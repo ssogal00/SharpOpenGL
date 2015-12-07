@@ -46,7 +46,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-SharpOpenGL/bin
-SharpOpenGL/obj
-SharpOpenGL/Properties
+bin/*.*
+obj/*.*
+Properties/*.*
 
