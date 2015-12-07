@@ -47,6 +47,8 @@ Temporary Items
 .apdisk
 
 bin/*.*
+bin/Debug/*.*
+obj/Debug/*.*
 obj/*.*
 Properties/*.*
 
