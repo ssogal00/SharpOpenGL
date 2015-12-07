@@ -134,17 +134,61 @@ namespace SharpOpenGL
 
         public List<int> GetUniformIndicesInBlock(int nBlockIndex)
         {
-            List<int> result = new List<int>();
-
+            List<int> result = new List<int>();            
+            
             if (ProgramLinked)
             {
                 if(nBlockIndex < ActiveUniformBlockCount)
                 {
-                    GL.GetActiveUniformBlock(ProgramObject, nBlockIndex, ActiveUniformBlockParameter.UniformBlockActiveUniformIndices, result.ToArray());
+                    int nSize = 0;
+
+                    GL.GetActiveUniformBlock(ProgramObject, nBlockIndex, ActiveUniformBlockParameter.UniformBlockActiveUniforms, out nSize);
+
+                    var arr = new int[nSize];
+
+                    GL.GetActiveUniformBlock(ProgramObject, nBlockIndex, ActiveUniformBlockParameter.UniformBlockActiveUniformIndices, arr);
+
+                    result.AddRange(arr);
+
+                    return result;
                 }
             }
 
             return result;
+        }
+
+        public List<string> GetUniformVariableNamesInBlock(int nBlockIndex)
+        {
+            var Indices = GetUniformIndicesInBlock(nBlockIndex);
+
+            var result = new List<string>();
+
+            if(Indices.Count > 0)
+            {
+                foreach(var index in Indices)
+                {
+                    result.Add(GL.GetActiveUniformName(ProgramObject, index));
+                }
+            }
+
+            return result;
+        }
+
+        public int GetUniformBlockSize(int nBlockIndex)
+        {
+            if(ProgramLinked)
+            {
+                if(nBlockIndex < ActiveUniformBlockCount )
+                {
+                    int nResult = 0;
+
+                    GL.GetActiveUniformBlock(ProgramObject, nBlockIndex, ActiveUniformBlockParameter.UniformBlockDataSize, out nResult);
+
+                    return nResult;
+                }
+            }
+
+            return 0;
         }
 
         public int ProgramObject

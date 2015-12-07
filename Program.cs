@@ -38,9 +38,11 @@ namespace SharpOpenGL
 
             program.LinkProgram();
 
-            Console.Write(program.ActiveUniformBlockCount);
+            Console.WriteLine(program.ActiveUniformBlockCount);
+
+            var names = program.GetUniformVariableNamesInBlock(0);
             
-            foreach(var name in program.ActiveUniformBlockNames)
+            foreach(var name in names)
             {
                 Console.WriteLine(name);
             }
