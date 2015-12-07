@@ -94,6 +94,21 @@ namespace SharpOpenGL
             return result;
         }
 
+        public bool ProgramLinked
+        {
+            get { return IsProgramLinked(); }
+        }
+
+        public List<string> ActiveUniformBlockNames
+        {
+            get { return GetActiveUniformBlockNames(); }
+        }
+
+        public int ActiveUniformBlockCount
+        {
+            get { return GetActiveUniformBlockCount(); }
+        }
+
         public string GetUniformBlockName(int nBlockIndex)
         {
             if(IsProgramLinked())
@@ -115,6 +130,21 @@ namespace SharpOpenGL
             }
 
             return "";
+        }
+
+        public List<int> GetUniformIndicesInBlock(int nBlockIndex)
+        {
+            List<int> result = new List<int>();
+
+            if (ProgramLinked)
+            {
+                if(nBlockIndex < ActiveUniformBlockCount)
+                {
+                    GL.GetActiveUniformBlock(ProgramObject, nBlockIndex, ActiveUniformBlockParameter.UniformBlockActiveUniformIndices, result.ToArray());
+                }
+            }
+
+            return result;
         }
 
         public int ProgramObject

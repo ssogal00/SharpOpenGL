@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -17,6 +18,32 @@ namespace SharpOpenGL
             VSync = VSyncMode.Off;
 
             GL.ClearColor(System.Drawing.Color.MidnightBlue);
+
+            VertexShader vs = new VertexShader();
+
+            var content = File.ReadAllText("TestShader.vs");
+
+            vs.CompileShader(content);
+
+            FragmentShader fs = new FragmentShader();
+
+            var fscontent = File.ReadAllText("TestShader.fs");
+
+            fs.CompileShader(fscontent);
+
+            ShaderProgram program = new ShaderProgram();
+
+            program.AttachShader(vs);
+            program.AttachShader(fs);
+
+            program.LinkProgram();
+
+            Console.Write(program.ActiveUniformBlockCount);
+            
+            foreach(var name in program.ActiveUniformBlockNames)
+            {
+                Console.WriteLine(name);
+            }
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
