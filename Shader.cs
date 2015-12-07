@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL
 {
-    class Shader
+    public class Shader
     {
         public Shader()
         {            

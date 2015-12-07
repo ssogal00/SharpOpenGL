@@ -12,8 +12,9 @@ namespace SharpOpenGL
 {
     public class VertexShader : Shader
     {
-
-        public VertexShader
-
+        public VertexShader()
+        {
+            ShaderObject = GL.CreateShader(ShaderType.VertexShader);
+        }        
     }
 }
