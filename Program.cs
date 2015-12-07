@@ -14,13 +14,13 @@ namespace SharpOpenGL
     public class MainWindow : GameWindow
     {
         protected override void OnLoad(EventArgs e)
-        {
+        {   
             VSync = VSyncMode.Off;
 
             GL.ClearColor(System.Drawing.Color.MidnightBlue);
 
             VertexShader vs = new VertexShader();
-
+            
             var content = File.ReadAllText("TestShader.vs");
 
             vs.CompileShader(content);
@@ -34,18 +34,16 @@ namespace SharpOpenGL
             ShaderProgram program = new ShaderProgram();
 
             program.AttachShader(vs);
-            program.AttachShader(fs);
+            program.AttachShader(fs);            
 
             program.LinkProgram();
 
-            Console.WriteLine(program.ActiveUniformBlockCount);
 
             var names = program.GetUniformVariableNamesInBlock(0);
-            
-            foreach(var name in names)
-            {
-                Console.WriteLine(name);
-            }
+            var types = program.GetUniformVariableTypesInBlock(0);
+            var offsets = program.GetUniformVariableOffsetsInBlock(0);
+
+            Console.WriteLine(names);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -53,7 +51,7 @@ namespace SharpOpenGL
             GL.Viewport(0, 0, Width, Height);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
+            
             SwapBuffers();
         }
     }
@@ -67,7 +65,7 @@ namespace SharpOpenGL
         static void Main()
         {
             using (MainWindow example = new MainWindow())            
-            {                
+            {   
                 example.Run(60);
             }
         }

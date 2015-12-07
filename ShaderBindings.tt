@@ -1,0 +1,28 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ assembly name="D:\SharpOpenGL\SharpOpenGL\lib\OpenTK.dll" #>
+<#@ import namespace="OpenTK" #>
+<#@ import namespace="OpenTK.Graphics.OpenGL" #>
+
+
+namespace SharpOpenGL
+{
+	[StructLayout(LayoutKind.Explicit)]
+	public struct <#= BlockName #>
+	{
+		<# 
+		for(int i = 0; i < VariableTypeList.Count; ++i)
+		{
+		#>
+		
+		[FieldOffset(<#=VariableOffsetList[i]#>)]
+		<#=VariableTypeList[i]#> <#=VariableNameList[i]#>;
+
+		<#	
+		}
+		#>
+	}
+}

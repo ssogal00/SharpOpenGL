@@ -35,7 +35,7 @@ namespace SharpOpenGL
 
                 GL.GetProgram(ProgramObject, GetProgramParameterName.LinkStatus, out result);
 
-                return result == 1;
+                return result == 1;                
             }
 
             return false;
@@ -47,7 +47,7 @@ namespace SharpOpenGL
             {
                 int result = 0;
                 
-                GL.GetProgram(ProgramObject, GetProgramParameterName.ActiveUniforms, out result);
+                GL.GetProgram(ProgramObject, GetProgramParameterName.ActiveUniforms, out result);               
 
                 return result;
             }
@@ -183,12 +183,84 @@ namespace SharpOpenGL
                     int nResult = 0;
 
                     GL.GetActiveUniformBlock(ProgramObject, nBlockIndex, ActiveUniformBlockParameter.UniformBlockDataSize, out nResult);
-
+                    
                     return nResult;
                 }
             }
 
             return 0;
+        }
+
+        public List<ActiveUniformType> GetUniformVariableTypesInBlock(int nBlockIndex)
+        {
+            var result = new List<ActiveUniformType>();
+
+            if(ProgramLinked)
+            {
+                var Indices = GetUniformIndicesInBlock(nBlockIndex);
+
+                foreach(var index in Indices)
+                {
+                    int size;
+                    ActiveUniformType type;
+                    
+                    GL.GetActiveUniform(ProgramObject, index, out size, out type);
+
+                    result.Add(type);
+                }
+            }
+
+            return result;
+        }
+        
+        public List<int> GetUniformVariableOffsetsInBlock(int nBlockIndex)
+        {
+            if(ProgramLinked)
+            {
+                var Indices = GetUniformIndicesInBlock(nBlockIndex);
+                
+                if(Indices.Count > 0)
+                {
+                    int[] result = new int[Indices.Count];
+
+                    GL.GetActiveUniforms(ProgramObject, Indices.Count, Indices.ToArray(), ActiveUniformParameter.UniformOffset, result);
+
+                    return result.ToList();
+                }                
+            }
+
+            return null;
+        }       
+
+
+        public List<string> GetUniformVariableTypeStringsInBlock(int nBlockIndex)
+        {
+            var result = new List<string>();
+
+            var types = GetUniformVariableTypesInBlock(nBlockIndex);
+
+            types.ForEach(x => result.Add(x.ToString()));
+
+            return result;
+        }
+
+        public List<UniformVariableMetaData> GetUniformVariableMetaDataList(int nBlockIndex)
+        {
+            var result = new List<UniformVariableMetaData>();
+
+            var types = GetUniformVariableTypesInBlock(nBlockIndex);
+            var names = GetUniformVariableNamesInBlock(nBlockIndex);
+            var offsets = GetUniformVariableOffsetsInBlock(nBlockIndex);
+
+            if (types.Count == names.Count && names.Count == offsets.Count)
+            {
+                for (int i = 0; i < types.Count; ++i)
+                {
+                    result.Add(new UniformVariableMetaData(names[i], types[i], offsets[i]));
+                }
+            }
+
+            return result;
         }
 
         public int ProgramObject

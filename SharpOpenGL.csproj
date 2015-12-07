@@ -57,10 +57,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FragmentShader.cs" />
+    <Compile Include="OpenGLBuffer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shader.cs" />
+    <Compile Include="ShaderBindings.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShaderBindings.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShaderBindingsPartial.cs" />
     <Compile Include="ShaderProgram.cs" />
+    <Compile Include="UniformBlockMetaData.cs" />
     <Compile Include="VertexShader.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -88,9 +96,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestShader.fs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ShaderBindings.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ShaderBindings.cs</LastGenOutput>
     </Content>
+    <Content Include="TestShader.fs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

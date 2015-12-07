@@ -12,8 +12,9 @@ namespace SharpOpenGL
     public class Shader
     {
         public Shader()
-        {            
+        {
         }        
+
 
         public void CompileShader(string ShaderSourceCode)
         {
