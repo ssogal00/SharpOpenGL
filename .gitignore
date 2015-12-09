@@ -46,9 +46,15 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-bin/*.*
-bin/Debug/*.*
-obj/Debug/*.*
-obj/*.*
-Properties/*.*
+SharpOpenGL/bin/*.*
+SharpOpenGL/bin/Debug/*.*
+SharpOpenGL/obj/Debug/*.*
+SharpOpenGL/obj/*.*
+SharpOpenGL/Properties/*.*
 
+
+ShaderCodeGenerator/bin/*.*
+ShaderCodeGenerator/bin/Debug/*.*
+ShaderCodeGenerator/obj/Debug/*.*
+ShaderCodeGenerator/obj/*.*
+ShaderCodeGenerator/Properties/*.*
