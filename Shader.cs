@@ -19,7 +19,7 @@ namespace SharpOpenGL
         public void CompileShader(string ShaderSourceCode)
         {
             GL.ShaderSource(m_ShaderObject, ShaderSourceCode);
-            GL.CompileShader(m_ShaderObject);
+            GL.CompileShader(m_ShaderObject);            
 
             int nStatus;
             GL.GetShader(m_ShaderObject, ShaderParameter.CompileStatus, out nStatus);
