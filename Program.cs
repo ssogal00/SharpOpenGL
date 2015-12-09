@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
+using System.Runtime.InteropServices;
+
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -38,11 +40,10 @@ namespace SharpOpenGL
 
             program.LinkProgram();
 
-
-            var names = program.GetUniformVariableNamesInBlock(0);
-            var types = program.GetUniformVariableTypesInBlock(0);
+            var names   = program.GetUniformVariableNamesInBlock(0);
+            var types   = program.GetUniformVariableTypesInBlock(0);
             var offsets = program.GetUniformVariableOffsetsInBlock(0);
-
+            
             Console.WriteLine(names);
         }
 
