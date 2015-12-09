@@ -9,13 +9,11 @@ using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.Buffer
 {
-    public class OpenGLBuffer : IDisposable
+    public abstract class OpenGLBuffer : IDisposable
     {
-        public OpenGLBuffer(BufferTarget Target, BufferUsageHint Hint)
+        public OpenGLBuffer()
         {
-            m_BufferTarget = Target;
             m_BufferObject = GL.GenBuffer();
-            m_Hint = Hint;
         }
 
         public void Dispose()

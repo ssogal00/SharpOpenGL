@@ -9,11 +9,11 @@ using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.Buffer
 {
-    public class UniformBuffer : OpenGLBuffer
+    public class IndexBuffer : OpenGLBuffer
     {
-        public UniformBuffer()            
+        public IndexBuffer()
         {
-            m_BufferTarget = BufferTarget.UniformBuffer;
+            m_BufferTarget = BufferTarget.ElementArrayBuffer;
             m_Hint = BufferUsageHint.DynamicDraw;
         }
     }

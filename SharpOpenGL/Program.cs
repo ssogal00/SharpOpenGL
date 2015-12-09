@@ -47,13 +47,17 @@ namespace SharpOpenGL
                 var types = program.GetUniformVariableTypesInBlock(0);
                 var offsets = program.GetUniformVariableOffsetsInBlock(0);
 
-                var a = new SharpOpenGL.Buffer.OpenGLBuffer(BufferTarget.UniformBuffer, BufferUsageHint.DynamicDraw);
+                var a = new SharpOpenGL.Buffer.UniformBuffer();
 
                 a.Bind();
 
                 TestShader_VS_Uniforms aa = new TestShader_VS_Uniforms();
                 a.BufferData<TestShader_VS_Uniforms>((IntPtr)Marshal.SizeOf(aa), ref aa);
-                Console.WriteLine(names);
+
+                foreach (var n in names)
+                {
+                    Console.WriteLine(n);
+                }
             }
             else
             {

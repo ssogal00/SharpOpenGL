@@ -51,8 +51,6 @@ SharpOpenGL/bin/Debug/*.*
 SharpOpenGL/obj/Debug/*.*
 SharpOpenGL/obj/*.*
 SharpOpenGL/Properties/*.*
-
-
 ShaderCodeGenerator/bin/*.*
 ShaderCodeGenerator/bin/Debug/*.*
 ShaderCodeGenerator/obj/Debug/*.*

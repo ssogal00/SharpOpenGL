@@ -56,7 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buffer\IndexBuffer.cs" />
     <Compile Include="Buffer\UniformBuffer.cs" />
+    <Compile Include="Buffer\VertexBuffer.cs" />
     <Compile Include="FragmentShader.cs" />
     <Compile Include="Buffer\OpenGLBuffer.cs" />
     <Compile Include="Program.cs" />

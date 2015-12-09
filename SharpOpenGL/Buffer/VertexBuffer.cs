@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace SharpOpenGL.Buffer
+namespace SharpOpenGL.Buffer 
 {
-    public class UniformBuffer : OpenGLBuffer
+    public class VertexBuffer : OpenGLBuffer
     {
-        public UniformBuffer()            
+        public VertexBuffer()
         {
-            m_BufferTarget = BufferTarget.UniformBuffer;
+            m_BufferTarget = BufferTarget.ArrayBuffer;
             m_Hint = BufferUsageHint.DynamicDraw;
         }
     }
