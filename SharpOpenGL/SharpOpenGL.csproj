@@ -56,15 +56,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Buffer\UniformBuffer.cs" />
     <Compile Include="FragmentShader.cs" />
-    <Compile Include="OpenGLBuffer.cs" />
+    <Compile Include="Buffer\OpenGLBuffer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RuntimeCompiler.cs" />
     <Compile Include="Shader.cs" />
     <Compile Include="ShaderProgram.cs" />
     <Compile Include="ShaderVariable.cs" />
-    <Compile Include="UniformBlockMetaData.cs" />
+    <Compile Include="UniformBlock.cs" />
     <Compile Include="UniformVariableMetaData.cs" />
     <Compile Include="VertexShader.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

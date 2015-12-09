@@ -46,15 +46,18 @@ namespace ShaderCompiler
 
                             vs.CompileShader(File.ReadAllText(vsFile));
                             program.AttachShader(vs);
-                            program.LinkProgram();
 
-                            var filename = Path.GetFileNameWithoutExtension(vsFile);
+                            String result;
+                            if (program.LinkProgram(out result))
+                            {
+                                var filename = Path.GetFileNameWithoutExtension(vsFile);
 
-                            ShaderBindings sb = new ShaderBindings(program, 0, filename + "_VS");
+                                ShaderBindings sb = new ShaderBindings(program, 0, filename + "_VS");
 
-                            var Contents = sb.TransformText();
+                                var Contents = sb.TransformText();
 
-                            builder.Append(Contents);                            
+                                builder.Append(Contents);                            
+                            }                            
                         }
 
                         // generate code for fragment shader files
@@ -65,15 +68,18 @@ namespace ShaderCompiler
 
                             fs.CompileShader(File.ReadAllText(fsFile));
                             program.AttachShader(fs);
-                            program.LinkProgram();
 
-                            var filename = Path.GetFileNameWithoutExtension(fsFile);
+                            String result;
+                            if (program.LinkProgram(out result))
+                            {
+                                var filename = Path.GetFileNameWithoutExtension(fsFile);
 
-                            ShaderBindings sb = new ShaderBindings(program, 0, filename + "_FS");
+                                ShaderBindings sb = new ShaderBindings(program, 0, filename + "_FS");
 
-                            var Contents = sb.TransformText();
+                                var Contents = sb.TransformText();
 
-                            builder.Append(Contents);            
+                                builder.Append(Contents);
+                            }
                         }
                     }
 

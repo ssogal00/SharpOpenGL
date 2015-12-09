@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
+using SharpOpenGL.Buffer;
+
 namespace SharpOpenGL
 {
     public class ShaderProgram
@@ -14,12 +16,27 @@ namespace SharpOpenGL
 
         public ShaderProgram()
         {
-            ProgramObject = GL.CreateProgram();
+            ProgramObject = GL.CreateProgram();            
         }
 
-        public void LinkProgram()
+        /// <summary>
+        /// Link Program
+        /// </summary>
+        /// <param name="result">링크 결과를 담는 스트링</param>
+        /// <returns>성공시 true, 실패시 false</returns>
+        public bool LinkProgram(out String result)
         {
             GL.LinkProgram(ProgramObject);
+
+            result = "";
+
+            if (!ProgramLinked)
+            {
+                result = GL.GetProgramInfoLog(ProgramObject);
+                return false;
+            }
+
+            return true;
         }
 
         public void UseProgram()
@@ -55,6 +72,10 @@ namespace SharpOpenGL
             return 0;
         }
 
+        /// <summary>
+        /// Return Block Count in Shader Program
+        /// </summary>
+        /// <returns>Count of Blocks</returns>
         public int GetActiveUniformBlockCount()
         {
             if(IsProgramLinked())
@@ -69,6 +90,10 @@ namespace SharpOpenGL
             return 0;
         }
 
+        /// <summary>
+        /// Attach Fragment, Vertex, etc shader to Program
+        /// </summary>
+        /// <param name="ShaderToAttach"></param>
         public void AttachShader(Shader ShaderToAttach)
         {
             if(m_ProgramObject != 0)
@@ -132,6 +157,16 @@ namespace SharpOpenGL
             return "";
         }
 
+        public int GetUniformBlockIndex(String BlockName)
+        {
+            if(ProgramLinked)
+            {
+                return GL.GetUniformBlockIndex(ProgramObject, BlockName);
+            }
+
+            return -1;
+        }
+
         public List<int> GetUniformIndicesInBlock(int nBlockIndex)
         {
             List<int> result = new List<int>();            
@@ -148,7 +183,7 @@ namespace SharpOpenGL
 
                     GL.GetActiveUniformBlock(ProgramObject, nBlockIndex, ActiveUniformBlockParameter.UniformBlockActiveUniformIndices, arr);
 
-                    result.AddRange(arr);
+                    result.AddRange(arr);                    
 
                     return result;
                 }
@@ -157,6 +192,32 @@ namespace SharpOpenGL
             return result;
         }
 
+        /// <summary>
+        /// Return whether this block is referenced by Vertex Shader
+        /// </summary>
+        /// <param name="nBlockIndex"></param>
+        /// <returns>true/false</returns>
+        public bool IsBlockRefByVertexShader(int nBlockIndex)
+        {
+            if(ProgramLinked)
+            {
+                if(nBlockIndex < ActiveUniformBlockCount)
+                {
+                    int nReturn = 0;
+                    GL.GetActiveUniformBlock(ProgramObject, nBlockIndex, ActiveUniformBlockParameter.UniformBlockReferencedByVertexShader, out nReturn);
+
+                    return nReturn == 1;                    
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Uniform Block안의 Unifrom Variable이름들을 List로 리턴한다.
+        /// </summary>
+        /// <param name="nBlockIndex"></param>
+        /// <returns></returns>
         public List<string> GetUniformVariableNamesInBlock(int nBlockIndex)
         {
             var Indices = GetUniformIndicesInBlock(nBlockIndex);
@@ -167,14 +228,19 @@ namespace SharpOpenGL
             {
                 foreach(var index in Indices)
                 {
-                    result.Add(GL.GetActiveUniformName(ProgramObject, index));
+                    result.Add(GL.GetActiveUniformName(ProgramObject, index));                    
                 }
             }
 
             return result;
         }
 
-        public int GetUniformBlockSize(int nBlockIndex)
+        /// <summary>
+        /// Get Data Block Size 
+        /// </summary>
+        /// <param name="nBlockIndex"></param>
+        /// <returns></returns>
+        public int GetUniformBlockDataSize(int nBlockIndex)
         {
             if(ProgramLinked)
             {
@@ -183,7 +249,7 @@ namespace SharpOpenGL
                     int nResult = 0;
 
                     GL.GetActiveUniformBlock(ProgramObject, nBlockIndex, ActiveUniformBlockParameter.UniformBlockDataSize, out nResult);
-                    
+
                     return nResult;
                 }
             }
@@ -261,7 +327,19 @@ namespace SharpOpenGL
             }
 
             return result;
+        }        
+
+        public void UniformBlockBinding(int BlockIndex, int BindingIndex)
+        {
+            if(ProgramLinked)
+            {
+                if (BlockIndex < ActiveUniformBlockCount)
+                {
+                    GL.UniformBlockBinding(ProgramObject, BlockIndex, BindingIndex);
+                }
+            }
         }
+
 
         public int ProgramObject
         {

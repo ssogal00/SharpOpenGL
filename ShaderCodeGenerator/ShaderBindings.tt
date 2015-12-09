@@ -7,7 +7,7 @@
 <#@ import namespace="OpenTK.Graphics.OpenGL" #>
 
 
-[StructLayout(LayoutKind.Explicit)]
+[StructLayout(LayoutKind.Explicit,Size=<#= BlockDataSize #>)]
 public struct <#= StructName #>
 {
 	<# 

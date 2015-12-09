@@ -1,5 +1,6 @@
 #version 430 core
-uniform Uniforms {
+uniform Uniforms2
+{
  vec3 translation;
  float scale;
  vec4 rotation;

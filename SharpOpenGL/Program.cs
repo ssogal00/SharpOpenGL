@@ -36,15 +36,29 @@ namespace SharpOpenGL
             ShaderProgram program = new ShaderProgram();
 
             program.AttachShader(vs);
-            program.AttachShader(fs);            
+            program.AttachShader(fs);
 
-            program.LinkProgram();
+            String result;
+            if(program.LinkProgram(out result))
+            {
+                var name = program.GetUniformBlockName(0);
 
-            var names   = program.GetUniformVariableNamesInBlock(0);
-            var types   = program.GetUniformVariableTypesInBlock(0);
-            var offsets = program.GetUniformVariableOffsetsInBlock(0);
-            
-            Console.WriteLine(names);
+                var names = program.GetUniformVariableNamesInBlock(0);
+                var types = program.GetUniformVariableTypesInBlock(0);
+                var offsets = program.GetUniformVariableOffsetsInBlock(0);
+
+                var a = new SharpOpenGL.Buffer.OpenGLBuffer(BufferTarget.UniformBuffer, BufferUsageHint.DynamicDraw);
+
+                a.Bind();
+
+                TestShader_VS_Uniforms aa = new TestShader_VS_Uniforms();
+                a.BufferData<TestShader_VS_Uniforms>((IntPtr)Marshal.SizeOf(aa), ref aa);
+                Console.WriteLine(names);
+            }
+            else
+            {
+                MessageBox.Show(result);
+            }
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)

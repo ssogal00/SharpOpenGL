@@ -30,7 +30,14 @@ namespace ShaderCompiler
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\n\r\n[StructLayout(LayoutKind.Explicit)]\r\npublic struct ");
+            this.Write("\r\n\r\n[StructLayout(LayoutKind.Explicit,Size=");
+            
+            #line 10 "D:\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(BlockDataSize));
+            
+            #line default
+            #line hidden
+            this.Write(")]\r\npublic struct ");
             
             #line 11 "D:\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(StructName));
