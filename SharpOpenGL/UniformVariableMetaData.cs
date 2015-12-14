@@ -19,7 +19,7 @@ namespace SharpOpenGL
             switch(type)
             {
                 case ActiveUniformType.Bool:
-                    VariableTypeString = "bool";
+                    VariableTypeString = typeof(System.Boolean).ToString();
                     break;
                     
                 case ActiveUniformType.FloatVec2:
@@ -43,7 +43,7 @@ namespace SharpOpenGL
                     break;
                 
                 case ActiveUniformType.Float:
-                    VariableTypeString = "float";
+                    VariableTypeString = typeof(System.Single).ToString();
                     break;
             }
             

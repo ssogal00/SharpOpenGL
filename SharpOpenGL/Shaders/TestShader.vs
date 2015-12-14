@@ -5,6 +5,7 @@ uniform Uniforms {
  vec4 rotation;
  bool enabled;
 };
+
 in vec2 vPos;
 in vec3 vColor;
 out vec4 fColor;
@@ -20,6 +21,6 @@ void main()
  pos *= scale;
  pos *= rot;
  pos += translation;
- fColor = vec4(scale, scale, scale, 1);
+ fColor = vec4(vColor.x, vColor.y, vColor.z, 1);
  gl_Position = vec4(pos, 1);
 }

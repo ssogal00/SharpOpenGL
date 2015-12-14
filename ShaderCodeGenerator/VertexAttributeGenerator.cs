@@ -20,9 +20,9 @@ namespace ShaderCompiler
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "D:\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+    #line 1 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
-    public partial class ShaderBindings : ShaderBindingsBase
+    public partial class VertexAttributeGenerator : VertexAttributeGeneratorBase
     {
 #line hidden
         /// <summary>
@@ -30,54 +30,72 @@ namespace ShaderCompiler
         /// </summary>
         public virtual string TransformText()
         {
+            this.Write("\r\n");
+            
+            #line 9 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
+
+	int nTotalSize = 0;
+	for(int i =0; i < VertexAttributeList.Count; ++i)
+	{
+		nTotalSize += VertexAttributeList[i].Size;
+	}
+
+            
+            #line default
+            #line hidden
             this.Write("\r\n\r\n[StructLayout(LayoutKind.Explicit,Size=");
             
-            #line 10 "D:\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(BlockDataSize));
+            #line 18 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(nTotalSize));
             
             #line default
             #line hidden
             this.Write(")]\r\npublic struct ");
             
-            #line 11 "D:\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            #line 19 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(StructName));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n\t");
             
-            #line 13 "D:\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            #line 21 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
  
-	for(int i = 0; i < MetaDataList.Count; ++i)
+	for(int i = 0; i < VertexAttributeList.Count; ++i)
 	{
+		int nOffset = 0;
+		for(int j = 0; j < i; ++j)
+		{
+			nOffset += VertexAttributeList[j].Size;
+		}
 	
             
             #line default
             #line hidden
             this.Write("\t\t\r\n\t[FieldOffset(");
             
-            #line 18 "D:\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(MetaDataList[i].VariableOffset));
+            #line 31 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(nOffset));
             
             #line default
             #line hidden
             this.Write(")]\r\n\tpublic ");
             
-            #line 19 "D:\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(MetaDataList[i].VariableTypeString));
+            #line 32 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].AttributeTypeString));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 19 "D:\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(MetaDataList[i].VariableName));
+            #line 32 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].Name));
             
             #line default
             #line hidden
             this.Write(";\r\n\t");
             
-            #line 20 "D:\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            #line 33 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
 
 	}
 	
@@ -96,7 +114,7 @@ namespace ShaderCompiler
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "12.0.0.0")]
-    public class ShaderBindingsBase
+    public class VertexAttributeGeneratorBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

@@ -11,15 +11,14 @@ public struct TestShader_VS_Uniforms
 	public OpenTK.Vector3 translation;
 			
 	[FieldOffset(12)]
-	public float scale;
+	public System.Single scale;
 			
 	[FieldOffset(16)]
 	public OpenTK.Vector4 rotation;
 			
 	[FieldOffset(32)]
-	public bool enabled;
+	public System.Boolean enabled;
 	}
-
 
 
 [StructLayout(LayoutKind.Explicit,Size=48)]
@@ -30,13 +29,12 @@ public struct TestShader_FS_Uniforms
 	public OpenTK.Vector3 translation;
 			
 	[FieldOffset(12)]
-	public float scale;
+	public System.Single scale;
 			
 	[FieldOffset(16)]
 	public OpenTK.Vector4 rotation;
 			
 	[FieldOffset(32)]
-	public bool enabled;
+	public System.Boolean enabled;
 	}
-
 }

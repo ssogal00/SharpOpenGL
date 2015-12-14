@@ -355,12 +355,17 @@ namespace SharpOpenGL
 
                 for (int index = 0; index < nCount; ++index)
                 {
-                    int nSize = 0;
-                    ActiveAttribType Type = ActiveAttribType.None;
-                    
-                    GL.GetActiveAttrib(ProgramObject, index, out nSize, out Type);
+                    int nComponentCount = 0;
+                    int nBuffSize = 1024;
+                    int nLength = 0;
 
-                    result.Add(new VertexAttribute(index, nSize, Type));
+                    ActiveAttribType Type = ActiveAttribType.None;
+
+                    StringBuilder sb = new StringBuilder();
+
+                    GL.GetActiveAttrib(ProgramObject, index, nBuffSize, out nLength, out nComponentCount, out Type, sb);
+
+                    result.Add(new VertexAttribute(index, nComponentCount, Type, sb.ToString()));
                 }
             }
 

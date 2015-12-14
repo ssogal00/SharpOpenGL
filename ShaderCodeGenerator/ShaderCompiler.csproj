@@ -67,6 +67,12 @@
       <DependentUpon>ShaderBindings.tt</DependentUpon>
     </Compile>
     <Compile Include="ShaderBindingsPartial.cs" />
+    <Compile Include="VertexAttributeGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VertexAttributeGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VertexAttributeGeneratorPartial.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -100,6 +106,10 @@
     <Content Include="ShaderBindings.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ShaderBindings.cs</LastGenOutput>
+    </Content>
+    <Content Include="VertexAttributeGenerator.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>VertexAttributeGenerator.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
