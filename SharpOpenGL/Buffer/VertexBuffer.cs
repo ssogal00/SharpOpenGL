@@ -16,5 +16,7 @@ namespace SharpOpenGL.Buffer
             m_BufferTarget = BufferTarget.ArrayBuffer;
             m_Hint = BufferUsageHint.DynamicDraw;
         }
+
+
     }
 }
