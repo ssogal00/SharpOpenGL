@@ -257,6 +257,7 @@ namespace SharpOpenGL
             return 0;
         }
 
+
         public List<ActiveUniformType> GetUniformVariableTypesInBlock(int nBlockIndex)
         {
             var result = new List<ActiveUniformType>();
@@ -327,7 +328,44 @@ namespace SharpOpenGL
             }
 
             return result;
-        }        
+        }
+
+        public int GetActiveVertexAttributeCount()
+        {
+            if(ProgramLinked)
+            {
+                int result = 0;
+                
+                GL.GetProgram(ProgramObject, GetProgramParameterName.ActiveAttributes, out result);                
+
+                return result;
+            }
+
+            return 0;
+        }
+        
+        
+        public List<VertexAttribute> GetActiveVertexAttributeList()
+        {
+            var result = new List<VertexAttribute>();
+
+            if(ProgramLinked)
+            {
+                int nCount = GetActiveVertexAttributeCount();
+
+                for (int index = 0; index < nCount; ++index)
+                {
+                    int nSize = 0;
+                    ActiveAttribType Type = ActiveAttribType.None;
+                    
+                    GL.GetActiveAttrib(ProgramObject, index, out nSize, out Type);
+
+                    result.Add(new VertexAttribute(index, nSize, Type));
+                }
+            }
+
+            return result;
+        }
 
         public void UniformBlockBinding(int BlockIndex, int BindingIndex)
         {
