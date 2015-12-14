@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="Buffer\IndexBuffer.cs" />
     <Compile Include="Buffer\UniformBuffer.cs" />
-    <Compile Include="Buffer\VertexBuffer.cs" />
+    <Compile Include="Buffer\StaticVertexBuffer.cs" />
     <Compile Include="CompiledVertexAttributes.cs" />
     <Compile Include="FragmentShader.cs" />
     <Compile Include="Buffer\OpenGLBuffer.cs" />
@@ -91,20 +91,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="TestShader.vs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TestShader.fs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

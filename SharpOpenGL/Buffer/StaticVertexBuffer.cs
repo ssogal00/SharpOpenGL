@@ -9,14 +9,15 @@ using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.Buffer 
 {
-    public class VertexBuffer : OpenGLBuffer
+    public class StaticVertexBuffer<T> : OpenGLBuffer where T : struct
     {
-        public VertexBuffer()
+        public StaticVertexBuffer()
         {
             m_BufferTarget = BufferTarget.ArrayBuffer;
-            m_Hint = BufferUsageHint.DynamicDraw;
+            m_Hint = BufferUsageHint.StaticDraw;
         }
-
+        
+        
 
     }
 }

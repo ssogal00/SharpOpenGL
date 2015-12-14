@@ -15,9 +15,9 @@ namespace SharpOpenGL
 {
     public class VertexAttribute
     {
-        public VertexAttribute(int nIndex, int nComponentCount, ActiveAttribType _AttributeType, string _Name)
+        public VertexAttribute(int nLocation, int nComponentCount, ActiveAttribType _AttributeType, string _Name)
         {
-            Index               = nIndex;
+            AttributeLocation   = nLocation;
             ComponentCount      = nComponentCount;
             AttributeType       = _AttributeType;
             Name                = _Name;
@@ -25,7 +25,7 @@ namespace SharpOpenGL
             Size = OpenGLTypeConverter.GetAttributeTypeSize(AttributeType);            
         }
 
-        public int Index { get; set; }
+        public int AttributeLocation { get; set; }
         public int Size { get; set; }
         public int ComponentCount { get; set; }
         public string Name {get;set;}

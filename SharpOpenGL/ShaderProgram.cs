@@ -365,11 +365,23 @@ namespace SharpOpenGL
 
                     GL.GetActiveAttrib(ProgramObject, index, nBuffSize, out nLength, out nComponentCount, out Type, sb);
 
-                    result.Add(new VertexAttribute(index, nComponentCount, Type, sb.ToString()));
+                    var attributeLocation = GetAttributeLocation(sb.ToString());
+
+                    result.Add(new VertexAttribute(attributeLocation, nComponentCount, Type, sb.ToString()));
                 }
             }
 
             return result;
+        }
+
+        public int GetAttributeLocation(string AttributeName)
+        {   
+            if(ProgramLinked)
+            {
+                return GL.GetAttribLocation(ProgramObject, AttributeName);
+            }
+
+            return -1;
         }
 
         public void UniformBlockBinding(int BlockIndex, int BindingIndex)
