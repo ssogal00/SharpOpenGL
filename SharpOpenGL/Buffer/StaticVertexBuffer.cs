@@ -16,8 +16,7 @@ namespace SharpOpenGL.Buffer
             m_BufferTarget = BufferTarget.ArrayBuffer;
             m_Hint = BufferUsageHint.StaticDraw;
         }
-
-
+        
         public void VertexAttribPointer(T[] Data)
         {
             var VertexAttrType = typeof(T);
@@ -29,8 +28,10 @@ namespace SharpOpenGL.Buffer
                 var CustomAttributeDic = fields[index].CustomAttributes.ToDictionary(x=>x.AttributeType.Name, x => x.ConstructorArguments[0]);
 
                 var nComponentCount = Convert.ToInt32(CustomAttributeDic["ComponentCount"].Value);
-                
-                GL.VertexAttribPointer<T>(index, nComponentCount, VertexAttribPointerType.Float, false, VertexAttrType.StructLayoutAttribute.Size, Data);
+                var nOffset = Convert.ToInt32(CustomAttributeDic["FieldOffsetAttribute"].Value);
+
+                GL.EnableVertexAttribArray(index);
+                GL.VertexAttribPointer(index, nComponentCount, VertexAttribPointerType.Float, false, VertexAttrType.StructLayoutAttribute.Size, new IntPtr(nOffset));
             }
         }
     }
