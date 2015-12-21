@@ -319,11 +319,14 @@ namespace SharpOpenGL
             var names = GetUniformVariableNamesInBlock(nBlockIndex);
             var offsets = GetUniformVariableOffsetsInBlock(nBlockIndex);
 
-            if (types.Count == names.Count && names.Count == offsets.Count)
+            if (types.Count() > 0)
             {
-                for (int i = 0; i < types.Count; ++i)
+                if (types.Count == names.Count && names.Count == offsets.Count)
                 {
-                    result.Add(new UniformVariableMetaData(names[i], types[i], offsets[i]));
+                    for (int i = 0; i < types.Count; ++i)
+                    {
+                        result.Add(new UniformVariableMetaData(names[i], types[i], offsets[i]));
+                    }
                 }
             }
 
@@ -394,7 +397,7 @@ namespace SharpOpenGL
                 }
             }
         }
-
+        
 
         public int ProgramObject
         {

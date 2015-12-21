@@ -46,6 +46,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+.suo
+
 SharpOpenGL/bin/*.*
 SharpOpenGL/bin/Debug/*.*
 SharpOpenGL/obj/Debug/*.*

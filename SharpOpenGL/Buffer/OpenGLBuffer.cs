@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
+using System.Reflection;
+using System.Runtime.InteropServices;
+
 namespace SharpOpenGL.Buffer
 {
     public abstract class OpenGLBuffer : IDisposable
@@ -47,18 +50,20 @@ namespace SharpOpenGL.Buffer
             }
         }
 
-        public void BufferData<T>(IntPtr Size, ref T Data) where T : struct
+        public void BufferData<T>(ref T Data) where T : struct
         {
             if(IsBind)
             {
+                var Size = new IntPtr(Marshal.SizeOf(Data));
                 GL.BufferData<T>(m_BufferTarget, Size, ref Data, m_Hint);                
             }            
         }
+        
 
         public void BindBufferBase(int BindingPoint)
         {
             if(IsBind)
-            {                
+            {   
                 GL.BindBufferBase(m_BufferTarget, BindingPoint, m_BufferObject);
             }
         }

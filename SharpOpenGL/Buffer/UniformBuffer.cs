@@ -14,7 +14,7 @@ namespace SharpOpenGL.Buffer
         public UniformBuffer()            
         {
             m_BufferTarget = BufferTarget.UniformBuffer;
-            m_Hint = BufferUsageHint.DynamicDraw;
+            m_Hint = BufferUsageHint.DynamicDraw;            
         }
     }
 }

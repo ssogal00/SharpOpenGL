@@ -4,14 +4,14 @@ namespace SharpOpenGL
 
 
 
-[StructLayout(LayoutKind.Explicit,Size=20)]
+[StructLayout(LayoutKind.Explicit,Size=24)]
 public struct TestShaderVertexAttributes
 {
 			
-	[FieldOffsetAttribute(0), ComponentCount(1)]	
-	public OpenTK.Vector3 vColor;
+	[FieldOffset(0), ComponentCount(1)]	
+	public OpenTK.Vector3 VertexColor;
 			
-	[FieldOffsetAttribute(12), ComponentCount(1)]	
-	public OpenTK.Vector2 vPos;
+	[FieldOffset(12), ComponentCount(1)]	
+	public OpenTK.Vector3 VertexPosition;
 	}
 }
