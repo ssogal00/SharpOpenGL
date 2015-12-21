@@ -16,8 +16,22 @@ namespace SharpOpenGL.Buffer
             m_BufferTarget = BufferTarget.ArrayBuffer;
             m_Hint = BufferUsageHint.StaticDraw;
         }
-        
-        
 
+
+        public void VertexAttribPointer(T[] Data)
+        {
+            var VertexAttrType = typeof(T);
+
+            var fields = VertexAttrType.GetFields();
+
+            for(int index = 0; index < fields.Count(); ++index)
+            {
+                var CustomAttributeDic = fields[index].CustomAttributes.ToDictionary(x=>x.AttributeType.Name, x => x.ConstructorArguments[0]);
+
+                var nComponentCount = Convert.ToInt32(CustomAttributeDic["ComponentCount"].Value);
+
+                GL.VertexAttribPointer<T>(index, nComponentCount, VertexAttribPointerType.Float, false, VertexAttrType.StructLayoutAttribute.Size, Data);
+            }
+        }
     }
 }

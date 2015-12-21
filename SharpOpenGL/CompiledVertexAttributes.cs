@@ -8,10 +8,10 @@ namespace SharpOpenGL
 public struct TestShaderVertexAttributes
 {
 			
-	[FieldOffset(0)]
+	[FieldOffsetAttribute(0), ComponentCount(1)]	
 	public OpenTK.Vector3 vColor;
 			
-	[FieldOffset(12)]
+	[FieldOffsetAttribute(12), ComponentCount(1)]	
 	public OpenTK.Vector2 vPos;
 	}
 }

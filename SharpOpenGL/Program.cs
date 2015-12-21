@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
+using SharpOpenGL.Buffer;
 
 namespace SharpOpenGL
 {
@@ -41,23 +42,9 @@ namespace SharpOpenGL
             String result;
             if(program.LinkProgram(out result))
             {
-                var name = program.GetUniformBlockName(0);
-
-                var names = program.GetUniformVariableNamesInBlock(0);
-                var types = program.GetUniformVariableTypesInBlock(0);
-                var offsets = program.GetUniformVariableOffsetsInBlock(0);
-
-                var a = new SharpOpenGL.Buffer.UniformBuffer();
-
-                a.Bind();
-
-                TestShader_VS_Uniforms aa = new TestShader_VS_Uniforms();
-                a.BufferData<TestShader_VS_Uniforms>((IntPtr)Marshal.SizeOf(aa), ref aa);
-
-                foreach (var n in names)
-                {
-                    Console.WriteLine(n);
-                }
+                var buf = new StaticVertexBuffer<TestShaderVertexAttributes>();
+                List<TestShaderVertexAttributes> a = new List<TestShaderVertexAttributes>();
+                buf.VertexAttribPointer(a.ToArray());
             }
             else
             {

@@ -79,7 +79,14 @@ namespace ShaderCompiler
             
             #line default
             #line hidden
-            this.Write(")]\r\n\tpublic ");
+            this.Write("), ComponentCount(");
+            
+            #line 31 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].ComponentCount));
+            
+            #line default
+            #line hidden
+            this.Write(")]\t\r\n\tpublic ");
             
             #line 32 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].AttributeTypeString));
