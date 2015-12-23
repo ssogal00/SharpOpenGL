@@ -11,7 +11,21 @@ namespace SharpOpenGL.Camera
 {
     public class CameraBase : TickableObject
     {
-        public override void Tick(float fDeltaSeconds)
+
+        public CameraBase()
+        {
+
+        }
+
+        public CameraBase(float fFOV, float fAspectRatio, float fNear, float fFar)
+        {
+            FOV = fFOV;
+            AspectRatio = fAspectRatio;
+            Near = fNear;
+            Far = fFar;
+        }
+
+        public override void Tick(double fDeltaSeconds)
         {
 
         }

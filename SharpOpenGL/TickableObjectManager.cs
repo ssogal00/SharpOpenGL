@@ -10,7 +10,7 @@ namespace SharpOpenGL
     {
         public static List<TickableObject> ObjectList = new List<TickableObject>();
 
-        public static void Tick(float fDeltaSeconds)
+        public static void Tick(double fDeltaSeconds)
         {
             foreach(var Obj in ObjectList)
             {

@@ -11,6 +11,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 using SharpOpenGL.Buffer;
+using SharpOpenGL.Camera;
 using System.Drawing;
 
 namespace SharpOpenGL
@@ -42,6 +43,9 @@ namespace SharpOpenGL
 
         protected Matrix4 ModelView = new Matrix4();
         protected Matrix4 Projection = new Matrix4();
+
+        protected OrbitCamera Camera = new OrbitCamera();
+
         float angle = 0;
         
         protected DynamicUniformBuffer TransformBuffer = null;
@@ -110,12 +114,17 @@ namespace SharpOpenGL
         {
             base.OnUpdateFrame(e);
 
+            TickableObjectManager.Tick(e.Time);
+
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            
+
+            Transform.View = Camera.View;
+            Transform.Proj = Camera.Proj;
             Transform.Model = Matrix4.Rotate(Vector3.UnitY, angle);
             angle += 0.001f;
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
             TransformBuffer.BindBufferBase(0);    
+        
             
             GL.DrawElements(PrimitiveType.Triangles, CubeElements.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
 
@@ -126,8 +135,17 @@ namespace SharpOpenGL
         {
             base.OnKeyDown(e);
 
-            
+            if(e.Key == OpenTK.Input.Key.W)
+            {
+                Camera.MoveForward(3);
+            }
+            else if(e.Key == OpenTK.Input.Key.S)
+            {
+                Camera.MoveForward(-3);
+            }
         }
+
+        
 
         protected override void OnResize(EventArgs e)
         {
@@ -136,6 +154,14 @@ namespace SharpOpenGL
             GL.Viewport(0, 0, Width, Height);
 
             float fAspectRatio = Width / (float)Height;
+
+            Camera.AspectRatio = fAspectRatio;
+            Camera.FOV = MathHelper.PiOver2;
+            Camera.Near = 1;
+            Camera.Far = 100000;
+            Camera.EyeLocation = new Vector3(5, 5, 5);
+            Camera.DestLocation = new Vector3(5, 5, 5);
+            Camera.LookAtLocation = new Vector3(0, 0, 0);                        
 
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, fAspectRatio, 1, 100000);
             Transform.Model = Matrix4.Identity;

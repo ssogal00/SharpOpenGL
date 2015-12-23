@@ -13,6 +13,6 @@ namespace SharpOpenGL
             TickableObjectManager.ObjectList.Add(this);
         }
 
-        public abstract void Tick(float fDeltaSeconds);
+        public abstract void Tick(double fDeltaSeconds);
     }
 }
