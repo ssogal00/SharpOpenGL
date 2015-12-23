@@ -358,7 +358,7 @@ namespace SharpOpenGL
 
                 for (int index = 0; index < nCount; ++index)
                 {
-                    int nComponentCount = 0;
+                    int nSize = 0;
                     int nBuffSize = 1024;
                     int nLength = 0;
 
@@ -366,11 +366,11 @@ namespace SharpOpenGL
 
                     StringBuilder sb = new StringBuilder();
 
-                    GL.GetActiveAttrib(ProgramObject, index, nBuffSize, out nLength, out nComponentCount, out Type, sb);
+                    GL.GetActiveAttrib(ProgramObject, index, nBuffSize, out nLength, out nSize, out Type, sb);
 
                     var attributeLocation = GetAttributeLocation(sb.ToString());
 
-                    result.Add(new VertexAttribute(attributeLocation, nComponentCount, Type, sb.ToString()));
+                    result.Add(new VertexAttribute(attributeLocation, Type, sb.ToString()));
                 }
             }
 
@@ -387,13 +387,29 @@ namespace SharpOpenGL
             return -1;
         }
 
-        public void UniformBlockBinding(int BlockIndex, int BindingIndex)
+        
+        public void BindUniformBlock(int BlockIndex)
         {
             if(ProgramLinked)
             {
-                if (BlockIndex < ActiveUniformBlockCount)
+                if(BlockIndex < ActiveUniformBlockCount)
                 {
-                    GL.UniformBlockBinding(ProgramObject, BlockIndex, BindingIndex);
+                    GL.UniformBlockBinding(ProgramObject, BlockIndex, m_UniformBlockBindingIndex);
+                    m_UniformBlockBindingIndex++;
+                }
+            }
+        }
+
+        public void BindUniformBlock(string BlockName)
+        {
+            if(ProgramLinked)
+            {
+                var BlockIndex = GetUniformBlockIndex(BlockName);
+
+                if(BlockIndex < ActiveUniformBlockCount)
+                {
+                    GL.UniformBlockBinding(ProgramObject, BlockIndex, m_UniformBlockBindingIndex);
+                    m_UniformBlockBindingIndex++;
                 }
             }
         }
@@ -411,26 +427,37 @@ namespace SharpOpenGL
                 }
             }
 
-            return 0;
+            return -1;
+        }
+
+        public int GetUniformBlockBindingPoint(string BlockName)
+        {
+            if(ProgramLinked)
+            {
+                var BlockIndex = GetUniformBlockIndex(BlockName);
+
+                if(BlockIndex < ActiveUniformBlockCount)
+                {
+                    int Index = -1;
+                    GL.GetActiveUniformBlock(m_ProgramObject, BlockIndex, ActiveUniformBlockParameter.UniformBlockBinding, out Index);
+                    return Index;
+                }
+            }
+
+            return -1;
         }
 
         public int GetUniformLocation(string Name)
         {
             if(ProgramLinked)
             {
-                return GL.GetUniformLocation(m_ProgramObject, Name);
+                var result = GL.GetUniformLocation(m_ProgramObject, Name);                
+                return result;
             }
 
             return -1;
         }
-        
-        public void SetUniformVariable<T>(string Name, T Value)
-        {
-            if(ProgramLinked)
-            {
-                var Loc = GetUniformLocation(Name);                
-            }
-        }
+                
 
         public int ProgramObject
         {
@@ -447,5 +474,7 @@ namespace SharpOpenGL
      
 
         private int m_ProgramObject = 0;
+
+        private int m_UniformBlockBindingIndex = 0;
     }    
 }

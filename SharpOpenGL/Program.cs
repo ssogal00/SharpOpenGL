@@ -44,8 +44,8 @@ namespace SharpOpenGL
         protected Matrix4 Projection = new Matrix4();
         float angle = 0;
         
-        protected UniformBuffer TransformBuffer = null;
-        protected UniformBuffer ColorBuffer = null;
+        protected DynamicUniformBuffer TransformBuffer = null;
+        protected DynamicUniformBuffer ColorBuffer = null;
 
         protected VS_Transform Transform = new VS_Transform();
         protected StaticVertexBuffer<TestShaderVertexAttributes> VB = null;
@@ -84,13 +84,14 @@ namespace SharpOpenGL
                 ProgramObject.UseProgram();
 
                 // init uniform buffer
-                TransformBuffer = new UniformBuffer();
-                ColorBuffer = new UniformBuffer();
+                TransformBuffer = new DynamicUniformBuffer();
+                ColorBuffer = new DynamicUniformBuffer();
                 
                 // init vertex buffer
                 VB = new StaticVertexBuffer<TestShaderVertexAttributes>();
                 VB.Bind();
                 VB.BufferData<TestShaderVertexAttributes>(ref Vertices);
+                VB.VertexAttribPointer(Vertices);
                 
                 // init index buffer
                 IB = new IndexBuffer();
@@ -110,13 +111,7 @@ namespace SharpOpenGL
             base.OnUpdateFrame(e);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            VB.Bind();
-            VB.VertexAttribPointer(Vertices);
-            IB.Bind();
-
-
-
+            
             Transform.Model = Matrix4.Rotate(Vector3.UnitY, angle);
             angle += 0.001f;
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
@@ -125,6 +120,13 @@ namespace SharpOpenGL
             GL.DrawElements(PrimitiveType.Triangles, CubeElements.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
 
             SwapBuffers();
+        }
+
+        protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+
+            
         }
 
         protected override void OnResize(EventArgs e)
@@ -138,14 +140,11 @@ namespace SharpOpenGL
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, fAspectRatio, 1, 100000);
             Transform.Model = Matrix4.Identity;
             Transform.View = Matrix4.LookAt(new Vector3(5, 5, 5), new Vector3(0, 0, 0), Vector3.UnitY);
+            
+            ProgramObject.BindUniformBlock("Transform");
+            ProgramObject.BindUniformBlock("ColorBlock");
 
-            var BlockIndex = ProgramObject.GetUniformBlockIndex("Transform");
-            var ColorIndex = ProgramObject.GetUniformBlockIndex("ColorBlock");
-
-            ProgramObject.UniformBlockBinding(BlockIndex, 0);
-            ProgramObject.UniformBlockBinding(ColorIndex, 1);
-
-            var Index = ProgramObject.GetUniformBlockBindingPoint(BlockIndex);            
+            var Index = ProgramObject.GetUniformBlockBindingPoint("Transform");            
 
             TransformBuffer.Bind();
             
@@ -153,7 +152,7 @@ namespace SharpOpenGL
 
             TransformBuffer.BindBufferBase(Index);            
 
-            Index = ProgramObject.GetUniformBlockBindingPoint(ColorIndex);
+            Index = ProgramObject.GetUniformBlockBindingPoint("ColorBlock");
 
             ColorBuffer.Bind();
             var greenColor = new Vector3(0,1,0);

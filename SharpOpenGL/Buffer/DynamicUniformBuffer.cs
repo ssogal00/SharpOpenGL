@@ -9,9 +9,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.Buffer
 {
-    public class UniformBuffer : OpenGLBuffer
+    public class DynamicUniformBuffer : OpenGLBuffer
     {
-        public UniformBuffer()            
+        public DynamicUniformBuffer()            
         {
             m_BufferTarget = BufferTarget.UniformBuffer;
             m_Hint = BufferUsageHint.DynamicDraw;            
