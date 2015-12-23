@@ -19,14 +19,14 @@ namespace SharpOpenGL
     {
         TestShaderVertexAttributes[] Vertices = new TestShaderVertexAttributes[]
         {
-            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3(-0.5f,-0.5f, 0.5f)},
-            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3( 0.5f,-0.5f, 0.5f)},
-            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3( 0.5f, 0.5f, 0.5f)},
-            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3(-0.5f, 0.5f, 0.5f)},
-            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3(-0.5f,-0.5f,-0.5f)},
-            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3( 0.5f,-0.5f,-0.5f)},
-            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3( 0.5f, 0.5f,-0.5f)},
-            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3(-0.5f, 0.5f,-0.5f)},
+            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3(-1.0f,-1.0f, 1.0f)},
+            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3( 1.0f,-1.0f, 1.0f)},
+            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3( 1.0f, 1.0f, 1.0f)},
+            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3(-1.0f, 1.0f, 1.0f)},
+            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3(-1.0f,-1.0f,-1.0f)},
+            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3( 1.0f,-1.0f,-1.0f)},
+            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3( 1.0f, 1.0f,-1.0f)},
+            new TestShaderVertexAttributes{ VertexColor = new Vector3(1,0,0), VertexPosition = new Vector3(-1.0f, 1.0f,-1.0f)},
         };
 
         ushort[] CubeElements = new ushort[]
@@ -42,9 +42,12 @@ namespace SharpOpenGL
 
         protected Matrix4 ModelView = new Matrix4();
         protected Matrix4 Projection = new Matrix4();
+        float angle = 0;
         
-        protected UniformBuffer ShaderUniformBuffer = null;        
-        protected TestShader_VS_Transform Transform = new TestShader_VS_Transform();
+        protected UniformBuffer TransformBuffer = null;
+        protected UniformBuffer ColorBuffer = null;
+
+        protected VS_Transform Transform = new VS_Transform();
         protected StaticVertexBuffer<TestShaderVertexAttributes> VB = null;
         protected IndexBuffer IB = null;
 
@@ -81,8 +84,8 @@ namespace SharpOpenGL
                 ProgramObject.UseProgram();
 
                 // init uniform buffer
-                ShaderUniformBuffer = new UniformBuffer();
-                ShaderUniformBuffer.Bind();
+                TransformBuffer = new UniformBuffer();
+                ColorBuffer = new UniformBuffer();
                 
                 // init vertex buffer
                 VB = new StaticVertexBuffer<TestShaderVertexAttributes>();
@@ -93,6 +96,7 @@ namespace SharpOpenGL
                 IB = new IndexBuffer();
                 IB.Bind();
                 IB.BufferData<ushort>(ref CubeElements);
+
             }
             else
             {
@@ -111,6 +115,13 @@ namespace SharpOpenGL
             VB.VertexAttribPointer(Vertices);
             IB.Bind();
 
+
+
+            Transform.Model = Matrix4.Rotate(Vector3.UnitY, angle);
+            angle += 0.001f;
+            TransformBuffer.BufferData<VS_Transform>(ref Transform);
+            TransformBuffer.BindBufferBase(0);    
+            
             GL.DrawElements(PrimitiveType.Triangles, CubeElements.Length, DrawElementsType.UnsignedShort, IntPtr.Zero);
 
             SwapBuffers();
@@ -124,15 +135,30 @@ namespace SharpOpenGL
 
             float fAspectRatio = Width / (float)Height;
 
-            Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, fAspectRatio, 1, 100);
-
-            Transform.ModelView = Matrix4.LookAt(new Vector3(1, 1, 1), new Vector3(0, 0, 0), Vector3.UnitY);
-            
-            ShaderUniformBuffer.BufferData<TestShader_VS_Transform>(ref Transform);
+            Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, fAspectRatio, 1, 100000);
+            Transform.Model = Matrix4.Identity;
+            Transform.View = Matrix4.LookAt(new Vector3(5, 5, 5), new Vector3(0, 0, 0), Vector3.UnitY);
 
             var BlockIndex = ProgramObject.GetUniformBlockIndex("Transform");
+            var ColorIndex = ProgramObject.GetUniformBlockIndex("ColorBlock");
 
-            ShaderUniformBuffer.BindBufferBase(BlockIndex);
+            ProgramObject.UniformBlockBinding(BlockIndex, 0);
+            ProgramObject.UniformBlockBinding(ColorIndex, 1);
+
+            var Index = ProgramObject.GetUniformBlockBindingPoint(BlockIndex);            
+
+            TransformBuffer.Bind();
+            
+            TransformBuffer.BufferData<VS_Transform>(ref Transform);
+
+            TransformBuffer.BindBufferBase(Index);            
+
+            Index = ProgramObject.GetUniformBlockBindingPoint(ColorIndex);
+
+            ColorBuffer.Bind();
+            var greenColor = new Vector3(0,1,0);
+            ColorBuffer.BufferData<Vector3>(ref greenColor);
+            ColorBuffer.BindBufferBase(Index);            
         }
     }
 

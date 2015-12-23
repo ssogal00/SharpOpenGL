@@ -57,13 +57,16 @@ namespace ShaderCompiler
                             {
                                 var filename = Path.GetFileNameWithoutExtension(vsFile);
 
-                                ShaderBindings sb = new ShaderBindings(program, 0, filename + "_VS");
+                                var Names = program.ActiveUniformBlockNames;
 
-                                var Contents = sb.TransformText();
+                                for (int i = 0; i < Names.Count(); ++i)
+                                {
+                                    ShaderBindings sb = new ShaderBindings(program, i, "VS");
 
-                                CompiledShaderVariableBuilder.Append(Contents);
+                                    var Contents = sb.TransformText();
 
-
+                                    CompiledShaderVariableBuilder.Append(Contents);
+                                }
 
                                 VertexAttributeGenerator vag = new VertexAttributeGenerator(program, filename + "VertexAttributes");
                                 

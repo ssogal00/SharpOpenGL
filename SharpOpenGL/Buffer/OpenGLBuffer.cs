@@ -71,9 +71,9 @@ namespace SharpOpenGL.Buffer
 
         public void BindBufferBase(int BindingPoint)
         {
-            if(IsBind)
-            {   
-                GL.BindBufferBase(m_BufferTarget, BindingPoint, m_BufferObject);
+            if (IsBind)
+            {
+                GL.BindBufferBase(BufferRangeTarget.UniformBuffer, BindingPoint, m_BufferObject);
             }
         }
         

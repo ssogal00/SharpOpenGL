@@ -374,7 +374,7 @@ namespace SharpOpenGL
                 }
             }
 
-            return result;
+            return result.OrderBy(x=>x.AttributeLocation).ToList();
         }
 
         public int GetAttributeLocation(string AttributeName)
@@ -397,7 +397,40 @@ namespace SharpOpenGL
                 }
             }
         }
+
+        public int GetUniformBlockBindingPoint(int BlockIndex)
+        {
+            if(ProgramLinked)
+            {
+                if(BlockIndex < ActiveUniformBlockCount)
+                {
+                    int Index = -1;
+                    GL.GetActiveUniformBlock(m_ProgramObject, BlockIndex, ActiveUniformBlockParameter.UniformBlockBinding, out Index);
+
+                    return Index;
+                }
+            }
+
+            return 0;
+        }
+
+        public int GetUniformLocation(string Name)
+        {
+            if(ProgramLinked)
+            {
+                return GL.GetUniformLocation(m_ProgramObject, Name);
+            }
+
+            return -1;
+        }
         
+        public void SetUniformVariable<T>(string Name, T Value)
+        {
+            if(ProgramLinked)
+            {
+                var Loc = GetUniformLocation(Name);                
+            }
+        }
 
         public int ProgramObject
         {
