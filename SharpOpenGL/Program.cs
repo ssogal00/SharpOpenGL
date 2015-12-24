@@ -61,7 +61,7 @@ namespace SharpOpenGL
 
         protected override void OnLoad(EventArgs e)
         {
-            VSync = VSyncMode.On;            
+            VSync = VSyncMode.Off;            
 
             GL.ClearColor(System.Drawing.Color.White);            
 
@@ -113,7 +113,7 @@ namespace SharpOpenGL
             Transform.View = Camera.View;
             Transform.Proj = Camera.Proj;
             Transform.Model = Matrix4.Rotate(Vector3.UnitY, angle) * Matrix4.CreateScale(0.03f);
-            angle += 0.010f;
+            angle += 0.001f;
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
             TransformBuffer.BindBufferBase(0);   
             

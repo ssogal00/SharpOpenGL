@@ -65,10 +65,12 @@
     <Compile Include="Camera\OrbitCamera.cs" />
     <Compile Include="StaticMesh\ObjMesh.cs" />
     <Compile Include="StaticMesh\ObjMeshVertexAttribute.cs" />
+    <Compile Include="Texture\Texture2D.cs" />
     <Compile Include="TickableObject.cs" />
     <Compile Include="CompiledVertexAttributes.cs" />
     <Compile Include="OpenGLEnvironment.cs" />
     <Compile Include="TickableObjectManager.cs" />
+    <Compile Include="VertexAttributeBase.cs" />
     <Compile Include="VertexCustomAttribute\ComponentCount.cs" />
     <Compile Include="FragmentShader.cs" />
     <Compile Include="Buffer\OpenGLBuffer.cs" />

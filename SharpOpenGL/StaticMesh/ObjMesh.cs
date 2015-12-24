@@ -15,10 +15,10 @@ namespace SharpOpenGL.StaticMesh
 {
     public class ObjMesh
     {
-        StaticVertexBuffer<ObjMeshVertexAttribute> VB = null;
+        StaticVertexBuffer<TestShaderVertexAttributes> VB = null;
         IndexBuffer IB = null;
 
-        List<ObjMeshVertexAttribute> Vertices = new List<ObjMeshVertexAttribute>();
+        List<TestShaderVertexAttributes> Vertices = new List<TestShaderVertexAttributes>();
         List<ushort> Indices = new List<ushort>();
 
         public ObjMesh()
@@ -27,12 +27,12 @@ namespace SharpOpenGL.StaticMesh
 
         public void PrepareToDraw()
         {
-            VB = new StaticVertexBuffer<ObjMeshVertexAttribute>();
+            VB = new StaticVertexBuffer<TestShaderVertexAttributes>();
             IB = new IndexBuffer();
 
             VB.Bind();
             var Arr = Vertices.ToArray();
-            VB.BufferData<ObjMeshVertexAttribute>(ref Arr);
+            VB.BufferData<TestShaderVertexAttributes>(ref Arr);
             VB.VertexAttribPointer(Arr);
 
             IB.Bind();
@@ -62,7 +62,7 @@ namespace SharpOpenGL.StaticMesh
 
                         if(tokens.Count() == 4)
                         {
-                            ObjMeshVertexAttribute V = new ObjMeshVertexAttribute();
+                            TestShaderVertexAttributes V = new TestShaderVertexAttributes();
                             V.VertexPosition.X = Convert.ToSingle(tokens[1]);
                             V.VertexPosition.Y = Convert.ToSingle(tokens[2]);
                             V.VertexPosition.Z = Convert.ToSingle(tokens[3]);
