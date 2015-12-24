@@ -61,7 +61,7 @@ namespace SharpOpenGL
 
         protected override void OnLoad(EventArgs e)
         {
-            VSync = VSyncMode.On;
+            VSync = VSyncMode.On;            
 
             GL.ClearColor(System.Drawing.Color.White);            
 
@@ -91,20 +91,9 @@ namespace SharpOpenGL
 
                 // init uniform buffer
                 TransformBuffer = new DynamicUniformBuffer();
-                ColorBuffer = new DynamicUniformBuffer();
-                
-                // init vertex buffer
-//                 VB = new StaticVertexBuffer<TestShaderVertexAttributes>();
-//                 VB.Bind();
-//                 VB.BufferData<TestShaderVertexAttributes>(ref Vertices);
-//                 VB.VertexAttribPointer(Vertices);
-                
-                // init index buffer
-//                 IB = new IndexBuffer();
-//                 IB.Bind();
-//                 IB.BufferData<ushort>(ref CubeElements);
+                ColorBuffer = new DynamicUniformBuffer();                
 
-                Mesh.Load("..\\..\\ObjMesh\\atena.obj");
+                Mesh.Load("..\\..\\ObjMesh\\sherry3.obj");
             }
             else
             {
@@ -123,7 +112,7 @@ namespace SharpOpenGL
 
             Transform.View = Camera.View;
             Transform.Proj = Camera.Proj;
-            Transform.Model = Matrix4.Rotate(Vector3.UnitY, angle) * Matrix4.CreateScale(0.001f);
+            Transform.Model = Matrix4.Rotate(Vector3.UnitY, angle) * Matrix4.CreateScale(0.03f);
             angle += 0.010f;
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
             TransformBuffer.BindBufferBase(0);   
@@ -166,8 +155,8 @@ namespace SharpOpenGL
             Camera.LookAtLocation = new Vector3(0, 0, 0);                        
 
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, fAspectRatio, 1, 100000);
-            Transform.Model = Matrix4.Identity;
-            Transform.View = Matrix4.LookAt(new Vector3(50, 50, 50), new Vector3(0, 0, 0), Vector3.UnitY);
+            Transform.Model = Matrix4.CreateScale(0.03f);
+            Transform.View = Matrix4.LookAt(new Vector3(100, 100, 100), new Vector3(0, 0, 0), Vector3.UnitY);
             
             ProgramObject.BindUniformBlock("Transform");
             ProgramObject.BindUniformBlock("ColorBlock");
