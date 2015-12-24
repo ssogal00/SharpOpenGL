@@ -66,7 +66,7 @@ namespace SharpOpenGL.Buffer
                 var Size = new IntPtr(Marshal.SizeOf(Data[0]) * Data.Length);
                 GL.BufferData<T>(m_BufferTarget, Size, Data, m_Hint);
             }
-        }
+        }       
         
 
         public void BindBufferBase(int BindingPoint)

@@ -32,6 +32,14 @@ namespace SharpOpenGL.Camera
             UpdateProjMatrix();
         }
 
+        public void UpdateCameraDistance()
+        {
+            if(Math.Abs(DestCameraDistance - CameraDistance) > 0.1)
+            {
+                
+            }
+        }
+
         public void MoveForward(float fAmount)
         {
             var vDir = (LookAtLocation - EyeLocation).Normalized();
@@ -39,7 +47,8 @@ namespace SharpOpenGL.Camera
             DestEyeLocation = vDir * fAmount + EyeLocation;
         }
 
-        public float CameraDistance;
+        public float CameraDistance = 10;
+        public float DestCameraDistance = 10;
 
         public Vector3 DestLocation
         {
