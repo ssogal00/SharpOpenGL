@@ -187,7 +187,7 @@ namespace SharpOpenGL
 
                     return result;
                 }
-            }
+            }            
 
             return result;
         }
@@ -279,6 +279,40 @@ namespace SharpOpenGL
 
             return result;
         }
+        
+        public List<int> GetSampler2DUniformLocations()
+        {
+            var result = new List<int>();
+            if(ProgramLinked)
+            {
+                var Count = GetActiveUniformCount();
+
+                for(int i = 0; i < Count; ++i)
+                {
+                    int size;
+                    ActiveUniformType type;
+
+                    GL.GetActiveUniform(ProgramObject, i, out size, out type);
+
+                    if(type == ActiveUniformType.Sampler2D)
+                    {
+                        result.Add(i);
+                    }
+                }
+            }
+
+            return result;            
+        }
+
+        public int GetSampler2DUniformLocation(string Name)
+        {
+            if (ProgramLinked)
+            {
+                return GL.GetUniformLocation(ProgramObject, Name);
+            }
+            return -1;
+        }
+
         
         public List<int> GetUniformVariableOffsetsInBlock(int nBlockIndex)
         {
@@ -457,6 +491,16 @@ namespace SharpOpenGL
 
             return -1;
         }
+
+        public string GetUniformName(int Location)
+        { 
+            if(ProgramLinked)
+            {
+                return GL.GetActiveUniformName(ProgramObject, Location);
+            }
+
+            return "";
+        }
                 
 
         public int ProgramObject
@@ -471,7 +515,8 @@ namespace SharpOpenGL
                 m_ProgramObject = value;
             }
         }
-     
+
+        public Dictionary<string, int> Sampler2DMap = new Dictionary<string,int>();
 
         private int m_ProgramObject = 0;
 

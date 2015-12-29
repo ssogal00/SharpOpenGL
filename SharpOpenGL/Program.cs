@@ -14,6 +14,7 @@ using SharpOpenGL.Buffer;
 using SharpOpenGL.Camera;
 using System.Drawing;
 using SharpOpenGL.StaticMesh;
+using SharpOpenGL.Texture;
 
 namespace SharpOpenGL
 {
@@ -59,6 +60,8 @@ namespace SharpOpenGL
 
         protected ObjMesh Mesh = new ObjMesh();
 
+        protected Texture2D TextureObj = null;
+
         protected override void OnLoad(EventArgs e)
         {
             VSync = VSyncMode.Off;            
@@ -91,7 +94,11 @@ namespace SharpOpenGL
 
                 // init uniform buffer
                 TransformBuffer = new DynamicUniformBuffer();
-                ColorBuffer = new DynamicUniformBuffer();                
+                ColorBuffer = new DynamicUniformBuffer();
+
+                TextureObj = new Texture2D();
+
+                var count = ProgramObject.GetSampler2DUniformLocations();
 
                 Mesh.Load("..\\..\\ObjMesh\\sherry3.obj");
             }

@@ -61,6 +61,12 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SamplerGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SamplerGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SamplerGeneratorPartial.cs" />
     <Compile Include="ShaderBindings.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -103,6 +109,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SamplerGenerator.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SamplerGenerator.cs</LastGenOutput>
+    </Content>
     <Content Include="ShaderBindings.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ShaderBindings.cs</LastGenOutput>

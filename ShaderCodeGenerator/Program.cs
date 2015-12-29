@@ -41,6 +41,11 @@ namespace ShaderCompiler
                     CompiledVertexAttributeBuilder.AppendLine("namespace SharpOpenGL");
                     CompiledVertexAttributeBuilder.AppendLine("{");
 
+                    StringBuilder CompiledSamplerVariableBuilder = new StringBuilder("");
+                    CompiledSamplerVariableBuilder.AppendLine("using System.Runtime.InteropServices;");
+                    CompiledSamplerVariableBuilder.AppendLine("namespace SharpOpenGL");
+                    CompiledSamplerVariableBuilder.AppendLine("{");
+
                     if (Directory.Exists(args[0]))
                     {
                         // generate code for vertex shader files
@@ -95,6 +100,12 @@ namespace ShaderCompiler
                                 var Contents = sb.TransformText();
 
                                 CompiledShaderVariableBuilder.Append(Contents);
+
+                                SamplerGenerator sampler = new SamplerGenerator(program, filename + "_Sampler");
+
+                                var Contents2 = sampler.TransformText();
+
+                                CompiledSamplerVariableBuilder.Append(Contents2);
                             }
                         }
                     }
@@ -103,9 +114,13 @@ namespace ShaderCompiler
 
                     CompiledVertexAttributeBuilder.AppendLine("}");
 
+                    CompiledSamplerVariableBuilder.AppendLine("}");
+
                     File.WriteAllText(Path.Combine(args[1], "CompiledShaderVariables.cs"), CompiledShaderVariableBuilder.ToString());
 
                     File.WriteAllText(Path.Combine(args[1], "CompiledVertexAttributes.cs"), CompiledVertexAttributeBuilder.ToString());
+
+                    File.WriteAllText(Path.Combine(args[1], "CompiledSamplerVariables.cs"), CompiledSamplerVariableBuilder.ToString());
                 }
             }
         }

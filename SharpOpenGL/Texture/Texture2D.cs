@@ -31,11 +31,21 @@ namespace SharpOpenGL.Texture
             }
         }
 
+        public void Bind()
+        {
+            if(m_TextureObject != -1)
+            {
+                GL.BindTexture(TextureTarget.Texture2D, m_TextureObject);
+            }
+        }
+
         public void LoadBitmap(string FilePath)
         {
             using(var bitmap = new Bitmap(FilePath))
             {
-                var bmpData = bitmap.LockBits(new Rectangle(0,0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, bitmap.PixelFormat);                
+                var bmpData = bitmap.LockBits(new Rectangle(0,0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, bitmap.PixelFormat);
+
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, bitmap.Width, bitmap.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgb, PixelType.UnsignedByte, bmpData.Scan0);
             }            
         }
 
