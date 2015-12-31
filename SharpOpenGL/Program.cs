@@ -98,9 +98,13 @@ namespace SharpOpenGL
 
                 TextureObj = new Texture2D();
 
-                var count = ProgramObject.GetSampler2DUniformLocations();
-
                 Mesh.Load("..\\..\\ObjMesh\\sherry3.obj");
+
+                var Sampler = new TestShader_Sampler();
+
+                var samplerLoc = ProgramObject.GetSampler2DUniformLocation(Sampler.TestTexture);
+
+                TextureObj.BindShader(0, samplerLoc);
             }
             else
             {

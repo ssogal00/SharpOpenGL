@@ -39,17 +39,27 @@ namespace SharpOpenGL.Texture
             }
         }
 
+        public void BindShader(int Unit, int SamplerLoc)
+        {
+            if(m_TextureObject != -1)
+            {
+                GL.ActiveTexture(TextureUnit.Texture0);
+                Bind();
+                LoadBitmap("..\\..\\TextureResource\\bumpy3.bmp");
+                GL.Uniform1(SamplerLoc, 0);
+            }
+        }
+
+
         public void LoadBitmap(string FilePath)
         {
             using(var bitmap = new Bitmap(FilePath))
             {
-                var bmpData = bitmap.LockBits(new Rectangle(0,0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, bitmap.PixelFormat);
+                var bmpData = bitmap.LockBits(new Rectangle(0,0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
 
                 GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, bitmap.Width, bitmap.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgb, PixelType.UnsignedByte, bmpData.Scan0);
             }            
         }
-
-
         
         public int Width { get { return m_Width; } }
         public int Height { get { return m_Height; } }
