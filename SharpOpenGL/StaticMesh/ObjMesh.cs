@@ -19,7 +19,12 @@ namespace SharpOpenGL.StaticMesh
         IndexBuffer IB = null;
 
         List<TestShaderVertexAttributes> Vertices = new List<TestShaderVertexAttributes>();
-        List<ushort> Indices = new List<ushort>();
+        
+        List<Vector3> TempVertices = new List<Vector3>();
+        List<Vector2> TempTexCoord = new List<Vector2>();
+
+        List<ushort> VertexIndices = new List<ushort>();
+        List<ushort> TextureIndices = new List<ushort>();
 
         public ObjMesh()
         {            
@@ -36,13 +41,13 @@ namespace SharpOpenGL.StaticMesh
             VB.VertexAttribPointer(Arr);
 
             IB.Bind();
-            var IndexArr = Indices.ToArray();
+            var IndexArr = VertexIndices.ToArray();
             IB.BufferData<ushort>(ref IndexArr);
         }
 
         public int GetIndicesCount()
         {
-            return Indices.Count();
+            return VertexIndices.Count();
         }
                 
         public void Load(string FilePath)
@@ -62,12 +67,25 @@ namespace SharpOpenGL.StaticMesh
 
                         if(tokens.Count() == 4)
                         {
-                            TestShaderVertexAttributes V = new TestShaderVertexAttributes();
-                            V.VertexPosition.X = Convert.ToSingle(tokens[1]);
-                            V.VertexPosition.Y = Convert.ToSingle(tokens[2]);
-                            V.VertexPosition.Z = Convert.ToSingle(tokens[3]);
+                            Vector3 V = new Vector3();
+                            V.X = Convert.ToSingle(tokens[1]);
+                            V.Y = Convert.ToSingle(tokens[2]);
+                            V.Z = Convert.ToSingle(tokens[3]);
 
-                            Vertices.Add(V);
+                            TempVertices.Add(V);
+                        }
+                    }
+                    else if(line.StartsWith("vt"))
+                    {
+                        var tokens = line.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+                        if(tokens.Count() >= 3)
+                        {
+                            Vector2 V = new Vector2();
+                            V.X = Convert.ToSingle(tokens[1]);
+                            V.Y = Convert.ToSingle(tokens[2]);
+
+                            TempTexCoord.Add(V);
                         }
                     }
                     else if(line.StartsWith("f "))
@@ -76,16 +94,42 @@ namespace SharpOpenGL.StaticMesh
 
                         if(tokens.Count() == 4)
                         {
-                            ushort Index1 = Convert.ToUInt16(tokens[1].Split('/')[0]);
-                            ushort Index2 = Convert.ToUInt16(tokens[2].Split('/')[0]);
-                            ushort Index3 = Convert.ToUInt16(tokens[3].Split('/')[0]);
+                            TestShaderVertexAttributes V1 = new TestShaderVertexAttributes();
+                            TestShaderVertexAttributes V2 = new TestShaderVertexAttributes();
+                            TestShaderVertexAttributes V3 = new TestShaderVertexAttributes();
+                            
 
-                            Indices.Add((ushort)(Index1 - 1));
-                            Indices.Add((ushort)(Index2 - 1));
-                            Indices.Add((ushort)(Index3 - 1));
+                            var Token1 = tokens[1].Split('/');
+                            var Token2 = tokens[2].Split('/');
+                            var Token3 = tokens[3].Split('/');
+
+                            ushort Index1 = Convert.ToUInt16(Token1[0]);
+                            ushort Index2 = Convert.ToUInt16(Token2[0]);
+                            ushort Index3 = Convert.ToUInt16(Token3[0]);
+
+                            V1.VertexPosition = TempVertices[Index1-1];
+                            V2.VertexPosition = TempVertices[Index2-1];
+                            V3.VertexPosition = TempVertices[Index3-1];
+
+                            ushort TexIndex1 = Convert.ToUInt16(Token1[1]);
+                            ushort TexIndex2 = Convert.ToUInt16(Token2[1]);
+                            ushort TexIndex3 = Convert.ToUInt16(Token3[1]);
+
+
+                            V1.TexCoord = TempTexCoord[TexIndex1-1];
+                            V2.TexCoord = TempTexCoord[TexIndex2-1];
+                            V3.TexCoord = TempTexCoord[TexIndex3-1];
+
+                            Vertices.Add(V1); Vertices.Add(V2); Vertices.Add(V3);
+                            VertexIndices.Add((ushort)VertexIndices.Count);
+                            VertexIndices.Add((ushort)VertexIndices.Count);
+                            VertexIndices.Add((ushort)VertexIndices.Count);
                         }
                     }
+
                 }
+
+
 
                 PrepareToDraw();
             }

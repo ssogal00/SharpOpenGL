@@ -46,6 +46,9 @@ namespace SharpOpenGL.Texture
                 GL.ActiveTexture(TextureUnit.Texture0);
                 Bind();
                 LoadBitmap("..\\..\\TextureResource\\bumpy3.bmp");
+                
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Linear);
                 GL.Uniform1(SamplerLoc, 0);
             }
         }
@@ -55,9 +58,11 @@ namespace SharpOpenGL.Texture
         {
             using(var bitmap = new Bitmap(FilePath))
             {
-                var bmpData = bitmap.LockBits(new Rectangle(0,0, bitmap.Width, bitmap.Height), ImageLockMode.ReadWrite, bitmap.PixelFormat);
+                var bmpData = bitmap.LockBits(new Rectangle(0,0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, bitmap.PixelFormat);
 
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, bitmap.Width, bitmap.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Rgb, PixelType.UnsignedByte, bmpData.Scan0);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, bitmap.Width, bitmap.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, bmpData.Scan0);
+
+                bitmap.UnlockBits(bmpData);
             }            
         }
         
