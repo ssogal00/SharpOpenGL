@@ -61,10 +61,14 @@ namespace SharpOpenGL
         protected ObjMesh Mesh = new ObjMesh();
 
         protected Texture2D TextureObj = null;
+        protected Texture2D TextureObj2 = null;
 
         protected override void OnLoad(EventArgs e)
         {
-            VSync = VSyncMode.Off;            
+            VSync = VSyncMode.Off;
+
+            GL.CullFace(CullFaceMode.Back);
+            GL.FrontFace(FrontFaceDirection.Ccw);
 
             GL.ClearColor(System.Drawing.Color.White);            
 
@@ -96,15 +100,21 @@ namespace SharpOpenGL
                 TransformBuffer = new DynamicUniformBuffer();
                 ColorBuffer = new DynamicUniformBuffer();
 
-                TextureObj = new Texture2D();
-
                 Mesh.Load("..\\..\\ObjMesh\\sherry3.obj");
 
                 var Sampler = new TestShader_Sampler();
-
+                                
+                TextureObj = new Texture2D();
+                TextureObj.BindAtUnit(TextureUnit.Texture0);
+                TextureObj.LoadBitmap("..\\..\\TextureResource\\bumpy3.bmp");
                 var samplerLoc = ProgramObject.GetSampler2DUniformLocation(Sampler.TestTexture);
+                TextureObj.BindShader(TextureUnit.Texture0, samplerLoc);
 
-                TextureObj.BindShader(0, samplerLoc);
+                TextureObj2 = new Texture2D();
+                TextureObj2.BindAtUnit(TextureUnit.Texture1);
+                TextureObj2.LoadBitmap("..\\..\\TextureResource\\rockNormal.bmp");
+                var samplerLoc2 = ProgramObject.GetSampler2DUniformLocation(Sampler.TestTexture2);
+                TextureObj2.BindShader(TextureUnit.Texture1, samplerLoc2); 
             }
             else
             {
@@ -124,7 +134,7 @@ namespace SharpOpenGL
             Transform.View = Camera.View;
             Transform.Proj = Camera.Proj;
             Transform.Model = Matrix4.Rotate(Vector3.UnitY, angle) * Matrix4.CreateScale(0.03f);
-            angle += 0.001f;
+            //angle += 0.001f;
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
             TransformBuffer.BindBufferBase(0);   
             

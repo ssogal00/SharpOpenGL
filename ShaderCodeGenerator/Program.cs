@@ -116,7 +116,15 @@ namespace ShaderCompiler
 
                     CompiledSamplerVariableBuilder.AppendLine("}");
 
-                    File.WriteAllText(Path.Combine(args[1], "CompiledShaderVariables.cs"), CompiledShaderVariableBuilder.ToString());
+
+                    if(File.Exists(Path.Combine(args[1], "CompiledShaderVariables.cs")))
+                    {
+                        var PrevContents = File.ReadAllText(Path.Combine(args[1], "CompiledShaderVariables.cs"));
+                        if(PrevContents != CompiledSamplerVariableBuilder.ToString())
+                        {
+                            File.WriteAllText(Path.Combine(args[1], "CompiledShaderVariables.cs"), CompiledShaderVariableBuilder.ToString());       
+                        }
+                    }                    
 
                     File.WriteAllText(Path.Combine(args[1], "CompiledVertexAttributes.cs"), CompiledVertexAttributeBuilder.ToString());
 

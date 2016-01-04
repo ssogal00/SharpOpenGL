@@ -23,9 +23,13 @@ namespace SharpOpenGL.Camera
         {
             var vDir = (DestEyeLocation - EyeLocation).Normalized();
 
-            if(vDir.Length > 0.01)
+            if(vDir.Length > 1)
             {
                 EyeLocation = vDir * 0.01f + EyeLocation;                
+            }
+            else
+            {
+                EyeLocation = DestEyeLocation;
             }
 
             UpdateViewMatrix();

@@ -20,7 +20,12 @@ namespace SharpOpenGL.Texture
         public Texture2D()
         {
             m_TextureObject = GL.GenTexture();
+
+            m_Sampler = new Sampler();
+            m_Sampler.SetMagFilter(TextureMagFilter.Linear);
+            m_Sampler.SetMinFilter(TextureMinFilter.Linear);
         }
+
 
         public void Dispose()
         {
@@ -39,20 +44,24 @@ namespace SharpOpenGL.Texture
             }
         }
 
-        public void BindShader(int Unit, int SamplerLoc)
+        public void BindAtUnit(TextureUnit Unit)
         {
             if(m_TextureObject != -1)
             {
-                GL.ActiveTexture(TextureUnit.Texture0);
+                GL.ActiveTexture(Unit);
                 Bind();
-                LoadBitmap("..\\..\\TextureResource\\bumpy3.bmp");
-                
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int) TextureMagFilter.Linear);
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int) TextureMinFilter.Linear);
-                GL.Uniform1(SamplerLoc, 0);
+                m_TextureUnitBinded = Unit;
             }
         }
 
+        public void BindShader(TextureUnit Unit, int SamplerLoc)
+        {
+            if(m_TextureObject != -1)
+            {
+                m_Sampler.BindSampler(m_TextureUnitBinded);                
+                GL.Uniform1(SamplerLoc, (int)(m_TextureUnitBinded - TextureUnit.Texture0));
+            }
+        }
 
         public void LoadBitmap(string FilePath)
         {
@@ -73,5 +82,9 @@ namespace SharpOpenGL.Texture
         protected int m_Height = 0;
 
         int m_TextureObject = -1;
+
+        Sampler m_Sampler = null;
+
+        TextureUnit m_TextureUnitBinded;
     }
 }
