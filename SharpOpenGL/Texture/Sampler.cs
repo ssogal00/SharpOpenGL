@@ -15,10 +15,18 @@ namespace SharpOpenGL.Texture
         {
             m_SamplerObject = GL.GenSampler();
         }
+        
+        public bool IsValid
+        {
+            get
+            {
+                return m_SamplerObject != -1;
+            }
+        }
 
         public void Dispose()
         {
-            if(m_SamplerObject != -1)
+            if(IsValid)
             {
                 GL.DeleteSampler(m_SamplerObject);
                 m_SamplerObject = -1;
@@ -27,7 +35,7 @@ namespace SharpOpenGL.Texture
         
         public void SetMagFilter(TextureMagFilter Filter)
         {
-            if(m_SamplerObject != -1)
+            if(IsValid)
             {
                 GL.SamplerParameter(m_SamplerObject, SamplerParameterName.TextureMagFilter, (int) Filter);
             }
@@ -35,7 +43,7 @@ namespace SharpOpenGL.Texture
 
         public void SetMinFilter(TextureMinFilter Filter)
         {
-            if(m_SamplerObject != -1)
+            if(IsValid)
             {
                 GL.SamplerParameter(m_SamplerObject, SamplerParameterName.TextureMinFilter, (int)Filter);
             }
@@ -43,7 +51,7 @@ namespace SharpOpenGL.Texture
 
         public void SetWrapS(TextureWrapMode WrapMode)
         {
-            if (m_SamplerObject != -1)
+            if (IsValid)
             {
                 GL.SamplerParameter(m_SamplerObject, SamplerParameterName.TextureWrapS, (int)WrapMode);
             }
@@ -51,7 +59,7 @@ namespace SharpOpenGL.Texture
 
         public void SetWrapT(TextureWrapMode WrapMode)
         {
-            if(m_SamplerObject != -1)
+            if(IsValid)
             {
                 GL.SamplerParameter(m_SamplerObject, SamplerParameterName.TextureWrapT, (int)WrapMode);
             }
@@ -59,7 +67,7 @@ namespace SharpOpenGL.Texture
 
         public void BindSampler(TextureUnit UnitToBind)
         {
-            if(m_SamplerObject != -1)
+            if(IsValid)
             {
                 GL.BindSampler(((int)UnitToBind - (int)TextureUnit.Texture0) , m_SamplerObject);
             }

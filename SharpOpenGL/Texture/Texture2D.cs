@@ -26,10 +26,17 @@ namespace SharpOpenGL.Texture
             m_Sampler.SetMinFilter(TextureMinFilter.Linear);
         }
 
+        public bool IsValid
+        {
+            get
+            {
+                return m_TextureObject != -1;
+            }
+        }
 
         public void Dispose()
         {
-            if(m_TextureObject != -1)
+            if(IsValid)
             {
                 GL.DeleteTexture(m_TextureObject);
                 m_TextureObject = -1;                
@@ -38,7 +45,7 @@ namespace SharpOpenGL.Texture
 
         public void Bind()
         {
-            if(m_TextureObject != -1)
+            if(IsValid)
             {
                 GL.BindTexture(TextureTarget.Texture2D, m_TextureObject);
             }
@@ -46,7 +53,7 @@ namespace SharpOpenGL.Texture
 
         public void BindAtUnit(TextureUnit Unit)
         {
-            if(m_TextureObject != -1)
+            if(IsValid)
             {
                 GL.ActiveTexture(Unit);
                 Bind();
@@ -56,7 +63,7 @@ namespace SharpOpenGL.Texture
 
         public void BindShader(TextureUnit Unit, int SamplerLoc)
         {
-            if(m_TextureObject != -1)
+            if(IsValid)
             {
                 m_Sampler.BindSampler(m_TextureUnitBinded);                
                 GL.Uniform1(SamplerLoc, (int)(m_TextureUnitBinded - TextureUnit.Texture0));

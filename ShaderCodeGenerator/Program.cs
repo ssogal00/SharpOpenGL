@@ -38,6 +38,9 @@ namespace ShaderCompiler
 
                     StringBuilder CompiledVertexAttributeBuilder = new StringBuilder("");
                     CompiledVertexAttributeBuilder.AppendLine("using System.Runtime.InteropServices;");
+                    CompiledVertexAttributeBuilder.AppendLine("using OpenTK;");
+                    CompiledVertexAttributeBuilder.AppendLine("using OpenTK.Graphics.OpenGL;");
+
                     CompiledVertexAttributeBuilder.AppendLine("namespace SharpOpenGL");
                     CompiledVertexAttributeBuilder.AppendLine("{");
 

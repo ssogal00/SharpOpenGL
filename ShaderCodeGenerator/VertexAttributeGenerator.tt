@@ -28,7 +28,7 @@ public struct <#= StructName #>
 		}
 	#>
 		
-	[FieldOffset(<#=nOffset#>), ComponentCount(<#=VertexAttributeList[i].ComponentCount#>)]	
+	[FieldOffset(<#=nOffset#>), ComponentCount(<#=VertexAttributeList[i].ComponentCount#>), ComponentType(VertexAttribPointerType.<#=VertexAttributeList[i].ComponentType.ToString()#>)]	
 	public <#=VertexAttributeList[i].AttributeTypeString#> <#=VertexAttributeList[i].Name#>;
 	<#
 	}

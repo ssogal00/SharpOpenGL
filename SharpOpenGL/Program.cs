@@ -100,7 +100,7 @@ namespace SharpOpenGL
                 TransformBuffer = new DynamicUniformBuffer();
                 ColorBuffer = new DynamicUniformBuffer();
 
-                Mesh.Load("..\\..\\ObjMesh\\sherry3.obj");
+                Mesh.Load("..\\..\\ObjMesh\\pop.obj");
 
                 var Sampler = new TestShader_Sampler();
                                 
@@ -133,12 +133,12 @@ namespace SharpOpenGL
 
             Transform.View = Camera.View;
             Transform.Proj = Camera.Proj;
-            Transform.Model = Matrix4.Rotate(Vector3.UnitY, angle) * Matrix4.CreateScale(0.03f);
-            //angle += 0.001f;
+            Transform.Model = Matrix4.Rotate(Vector3.UnitX, 45) * Matrix4.CreateScale(0.03f);
+            angle += 0.001f;
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
             TransformBuffer.BindBufferBase(0);   
             
-            GL.DrawElements(PrimitiveType.Triangles, Mesh.GetIndicesCount(), DrawElementsType.UnsignedShort, IntPtr.Zero);            
+            GL.DrawElements(PrimitiveType.Triangles, Mesh.GetIndicesCount(), DrawElementsType.UnsignedShort, IntPtr.Zero);
 
             SwapBuffers();
         }

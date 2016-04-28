@@ -86,6 +86,13 @@ namespace ShaderCompiler
             
             #line default
             #line hidden
+            this.Write("), ComponentType(VertexAttribPointerType.");
+            
+            #line 31 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].ComponentType.ToString()));
+            
+            #line default
+            #line hidden
             this.Write(")]\t\r\n\tpublic ");
             
             #line 32 "D:\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
