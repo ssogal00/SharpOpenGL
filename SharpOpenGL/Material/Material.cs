@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace SharpOpenGL
 {
-    public class UniformBlock
+    public class Material
     {
-        public string   BlockName;
-        public int      BlockIndex;
-        public int      BlockSize;
+        
+
     }
 }

@@ -27,7 +27,7 @@ namespace SharpOpenGL.StaticMesh
         List<ushort> TextureIndices = new List<ushort>();
 
         public ObjMesh()
-        {            
+        {
         }
 
         public void PrepareToDraw()
@@ -126,10 +126,7 @@ namespace SharpOpenGL.StaticMesh
                             VertexIndices.Add((ushort)VertexIndices.Count);
                         }
                     }
-
                 }
-
-
 
                 PrepareToDraw();
             }

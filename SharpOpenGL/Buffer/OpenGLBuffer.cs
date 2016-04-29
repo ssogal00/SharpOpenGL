@@ -56,7 +56,7 @@ namespace SharpOpenGL.Buffer
             {
                 var Size = new IntPtr(Marshal.SizeOf(Data));
                 GL.BufferData<T>(m_BufferTarget, Size, ref Data, m_Hint);
-            }            
+            }
         }
 
         public void BufferData<T>(ref T[] Data) where T: struct
@@ -66,8 +66,7 @@ namespace SharpOpenGL.Buffer
                 var Size = new IntPtr(Marshal.SizeOf(Data[0]) * Data.Length);
                 GL.BufferData<T>(m_BufferTarget, Size, Data, m_Hint);
             }
-        }       
-        
+        }
 
         public void BindBufferBase(int BindingPoint)
         {
@@ -75,10 +74,7 @@ namespace SharpOpenGL.Buffer
             {                
                 GL.BindBufferBase(BufferRangeTarget.UniformBuffer, BindingPoint, m_BufferObject);
             }
-        }       
-
-        
-        
+        }
         
         public BufferUsageHint UsageHint
         {

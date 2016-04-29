@@ -28,10 +28,11 @@ namespace SharpOpenGL.Buffer
                 var CustomAttributeDic = fields[index].CustomAttributes.ToDictionary(x=>x.AttributeType.Name, x => x.ConstructorArguments[0]);
 
                 var nComponentCount = Convert.ToInt32(CustomAttributeDic["ComponentCount"].Value);
-                var nOffset = Convert.ToInt32(CustomAttributeDic["FieldOffsetAttribute"].Value);                
+                var nOffset         = Convert.ToInt32(CustomAttributeDic["FieldOffsetAttribute"].Value);                
+                var eType           = (VertexAttribPointerType) CustomAttributeDic["ComponentType"].Value;
 
                 GL.EnableVertexAttribArray(index);
-                GL.VertexAttribPointer(index, nComponentCount, VertexAttribPointerType.Float, false, VertexAttrType.StructLayoutAttribute.Size, new IntPtr(nOffset));
+                GL.VertexAttribPointer(index, nComponentCount, eType, false, VertexAttrType.StructLayoutAttribute.Size, new IntPtr(nOffset));
             }
         }
     }

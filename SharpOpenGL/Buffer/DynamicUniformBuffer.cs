@@ -13,8 +13,21 @@ namespace SharpOpenGL.Buffer
     {
         public DynamicUniformBuffer()            
         {
-            m_BufferTarget = BufferTarget.UniformBuffer;
-            m_Hint = BufferUsageHint.DynamicDraw;            
+            m_BufferTarget  = BufferTarget.UniformBuffer;
+            m_Hint          = BufferUsageHint.DynamicDraw;            
         }
+
+        public DynamicUniformBuffer(ShaderProgram ProgramObject, string UniformBlockName)
+        {
+            m_BufferTarget = BufferTarget.UniformBuffer;
+            m_Hint = BufferUsageHint.DynamicDraw;
+
+            if (ProgramObject.IsProgramLinked())
+            {
+                BindingPoint = ProgramObject.GetUniformBlockBindingPoint(UniformBlockName);
+            }
+        }
+
+        int BindingPoint = -1;
     }
 }

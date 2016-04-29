@@ -98,7 +98,7 @@ namespace SharpOpenGL
 
                 // init uniform buffer
                 TransformBuffer = new DynamicUniformBuffer();
-                ColorBuffer = new DynamicUniformBuffer();
+                ColorBuffer     = new DynamicUniformBuffer();
 
                 Mesh.Load("..\\..\\ObjMesh\\pop.obj");
 
@@ -133,10 +133,10 @@ namespace SharpOpenGL
 
             Transform.View = Camera.View;
             Transform.Proj = Camera.Proj;
-            Transform.Model = Matrix4.Rotate(Vector3.UnitX, 45) * Matrix4.CreateScale(0.03f);
+            Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitX, angle) * Matrix4.CreateScale(0.03f);
             angle += 0.001f;
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
-            TransformBuffer.BindBufferBase(0);   
+            TransformBuffer.BindBufferBase(0);
             
             GL.DrawElements(PrimitiveType.Triangles, Mesh.GetIndicesCount(), DrawElementsType.UnsignedShort, IntPtr.Zero);
 
@@ -178,24 +178,14 @@ namespace SharpOpenGL
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, fAspectRatio, 1, 100000);
             Transform.Model = Matrix4.CreateScale(0.03f);
             Transform.View = Matrix4.LookAt(new Vector3(100, 100, 100), new Vector3(0, 0, 0), Vector3.UnitY);
-            
-            ProgramObject.BindUniformBlock("Transform");
-            ProgramObject.BindUniformBlock("ColorBlock");
 
-            var Index = ProgramObject.GetUniformBlockBindingPoint("Transform");            
-
-            TransformBuffer.Bind();
-            
+            TransformBuffer.Bind();            
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
-
-            TransformBuffer.BindBufferBase(Index);            
-
-            Index = ProgramObject.GetUniformBlockBindingPoint("ColorBlock");
+            
 
             ColorBuffer.Bind();
             var greenColor = new Vector3(0,1,0);
-            ColorBuffer.BufferData<Vector3>(ref greenColor);
-            ColorBuffer.BindBufferBase(Index);            
+            ColorBuffer.BufferData<Vector3>(ref greenColor);            
         }
     }
 
