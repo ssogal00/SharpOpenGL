@@ -129,6 +129,7 @@ namespace SharpOpenGL
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.UniformMatrix3x2(Loc, false, ref Data);
         }
+        
 
 
         public int GetActiveUniformCount()
@@ -404,8 +405,7 @@ namespace SharpOpenGL
             }
 
             return null;
-        }       
-
+        }      
 
         public List<string> GetUniformVariableTypeStringsInBlock(int nBlockIndex)
         {
