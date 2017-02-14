@@ -17,7 +17,7 @@ public struct TestShaderVertexAttributes
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Vector2 TexCoord;
 	
-	public void VertexAttributeBinding()
+	public static void VertexAttributeBinding()
 	{
 		GL.EnableVertexAttribArray(0);
 		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 20, new IntPtr(0));

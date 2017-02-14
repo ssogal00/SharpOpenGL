@@ -68,7 +68,8 @@ namespace SharpOpenGL
             VSync = VSyncMode.Off;
 
             GL.CullFace(CullFaceMode.Back);
-            GL.FrontFace(FrontFaceDirection.Ccw);
+            GL.FrontFace(FrontFaceDirection.Cw);
+            GL.Enable(EnableCap.DepthTest);
 
             GL.ClearColor(System.Drawing.Color.White);            
 
@@ -112,7 +113,7 @@ namespace SharpOpenGL
 
                 TextureObj2 = new Texture2D();
                 TextureObj2.BindAtUnit(TextureUnit.Texture1);
-                TextureObj2.LoadBitmap("..\\..\\TextureResource\\rockNormal.bmp");
+                TextureObj2.LoadBitmap("..\\..\\TextureResource\\bumpy3.bmp");
                 var samplerLoc2 = ProgramObject.GetSampler2DUniformLocation(Sampler.TestTexture2);
                 TextureObj2.BindShader(TextureUnit.Texture1, samplerLoc2); 
             }
@@ -127,14 +128,20 @@ namespace SharpOpenGL
         {
             base.OnUpdateFrame(e);
 
+
+            GL.CullFace(CullFaceMode.Back);
+            GL.FrontFace(FrontFaceDirection.Cw);
+            GL.Enable(EnableCap.DepthTest);
+
             TickableObjectManager.Tick(e.Time);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             Transform.View = Camera.View;
             Transform.Proj = Camera.Proj;
-            Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitX, angle) * Matrix4.CreateScale(0.03f);
-            angle += 0.001f;
+            //Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitX, angle) * Matrix4.CreateScale(0.03f);
+            Transform.Model = Matrix4.Identity * Matrix4.CreateScale(0.3f);
+            
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
             TransformBuffer.BindBufferBase(0);
             
@@ -168,16 +175,16 @@ namespace SharpOpenGL
             float fAspectRatio = Width / (float)Height;
 
             Camera.AspectRatio = fAspectRatio;
-            Camera.FOV = MathHelper.PiOver2;
+            Camera.FOV = MathHelper.PiOver6 ;
             Camera.Near = 1;
-            Camera.Far = 100000;
+            Camera.Far = 10000;
             Camera.EyeLocation = new Vector3(5, 5, 5);
             Camera.DestLocation = new Vector3(5, 5, 5);
             Camera.LookAtLocation = new Vector3(0, 0, 0);                        
 
-            Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, fAspectRatio, 1, 100000);
+            Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
             Transform.Model = Matrix4.CreateScale(0.03f);
-            Transform.View = Matrix4.LookAt(new Vector3(100, 100, 100), new Vector3(0, 0, 0), Vector3.UnitY);
+            Transform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);
 
             TransformBuffer.Bind();            
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
