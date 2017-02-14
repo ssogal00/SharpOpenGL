@@ -58,6 +58,79 @@ namespace SharpOpenGL
             return false;
         }
 
+        public void SetUniformVarData(string VarName, float fValue)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform1(Loc, fValue);
+        }
+
+        public void SetUniformVarData(string VarName, OpenTK.Vector2 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform2(Loc, Data);
+        }
+
+        public void SetUniformVarData(string VarName, ref OpenTK.Vector2 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform2(Loc, ref Data);
+        }
+
+        public void SetUniformVarData(string VarName, OpenTK.Vector3 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform3(Loc, Data);
+        }
+
+        public void SetUniformVarData(string VarName, ref OpenTK.Vector3 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform3(Loc, ref Data);
+        }
+        
+        public void SetUniformVarData(string VarName, OpenTK.Vector4 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform4(Loc, Data);
+        }
+
+        public void SetUniformVarData(string VarName, ref OpenTK.Matrix2 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.UniformMatrix2(Loc, false, ref Data);
+        }
+
+        public void SetUniformVarData(string VarName, ref OpenTK.Matrix3 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.UniformMatrix3(Loc, false, ref Data);
+        }
+
+        public void SetUniformVarData(string VarName, OpenTK.Matrix4 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.UniformMatrix4(Loc, false, ref Data);
+        }
+
+        public void SetUniformVarData(string VarName, OpenTK.Matrix2x3 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.UniformMatrix2x3(Loc, false, ref Data);
+        }
+
+        public void SetUniformVarData(string VarName, OpenTK.Matrix2x4 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.UniformMatrix2x4(Loc, false, ref Data);
+        }
+
+        public void SetUniformVarData(string VarName, OpenTK.Matrix3x2 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.UniformMatrix3x2(Loc, false, ref Data);
+        }
+
+
         public int GetActiveUniformCount()
         {
             if(IsProgramLinked())

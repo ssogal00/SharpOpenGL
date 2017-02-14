@@ -20,9 +20,9 @@ namespace ShaderCompiler
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
+    #line 1 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderBase.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public partial class VertexAttributeGenerator : VertexAttributeGeneratorBase
+    public partial class VertexShaderBase : VertexShaderBaseBase
     {
 #line hidden
         /// <summary>
@@ -30,159 +30,7 @@ namespace ShaderCompiler
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\n");
-            
-            #line 9 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-
-	int nTotalSize = 0;
-	for(int i =0; i < VertexAttributeList.Count; ++i)
-	{
-		nTotalSize += VertexAttributeList[i].Size;
-	}
-
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\r\n[StructLayout(LayoutKind.Explicit,Size=");
-            
-            #line 18 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(nTotalSize));
-            
-            #line default
-            #line hidden
-            this.Write(")]\r\npublic struct ");
-            
-            #line 19 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(StructName));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n{\r\n");
-            
-            #line 21 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
- 
-for(int i = 0; i < VertexAttributeList.Count; ++i)
-{
-	int nOffset = 0;
-	for(int j = 0; j < i; ++j)
-	{
-		nOffset += VertexAttributeList[j].Size;
-	}
-
-            
-            #line default
-            #line hidden
-            this.Write("\t\r\n\t[FieldOffset(");
-            
-            #line 30 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(nOffset));
-            
-            #line default
-            #line hidden
-            this.Write("), ComponentCount(");
-            
-            #line 30 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].ComponentCount));
-            
-            #line default
-            #line hidden
-            this.Write("), ComponentType(VertexAttribPointerType.");
-            
-            #line 30 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].ComponentType.ToString()));
-            
-            #line default
-            #line hidden
-            this.Write(")]\r\n\tpublic ");
-            
-            #line 31 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].AttributeTypeString));
-            
-            #line default
-            #line hidden
-            this.Write(" ");
-            
-            #line 31 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].Name));
-            
-            #line default
-            #line hidden
-            this.Write(";\r\n\t");
-            
-            #line 32 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-
-	}
-	
-            
-            #line default
-            #line hidden
-            this.Write("\r\n\tpublic static void VertexAttributeBinding()\r\n\t{\r\n");
-            
-            #line 38 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-
-for(int index = 0; index < VertexAttributeList.Count; ++index)    
-{
-	int nOffset = 0;
-	for(int j = 0; j < index; ++j)
-	{
-		nOffset += VertexAttributeList[j].Size;
-	}
-
-            
-            #line default
-            #line hidden
-            this.Write("\t\tGL.EnableVertexAttribArray(");
-            
-            #line 47 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(index));
-            
-            #line default
-            #line hidden
-            this.Write(");\r\n\t\tGL.VertexAttribPointer(");
-            
-            #line 48 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(index));
-            
-            #line default
-            #line hidden
-            this.Write(", ");
-            
-            #line 48 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[index].ComponentCount));
-            
-            #line default
-            #line hidden
-            this.Write(", VertexAttribPointerType.");
-            
-            #line 48 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[index].ComponentType.ToString()));
-            
-            #line default
-            #line hidden
-            this.Write(", false, ");
-            
-            #line 48 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(nTotalSize));
-            
-            #line default
-            #line hidden
-            this.Write(", new IntPtr(");
-            
-            #line 48 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(nOffset));
-            
-            #line default
-            #line hidden
-            this.Write("));\r\n");
-            
-            #line 49 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeGenerator.tt"
-
-}
-
-            
-            #line default
-            #line hidden
-            this.Write("\t}\r\n}\r\n");
+            this.Write("\r\nnamespace SharpOpenGL\r\n{\r\n\tpublic class VertexShaderBase\r\n\t{\r\n\t\r\n\r\n\t}\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -194,7 +42,7 @@ for(int index = 0; index < VertexAttributeList.Count; ++index)
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public class VertexAttributeGeneratorBase
+    public class VertexShaderBaseBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

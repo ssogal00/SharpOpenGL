@@ -37,6 +37,7 @@ namespace ShaderCompiler
                     CompiledShaderVariableBuilder.AppendLine("{");
 
                     StringBuilder CompiledVertexAttributeBuilder = new StringBuilder("");
+                    CompiledVertexAttributeBuilder.AppendLine("using System;");
                     CompiledVertexAttributeBuilder.AppendLine("using System.Runtime.InteropServices;");
                     CompiledVertexAttributeBuilder.AppendLine("using OpenTK;");
                     CompiledVertexAttributeBuilder.AppendLine("using OpenTK.Graphics.OpenGL;");

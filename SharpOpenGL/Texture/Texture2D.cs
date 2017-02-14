@@ -17,21 +17,6 @@ using FreeImageAPI;
 
 namespace SharpOpenGL.Texture
 {
-//     public class FreeImage
-//     {
-//         [DllImport("FreeImageNET.dll")]
-//         public static extern int FreeImage_Load(FREE_IMAGE_FORMAT format, string filename, int flags);
-// 
-//         [DllImport("FreeImageNET.dll")]
-//         public static extern FREE_IMAGE_FORMAT GetFIFFromFilename(string filename);
-// 
-//         [DllImport("FreeImageNET.dll")]
-//         public static extern void FreeImage_Unload(int handle);
-// 
-//         [DllImport("FreeImageNET.dll")]
-//         public extern static FREE_IMAGE_FORMAT GetFileType(string filename, int size);
-//     }
-
     public class Texture2D : IDisposable
     {
         FIBITMAP DIB;
@@ -132,6 +117,8 @@ namespace SharpOpenGL.Texture
             var nHeight = (int) FreeImage.GetHeight(DIB);
 
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, nWidth, nHeight, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, Bytes);
+
+            FreeImage.Unload(DIB);
         }
         
         public int Width { get { return m_Width; } }

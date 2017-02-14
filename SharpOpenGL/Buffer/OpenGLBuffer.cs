@@ -58,8 +58,14 @@ namespace SharpOpenGL.Buffer
                 GL.BufferData<T>(m_BufferTarget, Size, ref Data, m_Hint);
             }
         }
+     
+        public void BufferWholeData<T>(ref T Data) where T: struct
+        { 
+            Bind();
+            GL.BufferSubData<T>(m_BufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
+	    }
 
-        public void BufferData<T>(ref T[] Data) where T: struct
+    public void BufferData<T>(ref T[] Data) where T: struct
         {
             if(IsBind && Data != null)
             {

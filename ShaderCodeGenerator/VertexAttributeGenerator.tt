@@ -18,19 +18,36 @@
 [StructLayout(LayoutKind.Explicit,Size=<#= nTotalSize #>)]
 public struct <#= StructName #>
 {
-	<# 
-	for(int i = 0; i < VertexAttributeList.Count; ++i)
+<# 
+for(int i = 0; i < VertexAttributeList.Count; ++i)
+{
+	int nOffset = 0;
+	for(int j = 0; j < i; ++j)
 	{
-		int nOffset = 0;
-		for(int j = 0; j < i; ++j)
-		{
-			nOffset += VertexAttributeList[j].Size;
-		}
-	#>
-		
-	[FieldOffset(<#=nOffset#>), ComponentCount(<#=VertexAttributeList[i].ComponentCount#>), ComponentType(VertexAttribPointerType.<#=VertexAttributeList[i].ComponentType.ToString()#>)]	
+		nOffset += VertexAttributeList[j].Size;
+	}
+#>	
+	[FieldOffset(<#=nOffset#>), ComponentCount(<#=VertexAttributeList[i].ComponentCount#>), ComponentType(VertexAttribPointerType.<#=VertexAttributeList[i].ComponentType.ToString()#>)]
 	public <#=VertexAttributeList[i].AttributeTypeString#> <#=VertexAttributeList[i].Name#>;
 	<#
 	}
 	#>
+
+	public static void VertexAttributeBinding()
+	{
+<#
+for(int index = 0; index < VertexAttributeList.Count; ++index)    
+{
+	int nOffset = 0;
+	for(int j = 0; j < index; ++j)
+	{
+		nOffset += VertexAttributeList[j].Size;
+	}
+#>
+		GL.EnableVertexAttribArray(<#=index#>);
+		GL.VertexAttribPointer(<#=index#>, <#=VertexAttributeList[index].ComponentCount#>, VertexAttribPointerType.<#=VertexAttributeList[index].ComponentType.ToString()#>, false, <#=nTotalSize#>, new IntPtr(<#=nOffset#>));
+<#
+}
+#>
+	}
 }
