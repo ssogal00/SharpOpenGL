@@ -13,10 +13,29 @@ using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using System.Drawing.Imaging;
 
+using FreeImageAPI;
+
 namespace SharpOpenGL.Texture
 {
+//     public class FreeImage
+//     {
+//         [DllImport("FreeImageNET.dll")]
+//         public static extern int FreeImage_Load(FREE_IMAGE_FORMAT format, string filename, int flags);
+// 
+//         [DllImport("FreeImageNET.dll")]
+//         public static extern FREE_IMAGE_FORMAT GetFIFFromFilename(string filename);
+// 
+//         [DllImport("FreeImageNET.dll")]
+//         public static extern void FreeImage_Unload(int handle);
+// 
+//         [DllImport("FreeImageNET.dll")]
+//         public extern static FREE_IMAGE_FORMAT GetFileType(string filename, int size);
+//     }
+
     public class Texture2D : IDisposable
     {
+        FIBITMAP DIB;
+
         public Texture2D()
         {
             m_TextureObject = GL.GenTexture();
@@ -80,6 +99,39 @@ namespace SharpOpenGL.Texture
 
                 bitmap.UnlockBits(bmpData);
             }            
+        }
+
+        public void Load(string FilePath)
+        {
+            FREE_IMAGE_FORMAT FileType = FreeImageAPI.FreeImage.GetFileType(FilePath, 0);
+
+            if(FileType == FREE_IMAGE_FORMAT.FIF_UNKNOWN)
+            {
+                FileType = FreeImage.GetFIFFromFilename(FilePath);
+            }
+
+            if(FileType == FREE_IMAGE_FORMAT.FIF_UNKNOWN)
+            {
+                return;
+            }
+
+            if(FreeImage.FIFSupportsReading(FileType))
+            {
+                DIB = FreeImage.Load(FileType, FilePath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
+            }
+
+            if(DIB == null)
+            {
+                return;
+            }
+
+            DIB = FreeImage.ConvertTo32Bits(DIB);
+            IntPtr Bytes = FreeImage.GetBits(DIB);
+
+            var nWidth = (int) FreeImage.GetWidth(DIB);
+            var nHeight = (int) FreeImage.GetHeight(DIB);
+
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, nWidth, nHeight, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, Bytes);
         }
         
         public int Width { get { return m_Width; } }
