@@ -12,7 +12,7 @@ newmtl TX_CH_Main_Juliet_Hair_D
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Kd ./texture/TX_CH_Main_Juliet_Hair_D.png
+	map_Kd ./Textures/TX_CH_Main_Juliet_Hair_D.png
 
 newmtl TX_CH_Main_Juliet_Skin_D_Cos21
 	Ns 10.0000
@@ -25,7 +25,7 @@ newmtl TX_CH_Main_Juliet_Skin_D_Cos21
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Kd ./texture/TX_CH_Main_Juliet_Skin_D_Cos21.png
+	map_Kd ./Textures/TX_CH_Main_Juliet_Skin_D_Cos21.png
 
 newmtl eyeball_l
 	Ns 10.0000
@@ -38,7 +38,7 @@ newmtl eyeball_l
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Kd ./texture/eye.png
+	map_Kd ./Textures/eye.png
 
 newmtl eyeball_r
 	Ns 10.0000
@@ -51,7 +51,7 @@ newmtl eyeball_r
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Kd ./texture/eye.png
+	map_Kd ./Textures/eye.png
 
 newmtl TX_CH_Main_Juliet_Cloth_D_Cos21
 	Ns 10.0000
@@ -64,4 +64,4 @@ newmtl TX_CH_Main_Juliet_Cloth_D_Cos21
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Kd ./texture/TX_CH_Main_Juliet_Cloth_D_Cos21.png
+	map_Kd ./Textures/TX_CH_Main_Juliet_Cloth_D_Cos21.png
