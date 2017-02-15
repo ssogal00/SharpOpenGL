@@ -10,6 +10,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL;
 using SharpOpenGL.Buffer;
+using SharpOpenGL.Texture;
 
 namespace SharpOpenGL.StaticMesh
 {
@@ -27,25 +28,30 @@ namespace SharpOpenGL.StaticMesh
         List<uint> TextureIndices = new List<uint>();
 
         List<ObjMeshSection> MeshSectionList = new List<ObjMeshSection>();
-
+        
         Dictionary<string, ObjMeshMaterial> MaterialMap = new Dictionary<string, ObjMeshMaterial>();
+
+        Dictionary<string, Texture2D> TextureMap = new Dictionary<string, Texture2D>();
 
         public ObjMesh()
         {
         }
 
-        public void Draw()
+        public void Draw(ShaderProgram Program)
         {
             VB.Bind();
             IB.Bind();
 
             TestShaderVertexAttributes.VertexAttributeBinding();
 
-            foreach(var Section in MeshSectionList)
+            foreach(var Section in MeshSectionList)            
             {
                 if(MaterialMap.ContainsKey(Section.SectionName) )
                 {
-                    MaterialMap[Section.SectionName].DiffuseMap;
+                    GL.ActiveTexture(TextureUnit.Texture0);
+                    TextureMap[MaterialMap[Section.SectionName].DiffuseMap].Bind();
+                    var Loc = Program.GetSampler2DUniformLocation("TestTexture");
+                    TextureMap[MaterialMap[Section.SectionName].DiffuseMap].BindShader(TextureUnit.Texture0, Loc);
                 }
 
                 var ByteOffset = new IntPtr(Section.StartIndex * sizeof(uint) );
@@ -225,6 +231,19 @@ namespace SharpOpenGL.StaticMesh
                 }
 
                 PrepareToDraw();
+                //
+                foreach(var Mtl in MaterialMap)
+                {
+                    if(Mtl.Value.DiffuseMap.Length > 0)
+                    {
+                        if(!TextureMap.ContainsKey(Mtl.Value.DiffuseMap))
+                        {
+                            var TextureObj = new Texture2D();
+                            TextureObj.Load(Mtl.Value.DiffuseMap);
+                            TextureMap.Add(Mtl.Value.DiffuseMap, TextureObj);
+                        }                        
+                    }
+                }
             }
         }        
     }
