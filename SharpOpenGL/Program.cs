@@ -138,14 +138,13 @@ namespace SharpOpenGL
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             Transform.View = Camera.View;
-            Transform.Proj = Camera.Proj;
-            //Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitX, angle) * Matrix4.CreateScale(0.03f);
+            Transform.Proj = Camera.Proj;            
             Transform.Model = Matrix4.Identity * Matrix4.CreateScale(0.3f);
             
             TransformBuffer.BufferData<VS_Transform>(ref Transform);
             TransformBuffer.BindBufferBase(0);
             
-            GL.DrawElements(PrimitiveType.Triangles, Mesh.GetIndicesCount(), DrawElementsType.UnsignedShort, IntPtr.Zero);
+            Mesh.Draw();
 
             SwapBuffers();
         }

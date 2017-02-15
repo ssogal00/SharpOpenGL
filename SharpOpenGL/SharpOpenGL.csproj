@@ -67,6 +67,8 @@
     <Compile Include="CompiledSamplerVariables.cs" />
     <Compile Include="Material\Material.cs" />
     <Compile Include="StaticMesh\ObjMesh.cs" />
+    <Compile Include="StaticMesh\ObjMeshMaterial.cs" />
+    <Compile Include="StaticMesh\ObjMeshSection.cs" />
     <Compile Include="StaticMesh\ObjMeshVertexAttribute.cs" />
     <Compile Include="Texture\Sampler.cs" />
     <Compile Include="Texture\Texture2D.cs" />
