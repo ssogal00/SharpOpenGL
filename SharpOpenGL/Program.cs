@@ -101,7 +101,7 @@ namespace SharpOpenGL
                 TransformBuffer = new DynamicUniformBuffer();
                 ColorBuffer     = new DynamicUniformBuffer();
 
-                Mesh.Load("..\\..\\ObjMesh\\pop.obj");
+                Mesh.Load("..\\..\\ObjMesh\\pop.obj", "..\\..\\ObjMesh\\pop.mtl");
 
                 var Sampler = new TestShader_Sampler();
                                 

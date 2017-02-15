@@ -28,6 +28,8 @@ namespace SharpOpenGL.StaticMesh
 
         List<ObjMeshSection> MeshSectionList = new List<ObjMeshSection>();
 
+        Dictionary<string, ObjMeshMaterial> MaterialMap = new Dictionary<string, ObjMeshMaterial>();
+
         public ObjMesh()
         {
         }
@@ -41,6 +43,11 @@ namespace SharpOpenGL.StaticMesh
 
             foreach(var Section in MeshSectionList)
             {
+                if(MaterialMap.ContainsKey(Section.SectionName) )
+                {
+                    MaterialMap[Section.SectionName].DiffuseMap;
+                }
+
                 var ByteOffset = new IntPtr(Section.StartIndex * sizeof(uint) );
                 GL.DrawElements(PrimitiveType.Triangles, (int)(Section.EndIndex - Section.StartIndex), DrawElementsType.UnsignedInt, ByteOffset);
             }
@@ -65,9 +72,51 @@ namespace SharpOpenGL.StaticMesh
         {
             return VertexIndices.Count();
         }
-                
-        public void Load(string FilePath)
+
+        public void ParseMtlFile(string MtlPath)
         {
+            if(File.Exists(MtlPath))
+            {
+                var Lines = File.ReadAllLines(MtlPath);
+                ObjMeshMaterial NewMaterial = null;
+                foreach (var line in Lines)
+                {
+                    var TrimmedLine = line.TrimStart(new char[] { ' ', '\t' });
+
+                    if (TrimmedLine.StartsWith("newmtl"))
+                    {
+                        var Tokens = TrimmedLine.Split(new char[]{ ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+                        if(Tokens.Count() == 2)
+                        {
+                            NewMaterial = new ObjMeshMaterial();                            
+                            NewMaterial.MaterialName = Tokens[1];
+                        }
+                    }
+                    else if(TrimmedLine.StartsWith("map_Kd"))
+                    {
+                        var Tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries); 
+                        if(Tokens.Count() == 2)
+                        {
+                            if(NewMaterial != null)
+                            {
+                                NewMaterial.DiffuseMap = Tokens[1];
+                            }
+                        }
+                    }
+                    else if(TrimmedLine.Length == 0 && NewMaterial != null)
+                    {
+                        MaterialMap.Add(NewMaterial.MaterialName, NewMaterial);
+                        NewMaterial = null;
+                    }
+                }
+            }
+        }
+                
+        public void Load(string FilePath, string MtlPath)
+        {
+            ParseMtlFile(MtlPath);
+
             if(File.Exists(FilePath))
             {
                 var Lines = File.ReadAllLines(FilePath);
