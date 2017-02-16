@@ -8,12 +8,12 @@ namespace ShaderCompiler
 {
     public class CodeGenerator
     {
-        public void AddDependency(string DependencyName)
+        protected List<string> DependencyList = new List<string>
         {
-            DependencyList.Add(DependencyName);
-        }
-                
-        protected List<string> DependencyList = new List<string>();
+            "System.Runtime.InteropServices",
+            "OpenTK",
+            "OpenTK.Graphics.OpenGL",
+        };
 
         public string NameSpace = "";
 
@@ -25,7 +25,8 @@ namespace ShaderCompiler
             {
                 Builder.AppendLine(string.Format("using {0};", Dependency));
             }
-            Builder.AppendLine(NameSpace);
+            
+            Builder.AppendLine("namespace " + NameSpace);
             Builder.AppendLine("{");
             Builder.AppendLine(GetCodeContents());
             Builder.AppendLine("}");

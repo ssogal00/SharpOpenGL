@@ -12,12 +12,13 @@ namespace ShaderCompiler
     {
         VertexAttributeTemplate m_Template;
 
-        VertexAttributeCodeGenerator(ShaderProgram ProgramObject, string Name)
+        public VertexAttributeCodeGenerator(ShaderProgram ProgramObject, string Name)
         {
             m_Template = new VertexAttributeTemplate(ProgramObject, Name + "VertexAttributes");
+            NameSpace = string.Format("SharpOpenGL.{0}", Name + "VertexAttribute");
         }
 
-        protected virtual string GetCodeContents()
+        protected override string GetCodeContents()
         {
             return m_Template.TransformText();
         }

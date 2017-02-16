@@ -34,16 +34,7 @@ namespace ShaderCompiler
                     StringBuilder CompiledShaderVariableBuilder = new StringBuilder("");
                     CompiledShaderVariableBuilder.AppendLine("using System.Runtime.InteropServices;");
                     CompiledShaderVariableBuilder.AppendLine("namespace SharpOpenGL");
-                    CompiledShaderVariableBuilder.AppendLine("{");
-
-                    StringBuilder CompiledVertexAttributeBuilder = new StringBuilder("");
-                    CompiledVertexAttributeBuilder.AppendLine("using System;");
-                    CompiledVertexAttributeBuilder.AppendLine("using System.Runtime.InteropServices;");
-                    CompiledVertexAttributeBuilder.AppendLine("using OpenTK;");
-                    CompiledVertexAttributeBuilder.AppendLine("using OpenTK.Graphics.OpenGL;");
-
-                    CompiledVertexAttributeBuilder.AppendLine("namespace SharpOpenGL");
-                    CompiledVertexAttributeBuilder.AppendLine("{");
+                    CompiledShaderVariableBuilder.AppendLine("{");                    
 
                     StringBuilder CompiledSamplerVariableBuilder = new StringBuilder("");
                     CompiledSamplerVariableBuilder.AppendLine("using System.Runtime.InteropServices;");
@@ -67,29 +58,12 @@ namespace ShaderCompiler
                             {
                                 var filename = Path.GetFileNameWithoutExtension(vsFile);
 
-                                var Names = program.ActiveUniformBlockNames;
+                                var gen = new VertexAttributeCodeGenerator(program, filename);
 
-                                for (int i = 0; i < Names.Count(); ++i)
-                                {
-                                    ShaderBindings sb = new ShaderBindings(program, i, "VS");
+                                var test = gen.GetCode();
 
-                                    var Contents = sb.TransformText();
-
-                                    CompiledShaderVariableBuilder.Append(Contents);
-                                }
-
-                                VertexAttributeTemplate vag = new VertexAttributeTemplate(program, filename + "VertexAttributes");
-                                
-                                var Contents2 = vag.TransformText();
-
-                                CompiledVertexAttributeBuilder.Append(Contents2);
-
-                                VertexShaderTemplate VSBase = new VertexShaderTemplate(program, filename);
-
-                                var VSBaseContent = VSBase.TransformText();
-
-                                Console.Write(VSBaseContent);
-                            } 
+                                File.WriteAllText(Path.Combine(args[1], "CompiledVertexAttributes.cs"), gen.GetCode());
+                            }
                         }
 
                         // generate code for fragment shader files
@@ -121,9 +95,7 @@ namespace ShaderCompiler
                         }
                     }
 
-                    CompiledShaderVariableBuilder.AppendLine("}");
-
-                    CompiledVertexAttributeBuilder.AppendLine("}");
+                    CompiledShaderVariableBuilder.AppendLine("}");                    
 
                     CompiledSamplerVariableBuilder.AppendLine("}");
 
@@ -135,9 +107,7 @@ namespace ShaderCompiler
                         {
                             File.WriteAllText(Path.Combine(args[1], "CompiledShaderVariables.cs"), CompiledShaderVariableBuilder.ToString());       
                         }
-                    }                    
-
-                    File.WriteAllText(Path.Combine(args[1], "CompiledVertexAttributes.cs"), CompiledVertexAttributeBuilder.ToString());
+                    }                                        
 
                     File.WriteAllText(Path.Combine(args[1], "CompiledSamplerVariables.cs"), CompiledSamplerVariableBuilder.ToString());
                 }
