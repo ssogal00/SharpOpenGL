@@ -20,9 +20,9 @@ namespace ShaderCompiler
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+    #line 1 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderUniformTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public partial class ShaderBindings : ShaderBindingsBase
+    public partial class ShaderUniformTemplate : ShaderUniformTemplateBase
     {
 #line hidden
         /// <summary>
@@ -32,21 +32,21 @@ namespace ShaderCompiler
         {
             this.Write("\r\n\r\n[StructLayout(LayoutKind.Explicit,Size=");
             
-            #line 10 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            #line 10 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderUniformTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BlockDataSize));
             
             #line default
             #line hidden
             this.Write(")]\r\npublic struct ");
             
-            #line 11 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            #line 11 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderUniformTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(StructName));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n");
             
-            #line 13 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            #line 13 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderUniformTemplate.tt"
  
 for(int i = 0; i < MetaDataList.Count; ++i)
 {
@@ -56,28 +56,28 @@ for(int i = 0; i < MetaDataList.Count; ++i)
             #line hidden
             this.Write("\t[FieldOffset(");
             
-            #line 17 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            #line 17 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderUniformTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(MetaDataList[i].VariableOffset));
             
             #line default
             #line hidden
             this.Write(")]\r\n\tpublic ");
             
-            #line 18 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            #line 18 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderUniformTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(MetaDataList[i].VariableTypeString));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 18 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            #line 18 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderUniformTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(MetaDataList[i].VariableName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 19 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderBindings.tt"
+            #line 19 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\ShaderUniformTemplate.tt"
 
 }
 
@@ -96,7 +96,7 @@ for(int i = 0; i < MetaDataList.Count; ++i)
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public class ShaderBindingsBase
+    public class ShaderUniformTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

@@ -11,9 +11,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace ShaderCompiler   
 {
-    public partial class ShaderBindings
+    public partial class ShaderUniformTemplate
     {
-        public ShaderBindings(ShaderProgram program, int nBlockIndex)
+        public ShaderUniformTemplate(ShaderProgram program, int nBlockIndex)
         {
             MetaDataList = program.GetUniformVariableMetaDataList(nBlockIndex).OrderBy(x=>x.VariableOffset).ToList();
             BlockName = program.GetUniformBlockName(nBlockIndex);
@@ -21,7 +21,7 @@ namespace ShaderCompiler
             BlockDataSize = program.GetUniformBlockDataSize(nBlockIndex);
         }
 
-        public ShaderBindings(ShaderProgram program, int nBlockIndex, string StructNamePrefix)
+        public ShaderUniformTemplate(ShaderProgram program, int nBlockIndex, string StructNamePrefix)
         {
             MetaDataList = program.GetUniformVariableMetaDataList(nBlockIndex).OrderBy(x=>x.VariableOffset).ToList();
             BlockName = program.GetUniformBlockName(nBlockIndex);

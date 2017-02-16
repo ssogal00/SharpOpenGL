@@ -62,7 +62,15 @@ namespace ShaderCompiler
 
                                 var test = gen.GetCode();
 
-                                File.WriteAllText(Path.Combine(args[1], "CompiledVertexAttributes.cs"), gen.GetCode());
+                                //File.WriteAllText(Path.Combine(args[1], "CompiledVertexAttributes.cs"), gen.GetCode());
+
+                                Console.Write(test);
+
+                                var UniformCodeGen = new ShaderUniformCodeGenerator(program, filename);
+
+                                var test2 = UniformCodeGen.GetCode();
+
+                                Console.Write(test2);
                             }
                         }
 
@@ -80,17 +88,11 @@ namespace ShaderCompiler
                             {
                                 var filename = Path.GetFileNameWithoutExtension(fsFile);
 
-                                ShaderBindings sb = new ShaderBindings(program, 0, filename + "_FS");
+                                var gen = new ShaderUniformCodeGenerator(program, filename);
 
-                                var Contents = sb.TransformText();
+                                var test = gen.GetCode();
 
-                                CompiledShaderVariableBuilder.Append(Contents);
-
-                                SamplerGenerator sampler = new SamplerGenerator(program, filename + "_Sampler");
-
-                                var Contents2 = sampler.TransformText();
-
-                                CompiledSamplerVariableBuilder.Append(Contents2);
+                                Console.Write(test);
                             }
                         }
                     }

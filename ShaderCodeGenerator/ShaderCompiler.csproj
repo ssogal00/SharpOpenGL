@@ -65,12 +65,13 @@
       <DependentUpon>SamplerGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="SamplerGeneratorPartial.cs" />
-    <Compile Include="ShaderBindings.cs">
+    <Compile Include="ShaderUniformCodeGenerator.cs" />
+    <Compile Include="ShaderUniformTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ShaderBindings.tt</DependentUpon>
+      <DependentUpon>ShaderUniformTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="ShaderBindingsPartial.cs" />
+    <Compile Include="ShaderUniformTemplatePartial.cs" />
     <Compile Include="VertexAttributeCodeGenerator.cs" />
     <Compile Include="VertexAttributeTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -120,9 +121,9 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>SamplerGenerator.cs</LastGenOutput>
     </Content>
-    <Content Include="ShaderBindings.tt">
+    <Content Include="ShaderUniformTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>ShaderBindings.cs</LastGenOutput>
+      <LastGenOutput>ShaderUniformTemplate.cs</LastGenOutput>
     </Content>
     <Content Include="VertexShaderTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
