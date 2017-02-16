@@ -7,9 +7,9 @@ using SharpOpenGL;
 
 namespace ShaderCompiler
 {
-    public partial class VertexShaderBase
+    public partial class VertexShaderTemplate
     {
-        public VertexShaderBase(ShaderProgram Program, string ShaderName)
+        public VertexShaderTemplate(ShaderProgram Program, string ShaderName)
         {
             VSProgram = Program;
             VSShaderName = ShaderName;            

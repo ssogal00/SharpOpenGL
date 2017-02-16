@@ -50,13 +50,14 @@ namespace ShaderCompiler
                     CompiledSamplerVariableBuilder.AppendLine("namespace SharpOpenGL");
                     CompiledSamplerVariableBuilder.AppendLine("{");
 
+
                     if (Directory.Exists(args[0]))
                     {
                         // generate code for vertex shader files
                         foreach (var vsFile in Directory.EnumerateFiles(args[0], "*.vs"))
                         {
                             VertexShader vs = new VertexShader();
-                            ShaderProgram program = new ShaderProgram();
+                            ShaderProgram program = new ShaderProgram();                            
 
                             vs.CompileShader(File.ReadAllText(vsFile));
                             program.AttachShader(vs);
@@ -77,11 +78,17 @@ namespace ShaderCompiler
                                     CompiledShaderVariableBuilder.Append(Contents);
                                 }
 
-                                VertexAttributeGenerator vag = new VertexAttributeGenerator(program, filename + "VertexAttributes");
+                                VertexAttributeTemplate vag = new VertexAttributeTemplate(program, filename + "VertexAttributes");
                                 
                                 var Contents2 = vag.TransformText();
 
                                 CompiledVertexAttributeBuilder.Append(Contents2);
+
+                                VertexShaderTemplate VSBase = new VertexShaderTemplate(program, filename);
+
+                                var VSBaseContent = VSBase.TransformText();
+
+                                Console.Write(VSBaseContent);
                             } 
                         }
 

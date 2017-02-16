@@ -11,9 +11,9 @@ using SharpOpenGL;
 
 namespace ShaderCompiler
 {
-    public partial class VertexAttributeGenerator
+    public partial class VertexAttributeTemplate
     {
-        public VertexAttributeGenerator(ShaderProgram Program, string Name)
+        public VertexAttributeTemplate(ShaderProgram Program, string Name)
         {
             VertexAttributeList = Program.GetActiveVertexAttributeList();
             StructName = Name;

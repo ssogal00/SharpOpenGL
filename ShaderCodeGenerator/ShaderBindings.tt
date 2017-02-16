@@ -10,14 +10,13 @@
 [StructLayout(LayoutKind.Explicit,Size=<#= BlockDataSize #>)]
 public struct <#= StructName #>
 {
-	<# 
-	for(int i = 0; i < MetaDataList.Count; ++i)
-	{
-	#>
-		
+<# 
+for(int i = 0; i < MetaDataList.Count; ++i)
+{
+#>
 	[FieldOffset(<#=MetaDataList[i].VariableOffset#>)]
 	public <#=MetaDataList[i].VariableTypeString#> <#=MetaDataList[i].VariableName#>;
-	<#
-	}
-	#>
+<#
+}
+#>
 }

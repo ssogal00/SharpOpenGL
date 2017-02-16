@@ -20,9 +20,9 @@ namespace ShaderCompiler
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderBase.tt"
+    #line 1 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public partial class VertexShaderBase : VertexShaderBaseBase
+    public partial class VertexAttributeTemplate : VertexAttributeTemplateBase
     {
 #line hidden
         /// <summary>
@@ -30,7 +30,159 @@ namespace ShaderCompiler
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\nnamespace SharpOpenGL\r\n{\r\n\tpublic class VertexShaderBase\r\n\t{\r\n\t\r\n\r\n\t}\r\n}");
+            this.Write("\r\n");
+            
+            #line 9 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+
+	int nTotalSize = 0;
+	for(int i =0; i < VertexAttributeList.Count; ++i)
+	{
+		nTotalSize += VertexAttributeList[i].Size;
+	}
+
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\r\n[StructLayout(LayoutKind.Explicit,Size=");
+            
+            #line 18 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(nTotalSize));
+            
+            #line default
+            #line hidden
+            this.Write(")]\r\npublic struct ");
+            
+            #line 19 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(StructName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n{\r\n");
+            
+            #line 21 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+ 
+for(int i = 0; i < VertexAttributeList.Count; ++i)
+{
+	int nOffset = 0;
+	for(int j = 0; j < i; ++j)
+	{
+		nOffset += VertexAttributeList[j].Size;
+	}
+
+            
+            #line default
+            #line hidden
+            this.Write("\t\r\n\t[FieldOffset(");
+            
+            #line 30 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(nOffset));
+            
+            #line default
+            #line hidden
+            this.Write("), ComponentCount(");
+            
+            #line 30 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].ComponentCount));
+            
+            #line default
+            #line hidden
+            this.Write("), ComponentType(VertexAttribPointerType.");
+            
+            #line 30 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].ComponentType.ToString()));
+            
+            #line default
+            #line hidden
+            this.Write(")]\r\n\tpublic ");
+            
+            #line 31 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].AttributeTypeString));
+            
+            #line default
+            #line hidden
+            this.Write(" ");
+            
+            #line 31 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].Name));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n\t");
+            
+            #line 32 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+
+	}
+	
+            
+            #line default
+            #line hidden
+            this.Write("\r\n\tpublic static void VertexAttributeBinding()\r\n\t{\r\n");
+            
+            #line 38 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+
+for(int index = 0; index < VertexAttributeList.Count; ++index)    
+{
+	int nOffset = 0;
+	for(int j = 0; j < index; ++j)
+	{
+		nOffset += VertexAttributeList[j].Size;
+	}
+
+            
+            #line default
+            #line hidden
+            this.Write("\t\tGL.EnableVertexAttribArray(");
+            
+            #line 47 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(index));
+            
+            #line default
+            #line hidden
+            this.Write(");\r\n\t\tGL.VertexAttribPointer(");
+            
+            #line 48 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(index));
+            
+            #line default
+            #line hidden
+            this.Write(", ");
+            
+            #line 48 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[index].ComponentCount));
+            
+            #line default
+            #line hidden
+            this.Write(", VertexAttribPointerType.");
+            
+            #line 48 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[index].ComponentType.ToString()));
+            
+            #line default
+            #line hidden
+            this.Write(", false, ");
+            
+            #line 48 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(nTotalSize));
+            
+            #line default
+            #line hidden
+            this.Write(", new IntPtr(");
+            
+            #line 48 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(nOffset));
+            
+            #line default
+            #line hidden
+            this.Write("));\r\n");
+            
+            #line 49 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
+
+}
+
+            
+            #line default
+            #line hidden
+            this.Write("\t}\r\n}\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -42,7 +194,7 @@ namespace ShaderCompiler
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "14.0.0.0")]
-    public class VertexShaderBaseBase
+    public class VertexAttributeTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

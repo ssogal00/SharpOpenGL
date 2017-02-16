@@ -56,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SamplerGenerator.cs">
@@ -70,19 +71,20 @@
       <DependentUpon>ShaderBindings.tt</DependentUpon>
     </Compile>
     <Compile Include="ShaderBindingsPartial.cs" />
-    <Compile Include="VertexAttributeGenerator.cs">
+    <Compile Include="VertexAttributeCodeGenerator.cs" />
+    <Compile Include="VertexAttributeTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VertexAttributeGenerator.tt</DependentUpon>
+      <DependentUpon>VertexAttributeTemplate.tt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="VertexAttributeGeneratorPartial.cs" />
-    <Compile Include="VertexShaderBase.cs">
+    <Compile Include="VertexAttributeTemplatePartial.cs" />
+    <Compile Include="VertexShaderTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>VertexShaderBase.tt</DependentUpon>
+      <DependentUpon>VertexShaderTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="VertexShaderBasePartial.cs" />
+    <Compile Include="VertexShaderTemplatePartial.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -121,15 +123,15 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ShaderBindings.cs</LastGenOutput>
     </Content>
-    <Content Include="VertexShaderBase.tt">
+    <Content Include="VertexShaderTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>VertexShaderBase.cs</LastGenOutput>
+      <LastGenOutput>VertexShaderTemplate.cs</LastGenOutput>
     </Content>
-    <None Include="VertexAttributeGenerator.tt">
+    <Content Include="VertexAttributeTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>VertexAttributeGenerator.cs</LastGenOutput>
+      <LastGenOutput>VertexAttributeTemplate.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
