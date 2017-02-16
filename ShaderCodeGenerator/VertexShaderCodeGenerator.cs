@@ -12,7 +12,15 @@ namespace ShaderCompiler
     {
         public VertexShaderCodeGenerator(SharpOpenGL.ShaderProgram ProgramObject, string Name)
         {
-
+            Program = ProgramObject;
         }
+
+        protected override string GetCodeContents()
+        {
+            var template = new VertexShaderTemplate(Program, "");
+            return template.TransformText();
+        }
+
+        ShaderProgram Program;
     }
 }
