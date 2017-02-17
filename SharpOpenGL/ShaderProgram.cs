@@ -380,6 +380,30 @@ namespace SharpOpenGL
             return result;            
         }
 
+        public List<string> GetSampler2DNames()
+        {
+            var result = new List<string>();
+            if(ProgramLinked)
+            {
+                var Count = GetActiveUniformCount();
+
+                for (int i = 0; i < Count; ++i)
+                {
+                    int size;
+                    ActiveUniformType type;
+
+                    GL.GetActiveUniform(ProgramObject, i, out size, out type);
+
+                    if (type == ActiveUniformType.Sampler2D)
+                    {
+                        result.Add(GL.GetActiveUniformName(ProgramObject, i));
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public int GetSampler2DUniformLocation(string Name)
         {
             if (ProgramLinked)
