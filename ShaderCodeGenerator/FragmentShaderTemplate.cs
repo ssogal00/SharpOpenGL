@@ -28,6 +28,8 @@ namespace ShaderCompiler
         /// </summary>
         public virtual string TransformText()
         {
+            this.Write("\r\n\r\npublic class FragmentShaderBase\r\n{\r\n\tpublic FragmentShaderBase()\r\n\t{\r\n\t\t\r\n\t}\r" +
+                    "\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

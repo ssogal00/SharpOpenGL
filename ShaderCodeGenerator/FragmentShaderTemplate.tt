@@ -3,3 +3,12 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+
+
+public class FragmentShaderBase
+{
+	public FragmentShaderBase()
+	{
+		
+	}
+}
