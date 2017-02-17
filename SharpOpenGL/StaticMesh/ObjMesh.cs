@@ -12,14 +12,17 @@ using SharpOpenGL;
 using SharpOpenGL.Buffer;
 using SharpOpenGL.Texture;
 
+using SharpOpenGL.TestShader.VertexShader;
+using TestShaderVertexAttributes = SharpOpenGL.TestShader.VertexShader.VertexAttribute;
+
 namespace SharpOpenGL.StaticMesh
 {
     public class ObjMesh
     {
-        StaticVertexBuffer<TestShaderVertexAttributes> VB = null;
+        StaticVertexBuffer<SharpOpenGL.TestShader.VertexShader.VertexAttribute> VB = null;
         IndexBuffer IB = null;
 
-        List<TestShaderVertexAttributes> Vertices = new List<TestShaderVertexAttributes>();
+        List<SharpOpenGL.TestShader.VertexShader.VertexAttribute> Vertices = new List<SharpOpenGL.TestShader.VertexShader.VertexAttribute>();
         
         List<Vector3> TempVertices = new List<Vector3>();
         List<Vector2> TempTexCoord = new List<Vector2>();
@@ -42,7 +45,7 @@ namespace SharpOpenGL.StaticMesh
             VB.Bind();
             IB.Bind();
 
-            TestShaderVertexAttributes.VertexAttributeBinding();
+            SharpOpenGL.TestShader.VertexShader.VertexAttribute.VertexAttributeBinding();
 
             foreach(var Section in MeshSectionList)            
             {
@@ -61,12 +64,12 @@ namespace SharpOpenGL.StaticMesh
 
         public void PrepareToDraw()
         {
-            VB = new StaticVertexBuffer<TestShaderVertexAttributes>();
+            VB = new StaticVertexBuffer<SharpOpenGL.TestShader.VertexShader.VertexAttribute>();
             IB = new IndexBuffer();
 
             VB.Bind();
             var Arr = Vertices.ToArray();
-            VB.BufferData<TestShaderVertexAttributes>(ref Arr);
+            VB.BufferData<SharpOpenGL.TestShader.VertexShader.VertexAttribute>(ref Arr);
             VB.VertexAttribPointer(Arr);
 
             IB.Bind();
@@ -115,6 +118,12 @@ namespace SharpOpenGL.StaticMesh
                         MaterialMap.Add(NewMaterial.MaterialName, NewMaterial);
                         NewMaterial = null;
                     }
+                }
+
+                if(NewMaterial != null)
+                {
+                    MaterialMap.Add(NewMaterial.MaterialName, NewMaterial);
+                    NewMaterial = null;
                 }
             }
         }
@@ -184,9 +193,9 @@ namespace SharpOpenGL.StaticMesh
                             V2.VertexPosition = TempVertices[(int)Index2-1];
                             V3.VertexPosition = TempVertices[(int)Index3-1];
 
-                            uint TexIndex1 = Convert.ToUInt16(Token1[1]);
-                            uint TexIndex2 = Convert.ToUInt16(Token2[1]);
-                            uint TexIndex3 = Convert.ToUInt16(Token3[1]);
+                            uint TexIndex1 = Convert.ToUInt32(Token1[1]);
+                            uint TexIndex2 = Convert.ToUInt32(Token2[1]);
+                            uint TexIndex3 = Convert.ToUInt32(Token3[1]);
 
 
                             V1.TexCoord = TempTexCoord[(int)TexIndex1-1];
@@ -238,7 +247,7 @@ namespace SharpOpenGL.StaticMesh
                     {
                         if(!TextureMap.ContainsKey(Mtl.Value.DiffuseMap))
                         {
-                            var TextureObj = new Texture2D();
+                            var TextureObj = new Texture2D();                            
                             TextureObj.Load(Mtl.Value.DiffuseMap);
                             TextureMap.Add(Mtl.Value.DiffuseMap, TextureObj);
                         }                        

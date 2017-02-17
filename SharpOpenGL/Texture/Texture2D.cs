@@ -14,6 +14,8 @@ using System.Drawing;
 using System.Drawing.Imaging;
 
 using FreeImageAPI;
+using System.Diagnostics;
+using System.IO;
 
 namespace SharpOpenGL.Texture
 {
@@ -88,6 +90,11 @@ namespace SharpOpenGL.Texture
 
         public void Load(string FilePath)
         {
+            if(!File.Exists(FilePath))
+            {
+                return;
+            }
+
             FREE_IMAGE_FORMAT FileType = FreeImageAPI.FreeImage.GetFileType(FilePath, 0);
 
             if(FileType == FREE_IMAGE_FORMAT.FIF_UNKNOWN)
@@ -113,10 +120,11 @@ namespace SharpOpenGL.Texture
             DIB = FreeImage.ConvertTo32Bits(DIB);
             IntPtr Bytes = FreeImage.GetBits(DIB);
 
-            var nWidth = (int) FreeImage.GetWidth(DIB);
-            var nHeight = (int) FreeImage.GetHeight(DIB);
+            m_Width = (int) FreeImage.GetWidth(DIB);
+            m_Height = (int) FreeImage.GetHeight(DIB);
 
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, nWidth, nHeight, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, Bytes);
+            this.BindAtUnit(TextureUnit.Texture0);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, m_Width, m_Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, Bytes);
 
             FreeImage.Unload(DIB);
         }
