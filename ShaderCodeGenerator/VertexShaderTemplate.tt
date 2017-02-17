@@ -6,33 +6,35 @@
 <#@ import namespace="OpenTK" #>
 <#@ import namespace="OpenTK.Graphics.OpenGL" #>
 
-namespace SharpOpenGL.<#=VSProgram.ProgramName#>
+public class VertexShaderBase
 {
-	public class <#=VSProgram.ProgramName#>VertexShader
+	ShaderProgram VSProgram;
+
+	VertexShaderBase(ShaderProgram programObject)
 	{
-		ShaderProgram VSProgram;
+		VSProgram = programObject;
+	}
 
-		public void Initialize()
-		{
+	public void Initialize()
+	{
 		<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
 		{#>
-			<#=UniformBlockName#>Buffer = new DynamicUniformBuffer();
-		<#}#>
-		}
-
-		<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
-		{#>
-		DynamicUniformBuffer <#=UniformBlockName#>Buffer;
-		<#}#>
-
-		<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
-		{#>
-		public void Set<#=UniformBlockName#>BlockData()
-		{
-			var Loc = VSProgram.GetUniformBlockIndex("<#=UniformBlockName#>");
-			<#=UniformBlockName#>Buffer.BindBufferBase(Loc);
-			<#=UniformBlockName#>Buffer.BufferWholeData(Data);
-		}
+		<#=UniformBlockName#>Buffer = new SharpOpenGL.Buffer.DynamicUniformBuffer();
 		<#}#>
 	}
+
+		<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
+		{#>
+	SharpOpenGL.Buffer.DynamicUniformBuffer <#=UniformBlockName#>Buffer;
+		<#}#>
+
+		<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
+		{#>
+	public void Set<#=UniformBlockName#>BlockData(ref <#=UniformBlockName#> Data)
+	{
+		var Loc = VSProgram.GetUniformBlockIndex("<#=UniformBlockName#>");
+		<#=UniformBlockName#>Buffer.BindBufferBase(Loc);
+		<#=UniformBlockName#>Buffer.BufferWholeData<<#=UniformBlockName#>>(ref Data);
+	}
+		<#}#>
 }

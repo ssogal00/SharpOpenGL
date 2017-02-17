@@ -62,6 +62,10 @@ namespace ShaderCompiler
                                 File.WriteAllText(Path.Combine(args[1], "CompiledShaderVariables.cs"), UniformCodeGen.GetCode());
 
                                 Console.Write(test2);
+
+                                var VertexShaderCodeGen = new VertexShaderCodeGenerator(program, filename + ".VertexShader");
+
+                                File.WriteAllText(Path.Combine(args[1], "CompiledVertexShader.cs"), VertexShaderCodeGen.GetCode());
                             }
                         }
                         

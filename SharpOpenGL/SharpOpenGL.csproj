@@ -65,6 +65,7 @@
     <Compile Include="Camera\FreeCamera.cs" />
     <Compile Include="Camera\OrbitCamera.cs" />
     <Compile Include="CompiledSamplerVariables.cs" />
+    <Compile Include="CompiledVertexShader.cs" />
     <Compile Include="Material\Material.cs" />
     <Compile Include="StaticMesh\ObjMesh.cs" />
     <Compile Include="StaticMesh\ObjMeshMaterial.cs" />

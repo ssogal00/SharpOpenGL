@@ -13,6 +13,7 @@ namespace ShaderCompiler
         public VertexShaderCodeGenerator(SharpOpenGL.ShaderProgram ProgramObject, string Name)
         {
             Program = ProgramObject;
+            NameSpace = string.Format("SharpOpenGL.{0}", Name); 
         }
 
         protected override string GetCodeContents()
