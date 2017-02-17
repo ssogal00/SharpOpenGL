@@ -48,17 +48,8 @@ Temporary Items
 
 .suo
 
-SharpOpenGL/bin/*.*
-SharpOpenGL/bin/Debug/*.*
-SharpOpenGL/bin/Release/*.*
-SharpOpenGL/obj/Debug/*.*
-SharpOpenGL/obj/Debug
-SharpOpenGL/obj/Release/*.*
-SharpOpenGL/obj/Release
-SharpOpenGL/obj/*.*
-ShaderCodeGenerator/bin/*.*
-ShaderCodeGenerator/bin/Debug/*.*
-ShaderCodeGenerator/bin/Release/*.*
-ShaderCodeGenerator/obj/Debug/*.*
-ShaderCodeGenerator/obj/Release/*.*
-ShaderCodeGenerator/obj/*.*
+SharpOpenGL/bin
+SharpOpenGL/obj
+ShaderCodeGenerator/bin
+ShaderCodeGenerator/obj
+packages

@@ -2,13 +2,13 @@ using System;
 using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-namespace SharpOpenGL
+namespace SharpOpenGL.TestShader.VertexShader
 {
 
 
 
 [StructLayout(LayoutKind.Explicit,Size=20)]
-public struct TestShaderVertexAttributes
+public struct VertexAttribute
 {
 	
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
@@ -25,4 +25,5 @@ public struct TestShaderVertexAttributes
 		GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 20, new IntPtr(12));
 	}
 }
+
 }

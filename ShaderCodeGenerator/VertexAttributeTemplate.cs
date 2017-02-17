@@ -50,14 +50,7 @@ namespace ShaderCompiler
             
             #line default
             #line hidden
-            this.Write(")]\r\npublic struct ");
-            
-            #line 19 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(StructName));
-            
-            #line default
-            #line hidden
-            this.Write("\r\n{\r\n");
+            this.Write(")]\r\npublic struct VertexAttribute\r\n{\r\n");
             
             #line 21 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexAttributeTemplate.tt"
  

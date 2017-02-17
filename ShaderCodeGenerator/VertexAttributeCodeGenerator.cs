@@ -15,7 +15,7 @@ namespace ShaderCompiler
         public VertexAttributeCodeGenerator(ShaderProgram ProgramObject, string Name)
         {
             m_Template = new VertexAttributeTemplate(ProgramObject, Name + "VertexAttributes");
-            NameSpace = string.Format("SharpOpenGL);
+            NameSpace = string.Format("SharpOpenGL.{0}", Name);
         }
 
         protected override string GetCodeContents()

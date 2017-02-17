@@ -16,6 +16,9 @@ using System.Drawing;
 using SharpOpenGL.StaticMesh;
 using SharpOpenGL.Texture;
 
+using TestShaderVertexAttributes = SharpOpenGL.TestShader.VertexShader.VertexAttribute;
+using TestShaderVS = SharpOpenGL.TestShader.VertexShader;
+
 namespace SharpOpenGL
 {
     public class MainWindow : GameWindow
@@ -47,13 +50,12 @@ namespace SharpOpenGL
         protected Matrix4 Projection = new Matrix4();
 
         protected OrbitCamera Camera = new OrbitCamera();
-
-        float angle = 0;
+        
         
         protected DynamicUniformBuffer TransformBuffer = null;
         protected DynamicUniformBuffer ColorBuffer = null;
 
-        protected VS_Transform Transform = new VS_Transform();
+        protected TestShaderVS.Transform Transform = new TestShaderVS.Transform();
         protected StaticVertexBuffer<TestShaderVertexAttributes> VB = null;
         protected IndexBuffer IB = null;
         protected ShaderProgram ProgramObject = null;
@@ -101,21 +103,9 @@ namespace SharpOpenGL
                 TransformBuffer = new DynamicUniformBuffer();
                 ColorBuffer     = new DynamicUniformBuffer();
 
-                Mesh.Load("..\\..\\ObjMesh\\pop.obj", "..\\..\\ObjMesh\\pop.mtl");
+                //Mesh.Load("..\\..\\ObjMesh\\sponza2.obj", "..\\..\\ObjMesh\\sponzaPBR.mtl");
+                Mesh.Load("../../ObjMesh/pop.obj", "../../ObjMesh/pop.mtl");
 
-                var Sampler = new TestShader_Sampler();
-                                
-                TextureObj = new Texture2D();
-                TextureObj.BindAtUnit(TextureUnit.Texture0);
-                TextureObj.LoadBitmap("..\\..\\TextureResource\\bumpy3.bmp");
-                var samplerLoc = ProgramObject.GetSampler2DUniformLocation(Sampler.TestTexture);
-                TextureObj.BindShader(TextureUnit.Texture0, samplerLoc);
-
-                TextureObj2 = new Texture2D();
-                TextureObj2.BindAtUnit(TextureUnit.Texture1);
-                TextureObj2.LoadBitmap("..\\..\\TextureResource\\bumpy3.bmp");
-                var samplerLoc2 = ProgramObject.GetSampler2DUniformLocation(Sampler.TestTexture2);
-                TextureObj2.BindShader(TextureUnit.Texture1, samplerLoc2); 
             }
             else
             {
@@ -138,13 +128,13 @@ namespace SharpOpenGL
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             Transform.View = Camera.View;
-            Transform.Proj = Camera.Proj;            
-            Transform.Model = Matrix4.Identity * Matrix4.CreateScale(0.3f);
-            
-            TransformBuffer.BufferData<VS_Transform>(ref Transform);
+            Transform.Proj = Camera.Proj;
+            /* Transform.Model = Matrix4.Identity * Matrix4.CreateScale(0.3f);*/
+
             TransformBuffer.BindBufferBase(0);
+            TransformBuffer.BufferData<TestShaderVS.Transform>(ref Transform);            
             
-            Mesh.Draw();
+            Mesh.Draw(ProgramObject);
 
             SwapBuffers();
         }
@@ -186,7 +176,7 @@ namespace SharpOpenGL
             Transform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);
 
             TransformBuffer.Bind();            
-            TransformBuffer.BufferData<VS_Transform>(ref Transform);
+            TransformBuffer.BufferData<TestShaderVS.Transform>(ref Transform);
             
 
             ColorBuffer.Bind();

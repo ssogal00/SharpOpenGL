@@ -19,6 +19,8 @@ namespace SharpOpenGL
             ProgramObject = GL.CreateProgram();            
         }
 
+        public string ProgramName = "";
+
         /// <summary>
         /// Link Program
         /// </summary>

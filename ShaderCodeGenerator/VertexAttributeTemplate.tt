@@ -16,7 +16,7 @@
 
 
 [StructLayout(LayoutKind.Explicit,Size=<#= nTotalSize #>)]
-public struct <#= StructName #>
+public struct VertexAttribute
 {
 <# 
 for(int i = 0; i < VertexAttributeList.Count; ++i)

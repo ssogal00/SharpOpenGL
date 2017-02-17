@@ -30,18 +30,7 @@ namespace ShaderCompiler
                     context.MakeCurrent(windowInfo);
 
                     context.LoadAll();
-
-                    StringBuilder CompiledShaderVariableBuilder = new StringBuilder("");
-                    CompiledShaderVariableBuilder.AppendLine("using System.Runtime.InteropServices;");
-                    CompiledShaderVariableBuilder.AppendLine("namespace SharpOpenGL");
-                    CompiledShaderVariableBuilder.AppendLine("{");                    
-
-                    StringBuilder CompiledSamplerVariableBuilder = new StringBuilder("");
-                    CompiledSamplerVariableBuilder.AppendLine("using System.Runtime.InteropServices;");
-                    CompiledSamplerVariableBuilder.AppendLine("namespace SharpOpenGL");
-                    CompiledSamplerVariableBuilder.AppendLine("{");
-
-
+                    
                     if (Directory.Exists(args[0]))
                     {
                         // generate code for vertex shader files
@@ -58,60 +47,25 @@ namespace ShaderCompiler
                             {
                                 var filename = Path.GetFileNameWithoutExtension(vsFile);
 
-                                var gen = new VertexAttributeCodeGenerator(program, filename);
+                                var gen = new VertexAttributeCodeGenerator(program, filename + ".VertexShader");
 
                                 var test = gen.GetCode();
 
-                                //File.WriteAllText(Path.Combine(args[1], "CompiledVertexAttributes.cs"), gen.GetCode());
+                                File.WriteAllText(Path.Combine(args[1], "CompiledVertexAttributes.cs"), test);
 
                                 Console.Write(test);
 
-                                var UniformCodeGen = new ShaderUniformCodeGenerator(program, filename);
+                                var UniformCodeGen = new ShaderUniformCodeGenerator(program, filename + ".VertexShader");
 
                                 var test2 = UniformCodeGen.GetCode();
+
+                                File.WriteAllText(Path.Combine(args[1], "CompiledShaderVariables.cs"), UniformCodeGen.GetCode());
 
                                 Console.Write(test2);
                             }
                         }
-
-                        // generate code for fragment shader files
-                        foreach (var fsFile in Directory.EnumerateFiles(args[0], "*.fs"))
-                        {
-                            FragmentShader fs = new FragmentShader();
-                            ShaderProgram program = new ShaderProgram();
-
-                            fs.CompileShader(File.ReadAllText(fsFile));
-                            program.AttachShader(fs);
-
-                            String result;
-                            if (program.LinkProgram(out result))
-                            {
-                                var filename = Path.GetFileNameWithoutExtension(fsFile);
-
-                                var gen = new ShaderUniformCodeGenerator(program, filename);
-
-                                var test = gen.GetCode();
-
-                                Console.Write(test);
-                            }
-                        }
+                        
                     }
-
-                    CompiledShaderVariableBuilder.AppendLine("}");                    
-
-                    CompiledSamplerVariableBuilder.AppendLine("}");
-
-
-                    if(File.Exists(Path.Combine(args[1], "CompiledShaderVariables.cs")))
-                    {
-                        var PrevContents = File.ReadAllText(Path.Combine(args[1], "CompiledShaderVariables.cs"));
-                        if(PrevContents != CompiledSamplerVariableBuilder.ToString())
-                        {
-                            File.WriteAllText(Path.Combine(args[1], "CompiledShaderVariables.cs"), CompiledShaderVariableBuilder.ToString());       
-                        }
-                    }                                        
-
-                    File.WriteAllText(Path.Combine(args[1], "CompiledSamplerVariables.cs"), CompiledSamplerVariableBuilder.ToString());
                 }
             }
         }

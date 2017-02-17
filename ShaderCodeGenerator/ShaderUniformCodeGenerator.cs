@@ -13,7 +13,7 @@ namespace ShaderCompiler
         public ShaderUniformCodeGenerator(ShaderProgram ProgramObject , string Name)
         {
             Program = ProgramObject;
-            NameSpace = Name;
+            NameSpace = string.Format("SharpOpenGL.{0}", Name);
         }
 
         protected override string GetCodeContents()

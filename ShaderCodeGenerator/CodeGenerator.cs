@@ -10,6 +10,7 @@ namespace ShaderCompiler
     {
         protected List<string> DependencyList = new List<string>
         {
+            "System",
             "System.Runtime.InteropServices",
             "OpenTK",
             "OpenTK.Graphics.OpenGL",
