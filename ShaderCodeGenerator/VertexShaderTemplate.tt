@@ -10,31 +10,31 @@ public class VertexShaderBase
 {
 	ShaderProgram VSProgram;
 
-	VertexShaderBase(ShaderProgram programObject)
+	public VertexShaderBase(ShaderProgram programObject)
 	{
 		VSProgram = programObject;
+		Initialize();
 	}
 
 	public void Initialize()
 	{
-		<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
-		{#>
+<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
+{#>
 		<#=UniformBlockName#>Buffer = new SharpOpenGL.Buffer.DynamicUniformBuffer();
-		<#}#>
+<#}#>
 	}
-
-		<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
-		{#>
+<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
+{#>
 	SharpOpenGL.Buffer.DynamicUniformBuffer <#=UniformBlockName#>Buffer;
-		<#}#>
+<#}#>
 
-		<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
-		{#>
+<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
+{#>
 	public void Set<#=UniformBlockName#>BlockData(ref <#=UniformBlockName#> Data)
 	{
 		var Loc = VSProgram.GetUniformBlockIndex("<#=UniformBlockName#>");
 		<#=UniformBlockName#>Buffer.BindBufferBase(Loc);
 		<#=UniformBlockName#>Buffer.BufferWholeData<<#=UniformBlockName#>>(ref Data);
 	}
-		<#}#>
+<#}#>
 }

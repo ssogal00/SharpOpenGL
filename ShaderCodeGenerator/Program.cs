@@ -33,6 +33,25 @@ namespace ShaderCompiler
                     
                     if (Directory.Exists(args[0]))
                     {
+                        foreach(var fsFile in Directory.EnumerateFiles(args[0], "*.fs"))
+                        {
+                            FragmentShader fs = new FragmentShader();
+                            ShaderProgram program = new ShaderProgram();
+
+                            fs.CompileShader(File.ReadAllText(fsFile));
+                            program.AttachShader(fs);
+
+                            String result;
+                            if(program.LinkProgram(out result))
+                            {
+                                var filename = Path.GetFileNameWithoutExtension(fsFile);
+
+                                var FragmentShaderCodeGen = new FragmentShaderCodeGenerator(program, filename + ".FragmentShader");
+
+                                File.WriteAllText(Path.Combine(args[1], "CompiledFragmentShader.cs"), FragmentShaderCodeGen.GetCode());
+                            }
+                        }
+
                         // generate code for vertex shader files
                         foreach (var vsFile in Directory.EnumerateFiles(args[0], "*.vs"))
                         {

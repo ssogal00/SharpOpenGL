@@ -57,11 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGenerator.cs" />
+    <Compile Include="FragmentShaderCodeGenerator.cs" />
     <Compile Include="FragmentShaderTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>FragmentShaderTemplate.tt</DependentUpon>
     </Compile>
+    <Compile Include="FragmentShaderTemplatePartial.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SamplerGenerator.cs">

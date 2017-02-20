@@ -14,6 +14,7 @@ namespace ShaderCompiler
             "System.Runtime.InteropServices",
             "OpenTK",
             "OpenTK.Graphics.OpenGL",
+            "SharpOpenGL",
         };
 
         public string NameSpace = "";

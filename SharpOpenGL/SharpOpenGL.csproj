@@ -64,9 +64,10 @@
     <Compile Include="Camera\CameraBase.cs" />
     <Compile Include="Camera\FreeCamera.cs" />
     <Compile Include="Camera\OrbitCamera.cs" />
+    <Compile Include="CompiledFragmentShader.cs" />
     <Compile Include="CompiledSamplerVariables.cs" />
     <Compile Include="CompiledVertexShader.cs" />
-    <Compile Include="Material\Material.cs" />
+    <Compile Include="Material.cs" />
     <Compile Include="StaticMesh\ObjMesh.cs" />
     <Compile Include="StaticMesh\ObjMeshMaterial.cs" />
     <Compile Include="StaticMesh\ObjMeshSection.cs" />
@@ -122,7 +123,9 @@
   <ItemGroup>
     <Content Include="Shader\TestShader.fs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Material\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

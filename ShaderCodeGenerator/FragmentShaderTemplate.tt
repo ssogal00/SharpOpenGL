@@ -4,11 +4,24 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 
-
 public class FragmentShaderBase
 {
-	public FragmentShaderBase()
+	ShaderProgram FSProgram;
+
+	public FragmentShaderBase(ShaderProgram programObject)
 	{
-		
+		FSProgram = programObject;			
 	}
+<# int index = 0;
+foreach(var Sampler in ProgramObject.GetSampler2DNames())
+{#>
+	public void Set<#=Sampler#>2D(Texture.Texture2D TextureObject)
+	{
+		GL.ActiveTexture(TextureUnit.Texture<#=index#>);
+        TextureObject.Bind();
+        var Loc = FSProgram.GetSampler2DUniformLocation("<#=Sampler#>");
+		GL.Uniform1(Loc, (int)(<#=index#>));
+	}
+<#index++;#>
+<#}#>
 }
