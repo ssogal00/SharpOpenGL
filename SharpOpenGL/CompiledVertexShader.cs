@@ -6,6 +6,13 @@ using SharpOpenGL;
 namespace SharpOpenGL.TestShader.VertexShader
 {
 
+public interface IVertexShaderInterface
+{
+	void SetColorBlockBlockData(ref ColorBlock Data);
+	void SetTransformBlockData(ref Transform Data);
+	
+}
+
 public class VertexShaderBase
 {
 	ShaderProgram VSProgram;

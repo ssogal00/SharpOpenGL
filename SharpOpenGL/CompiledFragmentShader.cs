@@ -6,6 +6,11 @@ using SharpOpenGL;
 namespace SharpOpenGL.TestShader.FragmentShader
 {
 
+public interface IFragmentShaderInterface
+{
+	void SetTestTexture2D(Texture.Texture2D TextureObject);
+}
+
 public class FragmentShaderBase
 {
 	ShaderProgram FSProgram;

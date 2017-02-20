@@ -6,6 +6,14 @@
 <#@ import namespace="OpenTK" #>
 <#@ import namespace="OpenTK.Graphics.OpenGL" #>
 
+public interface IVertexShaderInterface
+{
+<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
+{#>
+	void Set<#=UniformBlockName#>BlockData(ref <#=UniformBlockName#> Data);
+<#}#>	
+}
+
 public class VertexShaderBase
 {
 	ShaderProgram VSProgram;

@@ -9,7 +9,6 @@ using SharpOpenGL.TestShader;
 
 namespace SharpOpenGL
 {
-    public class Material : VertexShader
-    {
-    }
+    public class Material
+    { }
 }

@@ -4,6 +4,14 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 
+public interface IFragmentShaderInterface
+{
+<#foreach(var Sampler in ProgramObject.GetSampler2DNames())
+{#>
+	void Set<#=Sampler#>2D(Texture.Texture2D TextureObject);
+<#}#>
+}
+
 public class FragmentShaderBase
 {
 	ShaderProgram FSProgram;
