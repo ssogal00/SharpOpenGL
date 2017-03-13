@@ -1,0 +1,13 @@
+﻿<Window x:Class="MaterialEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MaterialEditor"
+        xmlns:OpenTK="clr-namespace:OpenTK;assembly=OpenTK.GLControl"        
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <WindowsFormsHost>
+        <OpenTK:GLControl x:Name="mGlControl" Load="GLControlLoad" Resize="GLControlResize" Paint="GLControlPaint"></OpenTK:GLControl>
+    </WindowsFormsHost>
+</Window>

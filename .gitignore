@@ -52,4 +52,6 @@ SharpOpenGL/bin
 SharpOpenGL/obj
 ShaderCodeGenerator/bin
 ShaderCodeGenerator/obj
+MaterialEditor/bin
+MaterialEditor/obj
 packages
