@@ -21,9 +21,9 @@
         <WindowsFormsHost Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="8">
             <OpenTK:GLControl x:Name="mGlControl" Load="GLControlLoad" Resize="GLControlResize" Paint="GLControlPaint"></OpenTK:GLControl>
         </WindowsFormsHost>
-        <StackPanel Grid.Row="0" Grid.Column="1">
+        <DockPanel Grid.Row="0" Grid.Column="1" Dock="Top"  VerticalAlignment="Stretch" Margin="5">
             <Label>Vertex Shader</Label>
-            <TextBox VerticalAlignment="Stretch"></TextBox>
-        </StackPanel>
+            <RichTextBox VerticalAlignment="Stretch"></RichTextBox>
+        </DockPanel>
     </Grid>    
 </Window>
