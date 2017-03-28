@@ -6,8 +6,24 @@
         xmlns:local="clr-namespace:MaterialEditor"
         xmlns:OpenTK="clr-namespace:OpenTK;assembly=OpenTK.GLControl"        
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <WindowsFormsHost>
-        <OpenTK:GLControl x:Name="mGlControl" Load="GLControlLoad" Resize="GLControlResize" Paint="GLControlPaint"></OpenTK:GLControl>
-    </WindowsFormsHost>
+        Title="MainWindow" Height="768" Width="1024">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*">
+            </ColumnDefinition>
+            <ColumnDefinition>      
+            </ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <WindowsFormsHost Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="8">
+            <OpenTK:GLControl x:Name="mGlControl" Load="GLControlLoad" Resize="GLControlResize" Paint="GLControlPaint"></OpenTK:GLControl>
+        </WindowsFormsHost>
+        <StackPanel Grid.Row="0" Grid.Column="1">
+            <Label>Vertex Shader</Label>
+            <TextBox VerticalAlignment="Stretch"></TextBox>
+        </StackPanel>
+    </Grid>    
 </Window>
