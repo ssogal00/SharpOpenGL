@@ -50,6 +50,8 @@ Temporary Items
 
 SharpOpenGL/bin
 SharpOpenGL/obj
+Core/bin
+Core/obj
 ShaderCodeGenerator/bin
 ShaderCodeGenerator/obj
 MaterialEditor/bin
