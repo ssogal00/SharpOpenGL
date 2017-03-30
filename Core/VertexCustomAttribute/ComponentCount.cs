@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpOpenGL
+namespace Core.VertexCustomAttribute
 {
     [AttributeUsage(AttributeTargets.Field, Inherited = false)]
     public class ComponentCount : System.Attribute

@@ -46,9 +46,13 @@ namespace ShaderCompiler
                             {
                                 var filename = Path.GetFileNameWithoutExtension(fsFile);
 
+                                program.ProgramName = filename;
+
                                 var FragmentShaderCodeGen = new FragmentShaderCodeGenerator(program, filename + ".FragmentShader");
 
-                                File.WriteAllText(Path.Combine(args[1], "CompiledFragmentShader.cs"), FragmentShaderCodeGen.GetCode());
+                                var OutputFilename = string.Format("CompiledFragmentShader.{0}.cs", filename);
+
+                                File.WriteAllText(Path.Combine(args[1], OutputFilename), FragmentShaderCodeGen.GetCode());
                             }
                         }
 
@@ -70,7 +74,9 @@ namespace ShaderCompiler
 
                                 var test = gen.GetCode();
 
-                                File.WriteAllText(Path.Combine(args[1], "CompiledVertexAttributes.cs"), test);
+                                var VertexAttributeOutputFilename = string.Format("CompiledVertexAttributes.{0}.cs", filename);
+
+                                File.WriteAllText(Path.Combine(args[1], VertexAttributeOutputFilename), test);
 
                                 Console.Write(test);
 
@@ -78,11 +84,15 @@ namespace ShaderCompiler
 
                                 var test2 = UniformCodeGen.GetCode();
 
-                                File.WriteAllText(Path.Combine(args[1], "CompiledShaderVariables.cs"), UniformCodeGen.GetCode());
+                                var ShaderVariableOutputFilename = string.Format("CompiledShaderVariables.{0}.cs", filename);
+
+                                File.WriteAllText(Path.Combine(args[1], ShaderVariableOutputFilename), UniformCodeGen.GetCode());
 
                                 Console.Write(test2);
 
                                 var VertexShaderCodeGen = new VertexShaderCodeGenerator(program, filename + ".VertexShader");
+
+                                var VertexShaderOutputFilename = string.Format("CompiledVertexShader.{0}.cs", filename);
 
                                 File.WriteAllText(Path.Combine(args[1], "CompiledVertexShader.cs"), VertexShaderCodeGen.GetCode());
                             }

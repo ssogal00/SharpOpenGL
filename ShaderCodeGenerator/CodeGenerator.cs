@@ -14,7 +14,11 @@ namespace ShaderCompiler
             "System.Runtime.InteropServices",
             "OpenTK",
             "OpenTK.Graphics.OpenGL",
-            "SharpOpenGL",
+            "Core",
+            "Core.Buffer",
+            "Core.OpenGLShader",
+            "Core.Texture",
+            "Core.VertexCustomAttribute"
         };
 
         public string NameSpace = "";

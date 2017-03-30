@@ -8,7 +8,7 @@ public interface IFragmentShaderInterface
 {
 <#foreach(var Sampler in ProgramObject.GetSampler2DNames())
 {#>
-	void Set<#=Sampler#>2D(Texture.Texture2D TextureObject);
+	void Set<#=Sampler#>2D(Core.Texture.Texture2D TextureObject);
 <#}#>
 }
 
@@ -23,7 +23,7 @@ public class FragmentShaderBase
 <# int index = 0;
 foreach(var Sampler in ProgramObject.GetSampler2DNames())
 {#>
-	public void Set<#=Sampler#>2D(Texture.Texture2D TextureObject)
+	public void Set<#=Sampler#>2D(Core.Texture.Texture2D TextureObject)
 	{
 		GL.ActiveTexture(TextureUnit.Texture<#=index#>);
         TextureObject.Bind();

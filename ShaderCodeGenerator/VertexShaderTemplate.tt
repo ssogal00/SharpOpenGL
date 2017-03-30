@@ -28,12 +28,12 @@ public class VertexShaderBase
 	{
 <#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
 {#>
-		<#=UniformBlockName#>Buffer = new SharpOpenGL.Buffer.DynamicUniformBuffer();
+		<#=UniformBlockName#>Buffer = new Core.Buffer.DynamicUniformBuffer();
 <#}#>
 	}
 <#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
 {#>
-	SharpOpenGL.Buffer.DynamicUniformBuffer <#=UniformBlockName#>Buffer;
+	Core.Buffer.DynamicUniformBuffer <#=UniformBlockName#>Buffer;
 <#}#>
 
 <#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())

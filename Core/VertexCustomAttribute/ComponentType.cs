@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace SharpOpenGL
+namespace Core.VertexCustomAttribute
 {
     [AttributeUsage(AttributeTargets.Field, Inherited = false)]
     public class ComponentType : System.Attribute

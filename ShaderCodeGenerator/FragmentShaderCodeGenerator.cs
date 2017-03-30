@@ -15,7 +15,7 @@ namespace ShaderCompiler
         public FragmentShaderCodeGenerator(Core.OpenGLShader.ShaderProgram ProgramObject, string Name)
         {
             Program = ProgramObject;
-            NameSpace = string.Format("SharpOpenGL.{0}", Name);
+            NameSpace = string.Format("CompiledShader.{0}", Name);
         }
 
         protected override string GetCodeContents()

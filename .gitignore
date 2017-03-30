@@ -56,4 +56,6 @@ ShaderCodeGenerator/bin
 ShaderCodeGenerator/obj
 MaterialEditor/bin
 MaterialEditor/obj
+CompiledShader/bin
+CompiledShader/obj
 packages

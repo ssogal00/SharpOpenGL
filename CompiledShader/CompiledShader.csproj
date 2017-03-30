@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}</ProjectGuid>
+    <ProjectGuid>{50AD8C27-759D-4399-8056-59CA4D413829}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Core</RootNamespace>
-    <AssemblyName>Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>CompiledShader</RootNamespace>
+    <AssemblyName>CompiledShader</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,10 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FreeImageNET">
-      <HintPath>..\SharpOpenGL\lib\FreeImageNET.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK">
+    <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SharpOpenGL\lib\OpenTK\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK.GLControl">
@@ -42,7 +39,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,27 +47,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Buffer\DynamicUniformBuffer.cs" />
-    <Compile Include="Buffer\IndexBuffer.cs" />
-    <Compile Include="Buffer\OpenGLBuffer.cs" />
-    <Compile Include="Buffer\StaticUniformBuffer.cs" />
-    <Compile Include="Buffer\StaticVertexBuffer.cs" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="OpenGLShader\FragmentShader.cs" />
-    <Compile Include="OpenGLShader\Shader.cs" />
-    <Compile Include="OpenGLShader\UniformVariableMetaData.cs" />
-    <Compile Include="OpenGLShader\VertexAttribute.cs" />
-    <Compile Include="OpenGLShader\VertexShader.cs" />
+    <Compile Include="CompiledFragmentShader.TestShader.cs" />
+    <Compile Include="CompiledFragmentShader.TestShader2.cs" />
+    <Compile Include="CompiledShaderVariables.TestShader.cs" />
+    <Compile Include="CompiledShaderVariables.TestShader2.cs" />
+    <Compile Include="CompiledVertexAttributes.TestShader.cs" />
+    <Compile Include="CompiledVertexAttributes.TestShader2.cs" />
+    <Compile Include="CompiledVertexShader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OpenGLShader\ShaderProgram.cs" />
-    <Compile Include="OpenGLType\OpenGLTypeHelper.cs" />
-    <Compile Include="Texture\Sampler.cs" />
-    <Compile Include="Texture\Texture2D.cs" />
-    <Compile Include="VertexCustomAttribute\ComponentCount.cs" />
-    <Compile Include="VertexCustomAttribute\ComponentType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="StaticMesh\" />
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{1115dd7b-beb3-4d5c-9528-9e852ecc63d5}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
