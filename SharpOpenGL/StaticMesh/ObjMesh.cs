@@ -11,7 +11,7 @@ using OpenTK.Graphics.OpenGL;
 using SharpOpenGL;
 using Core.Buffer;
 using Core.OpenGLShader;
-using SharpOpenGL.Texture;
+using Core.Texture;
 
 using SharpOpenGL.TestShader.VertexShader;
 using TestShaderVertexAttributes = SharpOpenGL.TestShader.VertexShader.VertexAttribute;

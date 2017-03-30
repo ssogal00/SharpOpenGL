@@ -15,7 +15,7 @@ using Core.OpenGLShader;
 using SharpOpenGL.Camera;
 using System.Drawing;
 using SharpOpenGL.StaticMesh;
-using SharpOpenGL.Texture;
+using Core.Texture;
 
 using TestShaderVertexAttributes = SharpOpenGL.TestShader.VertexShader.VertexAttribute;
 using TestShaderVS = SharpOpenGL.TestShader.VertexShader;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace SharpOpenGL.Texture
+namespace Core.Texture
 {
     public class Sampler : IDisposable
     {

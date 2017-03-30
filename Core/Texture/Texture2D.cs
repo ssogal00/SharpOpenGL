@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using System.Runtime.InteropServices;
 
-using SharpOpenGL;
+using Core;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -17,7 +17,7 @@ using FreeImageAPI;
 using System.Diagnostics;
 using System.IO;
 
-namespace SharpOpenGL.Texture
+namespace Core.Texture
 {
     public class Texture2D : IDisposable
     {

@@ -4,6 +4,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL;
 using Core.OpenGLShader;
+using Texture = Core.Texture;
 
 namespace SharpOpenGL.TestShader.FragmentShader
 {
