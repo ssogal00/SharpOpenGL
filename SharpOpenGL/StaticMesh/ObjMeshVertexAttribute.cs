@@ -10,6 +10,8 @@ using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
+using Core.VertexCustomAttribute;
+
 namespace SharpOpenGL.StaticMesh
 {
     [StructLayout(LayoutKind.Explicit, Size = 12)]

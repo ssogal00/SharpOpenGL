@@ -12,10 +12,11 @@ using OpenTK.Graphics.OpenGL;
 
 using Core.Buffer;
 using Core.OpenGLShader;
-using SharpOpenGL.Camera;
+using Core.Camera;
 using System.Drawing;
 using SharpOpenGL.StaticMesh;
 using Core.Texture;
+using Core.Tickable;
 
 using TestShaderVertexAttributes = SharpOpenGL.TestShader.VertexShader.VertexAttribute;
 using TestShaderVS = SharpOpenGL.TestShader.VertexShader;
@@ -51,20 +52,13 @@ namespace SharpOpenGL
         protected Matrix4 Projection = new Matrix4();
 
         protected OrbitCamera Camera = new OrbitCamera();
-        
-        
         protected DynamicUniformBuffer TransformBuffer = null;
         protected DynamicUniformBuffer ColorBuffer = null;
 
         protected TestShaderVS.Transform Transform = new TestShaderVS.Transform();
-        protected StaticVertexBuffer<TestShaderVertexAttributes> VB = null;
-        protected IndexBuffer IB = null;
         protected ShaderProgram ProgramObject = null;
 
         protected ObjMesh Mesh = new ObjMesh();
-
-        protected Texture2D TextureObj = null;
-        protected Texture2D TextureObj2 = null;
 
         protected override void OnLoad(EventArgs e)
         {

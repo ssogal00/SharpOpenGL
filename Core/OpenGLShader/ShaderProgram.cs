@@ -19,6 +19,14 @@ namespace Core.OpenGLShader
             ProgramObject = GL.CreateProgram();            
         }
 
+        public ShaderProgram(VertexShader VS, FragmentShader FS)
+        {
+            AttachShader(VS);
+            AttachShader(FS);
+            string Result;
+            LinkProgram(out Result);
+        }
+
         public string ProgramName = "";
 
         /// <summary>

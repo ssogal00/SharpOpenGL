@@ -3,6 +3,9 @@ using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL;
+using Core;
+using Core.Buffer;
+using Core.VertexCustomAttribute;
 namespace SharpOpenGL.TestShader.VertexShader
 {
 

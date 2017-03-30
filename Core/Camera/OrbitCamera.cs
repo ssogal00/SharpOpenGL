@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace SharpOpenGL.Camera
+namespace Core.Camera
 {
     public class OrbitCamera : CameraBase
     {

@@ -56,6 +56,9 @@
     <Compile Include="Buffer\OpenGLBuffer.cs" />
     <Compile Include="Buffer\StaticUniformBuffer.cs" />
     <Compile Include="Buffer\StaticVertexBuffer.cs" />
+    <Compile Include="Camera\CameraBase.cs" />
+    <Compile Include="Camera\FreeCamera.cs" />
+    <Compile Include="Camera\OrbitCamera.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="OpenGLShader\FragmentShader.cs" />
     <Compile Include="OpenGLShader\Shader.cs" />
@@ -67,6 +70,8 @@
     <Compile Include="OpenGLType\OpenGLTypeHelper.cs" />
     <Compile Include="Texture\Sampler.cs" />
     <Compile Include="Texture\Texture2D.cs" />
+    <Compile Include="Tickable\TickableObject.cs" />
+    <Compile Include="Tickable\TickableObjectManager.cs" />
     <Compile Include="VertexCustomAttribute\ComponentCount.cs" />
     <Compile Include="VertexCustomAttribute\ComponentType.cs" />
   </ItemGroup>

@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace SharpOpenGL.Camera
+using Core.Tickable;
+
+namespace Core.Camera
 {
     public class CameraBase : TickableObject
     {
@@ -40,12 +42,12 @@ namespace SharpOpenGL.Camera
             get { return ProjMatrix; }
         }
 
-        protected void UpdateViewMatrix()
+        public void UpdateViewMatrix()
         {
             ViewMatrix = Matrix4.LookAt(EyeLocation, LookAtLocation, Vector3.UnitY);
         }
 
-        protected void UpdateProjMatrix()
+        public void UpdateProjMatrix()
         {
             ProjMatrix = Matrix4.CreatePerspectiveFieldOfView(FOV, AspectRatio, Near, Far);
         }
