@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL;
+using Core.OpenGLShader;
+
 namespace SharpOpenGL.TestShader.VertexShader
 {
 
@@ -25,11 +27,11 @@ public class VertexShaderBase
 
 	public void Initialize()
 	{
-		ColorBlockBuffer = new SharpOpenGL.Buffer.DynamicUniformBuffer();
-		TransformBuffer = new SharpOpenGL.Buffer.DynamicUniformBuffer();
+		ColorBlockBuffer = new Core.Buffer.DynamicUniformBuffer();
+		TransformBuffer = new Core.Buffer.DynamicUniformBuffer();
 	}
-	SharpOpenGL.Buffer.DynamicUniformBuffer ColorBlockBuffer;
-	SharpOpenGL.Buffer.DynamicUniformBuffer TransformBuffer;
+	Core.Buffer.DynamicUniformBuffer ColorBlockBuffer;
+	Core.Buffer.DynamicUniformBuffer TransformBuffer;
 
 	public void SetColorBlockBlockData(ref ColorBlock Data)
 	{

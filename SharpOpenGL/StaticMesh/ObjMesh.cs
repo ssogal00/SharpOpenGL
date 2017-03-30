@@ -9,7 +9,8 @@ using System.IO;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL;
-using SharpOpenGL.Buffer;
+using Core.Buffer;
+using Core.OpenGLShader;
 using SharpOpenGL.Texture;
 
 using SharpOpenGL.TestShader.VertexShader;

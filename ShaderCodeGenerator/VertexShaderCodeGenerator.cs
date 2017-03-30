@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SharpOpenGL;
+using Core.OpenGLShader;
 
 namespace ShaderCompiler
 {
     public class VertexShaderCodeGenerator : CodeGenerator
     {
-        public VertexShaderCodeGenerator(SharpOpenGL.ShaderProgram ProgramObject, string Name)
+        public VertexShaderCodeGenerator(Core.OpenGLShader.ShaderProgram ProgramObject, string Name)
         {
             Program = ProgramObject;
             NameSpace = string.Format("SharpOpenGL.{0}", Name); 

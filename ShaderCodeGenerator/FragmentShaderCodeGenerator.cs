@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SharpOpenGL;
+using Core;
+
+using ShaderProgram = Core.OpenGLShader.ShaderProgram;
 
 namespace ShaderCompiler
 {
     public class FragmentShaderCodeGenerator : CodeGenerator
     {   
-        public FragmentShaderCodeGenerator(SharpOpenGL.ShaderProgram ProgramObject, string Name)
+        public FragmentShaderCodeGenerator(Core.OpenGLShader.ShaderProgram ProgramObject, string Name)
         {
             Program = ProgramObject;
             NameSpace = string.Format("SharpOpenGL.{0}", Name);

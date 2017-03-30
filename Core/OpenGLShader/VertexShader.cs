@@ -8,7 +8,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 
-namespace SharpOpenGL
+namespace Core.OpenGLShader
 {
     public class VertexShader : Shader
     {

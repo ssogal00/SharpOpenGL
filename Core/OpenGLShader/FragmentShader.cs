@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace SharpOpenGL
+namespace Core.OpenGLShader
 {
     public class FragmentShader : Shader
     {

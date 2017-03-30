@@ -3,6 +3,8 @@ using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL;
+using Core.OpenGLShader;
+
 namespace SharpOpenGL.TestShader.FragmentShader
 {
 

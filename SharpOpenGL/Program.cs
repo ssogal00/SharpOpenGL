@@ -10,7 +10,8 @@ using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-using SharpOpenGL.Buffer;
+using Core.Buffer;
+using Core.OpenGLShader;
 using SharpOpenGL.Camera;
 using System.Drawing;
 using SharpOpenGL.StaticMesh;

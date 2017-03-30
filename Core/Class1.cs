@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpOpenGL
+namespace Core
 {
-    public static class OpenGLEnvironment
+    public class Class1
     {
-        
     }
 }

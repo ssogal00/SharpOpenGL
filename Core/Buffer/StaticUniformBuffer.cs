@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace SharpOpenGL.Buffer
+namespace Core.Buffer
 {
-    public class StaticUniformBuffer : OpenGLBuffer
+    public class StaticUniformBuffer : Core.Buffer.OpenGLBuffer
     {
         public StaticUniformBuffer()
         {

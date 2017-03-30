@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace SharpOpenGL
+namespace Core.OpenGLType
 {
     public static class OpenGLTypeHelper 
     {

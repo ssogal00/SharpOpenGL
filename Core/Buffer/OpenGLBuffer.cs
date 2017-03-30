@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace SharpOpenGL.Buffer
+namespace Core.Buffer
 {
     public abstract class OpenGLBuffer : IDisposable
     {

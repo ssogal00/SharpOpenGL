@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text;
-using SharpOpenGL;
+using Core.OpenGLShader;
 
 using OpenTK;
 using OpenTK.Platform;

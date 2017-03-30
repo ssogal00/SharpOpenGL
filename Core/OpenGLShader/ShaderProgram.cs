@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-using SharpOpenGL.Buffer;
+using Core.Buffer;
 
-namespace SharpOpenGL
+namespace Core.OpenGLShader
 {
     public class ShaderProgram
     {

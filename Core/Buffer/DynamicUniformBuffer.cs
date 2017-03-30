@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace SharpOpenGL.Buffer
+using Core.OpenGLShader;
+
+namespace Core.Buffer
 {
     public class DynamicUniformBuffer : OpenGLBuffer
     {

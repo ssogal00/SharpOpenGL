@@ -11,7 +11,9 @@ using System.Reflection;
 
 using System.Runtime.InteropServices;
 
-namespace SharpOpenGL
+using Core.OpenGLType;
+
+namespace Core.OpenGLShader
 {
     public class VertexAttribute
     {

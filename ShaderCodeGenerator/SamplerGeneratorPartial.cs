@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using SharpOpenGL;
+using Core.OpenGLShader;
 
 namespace ShaderCompiler
 {
