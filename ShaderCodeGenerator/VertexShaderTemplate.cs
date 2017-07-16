@@ -59,11 +59,27 @@ foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
             
             #line default
             #line hidden
-            this.Write("\t\r\n}\r\n\r\npublic class VertexShaderBase\r\n{\r\n\tShaderProgram VSProgram;\r\n\r\n\tpublic Ve" +
-                    "rtexShaderBase(ShaderProgram programObject)\r\n\t{\r\n\t\tVSProgram = programObject;\r\n\t" +
-                    "\tInitialize();\r\n\t}\r\n\r\n\tpublic void Initialize()\r\n\t{\r\n");
+            this.Write(@"	
+}
+
+public class VertexShaderBase
+{
+	ShaderProgram VSProgram;
+	Core.OpenGLShader.VertexShader VSShader;
+
+	public VertexShaderBase(ShaderProgram programObject)
+	{
+		VSProgram = programObject;
+		VSShader.CompileShader(GetShaderSourceCode());
+		VSProgram.AttachShader(VSShader);
+		Initialize();
+	}
+
+	public void Initialize()
+	{
+");
             
-            #line 29 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 32 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
 foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
 {
             
@@ -71,21 +87,21 @@ foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
             #line hidden
             this.Write("\t\t");
             
-            #line 31 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 34 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
             
             #line default
             #line hidden
             this.Write("Buffer = new Core.Buffer.DynamicUniformBuffer();\r\n");
             
-            #line 32 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 35 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\t}\r\n");
             
-            #line 34 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 37 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
 foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
 {
             
@@ -93,21 +109,21 @@ foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
             #line hidden
             this.Write("\tCore.Buffer.DynamicUniformBuffer ");
             
-            #line 36 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 39 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
             
             #line default
             #line hidden
             this.Write("Buffer;\r\n");
             
-            #line 37 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 40 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 39 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 42 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
 foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
 {
             
@@ -115,54 +131,61 @@ foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
             #line hidden
             this.Write("\tpublic void Set");
             
-            #line 41 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 44 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
             
             #line default
             #line hidden
             this.Write("BlockData(ref ");
             
-            #line 41 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 44 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
             
             #line default
             #line hidden
             this.Write(" Data)\r\n\t{\r\n\t\tvar Loc = VSProgram.GetUniformBlockIndex(\"");
             
-            #line 43 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 46 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
             
             #line default
             #line hidden
             this.Write("\");\r\n\t\t");
             
-            #line 44 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 47 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
             
             #line default
             #line hidden
             this.Write("Buffer.BindBufferBase(Loc);\r\n\t\t");
             
-            #line 45 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 48 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
             
             #line default
             #line hidden
             this.Write("Buffer.BufferWholeData<");
             
-            #line 45 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 48 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
             
             #line default
             #line hidden
             this.Write(">(ref Data);\r\n\t}\r\n");
             
-            #line 47 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            #line 50 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
 }
             
             #line default
             #line hidden
-            this.Write("}");
+            this.Write("\r\n\tprotected string GetShaderSourceCode()\r\n\t{\r\n\t\treturn @\"");
+            
+            #line 54 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\VertexShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(SourceCode));
+            
+            #line default
+            #line hidden
+            this.Write("\";\r\n\t}\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

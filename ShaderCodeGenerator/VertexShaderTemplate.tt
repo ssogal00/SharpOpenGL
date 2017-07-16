@@ -17,10 +17,13 @@ public interface IVertexShaderInterface
 public class VertexShaderBase
 {
 	ShaderProgram VSProgram;
+	Core.OpenGLShader.VertexShader VSShader;
 
 	public VertexShaderBase(ShaderProgram programObject)
 	{
 		VSProgram = programObject;
+		VSShader.CompileShader(GetShaderSourceCode());
+		VSProgram.AttachShader(VSShader);
 		Initialize();
 	}
 
@@ -45,4 +48,9 @@ public class VertexShaderBase
 		<#=UniformBlockName#>Buffer.BufferWholeData<<#=UniformBlockName#>>(ref Data);
 	}
 <#}#>
+
+	protected string GetShaderSourceCode()
+	{
+		return @"<#=SourceCode#>";
+	}
 }

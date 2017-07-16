@@ -53,7 +53,8 @@
     <Compile Include="CompiledShaderVariables.TestShader2.cs" />
     <Compile Include="CompiledVertexAttributes.TestShader.cs" />
     <Compile Include="CompiledVertexAttributes.TestShader2.cs" />
-    <Compile Include="CompiledVertexShader.cs" />
+    <Compile Include="CompiledVertexShader.TestShader.cs" />
+    <Compile Include="CompiledVertexShader.TestShader2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

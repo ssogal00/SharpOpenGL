@@ -50,11 +50,22 @@ foreach(var Sampler in ProgramObject.GetSampler2DNames())
             
             #line default
             #line hidden
-            this.Write("}\r\n\r\npublic class FragmentShaderBase\r\n{\r\n\tShaderProgram FSProgram;\r\n\r\n\tpublic Fra" +
-                    "gmentShaderBase(ShaderProgram programObject)\r\n\t{\r\n\t\tFSProgram = programObject;\t\t" +
-                    "\t\r\n\t}\r\n");
+            this.Write(@"}
+
+public class FragmentShaderBase
+{
+	ShaderProgram FSProgram;
+	Core.OpenGLShader.FragmentShader FSShader;
+
+	public FragmentShaderBase(ShaderProgram programObject)
+	{
+		FSProgram = programObject;			
+		FSShader.CompileShader(GetShaderSourceCode());
+		FSProgram.AttachShader(FSShader);
+	}
+");
             
-            #line 23 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 26 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
  int index = 0;
 foreach(var Sampler in ProgramObject.GetSampler2DNames())
 {
@@ -63,7 +74,7 @@ foreach(var Sampler in ProgramObject.GetSampler2DNames())
             #line hidden
             this.Write("\tpublic void Set");
             
-            #line 26 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 29 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
             
             #line default
@@ -71,7 +82,7 @@ foreach(var Sampler in ProgramObject.GetSampler2DNames())
             this.Write("2D(Core.Texture.Texture2D TextureObject)\r\n\t{\r\n\t\tGL.ActiveTexture(TextureUnit.Text" +
                     "ure");
             
-            #line 28 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 31 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(index));
             
             #line default
@@ -79,32 +90,39 @@ foreach(var Sampler in ProgramObject.GetSampler2DNames())
             this.Write(");\r\n        TextureObject.Bind();\r\n        var Loc = FSProgram.GetSampler2DUnifor" +
                     "mLocation(\"");
             
-            #line 30 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 33 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
             
             #line default
             #line hidden
             this.Write("\");\r\n\t\tGL.Uniform1(Loc, (int)(");
             
-            #line 31 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 34 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(index));
             
             #line default
             #line hidden
             this.Write("));\r\n\t}\r\n");
             
-            #line 33 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 36 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
 index++;
             
             #line default
             #line hidden
             
-            #line 34 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 37 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
 }
             
             #line default
             #line hidden
-            this.Write("}");
+            this.Write("\tprotected string GetShaderSourceCode()\r\n\t{\r\n\t\treturn @\"");
+            
+            #line 40 "E:\Users\openg\OneDrive\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(SourceCode));
+            
+            #line default
+            #line hidden
+            this.Write("\";\r\n\t}\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }

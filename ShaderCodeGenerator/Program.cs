@@ -48,7 +48,7 @@ namespace ShaderCompiler
 
                                 program.ProgramName = filename;
 
-                                var FragmentShaderCodeGen = new FragmentShaderCodeGenerator(program, filename + ".FragmentShader");
+                                var FragmentShaderCodeGen = new FragmentShaderCodeGenerator(program, filename + ".FragmentShader", File.ReadAllText(fsFile));
 
                                 var OutputFilename = string.Format("CompiledFragmentShader.{0}.cs", filename);
 
@@ -90,11 +90,12 @@ namespace ShaderCompiler
 
                                 Console.Write(test2);
 
-                                var VertexShaderCodeGen = new VertexShaderCodeGenerator(program, filename + ".VertexShader");
+                                var ShaderSourceCode = File.ReadAllText(vsFile);                                
+                                var VertexShaderCodeGen = new VertexShaderCodeGenerator(program, filename + ".VertexShader", ShaderSourceCode);
 
                                 var VertexShaderOutputFilename = string.Format("CompiledVertexShader.{0}.cs", filename);
 
-                                File.WriteAllText(Path.Combine(args[1], "CompiledVertexShader.cs"), VertexShaderCodeGen.GetCode());
+                                File.WriteAllText(Path.Combine(args[1], VertexShaderOutputFilename), VertexShaderCodeGen.GetCode());
                             }
                         }
                         

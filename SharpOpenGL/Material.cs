@@ -9,6 +9,6 @@ using SharpOpenGL.TestShader;
 
 namespace SharpOpenGL
 {
-    public class Material
-    { }
+    public class TestMaterial { }
+    
 }

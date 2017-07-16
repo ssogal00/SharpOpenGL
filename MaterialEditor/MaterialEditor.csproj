@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FreeImageNET, Version=3.15.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SharpOpenGL\lib\FreeImageNET.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>..\SharpOpenGL\lib\OpenTK\OpenTK.dll</HintPath>
     </Reference>

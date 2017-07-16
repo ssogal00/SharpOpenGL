@@ -11,13 +11,15 @@ namespace ShaderCompiler
 {
     public partial class FragmentShaderTemplate
     {
-        public FragmentShaderTemplate(ShaderProgram Program, string ShaderName)
+        public FragmentShaderTemplate(ShaderProgram Program, string ShaderName,string ShaderSource)
         {
             ProgramObject = Program;
             FSShaderName = ShaderName;
+            SourceCode = ShaderSource;
         }
 
         ShaderProgram ProgramObject;
         string FSShaderName = "";
+        string SourceCode = "";
     }
 }

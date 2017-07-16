@@ -15,10 +15,13 @@ public interface IFragmentShaderInterface
 public class FragmentShaderBase
 {
 	ShaderProgram FSProgram;
+	Core.OpenGLShader.FragmentShader FSShader;
 
 	public FragmentShaderBase(ShaderProgram programObject)
 	{
 		FSProgram = programObject;			
+		FSShader.CompileShader(GetShaderSourceCode());
+		FSProgram.AttachShader(FSShader);
 	}
 <# int index = 0;
 foreach(var Sampler in ProgramObject.GetSampler2DNames())
@@ -32,4 +35,8 @@ foreach(var Sampler in ProgramObject.GetSampler2DNames())
 	}
 <#index++;#>
 <#}#>
+	protected string GetShaderSourceCode()
+	{
+		return @"<#=SourceCode#>";
+	}
 }
