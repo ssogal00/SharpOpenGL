@@ -57,7 +57,7 @@ namespace ShaderCompiler
 		
 		MaterialProgram.LinkProgram( out CompileResult );	
 
-		Initialize();
+		Initialize(MaterialProgram);
 	}
 
 	public ShaderProgram GetProgramObject()
@@ -70,7 +70,7 @@ namespace ShaderCompiler
 		MaterialProgram.UseProgram();
 	}
 
-	public void Initialize()
+	public void Initialize(ShaderProgram ProgramObject)
 	{
 ");
             
@@ -87,7 +87,14 @@ foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
             
             #line default
             #line hidden
-            this.Write("Buffer = new Core.Buffer.DynamicUniformBuffer();\r\n");
+            this.Write("Buffer = new Core.Buffer.DynamicUniformBuffer(ProgramObject, @\"");
+            
+            #line 44 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
+            
+            #line default
+            #line hidden
+            this.Write("\");\r\n");
             
             #line 45 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
 }
@@ -152,30 +159,58 @@ foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
             
             #line default
             #line hidden
-            this.Write("Buffer.BindBufferBase(Loc);\r\n\t\t");
+            this.Write("Buffer.Bind();\r\n\t\t// ");
             
             #line 58 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
+            
+            #line default
+            #line hidden
+            this.Write("Buffer.BindBufferBase(Loc);\r\n\t\t");
+            
+            #line 59 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
+            
+            #line default
+            #line hidden
+            this.Write("Buffer.BindBufferBase(0);\r\n\t\t");
+            
+            #line 60 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
+            
+            #line default
+            #line hidden
+            this.Write("Buffer.BufferData<");
+            
+            #line 60 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
+            
+            #line default
+            #line hidden
+            this.Write(">(ref Data);\r\n\t\t// ");
+            
+            #line 61 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
             
             #line default
             #line hidden
             this.Write("Buffer.BufferWholeData<");
             
-            #line 58 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 61 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(UniformBlockName));
             
             #line default
             #line hidden
             this.Write(">(ref Data);\r\n\t}\r\n");
             
-            #line 60 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 63 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 62 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 65 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
  int index = 0;
 foreach(var Sampler in FSProgram.GetSampler2DNames())
 {
@@ -184,7 +219,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
             #line hidden
             this.Write("\tpublic void Set");
             
-            #line 65 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 68 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
             
             #line default
@@ -192,7 +227,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
             this.Write("2D(Core.Texture.Texture2D TextureObject)\r\n\t{\r\n\t\tGL.ActiveTexture(TextureUnit.Text" +
                     "ure");
             
-            #line 67 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 70 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(index));
             
             #line default
@@ -200,48 +235,48 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
             this.Write(");\r\n        TextureObject.Bind();\r\n        var Loc = MaterialProgram.GetSampler2D" +
                     "UniformLocation(\"");
             
-            #line 69 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 72 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
             
             #line default
             #line hidden
             this.Write("\");\r\n\t\t// GL.Uniform1(Loc, (int)(");
             
-            #line 70 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 73 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(index));
             
             #line default
             #line hidden
             this.Write("));\r\n\t\tTextureObject.BindShader(TextureUnit.Texture");
             
-            #line 71 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 74 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(index));
             
             #line default
             #line hidden
             this.Write(", Loc);\r\n\t}\r\n");
             
-            #line 73 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 76 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
 index++;
             
             #line default
             #line hidden
             
-            #line 74 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 77 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n\tprotected string GetVSSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
-            #line 78 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 81 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VSSourceCode));
             
             #line default
             #line hidden
             this.Write("\";\r\n\t}\r\n\r\n\tprotected string GetFSSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
-            #line 83 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 86 "C:\Users\ssogal\Documents\GitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FSSourceCode));
             
             #line default

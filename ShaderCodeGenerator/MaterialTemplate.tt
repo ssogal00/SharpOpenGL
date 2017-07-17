@@ -24,7 +24,7 @@ public class <#=ShaderName#>
 		
 		MaterialProgram.LinkProgram( out CompileResult );	
 
-		Initialize();
+		Initialize(MaterialProgram);
 	}
 
 	public ShaderProgram GetProgramObject()
@@ -37,11 +37,11 @@ public class <#=ShaderName#>
 		MaterialProgram.UseProgram();
 	}
 
-	public void Initialize()
+	public void Initialize(ShaderProgram ProgramObject)
 	{
 <#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
 {#>
-		<#=UniformBlockName#>Buffer = new Core.Buffer.DynamicUniformBuffer();
+		<#=UniformBlockName#>Buffer = new Core.Buffer.DynamicUniformBuffer(ProgramObject, @"<#=UniformBlockName#>");
 <#}#>
 	}
 <#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
@@ -54,8 +54,11 @@ public class <#=ShaderName#>
 	public void Set<#=UniformBlockName#>BlockData(ref <#=UniformBlockName#> Data)
 	{
 		var Loc = MaterialProgram.GetUniformBlockIndex("<#=UniformBlockName#>");
-		<#=UniformBlockName#>Buffer.BindBufferBase(Loc);
-		<#=UniformBlockName#>Buffer.BufferWholeData<<#=UniformBlockName#>>(ref Data);
+		<#=UniformBlockName#>Buffer.Bind();
+		// <#=UniformBlockName#>Buffer.BindBufferBase(Loc);
+		<#=UniformBlockName#>Buffer.BindBufferBase(0);
+		<#=UniformBlockName#>Buffer.BufferData<<#=UniformBlockName#>>(ref Data);
+		// <#=UniformBlockName#>Buffer.BufferWholeData<<#=UniformBlockName#>>(ref Data);
 	}
 <#}#>
 

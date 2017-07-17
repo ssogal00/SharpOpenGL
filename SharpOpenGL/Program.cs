@@ -98,12 +98,9 @@ namespace SharpOpenGL
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             Transform.View = Camera.View;
-            Transform.Proj = Camera.Proj;
-            /* Transform.Model = Matrix4.Identity * Matrix4.CreateScale(0.3f);*/
+            Transform.Proj = Camera.Proj;                  
+            TestMaterial.SetTransformBlockData(ref Transform);
 
-            TransformBuffer.BindBufferBase(0);
-            TransformBuffer.BufferData<TestShaderVS.Transform>(ref Transform);            
-            
             Mesh.Draw(TestMaterial);
 
             SwapBuffers();
@@ -143,11 +140,7 @@ namespace SharpOpenGL
 
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
             Transform.Model = Matrix4.CreateScale(0.03f);
-            Transform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);
-
-            TransformBuffer.Bind();            
-            TransformBuffer.BufferData<TestShaderVS.Transform>(ref Transform);
-            
+            Transform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);            
 
             ColorBuffer.Bind();
             var greenColor = new Vector3(0,1,0);

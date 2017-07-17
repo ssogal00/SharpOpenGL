@@ -30,7 +30,7 @@ public class BasicMaterial
 		
 		MaterialProgram.LinkProgram( out CompileResult );	
 
-		Initialize();
+		Initialize(MaterialProgram);
 	}
 
 	public ShaderProgram GetProgramObject()
@@ -43,10 +43,10 @@ public class BasicMaterial
 		MaterialProgram.UseProgram();
 	}
 
-	public void Initialize()
+	public void Initialize(ShaderProgram ProgramObject)
 	{
-		ColorBlockBuffer = new Core.Buffer.DynamicUniformBuffer();
-		TransformBuffer = new Core.Buffer.DynamicUniformBuffer();
+		ColorBlockBuffer = new Core.Buffer.DynamicUniformBuffer(ProgramObject, @"ColorBlock");
+		TransformBuffer = new Core.Buffer.DynamicUniformBuffer(ProgramObject, @"Transform");
 	}
 	Core.Buffer.DynamicUniformBuffer ColorBlockBuffer;
 	Core.Buffer.DynamicUniformBuffer TransformBuffer;
@@ -54,14 +54,20 @@ public class BasicMaterial
 	public void SetColorBlockBlockData(ref ColorBlock Data)
 	{
 		var Loc = MaterialProgram.GetUniformBlockIndex("ColorBlock");
-		ColorBlockBuffer.BindBufferBase(Loc);
-		ColorBlockBuffer.BufferWholeData<ColorBlock>(ref Data);
+		ColorBlockBuffer.Bind();
+		// ColorBlockBuffer.BindBufferBase(Loc);
+		ColorBlockBuffer.BindBufferBase(0);
+		ColorBlockBuffer.BufferData<ColorBlock>(ref Data);
+		// ColorBlockBuffer.BufferWholeData<ColorBlock>(ref Data);
 	}
 	public void SetTransformBlockData(ref Transform Data)
 	{
 		var Loc = MaterialProgram.GetUniformBlockIndex("Transform");
-		TransformBuffer.BindBufferBase(Loc);
-		TransformBuffer.BufferWholeData<Transform>(ref Data);
+		TransformBuffer.Bind();
+		// TransformBuffer.BindBufferBase(Loc);
+		TransformBuffer.BindBufferBase(0);
+		TransformBuffer.BufferData<Transform>(ref Data);
+		// TransformBuffer.BufferWholeData<Transform>(ref Data);
 	}
 
 	public void SetTestTexture2D(Core.Texture.Texture2D TextureObject)
