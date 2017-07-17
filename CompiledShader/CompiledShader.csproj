@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CompiledShader</RootNamespace>
     <AssemblyName>CompiledShader</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -47,14 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CompiledFragmentShader.TestShader.cs" />
-    <Compile Include="CompiledFragmentShader.TestShader2.cs" />
-    <Compile Include="CompiledShaderVariables.TestShader.cs" />
-    <Compile Include="CompiledShaderVariables.TestShader2.cs" />
-    <Compile Include="CompiledVertexAttributes.TestShader.cs" />
-    <Compile Include="CompiledVertexAttributes.TestShader2.cs" />
-    <Compile Include="CompiledVertexShader.TestShader.cs" />
-    <Compile Include="CompiledVertexShader.TestShader2.cs" />
+    <Compile Include="Compiled.BasicMaterial.cs" />
+    <Compile Include="CompiledShaderVariables.BasicMaterial.cs" />
+    <Compile Include="CompiledVertexAttributes.BasicMaterial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

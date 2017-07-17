@@ -16,8 +16,8 @@ namespace SharpOpenGL.StaticMesh
         public string SpecularMap;
         public string MaskMap;
 
-        OpenTK.Vector3 Ambient;
-        OpenTK.Vector3 Diffuse;
-        OpenTK.Vector3 Specular;
+//         OpenTK.Vector3 Ambient;
+//         OpenTK.Vector3 Diffuse;
+//         OpenTK.Vector3 Specular;
     }
 }

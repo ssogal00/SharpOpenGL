@@ -12,6 +12,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 using System.IO;
+using System.Xml.Linq;
 
 namespace ShaderCompiler
 {
@@ -30,75 +31,64 @@ namespace ShaderCompiler
                     context.MakeCurrent(windowInfo);
 
                     context.LoadAll();
-                    
                     if (Directory.Exists(args[0]))
                     {
-                        foreach(var fsFile in Directory.EnumerateFiles(args[0], "*.fs"))
+                        string materialXml = Path.Combine(args[0], "MaterialList.xml");
+                        string dir = Path.GetDirectoryName(materialXml);
+                        if(File.Exists(materialXml))
                         {
-                            FragmentShader fs = new FragmentShader();
-                            ShaderProgram program = new ShaderProgram();
-
-                            fs.CompileShader(File.ReadAllText(fsFile));
-                            program.AttachShader(fs);
-
-                            String result;
-                            if(program.LinkProgram(out result))
+                            var Root = XElement.Load(materialXml);
+                            foreach(var Node in Root.Descendants("Material"))
                             {
-                                var filename = Path.GetFileNameWithoutExtension(fsFile);
+                                string vsPath = Node.Attribute("vertexShader").Value;
+                                string fsPath = Node.Attribute("fragmentShader").Value;
+                                string materialName = Node.Attribute("name").Value;
 
-                                program.ProgramName = filename;
+                                FragmentShader fs = new FragmentShader();
+                                VertexShader vs = new VertexShader();
 
-                                var FragmentShaderCodeGen = new FragmentShaderCodeGenerator(program, filename + ".FragmentShader", File.ReadAllText(fsFile));
+                                ShaderProgram fsProgram = new ShaderProgram();
+                                ShaderProgram vsProgram = new ShaderProgram();
 
-                                var OutputFilename = string.Format("CompiledFragmentShader.{0}.cs", filename);
+                                fs.CompileShader(File.ReadAllText( Path.Combine(dir, fsPath)));
+                                fsProgram.AttachShader(fs);
 
-                                File.WriteAllText(Path.Combine(args[1], OutputFilename), FragmentShaderCodeGen.GetCode());
-                            }
-                        }
+                                vs.CompileShader(File.ReadAllText(Path.Combine(dir, vsPath)));
+                                vsProgram.AttachShader(vs);
 
-                        // generate code for vertex shader files
-                        foreach (var vsFile in Directory.EnumerateFiles(args[0], "*.vs"))
-                        {
-                            VertexShader vs = new VertexShader();
-                            ShaderProgram program = new ShaderProgram();                            
+                                string fsResult = "";
+                                string vsResult = "";
 
-                            vs.CompileShader(File.ReadAllText(vsFile));
-                            program.AttachShader(vs);
+                                if(fsProgram.LinkProgram(out fsResult) && vsProgram.LinkProgram(out vsResult))
+                                {
+                                    var materialCode = new MaterialCodeGenerator(vsProgram, fsProgram, File.ReadAllText(Path.Combine(dir, vsPath)), File.ReadAllText(Path.Combine(dir, fsPath)), materialName );
 
-                            String result;
-                            if (program.LinkProgram(out result))
-                            {
-                                var filename = Path.GetFileNameWithoutExtension(vsFile);
+                                    var codeContents = materialCode.GetCode();
 
-                                var gen = new VertexAttributeCodeGenerator(program, filename + ".VertexShader");
+                                    File.WriteAllText(Path.Combine(args[1], string.Format("Compiled.{0}.cs", materialName)), codeContents);
+                                }
+
+                                var gen = new VertexAttributeCodeGenerator(vsProgram, materialName);
 
                                 var test = gen.GetCode();
 
-                                var VertexAttributeOutputFilename = string.Format("CompiledVertexAttributes.{0}.cs", filename);
+                                var VertexAttributeOutputFilename = string.Format("CompiledVertexAttributes.{0}.cs", materialName);
 
                                 File.WriteAllText(Path.Combine(args[1], VertexAttributeOutputFilename), test);
 
                                 Console.Write(test);
 
-                                var UniformCodeGen = new ShaderUniformCodeGenerator(program, filename + ".VertexShader");
+                                var UniformCodeGen = new ShaderUniformCodeGenerator(vsProgram, materialName);
 
                                 var test2 = UniformCodeGen.GetCode();
 
-                                var ShaderVariableOutputFilename = string.Format("CompiledShaderVariables.{0}.cs", filename);
+                                var ShaderVariableOutputFilename = string.Format("CompiledShaderVariables.{0}.cs", materialName);
 
                                 File.WriteAllText(Path.Combine(args[1], ShaderVariableOutputFilename), UniformCodeGen.GetCode());
 
                                 Console.Write(test2);
-
-                                var ShaderSourceCode = File.ReadAllText(vsFile);                                
-                                var VertexShaderCodeGen = new VertexShaderCodeGenerator(program, filename + ".VertexShader", ShaderSourceCode);
-
-                                var VertexShaderOutputFilename = string.Format("CompiledVertexShader.{0}.cs", filename);
-
-                                File.WriteAllText(Path.Combine(args[1], VertexShaderOutputFilename), VertexShaderCodeGen.GetCode());
                             }
                         }
-                        
                     }
                 }
             }

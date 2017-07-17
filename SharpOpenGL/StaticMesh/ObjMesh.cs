@@ -13,17 +13,16 @@ using Core.Buffer;
 using Core.OpenGLShader;
 using Core.Texture;
 
-using SharpOpenGL.TestShader.VertexShader;
-using TestShaderVertexAttributes = SharpOpenGL.TestShader.VertexShader.VertexAttribute;
+using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
 
 namespace SharpOpenGL.StaticMesh
 {
     public class ObjMesh
     {
-        StaticVertexBuffer<SharpOpenGL.TestShader.VertexShader.VertexAttribute> VB = null;
+        StaticVertexBuffer<SharpOpenGL.BasicMaterial.VertexAttribute> VB = null;
         IndexBuffer IB = null;
 
-        List<SharpOpenGL.TestShader.VertexShader.VertexAttribute> Vertices = new List<SharpOpenGL.TestShader.VertexShader.VertexAttribute>();
+        List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
         
         List<Vector3> TempVertices = new List<Vector3>();
         List<Vector2> TempTexCoord = new List<Vector2>();
@@ -41,21 +40,18 @@ namespace SharpOpenGL.StaticMesh
         {
         }
 
-        public void Draw(ShaderProgram Program)
+        public void Draw(SharpOpenGL.BasicMaterial.BasicMaterial Material)
         {
             VB.Bind();
             IB.Bind();
 
-            SharpOpenGL.TestShader.VertexShader.VertexAttribute.VertexAttributeBinding();
+            SharpOpenGL.BasicMaterial.VertexAttribute.VertexAttributeBinding();
 
             foreach(var Section in MeshSectionList)            
             {
                 if(MaterialMap.ContainsKey(Section.SectionName) )
-                {
-                    GL.ActiveTexture(TextureUnit.Texture0);
-                    TextureMap[MaterialMap[Section.SectionName].DiffuseMap].Bind();
-                    var Loc = Program.GetSampler2DUniformLocation("TestTexture");
-                    TextureMap[MaterialMap[Section.SectionName].DiffuseMap].BindShader(TextureUnit.Texture0, Loc);
+                {                    
+                    Material.SetTestTexture2D(TextureMap[MaterialMap[Section.SectionName].DiffuseMap]);                    
                 }
 
                 var ByteOffset = new IntPtr(Section.StartIndex * sizeof(uint) );
@@ -65,12 +61,12 @@ namespace SharpOpenGL.StaticMesh
 
         public void PrepareToDraw()
         {
-            VB = new StaticVertexBuffer<SharpOpenGL.TestShader.VertexShader.VertexAttribute>();
+            VB = new StaticVertexBuffer<SharpOpenGL.BasicMaterial.VertexAttribute>();
             IB = new IndexBuffer();
 
             VB.Bind();
             var Arr = Vertices.ToArray();
-            VB.BufferData<SharpOpenGL.TestShader.VertexShader.VertexAttribute>(ref Arr);
+            VB.BufferData<SharpOpenGL.BasicMaterial.VertexAttribute>(ref Arr);
             VB.VertexAttribPointer(Arr);
 
             IB.Bind();

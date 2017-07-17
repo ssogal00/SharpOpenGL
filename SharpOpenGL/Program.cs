@@ -18,8 +18,8 @@ using SharpOpenGL.StaticMesh;
 using Core.Texture;
 using Core.Tickable;
 
-using TestShaderVertexAttributes = SharpOpenGL.TestShader.VertexShader.VertexAttribute;
-using TestShaderVS = SharpOpenGL.TestShader.VertexShader;
+using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
+using TestShaderVS = SharpOpenGL.BasicMaterial;
 
 namespace SharpOpenGL
 {
@@ -58,6 +58,8 @@ namespace SharpOpenGL
         protected TestShaderVS.Transform Transform = new TestShaderVS.Transform();
         protected ShaderProgram ProgramObject = null;
 
+        protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
+
         protected ObjMesh Mesh = new ObjMesh();
 
         protected override void OnLoad(EventArgs e)
@@ -70,43 +72,16 @@ namespace SharpOpenGL
 
             GL.ClearColor(System.Drawing.Color.White);            
 
-            VertexShader vs = new VertexShader();
+            TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();            
 
-            var dir = Directory.GetCurrentDirectory();
-            
-            var content = File.ReadAllText("..\\..\\Shader\\TestShader.vs");
+            TestMaterial.Use();            
 
-            vs.CompileShader(content);
+            // init uniform buffer
+            TransformBuffer = new DynamicUniformBuffer();
+            ColorBuffer     = new DynamicUniformBuffer();
 
-            FragmentShader fs = new FragmentShader();
-
-            var fscontent = File.ReadAllText("..\\..\\Shader\\TestShader.fs");
-
-            fs.CompileShader(fscontent);
-
-            ProgramObject = new ShaderProgram();
-
-            ProgramObject.AttachShader(vs);
-            ProgramObject.AttachShader(fs);
-
-            String result;
-            if (ProgramObject.LinkProgram(out result))
-            {
-                ProgramObject.UseProgram();
-
-                // init uniform buffer
-                TransformBuffer = new DynamicUniformBuffer();
-                ColorBuffer     = new DynamicUniformBuffer();
-
-                Mesh.Load("..\\..\\ObjMesh\\sponza2.obj", "..\\..\\ObjMesh\\sponzaPBR.mtl");
-                //Mesh.Load("../../ObjMesh/pop.obj", "../../ObjMesh/pop.mtl");
-
-            }
-            else
-            {
-                
-                MessageBox.Show(result);
-            }
+            Mesh.Load("..\\..\\ObjMesh\\sponza2.obj", "..\\..\\ObjMesh\\sponzaPBR.mtl");
+            //Mesh.Load("../../ObjMesh/pop.obj", "../../ObjMesh/pop.mtl");            
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -129,7 +104,7 @@ namespace SharpOpenGL
             TransformBuffer.BindBufferBase(0);
             TransformBuffer.BufferData<TestShaderVS.Transform>(ref Transform);            
             
-            Mesh.Draw(ProgramObject);
+            Mesh.Draw(TestMaterial);
 
             SwapBuffers();
         }

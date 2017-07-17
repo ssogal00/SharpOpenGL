@@ -7,7 +7,7 @@ using Core.Buffer;
 using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
-namespace SharpOpenGL.TestShader.VertexShader
+namespace SharpOpenGL.BasicMaterial
 {
 
 

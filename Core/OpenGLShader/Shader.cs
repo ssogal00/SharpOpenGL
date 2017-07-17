@@ -12,7 +12,7 @@ namespace Core.OpenGLShader
     public class Shader
     {
         public Shader()
-        {
+        {            
         }        
 
 

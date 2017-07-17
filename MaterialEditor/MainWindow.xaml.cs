@@ -111,7 +111,7 @@ namespace MaterialEditor
             TransformBuffer.BindBufferBase(0);
             TransformBuffer.BufferData<Transform>(ref TransformData);
 
-            Mesh.Draw(ProgramObject);            
+            //Mesh.Draw(ProgramObject);            
 
             mGlControl.SwapBuffers();
         }

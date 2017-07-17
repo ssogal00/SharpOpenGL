@@ -7,26 +7,27 @@ using Core.Buffer;
 using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
-namespace SharpOpenGL.TestShader2.VertexShader
+namespace SharpOpenGL.BasicMaterial
 {
 
-public interface IVertexShaderInterface
+public class BasicMaterialMaterial
 {
-	void SetColorBlockBlockData(ref ColorBlock Data);
-	void SetTransformBlockData(ref Transform Data);
-	
-}
-
-public class VertexShaderBase
-{
-	ShaderProgram VSProgram;
+	ShaderProgram MaterialProgram;
 	Core.OpenGLShader.VertexShader VSShader;
+	Core.OpenGLShader.FragmentShader FSShader;
 
-	public VertexShaderBase(ShaderProgram programObject)
+	public BasicMaterialMaterial()
 	{
-		VSProgram = programObject;
-		VSShader.CompileShader(GetShaderSourceCode());
-		VSProgram.AttachShader(VSShader);
+		MaterialProgram = new Core.OpenGLShader.ShaderProgram();
+		
+		VSShader.CompileShader(GetVSSourceCode());
+		FSShader.ComplieShader(GetFSSourceCode());
+
+		MaterialProgram.AttachShader(VSShader);
+		MaterialProgram.AttachShader(FSShader);
+		
+		MaterialProgram.Link();	
+
 		Initialize();
 	}
 
@@ -51,7 +52,15 @@ public class VertexShaderBase
 		TransformBuffer.BufferWholeData<Transform>(ref Data);
 	}
 
-	protected string GetShaderSourceCode()
+	public void SetTestTexture2D(Core.Texture.Texture2D TextureObject)
+	{
+		GL.ActiveTexture(TextureUnit.Texture0);
+        TextureObject.Bind();
+        var Loc = FSProgram.GetSampler2DUniformLocation("TestTexture");
+		GL.Uniform1(Loc, (int)(0));
+	}
+
+	protected string GetVSSourceCode()
 	{
 		return @"#version 430 core
 
@@ -79,6 +88,24 @@ void main()
 	Color = vec3(1,0,0);
 	OutTexCoord = TexCoord;
 	gl_Position = ( Proj * View * Model) * vec4(VertexPosition, 1);
+}";
+	}
+
+	protected string GetFSSourceCode()
+	{
+		return @"
+#version 430 core
+
+in vec3 Color;
+in vec2 OutTexCoord;
+out vec4 FragColor;
+
+uniform sampler2D TestTexture;
+
+
+void main()
+{   
+    FragColor = texture(TestTexture, OutTexCoord);
 }";
 	}
 }
