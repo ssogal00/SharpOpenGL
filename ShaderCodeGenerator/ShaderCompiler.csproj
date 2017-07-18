@@ -94,6 +94,12 @@
       <DependentUpon>SamplerGenerator.tt</DependentUpon>
     </Compile>
     <Compile Include="SamplerGeneratorPartial.cs" />
+    <Compile Include="ShaderUniformBlockTemplate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ShaderUniformBlockTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShaderUniformBlockTemplatePartial.cs" />
     <Compile Include="ShaderUniformCodeGenerator.cs" />
     <Compile Include="ShaderUniformTemplate.cs">
       <AutoGen>True</AutoGen>
@@ -151,6 +157,10 @@
     <Content Include="SamplerGenerator.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>SamplerGenerator.cs</LastGenOutput>
+    </Content>
+    <Content Include="ShaderUniformBlockTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ShaderUniformBlockTemplate.cs</LastGenOutput>
     </Content>
     <Content Include="ShaderUniformTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
