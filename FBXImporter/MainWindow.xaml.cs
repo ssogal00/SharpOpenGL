@@ -25,8 +25,12 @@ namespace FBXImporter
         public MainWindow()
         {
             InitializeComponent();
-            var test = new FBXWrapper.FBXSDKWrapper();
-            test.Print();
+            var SdkWrapper = new FBXWrapper.FBXSDKWrapper();
+
+            if(SdkWrapper.InitializeSDK())
+            {
+                SdkWrapper.ImportFBXMesh("Sample.FBX");
+            }            
         }
     }
 }

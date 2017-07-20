@@ -7,20 +7,20 @@ using namespace msclr::interop;
 
 bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
 {
-	FbxManager* pManager = FbxManager::Create();
+	FBXManager = FbxManager::Create();
 
-	if (!pManager)
+	if (!FBXManager)
 	{
 		return false;
 	}
 
-	FbxIOSettings* ios = FbxIOSettings::Create(pManager, IOSROOT);
-	pManager->SetIOSettings(ios);
+	FbxIOSettings* ios = FbxIOSettings::Create(FBXManager, IOSROOT);
+	FBXManager->SetIOSettings(ios);
 	
 	FbxString lPath = FbxGetApplicationDirectory();
-	pManager->LoadPluginsDirectory(lPath.Buffer());
+	FBXManager->LoadPluginsDirectory(lPath.Buffer());
 		
-	Scene = FbxScene::Create(pManager, "My Scene");
+	Scene = FbxScene::Create(FBXManager, "My Scene");
 	if (!Scene)
 	{
 		FBXSDK_printf("Error: Unable to create FBX scene!\n");
@@ -32,7 +32,7 @@ bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
 
 bool FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
 {
-	
+	LoadScene(FBXManager, Scene, FilePath);
 	return true;
 }
 
