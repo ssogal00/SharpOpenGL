@@ -72,7 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)\FBXWrapper\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\FBXWrapper\lib\vs2015\x86\debug;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)\FBXWrapper\lib\vs2015\x86\debug;$(SolutionDir)\FBXWrapper\lib\OpenTK;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,7 +118,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="FBXSDKWrapper.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FBXSDKWrapper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>..\SharpOpenGL\lib\OpenTK\OpenTK.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
