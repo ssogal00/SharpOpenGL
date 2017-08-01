@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F306074D-75DC-4318-8800-99F844A6D1A2}</ProjectGuid>
+    <ProjectGuid>{28ABFF9F-557B-49DA-A376-33A9734E322F}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FBXImporter</RootNamespace>

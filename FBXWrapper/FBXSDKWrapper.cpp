@@ -32,6 +32,7 @@ bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
 
 bool FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
 {
+	OpenTK::Vector3 Test;	
 	LoadScene(FBXManager, Scene, FilePath);
 	return true;
 }

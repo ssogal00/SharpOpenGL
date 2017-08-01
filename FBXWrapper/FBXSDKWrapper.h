@@ -1,6 +1,9 @@
 #pragma once
 
 #include "fbxsdk.h"
+
+#using <OpenTK.dll>
+
 namespace FBXWrapper
 {
 	public ref class FBXSDKWrapper
@@ -10,11 +13,12 @@ namespace FBXWrapper
 
 		bool ImportFBXMesh(System::String^ FilePath);		
 
+		
 	protected:
 		bool LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName);
 
 		class FbxScene* Scene = nullptr;
-		class FbxManager* FBXManager = nullptr;
+		class FbxManager* FBXManager = nullptr;		
 	};
 };
 
