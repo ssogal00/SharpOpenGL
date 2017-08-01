@@ -10,12 +10,11 @@ namespace FBXWrapper
 	{
 	public:
 		bool InitializeSDK();
-
-		bool ImportFBXMesh(System::String^ FilePath);		
-
+		bool ImportFBXMesh(System::String^ FilePath);
 		
 	protected:
 		bool LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName);
+		void ParseFbxMesh(FbxMesh* Mesh);
 
 		class FbxScene* Scene = nullptr;
 		class FbxManager* FBXManager = nullptr;		

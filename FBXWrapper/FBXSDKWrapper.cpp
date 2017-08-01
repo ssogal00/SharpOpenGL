@@ -5,6 +5,7 @@
 
 using namespace msclr::interop;
 
+
 bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
 {
 	FBXManager = FbxManager::Create();
@@ -33,8 +34,39 @@ bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
 bool FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
 {
 	OpenTK::Vector3 Test;	
-	LoadScene(FBXManager, Scene, FilePath);
+	bool bImportSuccess = LoadScene(FBXManager, Scene, FilePath);
+
+	if (Scene != nullptr && bImportSuccess == true)
+	{
+		FbxNode* RootNode = Scene->GetRootNode();
+		
+		if (RootNode)
+		{
+			System::Console::WriteLine("Child Node Count : {0}", RootNode->GetChildCount());
+
+			for (int i = 0; i < RootNode->GetChildCount(); ++i)
+			{	
+				FbxNode* ChildNode = RootNode->GetChild(i);
+
+				if (ChildNode && ChildNode->GetNodeAttribute())
+				{
+					if (ChildNode->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
+					{
+						ParseFbxMesh((FbxMesh*)(ChildNode->GetNodeAttribute()));
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	return true;
+}
+
+void FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh)
+{
+	int nPolygonCount = Mesh->GetPolygonCount();
+	FbxVector4* pControlPoints = Mesh->GetControlPoints();
 }
 
 bool FBXWrapper::FBXSDKWrapper::LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName)
@@ -60,7 +92,7 @@ bool FBXWrapper::FBXSDKWrapper::LoadScene(FbxManager* pFBXManager, FbxScene* pFB
 	if (!lImportStatus)
 	{
 		FbxString error = lImporter->GetStatus().GetErrorString();
-		FBXSDK_printf("Call to FbxImporter::Initialize() failed.\n");
+		System::Console::Write("Call to FbxImporter::Initialize() failed.\n");		
 		FBXSDK_printf("Error returned: %s\n\n", error.Buffer());
 
 		if (lImporter->GetStatus().GetCode() == FbxStatus::eInvalidFileVersion)
@@ -71,32 +103,32 @@ bool FBXWrapper::FBXSDKWrapper::LoadScene(FbxManager* pFBXManager, FbxScene* pFB
 
 		return false;
 	}
-
-
-	FBXSDK_printf("FBX file format version for this FBX SDK is %d.%d.%d\n", lSDKMajor, lSDKMinor, lSDKRevision);
+	
+	System::Console::WriteLine("FBX file format version for this FBX SDK is {0}.{1}.{2}", lSDKMajor, lSDKMinor, lSDKRevision);
 
 	if (lImporter->IsFBX())
 	{
-		FBXSDK_printf("FBX file format version for file '%s' is %d.%d.%d\n\n", stdFileName.c_str(), lFileMajor, lFileMinor, lFileRevision);
+		System::Console::WriteLine("FBX file format version for file '{0}' is {1}.{2}.{3}", FileName, lFileMajor, lFileMinor, lFileRevision);
 
 		// From this point, it is possible to access animation stack information without
 		// the expense of loading the entire file.
 
-		FBXSDK_printf("Animation Stack Information\n");
+		System::Console::WriteLine("Animation Stack Information\n");
 
 		lAnimStackCount = lImporter->GetAnimStackCount();
 
-		FBXSDK_printf("    Number of Animation Stacks: %d\n", lAnimStackCount);
-		FBXSDK_printf("    Current Animation Stack: \"%s\"\n", lImporter->GetActiveAnimStackName().Buffer());
-		FBXSDK_printf("\n");
+		System::Console::WriteLine("    Number of Animation Stacks: {0}", lAnimStackCount);
+		System::String^ AnimationStackName = gcnew System::String(lImporter->GetActiveAnimStackName().Buffer());
+		System::Console::WriteLine("    Current Animation Stack: \"{0}\"", AnimationStackName);
+		System::Console::WriteLine("");
 
 		for (i = 0; i < lAnimStackCount; i++)
 		{
 			FbxTakeInfo* lTakeInfo = lImporter->GetTakeInfo(i);
 
-			FBXSDK_printf("    Animation Stack %d\n", i);
-			FBXSDK_printf("         Name: \"%s\"\n", lTakeInfo->mName.Buffer());
-			FBXSDK_printf("         Description: \"%s\"\n", lTakeInfo->mDescription.Buffer());
+			System::Console::WriteLine("    Animation Stack {0}", i);
+			System::Console::WriteLine("         Name: \"{0}\"", gcnew System::String(lTakeInfo->mName.Buffer()));
+			System::Console::WriteLine("         Description: \"{0}\"", gcnew System::String(lTakeInfo->mDescription.Buffer()));
 
 			// Change the value of the import name if the animation stack should be imported 
 			// under a different name.
@@ -127,5 +159,4 @@ bool FBXWrapper::FBXSDKWrapper::LoadScene(FbxManager* pFBXManager, FbxScene* pFB
 	lImporter->Destroy();
 
 	return lStatus;
-
 }
