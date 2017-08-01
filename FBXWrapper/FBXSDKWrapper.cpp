@@ -31,6 +31,27 @@ bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
 	return true;
 }
 
+void FBXWrapper::FBXSDKWrapper::ParseNode(FbxNode* Node)
+{
+	if (Node != nullptr)
+	{
+		for (int i = 0; i < Node->GetChildCount(); ++i)
+		{
+			FbxNode* ChildNode = Node->GetChild(i);
+
+			if (ChildNode && ChildNode->GetNodeAttribute() && ChildNode->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
+			{
+				ParseFbxMesh((FbxMesh*)(ChildNode->GetNodeAttribute()));
+			}
+		}
+	}
+
+	for (int i = 0; i < Node->GetChildCount(); i++)
+	{
+		ParseNode(Node->GetChild(i));
+	}
+}
+
 bool FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
 {
 	OpenTK::Vector3 Test;	
@@ -42,21 +63,7 @@ bool FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
 		
 		if (RootNode)
 		{
-			System::Console::WriteLine("Child Node Count : {0}", RootNode->GetChildCount());
-
-			for (int i = 0; i < RootNode->GetChildCount(); ++i)
-			{	
-				FbxNode* ChildNode = RootNode->GetChild(i);
-
-				if (ChildNode && ChildNode->GetNodeAttribute())
-				{
-					if (ChildNode->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
-					{
-						ParseFbxMesh((FbxMesh*)(ChildNode->GetNodeAttribute()));
-						break;
-					}
-				}
-			}
+			ParseNode(RootNode);
 		}
 	}
 
@@ -132,12 +139,12 @@ bool FBXWrapper::FBXSDKWrapper::LoadScene(FbxManager* pFBXManager, FbxScene* pFB
 
 			// Change the value of the import name if the animation stack should be imported 
 			// under a different name.
-			FBXSDK_printf("         Import Name: \"%s\"\n", lTakeInfo->mImportName.Buffer());
+			System::Console::WriteLine("         Import Name: \"{0}\"\n", gcnew System::String(lTakeInfo->mImportName.Buffer()));
 
 			// Set the value of the import state to false if the animation stack should be not
 			// be imported. 
-			FBXSDK_printf("         Import State: %s\n", lTakeInfo->mSelect ? "true" : "false");
-			FBXSDK_printf("\n");
+			System::Console::WriteLine("         Import State: {0}\n", lTakeInfo->mSelect ? "true" : "false");
+			System::Console::WriteLine("\n");
 		}
 
 		// Set the import states. By default, the import states are always set to 

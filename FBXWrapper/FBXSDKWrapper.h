@@ -14,6 +14,8 @@ namespace FBXWrapper
 		
 	protected:
 		bool LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName);
+
+		void ParseNode(FbxNode* Node);
 		void ParseFbxMesh(FbxMesh* Mesh);
 
 		class FbxScene* Scene = nullptr;
