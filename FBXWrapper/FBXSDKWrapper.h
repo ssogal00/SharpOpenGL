@@ -18,6 +18,10 @@ namespace FBXWrapper
 		void ParseNode(FbxNode* Node);
 		void ParseFbxMesh(FbxMesh* Mesh);
 
+		OpenTK::Vector2 Parse2DVector(FbxVector2 Value);
+		OpenTK::Vector3 Parse3DVector(FbxVector4 Value);
+		OpenTK::Vector4 Parse4DVector(FbxVector4 Value);
+
 		class FbxScene* Scene = nullptr;
 		class FbxManager* FBXManager = nullptr;		
 	};

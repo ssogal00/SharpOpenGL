@@ -4,7 +4,8 @@
 #include <msclr/marshal_cppstd.h>
 
 using namespace msclr::interop;
-
+using namespace OpenTK;
+using namespace System::Collections;
 
 bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
 {
@@ -74,6 +75,48 @@ void FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh)
 {
 	int nPolygonCount = Mesh->GetPolygonCount();
 	FbxVector4* pControlPoints = Mesh->GetControlPoints();
+
+	List<OpenTK::Vector3^> ControlPointList = gcnew List<OpenTK::Vector3^>();
+
+	for (int i = 0; i < nPolygonCount; ++i)
+	{
+		int nPolygonSize = Mesh->GetPolygonSize(i);
+
+		for (int j = 0; j < nPolygonSize; ++j)
+		{
+			int nControlPointIndex = Mesh->GetPolygonVertex(i, j);
+			ControlPointList.Add(Parse3DVector(pControlPoints[i]));
+		}
+	}
+}
+
+Vector2 FBXWrapper::FBXSDKWrapper::Parse2DVector(FbxVector2 Value)
+{
+	Vector2 Result;
+	Result.X = static_cast<float>(Value[0]);
+	Result.Y = static_cast<float>(Value[1]);
+
+	return Result;
+}
+
+Vector3 FBXWrapper::FBXSDKWrapper::Parse3DVector(FbxVector4 Value)
+{
+	Vector3 Result;
+	Result.X = static_cast<float>(Value[0]);
+	Result.Y = static_cast<float>(Value[1]);
+	Result.Z = static_cast<float>(Value[2]);
+
+	return Result;
+}
+
+Vector4 FBXWrapper::FBXSDKWrapper::Parse4DVector(FbxVector4 Value)
+{
+	Vector4 Result;
+	Result.X = static_cast<float>(Value[0]);
+	Result.Y = static_cast<float>(Value[1]);
+	Result.Z = static_cast<float>(Value[2]);
+	Result.W = static_cast<float>(Value[3]);
+	return Result;
 }
 
 bool FBXWrapper::FBXSDKWrapper::LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName)
@@ -160,7 +203,6 @@ bool FBXWrapper::FBXSDKWrapper::LoadScene(FbxManager* pFBXManager, FbxScene* pFB
 
 	// Import the scene.
 	lStatus = lImporter->Import(pFBXScene);
-
 	
 	// Destroy the importer.
 	lImporter->Destroy();
