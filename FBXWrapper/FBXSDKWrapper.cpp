@@ -5,7 +5,7 @@
 
 using namespace msclr::interop;
 using namespace OpenTK;
-using namespace System::Collections;
+using namespace System::Collections::Generic;
 
 bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
 {
@@ -49,8 +49,63 @@ void FBXWrapper::FBXSDKWrapper::ParseNode(FbxNode* Node)
 
 	for (int i = 0; i < Node->GetChildCount(); i++)
 	{
+		System::Console::WriteLine("Here");
 		ParseNode(Node->GetChild(i));
 	}
+}
+
+FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh)
+{
+	ParsedFBXMesh^ ResultMesh = gcnew ParsedFBXMesh();
+	 	
+	int nPolygonCount = Mesh->GetPolygonCount();
+	ResultMesh->PolygonCount = nPolygonCount;
+	 
+	FbxVector4* pControlPoints = Mesh->GetControlPoints();
+	 
+	int VertexId = 0;
+	for (int i = 0; i < nPolygonCount; ++i)
+	{
+	 	int nPolygonSize = Mesh->GetPolygonSize(i);
+	 
+	 	for (int j = 0; j < nPolygonSize; ++j)
+	 	{
+	 		int nControlPointIndex = Mesh->GetPolygonVertex(i, j);
+	 		ResultMesh->VertexList.Add(Parse3DVector(pControlPoints[nControlPointIndex]));
+	 		ResultMesh->IndexList.Add(nControlPointIndex);
+
+			for (int k = 0; k < Mesh->GetElementNormalCount(); ++k)
+			{
+				FbxGeometryElementNormal* pNormal = Mesh->GetElementNormal(k);
+
+				if (pNormal->GetMappingMode() == FbxGeometryElement::eByPolygonVertex)
+				{
+					switch (pNormal->GetReferenceMode())
+					{
+					case FbxGeometryElement::eDirect:
+						ResultMesh->NormalList.Add(Parse3DVector(pNormal->GetDirectArray().GetAt(VertexId)));
+						break;
+
+					case FbxGeometryElement::eIndexToDirect:
+						int TempIndex = pNormal->GetIndexArray().GetAt(VertexId);
+						ResultMesh->NormalList.Add(Parse3DVector(pNormal->GetDirectArray().GetAt(TempIndex)));
+						break;
+					}
+				}
+				else if (pNormal->GetMappingMode() == FbxGeometryElement::eByControlPoint)
+				{
+					if (pNormal->GetReferenceMode() == FbxGeometryElement::eDirect)
+					{
+						//ResultMesh->NormalList.Add(Parse3DVector( pNormal->GetDirectArray().GetAt()));
+					}
+				}
+			}
+
+			VertexId++;
+	 	}		
+	}
+	 
+	return ResultMesh;
 }
 
 bool FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
@@ -71,24 +126,6 @@ bool FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
 	return true;
 }
 
-void FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh)
-{
-	int nPolygonCount = Mesh->GetPolygonCount();
-	FbxVector4* pControlPoints = Mesh->GetControlPoints();
-
-	List<OpenTK::Vector3^> ControlPointList = gcnew List<OpenTK::Vector3^>();
-
-	for (int i = 0; i < nPolygonCount; ++i)
-	{
-		int nPolygonSize = Mesh->GetPolygonSize(i);
-
-		for (int j = 0; j < nPolygonSize; ++j)
-		{
-			int nControlPointIndex = Mesh->GetPolygonVertex(i, j);
-			ControlPointList.Add(Parse3DVector(pControlPoints[i]));
-		}
-	}
-}
 
 Vector2 FBXWrapper::FBXSDKWrapper::Parse2DVector(FbxVector2 Value)
 {
@@ -209,3 +246,4 @@ bool FBXWrapper::FBXSDKWrapper::LoadScene(FbxManager* pFBXManager, FbxScene* pFB
 
 	return lStatus;
 }
+
