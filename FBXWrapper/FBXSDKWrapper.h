@@ -12,10 +12,10 @@ namespace FBXWrapper
 	{
 	public:
 
-		List<OpenTK::Vector3> VertexList = gcnew List<OpenTK::Vector3>();
-		List<OpenTK::Vector3> NormalList = gcnew List<OpenTK::Vector3>();
-		List<OpenTK::Vector2> UVList = gcnew List<OpenTK::Vector2>();
-		List<int> IndexList = gcnew List<int>();
+		List<OpenTK::Vector3>^ VertexList = gcnew List<OpenTK::Vector3>();
+		List<OpenTK::Vector3>^ NormalList = gcnew List<OpenTK::Vector3>();
+		List<OpenTK::Vector2>^ UVList = gcnew List<OpenTK::Vector2>();
+		List<int>^ IndexList = gcnew List<int>();
 		int PolygonCount = 0;
 	};
 
@@ -29,7 +29,11 @@ namespace FBXWrapper
 		bool LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName);
 
 		void ParseNode(FbxNode* Node);
+
 		ParsedFBXMesh^ ParseFbxMesh(FbxMesh* Mesh);
+
+		List<OpenTK::Vector3>^ ParseFbxMeshVertex(FbxMesh* Mesh);
+		List<OpenTK::Vector3>^ ParseFbxMeshNormal(FbxMesh* Mesh);
 
 		OpenTK::Vector2 Parse2DVector(FbxVector2 Value);
 		OpenTK::Vector3 Parse3DVector(FbxVector4 Value);
