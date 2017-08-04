@@ -29,7 +29,7 @@ namespace FBXImporter
 
             if(SdkWrapper.InitializeSDK())
             {
-                SdkWrapper.ImportFBXMesh("Sample.FBX");
+                ParsedFBXMesh TestMesh = SdkWrapper.ImportFBXMesh("Sample.FBX");
             }            
         }
     }

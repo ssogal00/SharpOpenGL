@@ -23,17 +23,18 @@ namespace FBXWrapper
 	{
 	public:
 		bool InitializeSDK();
-		bool ImportFBXMesh(System::String^ FilePath);
+		ParsedFBXMesh^ ImportFBXMesh(System::String^ FilePath);
 		
 	protected:
 		bool LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName);
 
-		void ParseNode(FbxNode* Node);
+		ParsedFBXMesh^ ParseFbxMesh(FbxNode* Node);
 
 		ParsedFBXMesh^ ParseFbxMesh(FbxMesh* Mesh);
 
 		List<OpenTK::Vector3>^ ParseFbxMeshVertex(FbxMesh* Mesh);
 		List<OpenTK::Vector3>^ ParseFbxMeshNormal(FbxMesh* Mesh);
+		List<OpenTK::Vector2>^ ParseFbxMeshUV(FbxMesh* Mesh);
 
 		OpenTK::Vector2 Parse2DVector(FbxVector2 Value);
 		OpenTK::Vector3 Parse3DVector(FbxVector4 Value);
