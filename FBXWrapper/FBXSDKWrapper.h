@@ -19,6 +19,14 @@ namespace FBXWrapper
 		int PolygonCount = 0;
 	};
 
+	public ref class FBXMeshBone
+	{
+	public:			
+		String^ BoneName = nullptr;
+		OpenTK::Matrix4^ Transform = nullptr;
+		OpenTK::Matrix4^ LinkTransform = nullptr;
+	};
+
 	public ref class FBXSDKWrapper
 	{
 	public:
@@ -29,12 +37,12 @@ namespace FBXWrapper
 		bool LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName);
 
 		ParsedFBXMesh^ ParseFbxMesh(FbxNode* Node);
-
 		ParsedFBXMesh^ ParseFbxMesh(FbxMesh* Mesh);
 
 		List<OpenTK::Vector3>^ ParseFbxMeshVertex(FbxMesh* Mesh);
 		List<OpenTK::Vector3>^ ParseFbxMeshNormal(FbxMesh* Mesh);
 		List<OpenTK::Vector2>^ ParseFbxMeshUV(FbxMesh* Mesh);
+		
 
 		OpenTK::Vector2 Parse2DVector(FbxVector2 Value);
 		OpenTK::Vector3 Parse3DVector(FbxVector4 Value);
@@ -42,8 +50,6 @@ namespace FBXWrapper
 
 		class FbxScene* Scene = nullptr;
 		class FbxManager* FBXManager = nullptr;		
-
-		
 	};
 };
 
