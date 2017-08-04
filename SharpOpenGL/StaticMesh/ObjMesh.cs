@@ -24,8 +24,9 @@ namespace SharpOpenGL.StaticMesh
 
         List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
         
-        List<Vector3> TempVertices = new List<Vector3>();
-        List<Vector2> TempTexCoord = new List<Vector2>();
+        List<Vector3> VertexList = new List<Vector3>();
+        List<Vector2> TexCoordList = new List<Vector2>();
+        List<Vector3> NormalList = new List<Vector3>();
 
         List<uint> VertexIndices = new List<uint>();
         List<uint> TextureIndices = new List<uint>();
@@ -139,6 +140,17 @@ namespace SharpOpenGL.StaticMesh
 
                     if(Trimmedline.StartsWith("vn"))
                     {
+                        var tokens = Trimmedline.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+
+                        if(tokens.Count() >= 4)
+                        {
+                            Vector3 VN = new Vector3();
+                            VN.X = Convert.ToSingle(tokens[1]);
+                            VN.Y = Convert.ToSingle(tokens[2]);
+                            VN.Z = Convert.ToSingle(tokens[3]);
+
+                            NormalList.Add(VN);
+                        }
                     }
                     else if(Trimmedline.StartsWith("v "))
                     {
@@ -151,7 +163,7 @@ namespace SharpOpenGL.StaticMesh
                             V.Y = Convert.ToSingle(tokens[2]);
                             V.Z = Convert.ToSingle(tokens[3]);
 
-                            TempVertices.Add(V);
+                            VertexList.Add(V);
                         }
                     }
                     else if(Trimmedline.StartsWith("vt"))
@@ -164,7 +176,7 @@ namespace SharpOpenGL.StaticMesh
                             V.X = Convert.ToSingle(tokens[1]);
                             V.Y = Convert.ToSingle(tokens[2]);
 
-                            TempTexCoord.Add(V);
+                            TexCoordList.Add(V);
                         }
                     }
                     else if(Trimmedline.StartsWith("f "))
@@ -186,18 +198,18 @@ namespace SharpOpenGL.StaticMesh
                             uint Index2 = Convert.ToUInt32(Token2[0]);
                             uint Index3 = Convert.ToUInt32(Token3[0]);
 
-                            V1.VertexPosition = TempVertices[(int)Index1-1];
-                            V2.VertexPosition = TempVertices[(int)Index2-1];
-                            V3.VertexPosition = TempVertices[(int)Index3-1];
+                            V1.VertexPosition = VertexList[(int)Index1-1];
+                            V2.VertexPosition = VertexList[(int)Index2-1];
+                            V3.VertexPosition = VertexList[(int)Index3-1];
 
                             uint TexIndex1 = Convert.ToUInt32(Token1[1]);
                             uint TexIndex2 = Convert.ToUInt32(Token2[1]);
                             uint TexIndex3 = Convert.ToUInt32(Token3[1]);
 
 
-                            V1.TexCoord = TempTexCoord[(int)TexIndex1-1];
-                            V2.TexCoord = TempTexCoord[(int)TexIndex2-1];
-                            V3.TexCoord = TempTexCoord[(int)TexIndex3-1];
+                            V1.TexCoord = TexCoordList[(int)TexIndex1-1];
+                            V2.TexCoord = TexCoordList[(int)TexIndex2-1];
+                            V3.TexCoord = TexCoordList[(int)TexIndex3-1];
 
                             Vertices.Add(V1); Vertices.Add(V2); Vertices.Add(V3);
                             VertexIndices.Add((uint)VertexIndices.Count);

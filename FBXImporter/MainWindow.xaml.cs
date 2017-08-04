@@ -12,8 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Windows.Forms;
+using System.Drawing;
 using FBXWrapper;
+
+using SharpOpenGL;
+
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace FBXImporter
 {
@@ -27,10 +33,35 @@ namespace FBXImporter
             InitializeComponent();
             var SdkWrapper = new FBXWrapper.FBXSDKWrapper();
 
-            if(SdkWrapper.InitializeSDK())
+            if (SdkWrapper.InitializeSDK())
             {
                 ParsedFBXMesh TestMesh = SdkWrapper.ImportFBXMesh("Sample.FBX");
-            }            
+            }
+        }
+        private void GLControlLoad(object sender, EventArgs e)
+        {
+            GL.ClearColor(System.Drawing.Color.Aqua);
+
+            GL.CullFace(CullFaceMode.Back);
+            GL.FrontFace(FrontFaceDirection.Cw);
+            GL.Enable(EnableCap.DepthTest);
+        }
+
+
+        private void GLControlPaint(object sender, System.Windows.Forms.PaintEventArgs e)
+        {
+            GL.CullFace(CullFaceMode.Back);
+            GL.FrontFace(FrontFaceDirection.Cw);
+            GL.Enable(EnableCap.DepthTest);
+
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            GlControl.SwapBuffers();
+        }
+
+        private void GLControlResize(object sender, EventArgs e)
+        {
+            GL.Viewport(0, 0, GlControl.Size.Width, GlControl.Size.Height);            
         }
     }
 }
