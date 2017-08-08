@@ -100,7 +100,7 @@ namespace FBXImporter
             Camera.UpdateProjMatrix();
 
             ModelTransform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
-            ModelTransform.Model = Matrix4.CreateScale(0.03f);
+            ModelTransform.Model = Matrix4.CreateScale(0.015f) * Matrix4.CreateTranslation(10,10,10);
             ModelTransform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);
                         
         }

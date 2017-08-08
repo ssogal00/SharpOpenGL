@@ -62,14 +62,16 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh
 	ResultMesh->VertexList = ParseFbxMeshVertex(Mesh);
 	ResultMesh->NormalList = ParseFbxMeshNormal(Mesh);
 	ResultMesh->UVList = ParseFbxMeshUV(Mesh);
+	ResultMesh->ControlPointList = ParseFbxControlPointList(Mesh);
+	ResultMesh->BoneList = ParseFbxMeshBone(Mesh);
 	 
 	return ResultMesh;
 }
 
 System::Collections::Generic::List<OpenTK::Vector3>^ FBXWrapper::FBXSDKWrapper::ParseFbxMeshVertex(FbxMesh* Mesh)
 {
-	int nPolygonCount = Mesh->GetPolygonCount();
-	int nControlPointCount = Mesh->GetControlPointsCount();
+	const int nPolygonCount = Mesh->GetPolygonCount();
+	const int nControlPointCount = Mesh->GetControlPointsCount();
 	
 	FbxVector4* pControlPoints = Mesh->GetControlPoints();
 
@@ -155,6 +157,57 @@ List<OpenTK::Vector2>^ FBXWrapper::FBXSDKWrapper::ParseFbxMeshUV(FbxMesh* Mesh)
 	return UVList;
 }
 
+List<OpenTK::Vector3>^ FBXWrapper::FBXSDKWrapper::ParseFbxControlPointList(FbxMesh* Mesh)
+{
+	List<OpenTK::Vector3>^ ResultControlPointList = gcnew List<OpenTK::Vector3>();
+
+	const int nControlPointCount = Mesh->GetControlPointsCount();
+
+	for (int i = 0; i < nControlPointCount; ++i)
+	{
+		ResultControlPointList->Add(Parse3DVector(Mesh->GetControlPointAt(i)));
+	}
+
+	return ResultControlPointList;
+}
+
+System::Collections::Generic::List<FBXWrapper::FBXMeshBone^>^ FBXWrapper::FBXSDKWrapper::ParseFbxMeshBone(FbxMesh* Mesh)
+{
+	List<FBXWrapper::FBXMeshBone^>^ ResultBoneList = gcnew List<FBXWrapper::FBXMeshBone^>();
+
+	int SkinCount = Mesh->GetDeformerCount(FbxDeformer::eSkin);
+
+	for (int i = 0; i < SkinCount; ++i)
+	{
+		FbxSkin* pSkin = ((FbxSkin*)Mesh->GetDeformer(i, FbxDeformer::eSkin));
+
+		int ClusterCount = pSkin->GetClusterCount();
+
+		for (int j = 0; j < ClusterCount; ++j)
+		{
+			FBXMeshBone^ NewBone = gcnew FBXMeshBone();
+
+			FbxCluster* pCluster = pSkin->GetCluster(j);
+
+			if (pCluster->GetLink() != nullptr)
+			{
+				FbxAMatrix LinkMatrix;
+				FbxAMatrix TransfromMatrix;
+				LinkMatrix = pCluster->GetTransformLinkMatrix(LinkMatrix);
+				TransfromMatrix = pCluster->GetTransformMatrix(TransfromMatrix);
+
+				NewBone->LinkTransform = ParseFbxAMatrix(LinkMatrix);
+				NewBone->Transform = ParseFbxAMatrix(TransfromMatrix);
+				NewBone->BoneName = gcnew System::String(pCluster->GetLink()->GetName());
+
+				ResultBoneList->Add(NewBone);
+			}
+		}
+	}
+
+	return ResultBoneList;
+}
+
 FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
 {	
 	bool bImportSuccess = LoadScene(FBXManager, Scene, FilePath);
@@ -201,6 +254,18 @@ Vector4 FBXWrapper::FBXSDKWrapper::Parse4DVector(FbxVector4 Value)
 	Result.Y = static_cast<float>(Value[1]);
 	Result.Z = static_cast<float>(Value[2]);
 	Result.W = static_cast<float>(Value[3]);
+	return Result;
+}
+
+OpenTK::Matrix4 FBXWrapper::FBXSDKWrapper::ParseFbxAMatrix(FbxAMatrix Value)
+{
+	OpenTK::Matrix4 Result;
+
+	Result.Row0 = Parse4DVector(Value.GetRow(0));
+	Result.Row1 = Parse4DVector(Value.GetRow(1));
+	Result.Row2 = Parse4DVector(Value.GetRow(2));
+	Result.Row3 = Parse4DVector(Value.GetRow(3));
+
 	return Result;
 }
 
