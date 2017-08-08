@@ -171,9 +171,9 @@ List<OpenTK::Vector3>^ FBXWrapper::FBXSDKWrapper::ParseFbxControlPointList(FbxMe
 	return ResultControlPointList;
 }
 
-System::Collections::Generic::List<FBXWrapper::FBXMeshBone^>^ FBXWrapper::FBXSDKWrapper::ParseFbxMeshBone(FbxMesh* Mesh)
+Dictionary<System::String^ ,FBXWrapper::FBXMeshBone^>^ FBXWrapper::FBXSDKWrapper::ParseFbxMeshBone(FbxMesh* Mesh)
 {
-	List<FBXWrapper::FBXMeshBone^>^ ResultBoneList = gcnew List<FBXWrapper::FBXMeshBone^>();
+	Dictionary<System::String^, FBXWrapper::FBXMeshBone^>^ ResultBoneList = gcnew Dictionary<System::String^, FBXWrapper::FBXMeshBone^>();
 
 	int SkinCount = Mesh->GetDeformerCount(FbxDeformer::eSkin);
 
@@ -194,13 +194,13 @@ System::Collections::Generic::List<FBXWrapper::FBXMeshBone^>^ FBXWrapper::FBXSDK
 				FbxAMatrix LinkMatrix;
 				FbxAMatrix TransfromMatrix;
 				LinkMatrix = pCluster->GetTransformLinkMatrix(LinkMatrix);
-				TransfromMatrix = pCluster->GetTransformMatrix(TransfromMatrix);
+				TransfromMatrix = pCluster->GetTransformMatrix(TransfromMatrix);				
 
 				NewBone->LinkTransform = ParseFbxAMatrix(LinkMatrix);
 				NewBone->Transform = ParseFbxAMatrix(TransfromMatrix);
 				NewBone->BoneName = gcnew System::String(pCluster->GetLink()->GetName());
 
-				ResultBoneList->Add(NewBone);
+				ResultBoneList->Add(NewBone->BoneName, NewBone);
 			}
 		}
 	}
@@ -261,12 +261,23 @@ OpenTK::Matrix4 FBXWrapper::FBXSDKWrapper::ParseFbxAMatrix(FbxAMatrix Value)
 {
 	OpenTK::Matrix4 Result;
 
-	Result.Row0 = Parse4DVector(Value.GetRow(0));
-	Result.Row1 = Parse4DVector(Value.GetRow(1));
-	Result.Row2 = Parse4DVector(Value.GetRow(2));
-	Result.Row3 = Parse4DVector(Value.GetRow(3));
+	Result.Row0 = Parse4DVector(Value.GetRow(0));	
+	//Print4DVector(Value.GetRow(0));
 
+	Result.Row1 = Parse4DVector(Value.GetRow(1));
+	//Print4DVector(Value.GetRow(1));
+
+	Result.Row2 = Parse4DVector(Value.GetRow(2));
+	//Print4DVector(Value.GetRow(2));
+
+	Result.Row3 = Parse4DVector(Value.GetRow(3));
+	//Print4DVector(Value.GetRow(3));
 	return Result;
+}
+
+void FBXWrapper::FBXSDKWrapper::Print4DVector(FbxVector4 Value)
+{
+	System::Console::WriteLine("X : {0}, Y : {1} , Z : {2} , W : {3}", Value[0], Value[1], Value[2], Value[3]);
 }
 
 bool FBXWrapper::FBXSDKWrapper::LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName)

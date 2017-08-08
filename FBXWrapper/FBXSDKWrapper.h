@@ -25,7 +25,7 @@ namespace FBXWrapper
 		List<OpenTK::Vector3>^ NormalList = gcnew List<OpenTK::Vector3>();
 		List<OpenTK::Vector2>^ UVList = gcnew List<OpenTK::Vector2>();
 		List<OpenTK::Vector3>^ ControlPointList = gcnew List<OpenTK::Vector3>();
-		List<FBXMeshBone^>^ BoneList = gcnew List<FBXMeshBone^>();
+		Dictionary<System::String^, FBXMeshBone^>^ BoneList = gcnew Dictionary<System::String^, FBXMeshBone^>();
 
 		List<int>^ IndexList = gcnew List<int>();
 		int PolygonCount = 0;
@@ -47,13 +47,15 @@ namespace FBXWrapper
 		List<OpenTK::Vector3>^ ParseFbxMeshNormal(FbxMesh* Mesh);
 		List<OpenTK::Vector2>^ ParseFbxMeshUV(FbxMesh* Mesh);
 		List<OpenTK::Vector3>^ ParseFbxControlPointList(FbxMesh* Mesh);
-		List<FBXMeshBone^>^	ParseFbxMeshBone(FbxMesh* Mesh);
+		Dictionary<System::String^, FBXMeshBone^>^	ParseFbxMeshBone(FbxMesh* Mesh);
 
 		OpenTK::Vector2 Parse2DVector(FbxVector2 Value);
 		OpenTK::Vector3 Parse3DVector(FbxVector4 Value);
 		OpenTK::Vector4 Parse4DVector(FbxVector4 Value);
 
 		OpenTK::Matrix4 ParseFbxAMatrix(FbxAMatrix Value);
+
+		void Print4DVector(FbxVector4 Value);
 
 		class FbxScene* Scene = nullptr;
 		class FbxManager* FBXManager = nullptr;		
