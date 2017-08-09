@@ -261,17 +261,14 @@ OpenTK::Matrix4 FBXWrapper::FBXSDKWrapper::ParseFbxAMatrix(FbxAMatrix Value)
 {
 	OpenTK::Matrix4 Result;
 
-	Result.Row0 = Parse4DVector(Value.GetRow(0));	
-	//Print4DVector(Value.GetRow(0));
+	Result.Row0 = Parse4DVector(Value.GetRow(0));		
 
 	Result.Row1 = Parse4DVector(Value.GetRow(1));
-	//Print4DVector(Value.GetRow(1));
-
-	Result.Row2 = Parse4DVector(Value.GetRow(2));
-	//Print4DVector(Value.GetRow(2));
+	
+	Result.Row2 = Parse4DVector(Value.GetRow(2));	
 
 	Result.Row3 = Parse4DVector(Value.GetRow(3));
-	//Print4DVector(Value.GetRow(3));
+	
 	return Result;
 }
 
