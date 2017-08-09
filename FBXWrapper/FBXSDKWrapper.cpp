@@ -61,14 +61,14 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh
 
 	System::Console::WriteLine(gcnew System::String(Node->GetName()));
 
-	ResultMesh->RootBone = gcnew FBXMeshBone();
+	ResultMesh->RootBone = gcnew FBXMeshBone();	
 
-	ParseBoneHierarchy(Node, ResultMesh->RootBone);
+	ParseBoneHierarchy(Scene->GetRootNode()->GetChild(0), ResultMesh->RootBone);
 	ResultMesh->VertexList = ParseFbxMeshVertex(Mesh);
 	ResultMesh->NormalList = ParseFbxMeshNormal(Mesh);
 	ResultMesh->UVList = ParseFbxMeshUV(Mesh);
 	ResultMesh->ControlPointList = ParseFbxControlPointList(Mesh);
-	ResultMesh->BoneList = ParseFbxMeshBone(Mesh);
+	ResultMesh->BoneMap = ParseFbxMeshBone(Mesh);
 	 
 	return ResultMesh;
 }
@@ -213,19 +213,21 @@ Dictionary<System::String^ ,FBXWrapper::FBXMeshBone^>^ FBXWrapper::FBXSDKWrapper
 	return ResultBoneList;
 }
 
-void FBXWrapper::FBXSDKWrapper::ParseBoneHierarchy(FbxNode* MeshNode, FBXMeshBone^ ParentBone)
+void FBXWrapper::FBXSDKWrapper::ParseBoneHierarchy(FbxNode* VisitNode, FBXMeshBone^ ParentBone)
 {	
-	ParentBone->BoneName = gcnew System::String(MeshNode->GetName());
-
-	int nChildCount = MeshNode->GetChildCount();
+	int nChildCount = VisitNode->GetChildCount();	
 
 	for (int i = 0; i < nChildCount; ++i)
 	{
-		FbxNode* ChildNode = MeshNode->GetChild(i);		
-		FBXMeshBone^ NewBone = gcnew FBXMeshBone();		
-		NewBone->BoneName = gcnew System::String(ChildNode->GetName());
-		ParentBone->ChildBoneList->Add(NewBone);
-		ParseBoneHierarchy(ChildNode, NewBone);
+		FbxNode* ChildNode = VisitNode->GetChild(i);
+
+		if (ChildNode && ChildNode->GetNodeAttribute() && ChildNode->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
+		{
+			FBXMeshBone^ NewBone = gcnew FBXMeshBone();
+			NewBone->BoneName = gcnew System::String(ChildNode->GetName());
+			ParentBone->ChildBoneList->Add(NewBone);
+			ParseBoneHierarchy(ChildNode, NewBone);
+		}
 	}	
 }
 
