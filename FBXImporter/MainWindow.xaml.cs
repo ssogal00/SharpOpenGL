@@ -70,8 +70,13 @@ namespace FBXImporter
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            //ModelTransform.View = Camera.View;
-            //ModelTransform.Proj = Camera.Proj;
+            Camera.UpdateCameraDistance();
+            Camera.UpdateViewMatrix();
+            Camera.UpdateProjMatrix();
+
+            ModelTransform.View = Camera.View;
+            ModelTransform.Proj = Camera.Proj;
+
             TestMaterial.SetTransformBlockData(ref ModelTransform);
 
             if(MyFBXMesh != null)
@@ -92,16 +97,17 @@ namespace FBXImporter
             Camera.FOV = MathHelper.PiOver6;
             Camera.Near = 1;
             Camera.Far = 10000;
-            Camera.EyeLocation = new Vector3(5, 5, 5);
-            Camera.DestLocation = new Vector3(5, 5, 5);
+            Camera.EyeLocation = new Vector3(-10, 0, 0);
+            Camera.DestLocation = new Vector3(10, 0, 0);
             Camera.LookAtLocation = new Vector3(0, 0, 0);
 
             Camera.UpdateCameraDistance();
+            Camera.UpdateViewMatrix();
             Camera.UpdateProjMatrix();
 
             ModelTransform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
-            ModelTransform.Model = Matrix4.CreateScale(0.015f) * Matrix4.CreateTranslation(10,10,10);
-            ModelTransform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);
+            ModelTransform.Model = Matrix4.CreateScale(0.015f) ;
+            ModelTransform.View = Matrix4.LookAt(new Vector3(0, 0, -10), new Vector3(0, 0, 0), Vector3.UnitY);
                         
         }
 
