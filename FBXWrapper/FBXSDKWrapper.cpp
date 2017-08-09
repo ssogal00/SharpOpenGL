@@ -42,7 +42,7 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxNode* Node
 
 			if (ChildNode && ChildNode->GetNodeAttribute() && ChildNode->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
 			{
-				return ParseFbxMesh((FbxMesh*)(ChildNode->GetNodeAttribute()));
+				return ParseFbxMesh((FbxMesh*)(ChildNode->GetNodeAttribute()), ChildNode);
 			}
 		}
 	}
@@ -55,10 +55,15 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxNode* Node
 	return nullptr;
 }
 
-FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh)
+FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 {
 	ParsedFBXMesh^ ResultMesh = gcnew ParsedFBXMesh();
-	 	
+
+	System::Console::WriteLine(gcnew System::String(Node->GetName()));
+
+	ResultMesh->RootBone = gcnew FBXMeshBone();
+
+	ParseBoneHierarchy(Node, ResultMesh->RootBone);
 	ResultMesh->VertexList = ParseFbxMeshVertex(Mesh);
 	ResultMesh->NormalList = ParseFbxMeshNormal(Mesh);
 	ResultMesh->UVList = ParseFbxMeshUV(Mesh);
@@ -208,6 +213,22 @@ Dictionary<System::String^ ,FBXWrapper::FBXMeshBone^>^ FBXWrapper::FBXSDKWrapper
 	return ResultBoneList;
 }
 
+void FBXWrapper::FBXSDKWrapper::ParseBoneHierarchy(FbxNode* MeshNode, FBXMeshBone^ ParentBone)
+{	
+	ParentBone->BoneName = gcnew System::String(MeshNode->GetName());
+
+	int nChildCount = MeshNode->GetChildCount();
+
+	for (int i = 0; i < nChildCount; ++i)
+	{
+		FbxNode* ChildNode = MeshNode->GetChild(i);		
+		FBXMeshBone^ NewBone = gcnew FBXMeshBone();		
+		NewBone->BoneName = gcnew System::String(ChildNode->GetName());
+		ParentBone->ChildBoneList->Add(NewBone);
+		ParseBoneHierarchy(ChildNode, NewBone);
+	}	
+}
+
 FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
 {	
 	bool bImportSuccess = LoadScene(FBXManager, Scene, FilePath);
@@ -283,8 +304,7 @@ bool FBXWrapper::FBXSDKWrapper::LoadScene(FbxManager* pFBXManager, FbxScene* pFB
 	int lSDKMajor, lSDKMinor, lSDKRevision;
 	//int lFileFormat = -1;
 	int i, lAnimStackCount;
-	bool lStatus;
-	char lPassword[1024];	
+	bool lStatus;		
 
 	// Get the file version number generate by the FBX SDK.
 	FbxManager::GetFileFormatVersion(lSDKMajor, lSDKMinor, lSDKRevision);

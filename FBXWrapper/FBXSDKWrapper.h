@@ -16,8 +16,11 @@ namespace FBXWrapper
 		OpenTK::Matrix4^ LinkTransform = nullptr;
 		List<unsigned int> ControlPointIndexList = gcnew List<unsigned int>();
 		List<float> ControlPointWeight = gcnew List<float>();
-	};
 
+		FBXMeshBone^ ParentBone = nullptr;
+		List<FBXMeshBone^>^ ChildBoneList = gcnew List<FBXMeshBone^>();
+	};
+	
 	public ref class ParsedFBXMesh
 	{
 	public:
@@ -28,6 +31,9 @@ namespace FBXWrapper
 		Dictionary<System::String^, FBXMeshBone^>^ BoneList = gcnew Dictionary<System::String^, FBXMeshBone^>();
 
 		List<int>^ IndexList = gcnew List<int>();
+		
+		FBXMeshBone^ RootBone = nullptr;
+
 		int PolygonCount = 0;
 	};	
 
@@ -41,13 +47,14 @@ namespace FBXWrapper
 		bool LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName);
 
 		ParsedFBXMesh^ ParseFbxMesh(FbxNode* Node);
-		ParsedFBXMesh^ ParseFbxMesh(FbxMesh* Mesh);
+		ParsedFBXMesh^ ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node);
 
 		List<OpenTK::Vector3>^ ParseFbxMeshVertex(FbxMesh* Mesh);
 		List<OpenTK::Vector3>^ ParseFbxMeshNormal(FbxMesh* Mesh);
 		List<OpenTK::Vector2>^ ParseFbxMeshUV(FbxMesh* Mesh);
 		List<OpenTK::Vector3>^ ParseFbxControlPointList(FbxMesh* Mesh);
 		Dictionary<System::String^, FBXMeshBone^>^	ParseFbxMeshBone(FbxMesh* Mesh);
+		void ParseBoneHierarchy(FbxNode* MeshNode, FBXMeshBone^ ParentBone);
 
 		OpenTK::Vector2 Parse2DVector(FbxVector2 Value);
 		OpenTK::Vector3 Parse3DVector(FbxVector4 Value);
