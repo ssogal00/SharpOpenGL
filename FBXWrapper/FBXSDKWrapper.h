@@ -50,7 +50,9 @@ namespace FBXWrapper
 		List<OpenTK::Vector2>^ ParseFbxMeshUV(FbxMesh* Mesh);
 		List<OpenTK::Vector3>^ ParseFbxControlPointList(FbxMesh* Mesh);
 		Dictionary<System::String^, FBXMeshBone^>^	ParseFbxMeshBone(FbxMesh* Mesh);
-		void ParseBoneHierarchy(FbxNode* VisitNode, FBXMeshBone^ ParentBone);
+		FBXMeshBone^ ParseBoneHierarchy(FbxNode* SceneRootNode);
+		FbxNode* FindFirstBoneNode(FbxNode* SceneRootNode);
+		void ParseBoneHierarchyRecursive(FbxNode* VisitNode, FBXMeshBone^ ParentBone);
 
 		OpenTK::Vector2 Parse2DVector(FbxVector2 Value);
 		OpenTK::Vector3 Parse3DVector(FbxVector4 Value);
