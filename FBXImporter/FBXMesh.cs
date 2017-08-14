@@ -47,7 +47,7 @@ namespace FBXImporter
             var TempIndices = VertexIndices.ToArray();
 
             MeshDrawable = new TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute>();
-            MeshDrawable.SetupData(ref TempVertices, ref TempIndices);
+            MeshDrawable.SetupData(ref TempVertices, ref TempIndices);            
         }
         
         public void Draw()
@@ -57,5 +57,6 @@ namespace FBXImporter
 
         FBXMeshBone RootBone = null;
         TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute> MeshDrawable = null;
+        LineDrawable<SharpOpenGL.SimpleMaterial.VertexAttribute> BoneDrawable = null;
     }
 }
