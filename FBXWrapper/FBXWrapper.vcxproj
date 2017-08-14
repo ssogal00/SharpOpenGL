@@ -125,9 +125,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BoneIterator.cpp" />
     <ClCompile Include="FBXSDKWrapper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoneIterator.h" />
     <ClInclude Include="FBXSDKWrapper.h" />
   </ItemGroup>
   <ItemGroup>

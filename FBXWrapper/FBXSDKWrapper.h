@@ -16,19 +16,9 @@ namespace FBXWrapper
 		OpenTK::Matrix4^ LinkTransform = nullptr;
 		List<unsigned int> ControlPointIndexList = gcnew List<unsigned int>();
 		List<float> ControlPointWeight = gcnew List<float>();
-
 		FBXMeshBone^ ParentBone = nullptr;
 		List<FBXMeshBone^>^ ChildBoneList = gcnew List<FBXMeshBone^>();
-	};
-	
-	public ref class BoneIterator
-	{
-	public:
-		BoneIterator(FBXMeshBone^ RootBone);
-		void MoveNext();
-		FBXMeshBone^ Current();
-		bool IsEnd();
-	};
+	};	
 	
 	public ref class ParsedFBXMesh
 	{

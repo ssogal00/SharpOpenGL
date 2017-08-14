@@ -1,6 +1,7 @@
 
 #include "fbxsdk.h"
 #include "FBXSDKWrapper.h"
+#include "BoneIterator.h"
 #include <msclr/marshal_cppstd.h>
 
 using namespace msclr::interop;
@@ -69,6 +70,17 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh
 	ResultMesh->UVList = ParseFbxMeshUV(Mesh);
 	ResultMesh->ControlPointList = ParseFbxControlPointList(Mesh);
 	ResultMesh->BoneMap = ParseFbxMeshBone(Mesh);
+
+	for (BoneIterator It(ResultMesh->RootBone); !It.IsEnd(); It.MoveNext())
+	{
+		FBXMeshBone^ CurrentBone = It.Current();
+		System::String^ BoneName = CurrentBone->BoneName;
+		if (BoneName != nullptr)
+		{
+			CurrentBone->LinkTransform = ResultMesh->BoneMap[BoneName]->LinkTransform;
+			CurrentBone->Transform = ResultMesh->BoneMap[BoneName]->Transform;
+		}
+	}
 	 
 	return ResultMesh;
 }
