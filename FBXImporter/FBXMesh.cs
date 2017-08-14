@@ -47,7 +47,27 @@ namespace FBXImporter
             var TempIndices = VertexIndices.ToArray();
 
             MeshDrawable = new TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute>();
-            MeshDrawable.SetupData(ref TempVertices, ref TempIndices);            
+            MeshDrawable.SetupData(ref TempVertices, ref TempIndices);
+
+
+            List<SharpOpenGL.SimpleMaterial.VertexAttribute> BoneVertices = new List<SharpOpenGL.SimpleMaterial.VertexAttribute>();
+
+            OpenTK.Vector4 vOrigin = new OpenTK.Vector4(0);
+
+            for (BoneIterator It = new BoneIterator(_ParsedFBXMesh.RootBone); !It.IsEnd(); It.MoveNext())
+            {
+                OpenTK.Matrix4 TransformMatrix = (OpenTK.Matrix4)It.Current().LinkTransform;
+
+                OpenTK.Vector4 vStart = OpenTK.Vector4.Transform(vOrigin, TransformMatrix);
+                
+                for(int i =0; i < It.Current().ChildBoneList.Count; ++i)
+                {
+                    OpenTK.Matrix4 ChildTransform = (OpenTK.Matrix4) It.Current().ChildBoneList[i].LinkTransform;
+                    OpenTK.Vector4 vEnd = OpenTK.Vector4.Transform(vStart, ChildTransform);
+
+
+                }
+            }
         }
         
         public void Draw()
