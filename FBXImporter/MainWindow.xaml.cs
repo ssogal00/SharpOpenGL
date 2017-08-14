@@ -40,15 +40,15 @@ namespace FBXImporter
             if (SdkWrapper.InitializeSDK())
             {
                 TestParsedFbxMesh = SdkWrapper.ImportFBXMesh("Sample.FBX");
-                MyFBXMesh = new FBXMesh(TestParsedFbxMesh);
-                MyLine = new Core.Primitive.Line(new OpenTK.Vector3(-10,-10,-10), new OpenTK.Vector3(10,10,10));
+                MyFBXMesh = new FBXMesh(TestParsedFbxMesh);                
                 MyLineDrawer = new LineDrawer();                
-                MyLineDrawer.AddLine(MyLine);                
+                MyLineDrawer.AddLine(new Core.Primitive.Line(new OpenTK.Vector3(-10, -10, -10), new OpenTK.Vector3(110, 10, 10)));
+                MyLineDrawer.AddLine(new Core.Primitive.Line(new OpenTK.Vector3(0, -10, -10), new OpenTK.Vector3(110, 10, 10)));
             }
         }
         private void GLControlLoad(object sender, EventArgs e)
         {
-            GL.ClearColor(System.Drawing.Color.Aqua);
+            GL.ClearColor(System.Drawing.Color.LightGray);
 
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
@@ -63,6 +63,7 @@ namespace FBXImporter
                 MyFBXMesh.PrepareToDraw();
             }
 
+            Simple.Use();
             if(MyLineDrawer != null)
             {
                 MyLineDrawer.Setup();
@@ -94,7 +95,7 @@ namespace FBXImporter
 
             if(MyFBXMesh != null)
             {                
-                //MyFBXMesh.Draw();
+                MyFBXMesh.Draw();
             }
 
             Simple.Use();

@@ -44,6 +44,7 @@ namespace Core.Buffer
 
         public void BufferData(IntPtr Size, IntPtr Data)
         {
+            Bind();
             if (IsBind)
             {
                 GL.BufferData(m_BufferTarget, Size, Data, m_Hint);
@@ -52,6 +53,7 @@ namespace Core.Buffer
 
         public void BufferData<T>(ref T Data) where T : struct
         {
+            Bind();
             if(IsBind)
             {
                 var Size = new IntPtr(Marshal.SizeOf(Data));
@@ -67,6 +69,7 @@ namespace Core.Buffer
 
     public void BufferData<T>(ref T[] Data) where T: struct
         {
+            Bind();
             if(IsBind && Data != null)
             {
                 var Size = new IntPtr(Marshal.SizeOf(Data[0]) * Data.Length);

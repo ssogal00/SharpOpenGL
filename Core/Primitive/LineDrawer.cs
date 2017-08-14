@@ -20,7 +20,7 @@ namespace Core.Primitive
 
             Core.Primitive.PrimitiveVertexAttribute.VertexAttributeBinding();
 
-            GL.DrawElements(PrimitiveType.Lines, IndexList.Count, DrawElementsType.UnsignedInt, 0);
+            GL.DrawElements(PrimitiveType.Lines, (int) IndexList.Count, DrawElementsType.UnsignedInt, 0);
         }
 
         public void Setup()
