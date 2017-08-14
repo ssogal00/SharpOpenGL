@@ -17,7 +17,7 @@ namespace Core.Buffer
             m_Hint = BufferUsageHint.StaticDraw;
         }
         
-        public void VertexAttribPointer()
+        public void BindVertexAttribute()
         {
             var VertexAttrType = typeof(T);
 

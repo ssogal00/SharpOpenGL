@@ -68,7 +68,7 @@ namespace SharpOpenGL.StaticMesh
             VB.Bind();
             var Arr = Vertices.ToArray();
             VB.BufferData<SharpOpenGL.BasicMaterial.VertexAttribute>(ref Arr);
-            VB.VertexAttribPointer();
+            VB.BindVertexAttribute();
 
             IB.Bind();
             var IndexArr = VertexIndices.ToArray();

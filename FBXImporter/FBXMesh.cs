@@ -13,15 +13,27 @@ using Core.Buffer;
 using Core.OpenGLShader;
 using Core.Texture;
 
+using Core;
+
 using OpenTK.Graphics.OpenGL;
+using Core.Primitive;
 
 namespace FBXImporter
 {
     public class FBXMesh
     {
-        public FBXMesh(FBXWrapper.ParsedFBXMesh _ParsedFBXMesh)
-        {                        
-            for(int i = 0; i < _ParsedFBXMesh.VertexList.Count; ++i)
+        public FBXMesh()
+        {            
+        }
+
+        public void SetFBXMeshInfo(FBXWrapper.ParsedFBXMesh _ParsedFBXMesh)
+        {
+            RootBone = _ParsedFBXMesh.RootBone;
+
+            List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
+            List<uint> VertexIndices = new List<uint>();
+
+            for (int i = 0; i < _ParsedFBXMesh.VertexList.Count; ++i)
             {
                 SharpOpenGL.BasicMaterial.VertexAttribute NewVertex = new SharpOpenGL.BasicMaterial.VertexAttribute();
                 NewVertex.VertexPosition = _ParsedFBXMesh.VertexList[i];
@@ -30,36 +42,20 @@ namespace FBXImporter
                 Vertices.Add(NewVertex);
                 VertexIndices.Add((uint)VertexIndices.Count);
             }
+
+            var TempVertices = Vertices.ToArray();
+            var TempIndices = VertexIndices.ToArray();
+
+            MeshDrawable = new TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute>();
+            MeshDrawable.SetupData(ref TempVertices, ref TempIndices);
         }
-
-        public void PrepareToDraw()
-        {
-            VB = new Core.Buffer.StaticVertexBuffer<SharpOpenGL.BasicMaterial.VertexAttribute>();
-            IB = new Core.Buffer.IndexBuffer();
-
-            var VertexArray = Vertices.ToArray();
-            VB.Bind();
-            VB.BufferData<SharpOpenGL.BasicMaterial.VertexAttribute>(ref VertexArray);
-
-            var IndexArray = VertexIndices.ToArray();
-            IB.Bind();            
-            IB.BufferData<uint>(ref IndexArray);
-        }
-
+        
         public void Draw()
         {
-            VB.Bind();
-            IB.Bind();
-
-            SharpOpenGL.BasicMaterial.VertexAttribute.VertexAttributeBinding();
-
-            GL.DrawElements(PrimitiveType.Triangles, (int)VertexIndices.Count, DrawElementsType.UnsignedInt, 0);
+            MeshDrawable.Draw();
         }
-                
-        protected List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
 
-        Core.Buffer.StaticVertexBuffer<SharpOpenGL.BasicMaterial.VertexAttribute> VB = null;
-        Core.Buffer.IndexBuffer IB = null;
-        List<uint> VertexIndices = new List<uint>();
+        FBXMeshBone RootBone = null;
+        TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute> MeshDrawable = null;
     }
 }

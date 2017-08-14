@@ -61,6 +61,7 @@
     <Compile Include="Camera\FreeCamera.cs" />
     <Compile Include="Camera\OrbitCamera.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="TriangleDrawable.cs" />
     <Compile Include="OpenGLShader\FragmentShader.cs" />
     <Compile Include="OpenGLShader\Shader.cs" />
     <Compile Include="OpenGLShader\UniformVariableMetaData.cs" />

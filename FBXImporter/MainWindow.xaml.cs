@@ -40,7 +40,7 @@ namespace FBXImporter
             if (SdkWrapper.InitializeSDK())
             {
                 TestParsedFbxMesh = SdkWrapper.ImportFBXMesh("Sample.FBX");
-                MyFBXMesh = new FBXMesh(TestParsedFbxMesh);                
+                MyFBXMesh = new FBXMesh();                
                 MyLineDrawer = new LineDrawer();                
                 MyLineDrawer.AddLine(new Core.Primitive.Line(new OpenTK.Vector3(-10, -10, -10), new OpenTK.Vector3(110, 10, 10)));
                 MyLineDrawer.AddLine(new Core.Primitive.Line(new OpenTK.Vector3(0, -10, -10), new OpenTK.Vector3(110, 10, 10)));
@@ -57,10 +57,9 @@ namespace FBXImporter
             TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();
             Simple = new SharpOpenGL.SimpleMaterial.SimpleMaterial();
             TestMaterial.Use();
-
             if (MyFBXMesh != null)
             {
-                MyFBXMesh.PrepareToDraw();
+                MyFBXMesh.SetFBXMeshInfo(TestParsedFbxMesh);
             }
 
             Simple.Use();

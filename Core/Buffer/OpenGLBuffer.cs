@@ -44,33 +44,41 @@ namespace Core.Buffer
 
         public void BufferData(IntPtr Size, IntPtr Data)
         {
-            Bind();
-            if (IsBind)
+            if(!IsBind)
             {
-                GL.BufferData(m_BufferTarget, Size, Data, m_Hint);
-            }
+                Bind();
+            }         
+            
+            GL.BufferData(m_BufferTarget, Size, Data, m_Hint);            
         }
 
         public void BufferData<T>(ref T Data) where T : struct
         {
-            Bind();
-            if(IsBind)
+            if (!IsBind)
             {
-                var Size = new IntPtr(Marshal.SizeOf(Data));
-                GL.BufferData<T>(m_BufferTarget, Size, ref Data, m_Hint);
+                Bind();
             }
+            
+            var Size = new IntPtr(Marshal.SizeOf(Data));
+            GL.BufferData<T>(m_BufferTarget, Size, ref Data, m_Hint);            
         }
      
         public void BufferWholeData<T>(ref T Data) where T: struct
-        { 
-            Bind();
+        {
+            if (!IsBind)
+            {
+                Bind();
+            }
             GL.BufferSubData<T>(m_BufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
 	    }
 
     public void BufferData<T>(ref T[] Data) where T: struct
         {
-            Bind();
-            if(IsBind && Data != null)
+            if (!IsBind)
+            {
+                Bind();
+            }
+            if (Data != null)
             {
                 var Size = new IntPtr(Marshal.SizeOf(Data[0]) * Data.Length);
                 GL.BufferData<T>(m_BufferTarget, Size, Data, m_Hint);
@@ -79,10 +87,12 @@ namespace Core.Buffer
 
         public void BindBufferBase(int BindingPoint)
         {
-            if (IsBind)
-            {                
-                GL.BindBufferBase(BufferRangeTarget.UniformBuffer, BindingPoint, m_BufferObject);
-            }
+            if (!IsBind)
+            {
+                Bind();
+            }            
+            
+            GL.BindBufferBase(BufferRangeTarget.UniformBuffer, BindingPoint, m_BufferObject);            
         }
         
         public BufferUsageHint UsageHint
