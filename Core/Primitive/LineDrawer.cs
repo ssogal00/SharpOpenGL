@@ -15,19 +15,12 @@ namespace Core.Primitive
     {
         public void Draw()
         {
-            VB.Bind();
-            IB.Bind();
-
-            Core.Primitive.PrimitiveVertexAttribute.VertexAttributeBinding();
-
-            GL.DrawElements(PrimitiveType.Lines, (int) IndexList.Count, DrawElementsType.UnsignedInt, 0);
+            MyLineDrawable.Draw();
         }
 
         public void Setup()
         {
-            VB = new StaticVertexBuffer<PrimitiveVertexAttribute>();
-            IB = new IndexBuffer();
-
+            MyLineDrawable = new LineDrawable<PrimitiveVertexAttribute>();
             foreach (var line in LineList)
             {
                 var VertexStart = new PrimitiveVertexAttribute();
@@ -37,32 +30,28 @@ namespace Core.Primitive
                 VertexEnd.VertexPosition = line.EndPoint;
 
                 VertexList.Add(VertexStart);
-
                 IndexList.Add((uint)IndexList.Count);
 
                 VertexList.Add(VertexEnd);
-
                 IndexList.Add((uint)IndexList.Count);
             }
 
-            var VertexArray = VertexList.ToArray();
-            VB.BufferData<PrimitiveVertexAttribute>(ref VertexArray);            
-
+            var VertexArray = VertexList.ToArray();            
             var IndexArray = IndexList.ToArray();
-            IB.BufferData<uint>(ref IndexArray);
+
+            MyLineDrawable.SetupData(ref VertexArray, ref IndexArray);
         }
 
         public void AddLine(Line NewLine)
         {
             LineList.Add(NewLine);
         }
-
-        StaticVertexBuffer<PrimitiveVertexAttribute> VB = null;
-        IndexBuffer IB = null;
-       
+               
         public List<Line> LineList = new List<Line>();
         public List<uint> IndexList = new List<uint>();
 
         public List<PrimitiveVertexAttribute> VertexList = new List<PrimitiveVertexAttribute>();
+
+        public LineDrawable<PrimitiveVertexAttribute> MyLineDrawable = null;
     }
 }

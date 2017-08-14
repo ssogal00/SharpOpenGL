@@ -88,10 +88,9 @@ namespace SharpOpenGL
         {
             base.OnUpdateFrame(e);
 
-
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
-            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.DepthTest);            
 
             TickableObjectManager.Tick(e.Time);
 

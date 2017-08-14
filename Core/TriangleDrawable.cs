@@ -14,39 +14,13 @@ using Core.Texture;
 namespace Core
 {
     //@ T : VertexAttribute
-    public class TriangleDrawable<T>  where T : struct
+    public class TriangleDrawable<T> : DrawableBase<T> where T : struct
     {
         public TriangleDrawable()
-        {
-            VB = new StaticVertexBuffer<T>();
-            IB = new IndexBuffer();            
+        {  
         }
 
-        protected void SetupVertexData(ref T[] VertexList)
-        {            
-            VB.BufferData<T>(ref VertexList);
-        }
-
-        protected void SetupIndexData(ref uint[] IndexList)
-        {
-            IB.BufferData<uint>(ref IndexList);
-        }
-
-        public void SetupData(ref T[] VertexList, ref uint[] IndexList)
-        {
-            VB.BufferData<T>(ref VertexList);
-            IB.BufferData<uint>(ref IndexList);
-            IndexCount = IndexList.Count();
-            bReadyToDraw = true;
-        }
-
-        public void Bind()
-        {            
-            VB.Bind();
-            IB.Bind();
-        }
-
-        public void Draw()
+        public virtual void Draw()
         {
             if (bReadyToDraw)
             {
@@ -58,11 +32,5 @@ namespace Core
                 GL.DrawElements(PrimitiveType.Triangles, IndexCount, DrawElementsType.UnsignedInt, 0);
             }
         }
-
-        protected StaticVertexBuffer<T> VB = null;
-        protected IndexBuffer IB = null;
-        
-        int IndexCount = 0;
-        bool bReadyToDraw = false;
     }
 }
