@@ -64,8 +64,7 @@ namespace FBXImporter
                 {
                     OpenTK.Matrix4 ChildTransform = (OpenTK.Matrix4) It.Current().ChildBoneList[i].LinkTransform;
                     OpenTK.Vector4 vEnd = OpenTK.Vector4.Transform(vStart, ChildTransform);
-
-
+                    
                 }
             }
         }

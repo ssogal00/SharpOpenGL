@@ -39,6 +39,8 @@ namespace Core.Primitive
             EndPoint = vEnd;
         }
 
+        
+
         public OpenTK.Vector3 StartPoint;
         public OpenTK.Vector3 EndPoint;
     }
