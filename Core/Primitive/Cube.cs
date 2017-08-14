@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.Primitive
 {
-    class Cube
+    public class Cube
     {
+
+
     }
 }

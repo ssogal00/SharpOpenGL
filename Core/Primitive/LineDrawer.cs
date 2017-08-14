@@ -17,7 +17,9 @@ namespace Core.Primitive
         {
             VB.Bind();
             IB.Bind();
-            
+
+            Core.Primitive.PrimitiveVertexAttribute.VertexAttributeBinding();
+
             GL.DrawElements(PrimitiveType.Lines, IndexList.Count, DrawElementsType.UnsignedInt, 0);
         }
 
@@ -44,8 +46,7 @@ namespace Core.Primitive
             }
 
             var VertexArray = VertexList.ToArray();
-            VB.BufferData<PrimitiveVertexAttribute>(ref VertexArray);
-            VB.VertexAttribPointer();
+            VB.BufferData<PrimitiveVertexAttribute>(ref VertexArray);            
 
             var IndexArray = IndexList.ToArray();
             IB.BufferData<uint>(ref IndexArray);

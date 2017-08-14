@@ -18,16 +18,16 @@ using Core.VertexCustomAttribute;
 namespace Core.Primitive
 {
 
-    [StructLayout(LayoutKind.Explicit, Size = 16)]
+    [StructLayout(LayoutKind.Explicit, Size = 12)]
     public struct PrimitiveVertexAttribute
     {
-        [FieldOffset(0)]
+        [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
         public OpenTK.Vector3 VertexPosition;
 
         public static void VertexAttributeBinding()
         {
             GL.EnableVertexAttribArray(0);
-            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 20, new IntPtr(0));
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 12, new IntPtr(0));
         }
     }
 

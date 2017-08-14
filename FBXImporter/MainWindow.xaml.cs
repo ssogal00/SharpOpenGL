@@ -19,9 +19,11 @@ using FBXWrapper;
 using SharpOpenGL;
 using Core.Buffer;
 using Core.Camera;
+using Core.Primitive;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL.BasicMaterial;
+using SharpOpenGL.SimpleMaterial;
 
 namespace FBXImporter
 {
@@ -39,6 +41,9 @@ namespace FBXImporter
             {
                 TestParsedFbxMesh = SdkWrapper.ImportFBXMesh("Sample.FBX");
                 MyFBXMesh = new FBXMesh(TestParsedFbxMesh);
+                MyLine = new Core.Primitive.Line(new OpenTK.Vector3(-10,-10,-10), new OpenTK.Vector3(10,10,10));
+                MyLineDrawer = new LineDrawer();                
+                MyLineDrawer.AddLine(MyLine);                
             }
         }
         private void GLControlLoad(object sender, EventArgs e)
@@ -50,15 +55,18 @@ namespace FBXImporter
             GL.Enable(EnableCap.DepthTest);
 
             TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();
+            Simple = new SharpOpenGL.SimpleMaterial.SimpleMaterial();
             TestMaterial.Use();
 
-            // init uniform buffer
-            TransformBuffer = new DynamicUniformBuffer();
-            ColorBuffer = new DynamicUniformBuffer();
             if (MyFBXMesh != null)
             {
                 MyFBXMesh.PrepareToDraw();
-            }            
+            }
+
+            if(MyLineDrawer != null)
+            {
+                MyLineDrawer.Setup();
+            }
         }
 
 
@@ -73,16 +81,25 @@ namespace FBXImporter
             Camera.UpdateCameraDistance();
             Camera.UpdateViewMatrix();
             Camera.UpdateProjMatrix();
-
+            
             ModelTransform.View = Camera.View;
             ModelTransform.Proj = Camera.Proj;
 
+            LineTransform.View = Camera.View;
+            LineTransform.Proj = Camera.Proj;
+            LineTransform.Model = Matrix4.CreateScale(0.014f);
+
+            TestMaterial.Use();
             TestMaterial.SetTransformBlockData(ref ModelTransform);
 
             if(MyFBXMesh != null)
             {                
-                MyFBXMesh.Draw();
+                //MyFBXMesh.Draw();
             }
+
+            Simple.Use();
+            Simple.SetTransformBlockData(ref LineTransform);
+            MyLineDrawer.Draw();
             
             GlControl.SwapBuffers();
         }
@@ -106,20 +123,23 @@ namespace FBXImporter
             Camera.UpdateProjMatrix();
 
             ModelTransform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
-            ModelTransform.Model = Matrix4.CreateScale(0.015f) ;
-            ModelTransform.View = Matrix4.LookAt(new Vector3(0, 0, -10), new Vector3(0, 0, 0), Vector3.UnitY);
-                        
+            ModelTransform.Model = Matrix4.CreateScale(0.015f) ;            
         }
 
         protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
-        protected DynamicUniformBuffer TransformBuffer = null;
-        protected DynamicUniformBuffer ColorBuffer = null;
+        protected SharpOpenGL.SimpleMaterial.SimpleMaterial Simple = null;
+        
+        
         protected Matrix4 ModelView = new Matrix4();
         protected Matrix4 Projection = new Matrix4();
         protected OrbitCamera Camera = new OrbitCamera();
+
         protected SharpOpenGL.BasicMaterial.Transform ModelTransform = new SharpOpenGL.BasicMaterial.Transform();
+        protected SharpOpenGL.SimpleMaterial.Transform LineTransform = new SharpOpenGL.SimpleMaterial.Transform();
 
         protected ParsedFBXMesh TestParsedFbxMesh = null;
         protected FBXMesh MyFBXMesh = null;
+        protected Core.Primitive.Line MyLine = null;
+        protected Core.Primitive.LineDrawer MyLineDrawer = null;
     }    
 }

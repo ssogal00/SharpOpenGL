@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <MaterialList>
 	<Material name="BasicMaterial" vertexShader="TestShader.vs" fragmentShader="TestShader.fs"/>
+	<Material name="SimpleMaterial" vertexShader="TestShader2.vs" fragmentShader="TestShader2.fs"/>
 </MaterialList>

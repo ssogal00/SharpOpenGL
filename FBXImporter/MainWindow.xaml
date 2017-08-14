@@ -27,8 +27,8 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
         </Grid>
-        <Canvas Grid.Row="0" Grid.Column="1">
-
-        </Canvas>
+        <TreeView Grid.Row="0" Grid.Column="1" x:Name="BoneTreeView" Margin="8">
+            
+        </TreeView>
     </Grid>
 </Window>
