@@ -229,6 +229,7 @@ FBXWrapper::FBXMeshBone^ FBXWrapper::FBXSDKWrapper::ParseBoneHierarchy(FbxNode* 
 
 	FBXMeshBone^ Root = gcnew FBXMeshBone();
 	Root->BoneName = gcnew System::String(BoneRootNode->GetName());
+	Root->ParentBone = nullptr;
 	ParseBoneHierarchyRecursive(BoneRootNode, Root);
 
 	return Root;
@@ -272,6 +273,7 @@ void FBXWrapper::FBXSDKWrapper::ParseBoneHierarchyRecursive(FbxNode* VisitNode, 
 		{
 			FBXMeshBone^ NewBone = gcnew FBXMeshBone();
 			NewBone->BoneName = gcnew System::String(ChildNode->GetName());
+			NewBone->ParentBone = ParentBone;
 			ParentBone->ChildBoneList->Add(NewBone);
 			ParseBoneHierarchyRecursive(ChildNode, NewBone);
 		}
@@ -331,12 +333,9 @@ OpenTK::Matrix4 FBXWrapper::FBXSDKWrapper::ParseFbxAMatrix(FbxAMatrix Value)
 {
 	OpenTK::Matrix4 Result;
 
-	Result.Row0 = Parse4DVector(Value.GetRow(0));		
-
-	Result.Row1 = Parse4DVector(Value.GetRow(1));
-	
-	Result.Row2 = Parse4DVector(Value.GetRow(2));	
-
+	Result.Row0 = Parse4DVector(Value.GetRow(0));
+	Result.Row1 = Parse4DVector(Value.GetRow(1));	
+	Result.Row2 = Parse4DVector(Value.GetRow(2));
 	Result.Row3 = Parse4DVector(Value.GetRow(3));
 	
 	return Result;

@@ -87,7 +87,7 @@ namespace FBXImporter
 
             LineTransform.View = Camera.View;
             LineTransform.Proj = Camera.Proj;
-            LineTransform.Model = Matrix4.CreateScale(0.014f);
+            LineTransform.Model = Matrix4.CreateScale(0.015f);
 
             TestMaterial.Use();
             TestMaterial.SetTransformBlockData(ref ModelTransform);
@@ -99,7 +99,10 @@ namespace FBXImporter
 
             Simple.Use();
             Simple.SetTransformBlockData(ref LineTransform);
-            MyLineDrawer.Draw();
+            if(MyFBXMesh != null)
+            {
+                MyFBXMesh.DrawBoneHierarchy();
+            }
             
             GlControl.SwapBuffers();
         }
@@ -114,8 +117,7 @@ namespace FBXImporter
             Camera.FOV = MathHelper.PiOver6;
             Camera.Near = 1;
             Camera.Far = 10000;
-            Camera.EyeLocation = new Vector3(-10, 0, 0);
-            Camera.DestLocation = new Vector3(10, 0, 0);
+            Camera.EyeLocation = new Vector3(0, 0, -10);
             Camera.LookAtLocation = new Vector3(0, 0, 0);
 
             Camera.UpdateCameraDistance();
@@ -123,7 +125,7 @@ namespace FBXImporter
             Camera.UpdateProjMatrix();
 
             ModelTransform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
-            ModelTransform.Model = Matrix4.CreateScale(0.015f) ;            
+            ModelTransform.Model = Matrix4.CreateScale(0.015f) ;               
         }
 
         protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
