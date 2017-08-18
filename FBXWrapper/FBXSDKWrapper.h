@@ -37,7 +37,10 @@ namespace FBXWrapper
 	{
 	public:
 		bool InitializeSDK();
+
 		ParsedFBXMesh^ ImportFBXMesh(System::String^ FilePath);
+
+		void ImportFBXAnimation(System::String^ FilePath);
 		
 	protected:
 		bool LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName);
@@ -54,13 +57,17 @@ namespace FBXWrapper
 		FbxNode* FindFirstBoneNode(FbxNode* SceneRootNode);
 		void ParseBoneHierarchyRecursive(FbxNode* VisitNode, FBXMeshBone^ ParentBone);
 
+		//
 		OpenTK::Vector2 Parse2DVector(FbxVector2 Value);
 		OpenTK::Vector3 Parse3DVector(FbxVector4 Value);
 		OpenTK::Vector4 Parse4DVector(FbxVector4 Value);
-
 		OpenTK::Matrix4 ParseFbxAMatrix(FbxAMatrix Value);
-
 		void Print4DVector(FbxVector4 Value);
+		//
+
+		//
+		void ParseFBXAnimation(FbxAnimStack* AnimStack, FbxNode* RootNode);		
+		//
 
 		class FbxScene* Scene = nullptr;
 		class FbxManager* FBXManager = nullptr;		

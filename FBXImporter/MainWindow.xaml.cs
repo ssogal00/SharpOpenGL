@@ -39,7 +39,7 @@ namespace FBXImporter
 
             if (SdkWrapper.InitializeSDK())
             {
-                TestParsedFbxMesh = SdkWrapper.ImportFBXMesh("Sample.FBX");
+                TestParsedFbxMesh = SdkWrapper.ImportFBXMesh("FBXSample.FBX");
                 MyFBXMesh = new FBXMesh();                
                 MyLineDrawer = new LineDrawer();                
                 MyLineDrawer.AddLine(new Core.Primitive.Line(new OpenTK.Vector3(-10, -10, -10), new OpenTK.Vector3(110, 10, 10)));

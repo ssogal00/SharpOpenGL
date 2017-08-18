@@ -299,6 +299,39 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::Stri
 	return Result;
 }
 
+void FBXWrapper::FBXSDKWrapper::ImportFBXAnimation(System::String^ FilePath)
+{
+	bool bImportSuccess = LoadScene(FBXManager, Scene, FilePath);
+
+	if (Scene != nullptr && bImportSuccess == true)
+	{
+		for (int i = 0; i < Scene->GetSrcObjectCount<FbxAnimStack>(); i++)
+		{
+			FbxAnimStack* lAnimStack = Scene->GetSrcObject<FbxAnimStack>(i);
+
+			FbxString lOutputString = "Animation Stack Name: ";
+			lOutputString += lAnimStack->GetName();
+			lOutputString += "\n\n";			
+
+			ParseFBXAnimation(lAnimStack, Scene->GetRootNode());			
+		}		
+	}
+}
+
+void FBXWrapper::FBXSDKWrapper::ParseFBXAnimation(FbxAnimStack* AnimStack, FbxNode* RootNode)
+{
+	int AnimLayers = AnimStack->GetMemberCount<FbxAnimLayer>();
+	
+	for (int i = 0; i < AnimLayers; i++)
+	{
+		FbxAnimLayer* pAnimLayer = AnimStack->GetMember<FbxAnimLayer>(i);
+
+
+
+		
+	}
+}
+
 
 Vector2 FBXWrapper::FBXSDKWrapper::Parse2DVector(FbxVector2 Value)
 {

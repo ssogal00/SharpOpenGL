@@ -21,12 +21,33 @@
     <ClCompile Include="BoneIterator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ParsedFBXAnimCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FBXSDKWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BoneIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParsedFBXAnimLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParsedFBXAnimNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParsedFBXAnimStack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParsedFBXAnimKey.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParsedFBXAnimCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParsedFBXEnum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
