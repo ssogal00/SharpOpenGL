@@ -2,7 +2,7 @@
 
 #using <OpenTK.dll>
 
-#include "FBXAnimKey.h"
+#include "ParsedFBXAnimNode.h"
 
 using namespace System::Collections::Generic;
 
@@ -13,5 +13,8 @@ namespace FBXWrapper
 	public:
 		System::String^ LayerName;
 		
+		List<ParsedFBXAnimNode^>^ AnimNodeList = gcnew List<ParsedFBXAnimNode^>();
+
+		void ParseNativeFBXAnimLayer(FbxAnimStack* NativeAnimStack, FbxAnimLayer* NativeAnimLayer, FbxNode* NativeNode);
 	};
 };

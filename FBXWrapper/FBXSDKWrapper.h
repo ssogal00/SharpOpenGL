@@ -1,7 +1,7 @@
 #pragma once
 
 #include "fbxsdk.h"
-
+#include "ParsedFBXAnimStack.h"
 #using <OpenTK.dll>
 
 using namespace System::Collections::Generic;
@@ -40,7 +40,7 @@ namespace FBXWrapper
 
 		ParsedFBXMesh^ ImportFBXMesh(System::String^ FilePath);
 
-		void ImportFBXAnimation(System::String^ FilePath);
+		ParsedFBXAnimStack^ ImportFBXAnimation(System::String^ FilePath);
 		
 	protected:
 		bool LoadScene(FbxManager* pFBXManager, FbxScene* pFBXScene, System::String^ FileName);
@@ -66,7 +66,7 @@ namespace FBXWrapper
 		//
 
 		//
-		void ParseFBXAnimation(FbxAnimStack* AnimStack, FbxNode* RootNode);		
+		ParsedFBXAnimStack^ ParseFBXAnimation(FbxAnimStack* AnimStack, FbxNode* RootNode);		
 		//
 
 		class FbxScene* Scene = nullptr;

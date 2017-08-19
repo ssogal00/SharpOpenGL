@@ -40,10 +40,8 @@ namespace FBXImporter
             if (SdkWrapper.InitializeSDK())
             {
                 TestParsedFbxMesh = SdkWrapper.ImportFBXMesh("FBXSample.FBX");
+                SdkWrapper.ImportFBXAnimation("ActiveSkill01.FBX");
                 MyFBXMesh = new FBXMesh();                
-                MyLineDrawer = new LineDrawer();                
-                MyLineDrawer.AddLine(new Core.Primitive.Line(new OpenTK.Vector3(-10, -10, -10), new OpenTK.Vector3(110, 10, 10)));
-                MyLineDrawer.AddLine(new Core.Primitive.Line(new OpenTK.Vector3(0, -10, -10), new OpenTK.Vector3(110, 10, 10)));
             }
         }
         private void GLControlLoad(object sender, EventArgs e)

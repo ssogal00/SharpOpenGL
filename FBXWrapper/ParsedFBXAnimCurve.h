@@ -12,7 +12,8 @@ namespace FBXWrapper
 	{
 	public:
 		int KeyCount;
-		List<ParsedFBXAnimKey^> AnimKeyList = gcnew List<ParsedFBXAnimKey^>();
+		List<ParsedFBXAnimKey^>^ AnimKeyList = gcnew List<ParsedFBXAnimKey^>();
 		void ParseNativeFBXAnimCurve(FbxAnimCurve* pCurve);
+	private:
 	};
 };

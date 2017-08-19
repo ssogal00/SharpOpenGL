@@ -15,7 +15,7 @@ namespace Core
         public LineDrawable()
         {            
         }        
-        public virtual void Draw() 
+        public override void Draw() 
         {
             if (bReadyToDraw)
             {

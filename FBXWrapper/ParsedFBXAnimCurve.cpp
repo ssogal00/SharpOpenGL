@@ -4,34 +4,37 @@
 
 void FBXWrapper::ParsedFBXAnimCurve::ParseNativeFBXAnimCurve(FbxAnimCurve* pCurve)
 {
-	FbxTime   lKeyTime;
-	float   lKeyValue;
-	char    lTimeString[256];
-	FbxString lOutputString;
-	int     lCount;
-	int lKeyCount = pCurve->KeyGetCount();
-
-	this->KeyCount = lKeyCount;
-
-	for (lCount = 0; lCount < lKeyCount; lCount++)
+	if (pCurve != nullptr)
 	{
-		ParsedFBXAnimKey^ AnimKey = gcnew ParsedFBXAnimKey();
+		FbxTime   lKeyTime;
+		float   lKeyValue;
+		char    lTimeString[256];
+		FbxString lOutputString;
+		int     lCount;
+		int lKeyCount = pCurve->KeyGetCount();
 
-		AnimKey->KeyValue = static_cast<float>(pCurve->KeyGetValue(lCount));
-		lKeyTime = pCurve->KeyGetTime(lCount);
-		AnimKey->KeyTimeString = gcnew System::String(lKeyTime.GetTimeString(lTimeString, FbxUShort(256)));
+		KeyCount = lKeyCount;
 
-		// constant
-		if (pCurve->KeyGetInterpolation(lCount) & FbxAnimCurveDef::eInterpolationConstant)
+		for (lCount = 0; lCount < lKeyCount; lCount++)
 		{
-			AnimKey->KeyInterpolationMethod = InterpolationMethod::EInterpolationConstant;
-		}
-		// Cubic
-		else if (pCurve->KeyGetInterpolation(lCount) & FbxAnimCurveDef::eInterpolationCubic)
-		{
-			AnimKey->KeyInterpolationMethod = InterpolationMethod::EInterpolationCubic;
-		}
+			ParsedFBXAnimKey^ AnimKey = gcnew ParsedFBXAnimKey();
 
-		AnimKeyList.Add(AnimKey);
+			AnimKey->KeyValue = static_cast<float>(pCurve->KeyGetValue(lCount));
+			lKeyTime = pCurve->KeyGetTime(lCount);
+			AnimKey->KeyTimeString = gcnew System::String(lKeyTime.GetTimeString(lTimeString, FbxUShort(256)));
+
+			// constant
+			if (pCurve->KeyGetInterpolation(lCount) & FbxAnimCurveDef::eInterpolationConstant)
+			{
+				AnimKey->KeyInterpolationMethod = InterpolationMethod::EInterpolationConstant;
+			}
+			// Cubic
+			else if (pCurve->KeyGetInterpolation(lCount) & FbxAnimCurveDef::eInterpolationCubic)
+			{
+				AnimKey->KeyInterpolationMethod = InterpolationMethod::EInterpolationCubic;
+			}
+
+			AnimKeyList->Add(AnimKey);
+		}
 	}
 }

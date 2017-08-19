@@ -2,11 +2,13 @@
 #include "fbxsdk.h"
 #include "FBXSDKWrapper.h"
 #include "BoneIterator.h"
+#include "ParsedFBXAnimStack.h"
 #include <msclr/marshal_cppstd.h>
 
 using namespace msclr::interop;
 using namespace OpenTK;
 using namespace System::Collections::Generic;
+using namespace FBXWrapper;
 
 bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
 {
@@ -299,7 +301,7 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::Stri
 	return Result;
 }
 
-void FBXWrapper::FBXSDKWrapper::ImportFBXAnimation(System::String^ FilePath)
+ParsedFBXAnimStack^ FBXWrapper::FBXSDKWrapper::ImportFBXAnimation(System::String^ FilePath)
 {
 	bool bImportSuccess = LoadScene(FBXManager, Scene, FilePath);
 
@@ -309,27 +311,22 @@ void FBXWrapper::FBXSDKWrapper::ImportFBXAnimation(System::String^ FilePath)
 		{
 			FbxAnimStack* lAnimStack = Scene->GetSrcObject<FbxAnimStack>(i);
 
-			FbxString lOutputString = "Animation Stack Name: ";
-			lOutputString += lAnimStack->GetName();
-			lOutputString += "\n\n";			
+			ParsedFBXAnimStack^ Result = ParseFBXAnimation(lAnimStack, Scene->GetRootNode());
 
-			ParseFBXAnimation(lAnimStack, Scene->GetRootNode());			
+			return Result;
 		}		
 	}
+
+	return nullptr;
 }
 
-void FBXWrapper::FBXSDKWrapper::ParseFBXAnimation(FbxAnimStack* AnimStack, FbxNode* RootNode)
+ParsedFBXAnimStack^ FBXWrapper::FBXSDKWrapper::ParseFBXAnimation(FbxAnimStack* AnimStack, FbxNode* RootNode)
 {
-	int AnimLayers = AnimStack->GetMemberCount<FbxAnimLayer>();
-	
-	for (int i = 0; i < AnimLayers; i++)
-	{
-		FbxAnimLayer* pAnimLayer = AnimStack->GetMember<FbxAnimLayer>(i);
+	ParsedFBXAnimStack^ NewStack = gcnew ParsedFBXAnimStack();
 
+	NewStack->ParseNativeFBXAnimStack(AnimStack, RootNode);
 
-
-		
-	}
+	return NewStack;
 }
 
 

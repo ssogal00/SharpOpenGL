@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace Core
@@ -14,7 +8,7 @@ namespace Core
         public QuadDrawable()
         {
         }
-        public virtual void Draw()
+        public override void Draw()
         {
             if (bReadyToDraw)
             {
