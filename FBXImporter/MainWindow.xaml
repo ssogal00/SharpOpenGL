@@ -30,5 +30,6 @@
         <TreeView Grid.Row="0" Grid.Column="1" x:Name="BoneTreeView" Margin="8">
             
         </TreeView>
+        <Button Click="AnimIndex_Click" x:Name="AnimIndex" Grid.Row="1" Grid.Column="1"></Button>
     </Grid>
 </Window>

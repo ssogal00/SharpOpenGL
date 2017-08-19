@@ -2,12 +2,12 @@
 #include "FBXSDKWrapper.h"
 #include "BoneIterator.h"
 
-FBXWrapper::BoneIterator::BoneIterator(FBXMeshBone^ RootBone)
+FBXWrapper::BoneIterator::BoneIterator(ParsedFBXMeshBone^ RootBone)
 {
 	AddBoneRecursive(RootBone);
 }
 
-void FBXWrapper::BoneIterator::AddBoneRecursive(FBXMeshBone^ ParentBone)
+void FBXWrapper::BoneIterator::AddBoneRecursive(ParsedFBXMeshBone^ ParentBone)
 {
 	BoneList->Add(ParentBone);	
 
@@ -22,7 +22,7 @@ void FBXWrapper::BoneIterator::MoveNext()
 	++Index;
 }
 
-FBXWrapper::FBXMeshBone^ FBXWrapper::BoneIterator::Current()
+FBXWrapper::ParsedFBXMeshBone^ FBXWrapper::BoneIterator::Current()
 {
 	if (Index < BoneList->Count)
 	{

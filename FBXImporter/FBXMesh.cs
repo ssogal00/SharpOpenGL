@@ -98,7 +98,7 @@ namespace FBXImporter
             }
         }
 
-        FBXMeshBone RootBone = null;
+        ParsedFBXMeshBone RootBone = null;
         TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute> MeshDrawable = null;
         LineDrawable<SharpOpenGL.SimpleMaterial.VertexAttribute> BoneDrawable = null;
     }

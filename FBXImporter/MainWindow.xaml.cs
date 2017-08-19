@@ -40,7 +40,9 @@ namespace FBXImporter
             if (SdkWrapper.InitializeSDK())
             {
                 TestParsedFbxMesh = SdkWrapper.ImportFBXMesh("FBXSample.FBX");
-                SdkWrapper.ImportFBXAnimation("ActiveSkill01.FBX");
+                TestAnimStack = SdkWrapper.ImportFBXAnimation("ActiveSkill01.FBX");
+                TestAnimation = new ParsedFBXAnimation(TestParsedFbxMesh, TestAnimStack);
+
                 MyFBXMesh = new FBXMesh();                
             }
         }
@@ -58,6 +60,11 @@ namespace FBXImporter
             if (MyFBXMesh != null)
             {
                 MyFBXMesh.SetFBXMeshInfo(TestParsedFbxMesh);
+            }
+
+            for (int i = 0; i < 100; i++)
+            {
+                AnimList.Add(new FBXMeshAnimation(TestAnimation, i));
             }
 
             Simple.Use();
@@ -85,21 +92,26 @@ namespace FBXImporter
 
             LineTransform.View = Camera.View;
             LineTransform.Proj = Camera.Proj;
-            LineTransform.Model = Matrix4.CreateScale(0.015f);
+            LineTransform.Model = ModelTransform.Model;
 
             TestMaterial.Use();
             TestMaterial.SetTransformBlockData(ref ModelTransform);
 
             if(MyFBXMesh != null)
             {                
-                MyFBXMesh.Draw();
+                //MyFBXMesh.Draw();
             }
 
             Simple.Use();
             Simple.SetTransformBlockData(ref LineTransform);
             if(MyFBXMesh != null)
             {
-                MyFBXMesh.DrawBoneHierarchy();
+                //MyFBXMesh.DrawBoneHierarchy();
+            }
+
+            if(AnimList != null)
+            {
+                AnimList[nCurrentAnimIndex].DrawBoneHierarchy();
             }
             
             GlControl.SwapBuffers();
@@ -123,7 +135,7 @@ namespace FBXImporter
             Camera.UpdateProjMatrix();
 
             ModelTransform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
-            ModelTransform.Model = Matrix4.CreateScale(0.015f) ;               
+            ModelTransform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitX, -OpenTK.MathHelper.PiOver2) * Matrix4.CreateScale(0.015f) ;               
         }
 
         protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
@@ -138,8 +150,24 @@ namespace FBXImporter
         protected SharpOpenGL.SimpleMaterial.Transform LineTransform = new SharpOpenGL.SimpleMaterial.Transform();
 
         protected ParsedFBXMesh TestParsedFbxMesh = null;
+        protected ParsedFBXAnimStack TestAnimStack = null;
+        protected ParsedFBXAnimation TestAnimation = null;
+
         protected FBXMesh MyFBXMesh = null;
+        protected FBXMeshAnimation MyFBXAnim = null;
+
+        List<FBXMeshAnimation> AnimList = new List<FBXMeshAnimation>();
+
         protected Core.Primitive.Line MyLine = null;
         protected Core.Primitive.LineDrawer MyLineDrawer = null;
+
+        protected int nCurrentAnimIndex = 0;
+
+        private void AnimIndex_Click(object sender, RoutedEventArgs e)
+        {
+            nCurrentAnimIndex++;
+            nCurrentAnimIndex = nCurrentAnimIndex % AnimList.Count;
+            GlControl.Invalidate();
+        }
     }    
 }

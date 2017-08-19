@@ -9,14 +9,14 @@ namespace FBXWrapper
 	public ref class BoneIterator
 	{
 	public:
-		BoneIterator(FBXMeshBone^ RootBone);
+		BoneIterator(ParsedFBXMeshBone^ RootBone);
 		void MoveNext();		
 		bool IsEnd();
 		void Reset();
-		FBXMeshBone^ Current();
+		ParsedFBXMeshBone^ Current();
 	protected:
-		List<FBXMeshBone^>^ BoneList = gcnew List<FBXMeshBone^>();
-		void AddBoneRecursive(FBXMeshBone^ ParentBone);
+		List<ParsedFBXMeshBone^>^ BoneList = gcnew List<ParsedFBXMeshBone^>();
+		void AddBoneRecursive(ParsedFBXMeshBone^ ParentBone);
 		int Index = 0;
 	};
 }
