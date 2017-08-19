@@ -45,7 +45,7 @@ OpenTK::Matrix4 ParsedFBXAnimNode::GetTransform(int KeyTimeIndex)
 	Matrix4 RY = OpenTK::Matrix4::CreateRotationY(Rotation.Y);
 	Matrix4 RZ = OpenTK::Matrix4::CreateRotationZ(Rotation.Z);
 
-	Matrix4 R = RZ * RY * RX ;
+	Matrix4 R = RX * RY * RZ;
 	
 	Matrix4 Result = S * R * T;
 
