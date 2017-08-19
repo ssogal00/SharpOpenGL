@@ -12,8 +12,9 @@ namespace FBXWrapper
 	{
 	public:
 		System::String^ LayerName;
-		
+
 		List<ParsedFBXAnimNode^>^ AnimNodeList = gcnew List<ParsedFBXAnimNode^>();
+		Dictionary<System::String^, ParsedFBXAnimNode^>^ AnimNodeMap = gcnew Dictionary<System::String ^, ParsedFBXAnimNode ^>();
 
 		void ParseNativeFBXAnimLayer(FbxAnimStack* NativeAnimStack, FbxAnimLayer* NativeAnimLayer, FbxNode* NativeNode);
 	};

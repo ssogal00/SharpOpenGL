@@ -127,6 +127,7 @@
   <ItemGroup>
     <ClCompile Include="BoneIterator.cpp" />
     <ClCompile Include="FBXSDKWrapper.cpp" />
+    <ClCompile Include="ParsedFBXAnimation.cpp" />
     <ClCompile Include="ParsedFBXAnimCurve.cpp" />
     <ClCompile Include="ParsedFBXAnimLayer.cpp" />
     <ClCompile Include="ParsedFBXAnimNode.cpp" />
@@ -142,6 +143,8 @@
     <ClInclude Include="BoneIterator.h" />
     <ClInclude Include="FBXSDKWrapper.h" />
     <ClInclude Include="ParsedFBXEnum.h" />
+    <ClInclude Include="ParsedFBXMesh.h" />
+    <ClInclude Include="ParsedFBXMeshBone.h" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">

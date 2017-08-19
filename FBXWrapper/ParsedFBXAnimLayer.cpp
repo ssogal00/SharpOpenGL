@@ -14,6 +14,8 @@ void ParsedFBXAnimLayer::ParseNativeFBXAnimLayer(FbxAnimStack* NativeAnimStack, 
 
 		AnimNodeList->Add(NewNode);
 
+		AnimNodeMap->Add(NewNode->NodeName, NewNode);
+
 		for (int nModelCount = 0; nModelCount < NativeNode->GetChildCount(); nModelCount++)
 		{
 			ParseNativeFBXAnimLayer(NativeAnimStack, NativeAnimLayer, NativeNode->GetChild(nModelCount));

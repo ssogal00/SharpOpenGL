@@ -5,6 +5,7 @@
 
 using namespace FBXWrapper;
 
+
 void ParsedFBXAnimStack::ParseNativeFBXAnimStack(FbxAnimStack* NativeAnimStack, FbxNode* NativeRootNode)
 {
 	if (NativeAnimStack != nullptr)
@@ -22,4 +23,14 @@ void ParsedFBXAnimStack::ParseNativeFBXAnimStack(FbxAnimStack* NativeAnimStack, 
 			AnimLayerList->Add(NewLayer);
 		}
 	}
+}
+
+ParsedFBXAnimNode^ ParsedFBXAnimStack::GetAnimNode(int nLayerIndex, System::String^ NodeName)
+{
+	if (nLayerIndex < AnimLayerList->Count)
+	{
+		return AnimLayerList[nLayerIndex]->AnimNodeMap[NodeName];
+	}
+
+	return nullptr;
 }

@@ -8,9 +8,11 @@
 using namespace msclr::interop;
 using namespace OpenTK;
 using namespace System::Collections::Generic;
+using namespace System;
 using namespace FBXWrapper;
 
-bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
+
+bool FBXSDKWrapper::InitializeSDK()
 {
 	FBXManager = FbxManager::Create();
 
@@ -35,7 +37,7 @@ bool FBXWrapper::FBXSDKWrapper::InitializeSDK()
 	return true;
 }
 
-FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxNode* Node)
+ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxNode* Node)
 {
 	if (Node != nullptr)
 	{
@@ -58,7 +60,7 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxNode* Node
 	return nullptr;
 }
 
-FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
+ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 {
 	ParsedFBXMesh^ ResultMesh = gcnew ParsedFBXMesh();
 
@@ -73,7 +75,7 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh
 
 	for (BoneIterator It(ResultMesh->RootBone); !It.IsEnd(); It.MoveNext())
 	{
-		FBXMeshBone^ CurrentBone = It.Current();
+		ParsedFBXMeshBone^ CurrentBone = It.Current();
 		System::String^ BoneName = CurrentBone->BoneName;
 		if (BoneName != nullptr)
 		{
@@ -85,7 +87,7 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh
 	return ResultMesh;
 }
 
-System::Collections::Generic::List<OpenTK::Vector3>^ FBXWrapper::FBXSDKWrapper::ParseFbxMeshVertex(FbxMesh* Mesh)
+List<Vector3>^ FBXSDKWrapper::ParseFbxMeshVertex(FbxMesh* Mesh)
 {
 	const int nPolygonCount = Mesh->GetPolygonCount();
 	const int nControlPointCount = Mesh->GetControlPointsCount();
@@ -108,7 +110,7 @@ System::Collections::Generic::List<OpenTK::Vector3>^ FBXWrapper::FBXSDKWrapper::
 	return ResultVertexList;
 }
 
-System::Collections::Generic::List<OpenTK::Vector3>^ FBXWrapper::FBXSDKWrapper::ParseFbxMeshNormal(FbxMesh* Mesh)
+List<OpenTK::Vector3>^ FBXSDKWrapper::ParseFbxMeshNormal(FbxMesh* Mesh)
 {
 	
 	int nPolygonCount = Mesh->GetPolygonCount();	
@@ -129,7 +131,7 @@ System::Collections::Generic::List<OpenTK::Vector3>^ FBXWrapper::FBXSDKWrapper::
 	return NormalList;
 }
 
-List<OpenTK::Vector2>^ FBXWrapper::FBXSDKWrapper::ParseFbxMeshUV(FbxMesh* Mesh)
+List<Vector2>^ FBXSDKWrapper::ParseFbxMeshUV(FbxMesh* Mesh)
 {
 	int nPolygonCount = Mesh->GetPolygonCount();
 
@@ -174,7 +176,7 @@ List<OpenTK::Vector2>^ FBXWrapper::FBXSDKWrapper::ParseFbxMeshUV(FbxMesh* Mesh)
 	return UVList;
 }
 
-List<OpenTK::Vector3>^ FBXWrapper::FBXSDKWrapper::ParseFbxControlPointList(FbxMesh* Mesh)
+List<Vector3>^ FBXSDKWrapper::ParseFbxControlPointList(FbxMesh* Mesh)
 {
 	List<OpenTK::Vector3>^ ResultControlPointList = gcnew List<OpenTK::Vector3>();
 
@@ -188,9 +190,9 @@ List<OpenTK::Vector3>^ FBXWrapper::FBXSDKWrapper::ParseFbxControlPointList(FbxMe
 	return ResultControlPointList;
 }
 
-Dictionary<System::String^ ,FBXWrapper::FBXMeshBone^>^ FBXWrapper::FBXSDKWrapper::ParseFbxMeshBone(FbxMesh* Mesh)
+Dictionary<String^ ,ParsedFBXMeshBone^>^ FBXSDKWrapper::ParseFbxMeshBone(FbxMesh* Mesh)
 {
-	Dictionary<System::String^, FBXWrapper::FBXMeshBone^>^ ResultBoneList = gcnew Dictionary<System::String^, FBXWrapper::FBXMeshBone^>();
+	Dictionary<System::String^, FBXWrapper::ParsedFBXMeshBone^>^ ResultBoneList = gcnew Dictionary<System::String^, FBXWrapper::ParsedFBXMeshBone^>();
 
 	int SkinCount = Mesh->GetDeformerCount(FbxDeformer::eSkin);
 
@@ -202,7 +204,7 @@ Dictionary<System::String^ ,FBXWrapper::FBXMeshBone^>^ FBXWrapper::FBXSDKWrapper
 
 		for (int j = 0; j < ClusterCount; ++j)
 		{
-			FBXMeshBone^ NewBone = gcnew FBXMeshBone();
+			ParsedFBXMeshBone^ NewBone = gcnew ParsedFBXMeshBone();
 
 			FbxCluster* pCluster = pSkin->GetCluster(j);
 
@@ -225,11 +227,11 @@ Dictionary<System::String^ ,FBXWrapper::FBXMeshBone^>^ FBXWrapper::FBXSDKWrapper
 	return ResultBoneList;
 }
 
-FBXWrapper::FBXMeshBone^ FBXWrapper::FBXSDKWrapper::ParseBoneHierarchy(FbxNode* SceneRootNode)
+ParsedFBXMeshBone^ FBXSDKWrapper::ParseBoneHierarchy(FbxNode* SceneRootNode)
 {
 	FbxNode* BoneRootNode = FindFirstBoneNode(SceneRootNode);
 
-	FBXMeshBone^ Root = gcnew FBXMeshBone();
+	ParsedFBXMeshBone^ Root = gcnew ParsedFBXMeshBone();
 	Root->BoneName = gcnew System::String(BoneRootNode->GetName());
 	Root->ParentBone = nullptr;
 	ParseBoneHierarchyRecursive(BoneRootNode, Root);
@@ -237,7 +239,7 @@ FBXWrapper::FBXMeshBone^ FBXWrapper::FBXSDKWrapper::ParseBoneHierarchy(FbxNode* 
 	return Root;
 }
 
-FbxNode* FBXWrapper::FBXSDKWrapper::FindFirstBoneNode(FbxNode* VisitNode)
+FbxNode* FBXSDKWrapper::FindFirstBoneNode(FbxNode* VisitNode)
 {
 	if (VisitNode && VisitNode->GetNodeAttribute() && VisitNode->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
 	{
@@ -263,7 +265,7 @@ FbxNode* FBXWrapper::FBXSDKWrapper::FindFirstBoneNode(FbxNode* VisitNode)
 	return nullptr;
 }
 
-void FBXWrapper::FBXSDKWrapper::ParseBoneHierarchyRecursive(FbxNode* VisitNode, FBXMeshBone^ ParentBone)
+void FBXSDKWrapper::ParseBoneHierarchyRecursive(FbxNode* VisitNode, ParsedFBXMeshBone^ ParentBone)
 {	
 	int nChildCount = VisitNode->GetChildCount();	
 
@@ -273,7 +275,7 @@ void FBXWrapper::FBXSDKWrapper::ParseBoneHierarchyRecursive(FbxNode* VisitNode, 
 
 		if (ChildNode && ChildNode->GetNodeAttribute() && ChildNode->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
 		{
-			FBXMeshBone^ NewBone = gcnew FBXMeshBone();
+			ParsedFBXMeshBone^ NewBone = gcnew ParsedFBXMeshBone();
 			NewBone->BoneName = gcnew System::String(ChildNode->GetName());
 			NewBone->ParentBone = ParentBone;
 			ParentBone->ChildBoneList->Add(NewBone);
@@ -282,7 +284,7 @@ void FBXWrapper::FBXSDKWrapper::ParseBoneHierarchyRecursive(FbxNode* VisitNode, 
 	}	
 }
 
-FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
+ParsedFBXMesh^ FBXSDKWrapper::ImportFBXMesh(System::String^ FilePath)
 {	
 	bool bImportSuccess = LoadScene(FBXManager, Scene, FilePath);
 
@@ -301,7 +303,7 @@ FBXWrapper::ParsedFBXMesh^ FBXWrapper::FBXSDKWrapper::ImportFBXMesh(System::Stri
 	return Result;
 }
 
-ParsedFBXAnimStack^ FBXWrapper::FBXSDKWrapper::ImportFBXAnimation(System::String^ FilePath)
+ParsedFBXAnimStack^ FBXSDKWrapper::ImportFBXAnimation(System::String^ FilePath)
 {
 	bool bImportSuccess = LoadScene(FBXManager, Scene, FilePath);
 
@@ -320,7 +322,7 @@ ParsedFBXAnimStack^ FBXWrapper::FBXSDKWrapper::ImportFBXAnimation(System::String
 	return nullptr;
 }
 
-ParsedFBXAnimStack^ FBXWrapper::FBXSDKWrapper::ParseFBXAnimation(FbxAnimStack* AnimStack, FbxNode* RootNode)
+ParsedFBXAnimStack^ FBXSDKWrapper::ParseFBXAnimation(FbxAnimStack* AnimStack, FbxNode* RootNode)
 {
 	ParsedFBXAnimStack^ NewStack = gcnew ParsedFBXAnimStack();
 
@@ -330,7 +332,7 @@ ParsedFBXAnimStack^ FBXWrapper::FBXSDKWrapper::ParseFBXAnimation(FbxAnimStack* A
 }
 
 
-Vector2 FBXWrapper::FBXSDKWrapper::Parse2DVector(FbxVector2 Value)
+Vector2 FBXSDKWrapper::Parse2DVector(FbxVector2 Value)
 {
 	Vector2 Result;
 	Result.X = static_cast<float>(Value[0]);
@@ -339,7 +341,7 @@ Vector2 FBXWrapper::FBXSDKWrapper::Parse2DVector(FbxVector2 Value)
 	return Result;
 }
 
-Vector3 FBXWrapper::FBXSDKWrapper::Parse3DVector(FbxVector4 Value)
+Vector3 FBXSDKWrapper::Parse3DVector(FbxVector4 Value)
 {
 	Vector3 Result;
 	Result.X = static_cast<float>(Value[0]);
@@ -349,7 +351,7 @@ Vector3 FBXWrapper::FBXSDKWrapper::Parse3DVector(FbxVector4 Value)
 	return Result;
 }
 
-Vector4 FBXWrapper::FBXSDKWrapper::Parse4DVector(FbxVector4 Value)
+Vector4 FBXSDKWrapper::Parse4DVector(FbxVector4 Value)
 {
 	Vector4 Result;
 	Result.X = static_cast<float>(Value[0]);
@@ -359,7 +361,7 @@ Vector4 FBXWrapper::FBXSDKWrapper::Parse4DVector(FbxVector4 Value)
 	return Result;
 }
 
-OpenTK::Matrix4 FBXWrapper::FBXSDKWrapper::ParseFbxAMatrix(FbxAMatrix Value)
+Matrix4 FBXSDKWrapper::ParseFbxAMatrix(FbxAMatrix Value)
 {
 	OpenTK::Matrix4 Result;
 
@@ -371,7 +373,7 @@ OpenTK::Matrix4 FBXWrapper::FBXSDKWrapper::ParseFbxAMatrix(FbxAMatrix Value)
 	return Result;
 }
 
-void FBXWrapper::FBXSDKWrapper::Print4DVector(FbxVector4 Value)
+void FBXSDKWrapper::Print4DVector(FbxVector4 Value)
 {
 	System::Console::WriteLine("X : {0}, Y : {1} , Z : {2} , W : {3}", Value[0], Value[1], Value[2], Value[3]);
 }
