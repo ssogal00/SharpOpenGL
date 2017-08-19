@@ -133,6 +133,7 @@
     <ClCompile Include="ParsedFBXAnimStack.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ParsedFBXAnimation.h" />
     <ClInclude Include="ParsedFBXAnimCurve.h" />
     <ClInclude Include="ParsedFBXAnimKey.h" />
     <ClInclude Include="ParsedFBXAnimLayer.h" />

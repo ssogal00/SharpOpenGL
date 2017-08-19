@@ -2,6 +2,21 @@
 #include "ParsedFBXAnimCurve.h"
 #include "ParsedFBXAnimKey.h"
 
+using namespace FBXWrapper;
+using namespace OpenTK;
+
+float ParsedFBXAnimCurve::GetValue(int KeyTimeIndex)
+{
+	if ( KeyTimeIndex >= 0 && KeyTimeIndex < AnimKeyList->Count )
+	{
+		return AnimKeyList[KeyTimeIndex]->KeyValue;
+	}
+	
+	return -1;
+}
+
+
+
 void FBXWrapper::ParsedFBXAnimCurve::ParseNativeFBXAnimCurve(FbxAnimCurve* pCurve)
 {
 	if (pCurve != nullptr)

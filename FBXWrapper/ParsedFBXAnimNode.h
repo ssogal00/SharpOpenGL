@@ -18,6 +18,8 @@ namespace FBXWrapper
 		System::String^ NodeName;
 
 		void ParseNativeFBXAnimNode(FbxAnimLayer* NativeAnimLayer, FbxNode* NativeNode);
+
+		OpenTK::Matrix4 GetTransform(int KeyTimeIndex);
 		
 		ParsedFBXAnimCurve^ TXCurve = nullptr;
 		ParsedFBXAnimCurve^ TYCurve = nullptr;

@@ -59,5 +59,8 @@
     <ClInclude Include="ParsedFBXEnum.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ParsedFBXAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

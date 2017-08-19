@@ -12,9 +12,6 @@ using SharpOpenGL;
 using Core.Buffer;
 using Core.OpenGLShader;
 using Core.Texture;
-
-using Core;
-
 using OpenTK.Graphics.OpenGL;
 using Core.Primitive;
 

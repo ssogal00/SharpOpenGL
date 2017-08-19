@@ -7,14 +7,19 @@ using namespace FBXWrapper;
 
 void ParsedFBXAnimStack::ParseNativeFBXAnimStack(FbxAnimStack* NativeAnimStack, FbxNode* NativeRootNode)
 {
-	int AnimLayers = NativeAnimStack->GetMemberCount<FbxAnimLayer>();
-	
-	for (int i = 0; i < AnimLayers; i++)
+	if (NativeAnimStack != nullptr)
 	{
-		FbxAnimLayer* pAnimLayer = NativeAnimStack->GetMember<FbxAnimLayer>(i);		
+		int AnimLayers = NativeAnimStack->GetMemberCount<FbxAnimLayer>();
 
-		ParsedFBXAnimLayer^ NewLayer = gcnew ParsedFBXAnimLayer();
-		NewLayer->ParseNativeFBXAnimLayer(NativeAnimStack, pAnimLayer, NativeRootNode);
-		AnimLayerList->Add(NewLayer);
+		StackName = gcnew System::String(NativeAnimStack->GetName());
+
+		for (int i = 0; i < AnimLayers; i++)
+		{
+			FbxAnimLayer* pAnimLayer = NativeAnimStack->GetMember<FbxAnimLayer>(i);
+
+			ParsedFBXAnimLayer^ NewLayer = gcnew ParsedFBXAnimLayer();
+			NewLayer->ParseNativeFBXAnimLayer(NativeAnimStack, pAnimLayer, NativeRootNode);
+			AnimLayerList->Add(NewLayer);
+		}
 	}
 }
