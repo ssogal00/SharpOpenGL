@@ -83,6 +83,30 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 			CurrentBone->Transform = ResultMesh->BoneMap[BoneName]->Transform;
 		}
 	}
+
+	for (BoneIterator It(ResultMesh->RootBone); !It.IsEnd(); It.MoveNext())
+	{
+		ParsedFBXMeshBone^ CurrentBone = ResultMesh->BoneMap[It.Current()->BoneName];
+
+		for (int i = 0; i < CurrentBone->ControlPointIndexList->Count; ++i)
+		{
+			SkinningInfo^ NewSkinningInfo = gcnew SkinningInfo();
+			NewSkinningInfo->nControlPointIndex = CurrentBone->ControlPointIndexList[i];
+			NewSkinningInfo->Weight = CurrentBone->ControlPointWeightList[i];
+			NewSkinningInfo->BoneName = CurrentBone->BoneName;
+
+			if (ResultMesh->SkinningInfoMap->ContainsKey(NewSkinningInfo->nControlPointIndex))
+			{
+				ResultMesh->SkinningInfoMap[NewSkinningInfo->nControlPointIndex]->Add(NewSkinningInfo);
+			}
+			else
+			{
+				List<SkinningInfo^>^ NewList = gcnew List<SkinningInfo^>();
+				NewList->Add(NewSkinningInfo);
+				ResultMesh->SkinningInfoMap->Add(NewSkinningInfo->nControlPointIndex, NewList);
+			}
+		}
+	}
 	 
 	return ResultMesh;
 }
@@ -91,8 +115,8 @@ List<Vector3>^ FBXSDKWrapper::ParseFbxMeshVertex(FbxMesh* Mesh)
 {
 	const int nPolygonCount = Mesh->GetPolygonCount();
 	const int nControlPointCount = Mesh->GetControlPointsCount();
-	
-	FbxVector4* pControlPoints = Mesh->GetControlPoints();
+			
+	FbxVector4* pControlPoints = Mesh->GetControlPoints();	
 
 	List<OpenTK::Vector3>^ ResultVertexList = gcnew List<OpenTK::Vector3>();
 		
@@ -111,8 +135,7 @@ List<Vector3>^ FBXSDKWrapper::ParseFbxMeshVertex(FbxMesh* Mesh)
 }
 
 List<OpenTK::Vector3>^ FBXSDKWrapper::ParseFbxMeshNormal(FbxMesh* Mesh)
-{
-	
+{	
 	int nPolygonCount = Mesh->GetPolygonCount();	
 	
 	List<OpenTK::Vector3>^ NormalList = gcnew List<OpenTK::Vector3>();
@@ -213,11 +236,20 @@ Dictionary<String^ ,ParsedFBXMeshBone^>^ FBXSDKWrapper::ParseFbxMeshBone(FbxMesh
 				FbxAMatrix LinkMatrix;
 				FbxAMatrix TransfromMatrix;
 				LinkMatrix = pCluster->GetTransformLinkMatrix(LinkMatrix);
-				TransfromMatrix = pCluster->GetTransformMatrix(TransfromMatrix);				
+				TransfromMatrix = pCluster->GetTransformMatrix(TransfromMatrix);		
+				const int nControlPointCount = pCluster->GetControlPointIndicesCount();
+				int* pIndices = pCluster->GetControlPointIndices();
+				double* pWeights = pCluster->GetControlPointWeights();
+
+				for (int k = 0; k < nControlPointCount; k++)
+				{
+					NewBone->ControlPointIndexList->Add(pIndices[k]);
+					NewBone->ControlPointWeightList->Add(static_cast<float>(pWeights[k]));
+				}
 
 				NewBone->LinkTransform = ParseFbxAMatrix(LinkMatrix);
 				NewBone->Transform = ParseFbxAMatrix(TransfromMatrix);
-				NewBone->BoneName = gcnew System::String(pCluster->GetLink()->GetName());
+				NewBone->BoneName = gcnew System::String(pCluster->GetLink()->GetName());				
 
 				ResultBoneList->Add(NewBone->BoneName, NewBone);
 			}

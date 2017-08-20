@@ -13,8 +13,8 @@ namespace FBXWrapper
 		System::String^ BoneName = nullptr;
 		OpenTK::Matrix4^ Transform = nullptr;
 		OpenTK::Matrix4^ LinkTransform = nullptr;
-		List<unsigned int> ControlPointIndexList = gcnew List<unsigned int>();
-		List<float> ControlPointWeight = gcnew List<float>();
+		List<int>^ ControlPointIndexList = gcnew List<int>();
+		List<float>^ ControlPointWeightList = gcnew List<float>();
 		ParsedFBXMeshBone^ ParentBone = nullptr;
 		List<ParsedFBXMeshBone^>^ ChildBoneList = gcnew List<ParsedFBXMeshBone^>();
 	};

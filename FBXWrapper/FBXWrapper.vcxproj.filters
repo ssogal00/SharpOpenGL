@@ -71,5 +71,8 @@
     <ClInclude Include="ParsedFBXMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SkinningInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
