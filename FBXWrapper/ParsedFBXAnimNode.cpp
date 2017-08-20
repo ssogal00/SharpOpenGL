@@ -2,6 +2,7 @@
 #include "fbxsdk.h"
 #include "ParsedFBXAnimCurve.h"
 #include "ParsedFBXAnimNode.h"
+#include "FBXSDKWrapper.h"
 
 using namespace FBXWrapper;
 using namespace OpenTK;
@@ -22,6 +23,8 @@ ParsedFBXAnimNode::ParsedFBXAnimNode()
 
 OpenTK::Matrix4 ParsedFBXAnimNode::GetTransform(int KeyTimeIndex)
 {
+	
+
 	OpenTK::Vector3 Translation;
 	Translation.X = TXCurve->GetValue(KeyTimeIndex);
 	Translation.Y = TYCurve->GetValue(KeyTimeIndex);
@@ -44,10 +47,12 @@ OpenTK::Matrix4 ParsedFBXAnimNode::GetTransform(int KeyTimeIndex)
 	Matrix4 RX = OpenTK::Matrix4::CreateRotationX(Rotation.X);
 	Matrix4 RY = OpenTK::Matrix4::CreateRotationY(Rotation.Y);
 	Matrix4 RZ = OpenTK::Matrix4::CreateRotationZ(Rotation.Z);
-
+	
 	Matrix4 R = RX * RY * RZ;
+	//Matrix4 R = RZ * RY * RX;
 	
 	Matrix4 Result = S * R * T;
+	//Matrix4 Result =  T * R * S;
 
 	return Result;
 }
@@ -117,5 +122,18 @@ void FBXWrapper::ParsedFBXAnimNode::ParseNativeFBXAnimNode(FbxAnimLayer* NativeA
 			SZCurve->ParseNativeFBXAnimCurve(pCurve);
 		}
 		// @end Scale
+
+// 		if (pCurve)
+// 		{
+// 			FbxTime   lKeyTime;
+// 			int     lCount;
+// 			int lKeyCount = pCurve->KeyGetCount();
+// 
+// 			for (lCount = 0; lCount < lKeyCount; lCount++)
+// 			{
+// 				lKeyTime = pCurve->KeyGetTime(lCount);
+// 				TransformList.Add(FBXSDKWrapper::ParseFbxAMatrix(NativeNode->EvaluateLocalTransform(lKeyTime)));
+// 			}
+// 		}
 	}
 }

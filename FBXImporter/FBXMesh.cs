@@ -28,20 +28,45 @@ namespace FBXImporter
             RootBone = _ParsedFBXMesh.RootBone;
 
             List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
-            List<uint> VertexIndices = new List<uint>();
+            List<uint> ControlPointIndexList = _ParsedFBXMesh.IndexList;
+            List<uint> NewIndexList = new List<uint>();
 
-            for (int i = 0; i < _ParsedFBXMesh.VertexList.Count; ++i)
+            List<OpenTK.Vector4> TransformedVertices = new List<Vector4>();
+
+            for(int i = 0; i < ControlPointIndexList.Count; ++i)
+            {
+                int index = (int)ControlPointIndexList[i];
+                List<SkinningInfo> SkinningInfoList = _ParsedFBXMesh.SkinningInfoMap[index];
+
+                OpenTK.Vector4 TransformedPosition = new OpenTK.Vector4();
+
+                for (int j = 0; j < SkinningInfoList.Count; ++j)
+                {
+                    OpenTK.Vector4 vPosition = new OpenTK.Vector4(_ParsedFBXMesh.ControlPointList[index]);
+
+                    OpenTK.Matrix4 OffsetMatrix = (OpenTK.Matrix4) _ParsedFBXMesh.BoneMap[SkinningInfoList[j].BoneName].Transform;
+
+                    //vPosition = OpenTK.Vector4.Transform(vPosition, (Matrix4)SkinningInfoList[j].OffsetMatrix) * SkinningInfoList[j].Weight;
+                    vPosition = OpenTK.Vector4.Transform(vPosition, OffsetMatrix) * SkinningInfoList[j].Weight;
+
+                    TransformedPosition = TransformedPosition + vPosition;
+                }
+
+                TransformedVertices.Add(TransformedPosition);                
+            }
+            
+            for (int i = 0; i < TransformedVertices.Count; ++i)
             {
                 SharpOpenGL.BasicMaterial.VertexAttribute NewVertex = new SharpOpenGL.BasicMaterial.VertexAttribute();
-                NewVertex.VertexPosition = _ParsedFBXMesh.VertexList[i];
-                NewVertex.TexCoord = _ParsedFBXMesh.UVList[i];
+                NewVertex.VertexPosition = TransformedVertices[i].Xyz;
 
                 Vertices.Add(NewVertex);
-                VertexIndices.Add((uint)VertexIndices.Count);
+                NewIndexList.Add((uint)NewIndexList.Count);                
             }
 
             var TempVertices = Vertices.ToArray();
-            var TempIndices = VertexIndices.ToArray();
+            var TempIndices =  NewIndexList.ToArray();
+            
 
             MeshDrawable = new TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute>();
             MeshDrawable.SetupData(ref TempVertices, ref TempIndices);

@@ -32,5 +32,8 @@ namespace FBXWrapper
 		ParsedFBXAnimCurve^ SXCurve = nullptr;
 		ParsedFBXAnimCurve^ SYCurve = nullptr;
 		ParsedFBXAnimCurve^ SZCurve = nullptr;		
+
+		List<OpenTK::Matrix4> TransformList = gcnew List<OpenTK::Matrix4>();
 	};
+
 };

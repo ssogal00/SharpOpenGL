@@ -11,6 +11,7 @@ namespace FBXWrapper
 	public:
 		int nControlPointIndex = 0;
 		System::String^ BoneName = nullptr;
-		float Weight = 0;		
+		float Weight = 0;
+		OpenTK::Matrix4^ OffsetMatrix = gcnew OpenTK::Matrix4();
 	};
 };

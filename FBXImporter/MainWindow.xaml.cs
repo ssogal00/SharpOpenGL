@@ -99,15 +99,15 @@ namespace FBXImporter
 
             if(MyFBXMesh != null)
             {                
-                //MyFBXMesh.Draw();
+               // MyFBXMesh.Draw();
             }
 
-            Simple.Use();
-            Simple.SetTransformBlockData(ref LineTransform);
-            if(MyFBXMesh != null)
-            {
-                //MyFBXMesh.DrawBoneHierarchy();
-            }
+             Simple.Use();
+             Simple.SetTransformBlockData(ref LineTransform);
+             if(MyFBXMesh != null)
+             {
+                // MyFBXMesh.DrawBoneHierarchy();
+             }
 
             if(AnimList != null)
             {

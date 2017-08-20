@@ -70,6 +70,7 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 	ResultMesh->NormalList = ParseFbxMeshNormal(Mesh);
 	ResultMesh->UVList = ParseFbxMeshUV(Mesh);
 	ResultMesh->ControlPointList = ParseFbxControlPointList(Mesh);
+	ResultMesh->IndexList = ParseFBXMeshIndex(Mesh);
 	ResultMesh->BoneMap = ParseFbxMeshBone(Mesh);
 	ResultMesh->RootBone= ParseBoneHierarchy(Scene->GetRootNode());
 
@@ -94,16 +95,17 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 			NewSkinningInfo->nControlPointIndex = CurrentBone->ControlPointIndexList[i];
 			NewSkinningInfo->Weight = CurrentBone->ControlPointWeightList[i];
 			NewSkinningInfo->BoneName = CurrentBone->BoneName;
+			NewSkinningInfo->OffsetMatrix = CurrentBone->Transform;
 
 			if (ResultMesh->SkinningInfoMap->ContainsKey(NewSkinningInfo->nControlPointIndex))
 			{
-				ResultMesh->SkinningInfoMap[NewSkinningInfo->nControlPointIndex]->Add(NewSkinningInfo);
+				ResultMesh->SkinningInfoMap[NewSkinningInfo->nControlPointIndex]->Add(NewSkinningInfo);				
 			}
 			else
 			{
 				List<SkinningInfo^>^ NewList = gcnew List<SkinningInfo^>();
 				NewList->Add(NewSkinningInfo);
-				ResultMesh->SkinningInfoMap->Add(NewSkinningInfo->nControlPointIndex, NewList);
+				ResultMesh->SkinningInfoMap->Add(NewSkinningInfo->nControlPointIndex, NewList);	
 			}
 		}
 	}
@@ -132,6 +134,27 @@ List<Vector3>^ FBXSDKWrapper::ParseFbxMeshVertex(FbxMesh* Mesh)
 	}
 
 	return ResultVertexList;
+}
+
+List<unsigned int>^ FBXSDKWrapper::ParseFBXMeshIndex(FbxMesh* Mesh)
+{
+	const int nPolygonCount = Mesh->GetPolygonCount();
+	const int nControlPointCount = Mesh->GetControlPointsCount();
+
+	List<unsigned int>^ IndexList = gcnew List<unsigned int>();
+
+	for (int i = 0; i < nPolygonCount; ++i)
+	{
+		int nPolygonSize = Mesh->GetPolygonSize(i);
+
+		for (int j = 0; j < nPolygonSize; ++j)
+		{
+			int nControlPointIndex = Mesh->GetPolygonVertex(i, j);
+			IndexList->Add(static_cast<unsigned int>(nControlPointIndex));
+		}
+	}
+
+	return IndexList;
 }
 
 List<OpenTK::Vector3>^ FBXSDKWrapper::ParseFbxMeshNormal(FbxMesh* Mesh)
