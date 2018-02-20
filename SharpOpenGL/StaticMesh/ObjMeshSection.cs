@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpOpenGL.StaticMesh
 {
-    public class ObjMeshSection
+    [Serializable] public class ObjMeshSection
     {
 
         public UInt32 StartIndex;

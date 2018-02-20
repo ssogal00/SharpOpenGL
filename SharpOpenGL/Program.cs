@@ -4,12 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-
-using System.Runtime.InteropServices;
-
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-
 using Core.Buffer;
 using Core.OpenGLShader;
 using Core.Camera;
@@ -17,7 +13,7 @@ using System.Drawing;
 using SharpOpenGL.StaticMesh;
 using Core.Texture;
 using Core.Tickable;
-
+using System.Runtime.Serialization.Formatters.Binary;
 
 using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
 using TestShaderVS = SharpOpenGL.BasicMaterial;
@@ -76,11 +72,7 @@ namespace SharpOpenGL
 
             TestMaterial.Use();
             
-
             Mesh.Load("..\\..\\ObjMesh\\sponza2.obj", "..\\..\\ObjMesh\\sponzaPBR.mtl");
-            //Mesh.Load("../../ObjMesh/pop.obj", "../../ObjMesh/pop.mtl");            
-
-            
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)

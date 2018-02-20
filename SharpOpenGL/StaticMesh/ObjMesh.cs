@@ -12,31 +12,47 @@ using SharpOpenGL;
 using Core.Buffer;
 using Core.OpenGLShader;
 using Core.Texture;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
 
 namespace SharpOpenGL.StaticMesh
 {
-    public class ObjMesh
+    [Serializable] public class ObjMesh
     {
-        StaticVertexBuffer<SharpOpenGL.BasicMaterial.VertexAttribute> VB = null;
-        IndexBuffer IB = null;
-
-        List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
+        [NonSerialized] StaticVertexBuffer<SharpOpenGL.BasicMaterial.VertexAttribute> VB = null;
+        [NonSerialized] IndexBuffer IB = null;
         
         List<Vector3> VertexList = new List<Vector3>();
+        
         List<Vector2> TexCoordList = new List<Vector2>();
+
+        
         List<Vector3> NormalList = new List<Vector3>();
 
-        List<uint> VertexIndices = new List<uint>();
-        List<uint> TextureIndices = new List<uint>();
+        [NonSerialized]
+        List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
 
-        List<ObjMeshSection> MeshSectionList = new List<ObjMeshSection>();
-        
+        List<uint> VertexIndices = new List<uint>();        
+
+        List<ObjMeshSection> MeshSectionList = new List<ObjMeshSection>();        
         Dictionary<string, ObjMeshMaterial> MaterialMap = new Dictionary<string, ObjMeshMaterial>();
 
-        Dictionary<string, Texture2D> TextureMap = new Dictionary<string, Texture2D>();
+        [NonSerialized] Dictionary<string, Texture2D> TextureMap = new Dictionary<string, Texture2D>();
 
+        Vector3 MinVertex = new Vector3(0,0,0);
+        Vector3 MaxVertex = new Vector3(0,0,0);
+        Vector3 MeshCenter = new Vector3(0, 0, 0);
+
+        [OnDeserialized]
+        void OnDeserialized(StreamingContext context)
+        {
+            PrepareToDraw();
+            LoadTextures();
+        }
+
+        
         public ObjMesh()
         {
         }
@@ -73,6 +89,22 @@ namespace SharpOpenGL.StaticMesh
             IB.Bind();
             var IndexArr = VertexIndices.ToArray();
             IB.BufferData<uint>(ref IndexArr);
+        }
+
+        protected void LoadTextures()
+        {
+            foreach (var Mtl in MaterialMap)
+            {
+                if (Mtl.Value.DiffuseMap.Length > 0)
+                {
+                    if (!TextureMap.ContainsKey(Mtl.Value.DiffuseMap))
+                    {
+                        var TextureObj = new Texture2D();
+                        TextureObj.Load(Mtl.Value.DiffuseMap);
+                        TextureMap.Add(Mtl.Value.DiffuseMap, TextureObj);
+                    }
+                }
+            }
         }
 
         public int GetIndicesCount()
