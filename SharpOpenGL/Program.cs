@@ -72,7 +72,7 @@ namespace SharpOpenGL
 
             TestMaterial.Use();
             
-            Mesh.Load("..\\..\\ObjMesh\\sponza2.obj", "..\\..\\ObjMesh\\sponzaPBR.mtl");
+            Mesh.Load("./ObjMesh/sponza2.obj", "./ObjMesh/sponzaPBR.mtl");
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
