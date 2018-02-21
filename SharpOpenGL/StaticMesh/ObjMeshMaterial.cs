@@ -8,16 +8,12 @@ using OpenTK;
 
 namespace SharpOpenGL.StaticMesh
 {
-    public class ObjMeshMaterial
+    [Serializable] public class ObjMeshMaterial
     {
         public string MaterialName;
         public string DiffuseMap;
         public string NormalMap;
         public string SpecularMap;
         public string MaskMap;
-
-//         OpenTK.Vector3 Ambient;
-//         OpenTK.Vector3 Diffuse;
-//         OpenTK.Vector3 Specular;
     }
 }

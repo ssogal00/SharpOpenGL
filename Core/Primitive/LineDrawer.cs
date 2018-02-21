@@ -20,11 +20,11 @@ namespace Core.Primitive
 
         public void Setup()
         {
-            MyLineDrawable = new LineDrawable<PrimitiveVertexAttribute>();
+            MyLineDrawable = new LineDrawable<P_VertexAttribute>();
             foreach (var line in LineList)
             {
-                var VertexStart = new PrimitiveVertexAttribute();
-                var VertexEnd = new PrimitiveVertexAttribute();
+                var VertexStart = new P_VertexAttribute();
+                var VertexEnd = new P_VertexAttribute();
 
                 VertexStart.VertexPosition = line.StartPoint;
                 VertexEnd.VertexPosition = line.EndPoint;
@@ -50,8 +50,8 @@ namespace Core.Primitive
         public List<Line> LineList = new List<Line>();
         public List<uint> IndexList = new List<uint>();
 
-        public List<PrimitiveVertexAttribute> VertexList = new List<PrimitiveVertexAttribute>();
+        public List<P_VertexAttribute> VertexList = new List<P_VertexAttribute>();
 
-        public LineDrawable<PrimitiveVertexAttribute> MyLineDrawable = null;
+        public LineDrawable<P_VertexAttribute> MyLineDrawable = null;
     }
 }
