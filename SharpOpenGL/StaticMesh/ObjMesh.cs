@@ -1,38 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.IO;
-
+﻿using Core.Buffer;
+using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using SharpOpenGL;
-using Core.Buffer;
-using Core.OpenGLShader;
-using Core.Texture;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-
-using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
+using ObjMeshVertexAttribute = Core.Primitive.PT_VertexAttribute;
 
 namespace SharpOpenGL.StaticMesh
 {
     [Serializable] public class ObjMesh
     {
-        [NonSerialized] StaticVertexBuffer<SharpOpenGL.BasicMaterial.VertexAttribute> VB = null;
+        [NonSerialized] StaticVertexBuffer<ObjMeshVertexAttribute> VB = null;
         [NonSerialized] IndexBuffer IB = null;
         
         List<Vector3> VertexList = new List<Vector3>();
         
         List<Vector2> TexCoordList = new List<Vector2>();
-
         
         List<Vector3> NormalList = new List<Vector3>();
 
         [NonSerialized]
-        List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
+        List<ObjMeshVertexAttribute> Vertices = new List<ObjMeshVertexAttribute>();
 
         List<uint> VertexIndices = new List<uint>();        
 
@@ -78,12 +69,12 @@ namespace SharpOpenGL.StaticMesh
 
         public void PrepareToDraw()
         {
-            VB = new StaticVertexBuffer<SharpOpenGL.BasicMaterial.VertexAttribute>();
+            VB = new StaticVertexBuffer<ObjMeshVertexAttribute>();
             IB = new IndexBuffer();
 
             VB.Bind();
             var Arr = Vertices.ToArray();
-            VB.BufferData<SharpOpenGL.BasicMaterial.VertexAttribute>(ref Arr);
+            VB.BufferData<ObjMeshVertexAttribute>(ref Arr);
             VB.BindVertexAttribute();
 
             IB.Bind();
@@ -217,9 +208,9 @@ namespace SharpOpenGL.StaticMesh
 
                         if(tokens.Count() == 4)
                         {
-                            TestShaderVertexAttributes V1 = new TestShaderVertexAttributes();
-                            TestShaderVertexAttributes V2 = new TestShaderVertexAttributes();
-                            TestShaderVertexAttributes V3 = new TestShaderVertexAttributes();
+                            var V1 = new ObjMeshVertexAttribute();
+                            var V2 = new ObjMeshVertexAttribute();
+                            var V3 = new ObjMeshVertexAttribute();
                             
 
                             var Token1 = tokens[1].Split('/');

@@ -17,6 +17,7 @@ using FreeImageAPI;
 using System.Diagnostics;
 using System.IO;
 
+
 namespace Core.Texture
 {
     public class Texture2D : IDisposable
@@ -116,6 +117,8 @@ namespace Core.Texture
             {
                 return;
             }
+
+            var Format = FreeImage.GetPixelFormat(DIB);
 
             DIB = FreeImage.ConvertTo32Bits(DIB);
             IntPtr Bytes = FreeImage.GetBits(DIB);

@@ -63,6 +63,7 @@
     <Compile Include="Camera\OrbitCamera.cs" />
     <Compile Include="DrawableBase.cs" />
     <Compile Include="LineDrawable.cs" />
+    <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
     <Compile Include="TriangleDrawable.cs" />
     <Compile Include="OpenGLShader\FragmentShader.cs" />
