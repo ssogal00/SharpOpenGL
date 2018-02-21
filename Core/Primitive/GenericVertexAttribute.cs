@@ -30,6 +30,26 @@ namespace Core.Primitive
     }
 
     // Position 
+    // Color
+    [StructLayout(LayoutKind.Explicit, Size = 24)]
+    public struct PC_VertexAttribute
+    {
+        [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
+        public OpenTK.Vector3 VertexPosition;
+
+        [FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
+        public OpenTK.Vector3 VertexColor;
+
+        public static void VertexAttributeBinding()
+        {
+            GL.EnableVertexAttribArray(0);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 24, new IntPtr(0));
+            GL.EnableVertexAttribArray(1);
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 24, new IntPtr(12));
+        }
+    }
+
+    // Position 
     // Texture Coordinate
     [StructLayout(LayoutKind.Explicit, Size = 20)]
     public struct PT_VertexAttribute
