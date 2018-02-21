@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Core.Buffer;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
 using OpenTK.Graphics.OpenGL;
-using Core.Buffer;
-
 
 namespace Core
 {
@@ -38,11 +31,29 @@ namespace Core
         }
       
         public virtual void Draw()
-        {            
+        {   
+            
+        }
+        
+        public virtual void DrawLinePrimitive()
+        {
+            
+            GL.DrawElements(PrimitiveType.Lines, IndexCount, DrawElementsType.UnsignedInt, 0);
+        }
+
+        public virtual void DrawTrianglePrimitive()
+        {
+            
+        }
+
+        public virtual void DrawLineStripPrimitive()
+        {
+
         }
 
         public virtual void Draw(uint Offset , uint Count)
         {
+
         }
 
         protected StaticVertexBuffer<T> VB = null;
