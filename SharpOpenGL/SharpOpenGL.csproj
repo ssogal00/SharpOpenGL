@@ -117,8 +117,11 @@
 </PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>if not exist $(TargetDir)\SponzaTexture mkdir $(TargetDir)\SponzaTexture
-xcopy /D /Y /S $(ProjectDir)\SponzaTexture $(TargetDir)\SponzaTexture
+    <PostBuildEvent>if not exist $(TargetDir)\Resources mkdir $(TargetDir)\Resources
+if not exist $(TargetDir)\Resources\SponzaTexture mkdir $(TargetDir)\Resources\SponzaTexture
+if not exist $(TargetDir)\Resources\ObjMesh mkdir $(TargetDir)\Resources\ObjMesh
+xcopy /D /Y /S $(ProjectDir)\Resources\SponzaTexture $(TargetDir)\Resources\SponzaTexture
+xcopy /D /Y /S $(ProjectDir)\Resources\ObjMesh $(TargetDir)\Resources\ObjMesh
 xcopy /F /Y /S $(ProjectDir)\lib\FreeImage.dll $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

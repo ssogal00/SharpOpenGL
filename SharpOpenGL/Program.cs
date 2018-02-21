@@ -80,7 +80,7 @@ namespace SharpOpenGL
             TransformBuffer = new DynamicUniformBuffer();
             ColorBuffer     = new DynamicUniformBuffer();
 
-            Mesh.Load("..\\..\\ObjMesh\\sponza2.obj", "..\\..\\ObjMesh\\sponzaPBR.mtl");
+            Mesh.Load("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
             //Mesh.Load("../../ObjMesh/pop.obj", "../../ObjMesh/pop.mtl");            
         }
 
