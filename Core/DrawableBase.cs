@@ -22,6 +22,13 @@ namespace Core
             IB.BufferData<uint>(ref IndexList);
         }
 
+        protected void BindVertexAndIndexBuffer()
+        {
+            VB.Bind();
+            IB.Bind();
+            VB.BindVertexAttribute();
+        }
+
         public void SetupData(ref T[] VertexList, ref uint[] IndexList)
         {
             VB.BufferData<T>(ref VertexList);
@@ -31,24 +38,44 @@ namespace Core
         }
       
         public virtual void Draw()
-        {   
-            
-        }
-        
-        public virtual void DrawLinePrimitive()
         {
             
-            GL.DrawElements(PrimitiveType.Lines, IndexCount, DrawElementsType.UnsignedInt, 0);
         }
 
-        public virtual void DrawTrianglePrimitive()
+        public virtual void DrawPrimitive(PrimitiveType type)
         {
-            
+            if(bReadyToDraw)
+            {
+                BindVertexAndIndexBuffer();
+                GL.DrawElements(type, IndexCount, DrawElementsType.UnsignedInt, 0);
+            }
+        }
+        
+        public virtual void DrawLinesPrimitive()
+        {
+            if(bReadyToDraw)
+            {
+                BindVertexAndIndexBuffer();
+                GL.DrawElements(PrimitiveType.Lines, IndexCount, DrawElementsType.UnsignedInt, 0);
+            }
+        }
+
+        public virtual void DrawTrianglesPrimitive()
+        {
+            if(bReadyToDraw)
+            {
+                BindVertexAndIndexBuffer();
+                GL.DrawElements(PrimitiveType.Triangles, IndexCount, DrawElementsType.UnsignedInt, 0);
+            }
         }
 
         public virtual void DrawLineStripPrimitive()
         {
-
+            if(bReadyToDraw)
+            {
+                BindVertexAndIndexBuffer();
+                GL.DrawElements(PrimitiveType.LineStrip, IndexCount, DrawElementsType.UnsignedInt, 0);
+            }
         }
 
         public virtual void Draw(uint Offset , uint Count)
