@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-
-using System.Reflection;
+﻿using OpenTK.Graphics.OpenGL;
+using System;
 using System.Runtime.InteropServices;
+using OpenTK;
 
 namespace Core.Buffer
 {
@@ -72,7 +65,12 @@ namespace Core.Buffer
             GL.BufferSubData<T>(m_BufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
 	    }
 
-    public void BufferData<T>(ref T[] Data) where T: struct
+        public void BufferSubData<T>(ref T Data) where T : struct
+        {
+
+        }
+
+        public void BufferData<T>(ref T[] Data) where T: struct
         {
             if (!IsBind)
             {
