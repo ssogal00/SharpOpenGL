@@ -56,6 +56,7 @@
     <Compile Include="Buffer\DynamicUniformBuffer.cs" />
     <Compile Include="Buffer\DynamicVertexBuffer.cs" />
     <Compile Include="Buffer\FrameBuffer.cs" />
+    <Compile Include="Buffer\GBuffer.cs" />
     <Compile Include="Buffer\IndexBuffer.cs" />
     <Compile Include="Buffer\OpenGLBuffer.cs" />
     <Compile Include="Buffer\StaticUniformBuffer.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="LineDrawable.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
+    <Compile Include="Texture\RenderTargetTexture.cs" />
     <Compile Include="TriangleDrawable.cs" />
     <Compile Include="OpenGLShader\FragmentShader.cs" />
     <Compile Include="OpenGLShader\Shader.cs" />

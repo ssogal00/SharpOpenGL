@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 using ObjMeshVertexAttribute = Core.Primitive.PT_VertexAttribute;
 
@@ -50,6 +51,8 @@ namespace SharpOpenGL.StaticMesh
         
         public Task LoadAsync(string FilePath, string MtlPath)
         {
+            Debug.Assert(File.Exists(FilePath) && File.Exists(MtlPath));            
+
             return Task.Run(() => { Load(FilePath, MtlPath); });
         }
 

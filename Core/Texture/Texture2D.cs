@@ -88,6 +88,7 @@ namespace Core.Texture
                 bitmap.UnlockBits(bmpData);
             }            
         }
+        
 
         public void Load(string FilePath)
         {
