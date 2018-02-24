@@ -62,6 +62,8 @@ namespace SharpOpenGL
 
         protected ObjMesh Mesh = new ObjMesh();
 
+        private Task<ObjMesh> MeshLoadTask = null;
+
         protected override void OnLoad(EventArgs e)
         {
             VSync = VSyncMode.Off;
@@ -74,19 +76,27 @@ namespace SharpOpenGL
 
             TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();            
 
-            TestMaterial.Use();            
+            TestMaterial.Use();
 
-            // init uniform buffer
-            TransformBuffer = new DynamicUniformBuffer();
-            ColorBuffer     = new DynamicUniformBuffer();
-
-            Mesh.Load("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
-            //Mesh.Load("../../ObjMesh/pop.obj", "../../ObjMesh/pop.mtl");            
+            // MeshLoadTask = ObjMesh.("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
+            MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
+
+            if(MeshLoadTask != null)
+            {
+                if(MeshLoadTask.IsCompleted)
+                {
+                    Mesh = MeshLoadTask.Result;
+                    Mesh.PrepareToDraw();
+                    Mesh.LoadTextures();
+                    MeshLoadTask = null;
+                }
+                return;
+            }
 
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
@@ -139,11 +149,7 @@ namespace SharpOpenGL
 
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
             Transform.Model = Matrix4.CreateScale(0.03f);
-            Transform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);            
-
-            ColorBuffer.Bind();
-            var greenColor = new Vector3(0,1,0);
-            ColorBuffer.BufferData<Vector3>(ref greenColor);            
+            Transform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);
         }
     }
 

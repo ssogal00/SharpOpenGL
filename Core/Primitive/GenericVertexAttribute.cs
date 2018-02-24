@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using OpenTK;
-using OpenTK.Graphics;
-
+﻿using Core.VertexCustomAttribute;
 using OpenTK.Graphics.OpenGL;
-using Core;
-using Core.Buffer;
+using System;
 using System.Runtime.InteropServices;
-using Core.VertexCustomAttribute;
 
 namespace Core.Primitive
 {

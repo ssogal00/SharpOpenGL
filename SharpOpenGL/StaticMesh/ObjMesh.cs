@@ -7,42 +7,57 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
+
 using ObjMeshVertexAttribute = Core.Primitive.PT_VertexAttribute;
+
 
 namespace SharpOpenGL.StaticMesh
 {
-    [Serializable] public class ObjMesh
+    public class ObjMesh
     {
-        [NonSerialized] StaticVertexBuffer<ObjMeshVertexAttribute> VB = null;
-        [NonSerialized] IndexBuffer IB = null;
+        // 
+        // Vertex Buffer and Index buffer to render
+        StaticVertexBuffer<ObjMeshVertexAttribute> VB = null;        
+        IndexBuffer IB = null;
         
-        List<Vector3> VertexList = new List<Vector3>();
-        
-        List<Vector2> TexCoordList = new List<Vector2>();
-        
-        List<Vector3> NormalList = new List<Vector3>();
-
-        [NonSerialized]
+        //
         List<ObjMeshVertexAttribute> Vertices = new List<ObjMeshVertexAttribute>();
+        List<Core.Primitive.P_VertexAttribute> P_Vertices = new List<Core.Primitive.P_VertexAttribute>();
+        List<Core.Primitive.PN_VertexAttribute> PN_Vertices = new List<Core.Primitive.PN_VertexAttribute>();
+        List<Core.Primitive.PNT_VertexAttribute> PNT_Vertices = new List<Core.Primitive.PNT_VertexAttribute>();
 
-        List<uint> VertexIndices = new List<uint>();        
+        List<uint> VertexIndices = new List<uint>();
 
+        // @only used for mesh loading
+        List<Vector3> VertexList = new List<Vector3>();        
+        List<Vector2> TexCoordList = new List<Vector2>();        
+        List<Vector3> NormalList = new List<Vector3>();
+        // clear after mesh loading
+ 
         List<ObjMeshSection> MeshSectionList = new List<ObjMeshSection>();        
         Dictionary<string, ObjMeshMaterial> MaterialMap = new Dictionary<string, ObjMeshMaterial>();
 
-        [NonSerialized] Dictionary<string, Texture2D> TextureMap = new Dictionary<string, Texture2D>();
+        Dictionary<string, Texture2D> TextureMap = new Dictionary<string, Texture2D>();
 
         Vector3 MinVertex = new Vector3(0,0,0);
         Vector3 MaxVertex = new Vector3(0,0,0);
         Vector3 MeshCenter = new Vector3(0, 0, 0);
-
-        [OnDeserialized]
-        void OnDeserialized(StreamingContext context)
+        
+        public Task LoadAsync(string FilePath, string MtlPath)
         {
-            PrepareToDraw();
-            LoadTextures();
+            return Task.Run(() => { Load(FilePath, MtlPath); });
         }
 
+        public static async Task<ObjMesh> LoadMeshAsync(string FilePath, string MtlPath)
+        {
+            ObjMesh result = new ObjMesh();
+            await Task.Factory.StartNew(() =>
+            {
+                result.Load(FilePath, MtlPath);
+            });
+            return result;
+        }
         
         public ObjMesh()
         {
@@ -82,7 +97,7 @@ namespace SharpOpenGL.StaticMesh
             IB.BufferData<uint>(ref IndexArr);
         }
 
-        protected void LoadTextures()
+        public void LoadTextures()
         {
             foreach (var Mtl in MaterialMap)
             {
@@ -103,7 +118,7 @@ namespace SharpOpenGL.StaticMesh
             return VertexIndices.Count();
         }
 
-        public void ParseMtlFile(string MtlPath)
+        protected void ParseMtlFile(string MtlPath)
         {
             if(File.Exists(MtlPath))
             {
@@ -269,23 +284,14 @@ namespace SharpOpenGL.StaticMesh
                 if(MeshSectionList.Count > 0)
                 {
                     MeshSectionList.Last().EndIndex = (UInt32) Vertices.Count;
-                }
+                }   
+                
 
-                PrepareToDraw();
-                //
-                foreach(var Mtl in MaterialMap)
-                {
-                    if(Mtl.Value.DiffuseMap.Length > 0)
-                    {
-                        if(!TextureMap.ContainsKey(Mtl.Value.DiffuseMap))
-                        {
-                            var TextureObj = new Texture2D();                            
-                            TextureObj.Load(Mtl.Value.DiffuseMap);
-                            TextureMap.Add(Mtl.Value.DiffuseMap, TextureObj);
-                        }                        
-                    }
-                }
             }
+
+            VertexList.Clear();
+            NormalList.Clear();
+            TexCoordList.Clear();
         }        
     }
 }

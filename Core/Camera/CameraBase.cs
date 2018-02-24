@@ -58,7 +58,48 @@ namespace Core.Camera
         public float AspectRatio { get; set; }
 
         public Vector3 EyeLocation = new Vector3();
-        public Vector3 LookAtLocation = new Vector3();
+        public Vector3 LookAtLocation = new Vector3();        
+
+        public Vector3 LookAtVector
+        {
+            get
+            {
+                return LookAtDir;
+            }
+            set
+            {
+                LookAtDir = value;
+            }
+        }
+
+        public Vector3 UpVector
+        {
+            get
+            {
+                return UpDir;
+            }
+        }
+
+        public Vector3 RightVector
+        {
+            get
+            {
+                return OpenTK.Vector3.Cross(LookAtVector, UpVector);
+            }
+        }
+
+        public Vector3 LeftVector
+        {
+            get
+            {
+                return -RightVector;
+            }
+        }
+
+        protected Vector3 UpDir = new Vector3(0,1,0);
+        protected Vector3 LookAtDir = new Vector3(0, 0, -1);
+
+        public Vector3 RightDir = new Vector3();
 
         protected float FieldOfView;
         protected Matrix4 ProjMatrix = new Matrix4();
