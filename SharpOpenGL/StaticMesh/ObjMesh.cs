@@ -18,14 +18,11 @@ namespace SharpOpenGL.StaticMesh
     {
         // 
         // Vertex Buffer and Index buffer to render
-        StaticVertexBuffer<ObjMeshVertexAttribute> VB = null;        
+        StaticVertexBuffer<ObjMeshVertexAttribute> VB = null;
         IndexBuffer IB = null;
         
         //
-        List<ObjMeshVertexAttribute> Vertices = new List<ObjMeshVertexAttribute>();
-        List<Core.Primitive.P_VertexAttribute> P_Vertices = new List<Core.Primitive.P_VertexAttribute>();
-        List<Core.Primitive.PN_VertexAttribute> PN_Vertices = new List<Core.Primitive.PN_VertexAttribute>();
-        List<Core.Primitive.PNT_VertexAttribute> PNT_Vertices = new List<Core.Primitive.PNT_VertexAttribute>();
+        List<ObjMeshVertexAttribute> Vertices = new List<ObjMeshVertexAttribute>();        
 
         List<uint> VertexIndices = new List<uint>();
 
@@ -39,6 +36,13 @@ namespace SharpOpenGL.StaticMesh
         Dictionary<string, ObjMeshMaterial> MaterialMap = new Dictionary<string, ObjMeshMaterial>();
 
         Dictionary<string, Texture2D> TextureMap = new Dictionary<string, Texture2D>();
+
+        // 
+        protected bool bHasNormal = false;
+        protected bool bHasTexCoordinate = false;
+
+        public bool HasNormal => bHasNormal;
+        public bool HasTexCoord => bHasTexCoordinate;
 
         Vector3 MinVertex = new Vector3(0,0,0);
         Vector3 MaxVertex = new Vector3(0,0,0);
@@ -180,7 +184,9 @@ namespace SharpOpenGL.StaticMesh
                     {
                         var tokens = Trimmedline.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
-                        if(tokens.Count() >= 4)
+                        bHasNormal = true;
+
+                        if (tokens.Count() >= 4)
                         {
                             Vector3 VN = new Vector3();
                             VN.X = Convert.ToSingle(tokens[1]);
@@ -206,6 +212,8 @@ namespace SharpOpenGL.StaticMesh
                     }
                     else if(Trimmedline.StartsWith("vt"))
                     {
+                        bHasTexCoordinate = true;
+
                         var tokens = Trimmedline.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
                         if(tokens.Count() >= 3)
@@ -284,9 +292,7 @@ namespace SharpOpenGL.StaticMesh
                 if(MeshSectionList.Count > 0)
                 {
                     MeshSectionList.Last().EndIndex = (UInt32) Vertices.Count;
-                }   
-                
-
+                }
             }
 
             VertexList.Clear();

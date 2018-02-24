@@ -20,6 +20,7 @@ using Core.Tickable;
 
 using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
 using TestShaderVS = SharpOpenGL.BasicMaterial;
+using OpenTK.Input;
 
 namespace SharpOpenGL
 {
@@ -52,6 +53,7 @@ namespace SharpOpenGL
         protected Matrix4 Projection = new Matrix4();
 
         protected OrbitCamera Camera = new OrbitCamera();
+        protected FreeCamera ActiveCamera = new FreeCamera();
         protected DynamicUniformBuffer TransformBuffer = null;
         protected DynamicUniformBuffer ColorBuffer = null;
 
@@ -77,14 +79,13 @@ namespace SharpOpenGL
             TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();            
 
             TestMaterial.Use();
-
-            // MeshLoadTask = ObjMesh.("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
+            
             MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            base.OnUpdateFrame(e);
+            base.OnUpdateFrame(e);            
 
             if(MeshLoadTask != null)
             {
@@ -129,7 +130,15 @@ namespace SharpOpenGL
             }
         }
 
-        
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseDown(e);
+        }
+
+        protected override void OnMouseMove(MouseMoveEventArgs e)
+        {
+            base.OnMouseMove(e);
+        }
 
         protected override void OnResize(EventArgs e)
         {

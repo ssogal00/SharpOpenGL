@@ -55,6 +55,7 @@
     <Compile Include="AABB.cs" />
     <Compile Include="Buffer\DynamicUniformBuffer.cs" />
     <Compile Include="Buffer\DynamicVertexBuffer.cs" />
+    <Compile Include="Buffer\FrameBuffer.cs" />
     <Compile Include="Buffer\IndexBuffer.cs" />
     <Compile Include="Buffer\OpenGLBuffer.cs" />
     <Compile Include="Buffer\StaticUniformBuffer.cs" />
