@@ -6,12 +6,11 @@ namespace Core.Texture
 {
     public class RenderTargetTexture : IDisposable
     {
-        public RenderTargetTexture(int widthParam, int heightParam, PixelInternalFormat formatParam)
+        public RenderTargetTexture(int widthParam, int heightParam)
         {
             TextureObject = GL.GenTexture();
             width = widthParam;
             height = heightParam;
-            textureFormat = formatParam;
         }
 
         protected void RecreateTexture()
@@ -26,7 +25,7 @@ namespace Core.Texture
         public void Bind()
         {
             GL.BindTexture(TextureTarget.Texture2D, TextureObject);            
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba16, width, height, 0, PixelFormat.Rgba, PixelType.Float, new IntPtr(0));            
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb16f, width, height, 0, PixelFormat.Rgba, PixelType.Float, new IntPtr(0));
         }
 
         public void Unbind()
@@ -62,6 +61,7 @@ namespace Core.Texture
         protected PixelInternalFormat textureFormat;
         public PixelInternalFormat TextureFormat => textureFormat;
 
+        public int GetTextureObject => TextureObject;
         protected int TextureObject;
     }
 }
