@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AABB.cs" />
+    <Compile Include="IBindable.cs" />
     <Compile Include="Buffer\DynamicUniformBuffer.cs" />
     <Compile Include="Buffer\DynamicVertexBuffer.cs" />
     <Compile Include="Buffer\FrameBuffer.cs" />

@@ -1,6 +1,8 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using Core.Texture;
 using System.Diagnostics;
+using System;
+using Core.CustomEvent;
 
 namespace Core.Buffer
 {
@@ -10,20 +12,25 @@ namespace Core.Buffer
         {
             BufferHeight = height;
             BufferWidth = width;
+              
+        }
+
+        private void CreateGBuffer()
+        {
             // 
             FrameBufferObject = new FrameBuffer();
             FrameBufferObject.Bind();
 
-            PositionAttachment = new RenderTargetTexture(width, height);
+            PositionAttachment = new RenderTargetTexture(BufferWidth, BufferHeight);
             PositionAttachment.Bind();
 
-            ColorAttachment = new RenderTargetTexture(width, height);
+            ColorAttachment = new RenderTargetTexture(BufferWidth, BufferHeight);
             ColorAttachment.Bind();
 
-            NormalAttachment = new RenderTargetTexture(width, height);
+            NormalAttachment = new RenderTargetTexture(BufferWidth, BufferHeight);
             NormalAttachment.Bind();
 
-            DepthAttachment = new DepthTargetTexture(width, height);
+            DepthAttachment = new DepthTargetTexture(BufferWidth, BufferHeight);
             DepthAttachment.Bind();
 
             GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, PositionAttachment.GetTextureObject, 0);
@@ -35,7 +42,17 @@ namespace Core.Buffer
 
             Debug.Assert(status == FramebufferErrorCode.FramebufferComplete);
 
-            FrameBufferObject.Unbind();            
+            FrameBufferObject.Unbind();
+        }
+
+        public void OnResourceCreate(object sender, EventArgs e)
+        {
+            CreateGBuffer();
+        }
+
+        public void OnWindowResized(object sender, ScreenResizeEventArgs e)
+        {
+            Resize(e.Width, e.Height);
         }
 
         public void Bind()
@@ -73,7 +90,7 @@ namespace Core.Buffer
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
-        public void Resize(int newWidth, int newHeight)
+        private void Resize(int newWidth, int newHeight)
         {
             Debug.Assert(newWidth > 0 && newHeight > 0);
 

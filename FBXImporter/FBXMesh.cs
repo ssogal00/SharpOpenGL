@@ -1,19 +1,7 @@
-﻿using System;
+﻿using Core;
+using OpenTK;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
-
-using Core;
-using FBXWrapper;
-
-using SharpOpenGL;
-using Core.Buffer;
-using Core.OpenGLShader;
-using Core.Texture;
-using OpenTK.Graphics.OpenGL;
-using Core.Primitive;
 
 namespace FBXImporter
 {

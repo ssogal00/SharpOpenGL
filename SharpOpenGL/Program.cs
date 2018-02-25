@@ -54,7 +54,7 @@ namespace SharpOpenGL
 
         protected ObjMesh Mesh = new ObjMesh();
 
-        protected GBuffer MyGBuffer = null;
+        protected GBuffer MyGBuffer = new GBuffer(1024, 768);
 
         private Task<ObjMesh> MeshLoadTask = null;
 
@@ -77,13 +77,24 @@ namespace SharpOpenGL
 
             TestMaterial.Use();
 
+            // register resource create event handler
             OnResourceCreate += ScreenBlit.OnResourceCreate;
+            OnResourceCreate += this.ResourceCreate;
+            OnResourceCreate += MyGBuffer.OnResourceCreate;
+
+            // resigter window resize event handler
             OnWindowResize += Camera.OnWindowResized;
+            OnWindowResize += MyGBuffer.OnWindowResized;
+
+            OnResourceCreate(this, e);
             
             MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
         }
 
+        protected void ResourceCreate(object sender, EventArgs e)
+        {
 
+        }       
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
