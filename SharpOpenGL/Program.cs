@@ -1,26 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.IO;
-
-using System.Runtime.InteropServices;
-
+﻿using Core.Buffer;
+using Core.Camera;
+using Core.OpenGLShader;
+using Core.Tickable;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-
-using Core.Buffer;
-using Core.OpenGLShader;
-using Core.Camera;
-using System.Drawing;
+using OpenTK.Input;
 using SharpOpenGL.StaticMesh;
-using Core.Texture;
-using Core.Tickable;
-
+using System;
+using System.Threading.Tasks;
 using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
 using TestShaderVS = SharpOpenGL.BasicMaterial;
-using OpenTK.Input;
+using Core.CustomEvent;
 
 namespace SharpOpenGL
 {
@@ -68,6 +58,11 @@ namespace SharpOpenGL
 
         private Task<ObjMesh> MeshLoadTask = null;
 
+        public event EventHandler<EventArgs> OnResourceCreate;
+        public event EventHandler<ScreenResizeEventArgs> OnWindowResize;
+
+        protected BlitToScreen ScreenBlit = new BlitToScreen();
+
         protected override void OnLoad(EventArgs e)
         {
             VSync = VSyncMode.Off;
@@ -78,14 +73,17 @@ namespace SharpOpenGL
 
             GL.ClearColor(System.Drawing.Color.White);            
 
-            TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();            
+            TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();
 
             TestMaterial.Use();
+
+            OnResourceCreate += ScreenBlit.OnResourceCreate;
+            OnWindowResize += Camera.OnWindowResized;
             
             MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
-
-            
         }
+
+
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
@@ -149,18 +147,14 @@ namespace SharpOpenGL
             base.OnResize(e);
 
             GL.Viewport(0, 0, Width, Height);
-                        
-            MyGBuffer = new GBuffer(Width, Height);
 
-            float fAspectRatio = Width / (float)Height;
+            ScreenResizeEventArgs eventArgs = new ScreenResizeEventArgs();
+            eventArgs.Width = Width;
+            eventArgs.Height = Height;
 
-            Camera.AspectRatio = fAspectRatio;
-            Camera.FOV = MathHelper.PiOver6 ;
-            Camera.Near = 1;
-            Camera.Far = 10000;
-            Camera.EyeLocation = new Vector3(5, 5, 5);
-            Camera.DestLocation = new Vector3(5, 5, 5);
-            Camera.LookAtLocation = new Vector3(0, 0, 0);                        
+            float fAspectRatio = Width / (float) Height;
+
+            OnWindowResize(this, eventArgs);
 
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
             Transform.Model = Matrix4.CreateScale(0.03f);

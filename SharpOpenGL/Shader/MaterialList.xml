@@ -2,4 +2,5 @@
 <MaterialList>
 	<Material name="BasicMaterial" vertexShader="TestShader.vs" fragmentShader="TestShader.fs"/>
 	<Material name="SimpleMaterial" vertexShader="TestShader2.vs" fragmentShader="TestShader2.fs"/>
+	<Material name="ScreenSpaceDraw" vertexShader="Screen.vs" fragmentShader="Screen.fs"/>
 </MaterialList>

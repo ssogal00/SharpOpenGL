@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK;
+using System;
+using Core.CustomEvent;
 
 namespace Core.Camera
 {
@@ -58,6 +53,23 @@ namespace Core.Camera
         {
             get { return DestEyeLocation; }
             set { DestEyeLocation = value;}
+        }
+
+        public void OnWindowResized(object sender, ScreenResizeEventArgs eventArgs)
+        {
+            var Width = eventArgs.Width;
+            var Height = eventArgs.Height;
+
+            float fAspectRatio = Width / (float)Height;
+
+            AspectRatio = fAspectRatio;
+            FOV = MathHelper.PiOver6;
+            Near = 1;
+            Far = 10000;
+
+            EyeLocation = new Vector3(5, 5, 5);
+            DestLocation = new Vector3(5, 5, 5);
+            LookAtLocation = new Vector3(0, 0, 0);
         }
 
         protected Vector3 DestEyeLocation = new Vector3();

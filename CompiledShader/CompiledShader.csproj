@@ -50,10 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compiled.BasicMaterial.cs" />
+    <Compile Include="Compiled.ScreenSpaceDraw.cs" />
     <Compile Include="Compiled.SimpleMaterial.cs" />
     <Compile Include="CompiledShaderVariables.BasicMaterial.cs" />
+    <Compile Include="CompiledShaderVariables.ScreenSpaceDraw.cs" />
     <Compile Include="CompiledShaderVariables.SimpleMaterial.cs" />
     <Compile Include="CompiledVertexAttributes.BasicMaterial.cs" />
+    <Compile Include="CompiledVertexAttributes.ScreenSpaceDraw.cs" />
     <Compile Include="CompiledVertexAttributes.SimpleMaterial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

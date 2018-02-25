@@ -8,8 +8,8 @@ namespace Core.Buffer
     {        
         public GBuffer(int width, int height)
         {
-            Height = height;
-            Width = width;
+            BufferHeight = height;
+            BufferWidth = width;
             // 
             FrameBufferObject = new FrameBuffer();
             FrameBufferObject.Bind();
@@ -55,7 +55,7 @@ namespace Core.Buffer
 
         public void PrepareToDraw()
         {
-            GL.Viewport(0,0,Width, Height);
+            GL.Viewport(0,0,BufferWidth, BufferHeight);
       
             var attachments = new DrawBuffersEnum[]
             {
@@ -73,6 +73,39 @@ namespace Core.Buffer
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
+        public void Resize(int newWidth, int newHeight)
+        {
+            Debug.Assert(newWidth > 0 && newHeight > 0);
+
+            FrameBufferObject.Bind();
+
+            BufferWidth = newWidth;
+            BufferHeight = newHeight;
+
+            PositionAttachment.Resize(BufferWidth, BufferHeight);
+            PositionAttachment.Bind();
+
+            ColorAttachment.Resize(BufferWidth, BufferHeight);
+            ColorAttachment.Bind();
+
+            NormalAttachment.Resize(BufferWidth, BufferHeight);
+            NormalAttachment.Bind();
+
+            DepthAttachment.Resize(BufferWidth, BufferHeight);
+            DepthAttachment.Bind();
+
+            GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, PositionAttachment.GetTextureObject, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, ColorAttachment.GetTextureObject, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment2, TextureTarget.Texture2D, NormalAttachment.GetTextureObject, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
+
+            var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+
+            Debug.Assert(status == FramebufferErrorCode.FramebufferComplete);
+
+            FrameBufferObject.Unbind();
+        }
+
         protected RenderTargetTexture PositionAttachment = null;
         protected RenderTargetTexture ColorAttachment = null;
         protected RenderTargetTexture NormalAttachment = null;
@@ -80,7 +113,7 @@ namespace Core.Buffer
 
         protected Core.Buffer.FrameBuffer FrameBufferObject = null;
 
-        protected int Width = 0;
-        protected int Height = 0;
+        protected int BufferWidth = 0;
+        protected int BufferHeight = 0;
     }
 }

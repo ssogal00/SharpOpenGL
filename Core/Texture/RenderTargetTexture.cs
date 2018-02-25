@@ -48,8 +48,7 @@ namespace Core.Texture
 
             RecreateTexture();
             width = newWidth;
-            height = newHeight;
-            Bind();
+            height = newHeight;            
         }
 
         protected int width;
