@@ -68,6 +68,7 @@
     <Compile Include="LineDrawable.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
+    <Compile Include="Texture\DepthTargetTexture.cs" />
     <Compile Include="Texture\RenderTargetTexture.cs" />
     <Compile Include="TriangleDrawable.cs" />
     <Compile Include="OpenGLShader\FragmentShader.cs" />

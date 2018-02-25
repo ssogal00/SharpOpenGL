@@ -64,6 +64,8 @@ namespace SharpOpenGL
 
         protected ObjMesh Mesh = new ObjMesh();
 
+        protected GBuffer MyGBuffer = null;
+
         private Task<ObjMesh> MeshLoadTask = null;
 
         protected override void OnLoad(EventArgs e)
@@ -81,6 +83,8 @@ namespace SharpOpenGL
             TestMaterial.Use();
             
             MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
+
+            
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -145,6 +149,8 @@ namespace SharpOpenGL
             base.OnResize(e);
 
             GL.Viewport(0, 0, Width, Height);
+                        
+            MyGBuffer = new GBuffer(Width, Height);
 
             float fAspectRatio = Width / (float)Height;
 
