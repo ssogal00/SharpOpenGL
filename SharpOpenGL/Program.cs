@@ -41,6 +41,8 @@ namespace SharpOpenGL
 
         protected BlitToScreen ScreenBlit = new BlitToScreen();
 
+        protected Texture2D TestTexture = null;
+
         protected override void OnLoad(EventArgs e)
         {
             VSync = VSyncMode.Off;
@@ -55,8 +57,7 @@ namespace SharpOpenGL
 
             TestMaterial.Use();
 
-            // register resource create event handler
-            OnResourceCreate += ScreenBlit.OnResourceCreate;
+            // register resource create event handler            
             OnResourceCreate += this.ResourceCreate;
             OnResourceCreate += MyGBuffer.OnResourceCreate;
             OnResourceCreate += Sampler.OnResourceCreate;
@@ -67,12 +68,19 @@ namespace SharpOpenGL
 
             OnResourceCreate(this, e);
             
-            MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
+            // MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
         {
+            // init Texture
+            TestTexture = new Texture2D();
+            TestTexture.Load("./Resources/SponzaTexture/Background_Albedo.DDS");
 
+            // init screen blit
+            ScreenBlit.OnResourceCreate(sender, e);
+
+            // 
         }       
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -103,7 +111,10 @@ namespace SharpOpenGL
             Transform.Proj = Camera.Proj;                  
             TestMaterial.SetTransformBlockData(ref Transform);
 
-            Mesh.Draw(TestMaterial);
+
+            ScreenBlit.Draw(TestTexture);
+
+            // Mesh.Draw(TestMaterial);
 
             SwapBuffers();
         }

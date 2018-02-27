@@ -13,8 +13,7 @@ namespace SharpOpenGL
     {
         public BlitToScreen()
         {
-            //
-            
+            //            
         }
 
         public void OnResourceCreate(object sender, System.EventArgs eventArgs)
@@ -65,16 +64,7 @@ namespace SharpOpenGL
             // feed index buffer
             uint[] IndexArray = { 0, 1, 2, 3, 4, 5 };
             IB.BufferData<uint>(ref IndexArray);
-        }
-        
-        public void Draw()
-        {
-            Material.Use();
-            VB.Bind();
-            IB.Bind();
-            PT_VertexAttribute.VertexAttributeBinding();
-            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
-        }
+        }        
 
         public void Draw(Texture2D texture)
         {
@@ -90,5 +80,10 @@ namespace SharpOpenGL
         protected List<uint> Indices = new List<uint>();
         protected StaticVertexBuffer<PT_VertexAttribute> VB = null;
         protected IndexBuffer IB = null;
+
+        // 
+        protected int GridRow = 1;
+        protected int GridCol = 1;
+        protected int GridIndex = 0;
     }
 }

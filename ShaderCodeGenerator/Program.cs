@@ -76,7 +76,7 @@ namespace ShaderCompiler
 
                                 File.WriteAllText(Path.Combine(args[1], VertexAttributeOutputFilename), test);
 
-                                Console.Write(test);
+                                //Console.Write(test);
 
                                 var UniformCodeGen = new ShaderUniformCodeGenerator(vsProgram, materialName);
 
@@ -86,7 +86,7 @@ namespace ShaderCompiler
 
                                 File.WriteAllText(Path.Combine(args[1], ShaderVariableOutputFilename), UniformCodeGen.GetCode());
 
-                                Console.Write(test2);
+                                //Console.Write(test2);
                             }
                         }
                     }
