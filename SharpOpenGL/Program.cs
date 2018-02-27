@@ -68,7 +68,7 @@ namespace SharpOpenGL
 
             OnResourceCreate(this, e);
             
-            // MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
+            MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
@@ -112,9 +112,9 @@ namespace SharpOpenGL
             TestMaterial.SetTransformBlockData(ref Transform);
 
 
-            ScreenBlit.Draw(TestTexture);
+            // ScreenBlit.Draw(TestTexture);
 
-            // Mesh.Draw(TestMaterial);
+            Mesh.Draw(TestMaterial);
 
             SwapBuffers();
         }

@@ -68,6 +68,7 @@
     <Compile Include="CustomEvent\ScreenResizeEventArgs.cs" />
     <Compile Include="DrawableBase.cs" />
     <Compile Include="LineDrawable.cs" />
+    <Compile Include="MaterialBase\MaterialBase.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
     <Compile Include="Texture\DepthTargetTexture.cs" />
