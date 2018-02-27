@@ -53,7 +53,7 @@ namespace Core.Texture
         public void Bind()
         {
             if(IsValid)
-            {
+            {   
                 GL.BindTexture(TextureTarget.Texture2D, m_TextureObject);
             }
         }
@@ -67,13 +67,14 @@ namespace Core.Texture
                 m_TextureUnitBinded = Unit;
             }
         }
+        
 
         public void BindShader(TextureUnit Unit, int SamplerLoc)
         {
             if(IsValid)
             {
-                m_Sampler.BindSampler(m_TextureUnitBinded);                
-                GL.Uniform1(SamplerLoc, (int)(m_TextureUnitBinded - TextureUnit.Texture0));
+                m_Sampler.BindSampler(Unit);                
+                GL.Uniform1(SamplerLoc, (int)(Unit - TextureUnit.Texture0));                
             }
         }
 

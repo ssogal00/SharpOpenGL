@@ -123,6 +123,8 @@ namespace Core.Buffer
             FrameBufferObject.Unbind();
         }
 
+
+
         protected RenderTargetTexture PositionAttachment = null;
         protected RenderTargetTexture ColorAttachment = null;
         protected RenderTargetTexture NormalAttachment = null;

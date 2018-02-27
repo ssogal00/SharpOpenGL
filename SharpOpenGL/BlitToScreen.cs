@@ -5,6 +5,7 @@ using Core.Buffer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
+using Core.Texture;
 
 namespace SharpOpenGL
 {
@@ -65,7 +66,6 @@ namespace SharpOpenGL
             uint[] IndexArray = { 0, 1, 2, 3, 4, 5 };
             IB.BufferData<uint>(ref IndexArray);
         }
-
         
         public void Draw()
         {
@@ -73,6 +73,16 @@ namespace SharpOpenGL
             VB.Bind();
             IB.Bind();
             PT_VertexAttribute.VertexAttributeBinding();
+            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+        }
+
+        public void Draw(Texture2D texture)
+        {
+            Material.Use();
+            VB.Bind();
+            IB.Bind();
+            PT_VertexAttribute.VertexAttributeBinding();
+            Material.SetColorTex2D(texture);
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
         }
 

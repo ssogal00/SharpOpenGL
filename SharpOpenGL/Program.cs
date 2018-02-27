@@ -11,34 +11,12 @@ using System.Threading.Tasks;
 using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
 using TestShaderVS = SharpOpenGL.BasicMaterial;
 using Core.CustomEvent;
+using Core.Texture;
 
 namespace SharpOpenGL
 {
     public class MainWindow : GameWindow
     {
-        TestShaderVertexAttributes[] Vertices = new TestShaderVertexAttributes[]
-        {
-            new TestShaderVertexAttributes{ VertexPosition = new Vector3(-1.0f,-1.0f, 1.0f)},
-            new TestShaderVertexAttributes{ VertexPosition = new Vector3( 1.0f,-1.0f, 1.0f)},
-            new TestShaderVertexAttributes{ VertexPosition = new Vector3( 1.0f, 1.0f, 1.0f)},
-            new TestShaderVertexAttributes{ VertexPosition = new Vector3(-1.0f, 1.0f, 1.0f)},
-            new TestShaderVertexAttributes{ VertexPosition = new Vector3(-1.0f,-1.0f,-1.0f)},
-            new TestShaderVertexAttributes{ VertexPosition = new Vector3( 1.0f,-1.0f,-1.0f)},
-            new TestShaderVertexAttributes{ VertexPosition = new Vector3( 1.0f, 1.0f,-1.0f)},
-            new TestShaderVertexAttributes{ VertexPosition = new Vector3(-1.0f, 1.0f,-1.0f)},
-        };
-
-        ushort[] CubeElements = new ushort[]
-        {
-            0, 1, 2, 2, 3, 0, // front face
-            3, 2, 6, 6, 7, 3, // top face
-            7, 6, 5, 5, 4, 7, // back face
-            4, 0, 3, 3, 7, 4, // left face
-            0, 1, 5, 5, 4, 0, // bottom face
-            1, 5, 6, 6, 2, 1, // right face
-        };
-
-
         protected Matrix4 ModelView = new Matrix4();
         protected Matrix4 Projection = new Matrix4();
 
@@ -81,6 +59,7 @@ namespace SharpOpenGL
             OnResourceCreate += ScreenBlit.OnResourceCreate;
             OnResourceCreate += this.ResourceCreate;
             OnResourceCreate += MyGBuffer.OnResourceCreate;
+            OnResourceCreate += Sampler.OnResourceCreate;
 
             // resigter window resize event handler
             OnWindowResize += Camera.OnWindowResized;

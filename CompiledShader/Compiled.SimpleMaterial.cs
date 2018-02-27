@@ -52,11 +52,9 @@ public class SimpleMaterial
 	public void SetTransformBlockData(ref Transform Data)
 	{
 		var Loc = MaterialProgram.GetUniformBlockIndex("Transform");
-		TransformBuffer.Bind();
-		// TransformBuffer.BindBufferBase(Loc);
+		TransformBuffer.Bind();		
 		TransformBuffer.BindBufferBase(0);
-		TransformBuffer.BufferData<Transform>(ref Data);
-		// TransformBuffer.BufferWholeData<Transform>(ref Data);
+		TransformBuffer.BufferData<Transform>(ref Data);		
 	}
 
 
