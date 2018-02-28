@@ -51,13 +51,14 @@ namespace SharpOpenGL.StaticMesh
         
         public Task LoadAsync(string FilePath, string MtlPath)
         {
-            Debug.Assert(File.Exists(FilePath) && File.Exists(MtlPath));            
+            Debug.Assert(File.Exists(FilePath) && File.Exists(MtlPath));
 
             return Task.Run(() => { Load(FilePath, MtlPath); });
         }
 
         public static async Task<ObjMesh> LoadMeshAsync(string FilePath, string MtlPath)
         {
+            Debug.Assert(File.Exists(FilePath) && File.Exists(MtlPath));
             ObjMesh result = new ObjMesh();
             await Task.Factory.StartNew(() =>
             {
