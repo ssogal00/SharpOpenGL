@@ -1,12 +1,13 @@
 #version 430 core
 
 
-layout (std140) uniform Transform
+uniform Transform
 {
-	mat4 Model;
-	mat4 Proj;
-	mat4 View;	
+	mat4x4 Model;
+	mat4x4 View;
+	mat4x4 Proj;
 };
+
 
 uniform vec3 Value;
 

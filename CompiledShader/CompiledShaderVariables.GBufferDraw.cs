@@ -17,9 +17,9 @@ public struct Transform
 	[FieldOffset(0)]
 	public OpenTK.Matrix4 Model;
 	[FieldOffset(64)]
-	public OpenTK.Matrix4 Proj;
-	[FieldOffset(128)]
 	public OpenTK.Matrix4 View;
+	[FieldOffset(128)]
+	public OpenTK.Matrix4 Proj;
 }
 
 }

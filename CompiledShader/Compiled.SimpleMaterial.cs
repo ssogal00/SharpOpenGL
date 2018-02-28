@@ -58,7 +58,7 @@ public class SimpleMaterial
 	}
 
 
-	protected string GetVSSourceCode()
+	public static string GetVSSourceCode()
 	{
 		return @"#version 430 core
 
@@ -78,7 +78,7 @@ void main()
 }";
 	}
 
-	protected string GetFSSourceCode()
+	public static string GetFSSourceCode()
 	{
 		return @"
 #version 430 core

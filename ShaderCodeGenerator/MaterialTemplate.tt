@@ -82,12 +82,12 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 <#index++;#>
 <#}#>
 
-	protected string GetVSSourceCode()
+	public static string GetVSSourceCode()
 	{
 		return @"<#=VSSourceCode#>";
 	}
 
-	protected string GetFSSourceCode()
+	public static string GetFSSourceCode()
 	{
 		return @"<#=FSSourceCode#>";
 	}

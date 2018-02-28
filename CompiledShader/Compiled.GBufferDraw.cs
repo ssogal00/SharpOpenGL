@@ -90,17 +90,18 @@ public class GBufferDraw
 		GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, 1);	
 	}
 
-	protected string GetVSSourceCode()
+	public static string GetVSSourceCode()
 	{
 		return @"#version 430 core
 
 
-layout (std140) uniform Transform
+uniform Transform
 {
-	mat4 Model;
-	mat4 Proj;
-	mat4 View;	
+	mat4x4 Model;
+	mat4x4 View;
+	mat4x4 Proj;
 };
+
 
 uniform vec3 Value;
 
@@ -123,7 +124,7 @@ void main()
 }";
 	}
 
-	protected string GetFSSourceCode()
+	public static string GetFSSourceCode()
 	{
 		return @"
 #version 430 core
@@ -159,7 +160,6 @@ uniform int MaskMapExist;
 
 void main()
 {   
-	
     DiffuseColor = texture(DiffuseTex, InTexCoordValue);
     PositionColor = vec4(Position, 0);
     NormalColor = texture(NormalTex, InTexCoordValue);

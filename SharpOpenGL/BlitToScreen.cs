@@ -66,13 +66,24 @@ namespace SharpOpenGL
             IB.BufferData<uint>(ref IndexArray);
         }        
 
-        public void Draw(Texture2D texture)
+        public void Blit(Texture2D texture)
         {
             Material.Use();
             VB.Bind();
             IB.Bind();
             PT_VertexAttribute.VertexAttributeBinding();
             Material.SetColorTex2D(texture);
+            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+        }
+
+        public void Blit(int textureObject)
+        {
+            Material.Use();
+            
+            VB.Bind();
+            IB.Bind();
+            PT_VertexAttribute.VertexAttributeBinding();
+            Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
         }
 

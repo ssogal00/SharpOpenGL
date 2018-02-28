@@ -60,6 +60,12 @@ namespace Core.Buffer
             FrameBufferObject.Bind();
         }
 
+        public void Clear()
+        {
+            GL.ClearColor(1, 1, 1, 1);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        }
+
         public void Unbind()
         {
             FrameBufferObject.Unbind();
@@ -83,12 +89,7 @@ namespace Core.Buffer
             
             GL.DrawBuffers(3, attachments);
         }
-
-        protected void Clear()
-        {
-            GL.ClearColor(1, 1, 1, 1);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-        }
+        
 
         private void Resize(int newWidth, int newHeight)
         {

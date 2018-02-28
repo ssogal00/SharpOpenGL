@@ -32,7 +32,6 @@ uniform int MaskMapExist;
 
 void main()
 {   
-	
     DiffuseColor = texture(DiffuseTex, InTexCoordValue);
     PositionColor = vec4(Position, 0);
     NormalColor = texture(NormalTex, InTexCoordValue);

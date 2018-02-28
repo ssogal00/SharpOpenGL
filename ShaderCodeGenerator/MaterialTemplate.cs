@@ -276,14 +276,14 @@ index++;
             
             #line default
             #line hidden
-            this.Write("\r\n\tprotected string GetVSSourceCode()\r\n\t{\r\n\t\treturn @\"");
+            this.Write("\r\n\tpublic static string GetVSSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
             #line 87 "C:\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VSSourceCode));
             
             #line default
             #line hidden
-            this.Write("\";\r\n\t}\r\n\r\n\tprotected string GetFSSourceCode()\r\n\t{\r\n\t\treturn @\"");
+            this.Write("\";\r\n\t}\r\n\r\n\tpublic static string GetFSSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
             #line 92 "C:\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FSSourceCode));

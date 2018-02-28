@@ -12,6 +12,7 @@ using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
 using TestShaderVS = SharpOpenGL.BasicMaterial;
 using Core.CustomEvent;
 using Core.Texture;
+using SharpOpenGL.GBufferDraw;
 
 namespace SharpOpenGL
 {
@@ -25,14 +26,18 @@ namespace SharpOpenGL
         protected DynamicUniformBuffer TransformBuffer = null;
         protected DynamicUniformBuffer ColorBuffer = null;
 
-        protected TestShaderVS.Transform Transform = new TestShaderVS.Transform();
+        //protected TestShaderVS.Transform Transform = new TestShaderVS.Transform();
+        protected GBufferDraw.Transform Transform = new GBufferDraw.Transform();
+
         protected ShaderProgram ProgramObject = null;
 
         protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
+        protected SharpOpenGL.GBufferDraw.GBufferDraw GBufferMaterial = null;
+        protected Core.MaterialBase.MaterialBase TestMaterail2 = null;
 
         protected ObjMesh Mesh = new ObjMesh();
-
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
+
 
         private Task<ObjMesh> MeshLoadTask = null;
 
@@ -53,10 +58,6 @@ namespace SharpOpenGL
 
             GL.ClearColor(System.Drawing.Color.White);            
 
-            TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();
-
-            TestMaterial.Use();
-
             // register resource create event handler            
             OnResourceCreate += this.ResourceCreate;
             OnResourceCreate += MyGBuffer.OnResourceCreate;
@@ -73,14 +74,19 @@ namespace SharpOpenGL
 
         protected void ResourceCreate(object sender, EventArgs e)
         {
-            // init Texture
-            TestTexture = new Texture2D();
-            TestTexture.Load("./Resources/SponzaTexture/Background_Albedo.DDS");
-
             // init screen blit
             ScreenBlit.OnResourceCreate(sender, e);
 
             // 
+            TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();
+            TestMaterial.Use();
+
+            GBufferMaterial = new SharpOpenGL.GBufferDraw.GBufferDraw();
+            GBufferMaterial.Use();
+
+            //
+            //TestMaterail2 = new Core.MaterialBase.MaterialBase(BasicMaterial.BasicMaterial.GetVSSourceCode(), BasicMaterial.BasicMaterial.GetFSSourceCode());
+            // stMaterail2.Setup();
         }       
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -108,13 +114,20 @@ namespace SharpOpenGL
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             Transform.View = Camera.View;
-            Transform.Proj = Camera.Proj;                  
-            TestMaterial.SetTransformBlockData(ref Transform);
+            Transform.Proj = Camera.Proj;
+            // TestMaterial.SetTransformBlockData(ref Transform);
+            GBufferMaterial.SetTransformBlockData(ref Transform);
 
 
             // ScreenBlit.Draw(TestTexture);
+            MyGBuffer.Bind();
+            MyGBuffer.Clear();
+            MyGBuffer.PrepareToDraw();
+            GBufferMaterial.Use();
+            Mesh.Draw(GBufferMaterial);
+            MyGBuffer.Unbind();
 
-            Mesh.Draw(TestMaterial);
+            ScreenBlit.Blit(MyGBuffer.ColorBufferObject);
 
             SwapBuffers();
         }
@@ -160,6 +173,8 @@ namespace SharpOpenGL
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
             Transform.Model = Matrix4.CreateScale(0.03f);
             Transform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);
+
+            
         }
     }
 
