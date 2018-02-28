@@ -54,29 +54,33 @@ public class BasicMaterial
 	public void SetColorBlockBlockData(ref ColorBlock Data)
 	{
 		var Loc = MaterialProgram.GetUniformBlockIndex("ColorBlock");
-		ColorBlockBuffer.Bind();
-		// ColorBlockBuffer.BindBufferBase(Loc);
+		ColorBlockBuffer.Bind();		
 		ColorBlockBuffer.BindBufferBase(0);
-		ColorBlockBuffer.BufferData<ColorBlock>(ref Data);
-		// ColorBlockBuffer.BufferWholeData<ColorBlock>(ref Data);
+		ColorBlockBuffer.BufferData<ColorBlock>(ref Data);		
 	}
 	public void SetTransformBlockData(ref Transform Data)
 	{
 		var Loc = MaterialProgram.GetUniformBlockIndex("Transform");
-		TransformBuffer.Bind();
-		// TransformBuffer.BindBufferBase(Loc);
+		TransformBuffer.Bind();		
 		TransformBuffer.BindBufferBase(0);
-		TransformBuffer.BufferData<Transform>(ref Data);
-		// TransformBuffer.BufferWholeData<Transform>(ref Data);
+		TransformBuffer.BufferData<Transform>(ref Data);		
 	}
 
 	public void SetTestTexture2D(Core.Texture.Texture2D TextureObject)
 	{
 		GL.ActiveTexture(TextureUnit.Texture0);
         TextureObject.Bind();
-        var Loc = MaterialProgram.GetSampler2DUniformLocation("TestTexture");
-		// GL.Uniform1(Loc, (int)(0));
+        var Loc = MaterialProgram.GetSampler2DUniformLocation("TestTexture");		
 		TextureObject.BindShader(TextureUnit.Texture0, Loc);
+	}
+
+	public void SetTestTexture2D(int TextureObject, Sampler sampler)
+	{
+		GL.ActiveTexture(TextureUnit.Texture0);
+		GL.BindTexture(TextureTarget.Texture2D, TextureObject);
+		sampler.BindSampler(TextureUnit.Texture0);
+		var SamplerLoc = MaterialProgram.GetSampler2DUniformLocation("TestTexture");
+		GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, 0);	
 	}
 
 	protected string GetVSSourceCode()

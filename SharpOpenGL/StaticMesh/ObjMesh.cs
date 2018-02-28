@@ -90,6 +90,25 @@ namespace SharpOpenGL.StaticMesh
             }
         }
 
+        public void Draw(SharpOpenGL.GBufferDraw.GBufferDraw material)
+        {
+            VB.Bind();
+            IB.Bind();
+            VB.BindVertexAttribute();
+
+            foreach(var section in MeshSectionList)
+            {
+                if (MaterialMap.ContainsKey(section.SectionName))
+                {
+                    material.SetDiffuseTex2D(TextureMap[MaterialMap[section.SectionName].DiffuseMap]);
+                    material.SetNormalTex2D(TextureMap[MaterialMap[section.SectionName].NormalMap]);
+                }
+
+                var ByteOffset = new IntPtr(section.StartIndex * sizeof(uint));
+                GL.DrawElements(PrimitiveType.Triangles, (int)(section.EndIndex - section.StartIndex), DrawElementsType.UnsignedInt, ByteOffset);
+            }
+        }
+        
         public void PrepareToDraw()
         {
             VB = new StaticVertexBuffer<ObjMeshVertexAttribute>();
@@ -116,6 +135,16 @@ namespace SharpOpenGL.StaticMesh
                         var TextureObj = new Texture2D();
                         TextureObj.Load(Mtl.Value.DiffuseMap);
                         TextureMap.Add(Mtl.Value.DiffuseMap, TextureObj);
+                    }
+                }
+
+                if (Mtl.Value.NormalMap.Length > 0)
+                {
+                    if(!TextureMap.ContainsKey(Mtl.Value.NormalMap))
+                    {
+                        var textureObj = new Texture2D();
+                        textureObj.Load(Mtl.Value.NormalMap);
+                        TextureMap.Add(Mtl.Value.NormalMap, textureObj);
                     }
                 }
             }
@@ -154,6 +183,17 @@ namespace SharpOpenGL.StaticMesh
                             if(NewMaterial != null)
                             {
                                 NewMaterial.DiffuseMap = Tokens[1];
+                            }
+                        }
+                    }
+                    else if(TrimmedLine.StartsWith("map_bump"))
+                    {
+                        var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                        if(tokens.Count() == 2)
+                        {
+                            if(NewMaterial != null)
+                            {
+                                NewMaterial.NormalMap = tokens[1];
                             }
                         }
                     }

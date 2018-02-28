@@ -73,6 +73,20 @@ namespace Core.Texture
             }
         }
 
+        public static void OnResourceCreate(object sender, EventArgs e)
+        {
+            DefaultLinearSampler = new Sampler();
+            DefaultLinearSampler.SetMagFilter(TextureMagFilter.Linear);
+            DefaultLinearSampler.SetMinFilter(TextureMinFilter.Linear);
+
+            DefaultPointSampler = new Sampler();
+            DefaultPointSampler.SetMagFilter(TextureMagFilter.Nearest);
+            DefaultPointSampler.SetMinFilter(TextureMinFilter.Nearest);
+        }
+
+        public static Sampler DefaultLinearSampler = null;
+        public static Sampler DefaultPointSampler = null;
+
         protected int m_SamplerObject = -1;
     }
 }

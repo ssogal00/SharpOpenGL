@@ -54,11 +54,9 @@ public class <#=ShaderName#>
 	public void Set<#=UniformBlockName#>BlockData(ref <#=UniformBlockName#> Data)
 	{
 		var Loc = MaterialProgram.GetUniformBlockIndex("<#=UniformBlockName#>");
-		<#=UniformBlockName#>Buffer.Bind();
-		// <#=UniformBlockName#>Buffer.BindBufferBase(Loc);
+		<#=UniformBlockName#>Buffer.Bind();		
 		<#=UniformBlockName#>Buffer.BindBufferBase(0);
-		<#=UniformBlockName#>Buffer.BufferData<<#=UniformBlockName#>>(ref Data);
-		// <#=UniformBlockName#>Buffer.BufferWholeData<<#=UniformBlockName#>>(ref Data);
+		<#=UniformBlockName#>Buffer.BufferData<<#=UniformBlockName#>>(ref Data);		
 	}
 <#}#>
 
@@ -69,9 +67,17 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	{
 		GL.ActiveTexture(TextureUnit.Texture<#=index#>);
         TextureObject.Bind();
-        var Loc = MaterialProgram.GetSampler2DUniformLocation("<#=Sampler#>");
-		// GL.Uniform1(Loc, (int)(<#=index#>));
+        var Loc = MaterialProgram.GetSampler2DUniformLocation("<#=Sampler#>");		
 		TextureObject.BindShader(TextureUnit.Texture<#=index#>, Loc);
+	}
+
+	public void Set<#=Sampler#>2D(int TextureObject, Sampler sampler)
+	{
+		GL.ActiveTexture(TextureUnit.Texture<#=index#>);
+		GL.BindTexture(TextureTarget.Texture2D, TextureObject);
+		sampler.BindSampler(TextureUnit.Texture<#=index#>);
+		var SamplerLoc = MaterialProgram.GetSampler2DUniformLocation("<#=Sampler#>");
+		GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, <#=index#>);	
 	}
 <#index++;#>
 <#}#>
