@@ -78,6 +78,7 @@ namespace SharpOpenGL
         {
             // init screen blit
             ScreenBlit.OnResourceCreate(sender, e);
+            ScreenBlit.SetGridSize(3, 3);
 
             // 
             TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();
@@ -133,8 +134,9 @@ namespace SharpOpenGL
             BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
             Mesh.Draw(BaseTest);
 
-            MyGBuffer.Unbind();            
-            ScreenBlit.Blit(MyGBuffer.ColorBufferObject);
+            MyGBuffer.Unbind();
+            ScreenBlit.Blit(MyGBuffer.NormalBufferObject, 2, 2, 1, 1);
+            ScreenBlit.Blit(MyGBuffer.ColorBufferObject, 0, 0, 3, 3);
 
             SwapBuffers();
         }

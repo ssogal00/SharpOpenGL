@@ -6,6 +6,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System;
 using Core.Texture;
+using System.Diagnostics;
 
 namespace SharpOpenGL
 {
@@ -18,56 +19,17 @@ namespace SharpOpenGL
 
         public void OnResourceCreate(object sender, System.EventArgs eventArgs)
         {
-            //
-            List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
-
-            // upper left
-            var EachVertex = new PT_VertexAttribute();
-            EachVertex.VertexPosition = new OpenTK.Vector3(-1, 1, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(0, 1);
-            VertexList.Add(EachVertex);
-
-            // lower right
-            EachVertex.VertexPosition = new OpenTK.Vector3(1, -1, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(1, 0);
-            VertexList.Add(EachVertex);
-
-            // lower left
-            EachVertex.VertexPosition = new OpenTK.Vector3(-1, -1, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(0, 0);
-            VertexList.Add(EachVertex);
-
-            // upper left
-            EachVertex.VertexPosition = new OpenTK.Vector3(-1, 1, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(0, 1);
-            VertexList.Add(EachVertex);
-
-            // upper right
-            EachVertex.VertexPosition = new OpenTK.Vector3(1, 1, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(1, 1);
-            VertexList.Add(EachVertex);
-
-            // lower right
-            EachVertex.VertexPosition = new OpenTK.Vector3(1, -1, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(1, 0);
-            VertexList.Add(EachVertex);
-
-            // create render resource
-            VB = new StaticVertexBuffer<PT_VertexAttribute>();
-            IB = new IndexBuffer();
+            // 
             Material = new ScreenSpaceDraw.ScreenSpaceDraw();
 
-            // feed vertex buffer
-            var VertexArray = VertexList.ToArray();
-            VB.BufferData<PT_VertexAttribute>(ref VertexArray);
-
+            VB = new StaticVertexBuffer<PT_VertexAttribute>();
+            IB = new IndexBuffer();
+            UpdateVertexBuffer(0, 0, 1, 1, 1, 1);
             // feed index buffer
             uint[] IndexArray = { 0, 1, 2, 3, 4, 5 };
             IB.BufferData<uint>(ref IndexArray);
         }
-
-
-
+        
         public void Blit(Texture2D texture)
         {
             Material.Use();
@@ -78,9 +40,15 @@ namespace SharpOpenGL
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
         }
 
-        public void Blit(Texture2D texture, int rowIndex, int colIndex)
+        public void Blit(Texture2D texture, int rowIndex, int colIndex, int gridRowSpan, int gridColSpan)
         {
-            
+            Material.Use();
+            UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);
+            VB.Bind();
+            IB.Bind();
+            PT_VertexAttribute.VertexAttributeBinding();
+            Material.SetColorTex2D(texture);
+            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
         }
 
         public void Blit(int textureObject)
@@ -93,26 +61,44 @@ namespace SharpOpenGL
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
         }
 
-        public void SetGridSize(int newGridRow, int newGridCol)
+        public void Blit(int textureObject, int rowIndex, int colIndex, int gridRowSpan, int gridColSpan)
         {
-            GridRowSize = newGridRow;
-            GridColSize = newGridCol;
+            Material.Use();
+            VB.Bind();
+            IB.Bind();
+            UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);            
+            PT_VertexAttribute.VertexAttributeBinding();
+            Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
+            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);            
         }
 
-        
-
-        protected void UpdateVertexBuffer(int gridRow, int gridCol)
+        public void SetGridSize(int newGridRow, int newGridCol)
         {
-            List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
+            Debug.Assert(newGridRow > 0 && newGridCol > 0);
 
-            float fRowGridLength = 2.0f / (float)GridRowSize;
-            float fColGridLength = 2.0f / (float)GridColSize;
+            GridRowSize = newGridRow;
+            GridColSize = newGridCol;            
+        }        
 
-            float fRowOffset = (float)gridRow * fRowGridLength;
-            float fColOffset = (float)gridCol * fColGridLength;
+        protected void UpdateVertexBuffer(int gridRowIndex, int gridColIndex, int gridRowSize, int gridColSize, int gridRowSpan, int gridColSpan)
+        {            
+            GridRowIndex = gridRowIndex;
+            GridColIndex = gridColIndex;
+            GridColSize = gridColSize;
+            GridRowSize = gridRowSize;
+            GridRowSpan = gridRowSpan;
+            GridColSpan = gridColSpan;
+
+            float fRowGridLength = 2.0f / (float)GridRowSize * (float)GridRowSpan;
+            float fColGridLength = 2.0f / (float)GridColSize * (float)GridColSpan;
+
+            float fRowOffset = (float)gridRowIndex * fRowGridLength;
+            float fColOffset = (float)gridColIndex * fColGridLength;
 
             float fOriginX = -1 + fRowOffset;
             float fOriginY =  1 - fColOffset;
+
+            VertexList.Clear();
 
             // upper left
             var EachVertex = new PT_VertexAttribute();
@@ -145,12 +131,8 @@ namespace SharpOpenGL
             EachVertex.TexCoord = new OpenTK.Vector2(1, 0);
             VertexList.Add(EachVertex);
 
-            // create render resource
-            VB = new StaticVertexBuffer<PT_VertexAttribute>();
-            IB = new IndexBuffer();
-            Material = new ScreenSpaceDraw.ScreenSpaceDraw();
-
             // feed vertex buffer
+            VB.Bind();
             var VertexArray = VertexList.ToArray();
             VB.BufferData<PT_VertexAttribute>(ref VertexArray);
         }
@@ -159,10 +141,16 @@ namespace SharpOpenGL
         protected List<uint> Indices = new List<uint>();
         protected StaticVertexBuffer<PT_VertexAttribute> VB = null;
         protected IndexBuffer IB = null;
-
+        List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
+        
         // 
         protected int GridRowSize = 1;
         protected int GridColSize = 1;
-        protected int GridIndex = 0;
+
+        protected int GridRowIndex = 0;
+        protected int GridColIndex = 0;
+
+        protected int GridRowSpan = 1;
+        protected int GridColSpan = 1;
     }
 }
