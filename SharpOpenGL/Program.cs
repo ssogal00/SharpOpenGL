@@ -12,7 +12,9 @@ using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
 using TestShaderVS = SharpOpenGL.BasicMaterial;
 using Core.CustomEvent;
 using Core.Texture;
+
 using SharpOpenGL.GBufferDraw;
+
 
 namespace SharpOpenGL
 {
@@ -33,7 +35,7 @@ namespace SharpOpenGL
 
         protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
         protected SharpOpenGL.GBufferDraw.GBufferDraw GBufferMaterial = null;
-        protected Core.MaterialBase.MaterialBase TestMaterail2 = null;
+        protected Core.MaterialBase.MaterialBase BaseTest = null;
 
         protected ObjMesh Mesh = new ObjMesh();
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
@@ -84,9 +86,11 @@ namespace SharpOpenGL
             GBufferMaterial = new SharpOpenGL.GBufferDraw.GBufferDraw();
             GBufferMaterial.Use();
 
+            
+
             //
-            //TestMaterail2 = new Core.MaterialBase.MaterialBase(BasicMaterial.BasicMaterial.GetVSSourceCode(), BasicMaterial.BasicMaterial.GetFSSourceCode());
-            // stMaterail2.Setup();
+            BaseTest = new Core.MaterialBase.MaterialBase(SharpOpenGL.GBufferDraw.GBufferDraw.GetVSSourceCode(), SharpOpenGL.GBufferDraw.GBufferDraw.GetFSSourceCode());
+            BaseTest.Setup();                        
         }       
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -116,17 +120,20 @@ namespace SharpOpenGL
             Transform.View = Camera.View;
             Transform.Proj = Camera.Proj;
             // TestMaterial.SetTransformBlockData(ref Transform);
-            GBufferMaterial.SetTransformBlockData(ref Transform);
+            // GBufferMaterial.SetTransformBlockData(ref Transform);
 
 
             // ScreenBlit.Draw(TestTexture);
             MyGBuffer.Bind();
             MyGBuffer.Clear();
             MyGBuffer.PrepareToDraw();
-            GBufferMaterial.Use();
-            Mesh.Draw(GBufferMaterial);
-            MyGBuffer.Unbind();
+            //GBufferMaterial.Use();            
+            //Mesh.Draw(GBufferMaterial);
+            BaseTest.Setup();
+            BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
+            Mesh.Draw(BaseTest);
 
+            MyGBuffer.Unbind();            
             ScreenBlit.Blit(MyGBuffer.ColorBufferObject);
 
             SwapBuffers();

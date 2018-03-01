@@ -3,6 +3,7 @@ using Core.OpenGLShader;
 using System.Collections.Generic;
 using System.Diagnostics;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace Core.MaterialBase
 {
@@ -26,16 +27,61 @@ namespace Core.MaterialBase
             bool bSuccess = MaterialProgram.LinkProgram(out CompileResult);
 
             Debug.Assert(bSuccess == true);
+
+            Initialize();
         }
 
         protected void Initialize()
         {
             var names = MaterialProgram.GetActiveUniformBlockNames();
+
+            if (names.Count > 0)
+            {
+                UniformBufferMap = new Dictionary<string, DynamicUniformBuffer>();
+            }
+
             foreach(var name in names)
             {
                 var uniformBuffer = new DynamicUniformBuffer(MaterialProgram, name);                
                 UniformBufferMap.Add(name, uniformBuffer);
             }
+
+            var samplerNames = MaterialProgram.GetSampler2DNames();
+
+            if(samplerNames.Count > 0)
+            {
+                SamplerMap = new Dictionary<string, TextureUnit>();
+            }
+
+            for(int i = 0; i < samplerNames.Count; ++i)
+            {
+                SamplerMap.Add(samplerNames[i], TextureUnit.Texture0 + i);
+            }
+
+            
+        }
+
+        public void SetTexture(string name, Core.Texture.Texture2D texture)
+        {
+            Debug.Assert(SamplerMap.ContainsKey(name));
+
+            var textureUnitToBind = SamplerMap[name];
+            GL.ActiveTexture(textureUnitToBind);
+            texture.Bind();
+            var Loc = MaterialProgram.GetSampler2DUniformLocation(name);
+            texture.BindShader(textureUnitToBind, Loc);
+        }
+
+        public void SetTexture(string name, int TextureObject)
+        {
+            Debug.Assert(SamplerMap.ContainsKey(name));
+            var textureUnitToBind = SamplerMap[name];
+
+            GL.ActiveTexture(textureUnitToBind);
+            GL.BindTexture(TextureTarget.Texture2D, TextureObject);
+            Core.Texture.Sampler.DefaultLinearSampler.BindSampler(textureUnitToBind);
+            var SamplerLoc = MaterialProgram.GetSampler2DUniformLocation(name);
+            GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, 0);
         }
 
         public void Setup()
@@ -43,9 +89,8 @@ namespace Core.MaterialBase
             MaterialProgram.UseProgram();
 
             int index = 0;
-            foreach(var uniformBuffer in UniformBufferMap)
+            foreach (var uniformBuffer in UniformBufferMap)
             {
-                uniformBuffer.Value.Bind();
                 uniformBuffer.Value.BindBufferBase(index++);
             }
         }
@@ -104,6 +149,6 @@ namespace Core.MaterialBase
         }
         
         protected Dictionary<string, DynamicUniformBuffer> UniformBufferMap = null;
-
+        protected Dictionary<string, TextureUnit> SamplerMap = null;
     }
 }

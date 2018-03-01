@@ -108,6 +108,25 @@ namespace SharpOpenGL.StaticMesh
                 GL.DrawElements(PrimitiveType.Triangles, (int)(section.EndIndex - section.StartIndex), DrawElementsType.UnsignedInt, ByteOffset);
             }
         }
+
+        public void Draw(Core.MaterialBase.MaterialBase material)
+        {
+            VB.Bind();
+            IB.Bind();
+            VB.BindVertexAttribute();
+
+            foreach (var section in MeshSectionList)
+            {
+                if (MaterialMap.ContainsKey(section.SectionName))
+                {
+                    material.SetTexture("DiffuseTex", TextureMap[MaterialMap[section.SectionName].DiffuseMap]);
+                    material.SetTexture("NormalTex", TextureMap[MaterialMap[section.SectionName].NormalMap]);
+                }
+
+                var ByteOffset = new IntPtr(section.StartIndex * sizeof(uint));
+                GL.DrawElements(PrimitiveType.Triangles, (int)(section.EndIndex - section.StartIndex), DrawElementsType.UnsignedInt, ByteOffset);
+            }
+        }
         
         public void PrepareToDraw()
         {
