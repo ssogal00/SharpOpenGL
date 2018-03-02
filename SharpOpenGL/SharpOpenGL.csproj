@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="BlitToScreen.cs" />
     <Compile Include="Material.cs" />
+    <Compile Include="PostProcess\Blur.cs" />
     <Compile Include="StaticMesh\ObjMesh.cs" />
     <Compile Include="StaticMesh\ObjMeshMaterial.cs" />
     <Compile Include="StaticMesh\ObjMeshSection.cs" />

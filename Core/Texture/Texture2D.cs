@@ -1,71 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Runtime.InteropServices;
-
-using Core;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
-
 using System.Drawing;
 using System.Drawing.Imaging;
-
 using FreeImageAPI;
-using System.Diagnostics;
 using System.IO;
-
 
 namespace Core.Texture
 {
-    public class Texture2D : IDisposable
+    public class Texture2D : TextureBase
     {
         FIBITMAP DIB;
 
         public Texture2D()
+            : base()
         {
-            m_TextureObject = GL.GenTexture();
-
-            m_Sampler = new Sampler();
-            m_Sampler.SetMagFilter(TextureMagFilter.Linear);
-            m_Sampler.SetMinFilter(TextureMinFilter.Linear);
-        }
-
-        public Texture2D(string texturename)
-        {
-            m_TextureObject = GL.GenTexture();
-            m_Sampler = new Sampler();
-            m_Sampler.SetMagFilter(TextureMagFilter.Linear);
-            m_Sampler.SetMinFilter(TextureMinFilter.Linear);
-
-            m_TextureName = texturename;
-        }
-
-        public bool IsValid
-        {
-            get
-            {
-                return m_TextureObject != -1;
-            }
-        }
-
-        public void Dispose()
-        {
-            if(IsValid)
-            {
-                GL.DeleteTexture(m_TextureObject);
-                m_TextureObject = -1;                
-            }
-        }
-
-        public void Bind()
-        {
-            if(IsValid)
-            {   
-                GL.BindTexture(TextureTarget.Texture2D, m_TextureObject);
-            }
         }
 
         public void BindAtUnit(TextureUnit Unit)
@@ -75,16 +23,6 @@ namespace Core.Texture
                 GL.ActiveTexture(Unit);
                 Bind();
                 m_TextureUnitBinded = Unit;
-            }
-        }
-        
-
-        public void BindShader(TextureUnit Unit, int SamplerLoc)
-        {
-            if(IsValid)
-            {
-                m_Sampler.BindSampler(Unit);                
-                GL.Uniform1(SamplerLoc, (int)(Unit - TextureUnit.Texture0));                
             }
         }
 
@@ -143,18 +81,6 @@ namespace Core.Texture
 
             FreeImage.Unload(DIB);
         }
-        
-        public int Width { get { return m_Width; } }
-        public int Height { get { return m_Height; } }
-        
-        protected int m_Width = 0;
-        protected int m_Height = 0;
-
-        int m_TextureObject = -1;
-
-        Sampler m_Sampler = null;
-
-        string m_TextureName = "";
 
         TextureUnit m_TextureUnitBinded;
     }
