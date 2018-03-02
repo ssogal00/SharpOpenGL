@@ -4,27 +4,11 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 
-public class <#=ShaderName#>
+public class <#=ShaderName#> : MaterialBase
 {
-	ShaderProgram MaterialProgram;
-	Core.OpenGLShader.VertexShader VSShader = new Core.OpenGLShader.VertexShader();
-	Core.OpenGLShader.FragmentShader FSShader= new Core.OpenGLShader.FragmentShader();
-
-	string CompileResult = "";
-
-	public <#=ShaderName#>()
-	{
-		MaterialProgram = new Core.OpenGLShader.ShaderProgram();
-		
-		VSShader.CompileShader(GetVSSourceCode());
-		FSShader.CompileShader(GetFSSourceCode());
-
-		MaterialProgram.AttachShader(VSShader);
-		MaterialProgram.AttachShader(FSShader);	
-		
-		MaterialProgram.LinkProgram( out CompileResult );	
-
-		Initialize(MaterialProgram);
+	public <#=ShaderName#>() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
 	}
 
 	public ShaderProgram GetProgramObject()
@@ -37,47 +21,17 @@ public class <#=ShaderName#>
 		MaterialProgram.UseProgram();
 	}
 
-	public void Initialize(ShaderProgram ProgramObject)
-	{
-<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
-{#>
-		<#=UniformBlockName#>Buffer = new Core.Buffer.DynamicUniformBuffer(ProgramObject, @"<#=UniformBlockName#>");
-<#}#>
-	}
-<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
-{#>
-	Core.Buffer.DynamicUniformBuffer <#=UniformBlockName#>Buffer;
-<#}#>
-
-<#foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
-{#>
-	public void Set<#=UniformBlockName#>BlockData(ref <#=UniformBlockName#> Data)
-	{
-		var Loc = MaterialProgram.GetUniformBlockIndex("<#=UniformBlockName#>");
-		<#=UniformBlockName#>Buffer.Bind();		
-		<#=UniformBlockName#>Buffer.BindBufferBase(0);
-		<#=UniformBlockName#>Buffer.BufferData<<#=UniformBlockName#>>(ref Data);		
-	}
-<#}#>
-
 <# int index = 0;
 foreach(var Sampler in FSProgram.GetSampler2DNames())
 {#>
 	public void Set<#=Sampler#>2D(Core.Texture.Texture2D TextureObject)
 	{
-		GL.ActiveTexture(TextureUnit.Texture<#=index#>);
-        TextureObject.Bind();
-        var Loc = MaterialProgram.GetSampler2DUniformLocation("<#=Sampler#>");		
-		TextureObject.BindShader(TextureUnit.Texture<#=index#>, Loc);
+		SetTexture(@"<#=Sampler#>", TextureObject);
 	}
 
 	public void Set<#=Sampler#>2D(int TextureObject, Sampler sampler)
 	{
-		GL.ActiveTexture(TextureUnit.Texture<#=index#>);
-		GL.BindTexture(TextureTarget.Texture2D, TextureObject);
-		sampler.BindSampler(TextureUnit.Texture<#=index#>);
-		var SamplerLoc = MaterialProgram.GetSampler2DUniformLocation("<#=Sampler#>");
-		GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, <#=index#>);	
+		SetTexture(@"<#=Sampler#>", TextureObject);
 	}
 <#index++;#>
 <#}#>
