@@ -7,30 +7,15 @@ using Core.Buffer;
 using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
+using Core.MaterialBase;
 namespace SharpOpenGL.BasicMaterial
 {
 
-public class BasicMaterial
+public class BasicMaterial : MaterialBase
 {
-	ShaderProgram MaterialProgram;
-	Core.OpenGLShader.VertexShader VSShader = new Core.OpenGLShader.VertexShader();
-	Core.OpenGLShader.FragmentShader FSShader= new Core.OpenGLShader.FragmentShader();
-
-	string CompileResult = "";
-
-	public BasicMaterial()
-	{
-		MaterialProgram = new Core.OpenGLShader.ShaderProgram();
-		
-		VSShader.CompileShader(GetVSSourceCode());
-		FSShader.CompileShader(GetFSSourceCode());
-
-		MaterialProgram.AttachShader(VSShader);
-		MaterialProgram.AttachShader(FSShader);	
-		
-		MaterialProgram.LinkProgram( out CompileResult );	
-
-		Initialize(MaterialProgram);
+	public BasicMaterial() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
 	}
 
 	public ShaderProgram GetProgramObject()
@@ -43,44 +28,14 @@ public class BasicMaterial
 		MaterialProgram.UseProgram();
 	}
 
-	public void Initialize(ShaderProgram ProgramObject)
-	{
-		ColorBlockBuffer = new Core.Buffer.DynamicUniformBuffer(ProgramObject, @"ColorBlock");
-		TransformBuffer = new Core.Buffer.DynamicUniformBuffer(ProgramObject, @"Transform");
-	}
-	Core.Buffer.DynamicUniformBuffer ColorBlockBuffer;
-	Core.Buffer.DynamicUniformBuffer TransformBuffer;
-
-	public void SetColorBlockBlockData(ref ColorBlock Data)
-	{
-		var Loc = MaterialProgram.GetUniformBlockIndex("ColorBlock");
-		ColorBlockBuffer.Bind();		
-		ColorBlockBuffer.BindBufferBase(0);
-		ColorBlockBuffer.BufferData<ColorBlock>(ref Data);		
-	}
-	public void SetTransformBlockData(ref Transform Data)
-	{
-		var Loc = MaterialProgram.GetUniformBlockIndex("Transform");
-		TransformBuffer.Bind();		
-		TransformBuffer.BindBufferBase(0);
-		TransformBuffer.BufferData<Transform>(ref Data);		
-	}
-
 	public void SetTestTexture2D(Core.Texture.Texture2D TextureObject)
 	{
-		GL.ActiveTexture(TextureUnit.Texture0);
-        TextureObject.Bind();
-        var Loc = MaterialProgram.GetSampler2DUniformLocation("TestTexture");		
-		TextureObject.BindShader(TextureUnit.Texture0, Loc);
+		SetTexture(@"TestTexture", TextureObject);
 	}
 
 	public void SetTestTexture2D(int TextureObject, Sampler sampler)
 	{
-		GL.ActiveTexture(TextureUnit.Texture0);
-		GL.BindTexture(TextureTarget.Texture2D, TextureObject);
-		sampler.BindSampler(TextureUnit.Texture0);
-		var SamplerLoc = MaterialProgram.GetSampler2DUniformLocation("TestTexture");
-		GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, 0);	
+		SetTexture(@"TestTexture", TextureObject);
 	}
 
 	public static string GetVSSourceCode()

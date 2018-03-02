@@ -8,7 +8,7 @@ using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
 using Core.MaterialBase;
-namespace SharpOpenGL.ScreenSpaceDraw
+namespace SharpOpenGL.Blur
 {
 
 }

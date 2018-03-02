@@ -4,4 +4,5 @@
 	<Material name="SimpleMaterial" vertexShader="TestShader2.vs" fragmentShader="TestShader2.fs"/>
 	<Material name="ScreenSpaceDraw" vertexShader="Screen.vs" fragmentShader="Screen.fs"/>
 	<Material name="GBufferDraw" vertexShader="GBuffer.vs" fragmentShader="GBuffer.fs"/>
+	<Material name="Blur" vertexShader="Blur.vs" fragmentShader="Blur.fs"/>
 </MaterialList>

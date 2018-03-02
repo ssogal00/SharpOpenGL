@@ -8,12 +8,12 @@ using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
 using Core.MaterialBase;
-namespace SharpOpenGL.ScreenSpaceDraw
+namespace SharpOpenGL.Blur
 {
 
-public class ScreenSpaceDraw : MaterialBase
+public class Blur : MaterialBase
 {
-	public ScreenSpaceDraw() 
+	public Blur() 
 	 : base (GetVSSourceCode(), GetFSSourceCode())
 	{	
 	}
@@ -40,36 +40,43 @@ public class ScreenSpaceDraw : MaterialBase
 
 	public static string GetVSSourceCode()
 	{
-		return @"#version 430 core
+		return @"#version 430
 
+layout (location = 0) in vec3 VertexPosition;
+layout (location = 1) in vec2 VertexTexCoord;
 
-layout(location=0) in vec3 VertexPosition;
-layout(location=1) in vec2 TexCoord;
+out vec2 TexCoord;
 
-out vec2 OutTexCoord;
-  
 void main()
-{	
-	OutTexCoord = TexCoord;	    
+{
+    TexCoord = VertexTexCoord;  
 	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);
-}";
+}
+";
 	}
 
 	public static string GetFSSourceCode()
 	{
-		return @"
-#version 430 core
+		return @"#version 430
 
-in vec2 OutTexCoord;
+in vec2 TexCoord;
 
 uniform sampler2D ColorTex;
+uniform vec2 BlurOffsets[9];
+uniform vec2 BlurWeights[9];
 
-out vec4 FragColor;
+layout( location = 0 ) out vec4 FragColor;
 
 void main() 
-{      
-
-    FragColor = texture(ColorTex, OutTexCoord);    
+{
+	vec4 color = vec4(0,0,0,0);
+    
+    for( int i = 0; i < 9; i++ )
+    {
+        color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;
+    }
+	        
+    FragColor = color;
 }";
 	}
 }

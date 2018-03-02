@@ -7,30 +7,15 @@ using Core.Buffer;
 using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
+using Core.MaterialBase;
 namespace SharpOpenGL.GBufferDraw
 {
 
-public class GBufferDraw
+public class GBufferDraw : MaterialBase
 {
-	ShaderProgram MaterialProgram;
-	Core.OpenGLShader.VertexShader VSShader = new Core.OpenGLShader.VertexShader();
-	Core.OpenGLShader.FragmentShader FSShader= new Core.OpenGLShader.FragmentShader();
-
-	string CompileResult = "";
-
-	public GBufferDraw()
-	{
-		MaterialProgram = new Core.OpenGLShader.ShaderProgram();
-		
-		VSShader.CompileShader(GetVSSourceCode());
-		FSShader.CompileShader(GetFSSourceCode());
-
-		MaterialProgram.AttachShader(VSShader);
-		MaterialProgram.AttachShader(FSShader);	
-		
-		MaterialProgram.LinkProgram( out CompileResult );	
-
-		Initialize(MaterialProgram);
+	public GBufferDraw() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
 	}
 
 	public ShaderProgram GetProgramObject()
@@ -43,51 +28,23 @@ public class GBufferDraw
 		MaterialProgram.UseProgram();
 	}
 
-	public void Initialize(ShaderProgram ProgramObject)
-	{
-		TransformBuffer = new Core.Buffer.DynamicUniformBuffer(ProgramObject, @"Transform");
-	}
-	Core.Buffer.DynamicUniformBuffer TransformBuffer;
-
-	public void SetTransformBlockData(ref Transform Data)
-	{
-		var Loc = MaterialProgram.GetUniformBlockIndex("Transform");
-		TransformBuffer.Bind();		
-		TransformBuffer.BindBufferBase(0);
-		TransformBuffer.BufferData<Transform>(ref Data);		
-	}
-
 	public void SetDiffuseTex2D(Core.Texture.Texture2D TextureObject)
 	{
-		GL.ActiveTexture(TextureUnit.Texture0);
-        TextureObject.Bind();
-        var Loc = MaterialProgram.GetSampler2DUniformLocation("DiffuseTex");		
-		TextureObject.BindShader(TextureUnit.Texture0, Loc);
+		SetTexture(@"DiffuseTex", TextureObject);
 	}
 
 	public void SetDiffuseTex2D(int TextureObject, Sampler sampler)
 	{
-		GL.ActiveTexture(TextureUnit.Texture0);
-		GL.BindTexture(TextureTarget.Texture2D, TextureObject);
-		sampler.BindSampler(TextureUnit.Texture0);
-		var SamplerLoc = MaterialProgram.GetSampler2DUniformLocation("DiffuseTex");
-		GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, 0);	
+		SetTexture(@"DiffuseTex", TextureObject);
 	}
 	public void SetNormalTex2D(Core.Texture.Texture2D TextureObject)
 	{
-		GL.ActiveTexture(TextureUnit.Texture1);
-        TextureObject.Bind();
-        var Loc = MaterialProgram.GetSampler2DUniformLocation("NormalTex");		
-		TextureObject.BindShader(TextureUnit.Texture1, Loc);
+		SetTexture(@"NormalTex", TextureObject);
 	}
 
 	public void SetNormalTex2D(int TextureObject, Sampler sampler)
 	{
-		GL.ActiveTexture(TextureUnit.Texture1);
-		GL.BindTexture(TextureTarget.Texture2D, TextureObject);
-		sampler.BindSampler(TextureUnit.Texture1);
-		var SamplerLoc = MaterialProgram.GetSampler2DUniformLocation("NormalTex");
-		GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, 1);	
+		SetTexture(@"NormalTex", TextureObject);
 	}
 
 	public static string GetVSSourceCode()

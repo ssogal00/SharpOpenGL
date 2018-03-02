@@ -7,30 +7,15 @@ using Core.Buffer;
 using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
+using Core.MaterialBase;
 namespace SharpOpenGL.SimpleMaterial
 {
 
-public class SimpleMaterial
+public class SimpleMaterial : MaterialBase
 {
-	ShaderProgram MaterialProgram;
-	Core.OpenGLShader.VertexShader VSShader = new Core.OpenGLShader.VertexShader();
-	Core.OpenGLShader.FragmentShader FSShader= new Core.OpenGLShader.FragmentShader();
-
-	string CompileResult = "";
-
-	public SimpleMaterial()
-	{
-		MaterialProgram = new Core.OpenGLShader.ShaderProgram();
-		
-		VSShader.CompileShader(GetVSSourceCode());
-		FSShader.CompileShader(GetFSSourceCode());
-
-		MaterialProgram.AttachShader(VSShader);
-		MaterialProgram.AttachShader(FSShader);	
-		
-		MaterialProgram.LinkProgram( out CompileResult );	
-
-		Initialize(MaterialProgram);
+	public SimpleMaterial() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
 	}
 
 	public ShaderProgram GetProgramObject()
@@ -41,20 +26,6 @@ public class SimpleMaterial
 	public void Use()
 	{
 		MaterialProgram.UseProgram();
-	}
-
-	public void Initialize(ShaderProgram ProgramObject)
-	{
-		TransformBuffer = new Core.Buffer.DynamicUniformBuffer(ProgramObject, @"Transform");
-	}
-	Core.Buffer.DynamicUniformBuffer TransformBuffer;
-
-	public void SetTransformBlockData(ref Transform Data)
-	{
-		var Loc = MaterialProgram.GetUniformBlockIndex("Transform");
-		TransformBuffer.Bind();		
-		TransformBuffer.BindBufferBase(0);
-		TransformBuffer.BufferData<Transform>(ref Data);		
 	}
 
 

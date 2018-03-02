@@ -8,7 +8,7 @@ using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
 using Core.MaterialBase;
-namespace SharpOpenGL.BasicMaterial
+namespace SharpOpenGL.Blur
 {
 
 
@@ -21,7 +21,7 @@ public struct VertexAttribute
 	public OpenTK.Vector3 VertexPosition;
 		
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public OpenTK.Vector2 TexCoord;
+	public OpenTK.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{

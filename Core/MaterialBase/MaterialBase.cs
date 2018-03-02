@@ -58,7 +58,7 @@ namespace Core.MaterialBase
                 SamplerMap.Add(samplerNames[i], TextureUnit.Texture0 + i);
             }
 
-            
+            UniformVariableNames = MaterialProgram.GetActiveUniformNames();
         }
 
         public void SetTexture(string name, Core.Texture.Texture2D texture)
@@ -120,35 +120,61 @@ namespace Core.MaterialBase
 
         public void SetUniformVarData(string varName, float data)
         {
+            Debug.Assert(UniformVariableNames.Contains(varName));
             MaterialProgram.SetUniformVarData(varName, data);
         }
 
         public void SetUniformVarData(string varName, OpenTK.Vector2 data)
         {
+            Debug.Assert(UniformVariableNames.Contains(varName));
             MaterialProgram.SetUniformVarData(varName, data);
         }
 
         public void SetUniformVarData(string varName, OpenTK.Vector3 data)
         {
+            Debug.Assert(UniformVariableNames.Contains(varName));
             MaterialProgram.SetUniformVarData(varName, data);
         }
 
         public void SetUniformVarData(string varName, OpenTK.Vector4 data)
         {
+            Debug.Assert(UniformVariableNames.Contains(varName));
             MaterialProgram.SetUniformVarData(varName, data);
         }
 
         public void SetUniformVarData(string varName, OpenTK.Matrix3 data)
         {
+            Debug.Assert(UniformVariableNames.Contains(varName));
             MaterialProgram.SetUniformVarData(varName, data);
         }
 
         public void SetUniformVarData(string varName, OpenTK.Matrix4 data)
         {
+            Debug.Assert(UniformVariableNames.Contains(varName));
             MaterialProgram.SetUniformVarData(varName, data);
         }
-        
+
+        public void SetUniformVector2ArrayData(string varName, ref float[] data )
+        {
+            Debug.Assert(UniformVariableNames.Contains(varName));
+            MaterialProgram.SetUniformVector2ArrayData(varName, ref data);
+        }
+
+        public void SetUniformVector3ArrayData(string varName, ref float[] data)
+        {
+            Debug.Assert(UniformVariableNames.Contains(varName));
+            MaterialProgram.SetUniformVector3ArrayData(varName, ref data);
+        }
+
+        public void SetUniformVector4ArrayData(string varName, ref float[] data)
+        {
+            Debug.Assert(UniformVariableNames.Contains(varName));
+            MaterialProgram.SetUniformVector4ArrayData(varName, ref data);
+        }
+
+
         protected Dictionary<string, DynamicUniformBuffer> UniformBufferMap = null;
         protected Dictionary<string, TextureUnit> SamplerMap = null;
+        protected List<string> UniformVariableNames = null;
     }
 }

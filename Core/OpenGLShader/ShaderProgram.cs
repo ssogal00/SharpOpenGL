@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-
 using Core.Buffer;
+using System.Diagnostics;
 
 namespace Core.OpenGLShader
 {
@@ -16,7 +15,7 @@ namespace Core.OpenGLShader
 
         public ShaderProgram()
         {
-            ProgramObject = GL.CreateProgram();            
+            ProgramObject = GL.CreateProgram();
         }
 
         public ShaderProgram(VertexShader VS, FragmentShader FS)
@@ -55,23 +54,21 @@ namespace Core.OpenGLShader
         }
 
         public bool IsProgramLinked()
-        { 
-            if(ProgramObject != 0)
+        {
+            if (ProgramObject != 0)
             {
                 int result = 0;
 
                 GL.GetProgram(ProgramObject, GetProgramParameterName.LinkStatus, out result);
 
-                return result == 1;                
+                return result == 1;
             }
 
             return false;
         }
 
-        
-
         public void SetUniformVarData(string VarName, float fValue)
-        {   
+        {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform1(Loc, fValue);
         }
@@ -105,7 +102,7 @@ namespace Core.OpenGLShader
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform4(Loc, ref data);
         }
-        
+
         public void SetUniformVarData(string VarName, ref OpenTK.Vector4 Data)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
@@ -166,8 +163,42 @@ namespace Core.OpenGLShader
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.UniformMatrix3x2(Loc, false, ref Data);
         }
-        
 
+        public void SetUniformVector2ArrayData(string VarName, ref float[] Data)
+        {
+            Debug.Assert(Data.Count() > 0);
+            Debug.Assert(Data.Count() % 2 == 0);
+
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform2(Loc, Data.Count() / 2, Data);
+        }
+
+        public void SetUniformVector2ArrayData(string VarName, ref double[] Data)
+        {
+            Debug.Assert(Data.Count() > 0);
+            Debug.Assert(Data.Count() % 2 == 0);
+
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform2(Loc, Data.Count() / 2, Data);
+        }
+
+        public void SetUniformVector3ArrayData(string VarName, ref float[] Data)
+        {
+            Debug.Assert(Data.Count() > 0);
+            Debug.Assert(Data.Count() % 3 == 0);
+
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform3(Loc, Data.Count() / 3, Data);
+        }
+
+        public void SetUniformVector4ArrayData(string VarName, ref float[] Data)
+        {
+            Debug.Assert(Data.Count() > 0);
+            Debug.Assert(Data.Count() % 4 == 0);
+
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform4(Loc, Data.Count() / 4, Data);
+        }
 
         public int GetActiveUniformCount()
         {
@@ -230,6 +261,77 @@ namespace Core.OpenGLShader
             return result;
         }
 
+        public List<string> GetActiveUniformNames()
+        {
+            List<string> result = new List<string>();
+
+            if (IsProgramLinked())
+            {
+                var uniformIndicesInBlock = new List<int>();
+
+                var uniformBlockCount = GetActiveUniformBlockCount();
+                
+                for(int i = 0; i < uniformBlockCount; ++i)
+                {
+                    uniformIndicesInBlock.AddRange(GetUniformIndicesInBlock(i));
+                }
+
+                int nCount = GetActiveUniformCount();
+
+                for (var i = 0; i < nCount; ++i)
+                {
+                    // skip uniform variables in block
+                    if (uniformIndicesInBlock.Contains(i))
+                    {
+                        continue;
+                    }
+
+                    var uniformType = GetActiveUniformVariableType(i);
+                    if (uniformType == ActiveUniformType.Sampler2D)
+                    {
+                        continue;
+                    }
+
+                    result.Add(GetActiveUniformVariableName(i));
+                }
+            }
+
+            return result;
+        }
+
+        public string GetActiveUniformVariableName(int nIndex)
+        {
+            if (IsProgramLinked())
+            {   
+                var result = GL.GetActiveUniformName(ProgramObject, nIndex);
+
+                var index = result.IndexOf('[');
+                if(index > 0)
+                {
+                    result = result.Remove(index);
+                }
+                
+                return result;
+            }
+
+            return "";
+        }
+
+        public ActiveUniformType GetActiveUniformVariableType(int nIndex)
+        {
+            if (IsProgramLinked())
+            {
+                ActiveUniformType type;
+                int size;
+                GL.GetActiveUniform(ProgramObject, nIndex, out size, out type);
+                return type;
+            }
+
+            Debug.Assert(false);
+
+            return ActiveUniformType.Bool;
+        }
+
         public bool ProgramLinked
         {
             get { return IsProgramLinked(); }
@@ -243,6 +345,11 @@ namespace Core.OpenGLShader
         public int ActiveUniformBlockCount
         {
             get { return GetActiveUniformBlockCount(); }
+        }
+
+        public int ActiveUniformCount
+        {
+            get { return GetActiveUniformCount(); }
         }
 
         public string GetUniformBlockName(int nBlockIndex)

@@ -33,6 +33,16 @@ namespace Core.Texture
             m_Sampler.SetMinFilter(TextureMinFilter.Linear);
         }
 
+        public Texture2D(string texturename)
+        {
+            m_TextureObject = GL.GenTexture();
+            m_Sampler = new Sampler();
+            m_Sampler.SetMagFilter(TextureMagFilter.Linear);
+            m_Sampler.SetMinFilter(TextureMinFilter.Linear);
+
+            m_TextureName = texturename;
+        }
+
         public bool IsValid
         {
             get
@@ -143,6 +153,8 @@ namespace Core.Texture
         int m_TextureObject = -1;
 
         Sampler m_Sampler = null;
+
+        string m_TextureName = "";
 
         TextureUnit m_TextureUnitBinded;
     }

@@ -36,6 +36,7 @@ namespace SharpOpenGL
         protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
         protected SharpOpenGL.GBufferDraw.GBufferDraw GBufferMaterial = null;
         protected Core.MaterialBase.MaterialBase BaseTest = null;
+        protected SharpOpenGL.Blur.Blur BlurMaterial = null;
 
         protected ObjMesh Mesh = new ObjMesh();
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
@@ -80,18 +81,15 @@ namespace SharpOpenGL
             ScreenBlit.OnResourceCreate(sender, e);
             ScreenBlit.SetGridSize(3, 3);
 
-            // 
-            TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();
-            TestMaterial.Use();
-
+            //
             GBufferMaterial = new SharpOpenGL.GBufferDraw.GBufferDraw();
             GBufferMaterial.Use();
 
-            
+            BlurMaterial = new SharpOpenGL.Blur.Blur();
 
-            //
-            BaseTest = new Core.MaterialBase.MaterialBase(SharpOpenGL.GBufferDraw.GBufferDraw.GetVSSourceCode(), SharpOpenGL.GBufferDraw.GBufferDraw.GetFSSourceCode());
-            BaseTest.Setup();                        
+            //            
+            BaseTest = new SharpOpenGL.GBufferDraw.GBufferDraw();
+            BaseTest.Setup();
         }       
 
         protected override void OnRenderFrame(FrameEventArgs e)
