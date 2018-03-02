@@ -2,6 +2,7 @@
 using System;
 using Core.CustomEvent;
 
+
 namespace Core.Camera
 {
     public class OrbitCamera : CameraBase
@@ -63,7 +64,7 @@ namespace Core.Camera
             float fAspectRatio = Width / (float)Height;
 
             AspectRatio = fAspectRatio;
-            FOV = MathHelper.PiOver6;
+            FOV = OpenTK.MathHelper.PiOver6;
             Near = 1;
             Far = 10000;
 
