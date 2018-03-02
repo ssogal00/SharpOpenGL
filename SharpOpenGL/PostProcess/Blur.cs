@@ -13,7 +13,7 @@ namespace SharpOpenGL.PostProcess
 {
     public class Blur : Core.PostProcess
     {
-        public Blur(Core.MaterialBase.MaterialBase material, RenderTargetTexture input)
+        public Blur(Core.MaterialBase.MaterialBase material, ColorAttachmentTexture input)
             : base(material)
         {
             Input = input;
@@ -32,7 +32,7 @@ namespace SharpOpenGL.PostProcess
             PostProcessMaterial.SetUniformVector2ArrayData("BlurWeights", ref m_Weight);
         }
 
-        protected RenderTargetTexture Input = null;
+        protected ColorAttachmentTexture Input = null;
 
         protected float[] m_Offset = null;
         protected float[] m_Weight = null;

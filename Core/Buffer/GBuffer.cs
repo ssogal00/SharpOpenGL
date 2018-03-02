@@ -21,13 +21,13 @@ namespace Core.Buffer
             FrameBufferObject = new FrameBuffer();
             FrameBufferObject.Bind();
 
-            PositionAttachment = new RenderTargetTexture(BufferWidth, BufferHeight);
+            PositionAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight);
             PositionAttachment.Resize(BufferWidth, BufferHeight);
 
-            ColorAttachment = new RenderTargetTexture(BufferWidth, BufferHeight);
+            ColorAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight);
             ColorAttachment.Resize(BufferWidth, BufferHeight);
 
-            NormalAttachment = new RenderTargetTexture(BufferWidth, BufferHeight);            
+            NormalAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight);            
             NormalAttachment.Resize(BufferWidth, BufferHeight);
 
             DepthAttachment = new DepthTargetTexture(BufferWidth, BufferHeight);
@@ -119,9 +119,9 @@ namespace Core.Buffer
 
 
 
-        protected RenderTargetTexture PositionAttachment = null;
-        protected RenderTargetTexture ColorAttachment = null;
-        protected RenderTargetTexture NormalAttachment = null;
+        protected ColorAttachmentTexture PositionAttachment = null;
+        protected ColorAttachmentTexture ColorAttachment = null;
+        protected ColorAttachmentTexture NormalAttachment = null;
         protected DepthTargetTexture DepthAttachment = null;
 
         protected Core.Buffer.FrameBuffer FrameBufferObject = null;

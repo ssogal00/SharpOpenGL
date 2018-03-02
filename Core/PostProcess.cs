@@ -15,7 +15,7 @@ namespace Core
         {
         }        
 
-        protected RenderTargetTexture Output = null;
+        protected ColorAttachmentTexture Output = null;
 
         protected MaterialBase.MaterialBase PostProcessMaterial = null;
     }
