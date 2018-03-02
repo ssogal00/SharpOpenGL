@@ -22,13 +22,19 @@ namespace Core.Texture
             }
         }
 
-        public void Bind()
+        public virtual void Bind()
         {
             if (IsValid)
             {
                 GL.BindTexture(TextureTarget.Texture2D, m_TextureObject);
             }
         }
+
+        public void Unbind()
+        {
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+        }
+
 
         public void BindShader(TextureUnit Unit, int SamplerLoc)
         {

@@ -61,7 +61,7 @@ namespace Core.MaterialBase
             UniformVariableNames = MaterialProgram.GetActiveUniformNames();
         }
 
-        public void SetTexture(string name, Core.Texture.Texture2D texture)
+        public void SetTexture(string name, Core.Texture.TextureBase texture)
         {
             Debug.Assert(SamplerMap.ContainsKey(name));
 

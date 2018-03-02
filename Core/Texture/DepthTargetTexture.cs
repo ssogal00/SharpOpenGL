@@ -4,22 +4,21 @@ using System.Diagnostics;
 
 namespace Core.Texture
 {
-    public class DepthTargetTexture
+    public class DepthTargetTexture : TextureBase
     {
         public DepthTargetTexture(int widthParam, int heightParam)
+            : base()
         {
-            width = widthParam;
-            height = heightParam;
-
-            TextureObject = GL.GenTexture();
+            m_Width = widthParam;
+            m_Height = heightParam;
         }
 
         protected void RecreateTexture()
         {
-            if(TextureObject != 0)
+            if(m_TextureObject != 0)
             {
-                GL.DeleteTexture(TextureObject);
-                TextureObject = GL.GenTexture();
+                GL.DeleteTexture(m_TextureObject);
+                m_TextureObject = GL.GenTexture();
             }
         }
 
@@ -28,30 +27,18 @@ namespace Core.Texture
             Debug.Assert(newWidth > 0 && newHeight > 0);
 
             RecreateTexture();
-            width = newWidth;
-            height = newHeight;
+            m_Width = newWidth;
+            m_Height = newHeight;
             Bind();
+            Alloc();
         }
 
-        public void Bind()
+        public void Alloc()
         {
-            GL.BindTexture(TextureTarget.Texture2D, TextureObject);            
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Depth24Stencil8, width, height, 0, PixelFormat.DepthComponent, PixelType.Float, new IntPtr(0));
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Depth24Stencil8, m_Width, m_Height, 0, PixelFormat.DepthComponent, PixelType.Float, new IntPtr(0));
         }
-
-        public void Unbind()
-        {
-            GL.BindTexture(TextureTarget.Texture2D, 0);
-        }
-
-        public int GetTextureObject => TextureObject;
-
-        protected int TextureObject = 0;
-
-        protected int width = 0;
-        public int Width => width;
         
-        protected int height = 0;
-        public int Height => height;
+
+        public int GetTextureObject => m_TextureObject;        
     }
 }

@@ -22,16 +22,16 @@ namespace Core.Buffer
             FrameBufferObject.Bind();
 
             PositionAttachment = new RenderTargetTexture(BufferWidth, BufferHeight);
-            PositionAttachment.Bind();
+            PositionAttachment.Resize(BufferWidth, BufferHeight);
 
             ColorAttachment = new RenderTargetTexture(BufferWidth, BufferHeight);
-            ColorAttachment.Bind();
+            ColorAttachment.Resize(BufferWidth, BufferHeight);
 
-            NormalAttachment = new RenderTargetTexture(BufferWidth, BufferHeight);
-            NormalAttachment.Bind();
+            NormalAttachment = new RenderTargetTexture(BufferWidth, BufferHeight);            
+            NormalAttachment.Resize(BufferWidth, BufferHeight);
 
             DepthAttachment = new DepthTargetTexture(BufferWidth, BufferHeight);
-            DepthAttachment.Bind();
+            DepthAttachment.Resize(BufferWidth, BufferHeight);
 
             GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, PositionAttachment.GetTextureObject, 0);
             GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, ColorAttachment.GetTextureObject, 0);
@@ -101,16 +101,9 @@ namespace Core.Buffer
             BufferHeight = newHeight;
 
             PositionAttachment.Resize(BufferWidth, BufferHeight);
-            PositionAttachment.Bind();
-
             ColorAttachment.Resize(BufferWidth, BufferHeight);
-            ColorAttachment.Bind();
-
             NormalAttachment.Resize(BufferWidth, BufferHeight);
-            NormalAttachment.Bind();
-
             DepthAttachment.Resize(BufferWidth, BufferHeight);
-            DepthAttachment.Bind();
 
             GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, PositionAttachment.GetTextureObject, 0);
             GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, ColorAttachment.GetTextureObject, 0);
