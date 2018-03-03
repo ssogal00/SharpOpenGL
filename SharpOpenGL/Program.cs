@@ -40,6 +40,7 @@ namespace SharpOpenGL
 
         protected ObjMesh Mesh = new ObjMesh();
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
+        protected RenderTarget MyGBuffer2 = new RenderTarget(1024, 768, 3);
 
 
         private Task<ObjMesh> MeshLoadTask = null;
@@ -69,7 +70,7 @@ namespace SharpOpenGL
             // resigter window resize event handler
             OnWindowResize += Camera.OnWindowResized;
             OnWindowResize += MyGBuffer.OnWindowResized;
-
+            
             OnResourceCreate(this, e);
 
             OnWindowResize += Blur.OnWindowResized;

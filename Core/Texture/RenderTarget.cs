@@ -41,6 +41,11 @@ namespace Core.Texture
             Resize(e.Width, e.Height);
         }
 
+        public void OnResourceCreate(object sender, EventArgs e)
+        {
+            Create();
+        }
+
         public virtual void PrepareToDraw()
         {
             Bind();
