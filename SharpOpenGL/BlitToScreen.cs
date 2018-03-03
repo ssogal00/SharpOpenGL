@@ -1,11 +1,8 @@
-﻿using Core.Primitive;
-using System.Collections.Generic;
-using Core;
-using Core.Buffer;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using System;
+﻿using Core.Buffer;
+using Core.Primitive;
 using Core.Texture;
+using OpenTK.Graphics.OpenGL;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace SharpOpenGL

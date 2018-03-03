@@ -1,41 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core;
-using Core.Texture;
-using Core.MathHelper;
-using System.Diagnostics;
+﻿using Core;
 using Core.CustomEvent;
+using Core.MaterialBase;
+using Core.MathHelper;
+using Core.Texture;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.PostProcess
 {
-    public class Blur : Core.PostProcess
+    public class Blur : SharpOpenGL.PostProcess.PostProcessBase
     {
-        public Blur(Core.MaterialBase.MaterialBase material, ColorAttachmentTexture input)
-            : base(material)
-        {
-            Input = input;
-            UpdateOffsetAndWeight(Input.Width, Input.Height);
+        public Blur()
+            : base()
+        {   
         }
 
-        public void OnResize(object sender, ScreenResizeEventArgs e)
+        public override void OnWindowResized(object sender, ScreenResizeEventArgs e)
         {
+            base.OnWindowResized(sender, e);
             UpdateOffsetAndWeight(e.Width, e.Height);
         }
-        public override void Render()
+
+        public override void OnResourceCreate(object sender, EventArgs e)
+        {
+            base.OnResourceCreate(sender, e);
+
+            PostProcessMaterial = new MaterialBase(SharpOpenGL.Blur.Blur.GetVSSourceCode(), SharpOpenGL.Blur.Blur.GetFSSourceCode());
+        }
+
+        public override void Render(TextureBase input)
         {
             PostProcessMaterial.Setup();
-            PostProcessMaterial.SetTexture("ColorTex", Input);
+            PostProcessMaterial.SetTexture("ColorTex", input);
             PostProcessMaterial.SetUniformVector2ArrayData("BlurOffsets", ref m_Offset);
             PostProcessMaterial.SetUniformVector2ArrayData("BlurWeights", ref m_Weight);
+
+            Output.Bind();
+
+            BlitToScreenSpace();
+
+            Output.Unbind();
         }
 
         protected ColorAttachmentTexture Input = null;
 
         protected float[] m_Offset = null;
         protected float[] m_Weight = null;
+
+        protected BlitToScreen m_BlitToScreen = null;
 
         protected void UpdateOffsetAndWeight(float Width, float Height)
         {

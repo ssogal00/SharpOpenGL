@@ -20,17 +20,33 @@ namespace Core.Texture
             BufferHeight = height;
         }
 
-        public void Create()
+        public void Bind()
         {
-            FrameBufferObject = new FrameBuffer();
+            FrameBufferObject.Bind();
+        }
+
+        public void Unbind()
+        {
+            FrameBufferObject.Unbind();
+        }
+
+        public void OnWindowResize(object sender, Core.CustomEvent.ScreenResizeEventArgs e)
+        {
+            Resize(e.Width, e.Height);
+        }
+
+        private void Resize(int newWidth, int newHeight)
+        {
+            Debug.Assert(newWidth > 0 && newHeight > 0);
+
             FrameBufferObject.Bind();
 
-            ColorAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight);
-            ColorAttachment.Resize(BufferWidth, BufferHeight);            
+            BufferWidth = newWidth;
+            BufferHeight = newHeight;
 
-            DepthAttachment = new DepthTargetTexture(BufferWidth, BufferHeight);
+            ColorAttachment.Resize(BufferWidth, BufferHeight);            
             DepthAttachment.Resize(BufferWidth, BufferHeight);
-            
+                        
             GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorAttachment.GetTextureObject, 0);            
             GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
 
@@ -39,6 +55,13 @@ namespace Core.Texture
             Debug.Assert(status == FramebufferErrorCode.FramebufferComplete);
 
             FrameBufferObject.Unbind();
+        }
+
+        public void Create()
+        {
+            FrameBufferObject = new FrameBuffer();
+
+            Resize(BufferWidth, BufferHeight);
         }
 
         protected ColorAttachmentTexture ColorAttachment = null;        
