@@ -14,7 +14,7 @@ void main()
     
     for( int i = 0; i < 9; i++ )
     {
-        color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;
+        color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;        
     }
 	        
     FragColor = color;

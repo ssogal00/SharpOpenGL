@@ -24,7 +24,7 @@ public class <#=ShaderName#> : MaterialBase
 <# int index = 0;
 foreach(var Sampler in FSProgram.GetSampler2DNames())
 {#>
-	public void Set<#=Sampler#>2D(Core.Texture.Texture2D TextureObject)
+	public void Set<#=Sampler#>2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"<#=Sampler#>", TextureObject);
 	}

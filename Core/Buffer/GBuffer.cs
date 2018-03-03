@@ -117,7 +117,13 @@ namespace Core.Buffer
             FrameBufferObject.Unbind();
         }
 
-
+        public ColorAttachmentTexture GetColorAttachement
+        {
+            get
+            {
+                return ColorAttachment;
+            }
+        }
 
         protected ColorAttachmentTexture PositionAttachment = null;
         protected ColorAttachmentTexture ColorAttachment = null;

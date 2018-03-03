@@ -74,6 +74,7 @@
     <Compile Include="MathHelper\MathHelper.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
+    <Compile Include="RenderResource.cs" />
     <Compile Include="Texture\DepthTargetTexture.cs" />
     <Compile Include="Texture\ColorAttachmentTexture.cs" />
     <Compile Include="Texture\RenderTargetTexture.cs" />

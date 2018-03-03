@@ -28,7 +28,7 @@ public class BasicMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-	public void SetTestTexture2D(Core.Texture.Texture2D TextureObject)
+	public void SetTestTexture2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"TestTexture", TextureObject);
 	}

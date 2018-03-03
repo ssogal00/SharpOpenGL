@@ -36,7 +36,7 @@ namespace SharpOpenGL
         protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
         protected SharpOpenGL.GBufferDraw.GBufferDraw GBufferMaterial = null;
         protected Core.MaterialBase.MaterialBase BaseTest = null;
-        protected SharpOpenGL.Blur.Blur BlurMaterial = null;
+        protected SharpOpenGL.PostProcess.BlurPostProcess Blur = null;
 
         protected ObjMesh Mesh = new ObjMesh();
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
@@ -71,6 +71,8 @@ namespace SharpOpenGL
             OnWindowResize += MyGBuffer.OnWindowResized;
 
             OnResourceCreate(this, e);
+
+            OnWindowResize += Blur.OnWindowResized;
             
             MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
         }
@@ -85,7 +87,8 @@ namespace SharpOpenGL
             GBufferMaterial = new SharpOpenGL.GBufferDraw.GBufferDraw();
             GBufferMaterial.Use();
 
-            BlurMaterial = new SharpOpenGL.Blur.Blur();
+            Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
+            Blur.OnResourceCreate(this, e);
 
             //            
             BaseTest = new SharpOpenGL.GBufferDraw.GBufferDraw();
@@ -118,22 +121,19 @@ namespace SharpOpenGL
 
             Transform.View = Camera.View;
             Transform.Proj = Camera.Proj;
-            // TestMaterial.SetTransformBlockData(ref Transform);
-            // GBufferMaterial.SetTransformBlockData(ref Transform);
-
-
-            // ScreenBlit.Draw(TestTexture);
+            
             MyGBuffer.Bind();
             MyGBuffer.Clear();
-            MyGBuffer.PrepareToDraw();
-            //GBufferMaterial.Use();            
-            //Mesh.Draw(GBufferMaterial);
+            MyGBuffer.PrepareToDraw();            
             BaseTest.Setup();
             BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
             Mesh.Draw(BaseTest);
 
             MyGBuffer.Unbind();
-            ScreenBlit.Blit(MyGBuffer.NormalBufferObject, 2, 2, 1, 1);
+
+            Blur.Render(MyGBuffer.GetColorAttachement);
+
+            ScreenBlit.Blit(Blur.GetOutputTextureObject().GetColorAttachmentTextureObject(), 2, 2, 1, 1);
             ScreenBlit.Blit(MyGBuffer.ColorBufferObject, 0, 0, 3, 3);
 
             SwapBuffers();

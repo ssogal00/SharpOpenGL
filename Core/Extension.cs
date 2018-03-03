@@ -12,10 +12,10 @@ namespace Core
         {
             float[] result = new float[vectorList.Count() * 2];
 
-            for(int i = 0; i < vectorList.Count(); ++i)
+            for(int i = 0; i < vectorList.Count(); i++)
             {
-                result[i]       = vectorList[i].X;
-                result[i + 1]   = vectorList[i].Y;
+                result[2 * i]       = vectorList[i].X;
+                result[2 * i + 1]   = vectorList[i].Y;
             }
 
             return result;
@@ -25,11 +25,11 @@ namespace Core
         {
             float[] result = new float[vectorList.Count() * 3];
 
-            for (int i = 0; i < vectorList.Count(); ++i)
+            for (int i = 0; i < vectorList.Count(); i++)
             {
-                result[i] = vectorList[i].X;
-                result[i + 1] = vectorList[i].Y;
-                result[i + 2] = vectorList[i].Z;
+                result[3 * i] = vectorList[i].X;
+                result[3 * i + 1] = vectorList[i].Y;
+                result[3 * i + 2] = vectorList[i].Z;
             }
 
             return result;

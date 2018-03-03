@@ -28,7 +28,7 @@ public class GBufferDraw : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-	public void SetDiffuseTex2D(Core.Texture.Texture2D TextureObject)
+	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"DiffuseTex", TextureObject);
 	}
@@ -37,7 +37,7 @@ public class GBufferDraw : MaterialBase
 	{
 		SetTexture(@"DiffuseTex", TextureObject);
 	}
-	public void SetNormalTex2D(Core.Texture.Texture2D TextureObject)
+	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
 	}

@@ -10,7 +10,9 @@ namespace Core.Texture
         public TextureBase()
         {
             m_TextureObject = GL.GenTexture();
-            m_Sampler = Core.Texture.Sampler.DefaultLinearSampler;
+            m_Sampler = new Sampler();
+            m_Sampler.SetMagFilter(TextureMagFilter.Linear);
+            m_Sampler.SetMinFilter(TextureMinFilter.Linear);
         }
 
         public void Dispose()

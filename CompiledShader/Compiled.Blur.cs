@@ -28,7 +28,7 @@ public class Blur : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-	public void SetColorTex2D(Core.Texture.Texture2D TextureObject)
+	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"ColorTex", TextureObject);
 	}
@@ -73,7 +73,7 @@ void main()
     
     for( int i = 0; i < 9; i++ )
     {
-        color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;
+        color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;        
     }
 	        
     FragColor = color;

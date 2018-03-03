@@ -10,9 +10,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.PostProcess
 {
-    public class Blur : SharpOpenGL.PostProcess.PostProcessBase
+    public class BlurPostProcess : SharpOpenGL.PostProcess.PostProcessBase
     {
-        public Blur()
+        public BlurPostProcess()
             : base()
         {   
         }
@@ -27,17 +27,21 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnResourceCreate(sender, e);
 
-            PostProcessMaterial = new MaterialBase(SharpOpenGL.Blur.Blur.GetVSSourceCode(), SharpOpenGL.Blur.Blur.GetFSSourceCode());
+            PostProcessMaterial = new SharpOpenGL.Blur.Blur();
         }
 
         public override void Render(TextureBase input)
         {
+
+
             PostProcessMaterial.Setup();
             PostProcessMaterial.SetTexture("ColorTex", input);
             PostProcessMaterial.SetUniformVector2ArrayData("BlurOffsets", ref m_Offset);
             PostProcessMaterial.SetUniformVector2ArrayData("BlurWeights", ref m_Weight);
 
             Output.Bind();
+            Output.PrepareToDraw();
+            Output.Clear();
 
             BlitToScreenSpace();
 

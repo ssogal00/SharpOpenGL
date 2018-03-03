@@ -22,6 +22,7 @@ namespace SharpOpenGL.PostProcess
             IB = new IndexBuffer();
 
             Output = new RenderTargetTexture(1024,768);
+            Output.Create();
 
             UpdateVertexBuffer();
             UpdateIndexBuffer();
@@ -52,6 +53,11 @@ namespace SharpOpenGL.PostProcess
         public virtual void Render(TextureBase Input0, TextureBase Input1, TextureBase Input2)
         {
         }        
+
+        public RenderTargetTexture GetOutputTextureObject()
+        {
+            return Output;
+        }
 
         protected RenderTargetTexture Output = null;
 

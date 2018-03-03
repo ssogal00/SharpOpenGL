@@ -25,6 +25,11 @@ namespace Core.Texture
             FrameBufferObject.Bind();
         }
 
+        public void Clear()
+        {
+            GL.ClearColor(1, 1, 1, 1);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        }
         public void Unbind()
         {
             FrameBufferObject.Unbind();
@@ -33,6 +38,18 @@ namespace Core.Texture
         public void OnWindowResize(object sender, Core.CustomEvent.ScreenResizeEventArgs e)
         {
             Resize(e.Width, e.Height);
+        }
+
+        public void PrepareToDraw()
+        {
+            GL.Viewport(0, 0, BufferWidth, BufferHeight);
+
+            var attachments = new DrawBuffersEnum[]
+            {
+                DrawBuffersEnum.ColorAttachment0,
+            };
+
+            GL.DrawBuffers(1, attachments);
         }
 
         private void Resize(int newWidth, int newHeight)
@@ -60,8 +77,15 @@ namespace Core.Texture
         public void Create()
         {
             FrameBufferObject = new FrameBuffer();
+            ColorAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight);
+            DepthAttachment = new DepthTargetTexture(BufferWidth, BufferHeight);
 
             Resize(BufferWidth, BufferHeight);
+        }
+
+        public int GetColorAttachmentTextureObject()
+        {
+            return ColorAttachment.GetTextureObject;
         }
 
         protected ColorAttachmentTexture ColorAttachment = null;        

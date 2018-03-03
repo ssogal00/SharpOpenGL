@@ -1,8 +1,11 @@
-﻿using Core.Buffer;
-using Core.Primitive;
-using Core.Texture;
-using OpenTK.Graphics.OpenGL;
+﻿using Core.Primitive;
 using System.Collections.Generic;
+using Core;
+using Core.Buffer;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using System;
+using Core.Texture;
 using System.Diagnostics;
 
 namespace SharpOpenGL
@@ -27,7 +30,7 @@ namespace SharpOpenGL
             IB.BufferData<uint>(ref IndexArray);
         }
         
-        public void Blit(Texture2D texture)
+        public void Blit(TextureBase texture)
         {
             Material.Use();
             VB.Bind();
@@ -37,7 +40,7 @@ namespace SharpOpenGL
             GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
         }
 
-        public void Blit(Texture2D texture, int rowIndex, int colIndex, int gridRowSpan, int gridColSpan)
+        public void Blit(TextureBase texture, int rowIndex, int colIndex, int gridRowSpan, int gridColSpan)
         {
             Material.Use();
             UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);

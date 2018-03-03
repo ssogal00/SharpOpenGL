@@ -28,7 +28,7 @@ public class ScreenSpaceDraw : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-	public void SetColorTex2D(Core.Texture.Texture2D TextureObject)
+	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"ColorTex", TextureObject);
 	}

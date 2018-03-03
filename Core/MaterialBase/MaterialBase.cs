@@ -88,10 +88,13 @@ namespace Core.MaterialBase
         {
             MaterialProgram.UseProgram();
 
-            int index = 0;
-            foreach (var uniformBuffer in UniformBufferMap)
+            if (UniformBufferMap != null)
             {
-                uniformBuffer.Value.BindBufferBase(index++);
+                int index = 0;
+                foreach (var uniformBuffer in UniformBufferMap)
+                {
+                    uniformBuffer.Value.BindBufferBase(index++);
+                }
             }
         }
 
