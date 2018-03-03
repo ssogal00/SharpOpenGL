@@ -46,14 +46,9 @@ namespace Core.Texture
             Bind();
             Clear();
 
-            GL.Viewport(0, 0, BufferWidth, BufferHeight);
-            
-            var attachments = new DrawBuffersEnum[]
-            {
-                DrawBuffersEnum.ColorAttachment0,
-            };
+            GL.Viewport(0, 0, BufferWidth, BufferHeight);            
 
-            GL.DrawBuffers(1, attachments);
+            GL.DrawBuffers(1, AttchmentsEnums);
         }
 
         private void Resize(int newWidth, int newHeight)
