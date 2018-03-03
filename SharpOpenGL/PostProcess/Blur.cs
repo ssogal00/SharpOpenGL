@@ -32,16 +32,12 @@ namespace SharpOpenGL.PostProcess
 
         public override void Render(TextureBase input)
         {
-
-
             PostProcessMaterial.Setup();
             PostProcessMaterial.SetTexture("ColorTex", input);
             PostProcessMaterial.SetUniformVector2ArrayData("BlurOffsets", ref m_Offset);
             PostProcessMaterial.SetUniformVector2ArrayData("BlurWeights", ref m_Weight);
-
-            Output.Bind();
+            
             Output.PrepareToDraw();
-            Output.Clear();
 
             BlitToScreenSpace();
 

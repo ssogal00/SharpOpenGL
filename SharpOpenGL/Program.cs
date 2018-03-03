@@ -53,7 +53,7 @@ namespace SharpOpenGL
 
         protected override void OnLoad(EventArgs e)
         {
-            VSync = VSyncMode.Off;
+            VSync = VSyncMode.On;
 
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
@@ -128,12 +128,11 @@ namespace SharpOpenGL
             BaseTest.Setup();
             BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
             Mesh.Draw(BaseTest);
-
             MyGBuffer.Unbind();
 
             Blur.Render(MyGBuffer.GetColorAttachement);
 
-            ScreenBlit.Blit(Blur.GetOutputTextureObject().GetColorAttachmentTextureObject(), 2, 2, 1, 1);
+            ScreenBlit.Blit(Blur.GetOutputTextureObject().GetColorAttachment0TextureObject(), 2, 2, 1, 1);
             ScreenBlit.Blit(MyGBuffer.ColorBufferObject, 0, 0, 3, 3);
 
             SwapBuffers();

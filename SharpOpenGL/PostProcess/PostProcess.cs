@@ -21,7 +21,7 @@ namespace SharpOpenGL.PostProcess
             VB = new StaticVertexBuffer<PT_VertexAttribute>();
             IB = new IndexBuffer();
 
-            Output = new RenderTargetTexture(1024,768);
+            Output = new RenderTarget(1024,768, 1);
             Output.Create();
 
             UpdateVertexBuffer();
@@ -54,12 +54,12 @@ namespace SharpOpenGL.PostProcess
         {
         }        
 
-        public RenderTargetTexture GetOutputTextureObject()
+        public RenderTarget GetOutputTextureObject()
         {
             return Output;
         }
 
-        protected RenderTargetTexture Output = null;
+        protected RenderTarget Output = null;
 
         protected Core.MaterialBase.MaterialBase PostProcessMaterial = null;
                 
