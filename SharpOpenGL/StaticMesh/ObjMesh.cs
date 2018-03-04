@@ -10,7 +10,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-using ObjMeshVertexAttribute = Core.Primitive.PT_VertexAttribute;
+using ObjMeshVertexAttribute = Core.Primitive.PNTT_VertexAttribute;
 
 
 namespace SharpOpenGL.StaticMesh
@@ -32,9 +32,13 @@ namespace SharpOpenGL.StaticMesh
         List<Vector2> TexCoordList = new List<Vector2>();        
         List<Vector3> NormalList = new List<Vector3>();
         List<Vector4> TangentList = new List<Vector4>();
-        List<uint> FaceList = new List<uint>();
+
+        List<uint> VertexIndexList = new List<uint>();
+        List<uint> TexCoordIndexList = new List<uint>();
+        List<uint> NormalIndexList = new List<uint>();
+        
         // clear after mesh loading
- 
+
         List<ObjMeshSection> MeshSectionList = new List<ObjMeshSection>();        
         Dictionary<string, ObjMeshMaterial> MaterialMap = new Dictionary<string, ObjMeshMaterial>();
 
@@ -73,28 +77,41 @@ namespace SharpOpenGL.StaticMesh
         {
         }
 
+        protected void GenerateVertices()
+        {
+            for (int i = 0; i < VertexIndexList.Count(); ++i)
+            {
+                var V1 = new ObjMeshVertexAttribute();
+                V1.VertexPosition = VertexList[(int)VertexIndexList[i]];
+                V1.TexCoord = TexCoordList[(int)TexCoordIndexList[i]];
+                V1.VertexNormal = NormalList[(int)NormalIndexList[i]];
+                V1.Tangent = TangentList[(int)VertexIndexList[i]];
+                Vertices.Add(V1);
+            }            
+        }
+
         protected void GenerateTangents()
         {
             List<Vector3> tan1Accum = new List<Vector3>();
             List<Vector3> tan2Accum = new List<Vector3>();
 
-            for (uint i = 0; i < VertexList.Count(); i++)
+            for (uint i = 0; i < VertexIndexList.Count(); i++)
             {
-                tan1Accum.Add(new Vector3());
-                tan2Accum.Add(new Vector3());
-                TangentList.Add(new Vector4());
+                tan1Accum.Add(new Vector3(0,0,0));
+                tan2Accum.Add(new Vector3(0,0,0));
+                TangentList.Add(new Vector4(0,0,0,0));
             }
 
             // Compute the tangent vector
-            for (uint i = 0; i < FaceList.Count(); i += 3)
+            for (uint i = 0; i < VertexIndexList.Count(); i += 3)
             {
-                var p1 = VertexList[(int)FaceList[(int)i]];
-                var p2 = VertexList[(int)FaceList[(int)(i + 1)]];
-                var p3 = VertexList[(int)FaceList[(int)(i + 2)]];
+                var p1 = VertexList[(int)VertexIndexList[(int)i]];
+                var p2 = VertexList[(int)VertexIndexList[(int)i + 1]];
+                var p3 = VertexList[(int)VertexIndexList[(int)i + 2]];
 
-                var tc1 = Vertices[(int)FaceList[(int)i]].TexCoord;
-                var tc2 = Vertices[(int)FaceList[(int)(i+1)]].TexCoord;
-                var tc3 = Vertices[(int)FaceList[(int)(i+2)]].TexCoord;
+                var tc1 = TexCoordList[(int)TexCoordIndexList[(int)i]];
+                var tc2 = TexCoordList[(int)TexCoordIndexList[(int)i+1]];
+                var tc3 = TexCoordList[(int)TexCoordIndexList[(int)i+2]];
 
                 Vector3 q1 = p2 - p1;
                 Vector3 q2 = p3 - p1;
@@ -110,27 +127,28 @@ namespace SharpOpenGL.StaticMesh
                    (s1 * q2.Y - s2 * q1.Y) * r,
                    (s1 * q2.Z - s2 * q1.Z) * r);
 
-                tan1Accum[(int)FaceList[(int)i]] += tan1;
-                tan1Accum[(int)FaceList[(int)i + 1]] += tan1;
-                tan1Accum[(int)FaceList[(int)i + 2]] += tan1;
+                tan1Accum[(int)VertexIndexList[(int)i]] += tan1;
+                tan1Accum[(int)VertexIndexList[(int)i + 1]] += tan1;
+                tan1Accum[(int)VertexIndexList[(int)i + 2]] += tan1;
 
-                tan2Accum[(int)FaceList[(int)i]] += tan2;
-                tan2Accum[(int)FaceList[(int)i + 1]] += tan2;
-                tan2Accum[(int)FaceList[(int)i + 2]] += tan2;
+                tan2Accum[(int)VertexIndexList[(int)i]] += tan2;
+                tan2Accum[(int)VertexIndexList[(int)i + 1]] += tan2;
+                tan2Accum[(int)VertexIndexList[(int)i + 2]] += tan2;
             }
 
-            for(uint i = 0; i< FaceList.Count(); ++i )
+            for(uint i = 0; i< VertexIndexList.Count(); ++i )
             {
-                var n = NormalList[(int)i];
-                var t1 = tan1Accum[(int)i];
-                var t2 = tan2Accum[(int)i];
+                var n = NormalList[(int)NormalIndexList[(int)i]];
+                var t1 = tan1Accum[(int)VertexIndexList[(int)i]];
+                var t2 = tan2Accum[(int)VertexIndexList[(int)i]];
 
                 // Gram-Schmidt orthogonalize                
                 var temp = OpenTK.Vector3.Normalize(t1 - (OpenTK.Vector3.Dot(n, t1) * n));
                 // Store handedness in w
                 // tangents[i] = vec4(glm::normalize(t1 - (glm::dot(n, t1) * n) ), 0.0f);
                 var W = (OpenTK.Vector3.Dot(OpenTK.Vector3.Cross(n, t1), t2) < 0.0f) ? -1.0f : 1.0f;
-                TangentList[(int)i] = new Vector4(temp.X, temp.Y, temp.Z, W);
+
+                TangentList[(int)VertexIndexList[(int)i]] = new Vector4(temp.X, temp.Y, temp.Z, W);
             }
             tan1Accum.Clear();
             tan2Accum.Clear();
@@ -355,28 +373,42 @@ namespace SharpOpenGL.StaticMesh
                             uint Index2 = Convert.ToUInt32(Token2[0]);
                             uint Index3 = Convert.ToUInt32(Token3[0]);
 
-                            FaceList.Add(Index1 - 1);
-                            FaceList.Add(Index2 - 1);
-                            FaceList.Add(Index3 - 1);
+                            VertexIndexList.Add(Index1 - 1);
+                            VertexIndexList.Add(Index2 - 1);
+                            VertexIndexList.Add(Index3 - 1);
 
-                            V1.VertexPosition = VertexList[(int)Index1-1];
-                            V2.VertexPosition = VertexList[(int)Index2-1];
-                            V3.VertexPosition = VertexList[(int)Index3-1];
+                            V1.VertexPosition = VertexList[(int)Index1 - 1];
+                            V2.VertexPosition = VertexList[(int)Index2 - 1];
+                            V3.VertexPosition = VertexList[(int)Index3 - 1];
 
                             uint TexIndex1 = Convert.ToUInt32(Token1[1]);
                             uint TexIndex2 = Convert.ToUInt32(Token2[1]);
                             uint TexIndex3 = Convert.ToUInt32(Token3[1]);
 
-                            V1.TexCoord = TexCoordList[(int)TexIndex1-1];
-                            V2.TexCoord = TexCoordList[(int)TexIndex2-1];
-                            V3.TexCoord = TexCoordList[(int)TexIndex3-1];
+                            TexCoordIndexList.Add(TexIndex1 - 1);
+                            TexCoordIndexList.Add(TexIndex2 - 1);
+                            TexCoordIndexList.Add(TexIndex3 - 1);
+
+                            V1.TexCoord = TexCoordList[(int)TexIndex1 - 1];
+                            V2.TexCoord = TexCoordList[(int)TexIndex2 - 1];
+                            V3.TexCoord = TexCoordList[(int)TexIndex3 - 1];
 
                             uint NormIndex1 = Convert.ToUInt32(Token1[2]);
                             uint NormIndex2 = Convert.ToUInt32(Token1[2]);
-                            uint NormIndex3 = Convert.ToUInt32(Token1[2]);                            
+                            uint NormIndex3 = Convert.ToUInt32(Token1[2]);
 
+                            NormalIndexList.Add(NormIndex1 - 1);
+                            NormalIndexList.Add(NormIndex2 - 1);
+                            NormalIndexList.Add(NormIndex3 - 1);
 
-                            Vertices.Add(V1); Vertices.Add(V2); Vertices.Add(V3);
+                            V1.VertexNormal = NormalList[(int)NormIndex1 - 1];
+                            V2.VertexNormal = NormalList[(int)NormIndex2 - 1];
+                            V3.VertexNormal = NormalList[(int)NormIndex3 - 1];
+
+                            Vertices.Add(V1);
+                            Vertices.Add(V2);
+                            Vertices.Add(V3);
+
                             VertexIndices.Add((uint)VertexIndices.Count);
                             VertexIndices.Add((uint)VertexIndices.Count);
                             VertexIndices.Add((uint)VertexIndices.Count);
@@ -414,12 +446,20 @@ namespace SharpOpenGL.StaticMesh
                 }
             }
 
+            
             //GenerateTangents();
+            //GenerateVertices();
 
             VertexList.Clear();
             NormalList.Clear();
             TexCoordList.Clear();
-            FaceList.Clear();
+            TangentList.Clear();
+
+            VertexIndexList.Clear();
+            NormalIndexList.Clear();
+            TexCoordIndexList.Clear();
+
+            //GC.Collect();
         }        
     }
 }
