@@ -31,6 +31,8 @@ namespace SharpOpenGL.StaticMesh
         List<Vector3> VertexList = new List<Vector3>();        
         List<Vector2> TexCoordList = new List<Vector2>();        
         List<Vector3> NormalList = new List<Vector3>();
+        List<Vector4> TangentList = new List<Vector4>();
+        List<uint> FaceList = new List<uint>();
         // clear after mesh loading
  
         List<ObjMeshSection> MeshSectionList = new List<ObjMeshSection>();        
@@ -71,42 +73,67 @@ namespace SharpOpenGL.StaticMesh
         {
         }
 
-        public void Draw(SharpOpenGL.BasicMaterial.BasicMaterial Material)
+        protected void GenerateTangents()
         {
-            VB.Bind();
-            IB.Bind();
+            List<Vector3> tan1Accum = new List<Vector3>();
+            List<Vector3> tan2Accum = new List<Vector3>();
 
-            SharpOpenGL.BasicMaterial.VertexAttribute.VertexAttributeBinding();
-
-            foreach(var Section in MeshSectionList)            
+            for (uint i = 0; i < VertexList.Count(); i++)
             {
-                if(MaterialMap.ContainsKey(Section.SectionName) )
-                {                    
-                    Material.SetTestTexture2D(TextureMap[MaterialMap[Section.SectionName].DiffuseMap]);                    
-                }
-
-                var ByteOffset = new IntPtr(Section.StartIndex * sizeof(uint) );
-                GL.DrawElements(PrimitiveType.Triangles, (int)(Section.EndIndex - Section.StartIndex), DrawElementsType.UnsignedInt, ByteOffset);
+                tan1Accum.Add(new Vector3());
+                tan2Accum.Add(new Vector3());
+                TangentList.Add(new Vector4());
             }
-        }
 
-        public void Draw(SharpOpenGL.GBufferDraw.GBufferDraw material)
-        {
-            VB.Bind();
-            IB.Bind();
-            VB.BindVertexAttribute();
-
-            foreach(var section in MeshSectionList)
+            // Compute the tangent vector
+            for (uint i = 0; i < FaceList.Count(); i += 3)
             {
-                if (MaterialMap.ContainsKey(section.SectionName))
-                {
-                    material.SetDiffuseTex2D(TextureMap[MaterialMap[section.SectionName].DiffuseMap]);
-                    material.SetNormalTex2D(TextureMap[MaterialMap[section.SectionName].NormalMap]);
-                }
+                var p1 = VertexList[(int)FaceList[(int)i]];
+                var p2 = VertexList[(int)FaceList[(int)(i + 1)]];
+                var p3 = VertexList[(int)FaceList[(int)(i + 2)]];
 
-                var ByteOffset = new IntPtr(section.StartIndex * sizeof(uint));
-                GL.DrawElements(PrimitiveType.Triangles, (int)(section.EndIndex - section.StartIndex), DrawElementsType.UnsignedInt, ByteOffset);
+                var tc1 = Vertices[(int)FaceList[(int)i]].TexCoord;
+                var tc2 = Vertices[(int)FaceList[(int)(i+1)]].TexCoord;
+                var tc3 = Vertices[(int)FaceList[(int)(i+2)]].TexCoord;
+
+                Vector3 q1 = p2 - p1;
+                Vector3 q2 = p3 - p1;
+                float s1 = tc2.X - tc1.X, s2 = tc3.X - tc1.X;
+                float t1 = tc2.Y - tc1.Y, t2 = tc3.Y - tc1.Y;
+                float r = 1.0f / (s1 * t2 - s2 * t1);
+
+                var tan1 = new Vector3((t2 * q1.X - t1 * q2.X) * r,
+                   (t2 * q1.Y - t1 * q2.Y) * r,
+                   (t2 * q1.Z - t1 * q2.Z) * r);
+
+                var tan2 = new Vector3((s1 * q2.X - s2 * q1.X) * r,
+                   (s1 * q2.Y - s2 * q1.Y) * r,
+                   (s1 * q2.Z - s2 * q1.Z) * r);
+
+                tan1Accum[(int)FaceList[(int)i]] += tan1;
+                tan1Accum[(int)FaceList[(int)i + 1]] += tan1;
+                tan1Accum[(int)FaceList[(int)i + 2]] += tan1;
+
+                tan2Accum[(int)FaceList[(int)i]] += tan2;
+                tan2Accum[(int)FaceList[(int)i + 1]] += tan2;
+                tan2Accum[(int)FaceList[(int)i + 2]] += tan2;
             }
+
+            for(uint i = 0; i< FaceList.Count(); ++i )
+            {
+                var n = NormalList[(int)i];
+                var t1 = tan1Accum[(int)i];
+                var t2 = tan2Accum[(int)i];
+
+                // Gram-Schmidt orthogonalize                
+                var temp = OpenTK.Vector3.Normalize(t1 - (OpenTK.Vector3.Dot(n, t1) * n));
+                // Store handedness in w
+                // tangents[i] = vec4(glm::normalize(t1 - (glm::dot(n, t1) * n) ), 0.0f);
+                var W = (OpenTK.Vector3.Dot(OpenTK.Vector3.Cross(n, t1), t2) < 0.0f) ? -1.0f : 1.0f;
+                TangentList[(int)i] = new Vector4(temp.X, temp.Y, temp.Z, W);
+            }
+            tan1Accum.Clear();
+            tan2Accum.Clear();
         }
 
         public void Draw(Core.MaterialBase.MaterialBase material)
@@ -216,6 +243,28 @@ namespace SharpOpenGL.StaticMesh
                             }
                         }
                     }
+                    else if(TrimmedLine.StartsWith("map_Ka"))
+                    {
+                        var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                        if(tokens.Count() == 2)
+                        {
+                            if(NewMaterial != null)
+                            {
+                                NewMaterial.SpecularMap = tokens[1];
+                            }
+                        }
+                    }
+                    else if(TrimmedLine.StartsWith("map_Ns"))
+                    {
+                        var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (tokens.Count() == 2)
+                        {
+                            if (NewMaterial != null)
+                            {
+                                NewMaterial.RoughnessMap = tokens[1];
+                            }
+                        }
+                    }
                     else if(TrimmedLine.Length == 0 && NewMaterial != null)
                     {
                         MaterialMap.Add(NewMaterial.MaterialName, NewMaterial);
@@ -297,15 +346,18 @@ namespace SharpOpenGL.StaticMesh
                             var V1 = new ObjMeshVertexAttribute();
                             var V2 = new ObjMeshVertexAttribute();
                             var V3 = new ObjMeshVertexAttribute();
-                            
 
                             var Token1 = tokens[1].Split('/');
                             var Token2 = tokens[2].Split('/');
                             var Token3 = tokens[3].Split('/');
-
+                            
                             uint Index1 = Convert.ToUInt32(Token1[0]);
                             uint Index2 = Convert.ToUInt32(Token2[0]);
                             uint Index3 = Convert.ToUInt32(Token3[0]);
+
+                            FaceList.Add(Index1 - 1);
+                            FaceList.Add(Index2 - 1);
+                            FaceList.Add(Index3 - 1);
 
                             V1.VertexPosition = VertexList[(int)Index1-1];
                             V2.VertexPosition = VertexList[(int)Index2-1];
@@ -315,10 +367,14 @@ namespace SharpOpenGL.StaticMesh
                             uint TexIndex2 = Convert.ToUInt32(Token2[1]);
                             uint TexIndex3 = Convert.ToUInt32(Token3[1]);
 
-
                             V1.TexCoord = TexCoordList[(int)TexIndex1-1];
                             V2.TexCoord = TexCoordList[(int)TexIndex2-1];
                             V3.TexCoord = TexCoordList[(int)TexIndex3-1];
+
+                            uint NormIndex1 = Convert.ToUInt32(Token1[2]);
+                            uint NormIndex2 = Convert.ToUInt32(Token1[2]);
+                            uint NormIndex3 = Convert.ToUInt32(Token1[2]);                            
+
 
                             Vertices.Add(V1); Vertices.Add(V2); Vertices.Add(V3);
                             VertexIndices.Add((uint)VertexIndices.Count);
@@ -358,9 +414,12 @@ namespace SharpOpenGL.StaticMesh
                 }
             }
 
+            //GenerateTangents();
+
             VertexList.Clear();
             NormalList.Clear();
             TexCoordList.Clear();
+            FaceList.Clear();
         }        
     }
 }

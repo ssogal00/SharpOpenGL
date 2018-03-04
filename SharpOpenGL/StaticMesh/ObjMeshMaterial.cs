@@ -14,6 +14,7 @@ namespace SharpOpenGL.StaticMesh
         public string DiffuseMap;
         public string NormalMap;
         public string SpecularMap;
+        public string RoughnessMap;
         public string MaskMap;
     }
 }

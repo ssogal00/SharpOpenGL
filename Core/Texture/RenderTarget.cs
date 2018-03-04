@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using OpenTK;
+﻿using Core.Buffer;
 using OpenTK.Graphics.OpenGL;
+using System;
 using System.Diagnostics;
-using Core.Buffer;
 
 namespace Core.Texture
 {
@@ -30,7 +24,7 @@ namespace Core.Texture
             GL.ClearColor(1, 1, 1, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
-
+        
         public void Unbind()
         {
             FrameBufferObject.Unbind();

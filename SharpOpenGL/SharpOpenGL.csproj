@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlitToScreen.cs" />
+    <Compile Include="RenderCommand.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="PostProcess\Blur.cs" />
     <Compile Include="PostProcess\PostProcess.cs" />
