@@ -62,23 +62,49 @@ uniform Transform
 
 uniform vec3 Value;
 
-uniform mat4 TestModel;
-uniform mat4 TestProj;
-uniform mat4 TestView;
 
 layout(location=0) in vec3 VertexPosition;
 layout(location=1) in vec3 VertexNormal;
 layout(location=2) in vec2 TexCoord;
 layout(location=3) in vec4 Tangent;
 
-layout(location = 0) out vec2 OutTexCoord;
-layout(location = 1) out vec3 Position;
+
+layout(location=0) out vec3 OutPosition;
+layout(location=1) out vec2 OutTexCoord;
+layout(location=2) out vec3 OutNormal;
+layout(location=3) out vec3 OutTangent;
+layout(location=4) out vec3 OutBinormal;
+
   
 void main()
 {	
+	mat4 ModelView = View * Model;
+
 	OutTexCoord = TexCoord;
 	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
-	Position =   (View * Model * vec4(VertexPosition, 1)).xyz;
+	OutPosition =   (ModelView * vec4(VertexPosition, 1)).xyz;
+	
+	OutNormal =  (ModelView * vec4(VertexNormal,0.0)).xyz;	
+
+	if(length(OutNormal) > 	0)
+	{
+		OutNormal = normalize(OutNormal);
+	}
+
+	OutTangent = (ModelView * Tangent).xyz;
+
+	if(length(OutTangent) > 0)
+	{
+		OutTangent = normalize(OutTangent);
+	}
+
+	vec3 binormal = ( cross( VertexNormal, Tangent.xyz ) * Tangent.w) ;	
+	OutBinormal = normalize((ModelView * vec4(binormal, 0.0)).xyz);	
+
+	if(length(OutBinormal) > 0)
+	{
+		OutBinormal = normalize(OutBinormal);
+	}
 }";
 	}
 
@@ -88,8 +114,12 @@ void main()
 #version 430 core
 
 
-layout (location = 0) in vec2 InTexCoordValue;
-layout (location = 1) in vec3 Position;
+layout(location=0) in vec3 InPosition;
+layout(location=1) in vec2 InTexCoord;
+layout(location=2) in vec3 InNormal;
+layout(location=3) in vec3 InTangent;
+layout(location=4) in vec3 InBinormal;
+
 
 layout (location = 0) out vec4 PositionColor;
 layout (location = 1) out vec4 DiffuseColor;
@@ -99,28 +129,28 @@ uniform sampler2D DiffuseTex;
 uniform sampler2D NormalTex;
 uniform sampler2D MaskTex;
 
-uniform int MaskMapExist;
-
-// subroutine vec4 ShadeModelType(vec2 TexCoord);
-// subroutine uniform ShadeModelType shadeModel;
-
-// subroutine (ShadeModelType)
-// vec4 DiffuseWithoutMaskMap(vec2 TexCoord)
-// {
-// 	return texture(DiffuseTex, TexCoord);
-// }
-
-// subroutine (ShadeModelType)
-// vec4 DiffuseWithMaskMap(vec2 TexCoord)
-// {
-// 	return texture(NormalTex, TexCoord);
-// }
-
 void main()
 {   
-    DiffuseColor = texture(DiffuseTex, InTexCoordValue);
-    PositionColor = vec4(Position, 0);
-    NormalColor = texture(NormalTex, InTexCoordValue);
+    mat3 TangentToModelViewSpaceMatrix = 
+        mat3( InTangent.x, InTangent.y, InTangent.z, 
+			  InBinormal.x, InBinormal.y, InBinormal.z, 
+			  InNormal.x, InNormal.y, InNormal.z);
+
+    vec4 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord )) - 1.0f);
+	vec3 BumpNormal = TangentToModelViewSpaceMatrix * NormalMapNormal.xyz;
+		
+	if(length(BumpNormal) > 0)
+	{
+		BumpNormal = normalize(BumpNormal);
+	}
+	else
+	{
+		BumpNormal = vec3(0.1,0.1,0.1);
+	}
+				
+	NormalColor.xyz = BumpNormal.xyz;
+    DiffuseColor = texture(DiffuseTex, InTexCoord);
+    PositionColor = vec4(InPosition, 0);    
 }";
 	}
 }

@@ -29,7 +29,7 @@ namespace SharpOpenGL
         protected DynamicUniformBuffer ColorBuffer = null;
 
         //protected TestShaderVS.Transform Transform = new TestShaderVS.Transform();
-        protected GBufferDraw.Transform Transform = new GBufferDraw.Transform();
+        protected SharpOpenGL.GBufferDraw.Transform Transform = new SharpOpenGL.GBufferDraw.Transform();
 
         protected ShaderProgram ProgramObject = null;
 
@@ -131,9 +131,9 @@ namespace SharpOpenGL
             Mesh.Draw(BaseTest);
             MyGBuffer.Unbind();
 
-            Blur.Render(MyGBuffer.GetColorAttachement);
+            //Blur.Render(MyGBuffer.GetColorAttachement);
 
-            ScreenBlit.Blit(Blur.GetOutputTextureObject().GetColorAttachment0TextureObject(), 2, 2, 1, 1);
+            ScreenBlit.Blit(MyGBuffer.NormalBufferObject, 2, 2, 1, 1);
             ScreenBlit.Blit(MyGBuffer.ColorBufferObject, 0, 0, 3, 3);
 
             SwapBuffers();
