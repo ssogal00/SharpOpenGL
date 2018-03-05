@@ -48,7 +48,7 @@ void main()
 	}
 
 	vec3 binormal = ( cross( VertexNormal, Tangent.xyz ) * Tangent.w) ;	
-	OutBinormal = normalize((ModelView * vec4(binormal, 0.0)).xyz);	
+	OutBinormal = (ModelView * vec4(binormal, 0.0)).xyz;	
 
 	if(length(OutBinormal) > 0)
 	{

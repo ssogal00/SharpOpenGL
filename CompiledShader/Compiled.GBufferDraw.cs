@@ -99,7 +99,7 @@ void main()
 	}
 
 	vec3 binormal = ( cross( VertexNormal, Tangent.xyz ) * Tangent.w) ;	
-	OutBinormal = normalize((ModelView * vec4(binormal, 0.0)).xyz);	
+	OutBinormal = (ModelView * vec4(binormal, 0.0)).xyz;	
 
 	if(length(OutBinormal) > 0)
 	{
@@ -145,10 +145,11 @@ void main()
 	}
 	else
 	{
-		BumpNormal = vec3(0.1,0.1,0.1);
+		BumpNormal = vec3(1,0.1,0.1);
 	}
 				
-	NormalColor.xyz = BumpNormal.xyz;
+	NormalColor = texture(NormalTex, InTexCoord);
+    
     DiffuseColor = texture(DiffuseTex, InTexCoord);
     PositionColor = vec4(InPosition, 0);    
 }";

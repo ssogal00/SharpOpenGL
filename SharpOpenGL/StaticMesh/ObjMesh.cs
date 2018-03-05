@@ -95,10 +95,14 @@ namespace SharpOpenGL.StaticMesh
             List<Vector3> tan1Accum = new List<Vector3>();
             List<Vector3> tan2Accum = new List<Vector3>();
 
-            for (uint i = 0; i < VertexIndexList.Count(); i++)
+            for(uint i = 0; i < VertexList.Count(); ++i)
             {
-                tan1Accum.Add(new Vector3(0,0,0));
-                tan2Accum.Add(new Vector3(0,0,0));
+                tan1Accum.Add(new Vector3(0, 0, 0));
+                tan2Accum.Add(new Vector3(0, 0, 0));
+            }
+            
+            for (uint i = 0; i < VertexIndexList.Count(); i++)
+            {                
                 TangentList.Add(new Vector4(0,0,0,0));
             }
 

@@ -33,10 +33,11 @@ void main()
 	}
 	else
 	{
-		BumpNormal = vec3(0.1,0.1,0.1);
+		BumpNormal = vec3(1,0.1,0.1);
 	}
 				
 	NormalColor = texture(NormalTex, InTexCoord);
+    
     DiffuseColor = texture(DiffuseTex, InTexCoord);
     PositionColor = vec4(InPosition, 0);    
 }
