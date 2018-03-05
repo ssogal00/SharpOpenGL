@@ -361,10 +361,6 @@ namespace SharpOpenGL.StaticMesh
 
                         if(tokens.Count() == 4)
                         {
-                            var V1 = new ObjMeshVertexAttribute();
-                            var V2 = new ObjMeshVertexAttribute();
-                            var V3 = new ObjMeshVertexAttribute();
-
                             var Token1 = tokens[1].Split('/');
                             var Token2 = tokens[2].Split('/');
                             var Token3 = tokens[3].Split('/');
@@ -376,22 +372,14 @@ namespace SharpOpenGL.StaticMesh
                             VertexIndexList.Add(Index1 - 1);
                             VertexIndexList.Add(Index2 - 1);
                             VertexIndexList.Add(Index3 - 1);
-
-                            V1.VertexPosition = VertexList[(int)Index1 - 1];
-                            V2.VertexPosition = VertexList[(int)Index2 - 1];
-                            V3.VertexPosition = VertexList[(int)Index3 - 1];
-
+                            
                             uint TexIndex1 = Convert.ToUInt32(Token1[1]);
                             uint TexIndex2 = Convert.ToUInt32(Token2[1]);
                             uint TexIndex3 = Convert.ToUInt32(Token3[1]);
 
                             TexCoordIndexList.Add(TexIndex1 - 1);
                             TexCoordIndexList.Add(TexIndex2 - 1);
-                            TexCoordIndexList.Add(TexIndex3 - 1);
-
-                            V1.TexCoord = TexCoordList[(int)TexIndex1 - 1];
-                            V2.TexCoord = TexCoordList[(int)TexIndex2 - 1];
-                            V3.TexCoord = TexCoordList[(int)TexIndex3 - 1];
+                            TexCoordIndexList.Add(TexIndex3 - 1);                            
 
                             uint NormIndex1 = Convert.ToUInt32(Token1[2]);
                             uint NormIndex2 = Convert.ToUInt32(Token1[2]);
@@ -399,15 +387,7 @@ namespace SharpOpenGL.StaticMesh
 
                             NormalIndexList.Add(NormIndex1 - 1);
                             NormalIndexList.Add(NormIndex2 - 1);
-                            NormalIndexList.Add(NormIndex3 - 1);
-
-                            V1.VertexNormal = NormalList[(int)NormIndex1 - 1];
-                            V2.VertexNormal = NormalList[(int)NormIndex2 - 1];
-                            V3.VertexNormal = NormalList[(int)NormIndex3 - 1];
-
-                            Vertices.Add(V1);
-                            Vertices.Add(V2);
-                            Vertices.Add(V3);
+                            NormalIndexList.Add(NormIndex3 - 1);                         
 
                             VertexIndices.Add((uint)VertexIndices.Count);
                             VertexIndices.Add((uint)VertexIndices.Count);
@@ -429,11 +409,11 @@ namespace SharpOpenGL.StaticMesh
                             }
                             else
                             {   
-                                MeshSectionList.Last().EndIndex = (UInt32) Vertices.Count;
+                                MeshSectionList.Last().EndIndex = (UInt32)VertexIndices.Count;
 
                                 ObjMeshSection NewSection = new ObjMeshSection();
                                 NewSection.SectionName = MtlLine[1];
-                                NewSection.StartIndex = (UInt32) Vertices.Count;                                
+                                NewSection.StartIndex = (UInt32) VertexIndices.Count;                                
                                 MeshSectionList.Add(NewSection);
                             }
                         }
@@ -447,8 +427,8 @@ namespace SharpOpenGL.StaticMesh
             }
 
             
-            //GenerateTangents();
-            //GenerateVertices();
+            GenerateTangents();
+            GenerateVertices();
 
             VertexList.Clear();
             NormalList.Clear();
@@ -457,9 +437,7 @@ namespace SharpOpenGL.StaticMesh
 
             VertexIndexList.Clear();
             NormalIndexList.Clear();
-            TexCoordIndexList.Clear();
-
-            //GC.Collect();
+            TexCoordIndexList.Clear();            
         }        
     }
 }
