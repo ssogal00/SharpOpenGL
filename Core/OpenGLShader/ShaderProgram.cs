@@ -66,11 +66,17 @@ namespace Core.OpenGLShader
 
             return false;
         }
-
+        
         public void SetUniformVarData(string VarName, float fValue)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform1(Loc, fValue);
+        }
+
+        public void SetUniformVarData(string VarName, int data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform1(Loc, data);
         }
 
         public void SetUniformVarData(string VarName, OpenTK.Vector2 Data)

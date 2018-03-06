@@ -10,11 +10,11 @@ namespace SharpOpenGL.StaticMesh
 {
     [Serializable] public class ObjMeshMaterial
     {
-        public string MaterialName;
-        public string DiffuseMap;
-        public string NormalMap;
-        public string SpecularMap;
-        public string RoughnessMap;
-        public string MaskMap;
+        public string MaterialName = null;
+        public string DiffuseMap = null;
+        public string NormalMap = null;
+        public string SpecularMap = null;
+        public string RoughnessMap = null;
+        public string MaskMap = null;
     }
 }

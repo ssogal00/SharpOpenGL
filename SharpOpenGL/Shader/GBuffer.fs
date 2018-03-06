@@ -17,27 +17,28 @@ uniform sampler2D DiffuseTex;
 uniform sampler2D NormalTex;
 uniform sampler2D MaskTex;
 
+uniform int MaskMapExist;
+
 void main()
 {   
-    mat3 TangentToModelViewSpaceMatrix = 
-        mat3( InTangent.x, InTangent.y, InTangent.z, 
-			  InBinormal.x, InBinormal.y, InBinormal.z, 
-			  InNormal.x, InNormal.y, InNormal.z);
+    if(MaskMapExist > 0)
+    {
+    	vec4 MaskValue= texture(MaskTex, InTexCoord);
+    	if(MaskValue.x > 0)
+    	{
+    		DiffuseColor = texture(DiffuseTex, InTexCoord);    	
+            //DiffuseColor = vec4(1,0,0,0);
+    	}
+    	else
+    	{
+    		discard;
+    	}
+    }
+    else
+    {
+    	DiffuseColor = texture(DiffuseTex, InTexCoord);
+    }
 
-    vec4 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord )) - 1.0f);
-	vec3 BumpNormal = TangentToModelViewSpaceMatrix * NormalMapNormal.xyz;
-		
-	if(length(BumpNormal) > 0)
-	{
-		BumpNormal = normalize(BumpNormal);
-	}
-	else
-	{
-		BumpNormal = vec3(1,0.1,0.1);
-	}
-				
-	NormalColor = texture(NormalTex, InTexCoord);
-    
-    DiffuseColor = texture(DiffuseTex, InTexCoord);
-    PositionColor = vec4(InPosition, 0);    
+	NormalColor = texture(NormalTex, InTexCoord);    
+    PositionColor = vec4(InPosition, 0);
 }

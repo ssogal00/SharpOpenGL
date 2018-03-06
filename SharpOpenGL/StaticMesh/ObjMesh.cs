@@ -170,6 +170,16 @@ namespace SharpOpenGL.StaticMesh
                 {
                     material.SetTexture("DiffuseTex", TextureMap[MaterialMap[section.SectionName].DiffuseMap]);
                     material.SetTexture("NormalTex", TextureMap[MaterialMap[section.SectionName].NormalMap]);
+
+                    if (MaterialMap[section.SectionName].MaskMap != null)
+                    {
+                        material.SetUniformVarData("MaskMapExist", 1);
+                        material.SetTexture("MaskTex", TextureMap[MaterialMap[section.SectionName].MaskMap]);
+                    }
+                    else
+                    {
+                        material.SetUniformVarData("MaskMapExist", 0);
+                    }
                 }
 
                 var ByteOffset = new IntPtr(section.StartIndex * sizeof(uint));
@@ -213,6 +223,16 @@ namespace SharpOpenGL.StaticMesh
                         var textureObj = new Texture2D();
                         textureObj.Load(Mtl.Value.NormalMap);
                         TextureMap.Add(Mtl.Value.NormalMap, textureObj);
+                    }
+                }
+
+                if(Mtl.Value.MaskMap != null)
+                {
+                    if (!TextureMap.ContainsKey(Mtl.Value.MaskMap))
+                    {
+                        var textureObj = new Texture2D();
+                        textureObj.Load(Mtl.Value.MaskMap);
+                        TextureMap.Add(Mtl.Value.MaskMap, textureObj);
                     }
                 }
             }
@@ -284,6 +304,17 @@ namespace SharpOpenGL.StaticMesh
                             if (NewMaterial != null)
                             {
                                 NewMaterial.RoughnessMap = tokens[1];
+                            }
+                        }
+                    }
+                    else if(TrimmedLine.StartsWith("map_d"))
+                    {
+                        var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (tokens.Count() == 2)
+                        {
+                            if (NewMaterial != null)
+                            {
+                                NewMaterial.MaskMap = tokens[1];
                             }
                         }
                     }

@@ -52,12 +52,14 @@ namespace Core.Camera
 
         public void MoveUpward()
         {
-            
+            var vMove = Vector3.Multiply(UpDir, fMoveAmount);
+            EyeLocation += vMove;
         }
 
         public void MoveDownward()
         {
-                
+            var vMove = Vector3.Multiply(UpDir, fMoveAmount);
+            EyeLocation -= vMove;
         }
 
         public override void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
@@ -77,6 +79,14 @@ namespace Core.Camera
             else if(e.Key == OpenTK.Input.Key.A)
             {
                 MoveLeft();
+            }
+            else if(e.Key == OpenTK.Input.Key.Z)
+            {
+                MoveUpward();
+            }
+            else if(e.Key == OpenTK.Input.Key.X)
+            {
+                MoveDownward();
             }
         }
 
