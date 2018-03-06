@@ -22,9 +22,8 @@ namespace SharpOpenGL
     {
         protected Matrix4 ModelView = new Matrix4();
         protected Matrix4 Projection = new Matrix4();
-
-        protected OrbitCamera Camera = new OrbitCamera();
-        protected FreeCamera ActiveCamera = new FreeCamera();
+        
+        protected FreeCamera FreeCam = new FreeCamera();
         protected DynamicUniformBuffer TransformBuffer = null;
         protected DynamicUniformBuffer ColorBuffer = null;
 
@@ -48,6 +47,8 @@ namespace SharpOpenGL
         public event EventHandler<EventArgs> OnResourceCreate;
         public event EventHandler<ScreenResizeEventArgs> OnWindowResize;
 
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyEvent;
+
         protected BlitToScreen ScreenBlit = new BlitToScreen();
 
         protected Texture2D TestTexture = null;
@@ -68,10 +69,14 @@ namespace SharpOpenGL
             OnResourceCreate += Sampler.OnResourceCreate;
 
             // resigter window resize event handler
-            OnWindowResize += Camera.OnWindowResized;
+            //OnWindowResize += Camera.OnWindowResized;
+            OnWindowResize += FreeCam.OnWindowResized;
             OnWindowResize += MyGBuffer.OnWindowResized;
             
             OnResourceCreate(this, e);
+
+            // OnKeyEvent += Camera.OnKeyDown;
+            OnKeyEvent += FreeCam.OnKeyDown;
 
             OnWindowResize += Blur.OnWindowResized;
             
@@ -120,8 +125,8 @@ namespace SharpOpenGL
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Transform.View = Camera.View;
-            Transform.Proj = Camera.Proj;
+            Transform.View = FreeCam.View;
+            Transform.Proj = FreeCam.Proj;
             
             MyGBuffer.Bind();
             MyGBuffer.Clear();
@@ -143,14 +148,7 @@ namespace SharpOpenGL
         {
             base.OnKeyDown(e);
 
-            if(e.Key == OpenTK.Input.Key.W)
-            {
-                Camera.MoveForward(3);
-            }
-            else if(e.Key == OpenTK.Input.Key.S)
-            {
-                Camera.MoveForward(-3);
-            }
+            OnKeyEvent(this, e);
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -177,7 +175,7 @@ namespace SharpOpenGL
 
             OnWindowResize(this, eventArgs);
 
-            Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
+            Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(FreeCam.FOV, fAspectRatio, FreeCam.Near, FreeCam.Far);
             Transform.Model = Matrix4.CreateScale(0.03f);
             Transform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);
 

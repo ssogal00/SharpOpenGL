@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlitToScreen.cs" />
+    <Compile Include="Light\DirectionalLight.cs" />
+    <Compile Include="Light\LightBase.cs" />
     <Compile Include="RenderCommand.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="PostProcess\Blur.cs" />

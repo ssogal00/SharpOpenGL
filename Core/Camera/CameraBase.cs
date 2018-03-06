@@ -8,12 +8,12 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 using Core.Tickable;
+using Core.CustomEvent;
 
 namespace Core.Camera
 {
     public class CameraBase : TickableObject
     {
-
         public CameraBase()
         {
 
@@ -44,7 +44,7 @@ namespace Core.Camera
 
         public void UpdateViewMatrix()
         {
-            ViewMatrix = Matrix4.LookAt(EyeLocation, LookAtLocation, Vector3.UnitY);
+            ViewMatrix = Matrix4.LookAt(EyeLocation, EyeLocation + Vector3.Multiply(LookAtDir ,1.0f), Vector3.UnitY);
         }
 
         public void UpdateProjMatrix()
@@ -58,48 +58,23 @@ namespace Core.Camera
         public float AspectRatio { get; set; }
 
         public Vector3 EyeLocation = new Vector3();
-        public Vector3 LookAtLocation = new Vector3();        
+        public Vector3 LookAtLocation = new Vector3();
+        
+        public virtual void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+        { }
 
-        public Vector3 LookAtVector
+        public virtual void OnWindowResized(object sender, ScreenResizeEventArgs eventArgs)
         {
-            get
-            {
-                return LookAtDir;
-            }
-            set
-            {
-                LookAtDir = value;
-            }
-        }
+            var Width = eventArgs.Width;
+            var Height = eventArgs.Height;
 
-        public Vector3 UpVector
-        {
-            get
-            {
-                return UpDir;
-            }
-        }
+            float fAspectRatio = Width / (float)Height;
 
-        public Vector3 RightVector
-        {
-            get
-            {
-                return OpenTK.Vector3.Cross(LookAtVector, UpVector);
-            }
-        }
-
-        public Vector3 LeftVector
-        {
-            get
-            {
-                return -RightVector;
-            }
+            AspectRatio = fAspectRatio;            
         }
 
         protected Vector3 UpDir = new Vector3(0,1,0);
-        protected Vector3 LookAtDir = new Vector3(0, 0, -1);
-
-        public Vector3 RightDir = new Vector3();
+        protected Vector3 LookAtDir = new Vector3(1, 0, 0);        
 
         protected float FieldOfView;
         protected Matrix4 ProjMatrix = new Matrix4();
