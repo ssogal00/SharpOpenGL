@@ -180,6 +180,16 @@ namespace SharpOpenGL.StaticMesh
                     {
                         material.SetUniformVarData("MaskMapExist", 0);
                     }
+
+                    if(MaterialMap[section.SectionName].SpecularMap != null)
+                    {
+                        material.SetUniformVarData("SpecularMapExist", 1);
+                        material.SetTexture("SpecularTex", TextureMap[MaterialMap[section.SectionName].SpecularMap]);
+                    }
+                    else
+                    {
+                        material.SetUniformVarData("SpecularMapExist", 0);
+                    }
                 }
 
                 var ByteOffset = new IntPtr(section.StartIndex * sizeof(uint));
@@ -223,6 +233,16 @@ namespace SharpOpenGL.StaticMesh
                         var textureObj = new Texture2D();
                         textureObj.Load(Mtl.Value.NormalMap);
                         TextureMap.Add(Mtl.Value.NormalMap, textureObj);
+                    }
+                }
+
+                if (Mtl.Value.SpecularMap != null)
+                {
+                    if(!TextureMap.ContainsKey(Mtl.Value.SpecularMap))
+                    {
+                        var textureObj = new Texture2D();
+                        textureObj.Load(Mtl.Value.SpecularMap);
+                        TextureMap.Add(Mtl.Value.SpecularMap, textureObj);
                     }
                 }
 

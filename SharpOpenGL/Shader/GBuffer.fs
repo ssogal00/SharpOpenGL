@@ -16,7 +16,9 @@ layout (location = 2) out vec4 NormalColor;
 uniform sampler2D DiffuseTex;
 uniform sampler2D NormalTex;
 uniform sampler2D MaskTex;
+uniform sampler2D SpecularTex;
 
+uniform int SpecularMapExist;
 uniform int MaskMapExist;
 
 void main()
@@ -54,8 +56,17 @@ void main()
 	{
 		BumpNormal = vec3(1,1,1);
 	}
-
-	// NormalColor = texture(NormalTex, InTexCoord);
+	
     NormalColor.xyz = BumpNormal;
+
+    if(SpecularMapExist > 0)
+    {
+        NormalColor.w = texture(SpecularTex, InTexCoord).x;
+    }
+    else
+    {
+        NormalColor.w = 0;
+    }
+
     PositionColor = vec4(InPosition, 0);
 }

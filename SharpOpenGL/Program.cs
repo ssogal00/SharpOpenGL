@@ -150,7 +150,7 @@ namespace SharpOpenGL
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
 
             //Blur.Render(MyGBuffer.GetColorAttachement);
-            ScreenBlit.Blit(MyGBuffer.NormalBufferObject, 2, 2, 1, 1);
+            ScreenBlit.Blit(MyGBuffer.ColorBufferObject, 2, 2, 1, 1);
             ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0,0,3,3);
             //ScreenBlit.Blit(MyGBuffer.ColorBufferObject, 0, 0, 3, 3);
 
