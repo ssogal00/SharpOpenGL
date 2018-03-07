@@ -42,12 +42,12 @@ namespace Core.Camera
             get { return ProjMatrix; }
         }
 
-        public void UpdateViewMatrix()
+        public virtual void UpdateViewMatrix()
         {
             ViewMatrix = Matrix4.LookAt(EyeLocation, EyeLocation + Vector3.Multiply(LookAtDir ,1.0f), Vector3.UnitY);
         }
 
-        public void UpdateProjMatrix()
+        public virtual void UpdateProjMatrix()
         {
             ProjMatrix = Matrix4.CreatePerspectiveFieldOfView(FOV, AspectRatio, Near, Far);
         }

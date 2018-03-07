@@ -178,6 +178,9 @@ namespace Core.Texture
 
         DrawBuffersEnum[] AttchmentsEnums = null;
 
+        public int RenderTargetWidth => BufferWidth;
+        public int RenderTargetHeight => BufferHeight;
+
         protected int BufferWidth = 640;
         protected int BufferHeight = 480;
         

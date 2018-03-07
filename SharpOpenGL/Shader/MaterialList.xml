@@ -5,4 +5,5 @@
 	<Material name="ScreenSpaceDraw" vertexShader="Screen.vs" fragmentShader="Screen.fs"/>
 	<Material name="GBufferDraw" vertexShader="GBuffer.vs" fragmentShader="GBuffer.fs"/>
 	<Material name="Blur" vertexShader="Blur.vs" fragmentShader="Blur.fs"/>
+	<Material name="LightMaterial" vertexShader="DeferredLight.vs" fragmentShader="DeferredLight.fs"/>
 </MaterialList>

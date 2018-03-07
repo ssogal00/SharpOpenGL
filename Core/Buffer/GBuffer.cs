@@ -119,10 +119,17 @@ namespace Core.Buffer
 
         public ColorAttachmentTexture GetColorAttachement
         {
-            get
-            {
-                return ColorAttachment;
-            }
+            get { return ColorAttachment; }
+        }
+
+        public ColorAttachmentTexture GetPositionAttachment
+        {
+            get { return PositionAttachment; }
+        }
+
+        public ColorAttachmentTexture GetNormalAttachment
+        {
+            get { return NormalAttachment; }
         }
 
         protected ColorAttachmentTexture PositionAttachment = null;

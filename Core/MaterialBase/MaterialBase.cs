@@ -139,6 +139,12 @@ namespace Core.MaterialBase
             MaterialProgram.SetUniformVarData(varName, data);
         }
 
+        public void SetUniformVarData(string varName, ref OpenTK.Vector2 data)
+        {
+            Debug.Assert(UniformVariableNames.Contains(varName));
+            MaterialProgram.SetUniformVarData(varName, data);
+        }        
+
         public void SetUniformVarData(string varName, OpenTK.Vector3 data)
         {
             Debug.Assert(UniformVariableNames.Contains(varName));

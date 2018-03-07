@@ -60,6 +60,7 @@
     <Compile Include="BlitToScreen.cs" />
     <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="Light\LightBase.cs" />
+    <Compile Include="PostProcess\DeferredLight.cs" />
     <Compile Include="RenderCommand.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="PostProcess\Blur.cs" />
@@ -91,6 +92,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Shader\DeferredLight.fs" />
+    <None Include="Shader\DeferredLight.vs" />
     <None Include="Shader\GBuffer.fs" />
     <None Include="Shader\GBuffer.vs" />
     <None Include="Shader\Screen.fs" />

@@ -36,6 +36,7 @@ namespace SharpOpenGL
         protected SharpOpenGL.GBufferDraw.GBufferDraw GBufferMaterial = null;
         protected Core.MaterialBase.MaterialBase BaseTest = null;
         protected SharpOpenGL.PostProcess.BlurPostProcess Blur = null;
+        protected SharpOpenGL.PostProcess.DeferredLight LightPostProcess = null;
 
         protected ObjMesh Mesh = new ObjMesh();
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
@@ -79,6 +80,7 @@ namespace SharpOpenGL
             OnKeyEvent += FreeCam.OnKeyDown;
 
             OnWindowResize += Blur.OnWindowResized;
+            OnWindowResize += LightPostProcess.OnWindowResized;
             
             MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
         }
@@ -95,6 +97,9 @@ namespace SharpOpenGL
 
             Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
             Blur.OnResourceCreate(this, e);
+
+            LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
+            LightPostProcess.OnResourceCreate(this, e);
 
             //            
             BaseTest = new SharpOpenGL.GBufferDraw.GBufferDraw();
@@ -142,10 +147,12 @@ namespace SharpOpenGL
             Mesh.Draw(BaseTest);
             MyGBuffer.Unbind();
 
-            //Blur.Render(MyGBuffer.GetColorAttachement);
+            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
 
+            //Blur.Render(MyGBuffer.GetColorAttachement);
             ScreenBlit.Blit(MyGBuffer.NormalBufferObject, 2, 2, 1, 1);
-            ScreenBlit.Blit(MyGBuffer.ColorBufferObject, 0, 0, 3, 3);
+            ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0,0,3,3);
+            //ScreenBlit.Blit(MyGBuffer.ColorBufferObject, 0, 0, 3, 3);
 
             SwapBuffers();
         }
@@ -182,7 +189,7 @@ namespace SharpOpenGL
             OnWindowResize(this, eventArgs);
 
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(FreeCam.FOV, fAspectRatio, FreeCam.Near, FreeCam.Far);
-            Transform.Model = Matrix4.CreateScale(0.03f);
+            Transform.Model = Matrix4.CreateScale(0.06f);
             Transform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);
 
             

@@ -26,28 +26,30 @@ namespace Core.Camera
         
         public void MoveForward()
         {
-            var vMove = Vector3.Multiply(LookAtDir, fMoveAmount);
+            var vMoveDir = m_RotationMatrix.Row2;
+            var vMove = Vector3.Multiply(vMoveDir, fMoveAmount);
             EyeLocation += vMove;
         }
 
         public void MoveBackward()
         {
-            var vMove = Vector3.Multiply(LookAtDir, fMoveAmount);
+            var vMoveDir = m_RotationMatrix.Row2;
+            var vMove = Vector3.Multiply(vMoveDir, fMoveAmount);
             EyeLocation -= vMove;
         }
 
         public void MoveRight()
         {
-            var RightDir = Vector3.Cross(LookAtDir, UpDir);
+            var RightDir = m_RotationMatrix.Row0;
             var vMove = Vector3.Multiply(RightDir, fMoveAmount);
-            EyeLocation += vMove;
+            EyeLocation -= vMove;
         }
 
         public void MoveLeft()
         {
-            var RightDir = Vector3.Cross(LookAtDir, UpDir);
+            var RightDir = m_RotationMatrix.Row0;
             var vMove = Vector3.Multiply(RightDir, fMoveAmount);
-            EyeLocation -= vMove;
+            EyeLocation += vMove;
         }        
 
         public void MoveUpward()
@@ -60,6 +62,16 @@ namespace Core.Camera
         {
             var vMove = Vector3.Multiply(UpDir, fMoveAmount);
             EyeLocation -= vMove;
+        }
+
+        public void RotateRight()
+        {
+            m_fYaw -= m_fRotateAmount;
+        }
+
+        public void RotateLeft()
+        {
+            m_fYaw += m_fRotateAmount;
         }
 
         public override void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
@@ -88,6 +100,14 @@ namespace Core.Camera
             {
                 MoveDownward();
             }
+            else if(e.Key == OpenTK.Input.Key.E)
+            {
+                RotateRight();
+            }
+            else if(e.Key == OpenTK.Input.Key.Q)
+            {
+                RotateLeft();
+            }
         }
 
         public override void Tick(double fDeltaSeconds)
@@ -96,7 +116,20 @@ namespace Core.Camera
             UpdateProjMatrix();
         }
 
+        public override void UpdateViewMatrix()
+        {
+            m_RotationMatrix = Matrix3.CreateRotationY(m_fYaw);
+            ViewMatrix = Matrix4.LookAt(EyeLocation, EyeLocation + Vector3.Multiply(m_RotationMatrix.Row2, 1.0f), Vector3.UnitY);
+        }
+
+        protected float m_fYaw = 0;
+
+        protected float m_fPitch = 0;
 
         protected float fMoveAmount = 3;
+
+        protected float m_fRotateAmount = OpenTK.MathHelper.DegreesToRadians(3);
+
+        protected Matrix3 m_RotationMatrix = new Matrix3();
     }
 }
