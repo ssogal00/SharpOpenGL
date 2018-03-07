@@ -144,7 +144,7 @@ namespace SharpOpenGL.StaticMesh
             {
                 var n = NormalList[(int)NormalIndexList[(int)i]];
                 var t1 = tan1Accum[(int)VertexIndexList[(int)i]];
-                var t2 = tan2Accum[(int)VertexIndexList[(int)i]];
+                var t2 = tan2Accum[(int)VertexIndexList[(int)i]];                
 
                 // Gram-Schmidt orthogonalize                
                 var temp = OpenTK.Vector3.Normalize(t1 - (OpenTK.Vector3.Dot(n, t1) * n));
@@ -417,8 +417,8 @@ namespace SharpOpenGL.StaticMesh
                             TexCoordIndexList.Add(TexIndex3 - 1);                            
 
                             uint NormIndex1 = Convert.ToUInt32(Token1[2]);
-                            uint NormIndex2 = Convert.ToUInt32(Token1[2]);
-                            uint NormIndex3 = Convert.ToUInt32(Token1[2]);
+                            uint NormIndex2 = Convert.ToUInt32(Token2[2]);
+                            uint NormIndex3 = Convert.ToUInt32(Token3[2]);
 
                             NormalIndexList.Add(NormIndex1 - 1);
                             NormalIndexList.Add(NormIndex2 - 1);

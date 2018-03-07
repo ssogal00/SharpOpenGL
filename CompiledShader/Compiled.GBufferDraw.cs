@@ -68,6 +68,7 @@ uniform Transform
 	mat4x4 Proj;
 };
 
+uniform mat4 NormalMatrix;
 
 uniform vec3 Value;
 
@@ -93,27 +94,12 @@ void main()
 	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
 	OutPosition =   (ModelView * vec4(VertexPosition, 1)).xyz;
 	
-	OutNormal =  (ModelView * vec4(VertexNormal,0.0)).xyz;	
+	OutNormal =  normalize(mat3(NormalMatrix) * VertexNormal);	
 
-	if(length(OutNormal) > 	0)
-	{
-		OutNormal = normalize(OutNormal);
-	}
+	OutTangent = normalize(mat3(NormalMatrix) * vec3(Tangent));
 
-	OutTangent = (ModelView * Tangent).xyz;
-
-	if(length(OutTangent) > 0)
-	{
-		OutTangent = normalize(OutTangent);
-	}
-
-	vec3 binormal = ( cross( VertexNormal, Tangent.xyz ) * Tangent.w) ;	
-	OutBinormal = (ModelView * vec4(binormal, 0.0)).xyz;	
-
-	if(length(OutBinormal) > 0)
-	{
-		OutBinormal = normalize(OutBinormal);
-	}
+	vec3 binormal = normalize(cross( VertexNormal, Tangent.xyz )) * Tangent.w ;
+	OutBinormal = binormal;
 }";
 	}
 
@@ -147,8 +133,7 @@ void main()
     	vec4 MaskValue= texture(MaskTex, InTexCoord);
     	if(MaskValue.x > 0)
     	{
-    		DiffuseColor = texture(DiffuseTex, InTexCoord);    	
-            //DiffuseColor = vec4(1,0,0,0);
+    		DiffuseColor = texture(DiffuseTex, InTexCoord);            
     	}
     	else
     	{
@@ -160,7 +145,25 @@ void main()
     	DiffuseColor = texture(DiffuseTex, InTexCoord);
     }
 
-	NormalColor = texture(NormalTex, InTexCoord);    
+    mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
+								   InBinormal.x, InBinormal.y, InBinormal.z, 
+								   InNormal.x, InNormal.y, InNormal.z);
+    
+
+    vec4 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord )) - 1.0f);			
+	vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);			
+
+    if(length(BumpNormal) > 0)
+	{
+		BumpNormal = normalize(BumpNormal);
+	}
+	else
+	{
+		BumpNormal = vec3(1,1,1);
+	}
+
+	// NormalColor = texture(NormalTex, InTexCoord);
+    NormalColor.xyz = BumpNormal;
     PositionColor = vec4(InPosition, 0);
 }";
 	}

@@ -133,6 +133,12 @@ namespace SharpOpenGL
             MyGBuffer.PrepareToDraw();            
             BaseTest.Setup();
             BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
+
+            var NormalMatrix = Transform.View * Transform.Model;
+            //NormalMatrix.Invert();
+            //NormalMatrix.Transpose();
+            BaseTest.SetUniformVarData("NormalMatrix", NormalMatrix);
+
             Mesh.Draw(BaseTest);
             MyGBuffer.Unbind();
 

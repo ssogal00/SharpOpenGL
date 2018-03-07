@@ -11,6 +11,12 @@ namespace SharpOpenGL.Light
 {
     public class DirectionalLight : LightBase
     {
+        public Vector3 LightDirection
+        {
+            get;
+            set;
+        }
 
+        protected Vector3 m_Direction;
     }
 }

@@ -26,8 +26,7 @@ void main()
     	vec4 MaskValue= texture(MaskTex, InTexCoord);
     	if(MaskValue.x > 0)
     	{
-    		DiffuseColor = texture(DiffuseTex, InTexCoord);    	
-            //DiffuseColor = vec4(1,0,0,0);
+    		DiffuseColor = texture(DiffuseTex, InTexCoord);            
     	}
     	else
     	{
@@ -39,6 +38,24 @@ void main()
     	DiffuseColor = texture(DiffuseTex, InTexCoord);
     }
 
-	NormalColor = texture(NormalTex, InTexCoord);    
+    mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
+								   InBinormal.x, InBinormal.y, InBinormal.z, 
+								   InNormal.x, InNormal.y, InNormal.z);
+    
+
+    vec4 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord )) - 1.0f);			
+	vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);			
+
+    if(length(BumpNormal) > 0)
+	{
+		BumpNormal = normalize(BumpNormal);
+	}
+	else
+	{
+		BumpNormal = vec3(1,1,1);
+	}
+
+	// NormalColor = texture(NormalTex, InTexCoord);
+    NormalColor.xyz = BumpNormal;
     PositionColor = vec4(InPosition, 0);
 }

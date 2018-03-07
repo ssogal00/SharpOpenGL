@@ -8,6 +8,7 @@ uniform Transform
 	mat4x4 Proj;
 };
 
+uniform mat4 NormalMatrix;
 
 uniform vec3 Value;
 
@@ -33,25 +34,10 @@ void main()
 	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
 	OutPosition =   (ModelView * vec4(VertexPosition, 1)).xyz;
 	
-	OutNormal =  (ModelView * vec4(VertexNormal,0.0)).xyz;	
+	OutNormal =  normalize(mat3(NormalMatrix) * VertexNormal);	
 
-	if(length(OutNormal) > 	0)
-	{
-		OutNormal = normalize(OutNormal);
-	}
+	OutTangent = normalize(mat3(NormalMatrix) * vec3(Tangent));
 
-	OutTangent = (ModelView * Tangent).xyz;
-
-	if(length(OutTangent) > 0)
-	{
-		OutTangent = normalize(OutTangent);
-	}
-
-	vec3 binormal = ( cross( VertexNormal, Tangent.xyz ) * Tangent.w) ;	
-	OutBinormal = (ModelView * vec4(binormal, 0.0)).xyz;	
-
-	if(length(OutBinormal) > 0)
-	{
-		OutBinormal = normalize(OutBinormal);
-	}
+	vec3 binormal = normalize(cross( VertexNormal, Tangent.xyz )) * Tangent.w ;
+	OutBinormal = binormal;
 }
