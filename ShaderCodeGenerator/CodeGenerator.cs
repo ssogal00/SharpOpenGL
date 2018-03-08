@@ -19,7 +19,9 @@ namespace ShaderCompiler
             "Core.OpenGLShader",
             "Core.Texture",
             "Core.VertexCustomAttribute",
-            "Core.MaterialBase"
+            "Core.MaterialBase",
+            "ZeroFormatter",
+            "ZeroFormatter.Formatters"
         };
 
         public string NameSpace = "";

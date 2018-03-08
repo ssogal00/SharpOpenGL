@@ -14,7 +14,7 @@
 	}
 #>
 
-
+[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=<#= nTotalSize #>)]
 public struct VertexAttribute
 {
@@ -27,6 +27,7 @@ for(int i = 0; i < VertexAttributeList.Count; ++i)
 		nOffset += VertexAttributeList[j].Size;
 	}
 #>	
+	[Index(<#=i#>)]
 	[FieldOffset(<#=nOffset#>), ComponentCount(<#=VertexAttributeList[i].ComponentCount#>), ComponentType(VertexAttribPointerType.<#=VertexAttributeList[i].ComponentType.ToString()#>)]
 	public <#=VertexAttributeList[i].AttributeTypeString#> <#=VertexAttributeList[i].Name#>;
 	<#

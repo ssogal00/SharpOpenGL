@@ -8,24 +8,30 @@ using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
 using Core.MaterialBase;
+using ZeroFormatter;
+using ZeroFormatter.Formatters;
 namespace SharpOpenGL.GBufferDraw
 {
 
 
-
+[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=48)]
 public struct VertexAttribute
 {
 	
+	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Vector3 VertexPosition;
 		
+	[Index(1)]
 	[FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Vector3 VertexNormal;
 		
+	[Index(2)]
 	[FieldOffset(24), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Vector2 TexCoord;
 		
+	[Index(3)]
 	[FieldOffset(32), ComponentCount(4), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Vector4 Tangent;
 	

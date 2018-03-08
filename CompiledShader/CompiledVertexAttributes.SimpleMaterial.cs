@@ -8,15 +8,18 @@ using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
 using Core.MaterialBase;
+using ZeroFormatter;
+using ZeroFormatter.Formatters;
 namespace SharpOpenGL.SimpleMaterial
 {
 
 
-
+[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=12)]
 public struct VertexAttribute
 {
 	
+	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Vector3 VertexPosition;
 	

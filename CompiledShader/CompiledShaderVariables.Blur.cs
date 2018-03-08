@@ -8,6 +8,8 @@ using Core.OpenGLShader;
 using Core.Texture;
 using Core.VertexCustomAttribute;
 using Core.MaterialBase;
+using ZeroFormatter;
+using ZeroFormatter.Formatters;
 namespace SharpOpenGL.Blur
 {
 
