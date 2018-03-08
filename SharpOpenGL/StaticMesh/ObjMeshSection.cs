@@ -1,12 +1,19 @@
 ﻿using System;
+using ZeroFormatter;
+using ZeroFormatter.Formatters;
+using ZeroFormatter.Internal;
 
 namespace SharpOpenGL.StaticMesh
 {
-    [Serializable] public class ObjMeshSection
+    [ZeroFormattable]
+    public class ObjMeshSection
     {
-
-        public UInt32 StartIndex;
-        public UInt32 EndIndex = 0;        
+        [Index(0)]
+        public UInt32 StartIndex = 0;
+        [Index(1)]
+        public UInt32 EndIndex = 0;
+        [Index(2)]
         public string SectionName;
     }
 }
+
