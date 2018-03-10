@@ -13,6 +13,7 @@ using System.Diagnostics;
 
 namespace Core.CustomSerialize
 {
+    
     public class Vector3Formatter<TTypeResolver> : Formatter<TTypeResolver, OpenTK.Vector3>
     where TTypeResolver : ITypeResolver, new()
     {

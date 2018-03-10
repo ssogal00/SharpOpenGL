@@ -9,25 +9,41 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using ZeroFormatter;
+using ZeroFormatter.Internal;
 
 using ObjMeshVertexAttribute = Core.Primitive.PNTT_VertexAttribute;
 
 
 namespace SharpOpenGL.StaticMesh
 {
+    [ZeroFormattable]
     public class ObjMesh
     {
         // 
         // Vertex Buffer and Index buffer to render
         StaticVertexBuffer<ObjMeshVertexAttribute> VB = null;
         IndexBuffer IB = null;
-        
-        //
-        List<ObjMeshVertexAttribute> Vertices = new List<ObjMeshVertexAttribute>();        
 
-        List<uint> VertexIndices = new List<uint>();
+        // serialized fields
+        // vertices
+        [Index(0)]
+        public virtual List<ObjMeshVertexAttribute> Vertices { get; protected set;} = new List<ObjMeshVertexAttribute>();
 
-        // @only used for mesh loading
+        // serialized mesh sections
+        [Index(1)]
+        public virtual List<ObjMeshSection> MeshSectionList { get; protected set; } = new List<ObjMeshSection>();
+
+        // serialized material map
+        [Index(2)]
+        public virtual Dictionary<string, ObjMeshMaterial> MaterialMap { get; protected set; } = new Dictionary<string, ObjMeshMaterial>();
+
+        // serialized vertex indices
+        [Index(3)]
+        public virtual List<uint> VertexIndices { get; protected set; } = new List<uint>();
+
+        // only used for mesh loading
+        // will be cleared after mesh load
         List<Vector3> VertexList = new List<Vector3>();        
         List<Vector2> TexCoordList = new List<Vector2>();        
         List<Vector3> NormalList = new List<Vector3>();
@@ -35,12 +51,8 @@ namespace SharpOpenGL.StaticMesh
 
         List<uint> VertexIndexList = new List<uint>();
         List<uint> TexCoordIndexList = new List<uint>();
-        List<uint> NormalIndexList = new List<uint>();
-        
-        // clear after mesh loading
-
-        List<ObjMeshSection> MeshSectionList = new List<ObjMeshSection>();        
-        Dictionary<string, ObjMeshMaterial> MaterialMap = new Dictionary<string, ObjMeshMaterial>();
+        List<uint> NormalIndexList = new List<uint>();        
+                
 
         Dictionary<string, Texture2D> TextureMap = new Dictionary<string, Texture2D>();
 
@@ -48,27 +60,40 @@ namespace SharpOpenGL.StaticMesh
         protected bool bHasNormal = false;
         protected bool bHasTexCoordinate = false;
 
+        [IgnoreFormat]
         public bool HasNormal => bHasNormal;
+        [IgnoreFormat]
         public bool HasTexCoord => bHasTexCoordinate;
 
         Vector3 MinVertex = new Vector3(0,0,0);
         Vector3 MaxVertex = new Vector3(0,0,0);
-        Vector3 MeshCenter = new Vector3(0, 0, 0);
-        
-        public Task LoadAsync(string FilePath, string MtlPath)
-        {
-            Debug.Assert(File.Exists(FilePath) && File.Exists(MtlPath));
+        Vector3 MeshCenter = new Vector3(0, 0, 0);        
+       
+        public void SaveSerialized(string path)
+        {   
+            var bytesarray = ZeroFormatter.ZeroFormatterSerializer.Serialize<ObjMesh>(this);
+            using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            {
+                fs.Write(bytesarray, 0, bytesarray.Count());
+            }
+        }
 
-            return Task.Run(() => { Load(FilePath, MtlPath); });
+        public static ObjMesh LoadSerialized(string path)
+        {
+            byte[] data = File.ReadAllBytes(path);
+            ObjMesh result = ZeroFormatter.ZeroFormatterSerializer.Deserialize<ObjMesh>(data);
+            return result;
         }
 
         public static async Task<ObjMesh> LoadMeshAsync(string FilePath, string MtlPath)
         {
             Debug.Assert(File.Exists(FilePath) && File.Exists(MtlPath));
+
             ObjMesh result = new ObjMesh();
+
             await Task.Factory.StartNew(() =>
             {
-                result.Load(FilePath, MtlPath);
+                result.Load(FilePath, MtlPath);                
             });
             return result;
         }
@@ -114,14 +139,20 @@ namespace SharpOpenGL.StaticMesh
                 var p3 = VertexList[(int)VertexIndexList[(int)i + 2]];
 
                 var tc1 = TexCoordList[(int)TexCoordIndexList[(int)i]];
-                var tc2 = TexCoordList[(int)TexCoordIndexList[(int)i+1]];
-                var tc3 = TexCoordList[(int)TexCoordIndexList[(int)i+2]];
+                var tc2 = TexCoordList[(int)TexCoordIndexList[(int)i + 1]];
+                var tc3 = TexCoordList[(int)TexCoordIndexList[(int)i + 2]];
 
                 Vector3 q1 = p2 - p1;
                 Vector3 q2 = p3 - p1;
                 float s1 = tc2.X - tc1.X, s2 = tc3.X - tc1.X;
                 float t1 = tc2.Y - tc1.Y, t2 = tc3.Y - tc1.Y;
+
+                // prevent degeneration
                 float r = 1.0f / (s1 * t2 - s2 * t1);
+                if (Single.IsInfinity(r))
+                {
+                    r = 1 / 0.1f;
+                }
 
                 var tan1 = new Vector3((t2 * q1.X - t1 * q2.X) * r,
                    (t2 * q1.Y - t1 * q2.Y) * r,
@@ -129,31 +160,55 @@ namespace SharpOpenGL.StaticMesh
 
                 var tan2 = new Vector3((s1 * q2.X - s2 * q1.X) * r,
                    (s1 * q2.Y - s2 * q1.Y) * r,
-                   (s1 * q2.Z - s2 * q1.Z) * r);
+                   (s1 * q2.Z - s2 * q1.Z) * r);             
+
 
                 tan1Accum[(int)VertexIndexList[(int)i]] += tan1;
                 tan1Accum[(int)VertexIndexList[(int)i + 1]] += tan1;
-                tan1Accum[(int)VertexIndexList[(int)i + 2]] += tan1;
+                tan1Accum[(int)VertexIndexList[(int)i + 2]] += tan1;                
 
                 tan2Accum[(int)VertexIndexList[(int)i]] += tan2;
                 tan2Accum[(int)VertexIndexList[(int)i + 1]] += tan2;
-                tan2Accum[(int)VertexIndexList[(int)i + 2]] += tan2;
+                tan2Accum[(int)VertexIndexList[(int)i + 2]] += tan2;                
             }
+
+            Vector4 lastValidTangent = new Vector4();
 
             for(uint i = 0; i< VertexIndexList.Count(); ++i )
             {
                 var n = NormalList[(int)NormalIndexList[(int)i]];
                 var t1 = tan1Accum[(int)VertexIndexList[(int)i]];
-                var t2 = tan2Accum[(int)VertexIndexList[(int)i]];                
+                var t2 = tan2Accum[(int)VertexIndexList[(int)i]];               
 
                 // Gram-Schmidt orthogonalize                
                 var temp = OpenTK.Vector3.Normalize(t1 - (OpenTK.Vector3.Dot(n, t1) * n));
-                // Store handedness in w
-                // tangents[i] = vec4(glm::normalize(t1 - (glm::dot(n, t1) * n) ), 0.0f);
+                // Store handedness in w                
                 var W = (OpenTK.Vector3.Dot(OpenTK.Vector3.Cross(n, t1), t2) < 0.0f) ? -1.0f : 1.0f;
 
-                TangentList[(int)VertexIndexList[(int)i]] = new Vector4(temp.X, temp.Y, temp.Z, W);
+                bool bValid = true;
+                if(Single.IsNaN(temp.X) || Single.IsNaN(temp.Y) || Single.IsNaN(temp.Z))
+                {
+                    bValid = false;
+                }
+
+                if (Single.IsInfinity(temp.X) || Single.IsInfinity(temp.Y) || Single.IsInfinity(temp.Z))
+                {
+                    bValid = false;
+                }
+
+                if(bValid == true)
+                {
+                    lastValidTangent = new Vector4(temp.X, temp.Y, temp.Z, W);
+                }
+
+                if(bValid == false)
+                {
+                    temp = lastValidTangent.Xyz;
+                }
+
+                TangentList[(int)i] = new Vector4(temp.X, temp.Y, temp.Z, W);
             }
+            
             tan1Accum.Clear();
             tan2Accum.Clear();
         }

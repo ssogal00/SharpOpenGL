@@ -14,6 +14,10 @@ using Core.CustomEvent;
 using Core.Texture;
 
 using SharpOpenGL.GBufferDraw;
+using ZeroFormatter;
+using ZeroFormatter.Formatters;
+using Core.CustomSerialize;
+using ZeroFormatter.Internal;
 
 
 namespace SharpOpenGL
@@ -56,6 +60,10 @@ namespace SharpOpenGL
 
         protected override void OnLoad(EventArgs e)
         {
+            Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
+            Formatter<DefaultResolver, OpenTK.Vector2>.Register(new Vector2Formatter<DefaultResolver>());
+            Formatter<DefaultResolver, OpenTK.Vector4>.Register(new Vector4Formatter<DefaultResolver>());
+
             VSync = VSyncMode.On;
 
             GL.CullFace(CullFaceMode.Back);
@@ -81,8 +89,12 @@ namespace SharpOpenGL
 
             OnWindowResize += Blur.OnWindowResized;
             OnWindowResize += LightPostProcess.OnWindowResized;
-            
-            MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
+
+            MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");            
+
+            /*Mesh = ObjMesh.LoadSerialized("sponza.serialized");
+            Mesh.PrepareToDraw();
+            Mesh.LoadTextures();*/
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
@@ -115,6 +127,7 @@ namespace SharpOpenGL
                 if(MeshLoadTask.IsCompleted)
                 {
                     Mesh = MeshLoadTask.Result;
+                    Mesh.SaveSerialized("sponza.serialized");
                     Mesh.PrepareToDraw();
                     Mesh.LoadTextures();
                     MeshLoadTask = null;
@@ -139,10 +152,7 @@ namespace SharpOpenGL
             BaseTest.Setup();
             BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
 
-            var NormalMatrix = Transform.View * Transform.Model;
-            //NormalMatrix.Invert();
-            //NormalMatrix.Transpose();
-            BaseTest.SetUniformVarData("NormalMatrix", NormalMatrix);
+            
 
             Mesh.Draw(BaseTest);
             MyGBuffer.Unbind();
@@ -150,7 +160,7 @@ namespace SharpOpenGL
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
 
             //Blur.Render(MyGBuffer.GetColorAttachement);
-            ScreenBlit.Blit(MyGBuffer.ColorBufferObject, 2, 2, 1, 1);
+            ScreenBlit.Blit(MyGBuffer.NormalBufferObject, 2, 2, 1, 1);
             ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0,0,3,3);
             //ScreenBlit.Blit(MyGBuffer.ColorBufferObject, 0, 0, 3, 3);
 

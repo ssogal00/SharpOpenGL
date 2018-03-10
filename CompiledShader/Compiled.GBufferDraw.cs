@@ -105,12 +105,12 @@ void main()
 	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
 	OutPosition =   (ModelView * vec4(VertexPosition, 1)).xyz;
 	
-	OutNormal =  normalize(mat3(NormalMatrix) * VertexNormal);	
+	OutNormal =  normalize(mat3(ModelView) * VertexNormal);	
 
-	OutTangent = normalize(mat3(NormalMatrix) * vec3(Tangent));
+	OutTangent = normalize(mat3(ModelView) * vec3(Tangent));
 
-	vec3 binormal = normalize(cross( VertexNormal, Tangent.xyz )) * Tangent.w ;
-	OutBinormal = binormal;
+	vec3 binormal = (cross( VertexNormal, Tangent.xyz )) * Tangent.w;
+	OutBinormal = normalize(mat3(ModelView) * binormal);	
 }";
 	}
 
@@ -158,24 +158,16 @@ void main()
     	DiffuseColor = texture(DiffuseTex, InTexCoord);
     }
 
+    
     mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
 								   InBinormal.x, InBinormal.y, InBinormal.z, 
 								   InNormal.x, InNormal.y, InNormal.z);
     
 
-    vec4 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord )) - 1.0f);			
-	vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);			
-
-    if(length(BumpNormal) > 0)
-	{
-		BumpNormal = normalize(BumpNormal);
-	}
-	else
-	{
-		BumpNormal = vec3(1,1,1);
-	}
+    vec3 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord ).xyz) - vec3(1.0f));
+	vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
 	
-    NormalColor.xyz = BumpNormal;
+    NormalColor.xyz = BumpNormal.xyz;
 
     if(SpecularMapExist > 0)
     {

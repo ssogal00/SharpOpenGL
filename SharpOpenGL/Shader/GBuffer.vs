@@ -34,10 +34,10 @@ void main()
 	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
 	OutPosition =   (ModelView * vec4(VertexPosition, 1)).xyz;
 	
-	OutNormal =  normalize(mat3(NormalMatrix) * VertexNormal);	
+	OutNormal =  normalize(mat3(ModelView) * VertexNormal);	
 
-	OutTangent = normalize(mat3(NormalMatrix) * vec3(Tangent));
+	OutTangent = normalize(mat3(ModelView) * vec3(Tangent));
 
-	vec3 binormal = normalize(cross( VertexNormal, Tangent.xyz )) * Tangent.w ;
-	OutBinormal = binormal;
+	vec3 binormal = (cross( VertexNormal, Tangent.xyz )) * Tangent.w;
+	OutBinormal = normalize(mat3(ModelView) * binormal);	
 }

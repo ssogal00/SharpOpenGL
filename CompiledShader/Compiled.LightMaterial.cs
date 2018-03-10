@@ -161,7 +161,9 @@ void main()
 	vec4 FinalColor;
     
     FinalColor = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, Color);
-        
+
+    FinalColor = FinalColor * Normal.w; 
+    
     FragColor = FinalColor;
 }
 ";
