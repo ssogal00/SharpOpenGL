@@ -157,12 +157,15 @@ void main()
 	
 	vec3 ViewDir = -normalize(Position);
 	vec3 Half = normalize(LightDir + ViewDir);
-	
-	vec4 FinalColor;
-    
-    FinalColor = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, Color);
 
-    FinalColor = FinalColor * Normal.w; 
+
+    vec3 diffuse = max(dot(Normal.xyz, LightDir), 0.0) * Color * LightDiffuse;
+
+    vec3 specular = pow(max(dot(Normal.xyz, Half), 0) , 64.0) * vec3(Normal.a);
+
+
+	vec4 FinalColor;
+    FinalColor.xyz = diffuse + specular;
     
     FragColor = FinalColor;
 }

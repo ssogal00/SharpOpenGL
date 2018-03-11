@@ -171,11 +171,11 @@ void main()
 
     if(SpecularMapExist > 0)
     {
-        NormalColor.w = texture(SpecularTex, InTexCoord).x;
+        NormalColor.a = texture(SpecularTex, InTexCoord).x;
     }
     else
     {
-        NormalColor.w = 0;
+        NormalColor.a = 0;
     }
 
     PositionColor = vec4(InPosition, 0);
