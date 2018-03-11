@@ -66,6 +66,12 @@ namespace Core.Buffer
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
+        public void Clear(System.Drawing.Color clearColor)
+        {
+            GL.ClearColor(clearColor);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        }
+
         public void Unbind()
         {
             FrameBufferObject.Unbind();

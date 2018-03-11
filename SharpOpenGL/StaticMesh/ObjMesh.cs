@@ -65,9 +65,21 @@ namespace SharpOpenGL.StaticMesh
         [IgnoreFormat]
         public bool HasTexCoord => bHasTexCoordinate;
 
-        Vector3 MinVertex = new Vector3(0,0,0);
-        Vector3 MaxVertex = new Vector3(0,0,0);
-        Vector3 MeshCenter = new Vector3(0, 0, 0);        
+        protected float MinX = float.MaxValue;
+        protected float MaxX = float.MinValue;
+
+        protected float MinY = float.MaxValue;
+        protected float MaxY = float.MinValue;
+
+        protected float MinZ = float.MaxValue;
+        protected float MaxZ = float.MinValue;       
+        
+        [IgnoreFormat]
+        public virtual Vector3 MinVertex { get; set; } = new Vector3(0, 0, 0);
+
+        [IgnoreFormat]
+        public virtual Vector3 MaxVertex { get; set; } = new Vector3(0, 0, 0);
+        
        
         public void SaveSerialized(string path)
         {   
@@ -224,7 +236,16 @@ namespace SharpOpenGL.StaticMesh
                 if (MaterialMap.ContainsKey(section.SectionName))
                 {
                     material.SetTexture("DiffuseTex", TextureMap[MaterialMap[section.SectionName].DiffuseMap]);
-                    material.SetTexture("NormalTex", TextureMap[MaterialMap[section.SectionName].NormalMap]);
+
+                    if(MaterialMap[section.SectionName].NormalMap != null)
+                    {
+                        material.SetUniformVarData("NormalMapExist", 1);
+                        material.SetTexture("NormalTex", TextureMap[MaterialMap[section.SectionName].NormalMap]);
+                    }
+                    else
+                    {
+                        material.SetUniformVarData("NormalMapExist", 0);
+                    }
 
                     if (MaterialMap[section.SectionName].MaskMap != null)
                     {
@@ -281,7 +302,7 @@ namespace SharpOpenGL.StaticMesh
                     }
                 }
 
-                if (Mtl.Value.NormalMap.Length > 0)
+                if (Mtl.Value.NormalMap != null)
                 {
                     if(!TextureMap.ContainsKey(Mtl.Value.NormalMap))
                     {
@@ -407,6 +428,37 @@ namespace SharpOpenGL.StaticMesh
                 }
             }
         }
+
+        protected void UpdateMinMaxVertex(ref OpenTK.Vector3 newVertex)
+        {
+            // update X
+            if(newVertex.X > MaxX)
+            {
+                MaxX = newVertex.X;
+            }
+            if(newVertex.X < MinX)
+            {
+                MinX = newVertex.X;
+            }
+
+            if (newVertex.Y > MaxY)
+            {
+                MaxY = newVertex.Y;
+            }
+            if (newVertex.Y < MinY)
+            {
+                MinY = newVertex.Y;
+            }
+
+            if (newVertex.Z > MaxZ)
+            {
+                MaxZ = newVertex.Z;
+            }
+            if (newVertex.Z < MinZ)
+            {
+                MinZ = newVertex.Z;
+            }
+        }
                 
         public void Load(string FilePath, string MtlPath)
         {
@@ -446,6 +498,8 @@ namespace SharpOpenGL.StaticMesh
                             V.X = Convert.ToSingle(tokens[1]);
                             V.Y = Convert.ToSingle(tokens[2]);
                             V.Z = Convert.ToSingle(tokens[3]);
+
+                            UpdateMinMaxVertex(ref V);
 
                             VertexList.Add(V);
                         }
@@ -532,10 +586,9 @@ namespace SharpOpenGL.StaticMesh
 
                 if(MeshSectionList.Count > 0)
                 {
-                    MeshSectionList.Last().EndIndex = (UInt32) Vertices.Count;
+                    MeshSectionList.Last().EndIndex = (UInt32)VertexIndices.Count;
                 }
             }
-
             
             GenerateTangents();
             GenerateVertices();

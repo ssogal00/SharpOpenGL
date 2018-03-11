@@ -32,12 +32,9 @@ namespace Core.Camera
             UpdateProjMatrix();
         }
 
-        public void UpdateCameraDistance()
+        public override void UpdateViewMatrix()
         {
-            if(Math.Abs(DestCameraDistance - CameraDistance) > 0.1)
-            {
-                
-            }
+            ViewMatrix = Matrix4.LookAt(EyeLocation, LookAtLocation, Vector3.UnitY);
         }
 
         public void MoveForward(float fAmount)

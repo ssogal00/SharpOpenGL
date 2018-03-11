@@ -20,6 +20,7 @@ uniform sampler2D SpecularTex;
 
 uniform int SpecularMapExist;
 uniform int MaskMapExist;
+uniform int NormalMapExist;
 
 void main()
 {   
@@ -40,16 +41,21 @@ void main()
     	DiffuseColor = texture(DiffuseTex, InTexCoord);
     }
 
-    
     mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
-								   InBinormal.x, InBinormal.y, InBinormal.z, 
-								   InNormal.x, InNormal.y, InNormal.z);
-    
+								    InBinormal.x, InBinormal.y, InBinormal.z, 
+								    InNormal.x, InNormal.y, InNormal.z);
 
-    vec3 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord ).xyz) - vec3(1.0f));
-	vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
+    if(NormalMapExist > 0)
+    {
+        vec3 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord ).xyz) - vec3(1.0f));
+	    vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
 	
-    NormalColor.xyz = BumpNormal.xyz;
+        NormalColor.xyz = BumpNormal.xyz;
+    }
+    else
+    {
+        NormalColor.xyz = InNormal.xyz;
+    }
 
     if(SpecularMapExist > 0)
     {

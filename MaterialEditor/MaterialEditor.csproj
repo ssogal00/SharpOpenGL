@@ -112,6 +112,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CompiledShader\CompiledShader.csproj">
+      <Project>{50ad8c27-759d-4399-8056-59ca4d413829}</Project>
+      <Name>CompiledShader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{1115dd7b-beb3-4d5c-9528-9e852ecc63d5}</Project>
       <Name>Core</Name>
@@ -122,6 +126,14 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if not exist $(TargetDir)\Resources mkdir $(TargetDir)\Resources
+if not exist $(TargetDir)\Resources\SponzaTexture mkdir $(TargetDir)\Resources\SponzaTexture
+if not exist $(TargetDir)\Resources\ObjMesh mkdir $(TargetDir)\Resources\ObjMesh
+xcopy /D /Y /S $(SolutionDir)\SharpOpenGL\Resources\SponzaTexture $(TargetDir)\Resources\SponzaTexture
+xcopy /D /Y /S $(SolutionDir)\SharpOpenGL\Resources\ObjMesh $(TargetDir)\Resources\ObjMesh
+xcopy /F /Y /S $(SolutionDir)\SharpOpenGL\lib\FreeImage.dll $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
