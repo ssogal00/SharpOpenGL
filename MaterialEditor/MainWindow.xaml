@@ -7,13 +7,26 @@
         xmlns:OpenTK="clr-namespace:OpenTK;assembly=OpenTK.GLControl" 
         mc:Ignorable="d"
         Title="MainWindow" Height="512" Width="1024">
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary 
+                    Source="SharedTemplate.xaml"
+                    />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*">
+            <ColumnDefinition Width="0.5*">
             </ColumnDefinition>
             <ColumnDefinition>      
             </ColumnDefinition>
@@ -27,8 +40,12 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>            
         </Grid>
-        <Canvas Grid.Row="0" Grid.Column="1">
-            
+        <Canvas Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="8">
+            <Grid>                
+                <Canvas>
+                    <local:NodeItem X="100" Y="200" Width="10" Height="20"></local:NodeItem>
+                </Canvas>                                    
+            </Grid>
         </Canvas>
     </Grid>    
 </Window>
