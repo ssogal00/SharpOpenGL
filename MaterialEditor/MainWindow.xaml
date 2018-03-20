@@ -18,7 +18,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
+    
 
     <Grid>
         <Grid.RowDefinitions>
@@ -43,7 +43,9 @@
         <Canvas Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="8">
             <Grid>                
                 <Canvas>
-                    <local:NodeItem X="100" Y="200" Width="10" Height="20"></local:NodeItem>
+                    <local:NodeItem X="200" Y="200" Width="100" Height="100" BorderThickness="4" BorderBrush="DarkGray">
+                        <Button Background="Aqua">Hello world</Button>
+                    </local:NodeItem>
                 </Canvas>                                    
             </Grid>
         </Canvas>

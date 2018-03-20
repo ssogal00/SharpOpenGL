@@ -22,5 +22,12 @@ namespace MaterialEditor
         public static readonly DependencyProperty NodesSourceProperty =
             DependencyProperty.Register("NodesSource", typeof(IEnumerable), typeof(NetworkView), new FrameworkPropertyMetadata());
 
+        private static readonly DependencyPropertyKey NodesPropertyKey =
+           DependencyProperty.RegisterReadOnly("Nodes", typeof(ImpObservableCollection<object>), typeof(NetworkView),
+               new FrameworkPropertyMetadata());
+        public static readonly DependencyProperty NodesProperty = NodesPropertyKey.DependencyProperty;
+
+
+
     }
 }

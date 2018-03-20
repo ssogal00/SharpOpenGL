@@ -83,6 +83,7 @@
     <Compile Include="Model\ConnectorViewModel.cs" />
     <Compile Include="Model\MainWindowViewModel.cs" />
     <Compile Include="Model\NetworkViewModel.cs" />
+    <Compile Include="NetworkView.cs" />
     <Compile Include="Utils\ImpObservableCollection.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
