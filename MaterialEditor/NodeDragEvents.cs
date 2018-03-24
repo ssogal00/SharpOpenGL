@@ -8,11 +8,11 @@ using System.Collections;
 
 namespace MaterialEditor
 {
-    public class NodeDragEventArgs  : RoutedEventArgs
+    public class NodeDragEventArgs : RoutedEventArgs
     {
         public ICollection nodes = null;
 
-        protected NodeDragEventArgs(RoutedEvent routedEvent ,object source, ICollection nodes)
+        protected NodeDragEventArgs(RoutedEvent routedEvent, object source, ICollection nodes)
             : base(routedEvent, source)
         {
             this.nodes = nodes;
@@ -47,6 +47,8 @@ namespace MaterialEditor
             }
         }
     }
+
+    public delegate void NodeDragStartedEventHandler(object sender, NodeDragStartedEventArgs e);
 
     public class NodeDraggingEventArgs : NodeDragEventArgs
     {

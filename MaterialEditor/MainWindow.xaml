@@ -54,7 +54,9 @@
                     </Grid>
                 </Grid>
             </DataTemplate>
+            
             <Style TargetType="{x:Type local:NodeItem}">
+                <Setter Property="ParentNetworkView" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NetworkView}}, Path=.}"></Setter>
                 <Setter Property="Canvas.Left" Value="{Binding X, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
                 </Setter>
                 <Setter Property="Canvas.Top" Value="{Binding Y, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
@@ -76,6 +78,11 @@
                                     <ContentPresenter></ContentPresenter>
                                 </Border>
                             </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="selectionBorder" Property="BorderBrush" Value="{StaticResource selectionBorderColor}"></Setter>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -106,7 +113,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <!-- spacer -->
-                            <RowDefinition Height="2" />
+                            <RowDefinition Height="5" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
@@ -162,7 +169,7 @@
             <OpenTK:GLControl x:Name="mGlControl" Load="GLControlLoad" Resize="GLControlResize" Paint="GLControlPaint"></OpenTK:GLControl>
         </WindowsFormsHost>
         <Grid Grid.Row="0" Grid.Column="1" Margin="3" Grid.RowSpan="2">
-            <local:NetworkView NodesSource="{Binding Network.Nodes}">
+            <local:NetworkView NodesSource="{Binding Path=Network.Nodes}" ConnectionsSource="{Binding Path=Network.Connections}">
             </local:NetworkView>
         </Grid>
         
