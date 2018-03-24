@@ -27,6 +27,14 @@ namespace MaterialEditor
             InitializeComponent();
         }
 
+        public MainWindowViewModel ViewModel
+        {
+            get
+            {
+                return (MainWindowViewModel)DataContext;
+            }
+        }
+
         protected ShaderProgram ProgramObject;
 
         protected OrbitCamera Camera = new OrbitCamera();
@@ -131,3 +139,4 @@ namespace MaterialEditor
 
     
 }
+

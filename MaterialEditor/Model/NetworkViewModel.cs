@@ -14,7 +14,6 @@ namespace MaterialEditor
 
         protected ImpObservableCollection<ConnectionViewModel> connections = null;
 
-
         public ImpObservableCollection<ConnectionViewModel> Connections
         {
             get

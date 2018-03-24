@@ -19,15 +19,68 @@ namespace MaterialEditor
 {
     public class NetworkView : Control
     {
+        public NetworkView()
+        {
+            this.Nodes = new ImpObservableCollection<object>();
+        }
+
         public static readonly DependencyProperty NodesSourceProperty =
-            DependencyProperty.Register("NodesSource", typeof(IEnumerable), typeof(NetworkView), new FrameworkPropertyMetadata());
+            DependencyProperty.Register("NodesSource", typeof(IEnumerable), typeof(NetworkView), new FrameworkPropertyMetadata(NodesSource_PropertyChanged));
 
         private static readonly DependencyPropertyKey NodesPropertyKey =
            DependencyProperty.RegisterReadOnly("Nodes", typeof(ImpObservableCollection<object>), typeof(NetworkView),
                new FrameworkPropertyMetadata());
+
         public static readonly DependencyProperty NodesProperty = NodesPropertyKey.DependencyProperty;
 
+        
+        private static void NodesSource_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            NetworkView c = (NetworkView)d;
+            c.Nodes.Clear();
 
+            if(e.NewValue != null)
+            {
+                var enumerable = e.NewValue as IEnumerable;
+                if(enumerable != null)
+                {
+                    foreach(object obj in enumerable)
+                    {
+                        c.Nodes.Add(obj);
+                    }
+                }
+            }
+        }
 
+        static NetworkView()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(NetworkView), new FrameworkPropertyMetadata(typeof(NetworkView)));
+        }
+
+        private NodeItemsControl nodeItemsControl = null;
+
+        public ImpObservableCollection<object> Nodes
+        {
+            get
+            {
+                return (ImpObservableCollection<object>) GetValue(NodesProperty);
+            }
+            private set
+            {
+                SetValue(NodesPropertyKey, value);
+            }
+        }
+
+        public IEnumerable NodesSource
+        {
+            get
+            {
+                return (IEnumerable)GetValue(NodesSourceProperty);
+            }
+            set
+            {
+                SetValue(NodesSourceProperty, value);
+            }
+        }
     }
 }

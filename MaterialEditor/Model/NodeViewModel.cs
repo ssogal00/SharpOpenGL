@@ -10,6 +10,13 @@ namespace MaterialEditor
 {
     public class NodeViewModel : AbstractModelBase
     {
+        public NodeViewModel() { }
+
+        public NodeViewModel(string name)
+        {
+            this.name = name;
+        }
+
         private string name = string.Empty;
 
         private double x = 0;

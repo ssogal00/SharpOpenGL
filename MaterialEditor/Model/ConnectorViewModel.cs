@@ -18,5 +18,10 @@ namespace MaterialEditor
             get;
             private set;
         }
+
+        public bool IsConnectionAttached
+        {
+            get { return true; }
+        }
     }
 }
