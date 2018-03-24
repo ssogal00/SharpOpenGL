@@ -21,9 +21,20 @@ namespace MaterialEditor
         public static readonly DependencyProperty ZIndexProperty = DependencyProperty.Register("ZIndex", typeof(int), typeof(NodeItem),
             new FrameworkPropertyMetadata(default(int), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        internal static readonly DependencyProperty ParentNetworkViewProperty = DependencyProperty.Register("ParentNetworkView", typeof(NetworkView),
+            typeof(NodeItem), new FrameworkPropertyMetadata(ParentNetworkView_PropertyChanged));
+
+        //internal static readonly RoutedEvent NodeDragStartedEvent = EventManager.RegisterRoutedEvent("NodeDragStarted", RoutingStrategy.Bubble, typeof(Nodedra)
+
         static NodeItem()
         { 
             DefaultStyleKeyProperty.OverrideMetadata(typeof(NodeItem), new FrameworkPropertyMetadata(typeof(NodeItem)));
+        }
+
+        private static void ParentNetworkView_PropertyChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            var nodeItem = (NodeItem)o;
+            //nodeItem.BringToFront();
         }
 
         public double X

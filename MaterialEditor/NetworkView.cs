@@ -33,7 +33,33 @@ namespace MaterialEditor
 
         public static readonly DependencyProperty NodesProperty = NodesPropertyKey.DependencyProperty;
 
-        
+        internal int FindMaxZIndex()
+        {
+            if(this.nodeItemsControl == null)
+            {
+                return 0;
+            }
+
+            int maxZ = 0;
+
+            for(int nodeIndex = 0; ; ++nodeIndex)
+            {
+                NodeItem nodeItem = (NodeItem)this.nodeItemsControl.ItemContainerGenerator.ContainerFromIndex(nodeIndex);
+                if(nodeItem == null)
+                {
+                    break;
+                }
+
+                if(nodeItem.ZIndex > maxZ)
+                {
+                    maxZ = nodeItem.ZIndex;
+                }
+            }
+
+            return maxZ;
+        }
+
+
         private static void NodesSource_PropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             NetworkView c = (NetworkView)d;

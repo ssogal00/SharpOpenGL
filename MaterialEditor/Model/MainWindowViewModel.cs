@@ -25,6 +25,7 @@ namespace MaterialEditor
             //
             node.InputConnectors.Add(new ConnectorViewModel("In1"));
             node.InputConnectors.Add(new ConnectorViewModel("In2"));
+            node.InputConnectors.Add(new ConnectorViewModel("In3"));
             node.OutputConnectors.Add(new ConnectorViewModel("Out1"));
             node.OutputConnectors.Add(new ConnectorViewModel("Out2"));
 
