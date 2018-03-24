@@ -84,6 +84,7 @@
     <Compile Include="Model\MainWindowViewModel.cs" />
     <Compile Include="Model\NetworkViewModel.cs" />
     <Compile Include="NetworkView.cs" />
+    <Compile Include="NodeDragEvents.cs" />
     <Compile Include="NodeItemsControl.cs" />
     <Compile Include="Utils\ImpObservableCollection.cs" />
     <Compile Include="MainWindow.xaml.cs">

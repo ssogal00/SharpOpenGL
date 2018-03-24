@@ -33,6 +33,10 @@ namespace MaterialEditor
 
         public static readonly DependencyProperty NodesProperty = NodesPropertyKey.DependencyProperty;
 
+
+        //public static readonly RoutedEvent NodeDragStartedEvent =
+         //   EventManager.RegisterRoutedEvent("NodeDragStarted", RoutingStrategy.Bubble, );
+
         internal int FindMaxZIndex()
         {
             if(this.nodeItemsControl == null)
