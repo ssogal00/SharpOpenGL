@@ -176,9 +176,42 @@ namespace MaterialEditor
             var newConnection = (ConnectionViewModel)e.Connection;
             this.ViewModel.ConnectionDragCompleted(newConnection, connectorDraggedOut, connectorDraggedOver);
         }
+
+        private void networkControl_QueryConnectionFeedback(object sender, QueryConnectionFeedbackEventArgs e)
+        {
+            var draggedOutConnector = (ConnectorViewModel)e.ConnectorDraggedOut;
+            var draggedOverConnector = (ConnectorViewModel)e.DraggedOverConnector;
+            object feedbackIndicator = null;
+            bool connectionOk = true;
+
+            this.ViewModel.QueryConnnectionFeedback(draggedOutConnector, draggedOverConnector, out feedbackIndicator, out connectionOk);
+
+            //
+            // Return the feedback object to NetworkView.
+            // The object combined with the data-template for it will be used to create a 'feedback icon' to
+            // display (in an adorner) to the user.
+            //
+            e.FeedbackIndicator = feedbackIndicator;
+
+            //
+            // Let NetworkView know if the connection is ok or not ok.
+            //
+            e.ConnectionOk = connectionOk;
+        }
+
+        private void CreateNode_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            CreateNode();
+        }
+
+        private void CreateNode()
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode("New Node!", newNodePosition, true);
+        }
     }
 
 
-    
+
 }
 

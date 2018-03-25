@@ -60,6 +60,12 @@
 
     <SolidColorBrush x:Key="selectionBorderColor" Color="Blue"/>
 
+    <SolidColorBrush
+        x:Key="selectionBorderBackgroundColor"
+        Color="Blue"
+        Opacity="0.25"
+        />
+
     <Style TargetType="{x:Type local:NetworkView}">
         <Setter Property="Template">
             <Setter.Value>
