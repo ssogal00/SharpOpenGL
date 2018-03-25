@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpOpenGL", "SharpOpenGL\SharpOpenGL.csproj", "{DEA90434-3C61-4C6C-A682-7F8E00B9D2E7}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FBXWrapper", "FBXWrapper\FBXWrapper.vcxproj", "{C7791532-CE38-47A3-B1CE-9E4CFCCE94E2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FBXImporter", "FBXImporter\FBXImporter.csproj", "{28ABFF9F-557B-49DA-A376-33A9734E322F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdornedControl", "AdornedControl\AdornedControl.csproj", "{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NodeEditorUtils", "NodeEditorUtils\NodeEditorUtils.csproj", "{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,8 +139,43 @@ Global
 		{28ABFF9F-557B-49DA-A376-33A9734E322F}.Release|x64.Build.0 = Release|Any CPU
 		{28ABFF9F-557B-49DA-A376-33A9734E322F}.Release|x86.ActiveCfg = Release|Any CPU
 		{28ABFF9F-557B-49DA-A376-33A9734E322F}.Release|x86.Build.0 = Release|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Debug|ARM.Build.0 = Debug|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Debug|x64.Build.0 = Debug|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Debug|x86.Build.0 = Debug|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Release|ARM.ActiveCfg = Release|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Release|ARM.Build.0 = Release|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Release|x64.ActiveCfg = Release|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Release|x64.Build.0 = Release|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Release|x86.ActiveCfg = Release|Any CPU
+		{AB6AFF8F-5381-49F4-A87D-C1F721FDDF08}.Release|x86.Build.0 = Release|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Debug|ARM.Build.0 = Debug|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Debug|x64.Build.0 = Debug|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Debug|x86.Build.0 = Debug|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Release|ARM.ActiveCfg = Release|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Release|ARM.Build.0 = Release|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Release|x64.ActiveCfg = Release|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Release|x64.Build.0 = Release|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C8A458F-E1CD-4C8D-BB6B-9379A10205D6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {164A90A2-08E8-4FBA-A2F3-95882DD5E87A}
 	EndGlobalSection
 EndGlobal

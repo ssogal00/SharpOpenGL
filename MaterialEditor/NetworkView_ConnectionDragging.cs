@@ -12,7 +12,7 @@ using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Documents;
 using System.Windows.Input;
-using MaterialEditor.Utils;
+using NodeEditorUtils;
 
 namespace MaterialEditor
 {

@@ -14,7 +14,7 @@ using System.Windows.Input;
 //
 //  http://www.codeproject.com/KB/WPF/WPFJoshSmith.aspx
 //
-namespace MaterialEditor
+namespace NodeEditorUtils
 {
     public enum AdornerPlacement
     {

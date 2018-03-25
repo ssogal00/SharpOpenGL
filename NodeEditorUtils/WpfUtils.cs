@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Diagnostics;
 
-namespace MaterialEditor.Utils
+namespace NodeEditorUtils
 {
     /// <summary>
     /// This class contains helper functions for dealing with WPF.

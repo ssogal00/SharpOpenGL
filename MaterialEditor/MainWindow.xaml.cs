@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 
 using Core.MaterialBase;
+using System.Windows.Input;
 using SharpOpenGL;
 using Core.CustomEvent;
 using SharpOpenGL.GBufferDraw;
@@ -133,6 +134,47 @@ namespace MaterialEditor
             Transform.Proj = Camera.Proj;
             Transform.Model = Matrix4.CreateScale(0.1f);
             Transform.View = Camera.View;
+        }
+
+        /// <summary>
+        /// Event raised when the user has started to drag out a connection.
+        /// </summary>
+        private void networkControl_ConnectionDragStarted(object sender, ConnectionDragStartedEventArgs e)
+        {
+            var draggedOutConnector = (ConnectorViewModel)e.ConnectorDraggedOut;
+            var curDragPoint = Mouse.GetPosition(networkControl);
+
+            //
+            // Delegate the real work to the view model.
+            //
+            var connection = this.ViewModel.ConnectionDragStarted(draggedOutConnector, curDragPoint);
+
+            //
+            // Must return the view-model object that represents the connection via the event args.
+            // This is so that NetworkView can keep track of the object while it is being dragged.
+            //
+            e.Connection = connection;
+        }
+
+        /// <summary>
+        /// Event raised while the user is dragging a connection.
+        /// </summary>
+        private void networkControl_ConnectionDragging(object sender, ConnectionDraggingEventArgs e)
+        {
+            Point curDragPoint = Mouse.GetPosition(networkControl);
+            var connection = (ConnectionViewModel)e.Connection;
+            this.ViewModel.ConnectionDragging(curDragPoint, connection);
+        }
+
+        /// <summary>
+        /// Event raised when the user has finished dragging out a connection.
+        /// </summary>
+        private void networkControl_ConnectionDragCompleted(object sender, ConnectionDragCompletedEventArgs e)
+        {
+            var connectorDraggedOut = (ConnectorViewModel)e.ConnectorDraggedOut;
+            var connectorDraggedOver = (ConnectorViewModel)e.ConnectorDraggedOver;
+            var newConnection = (ConnectionViewModel)e.Connection;
+            this.ViewModel.ConnectionDragCompleted(newConnection, connectorDraggedOut, connectorDraggedOver);
         }
     }
 

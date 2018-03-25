@@ -69,14 +69,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Utils\WpfUtils.cs" />
+    <Compile Include="ConnectionBadIndicator.cs" />
+    <Compile Include="ConnectionOkIndicator.cs" />
+    <Compile Include="CurvedArrow.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="ConnectorItemDragEvent.cs" />
     <Compile Include="ConnectionDragEvent.cs" />
-    <Compile Include="FrameworkElementAdorner.cs" />
     <Compile Include="Model\AbstractModelBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -139,6 +140,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AdornedControl\AdornedControl.csproj">
+      <Project>{ab6aff8f-5381-49f4-a87d-c1f721fddf08}</Project>
+      <Name>AdornedControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CompiledShader\CompiledShader.csproj">
       <Project>{50ad8c27-759d-4399-8056-59ca4d413829}</Project>
       <Name>CompiledShader</Name>
@@ -147,10 +152,19 @@
       <Project>{1115dd7b-beb3-4d5c-9528-9e852ecc63d5}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NodeEditorUtils\NodeEditorUtils.csproj">
+      <Project>{4c8a458f-e1cd-4c8d-bb6b-9379a10205d6}</Project>
+      <Name>NodeEditorUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpOpenGL\SharpOpenGL.csproj">
       <Project>{dea90434-3c61-4c6c-a682-7f8e00b9d2e7}</Project>
       <Name>SharpOpenGL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\block_16.png" />
+    <Resource Include="Resources\scissors.png" />
+    <Resource Include="Resources\tick_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

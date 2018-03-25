@@ -4,13 +4,18 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MaterialEditor"
-        xmlns:OpenTK="clr-namespace:OpenTK;assembly=OpenTK.GLControl" 
+        xmlns:OpenTK="clr-namespace:OpenTK;assembly=OpenTK.GLControl"
+        xmlns:ac="clr-namespace:AdornedControl;assembly=AdornedControl"
         mc:Ignorable="d"
         Title="MainWindow" Height="512" Width="1024">
 
     <Window.DataContext>
         <local:MainWindowViewModel></local:MainWindowViewModel>
     </Window.DataContext>
+
+    <Window.CommandBindings>
+       
+    </Window.CommandBindings>
 
     <Window.Resources>
         
@@ -20,6 +25,7 @@
                     Source="SharedTemplate.xaml"
                     />
             </ResourceDictionary.MergedDictionaries>
+            
             <DataTemplate x:Key="inputConnectorTemplate">
                 <Grid Margin="0,2,0,0">
                     <Grid.ColumnDefinitions>
@@ -33,6 +39,7 @@
                     <TextBlock Grid.Column="1" Margin="10,0,0,0" Text="{Binding Name}" VerticalAlignment="Center"/>
                 </Grid>
             </DataTemplate>
+            
             <DataTemplate x:Key="outputConnectorTemplate">
                 <Grid HorizontalAlignment="Right" Margin="0,2,0,0">
                     <Grid.ColumnDefinitions>
@@ -55,6 +62,70 @@
                 </Grid>
             </DataTemplate>
             
+            
+
+            <DataTemplate
+                DataType="{x:Type local:ConnectionViewModel}"
+                >
+
+                <!-- 
+                An adorned control is used, to represent the connection. 
+                When the user hovers the mouse cursor over the connection, the 
+                'delete connection' adorner pops up and allows them to delete the connection.
+                -->
+                <ac:AdornedControl
+                    HorizontalAdornerPlacement="Mouse"
+                    VerticalAdornerPlacement="Mouse"
+                    IsMouseOverShowEnabled="{Binding ElementName=networkControl, Path=IsNotDragging}"
+                    >
+
+                    <!-- The connection is represented by a curved arrow. -->
+                    <local:CurvedArrow
+                        Stroke="{StaticResource connectionBrush}"
+                        StrokeThickness="2"
+                        Fill="{StaticResource connectionBrush}"
+                        Points="{Binding Points}"
+                        />
+
+                    <ac:AdornedControl.AdornerContent>
+
+                        <!-- 
+                        This is the adorner that pops up when the user hovers the mouse over the connection.
+                        It displays a button that the user can click to delete the connection.
+                        -->
+                        <Canvas
+                            x:Name="connectionAdornerCanvas"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Width="30"
+                            Height="30"
+                            >
+                            <Line
+                                X1="0"
+                                Y1="30"
+                                X2="15"
+                                Y2="15"
+                                Stroke="Black"
+                                StrokeThickness="1"
+                                />
+                            <Button
+                                x:Name="deleteConnectionButton"
+                                Canvas.Left="10"
+                                Canvas.Top="0"
+                                Width="20"
+                                Height="20"
+                                Cursor="Hand"
+                                Focusable="False"
+                                
+                                CommandParameter="{Binding}"
+                                Template="{StaticResource deleteButtonTemplate}"
+                                />
+                        </Canvas>
+                    </ac:AdornedControl.AdornerContent>
+                </ac:AdornedControl>
+            </DataTemplate>
+
+
             <Style TargetType="{x:Type local:NodeItem}">
                 <Setter Property="ParentNetworkView" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NetworkView}}, Path=.}"></Setter>
                 <Setter Property="Canvas.Left" Value="{Binding X, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
@@ -169,7 +240,13 @@
             <OpenTK:GLControl x:Name="mGlControl" Load="GLControlLoad" Resize="GLControlResize" Paint="GLControlPaint"></OpenTK:GLControl>
         </WindowsFormsHost>
         <Grid Grid.Row="0" Grid.Column="1" Margin="3" Grid.RowSpan="2">
-            <local:NetworkView NodesSource="{Binding Path=Network.Nodes}" ConnectionsSource="{Binding Path=Network.Connections}">
+            <local:NetworkView x:Name="networkControl" 
+                               NodesSource="{Binding Path=Network.Nodes}" 
+                               ConnectionsSource="{Binding Path=Network.Connections}"
+                               ConnectionDragStarted="networkControl_ConnectionDragStarted"
+                               ConnectionDragging="networkControl_ConnectionDragging"
+                               ConnectionDragCompleted="networkControl_ConnectionDragCompleted"
+                               >
             </local:NetworkView>
         </Grid>
         
