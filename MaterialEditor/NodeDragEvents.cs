@@ -71,23 +71,23 @@ namespace MaterialEditor
         {
             get { return verticalChange; }
         }
-
-        public delegate void NodeDraggingEventHandler(object sender, NodeDraggingEventArgs e);
-
-        /// <summary>
-        /// Arguments for event raised when the user has completed dragging a node in the network.
-        /// </summary>
-        public class NodeDragCompletedEventArgs : NodeDragEventArgs
-        {
-            public NodeDragCompletedEventArgs(RoutedEvent routedEvent, object source, ICollection nodes) :
-                base(routedEvent, source, nodes)
-            {
-            }
-        }
-
-        /// <summary>
-        /// Defines the event handler for NodeDragCompleted events.
-        /// </summary>
-        public delegate void NodeDragCompletedEventHandler(object sender, NodeDragCompletedEventArgs e);
     }
+
+    /// <summary>
+    /// Arguments for event raised when the user has completed dragging a node in the network.
+    /// </summary>
+    public class NodeDragCompletedEventArgs : NodeDragEventArgs
+    {
+        public NodeDragCompletedEventArgs(RoutedEvent routedEvent, object source, ICollection nodes) :
+            base(routedEvent, source, nodes)
+        {
+        }
+    }
+
+    /// <summary>
+    /// Defines the event handler for NodeDragCompleted events.
+    /// </summary>
+    public delegate void NodeDragCompletedEventHandler(object sender, NodeDragCompletedEventArgs e);
+
+    public delegate void NodeDraggingEventHandler(object sender, NodeDraggingEventArgs e);
 }

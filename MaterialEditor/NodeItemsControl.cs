@@ -25,5 +25,15 @@ namespace MaterialEditor
         {
             return item is NodeItem;
         }
+
+        /// <summary>
+        /// Find the NodeItem UI element that has the specified data context.
+        /// Return null if no such NodeItem exists.
+        /// </summary>
+        internal NodeItem FindAssociatedNodeItem(object nodeDataContext)
+        {
+            return (NodeItem)this.ItemContainerGenerator.ContainerFromItem(nodeDataContext);
+        }
+
     }
 }

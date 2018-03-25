@@ -69,10 +69,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utils\WpfUtils.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="ConnectorItemDragEvent.cs" />
+    <Compile Include="ConnectionDragEvent.cs" />
+    <Compile Include="FrameworkElementAdorner.cs" />
     <Compile Include="Model\AbstractModelBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -84,6 +88,8 @@
     <Compile Include="Model\MainWindowViewModel.cs" />
     <Compile Include="Model\NetworkViewModel.cs" />
     <Compile Include="NetworkView.cs" />
+    <Compile Include="NetworkView_ConnectionDragging.cs" />
+    <Compile Include="NetworkView_DragSelection.cs" />
     <Compile Include="NetworkView_NodeDragging.cs" />
     <Compile Include="NodeDragEvents.cs" />
     <Compile Include="NodeItemsControl.cs" />

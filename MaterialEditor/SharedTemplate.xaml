@@ -65,6 +65,19 @@
                                     </ItemsPanelTemplate>                                    
                                 </ItemsControl.ItemsPanel>
                             </ItemsControl>
+                            <Canvas
+                                x:Name="PART_DragSelectionCanvas"
+                                Visibility="Collapsed"
+                                >
+                                <Border 
+                                    x:Name="PART_DragSelectionBorder"
+                                    BorderBrush="Blue"
+                                    BorderThickness="1"
+                                    Background="LightBlue"
+                                    CornerRadius="1"
+                                    Opacity="0.5"
+                                    />
+                            </Canvas>
                         </Grid>
                     </Border>
                 </ControlTemplate>
