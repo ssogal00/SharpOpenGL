@@ -6,41 +6,7 @@
         x:Key="connectorBackgroundBrush"
         Color="White"
         />
-
-
-
-
-    <Style TargetType="{x:Type local:ConnectorItem}">
-
-        <!-- Data-bind the parent NetworkView. -->
-        <Setter
-            Property="ParentNetworkView"
-            Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NetworkView}}, Path=.}"
-            />
-
-        <!-- Data-bind the parent NodeItem. -->
-        <Setter
-            Property="ParentNodeItem"
-            Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NodeItem}}, Path=.}"
-            />
-
-        <!-- The control-template for the connector. -->
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate 
-                    TargetType="{x:Type local:ConnectorItem}"
-                    >
-
-                    <!-- Application-defined connector content is presented here. -->
-                    <ContentPresenter />
-
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     
-
     <LinearGradientBrush
         x:Key="nodeFillBrush"
         StartPoint="0,0"

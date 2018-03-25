@@ -160,6 +160,10 @@
       <Project>{dea90434-3c61-4c6c-a682-7f8e00b9d2e7}</Project>
       <Name>SharpOpenGL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZoomAndPan\ZoomAndPan.csproj">
+      <Project>{a609faa5-6c95-45a7-abed-c2ade213d05c}</Project>
+      <Name>ZoomAndPan</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\block_16.png" />

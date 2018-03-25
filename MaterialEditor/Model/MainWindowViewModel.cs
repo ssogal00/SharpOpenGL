@@ -447,7 +447,6 @@ namespace MaterialEditor
 
             node.InputConnectors.Add(new ConnectorViewModel("In1"));
             node.InputConnectors.Add(new ConnectorViewModel("In2"));
-            node.InputConnectors.Add(new ConnectorViewModel("In3"));
             node.OutputConnectors.Add(new ConnectorViewModel("Out1"));
             node.OutputConnectors.Add(new ConnectorViewModel("Out2"));
 
@@ -523,18 +522,7 @@ namespace MaterialEditor
             //
             NodeViewModel node1 = CreateNode("Node1", new Point(100, 60), false);
             NodeViewModel node2 = CreateNode("Node2", new Point(350, 80), false);
-
-            //
-            // Create a connection between the nodes.
-            //
-            ConnectionViewModel connection = new ConnectionViewModel();
-            connection.SourceConnector = node1.OutputConnectors[0];
-            connection.DestConnector = node2.InputConnectors[0];
-
-            //
-            // Add the connection to the view-model.
-            //
-            this.Network.Connections.Add(connection);
+            
         }
 
         #endregion Private Methods

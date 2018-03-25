@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MaterialEditor"
+        xmlns:ZoomAndPan="clr-namespace:ZoomAndPan;assembly=ZoomAndPan"
         xmlns:OpenTK="clr-namespace:OpenTK;assembly=OpenTK.GLControl"
         xmlns:ac="clr-namespace:AdornedControl;assembly=AdornedControl"
         mc:Ignorable="d"
@@ -81,6 +82,8 @@
 
                     <!-- The connection is represented by a curved arrow. -->
                     <local:CurvedArrow
+                        ArrowHeadLength="10"
+                        ArrowHeadWidth="6"
                         Stroke="{StaticResource connectionBrush}"
                         StrokeThickness="2"
                         Fill="{StaticResource connectionBrush}"
@@ -240,14 +243,28 @@
             <OpenTK:GLControl x:Name="mGlControl" Load="GLControlLoad" Resize="GLControlResize" Paint="GLControlPaint"></OpenTK:GLControl>
         </WindowsFormsHost>
         <Grid Grid.Row="0" Grid.Column="1" Margin="3" Grid.RowSpan="2">
-            <local:NetworkView x:Name="networkControl" 
-                               NodesSource="{Binding Path=Network.Nodes}" 
-                               ConnectionsSource="{Binding Path=Network.Connections}"
-                               ConnectionDragStarted="networkControl_ConnectionDragStarted"
-                               ConnectionDragging="networkControl_ConnectionDragging"
-                               ConnectionDragCompleted="networkControl_ConnectionDragCompleted"
-                               >
-            </local:NetworkView>
+            <ScrollViewer CanContentScroll="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" Focusable="False">
+                <ZoomAndPan:ZoomAndPanControl 
+                    x:Name="zoomAndPanControl" 
+                    ContentScale="{Binding ContentScale, Mode=TwoWay}"
+                    ContentOffsetX="{Binding ContentOffsetX, Mode=TwoWay}"
+                    ContentOffsetY="{Binding ContentOffsetY, Mode=TwoWay}"
+                    ContentViewportWidth="{Binding ContentViewportWidth, Mode=OneWayToSource}"
+                    ContentViewportHeight="{Binding ContentViewportHeight, Mode=OneWayToSource}"
+                    Background="LightGray"
+                    Focusable="False">
+                    <AdornerDecorator>
+                        <local:NetworkView x:Name="networkControl" 
+                                       NodesSource="{Binding Path=Network.Nodes}" 
+                                       ConnectionsSource="{Binding Path=Network.Connections}"
+                                       ConnectionDragStarted="networkControl_ConnectionDragStarted"
+                                       ConnectionDragging="networkControl_ConnectionDragging"
+                                       ConnectionDragCompleted="networkControl_ConnectionDragCompleted"
+                                       >
+                        </local:NetworkView>
+                    </AdornerDecorator>
+                </ZoomAndPan:ZoomAndPanControl>
+            </ScrollViewer>
         </Grid>
         
     </Grid>    
