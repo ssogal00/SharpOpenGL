@@ -78,6 +78,7 @@
     </Page>
     <Compile Include="ConnectorItemDragEvent.cs" />
     <Compile Include="ConnectionDragEvent.cs" />
+    <Compile Include="MainWindow_ZoomAndPan.cs" />
     <Compile Include="Model\AbstractModelBase.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
