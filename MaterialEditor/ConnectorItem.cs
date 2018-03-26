@@ -190,7 +190,7 @@ namespace MaterialEditor
 
                 Point curMousePoint = e.GetPosition(this.ParentNetworkView);
                 Vector offset = curMousePoint - lastMousePoint;
-                if (offset.X != 0.0 &&
+                if (offset.X != 0.0 ||
                     offset.Y != 0.0)
                 {
                     lastMousePoint = curMousePoint;
@@ -213,7 +213,7 @@ namespace MaterialEditor
                     Point curMousePoint = e.GetPosition(this.ParentNetworkView);
                     var dragDelta = curMousePoint - lastMousePoint;
                     double dragDistance = Math.Abs(dragDelta.Length);
-                    if (dragDistance > DragThreshold)
+                    if (dragDistance > 0)
                     {
                         //
                         // When the mouse has been dragged more than the threshold value commence dragging the node.
