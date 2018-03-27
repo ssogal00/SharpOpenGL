@@ -12,7 +12,7 @@ namespace MaterialEditor
     /// Defines a node in the view-model.
     /// Nodes are connected to other nodes through attached connectors (aka anchor/connection points).
     /// </summary>
-    public sealed class NodeViewModel : AbstractModelBase
+    public class NodeViewModel : AbstractModelBase
     {
         #region Private Data Members
 
