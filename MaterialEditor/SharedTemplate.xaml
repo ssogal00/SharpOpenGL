@@ -55,7 +55,15 @@
         EndPoint="0,1"
         >
         <GradientStop Color="White" Offset="0" />
-        <GradientStop Color="DarkKhaki" Offset="0.6" />
+        <GradientStop Color="Gray" Offset="0.6" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="nodeHeaderBrush" 
+                         StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="White" Offset="0.0"></GradientStop>
+        <GradientStop Color="#FFBB0606" Offset="0.5">                        
+        </GradientStop>
+        <GradientStop Color="Black" Offset="1.0"></GradientStop>
     </LinearGradientBrush>
 
     <SolidColorBrush x:Key="selectionBorderColor" Color="Blue"/>

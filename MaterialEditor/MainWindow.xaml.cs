@@ -221,6 +221,12 @@ namespace MaterialEditor
             var newNodePosition = Mouse.GetPosition(networkControl);
             this.ViewModel.CreateNode<ConstantVector3Node>("Vector3", newNodePosition);
         }
+
+        private void CreateAddNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<AddNode>("Add", newNodePosition);
+        }
     }
 
 
