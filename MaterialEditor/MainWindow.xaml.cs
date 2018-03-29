@@ -215,6 +215,12 @@ namespace MaterialEditor
             var connection = (ConnectionViewModel)e.Parameter;
             this.ViewModel.DeleteConnection(connection);
         }
+
+        private void CreateConstantVector3(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<ConstantVector3Node>("Vector3", newNodePosition);
+        }
     }
 
 

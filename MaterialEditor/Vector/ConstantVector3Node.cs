@@ -11,6 +11,11 @@ namespace MaterialEditor
     {
         protected OpenTK.Vector3 vec3;
 
+        public ConstantVector3Node()
+        {
+            this.OutputConnectors.Add(new ConnectorViewModel("Out"));
+        }
+
         public ConstantVector3Node(string name)
             : base(name)
         {

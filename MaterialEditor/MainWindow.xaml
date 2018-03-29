@@ -24,6 +24,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <RoutedUICommand x:Key="Commands.CreateNode" />
+            <RoutedUICommand x:Key="Commands.CreateConstantVector3"></RoutedUICommand>
             <RoutedUICommand x:Key="Commands.DeleteConnection" />
             
             <DataTemplate DataType="{x:Type local:ConnectionOkIndicator}">
@@ -286,6 +287,9 @@
                       ToolTip="Creates a new node"
                       >
             </MenuItem>
+            <MenuItem Header="Create Constant Vector3"
+                      Command="{StaticResource Commands.CreateConstantVector3}">                
+            </MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
 
@@ -294,6 +298,11 @@
             Command="{StaticResource Commands.CreateNode}" 
             Executed="CreateNode_Executed" 
             />
+        <CommandBinding
+            Command="{StaticResource Commands.CreateConstantVector3}"
+            Executed="CreateConstantVector3">
+            
+        </CommandBinding>
         <CommandBinding 
             Command="{StaticResource Commands.DeleteConnection}" 
             Executed="DeleteConnection_Executed" 
