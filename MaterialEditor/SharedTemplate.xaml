@@ -52,10 +52,10 @@
     <LinearGradientBrush
         x:Key="nodeFillBrush"
         StartPoint="0,0"
-        EndPoint="0,1"
+        EndPoint="1,1"
         >
         <GradientStop Color="White" Offset="0" />
-        <GradientStop Color="Gray" Offset="0.6" />
+        <GradientStop Color="Black" Offset="0.8" />
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="nodeHeaderBrush" 
