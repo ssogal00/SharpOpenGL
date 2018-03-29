@@ -63,7 +63,7 @@
         <GradientStop Color="White" Offset="0.0"></GradientStop>
         <GradientStop Color="#FFBB0606" Offset="0.5">                        
         </GradientStop>
-        <GradientStop Color="Black" Offset="1.0"></GradientStop>
+        <GradientStop Color="#FF4F3637" Offset="1.0"></GradientStop>
     </LinearGradientBrush>
 
     <SolidColorBrush x:Key="selectionBorderColor" Color="Blue"/>

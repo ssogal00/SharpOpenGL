@@ -11,8 +11,8 @@ namespace MaterialEditor
         public AddNode()
             : base ("Add")
         {
-            this.InputConnectors.Add(new ConnectorViewModel("Operand1"));
-            this.InputConnectors.Add(new ConnectorViewModel("Operand2"));
+            this.InputConnectors.Add(new ConnectorViewModel("In1"));
+            this.InputConnectors.Add(new ConnectorViewModel("In2"));
 
             this.OutputConnectors.Add(new ConnectorViewModel("Out"));
         }
