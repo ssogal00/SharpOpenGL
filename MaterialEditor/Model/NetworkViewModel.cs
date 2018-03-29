@@ -14,6 +14,27 @@ namespace MaterialEditor
 
         protected ImpObservableCollection<ConnectionViewModel> connections = null;
 
+        protected NodeViewModel currentSelectedNode = null;
+
+        public NodeViewModel CurrentSelectedNode
+        {
+            get
+            {
+                if(currentSelectedNode != null)
+                {
+                    return currentSelectedNode;
+                }
+
+                return new NodeViewModel("Dummy Node");
+            }
+
+            set
+            {
+                currentSelectedNode = value;
+                OnPropertyChanged("CurrentSelectedNode");
+            }
+        }
+
         public ImpObservableCollection<ConnectionViewModel> Connections
         {
             get

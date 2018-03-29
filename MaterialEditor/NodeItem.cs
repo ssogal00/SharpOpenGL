@@ -224,7 +224,7 @@ namespace MaterialEditor
                     //
                     // Nothing already selected, select the item.
                     //
-                    this.IsSelected = true;
+                    this.IsSelected = true;                    
                 }
                 else if (this.ParentNetworkView.SelectedNodes.Contains(this) ||
                          this.ParentNetworkView.SelectedNodes.Contains(this.DataContext))

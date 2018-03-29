@@ -531,7 +531,11 @@ namespace MaterialEditor
             //
             NodeViewModel node1 = CreateNode("Node1", new Point(100, 60), false);
             NodeViewModel node2 = CreateNode("Node2", new Point(350, 80), false);
-            
+
+            ConstantVector3Node testnode = new ConstantVector3Node("Vector3");
+            testnode.X = 111;
+
+            this.Network.CurrentSelectedNode = testnode;
         }
 
         #endregion Private Methods

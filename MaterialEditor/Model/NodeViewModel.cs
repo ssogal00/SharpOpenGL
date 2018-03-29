@@ -275,7 +275,7 @@ namespace MaterialEditor
                     return;
                 }
 
-                isSelected = value;
+                isSelected = value;                
 
                 OnPropertyChanged("IsSelected");
             }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 
-namespace MaterialEditor.Model
+namespace MaterialEditor
 {
     public class VariableVector3Node : NodeViewModel
     {

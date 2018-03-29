@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace MaterialEditor
 {
-    public class AddNode : NodeViewModel
+    public class MinusNode : NodeViewModel
     {
-        public AddNode()
-            : base ("Add")
+        public MinusNode()
+            : base("Minus")
         {
             this.InputConnectors.Add(new ConnectorViewModel("A"));
             this.InputConnectors.Add(new ConnectorViewModel("B"));
@@ -17,6 +17,4 @@ namespace MaterialEditor
             this.OutputConnectors.Add(new ConnectorViewModel("Out"));
         }
     }
-
-    
 }

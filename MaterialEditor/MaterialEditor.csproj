@@ -72,8 +72,13 @@
     <Compile Include="ConnectionBadIndicator.cs" />
     <Compile Include="ConnectionOkIndicator.cs" />
     <Compile Include="CurvedArrow.cs" />
+    <Compile Include="Operator\MinusNode.cs" />
     <Compile Include="Vector\ConstantVector3Node.cs" />
     <Compile Include="Vector\VariableVector3Node.cs" />
+    <Page Include="DetailViewTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
