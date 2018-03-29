@@ -12,12 +12,10 @@
 
     <Window.DataContext>
         <local:MainWindowViewModel></local:MainWindowViewModel>
-    </Window.DataContext>
+    </Window.DataContext>  
 
-   
-
+    
     <Window.Resources>
-        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary 
@@ -25,8 +23,9 @@
                     />
             </ResourceDictionary.MergedDictionaries>
 
-            <RoutedUICommand x:Key="Commands.CreateNode" />                       
-
+            <RoutedUICommand x:Key="Commands.CreateNode" />
+            <RoutedUICommand x:Key="Commands.DeleteConnection" />
+            
             <DataTemplate DataType="{x:Type local:ConnectionOkIndicator}">
                 <Grid
                     Width="80"
@@ -132,7 +131,7 @@
                                 Height="20"
                                 Cursor="Hand"
                                 Focusable="False"
-                                
+                                Command="{StaticResource Commands.DeleteConnection}"
                                 CommandParameter="{Binding}"
                                 Template="{StaticResource deleteButtonTemplate}"
                                 />
@@ -280,10 +279,24 @@
 
     </Window.Resources>
 
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Create Node"
+                      Command="{StaticResource Commands.CreateNode}"
+                      ToolTip="Creates a new node"
+                      >
+            </MenuItem>
+        </ContextMenu>
+    </Window.ContextMenu>
+
     <Window.CommandBindings>
         <CommandBinding 
             Command="{StaticResource Commands.CreateNode}" 
             Executed="CreateNode_Executed" 
+            />
+        <CommandBinding 
+            Command="{StaticResource Commands.DeleteConnection}" 
+            Executed="DeleteConnection_Executed" 
             />
     </Window.CommandBindings>
     

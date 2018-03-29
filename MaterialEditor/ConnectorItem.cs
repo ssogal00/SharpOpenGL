@@ -354,5 +354,12 @@ namespace MaterialEditor
         }
 
         #endregion Private Methods
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+
+        }
     }
 }

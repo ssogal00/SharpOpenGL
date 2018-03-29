@@ -209,6 +209,12 @@ namespace MaterialEditor
             var newNodePosition = Mouse.GetPosition(networkControl);
             this.ViewModel.CreateNode("New Node!", newNodePosition, true);
         }
+
+        private void DeleteConnection_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            var connection = (ConnectionViewModel)e.Parameter;
+            this.ViewModel.DeleteConnection(connection);
+        }
     }
 
 
