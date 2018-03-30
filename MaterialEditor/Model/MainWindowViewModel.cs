@@ -533,7 +533,7 @@ namespace MaterialEditor
             NodeViewModel node2 = CreateNode("Node2", new Point(350, 80), false);
 
             ConstantVector3Node testnode = new ConstantVector3Node("Vector3");
-            testnode.X = 111;
+            testnode.XValue = 1100;
 
             this.Network.CurrentSelectedNode = testnode;
         }

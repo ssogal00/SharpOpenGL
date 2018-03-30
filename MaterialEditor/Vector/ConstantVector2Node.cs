@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using OpenTK;
 
 namespace MaterialEditor
 {
-    public class ConstantVector3Node : NodeViewModel
+    public class ConstantVector2Node : NodeViewModel
     {
-        protected OpenTK.Vector3 vec3;
+        protected OpenTK.Vector2 vec2;
 
-        public ConstantVector3Node()
+        public ConstantVector2Node()
         {
             this.OutputConnectors.Add(new ConnectorViewModel("Out"));
         }
 
-        public ConstantVector3Node(string name)
+        public ConstantVector2Node(string name)
             : base(name)
         {
             this.OutputConnectors.Add(new ConnectorViewModel("Out"));
@@ -26,11 +27,11 @@ namespace MaterialEditor
         {
             get
             {
-                return vec3.X;
+                return vec2.X;
             }
             set
             {
-                vec3.X = value;
+                vec2.X = value;
                 OnPropertyChanged("XValue");
             }
         }
@@ -39,37 +40,28 @@ namespace MaterialEditor
         {
             get
             {
-                return vec3.Y;
+                return vec2.Y;
             }
             set
             {
-                vec3.Y = value;
+                vec2.Y = value;
                 OnPropertyChanged("YValue");
             }
         }
+        
 
-        public float ZValue
-        {
-            get { return vec3.Z; }
-            set
-            {
-                vec3.Z = value;
-                OnPropertyChanged("ZValue");
-            }
-        }
-
-        public Vector3 Vector3Value
+        public Vector2 Vector2Value
         {
             get
             {
-                return vec3;
+                return vec2;
             }
 
             set
             {
-                vec3 = value;
+                vec2 = value;
 
-                OnPropertyChanged("Vector3Value");
+                OnPropertyChanged("Vector2Value");
             }
         }
     }

@@ -8,26 +8,38 @@
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:ConstantVector3Node}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>            
-            <Grid Grid.Row="0">
-                <TextBlock Text="{Binding Name}"></TextBlock>                
+        <Border BorderBrush="Black" Margin="5" BorderThickness="1"> 
+            <Grid Margin="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <TextBlock Text="Name"></TextBlock>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <TextBlock Text="X"></TextBlock>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <TextBox Text="{Binding XValue, Mode=TwoWay}"></TextBox>                    
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="0">
+                    <TextBlock Text="Y"></TextBlock>
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <TextBox Text="{Binding YValue, Mode=TwoWay}"></TextBox>
+                </Grid>
             </Grid>
-            <Grid Grid.Row="1">
-                <TextBlock Text="{Binding X}"></TextBlock>
-            </Grid>
-            <Grid Grid.Row="2">
-                <TextBlock Text="{Binding Y}"></TextBlock>
-            </Grid>
-            <Grid Grid.Row="3">
-                <TextBlock Text="{Binding Z}"></TextBlock>
-            </Grid>
-        </Grid>
+        </Border>
     </DataTemplate>
 </ResourceDictionary>
 
