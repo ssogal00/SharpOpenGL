@@ -27,13 +27,15 @@ namespace MaterialEditor
         /// </summary>
         private Point hotspot;
 
+        
+
         #endregion Internal Data Members
 
         public ConnectorViewModel(string name)
         {
             this.Name = name;
             this.Type = ConnectorType.Undefined;
-        }
+        }        
 
         /// <summary>
         /// The name of the connector.

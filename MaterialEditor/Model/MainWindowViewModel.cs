@@ -442,7 +442,7 @@ namespace MaterialEditor
             var node = new T();
             node.Name = name;
             this.Network.Nodes.Add(node);
-            return null;
+            return node;
         }
 
         /// <summary>
@@ -529,13 +529,10 @@ namespace MaterialEditor
             //
             // Create some nodes and add them to the view-model.
             //
-            NodeViewModel node1 = CreateNode("Node1", new Point(100, 60), false);
-            NodeViewModel node2 = CreateNode("Node2", new Point(350, 80), false);
 
-            ConstantVector3Node testnode = new ConstantVector3Node("Vector3");
-            testnode.XValue = 1100;
+            NodeViewModel node3 = CreateNode<ResultNode>("Material Result", new Point(0, 0));
 
-            this.Network.CurrentSelectedNode = testnode;
+            this.Network.CurrentSelectedNode = node3;
         }
 
         #endregion Private Methods

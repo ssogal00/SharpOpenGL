@@ -22,6 +22,11 @@ namespace MaterialEditor
             this.OutputConnectors.Add(new ConnectorViewModel("Out"));
         }
 
+        public override string ToExpression()
+        {
+            return string.Format("vec3({0}, {1}, {2})", XValue, YValue, ZValue);
+        }
+
         public float XValue
         {
             get
@@ -63,14 +68,7 @@ namespace MaterialEditor
             get
             {
                 return vec3;
-            }
-
-            set
-            {
-                vec3 = value;
-
-                OnPropertyChanged("Vector3Value");
-            }
+            }            
         }
     }
 }

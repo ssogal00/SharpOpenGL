@@ -100,7 +100,7 @@ namespace MaterialEditor
 
             MyGbuffer.Unbind();
 
-            ScreenBlit.Blit(MyGbuffer.NormalBufferObject, 0, 0, 1, 1);            
+            ScreenBlit.Blit(MyGbuffer.ColorBufferObject, 0, 0, 1, 1);            
             
             mGlControl.SwapBuffers();
         }
@@ -222,14 +222,18 @@ namespace MaterialEditor
             this.ViewModel.CreateNode<ConstantVector3Node>("Vector3", newNodePosition);
         }
 
-        private void CreateAddNode(object sender, ExecutedRoutedEventArgs e)
+        private void CreateVector3AddNode(object sender, ExecutedRoutedEventArgs e)
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
-            this.ViewModel.CreateNode<AddNode>("Add", newNodePosition);
+            this.ViewModel.CreateNode<Vector3AddNode>("Add Vector3", newNodePosition);
+        }
+
+        private void OnBtnCompileClick(object sender, RoutedEventArgs e)
+        {
+            
+            string result = this.ViewModel.Network.CurrentSelectedNode.ToExpression();
+            
         }
     }
-
-
-
 }
 

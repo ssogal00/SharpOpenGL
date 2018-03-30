@@ -50,7 +50,7 @@ namespace MaterialEditor
         /// <summary>
         /// List of input connectors (connections points) attached to the node.
         /// </summary>
-        private ImpObservableCollection<ConnectorViewModel> inputConnectors = null;
+        private ImpObservableCollection<ConnectorViewModel> inputConnectors = null;        
 
         /// <summary>
         /// List of output connectors (connections points) attached to the node.
@@ -62,16 +62,26 @@ namespace MaterialEditor
         /// </summary>
         private bool isSelected = false;
 
+        public virtual string ToExpression()
+        {
+            return string.Empty;
+        }
+
+      
         #endregion Private Data Members
 
         public NodeViewModel()
         {
+            CreateInputOutputConnectors();
         }
 
         public NodeViewModel(string name)
         {
             this.name = name;
+            CreateInputOutputConnectors();
         }
+
+        protected virtual void CreateInputOutputConnectors() { }
 
         /// <summary>
         /// The name of the node.

@@ -71,13 +71,21 @@
     </ApplicationDefinition>
     <Compile Include="ConnectionBadIndicator.cs" />
     <Compile Include="ConnectionOkIndicator.cs" />
+    <Compile Include="Constant\ConstantFloatNode.cs" />
     <Compile Include="CurvedArrow.cs" />
+    <Compile Include="ConnectorInput.cs" />
     <Compile Include="Model\ConnectorType.cs" />
-    <Compile Include="Operator\MinusNode.cs" />
+    <Compile Include="Operator\Vector2AddNode.cs" />
+    <Compile Include="Operator\Vector3AddNode.cs" />
+    <Compile Include="Result\ResultNode.cs" />
     <Compile Include="Vector\ConstantVector2Node.cs" />
     <Compile Include="Vector\ConstantVector3Node.cs" />
     <Compile Include="Vector\VariableVector3Node.cs" />
     <Page Include="DetailViewTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InputConnectorTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -104,7 +112,6 @@
     <Compile Include="NetworkView_NodeDragging.cs" />
     <Compile Include="NodeDragEvents.cs" />
     <Compile Include="NodeItemsControl.cs" />
-    <Compile Include="Operator\AddNode.cs" />
     <Compile Include="Utils\ImpObservableCollection.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

@@ -13,12 +13,21 @@ namespace MaterialEditor
         protected OpenTK.Vector2 vec2;
 
         public ConstantVector2Node()
-        {
-            this.OutputConnectors.Add(new ConnectorViewModel("Out"));
+            : base("Vector2")
+        {   
         }
 
         public ConstantVector2Node(string name)
             : base(name)
+        {            
+        }
+
+        public override string ToExpression()
+        {
+            return string.Format("vec2({0},{1})", XValue, YValue);
+        }
+
+        protected override void CreateInputOutputConnectors()
         {
             this.OutputConnectors.Add(new ConnectorViewModel("Out"));
         }
@@ -55,13 +64,6 @@ namespace MaterialEditor
             get
             {
                 return vec2;
-            }
-
-            set
-            {
-                vec2 = value;
-
-                OnPropertyChanged("Vector2Value");
             }
         }
     }

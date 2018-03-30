@@ -27,7 +27,7 @@
 
             <RoutedUICommand x:Key="Commands.CreateNode" />
             <RoutedUICommand x:Key="Commands.CreateConstantVector3"></RoutedUICommand>
-            <RoutedUICommand x:Key="Commands.CreateAddNode"/>
+            <RoutedUICommand x:Key="Commands.CreateVector3AddNode"/>
             <RoutedUICommand x:Key="Commands.DeleteConnection" />
             
             <DataTemplate DataType="{x:Type local:ConnectionOkIndicator}">
@@ -207,8 +207,7 @@
             <MenuItem Header="Create Constant Vector3"
                       Command="{StaticResource Commands.CreateConstantVector3}">
             </MenuItem>
-            <MenuItem Header="Create Add Node" Command="{StaticResource Commands.CreateAddNode}">
-                
+            <MenuItem Header="Create Vector3 Add Node" Command="{StaticResource Commands.CreateVector3AddNode}">
             </MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
@@ -221,7 +220,7 @@
         <CommandBinding
             Command="{StaticResource Commands.CreateConstantVector3}"
             Executed="CreateConstantVector3"/>
-        <CommandBinding Command="{StaticResource Commands.CreateAddNode}" Executed="CreateAddNode">
+        <CommandBinding Command="{StaticResource Commands.CreateVector3AddNode}" Executed="CreateVector3AddNode">
         </CommandBinding>
         <CommandBinding 
             Command="{StaticResource Commands.DeleteConnection}" 
@@ -294,7 +293,11 @@
         <Grid Grid.Row="1" Grid.Column="0" Margin="3">
             <ScrollViewer>
                 <Grid>
-                    <ContentControl Content="{Binding Network.CurrentSelectedNode}"></ContentControl>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <Button Click="OnBtnCompileClick">Compile</Button>
                 </Grid>
             </ScrollViewer>
         </Grid>
