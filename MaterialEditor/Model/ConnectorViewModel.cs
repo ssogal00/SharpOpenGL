@@ -8,12 +8,7 @@ using System.Windows;
 
 namespace MaterialEditor
 {
-    public enum ConnectorType
-    {
-        Undefined,
-        Input,
-        Output,
-    }
+  
     /// <summary>
     /// Defines a connector (aka connection point) that can be attached to a node and is used to connect the node to another node.
     /// </summary>

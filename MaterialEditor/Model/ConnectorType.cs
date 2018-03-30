@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MaterialEditor
+{    public enum ConnectorType
+    {
+        Undefined,
+        Input,
+        Output,
+        ConstantVector3,
+        ConstantVector2,
+    }
+}

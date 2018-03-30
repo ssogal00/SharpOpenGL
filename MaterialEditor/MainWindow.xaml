@@ -271,7 +271,7 @@
                                        MouseUp="networkControl_MouseUp"
                                        MouseMove="networkControl_MouseMove"
                                        MouseWheel="networkControl_MouseWheel"
-                                       >
+                                       >                                
                             </local:NetworkView>
                             <Canvas
                             x:Name="dragZoomCanvas"

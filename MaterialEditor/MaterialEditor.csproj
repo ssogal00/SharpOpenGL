@@ -72,7 +72,9 @@
     <Compile Include="ConnectionBadIndicator.cs" />
     <Compile Include="ConnectionOkIndicator.cs" />
     <Compile Include="CurvedArrow.cs" />
+    <Compile Include="Model\ConnectorType.cs" />
     <Compile Include="Operator\MinusNode.cs" />
+    <Compile Include="Vector\ConstantVector2Node.cs" />
     <Compile Include="Vector\ConstantVector3Node.cs" />
     <Compile Include="Vector\VariableVector3Node.cs" />
     <Page Include="DetailViewTemplate.xaml">
