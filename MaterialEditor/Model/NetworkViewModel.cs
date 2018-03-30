@@ -42,6 +42,7 @@ namespace MaterialEditor
                 if(connections == null)
                 {
                     connections = new ImpObservableCollection<ConnectionViewModel>();
+                    connections.ItemsRemoved += new EventHandler<CollectionItemsChangedEventArgs>(connections_ItemsRemoved);
                 }
 
                 return connections;
@@ -55,8 +56,18 @@ namespace MaterialEditor
                 if(nodes == null)
                 {
                     nodes = new ImpObservableCollection<NodeViewModel>();
+                    
                 }
                 return nodes;
+            }
+        }
+
+        private void connections_ItemsRemoved(object sender, CollectionItemsChangedEventArgs e)
+        {
+            foreach (ConnectionViewModel connection in e.Items)
+            {
+                connection.SourceConnector = null;
+                connection.DestConnector = null;
             }
         }
     }
