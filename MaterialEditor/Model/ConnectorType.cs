@@ -15,10 +15,24 @@ namespace MaterialEditor
 
     public enum ConnectorDataType
     {
+        InvalidDataType,
         ConstantVector4,
         ConstantVector3,
         ConstantVector2,
         ConstantFloat,
         ConstantInt,        
     }
+
+    public static class ConnectionHelper
+    {
+        public static bool IsCompatibleConnector(ConnectorDataType a, ConnectorDataType b)
+        {
+            if(a == b)
+            {
+                return true;
+            }
+            
+            return false;
+        }
+    }    
 }

@@ -271,6 +271,8 @@ namespace MaterialEditor
                 connectionOk = sourceConnector.ParentNode != destConnector.ParentNode &&
                                  sourceConnector.Type != destConnector.Type;
 
+                connectionOk = connectionOk && ConnectionHelper.IsCompatibleConnector(sourceConnector.DataType, destConnector.DataType);
+
                 if (connectionOk)
                 {
                     // 
@@ -329,6 +331,8 @@ namespace MaterialEditor
             //
             bool connectionOk = connectorDraggedOut.ParentNode != connectorDraggedOver.ParentNode &&
                                 connectorDraggedOut.Type != connectorDraggedOver.Type;
+
+            connectionOk = connectionOk && ConnectionHelper.IsCompatibleConnector(connectorDraggedOut.DataType, connectorDraggedOver.DataType);
 
             if (!connectionOk)
             {

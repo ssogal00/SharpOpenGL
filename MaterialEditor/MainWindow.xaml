@@ -29,7 +29,8 @@
             <RoutedUICommand x:Key="Commands.CreateConstantVector3"></RoutedUICommand>
             <RoutedUICommand x:Key="Commands.CreateVector3AddNode"/>
             <RoutedUICommand x:Key="Commands.DeleteConnection" />
-            
+            <RoutedUICommand x:Key="Commands.CreateSineNode"/>
+
             <DataTemplate DataType="{x:Type local:ConnectionOkIndicator}">
                 <Grid
                     Width="80"
@@ -199,16 +200,10 @@
 
     <Window.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="Create Node"
-                      Command="{StaticResource Commands.CreateNode}"
-                      ToolTip="Creates a new node"
-                      >
-            </MenuItem>
-            <MenuItem Header="Create Constant Vector3"
-                      Command="{StaticResource Commands.CreateConstantVector3}">
-            </MenuItem>
-            <MenuItem Header="Create Vector3 Add Node" Command="{StaticResource Commands.CreateVector3AddNode}">
-            </MenuItem>
+            <MenuItem Header="Create Node" Command="{StaticResource Commands.CreateNode}" ToolTip="Creates a new node"/>
+            <MenuItem Header="Create Constant Vector3" Command="{StaticResource Commands.CreateConstantVector3}"></MenuItem>
+            <MenuItem Header="Create Vector3 Add Node" Command="{StaticResource Commands.CreateVector3AddNode}"></MenuItem>
+            <MenuItem Header="Create Sine Node" Command="{StaticResource Commands.CreateSineNode}"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
 
@@ -226,6 +221,7 @@
             Command="{StaticResource Commands.DeleteConnection}" 
             Executed="DeleteConnection_Executed" 
             />
+        <CommandBinding Command="{StaticResource Commands.CreateSineNode}" Executed="CreateSineNode"></CommandBinding>
     </Window.CommandBindings>
     
     <Grid>

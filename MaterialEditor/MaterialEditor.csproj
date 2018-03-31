@@ -76,11 +76,13 @@
     <Compile Include="ConnectorInput.cs" />
     <Compile Include="LiveMaterial\LiveMaterial.cs" />
     <Compile Include="Model\ConnectorType.cs" />
+    <Compile Include="Operator\CosineNode.cs" />
     <Compile Include="Operator\SineNode.cs" />
     <Compile Include="Operator\Vector2AddNode.cs" />
     <Compile Include="Operator\Vector3AddNode.cs" />
     <Compile Include="Result\ResultNode.cs" />
     <Compile Include="UniformParam\TimeParam.cs" />
+    <Compile Include="UniformParam\Vector3ParamNode.cs" />
     <Compile Include="Vector\ConstantVector2Node.cs" />
     <Compile Include="Vector\ConstantVector3Node.cs" />
     <Compile Include="Vector\ConstantVector4Node.cs" />

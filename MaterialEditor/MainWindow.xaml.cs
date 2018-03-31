@@ -16,6 +16,8 @@ using Core.CustomEvent;
 using SharpOpenGL.GBufferDraw;
 using Core.Texture;
 using System.Timers;
+using System.Windows.Threading;
+using System.Diagnostics;
 
 namespace MaterialEditor
 {
@@ -26,9 +28,23 @@ namespace MaterialEditor
     {
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
+
+            timer.Tick += new EventHandler(Tick);
+            timer.Interval = TimeSpan.FromMilliseconds(1);
+            timer.Start();
         }
 
+
+        private void Tick(object sender, EventArgs e)
+        {
+            fAngle += 1.0f;
+
+            this.Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(fAngle)) * Matrix4.CreateScale(0.1f);
+
+            mGlControl.Invalidate();
+        }
+        
         
         public MainWindowViewModel ViewModel
         {
@@ -49,12 +65,14 @@ namespace MaterialEditor
         protected Texture2D test = null;
         protected GBuffer MyGbuffer = new GBuffer(100,100);
         protected BlitToScreen ScreenBlit = new BlitToScreen();
+        
 
         protected MaterialBase DeferredMaterial = null;
 
         protected EventHandler<EventArgs> WindowCreateEvent;
         protected EventHandler<Core.CustomEvent.ScreenResizeEventArgs> WindowResizeEvent;
 
+        protected DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer(DispatcherPriority.Normal);
         protected LiveMaterial liveMaterial = null;
 
         protected ObjMesh Mesh = new ObjMesh();
@@ -242,6 +260,12 @@ namespace MaterialEditor
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
             this.ViewModel.CreateNode<Vector3AddNode>("Add Vector3", newNodePosition);
+        }
+
+        private void CreateSineNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<SineNode>("Sine", newNodePosition);
         }
 
         private void OnBtnCompileClick(object sender, RoutedEventArgs e)

@@ -13,13 +13,13 @@ namespace MaterialEditor
 
         public ConstantVector3Node()
         {
-            this.OutputConnectors.Add(new ConnectorViewModel("Out"));
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3));
         }
 
         public ConstantVector3Node(string name)
             : base(name)
         {
-            this.OutputConnectors.Add(new ConnectorViewModel("Out"));
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3));
         }
 
         public override string ToExpression()

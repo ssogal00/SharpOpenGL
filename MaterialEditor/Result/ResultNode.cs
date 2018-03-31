@@ -15,7 +15,7 @@ namespace MaterialEditor
         protected override void CreateInputOutputConnectors()
         {
             base.CreateInputOutputConnectors();
-            InputConnectors.Add(new ConnectorViewModel("Color"));
+            InputConnectors.Add(new ConnectorViewModel("Color", ConnectorDataType.ConstantVector3));
         }
 
         public override string ToExpression()
