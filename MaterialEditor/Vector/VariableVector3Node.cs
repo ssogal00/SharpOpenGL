@@ -11,25 +11,23 @@ namespace MaterialEditor
     {
         protected OpenTK.Vector3 vec3;
 
-        public VariableVector3Node()
+        protected override void CreateInputOutputConnectors()
         {
-            var xConnector = new ConnectorViewModel("X");
-            this.InputConnectors.Add(xConnector);
-            this.InputConnectors.Add(new ConnectorViewModel("Y"));
-            this.InputConnectors.Add(new ConnectorViewModel("Z"));
+            base.CreateInputOutputConnectors();
+            this.InputConnectors.Add(new ConnectorViewModel("X", ConnectorDataType.ConstantFloat));
+            this.InputConnectors.Add(new ConnectorViewModel("Y", ConnectorDataType.ConstantFloat));
+            this.InputConnectors.Add(new ConnectorViewModel("Z", ConnectorDataType.ConstantFloat));
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3));
+        }
 
-            this.OutputConnectors.Add(new ConnectorViewModel("Out"));
+        public VariableVector3Node()
+            : base("Variable Vector3")
+        {   
         }
 
         public VariableVector3Node(string name)
             : base(name)
         {
-            var xConnector = new ConnectorViewModel("X");
-            this.InputConnectors.Add(xConnector);
-            this.InputConnectors.Add(new ConnectorViewModel("Y"));
-            this.InputConnectors.Add(new ConnectorViewModel("Z"));
-
-            this.OutputConnectors.Add(new ConnectorViewModel("Out"));
         }
 
         public float XValue

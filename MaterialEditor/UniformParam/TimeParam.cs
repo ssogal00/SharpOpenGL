@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MaterialEditor.UniformParam
+namespace MaterialEditor
 {
-    class TimeParam
+    public class TimeParam : NodeViewModel
     {
+
     }
 }

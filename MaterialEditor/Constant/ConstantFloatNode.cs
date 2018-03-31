@@ -8,6 +8,32 @@ namespace MaterialEditor
 {
     public class ConstantFloatNode : NodeViewModel
     {
-        
+        public ConstantFloatNode()
+            : base("Float")
+        { }
+
+        protected override void CreateInputOutputConnectors()
+        {
+            base.CreateInputOutputConnectors();
+            OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat));
+        }
+
+        public override string ToExpression()
+        {
+            return string.Format("{0}", floatValue);
+        }
+
+        protected float floatValue = 0;
+
+        public float Value
+        {
+            get { return floatValue; }
+            set
+            {
+                floatValue = value;
+                OnPropertyChanged("Value");
+            }
+        }
     }
+
 }

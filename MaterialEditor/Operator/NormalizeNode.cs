@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MaterialEditor.Operator
 {
-    class NormalizeNode
+    class NormalizeNode        
     {
 
     }
