@@ -11,7 +11,6 @@ namespace MaterialEditor
         public Vector3AddNode()
             : base ("Vector3 Add")
         {
-
         }
 
         public override string ToExpression()
@@ -29,9 +28,9 @@ namespace MaterialEditor
 
         protected override void CreateInputOutputConnectors()
         {
-            this.InputConnectors.Add(new ConnectorViewModel("A"));
-            this.InputConnectors.Add(new ConnectorViewModel("B"));
-            this.OutputConnectors.Add(new ConnectorViewModel("Out"));
+            this.InputConnectors.Add(new ConnectorViewModel("A", ConnectorDataType.ConstantVector3));
+            this.InputConnectors.Add(new ConnectorViewModel("B", ConnectorDataType.ConstantVector3));
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3));
         }        
     }
 }

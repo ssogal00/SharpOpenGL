@@ -5,12 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MaterialEditor
-{    public enum ConnectorType
+{
+    public enum ConnectorType
     {
         Undefined,
         Input,
         Output,
+    }
+
+    public enum ConnectorDataType
+    {
+        ConstantVector4,
         ConstantVector3,
         ConstantVector2,
+        ConstantFloat,
+        ConstantInt,        
     }
 }

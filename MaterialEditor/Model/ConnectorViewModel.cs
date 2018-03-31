@@ -35,7 +35,13 @@ namespace MaterialEditor
         {
             this.Name = name;
             this.Type = ConnectorType.Undefined;
-        }        
+        }
+
+        public ConnectorViewModel(string name , ConnectorDataType dataType)
+            : this(name)
+        {
+            this.DataType = dataType;
+        }
 
         /// <summary>
         /// The name of the connector.
@@ -53,6 +59,11 @@ namespace MaterialEditor
         {
             get;
             internal set;
+        }
+
+        public ConnectorDataType DataType
+        {
+            get;set;
         }
 
         /// <summary>

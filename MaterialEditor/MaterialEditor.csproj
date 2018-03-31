@@ -74,12 +74,16 @@
     <Compile Include="Constant\ConstantFloatNode.cs" />
     <Compile Include="CurvedArrow.cs" />
     <Compile Include="ConnectorInput.cs" />
+    <Compile Include="LiveMaterial\LiveMaterial.cs" />
     <Compile Include="Model\ConnectorType.cs" />
+    <Compile Include="Operator\SineNode.cs" />
     <Compile Include="Operator\Vector2AddNode.cs" />
     <Compile Include="Operator\Vector3AddNode.cs" />
     <Compile Include="Result\ResultNode.cs" />
+    <Compile Include="UniformParam\TimeParam.cs" />
     <Compile Include="Vector\ConstantVector2Node.cs" />
     <Compile Include="Vector\ConstantVector3Node.cs" />
+    <Compile Include="Vector\ConstantVector4Node.cs" />
     <Compile Include="Vector\VariableVector3Node.cs" />
     <Page Include="DetailViewTemplate.xaml">
       <SubType>Designer</SubType>
@@ -193,9 +197,12 @@
     <PostBuildEvent>if not exist $(TargetDir)\Resources mkdir $(TargetDir)\Resources
 if not exist $(TargetDir)\Resources\SponzaTexture mkdir $(TargetDir)\Resources\SponzaTexture
 if not exist $(TargetDir)\Resources\ObjMesh mkdir $(TargetDir)\Resources\ObjMesh
+if not exist $(TargetDir)\Resources\Shader mkdir $(TargetDir)\Resources\Shader
 xcopy /D /Y /S $(SolutionDir)\SharpOpenGL\Resources\SponzaTexture $(TargetDir)\Resources\SponzaTexture
 xcopy /D /Y /S $(SolutionDir)\SharpOpenGL\Resources\ObjMesh $(TargetDir)\Resources\ObjMesh
-xcopy /F /Y /S $(SolutionDir)\SharpOpenGL\lib\FreeImage.dll $(TargetDir)</PostBuildEvent>
+xcopy /F /Y /S $(SolutionDir)\SharpOpenGL\lib\FreeImage.dll $(TargetDir)
+xcopy /F /Y /S $(SolutionDir)\MaterialEditor\Shader $(TargetDir)\Resources\Shader
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

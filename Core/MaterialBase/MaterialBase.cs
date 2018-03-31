@@ -31,8 +31,49 @@ namespace Core.MaterialBase
             Initialize();
         }
 
+        public MaterialBase()
+        {
+        }
+
+        protected bool Compile(string vertexShaderCode, string fragmentShaderCode)
+        {
+            if(MaterialProgram != null)
+            {
+                MaterialProgram.DeleteProgram();
+            }
+
+            MaterialProgram = new Core.OpenGLShader.ShaderProgram();
+
+            VSShader.CompileShader(vertexShaderCode);
+            FSShader.CompileShader(fragmentShaderCode);
+
+            MaterialProgram.AttachShader(VSShader);
+            MaterialProgram.AttachShader(FSShader);
+
+            bool bSuccess = MaterialProgram.LinkProgram(out CompileResult);
+
+            Debug.Assert(bSuccess == true);
+
+            Initialize();
+
+            return bSuccess;
+        }
+
+        protected void CleanUp()
+        {
+            if(UniformBufferMap != null)
+            {
+                foreach(var buffer in UniformBufferMap)
+                {
+                    buffer.Value.Dispose();
+                }
+            }
+        }
+
         protected void Initialize()
         {
+            CleanUp();
+           
             var names = MaterialProgram.GetActiveUniformBlockNames();
 
             if (names.Count > 0)
@@ -63,6 +104,11 @@ namespace Core.MaterialBase
 
         public void SetTexture(string name, Core.Texture.TextureBase texture)
         {
+            if(SamplerMap == null)
+            {
+                return;
+            }
+
             Debug.Assert(SamplerMap.ContainsKey(name));
 
             var textureUnitToBind = SamplerMap[name];
@@ -123,50 +169,66 @@ namespace Core.MaterialBase
 
         public void SetUniformVarData(string varName, float data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVarData(varName, data);
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, data);
+            }
         }
 
         public void SetUniformVarData(string varName, int data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVarData(varName, data);
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, data);
+            }
         }
 
         public void SetUniformVarData(string varName, OpenTK.Vector2 data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVarData(varName, data);
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, data);
+            }
         }
 
         public void SetUniformVarData(string varName, ref OpenTK.Vector2 data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVarData(varName, data);
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, data);
+            }
         }        
 
         public void SetUniformVarData(string varName, OpenTK.Vector3 data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVarData(varName, data);
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, data);
+            }
         }
 
         public void SetUniformVarData(string varName, OpenTK.Vector4 data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVarData(varName, data);
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, data);
+            }
         }
 
         public void SetUniformVarData(string varName, OpenTK.Matrix3 data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVarData(varName, data);
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, data);
+            }
         }
 
         public void SetUniformVarData(string varName, OpenTK.Matrix4 data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVarData(varName, data);
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, data);
+            }
         }
 
         public void SetUniformVector2ArrayData(string varName, ref float[] data )

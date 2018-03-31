@@ -15,6 +15,7 @@ using SharpOpenGL;
 using Core.CustomEvent;
 using SharpOpenGL.GBufferDraw;
 using Core.Texture;
+using System.Timers;
 
 namespace MaterialEditor
 {
@@ -25,9 +26,10 @@ namespace MaterialEditor
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
 
+        
         public MainWindowViewModel ViewModel
         {
             get
@@ -53,7 +55,11 @@ namespace MaterialEditor
         protected EventHandler<EventArgs> WindowCreateEvent;
         protected EventHandler<Core.CustomEvent.ScreenResizeEventArgs> WindowResizeEvent;
 
+        protected LiveMaterial liveMaterial = null;
+
         protected ObjMesh Mesh = new ObjMesh();
+
+        protected float fAngle = 0.0f;
 
         private void GLControlLoad(object sender, EventArgs e)
         {
@@ -79,6 +85,8 @@ namespace MaterialEditor
             Mesh.Load("./Resources/ObjMesh/myteapot.obj", "./Resources/ObjMesh/myteapot.mtl");
             Mesh.PrepareToDraw();
             Mesh.LoadTextures();
+
+            liveMaterial = new LiveMaterial();
         }
 
         private void GLControlPaint(object sender, System.Windows.Forms.PaintEventArgs e)
@@ -93,10 +101,18 @@ namespace MaterialEditor
             MyGbuffer.Clear(System.Drawing.Color.Gray);
             MyGbuffer.PrepareToDraw();
 
-            DeferredMaterial.Setup();
-            DeferredMaterial.SetUniformBufferValue<Transform>("Transform", ref Transform);
-
-            Mesh.Draw(DeferredMaterial);
+            if(liveMaterial != null && liveMaterial.IsValid())
+            {
+                liveMaterial.Setup();
+                liveMaterial.SetUniformBufferValue<Transform>("Transform", ref Transform);
+                Mesh.Draw(liveMaterial);
+            }
+            else
+            {
+                DeferredMaterial.Setup();
+                DeferredMaterial.SetUniformBufferValue<Transform>("Transform", ref Transform);
+                Mesh.Draw(DeferredMaterial);
+            }            
 
             MyGbuffer.Unbind();
 
@@ -229,10 +245,16 @@ namespace MaterialEditor
         }
 
         private void OnBtnCompileClick(object sender, RoutedEventArgs e)
-        {
-            
+        {            
             string result = this.ViewModel.Network.CurrentSelectedNode.ToExpression();
             
+            liveMaterial.SetDiffuseColorCode(result);
+            liveMaterial.Compile();
+
+            if(liveMaterial.IsValid())
+            {
+                mGlControl.Invalidate();
+            }
         }
     }
 }

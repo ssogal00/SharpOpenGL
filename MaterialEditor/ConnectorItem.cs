@@ -50,12 +50,7 @@ namespace MaterialEditor
         /// Set to 'true' when the user is dragging the connector.
         /// </summary>
         private bool isDragging = false;
-
-        /// <summary>
-        /// The threshold distance the mouse-cursor must move before dragging begins.
-        /// </summary>
-        private static readonly double DragThreshold = 2;
-
+        
         #endregion Private Data Members
 
         public ConnectorItem()

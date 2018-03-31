@@ -33,6 +33,26 @@ namespace Core.OpenGLShader
             }
         }
 
+        public bool CompileShader(string shaderSourceCode, out string errorlog)
+        {
+            GL.ShaderSource(m_ShaderObject, shaderSourceCode);
+            GL.CompileShader(m_ShaderObject);
+
+            errorlog = string.Empty;
+
+            int nStatus;
+            GL.GetShader(m_ShaderObject, ShaderParameter.CompileStatus, out nStatus);
+
+            if (nStatus != 1)
+            {
+                GL.GetShaderInfoLog(m_ShaderObject, out errorlog);
+
+                return false;
+            }
+
+            return true;
+        }
+
         public int ShaderObject 
         {
             get { return m_ShaderObject; }

@@ -12,7 +12,6 @@ namespace Core.OpenGLShader
 {
     public class ShaderProgram
     {
-
         public ShaderProgram()
         {
             ProgramObject = GL.CreateProgram();
@@ -24,6 +23,12 @@ namespace Core.OpenGLShader
             AttachShader(FS);
             string Result;
             LinkProgram(out Result);
+        }
+
+        public void DeleteProgram()
+        {
+            GL.DeleteProgram(ProgramObject);
+            ProgramObject = 0;
         }
 
         public string ProgramName = "";
