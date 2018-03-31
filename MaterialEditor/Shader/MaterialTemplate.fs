@@ -12,9 +12,11 @@ layout (location = 2) out vec4 NormalColor;
 
 uniform float time;
 
+{uniformVariableDeclaration}
+
 vec3 GetDiffuseColor()
 {
-    return {0};
+    return {diffuseColorCode};
 }
 
 void main()

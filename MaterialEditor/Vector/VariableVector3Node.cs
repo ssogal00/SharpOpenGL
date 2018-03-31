@@ -37,7 +37,7 @@ namespace MaterialEditor
                 var xExpression = InputConnectors[0].AttachedConnections[0].SourceConnector.ParentNode.ToExpression();
 
                 return string.Format("vec3({0}, 0, 0)", xExpression);
-            }
+            }            
 
             return string.Empty;
         }

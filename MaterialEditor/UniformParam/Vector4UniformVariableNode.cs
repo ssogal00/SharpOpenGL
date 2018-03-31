@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MaterialEditor.UniformParam
 {
-    class Vector4UniformVariableNode
+    public class Vector4UniformVariableNode
     {
     }
 }

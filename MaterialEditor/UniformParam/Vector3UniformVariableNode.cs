@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 
 namespace MaterialEditor
 {
-  
+    public class Vector3UniformVariableNode : NodeViewModel
+    {
+
+    }
 }

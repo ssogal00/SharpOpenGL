@@ -26,13 +26,58 @@ namespace MaterialEditor
         {
             return lastCompileSuccess;
         }
+
+        public void Compile(NetworkViewModel shaderNetwork)
+        {
+            var uniformVarCode = GetUniformVariableCode(shaderNetwork);
+
+            var fsTemplate = GetFragmentShaderCode();
+            var vsTemplate = GetVertexShaderCode();
+
+            if (uniformVarCode.Length > 0)
+            {
+                fsTemplate = fsTemplate.Replace("{uniformVariableDeclaration}", uniformVarCode);
+            }
+            else
+            {
+                fsTemplate = fsTemplate.Replace("{uniformVariableDeclaration}", "");
+            }
+
+            var diffuseColorCode = shaderNetwork.CurrentSelectedNode.ToExpression();
+
+            if(diffuseColorCode.Length > 0)
+            {
+                fsTemplate = fsTemplate.Replace("{diffuseColorCode}", diffuseColorCode);
+            }            
+
+            if(Compile(vsTemplate, fsTemplate))
+            {
+                Initialize();
+            }
+        }
         
-        public void Compile()
+        protected string GetUniformVariableCode(NetworkViewModel shaderNetwork)
+        {
+            string result = string.Empty;
+
+            foreach(var item in shaderNetwork.Nodes)
+            {
+                if (item is FloatUniformVariableNode)
+                {
+                    FloatUniformVariableNode node = (FloatUniformVariableNode)item;                    
+                    result += string.Format("uniform float {0};\n", node.UniformVariableName);
+                }                
+            }
+
+            return result;
+        }
+
+        protected bool Compile(string vsCode, string fsCode)
         {
             string errorlog;            
 
-            bool bVSCompileSuccess = VSShader.CompileShader(GetVertexShaderCode(), out errorlog);
-            bool bFSCompileSuccess = FSShader.CompileShader(GetFragmentShaderCode(), out errorlog);
+            bool bVSCompileSuccess = VSShader.CompileShader(vsCode, out errorlog);
+            bool bFSCompileSuccess = FSShader.CompileShader(fsCode, out errorlog);
 
             MaterialProgram = new Core.OpenGLShader.ShaderProgram();
 
@@ -45,7 +90,7 @@ namespace MaterialEditor
 
             lastCompileSuccess = bVSCompileSuccess && bFSCompileSuccess && bLinkResult;
 
-            Initialize();
+            return lastCompileSuccess;
         }
 
         public void Use()
@@ -54,11 +99,6 @@ namespace MaterialEditor
             {
                 MaterialProgram.UseProgram();
             }
-        }
-
-        public void SetDiffuseColorCode(string code)
-        {
-            diffuseColorCode = code;
         }
 
         protected string GetVertexShaderCode()
@@ -70,9 +110,7 @@ namespace MaterialEditor
 
         protected string GetFragmentShaderCode()
         {
-            string fsTemplate = File.ReadAllText("./Resources/Shader/MaterialTemplate.fs");
-
-            fsTemplate = fsTemplate.Replace("{0}", diffuseColorCode);
+            string fsTemplate = File.ReadAllText("./Resources/Shader/MaterialTemplate.fs");                        
             
             return fsTemplate;
         }

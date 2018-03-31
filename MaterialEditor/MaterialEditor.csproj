@@ -84,9 +84,11 @@
     <Compile Include="Operator\Vector3MultiplyFloat.cs" />
     <Compile Include="Operator\Vector4MultiplyFloat.cs" />
     <Compile Include="Result\ResultNode.cs" />
+    <Compile Include="UniformParam\FloatUniformVariableNode.cs" />
     <Compile Include="UniformParam\TextureParam.cs" />
     <Compile Include="UniformParam\TimeParamNode.cs" />
-    <Compile Include="UniformParam\Vector3ParamNode.cs" />
+    <Compile Include="UniformParam\Vector3UniformVariableNode.cs" />
+    <Compile Include="UniformParam\Vector4UniformVariableNode.cs" />
     <Compile Include="Vector\ConstantVector2Node.cs" />
     <Compile Include="Vector\ConstantVector3Node.cs" />
     <Compile Include="Vector\ConstantVector4Node.cs" />

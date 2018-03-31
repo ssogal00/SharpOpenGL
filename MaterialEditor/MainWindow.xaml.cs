@@ -289,11 +289,8 @@ namespace MaterialEditor
         }
 
         private void OnBtnCompileClick(object sender, RoutedEventArgs e)
-        {            
-            string result = this.ViewModel.Network.CurrentSelectedNode.ToExpression();
-            
-            liveMaterial.SetDiffuseColorCode(result);
-            liveMaterial.Compile();
+        {   
+            liveMaterial.Compile(this.ViewModel.Network);
 
             if(liveMaterial.IsValid())
             {
