@@ -33,12 +33,16 @@ namespace MaterialEditor
             timer.Tick += new EventHandler(Tick);
             timer.Interval = TimeSpan.FromMilliseconds(1);
             timer.Start();
+
+            watch.Start();
         }
 
 
         private void Tick(object sender, EventArgs e)
         {
             fAngle += 1.0f;
+
+            
 
             this.Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(fAngle)) * Matrix4.CreateScale(0.1f);
 
@@ -64,10 +68,10 @@ namespace MaterialEditor
 
         protected Texture2D test = null;
         protected GBuffer MyGbuffer = new GBuffer(100,100);
-        protected BlitToScreen ScreenBlit = new BlitToScreen();
-        
+        protected BlitToScreen ScreenBlit = new BlitToScreen();        
 
         protected MaterialBase DeferredMaterial = null;
+        protected Stopwatch watch = new Stopwatch();
 
         protected EventHandler<EventArgs> WindowCreateEvent;
         protected EventHandler<Core.CustomEvent.ScreenResizeEventArgs> WindowResizeEvent;
@@ -123,6 +127,10 @@ namespace MaterialEditor
             {
                 liveMaterial.Setup();
                 liveMaterial.SetUniformBufferValue<Transform>("Transform", ref Transform);
+
+                var elapsedsec = (float) watch.ElapsedMilliseconds / 1000;
+                liveMaterial.SetUniformVarData("time", elapsedsec);
+
                 Mesh.Draw(liveMaterial);
             }
             else
@@ -266,6 +274,18 @@ namespace MaterialEditor
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
             this.ViewModel.CreateNode<SineNode>("Sine", newNodePosition);
+        }
+
+        private void CreateTimeNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<TimeParamNode>("Time", newNodePosition);
+        }
+
+        private void CreateVariableVector3(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<VariableVector3Node>("Variable Vector3", newNodePosition);
         }
 
         private void OnBtnCompileClick(object sender, RoutedEventArgs e)

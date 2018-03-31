@@ -40,6 +40,32 @@ namespace MaterialEditor
 
         #endregion Internal Data Members
 
+        public NodeViewModel SourceNodeModel
+        {
+            get
+            {
+                if(sourceConnector != null && sourceConnector.ParentNode != null)
+                {
+                    return sourceConnector.ParentNode;
+                }
+
+                return null;
+            }
+        }
+
+        public NodeViewModel DestNodeModel
+        {
+            get
+            {
+                if (destConnector != null && destConnector.ParentNode != null)
+                {
+                    return destConnector.ParentNode;
+                }
+
+                return null;
+            }
+        }
+
         /// <summary>
         /// The source connector the connection is attached to.
         /// </summary>

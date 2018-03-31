@@ -26,11 +26,13 @@
             </ResourceDictionary.MergedDictionaries>
 
             <RoutedUICommand x:Key="Commands.CreateNode" />
-            <RoutedUICommand x:Key="Commands.CreateConstantVector3"></RoutedUICommand>
+            <RoutedUICommand x:Key="Commands.CreateConstantVector3"/>
+            <RoutedUICommand x:Key="Commands.CreateVariableVector3"/>
             <RoutedUICommand x:Key="Commands.CreateVector3AddNode"/>
-            <RoutedUICommand x:Key="Commands.DeleteConnection" />
+            <RoutedUICommand x:Key="Commands.DeleteConnection" />            
             <RoutedUICommand x:Key="Commands.CreateSineNode"/>
-
+            <RoutedUICommand x:Key="Commands.CreateTimeNode"/>
+            
             <DataTemplate DataType="{x:Type local:ConnectionOkIndicator}">
                 <Grid
                     Width="80"
@@ -202,8 +204,10 @@
         <ContextMenu>
             <MenuItem Header="Create Node" Command="{StaticResource Commands.CreateNode}" ToolTip="Creates a new node"/>
             <MenuItem Header="Create Constant Vector3" Command="{StaticResource Commands.CreateConstantVector3}"></MenuItem>
+            <MenuItem Header="Create Variable Vector3" Command="{StaticResource Commands.CreateVariableVector3}"></MenuItem>
             <MenuItem Header="Create Vector3 Add Node" Command="{StaticResource Commands.CreateVector3AddNode}"></MenuItem>
             <MenuItem Header="Create Sine Node" Command="{StaticResource Commands.CreateSineNode}"></MenuItem>
+            <MenuItem Header="Create Time Node" Command="{StaticResource Commands.CreateTimeNode}"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
 
@@ -222,6 +226,8 @@
             Executed="DeleteConnection_Executed" 
             />
         <CommandBinding Command="{StaticResource Commands.CreateSineNode}" Executed="CreateSineNode"></CommandBinding>
+        <CommandBinding Command="{StaticResource Commands.CreateTimeNode}" Executed="CreateTimeNode"></CommandBinding>
+        <CommandBinding Command="{StaticResource Commands.CreateVariableVector3}" Executed="CreateVariableVector3"></CommandBinding>
     </Window.CommandBindings>
     
     <Grid>

@@ -10,6 +10,8 @@ layout (location = 0) out vec4 PositionColor;
 layout (location = 1) out vec4 DiffuseColor;
 layout (location = 2) out vec4 NormalColor;
 
+uniform float time;
+
 vec3 GetDiffuseColor()
 {
     return {0};
