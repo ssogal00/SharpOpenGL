@@ -36,6 +36,12 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type local:TextureParamNode}">
+        <Grid Margin="2">
+            <Image Width="64" Height="64" Source="{Binding ImageSource}"></Image>
+        </Grid>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:ConstantVector3Node}">        
         <Grid Margin="2">                
             <Grid.ColumnDefinitions>
@@ -66,7 +72,6 @@
             <Grid Grid.Column="5" Margin="2">
                 <TextBox Text="{Binding ZValue, Mode=TwoWay}"></TextBox>
             </Grid>
-
         </Grid>
         
     </DataTemplate>

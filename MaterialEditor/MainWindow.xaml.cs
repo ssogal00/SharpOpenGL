@@ -288,6 +288,12 @@ namespace MaterialEditor
             this.ViewModel.CreateNode<VariableVector3Node>("Variable Vector3", newNodePosition);
         }
 
+        private void CreateTextureNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<TextureParamNode>("Texture Param", newNodePosition);
+        }
+
         private void OnBtnCompileClick(object sender, RoutedEventArgs e)
         {   
             liveMaterial.Compile(this.ViewModel.Network);

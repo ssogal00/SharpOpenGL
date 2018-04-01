@@ -75,6 +75,7 @@
     <Compile Include="CurvedArrow.cs" />
     <Compile Include="ConnectorInput.cs" />
     <Compile Include="LiveMaterial\LiveMaterial.cs" />
+    <Compile Include="Mask\MaskNode.cs" />
     <Compile Include="Model\ConnectorType.cs" />
     <Compile Include="Operator\CosineNode.cs" />
     <Compile Include="Operator\NormalizeNode.cs" />
@@ -85,7 +86,7 @@
     <Compile Include="Operator\Vector4MultiplyFloat.cs" />
     <Compile Include="Result\ResultNode.cs" />
     <Compile Include="UniformParam\FloatUniformVariableNode.cs" />
-    <Compile Include="UniformParam\TextureParam.cs" />
+    <Compile Include="UniformParam\TextureParamNode.cs" />
     <Compile Include="UniformParam\TimeParamNode.cs" />
     <Compile Include="UniformParam\Vector3UniformVariableNode.cs" />
     <Compile Include="UniformParam\Vector4UniformVariableNode.cs" />

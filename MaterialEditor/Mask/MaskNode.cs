@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MaterialEditor.UniformParam
+namespace MaterialEditor.Mask
 {
-    class TextureParam
-    {
-    }
+   
 }

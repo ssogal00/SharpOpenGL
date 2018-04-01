@@ -72,7 +72,7 @@
     <LinearGradientBrush x:Key="nodeHeaderBrush" 
                          StartPoint="0,0" EndPoint="1,1" Opacity="0.7">
         <GradientStop Color="White" Offset="0.0" ></GradientStop>
-        <GradientStop Color="#FFBB0606" Offset="0.5">                        
+        <GradientStop Color="#FF07742A" Offset="0.5">                        
         </GradientStop>
         <GradientStop Color="#FF4F3637" Offset="1.0"></GradientStop>
     </LinearGradientBrush>

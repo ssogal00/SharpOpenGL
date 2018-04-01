@@ -32,6 +32,7 @@
             <RoutedUICommand x:Key="Commands.DeleteConnection" />            
             <RoutedUICommand x:Key="Commands.CreateSineNode"/>
             <RoutedUICommand x:Key="Commands.CreateTimeNode"/>
+            <RoutedUICommand x:Key="Commands.CreateTextureNode"></RoutedUICommand>
             
             <DataTemplate DataType="{x:Type local:ConnectionOkIndicator}">
                 <Grid
@@ -208,6 +209,7 @@
             <MenuItem Header="Create Vector3 Add Node" Command="{StaticResource Commands.CreateVector3AddNode}"></MenuItem>
             <MenuItem Header="Create Sine Node" Command="{StaticResource Commands.CreateSineNode}"></MenuItem>
             <MenuItem Header="Create Time Node" Command="{StaticResource Commands.CreateTimeNode}"></MenuItem>
+            <MenuItem Header="Create Texture Node" Command="{StaticResource Commands.CreateTextureNode}"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
 
@@ -228,6 +230,7 @@
         <CommandBinding Command="{StaticResource Commands.CreateSineNode}" Executed="CreateSineNode"></CommandBinding>
         <CommandBinding Command="{StaticResource Commands.CreateTimeNode}" Executed="CreateTimeNode"></CommandBinding>
         <CommandBinding Command="{StaticResource Commands.CreateVariableVector3}" Executed="CreateVariableVector3"></CommandBinding>
+        <CommandBinding Command="{StaticResource Commands.CreateTextureNode}" Executed="CreateTextureNode"></CommandBinding>
     </Window.CommandBindings>
     
     <Grid>
