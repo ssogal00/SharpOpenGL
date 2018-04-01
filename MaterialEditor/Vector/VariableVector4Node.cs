@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using OpenTK;
 
 namespace MaterialEditor
 {
-    public class VariableVector3Node : NodeViewModel
+    public class VariableVector4Node : NodeViewModel
     {
-        protected OpenTK.Vector3 vec3;
+        protected OpenTK.Vector4 vec4;
 
         protected override void CreateInputOutputConnectors()
         {
@@ -17,15 +18,16 @@ namespace MaterialEditor
             this.InputConnectors.Add(new ConnectorViewModel("X", ConnectorDataType.ConstantFloat));
             this.InputConnectors.Add(new ConnectorViewModel("Y", ConnectorDataType.ConstantFloat));
             this.InputConnectors.Add(new ConnectorViewModel("Z", ConnectorDataType.ConstantFloat));
-            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3));
+            this.InputConnectors.Add(new ConnectorViewModel("W", ConnectorDataType.ConstantFloat));
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4));
         }
 
-        public VariableVector3Node()
-            : base("Variable Vector3")
-        {   
+        public VariableVector4Node()
+            : base("Variable Vector4")
+        {
         }
 
-        public VariableVector3Node(string name)
+        public VariableVector4Node(string name)
             : base(name)
         {
         }
@@ -35,34 +37,41 @@ namespace MaterialEditor
             string xExpression = "0";
             string yExpression = "0";
             string zExpression = "0";
+            string wExpression = "0";
 
             if (InputConnectors[0].AttachedConnections.Count == 1)
             {
                 xExpression = InputConnectors[0].AttachedConnections[0].SourceNodeModel.ToExpression();
-            }            
+            }
 
-            if(InputConnectors[1].AttachedConnections.Count == 1)
+            if (InputConnectors[1].AttachedConnections.Count == 1)
             {
                 yExpression = InputConnectors[1].AttachedConnections[0].SourceNodeModel.ToExpression();
             }
 
-            if(InputConnectors[2].AttachedConnections.Count == 1)
+            if (InputConnectors[2].AttachedConnections.Count == 1)
             {
                 zExpression = InputConnectors[2].AttachedConnections[0].SourceNodeModel.ToExpression();
             }
 
-            return string.Format("vec3({0},{1},{2})", xExpression, yExpression, zExpression);
+            if (InputConnectors[3].AttachedConnections.Count == 1)
+            {
+                wExpression = InputConnectors[3].AttachedConnections[0].SourceNodeModel.ToExpression();
+            }
+
+
+            return string.Format("vec4({0},{1},{2},{3})", xExpression, yExpression, zExpression, wExpression);
         }
 
         public float XValue
         {
             get
             {
-                return vec3.X;
+                return vec4.X;
             }
             set
             {
-                vec3.X = value;
+                vec4.X = value;
                 OnPropertyChanged("XValue");
             }
         }
@@ -71,37 +80,47 @@ namespace MaterialEditor
         {
             get
             {
-                return vec3.Y;
+                return vec4.Y;
             }
             set
             {
-                vec3.Y = value;
+                vec4.Y = value;
                 OnPropertyChanged("YValue");
             }
         }
 
         public float ZValue
         {
-            get { return vec3.Z; }
+            get { return vec4.Z; }
             set
             {
-                vec3.Z = value;
+                vec4.Z = value;
                 OnPropertyChanged("ZValue");
             }
         }
 
-        public Vector3 Vector3Value
+        public float WValue
+        {
+            get { return vec4.W; }
+            set
+            {
+                vec4.W = value;
+                OnPropertyChanged("WValue");
+            }
+        }
+
+        public Vector4 Vector4Value
         {
             get
             {
-                return vec3;
+                return vec4;
             }
 
             set
             {
-                vec3 = value;
+                vec4 = value;
 
-                OnPropertyChanged("Vector3Value");
+                OnPropertyChanged("Vector4Value");
             }
         }
 

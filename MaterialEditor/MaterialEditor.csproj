@@ -95,6 +95,7 @@
     <Compile Include="Vector\ConstantVector3Node.cs" />
     <Compile Include="Vector\ConstantVector4Node.cs" />
     <Compile Include="Vector\VariableVector3Node.cs" />
+    <Compile Include="Vector\VariableVector4Node.cs" />
     <Page Include="DetailViewTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

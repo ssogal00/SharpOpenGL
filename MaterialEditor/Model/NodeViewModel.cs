@@ -67,6 +67,10 @@ namespace MaterialEditor
             return string.Empty;
         }
 
+        public virtual string ToExpression(ConnectorDataType castType)
+        {
+            return string.Empty;
+        }
       
         #endregion Private Data Members
 

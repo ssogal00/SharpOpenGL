@@ -27,6 +27,20 @@ namespace MaterialEditor
             return string.Format("vec4({0}, {1}, {2}, {3})", XValue, YValue, ZValue, WValue);
         }
 
+        public override string ToExpression(ConnectorDataType castType)
+        {
+            if(castType == ConnectorDataType.ConstantVector3)
+            {
+                return string.Format("vec3({0},{1},{2})", XValue, YValue, ZValue);
+            }
+            else if(castType == ConnectorDataType.ConstantVector2)
+            {
+                return string.Format("vec2({0},{1})", XValue, YValue);
+            }
+
+            return string.Empty;
+        }
+
         public float XValue
         {
             get
