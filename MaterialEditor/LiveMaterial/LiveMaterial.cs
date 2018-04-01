@@ -9,6 +9,7 @@ using Core.OpenGLShader;
 using Core.MaterialBase;
 using System.IO;
 using Core;
+using Core.Texture;
 
 namespace MaterialEditor
 {
@@ -17,6 +18,8 @@ namespace MaterialEditor
         protected bool lastCompileSuccess = false;
 
         protected string diffuseColorCode = string.Empty;
+
+        protected Dictionary<string, Core.Texture.Texture2D> textureMap = new Dictionary<string, Core.Texture.Texture2D>();
         
         public LiveMaterial()
         {
@@ -27,20 +30,58 @@ namespace MaterialEditor
             return lastCompileSuccess;
         }
 
+        protected override void CleanUp()
+        {
+            base.CleanUp();           
+        }
+
+        public override void Setup()
+        {
+            base.Setup();
+
+            foreach (var texture in textureMap)
+            {
+                this.SetTexture(texture.Key, texture.Value);
+            }
+        }
+
+        protected void BuildTextureMap(NetworkViewModel shaderNetwork)
+        {
+            foreach(var item in shaderNetwork.Nodes)
+            {
+                if(item is TextureParamNode)
+                {
+                    var textureNode = (TextureParamNode)item;
+
+                    var texturePath = textureNode.ImageSource.UriSource.AbsolutePath;
+
+                    if(File.Exists(texturePath))
+                    {
+                        Texture2D newTexture = new Texture2D();
+                        newTexture.Load(texturePath);
+                        textureMap.Add(textureNode.UniformName, newTexture);
+                    }                    
+                }
+            }
+        }
+
         public void Compile(NetworkViewModel shaderNetwork)
         {
             var uniformVarCode = GetUniformVariableCode(shaderNetwork);
+            var sampler2DCode = GetTextureUniformVariableCode(shaderNetwork);
 
             var fsTemplate = GetFragmentShaderCode();
             var vsTemplate = GetVertexShaderCode();
 
-            if (uniformVarCode.Length > 0)
+            fsTemplate = fsTemplate.Replace("{uniformVariableDeclaration}", uniformVarCode);
+
+            if(sampler2DCode.Length > 0)
             {
-                fsTemplate = fsTemplate.Replace("{uniformVariableDeclaration}", uniformVarCode);
+                fsTemplate = fsTemplate.Replace("{sampler2DVariableDeclaration}", sampler2DCode);
             }
             else
             {
-                fsTemplate = fsTemplate.Replace("{uniformVariableDeclaration}", "");
+                fsTemplate = fsTemplate.Replace("{sampler2DVariableDeclaration}", "");
             }
 
             var diffuseColorCode = shaderNetwork.CurrentSelectedNode.ToExpression();
@@ -48,7 +89,9 @@ namespace MaterialEditor
             if(diffuseColorCode.Length > 0)
             {
                 fsTemplate = fsTemplate.Replace("{diffuseColorCode}", diffuseColorCode);
-            }            
+            }
+
+            BuildTextureMap(shaderNetwork);
 
             if(Compile(vsTemplate, fsTemplate))
             {
@@ -67,6 +110,22 @@ namespace MaterialEditor
                     FloatUniformVariableNode node = (FloatUniformVariableNode)item;                    
                     result += string.Format("uniform float {0};\n", node.UniformVariableName);
                 }                
+            }
+
+            return result;
+        }
+
+        protected string GetTextureUniformVariableCode(NetworkViewModel shaderNetwork)
+        {
+            string result = string.Empty;
+
+            foreach(var item in shaderNetwork.Nodes)
+            {
+                if(item is TextureParamNode)
+                {
+                    TextureParamNode node = (TextureParamNode)item;
+                    result += string.Format("uniform sampler2D {0};\n", node.UniformName);
+                }
             }
 
             return result;

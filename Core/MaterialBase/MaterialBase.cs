@@ -35,31 +35,9 @@ namespace Core.MaterialBase
         {
         }
 
-        protected bool Compile(string vertexShaderCode, string fragmentShaderCode)
-        {
-            if(MaterialProgram != null)
-            {
-                MaterialProgram.DeleteProgram();
-            }
+       
 
-            MaterialProgram = new Core.OpenGLShader.ShaderProgram();
-
-            VSShader.CompileShader(vertexShaderCode);
-            FSShader.CompileShader(fragmentShaderCode);
-
-            MaterialProgram.AttachShader(VSShader);
-            MaterialProgram.AttachShader(FSShader);
-
-            bool bSuccess = MaterialProgram.LinkProgram(out CompileResult);
-
-            Debug.Assert(bSuccess == true);
-
-            Initialize();
-
-            return bSuccess;
-        }
-
-        protected void CleanUp()
+        protected virtual void CleanUp()
         {
             if(UniformBufferMap != null)
             {
@@ -67,13 +45,12 @@ namespace Core.MaterialBase
                 {
                     buffer.Value.Dispose();
                 }
+                UniformBufferMap.Clear();
             }
         }
 
-        protected void Initialize()
+        protected virtual void BuildUniformBufferMap()
         {
-            CleanUp();
-           
             var names = MaterialProgram.GetActiveUniformBlockNames();
 
             if (names.Count > 0)
@@ -81,35 +58,50 @@ namespace Core.MaterialBase
                 UniformBufferMap = new Dictionary<string, DynamicUniformBuffer>();
             }
 
-            foreach(var name in names)
+            foreach (var name in names)
             {
-                var uniformBuffer = new DynamicUniformBuffer(MaterialProgram, name);                
+                var uniformBuffer = new DynamicUniformBuffer(MaterialProgram, name);
                 UniformBufferMap.Add(name, uniformBuffer);
             }
+        }
 
+        protected virtual void BuildSamplerMap()
+        {
             var samplerNames = MaterialProgram.GetSampler2DNames();
 
-            if(samplerNames.Count > 0)
+            if (samplerNames.Count > 0)
             {
                 SamplerMap = new Dictionary<string, TextureUnit>();
             }
 
-            for(int i = 0; i < samplerNames.Count; ++i)
+            for (int i = 0; i < samplerNames.Count; ++i)
             {
                 SamplerMap.Add(samplerNames[i], TextureUnit.Texture0 + i);
             }
+        }
+
+        protected virtual void Initialize()
+        {
+            CleanUp();
+
+            BuildUniformBufferMap();
+
+            BuildSamplerMap();
 
             UniformVariableNames = MaterialProgram.GetActiveUniformNames();
         }
 
         public void SetTexture(string name, Core.Texture.TextureBase texture)
         {
-            if(SamplerMap == null)
+            if (SamplerMap == null)
             {
                 return;
             }
 
-            Debug.Assert(SamplerMap.ContainsKey(name));
+            if (SamplerMap.ContainsKey(name) == false)
+            {
+                return;
+            }
 
             var textureUnitToBind = SamplerMap[name];
             GL.ActiveTexture(textureUnitToBind);
@@ -120,7 +112,11 @@ namespace Core.MaterialBase
 
         public void SetTexture(string name, int TextureObject)
         {
-            Debug.Assert(SamplerMap.ContainsKey(name));
+            if(SamplerMap.ContainsKey(name) == false)
+            {
+                return;
+            }
+            
             var textureUnitToBind = SamplerMap[name];
 
             GL.ActiveTexture(textureUnitToBind);
@@ -130,7 +126,7 @@ namespace Core.MaterialBase
             GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, 0);
         }
 
-        public void Setup()
+        public virtual void Setup()
         {
             MaterialProgram.UseProgram();
 

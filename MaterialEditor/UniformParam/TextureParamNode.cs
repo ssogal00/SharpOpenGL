@@ -12,11 +12,15 @@ namespace MaterialEditor
 {
     public class TextureParamNode : NodeViewModel
     {
+        static int TextureParamCount = 0;
+
         public TextureParamNode()
             :base("TextureParam")
         {
             var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "SponzaTexture", "Background_Albedo.dds");
             ImageSource = new BitmapImage(new Uri(imagePath));
+            UniformName = string.Format("Texture_{0}", TextureParamCount);
+            TextureParamCount++;
         }
 
         protected override void CreateInputOutputConnectors()
@@ -24,11 +28,12 @@ namespace MaterialEditor
             base.CreateInputOutputConnectors();
 
             OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4));
-        }
+        }        
 
         public string UniformName
         {
-            get;set;
+            get;
+            set;
         }
 
         private BitmapImage imageSource = null;
@@ -49,7 +54,7 @@ namespace MaterialEditor
 
         public override string ToExpression()
         {
-            return string.Format("texture({0} ,InTexCoord)");
+            return string.Format("texture({0} ,InTexCoord)", UniformName);
         }
     }
 }

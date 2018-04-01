@@ -15,7 +15,7 @@ namespace MaterialEditor
         protected override void CreateInputOutputConnectors()
         {
             base.CreateInputOutputConnectors();
-            InputConnectors.Add(new ConnectorViewModel("Albedo", ConnectorDataType.ConstantVector3));
+            InputConnectors.Add(new ConnectorViewModel("Albedo", ConnectorDataType.ConstantVector4));
             InputConnectors.Add(new ConnectorViewModel("Normal", ConnectorDataType.ConstantVector4));
         }
 

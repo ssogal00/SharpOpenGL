@@ -14,14 +14,16 @@ uniform float time;
 
 {uniformVariableDeclaration}
 
-vec3 GetDiffuseColor()
+{sampler2DVariableDeclaration}
+
+vec4 GetDiffuseColor()
 {
     return {diffuseColorCode};
 }
 
 void main()
 {   
-    DiffuseColor = vec4(GetDiffuseColor(), 1);
+    DiffuseColor = GetDiffuseColor();
     NormalColor.xyz = InNormal.xyz;
     PositionColor = vec4(InPosition, 0);
 }
