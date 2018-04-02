@@ -42,6 +42,48 @@
         </Grid>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type local:ConstantVector4Node}">
+        <Grid Margin="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Margin="2" MinWidth="10">
+                <TextBlock Text="X"></TextBlock>
+            </Grid>
+            <Grid Grid.Column="1" Margin="2" MinWidth="10">
+                <TextBox Text="{Binding XValue, Mode=TwoWay}"></TextBox>
+            </Grid>
+
+            <Grid Grid.Column="2" Margin="2" MinWidth="10">
+                <TextBlock Text="Y"></TextBlock>
+            </Grid>
+            <Grid Grid.Column="3" Margin="2" MinWidth="10">
+                <TextBox Text="{Binding YValue, Mode=TwoWay}"></TextBox>
+            </Grid>
+
+            <Grid Grid.Column="4" Margin="2" MinWidth="10">
+                <TextBlock Text="Z"></TextBlock>
+            </Grid>
+            <Grid Grid.Column="5" Margin="2" MinWidth="10">
+                <TextBox Text="{Binding ZValue, Mode=TwoWay}"></TextBox>
+            </Grid>
+            <Grid Grid.Column="6" Margin="2" MinWidth="10">
+                <TextBlock Text="W"></TextBlock>
+            </Grid>
+            <Grid Grid.Column="7" Margin="2" MinWidth="10">
+                <TextBox Text="{Binding WValue, Mode=TwoWay}"></TextBox>
+            </Grid>
+        </Grid>
+
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:ConstantVector3Node}">        
         <Grid Margin="2">                
             <Grid.ColumnDefinitions>

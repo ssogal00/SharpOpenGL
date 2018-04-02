@@ -264,6 +264,12 @@ namespace MaterialEditor
             this.ViewModel.CreateNode<ConstantVector3Node>("Vector3", newNodePosition);
         }
 
+        private void CreateConstantVector4(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<ConstantVector4Node>("Vector4", newNodePosition);
+        }
+
         private void CreateVector3AddNode(object sender, ExecutedRoutedEventArgs e)
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
@@ -288,10 +294,22 @@ namespace MaterialEditor
             this.ViewModel.CreateNode<VariableVector3Node>("Variable Vector3", newNodePosition);
         }
 
+        private void CreateVector4AddNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<Vector4AddNode>("Vector4 Add", newNodePosition);
+        }
+
         private void CreateTextureNode(object sender, ExecutedRoutedEventArgs e)
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
             this.ViewModel.CreateNode<TextureParamNode>("Texture Param", newNodePosition);
+        }
+
+        private void CreateViewspaceNormalNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            //this.ViewModel.CreateNode<TextureParamNode>("Texture Param", newNodePosition);
         }
 
         private void OnBtnCompileClick(object sender, RoutedEventArgs e)

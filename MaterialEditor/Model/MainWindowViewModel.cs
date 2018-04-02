@@ -444,6 +444,10 @@ namespace MaterialEditor
             where T : NodeViewModel, new()
         {
             var node = new T();
+
+            node.X = nodeLocation.X;
+            node.Y = nodeLocation.Y;
+
             node.Name = name;
             this.Network.Nodes.Add(node);
             return node;

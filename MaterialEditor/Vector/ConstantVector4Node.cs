@@ -11,15 +11,21 @@ namespace MaterialEditor
     {
         protected OpenTK.Vector4 vec4;
 
-        public ConstantVector4Node()
+        protected override void CreateInputOutputConnectors()
         {
-            this.OutputConnectors.Add(new ConnectorViewModel("Out"));
+            base.CreateInputOutputConnectors();
+
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4));
+        }
+
+        public ConstantVector4Node()
+            : base("Vector4")
+        {            
         }
 
         public ConstantVector4Node(string name)
             : base(name)
-        {
-            this.OutputConnectors.Add(new ConnectorViewModel("Out"));
+        {   
         }
 
         public override string ToExpression()

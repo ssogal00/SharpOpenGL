@@ -29,11 +29,9 @@ namespace MaterialEditor
         {
             return lastCompileSuccess;
         }
+        
 
-        protected override void CleanUp()
-        {
-            base.CleanUp();           
-        }
+
 
         public override void Setup()
         {
@@ -65,6 +63,16 @@ namespace MaterialEditor
             }
         }
 
+        protected void CleanUpTextureMap()
+        {
+            foreach(var item in textureMap)
+            {
+                item.Value.Dispose();
+            }
+
+            textureMap.Clear();
+        }
+
         public void Compile(NetworkViewModel shaderNetwork)
         {
             var uniformVarCode = GetUniformVariableCode(shaderNetwork);
@@ -82,19 +90,26 @@ namespace MaterialEditor
             else
             {
                 fsTemplate = fsTemplate.Replace("{sampler2DVariableDeclaration}", "");
-            }
+            }            
 
             var diffuseColorCode = shaderNetwork.CurrentSelectedNode.ToExpression();
 
             if(diffuseColorCode.Length > 0)
             {
                 fsTemplate = fsTemplate.Replace("{diffuseColorCode}", diffuseColorCode);
-            }
+            }            
 
-            BuildTextureMap(shaderNetwork);
-
+            // if compile succeeds
             if(Compile(vsTemplate, fsTemplate))
             {
+                //
+                CleanUpUniformBufferMap();
+
+                CleanUpTextureMap();
+
+                BuildTextureMap(shaderNetwork);
+
+                // 
                 Initialize();
             }
         }

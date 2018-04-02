@@ -37,7 +37,7 @@ namespace Core.MaterialBase
 
        
 
-        protected virtual void CleanUp()
+        protected virtual void CleanUpUniformBufferMap()
         {
             if(UniformBufferMap != null)
             {
@@ -82,8 +82,6 @@ namespace Core.MaterialBase
 
         protected virtual void Initialize()
         {
-            CleanUp();
-
             BuildUniformBufferMap();
 
             BuildSamplerMap();

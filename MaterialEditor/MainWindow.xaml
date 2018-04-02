@@ -27,12 +27,16 @@
 
             <RoutedUICommand x:Key="Commands.CreateNode" />
             <RoutedUICommand x:Key="Commands.CreateConstantVector3"/>
+            <RoutedUICommand x:Key="Commands.CreateConstantVector4"/>
             <RoutedUICommand x:Key="Commands.CreateVariableVector3"/>
             <RoutedUICommand x:Key="Commands.CreateVector3AddNode"/>
+            <RoutedUICommand x:Key="Commands.CreateVector4AddNode"/>
             <RoutedUICommand x:Key="Commands.DeleteConnection" />            
             <RoutedUICommand x:Key="Commands.CreateSineNode"/>
             <RoutedUICommand x:Key="Commands.CreateTimeNode"/>
             <RoutedUICommand x:Key="Commands.CreateTextureNode"></RoutedUICommand>
+            <RoutedUICommand x:Key="Commands.CreateViewspaceNormalNode"></RoutedUICommand>
+            
             
             <DataTemplate DataType="{x:Type local:ConnectionOkIndicator}">
                 <Grid
@@ -202,35 +206,34 @@
     </Window.Resources>
 
     <Window.ContextMenu>
-        <ContextMenu>
-            <MenuItem Header="Create Node" Command="{StaticResource Commands.CreateNode}" ToolTip="Creates a new node"/>
+        <ContextMenu>            
             <MenuItem Header="Create Constant Vector3" Command="{StaticResource Commands.CreateConstantVector3}"></MenuItem>
+            <MenuItem Header="Create Constant Vector4" Command="{StaticResource Commands.CreateConstantVector4}"></MenuItem>
             <MenuItem Header="Create Variable Vector3" Command="{StaticResource Commands.CreateVariableVector3}"></MenuItem>
+            <Separator></Separator>
             <MenuItem Header="Create Vector3 Add Node" Command="{StaticResource Commands.CreateVector3AddNode}"></MenuItem>
+            <MenuItem Header="Create Vector4 Add Node" Command="{StaticResource Commands.CreateVector4AddNode}"></MenuItem>
+            <Separator></Separator>
             <MenuItem Header="Create Sine Node" Command="{StaticResource Commands.CreateSineNode}"></MenuItem>
             <MenuItem Header="Create Time Node" Command="{StaticResource Commands.CreateTimeNode}"></MenuItem>
+            <Separator></Separator>
             <MenuItem Header="Create Texture Node" Command="{StaticResource Commands.CreateTextureNode}"></MenuItem>
+            <MenuItem Header="Create Viewspace Normal Node" Command="{StaticResource Commands.CreateViewspaceNormalNode}"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
 
     <Window.CommandBindings>
-        <CommandBinding 
-            Command="{StaticResource Commands.CreateNode}" 
-            Executed="CreateNode_Executed" 
-            />
-        <CommandBinding
-            Command="{StaticResource Commands.CreateConstantVector3}"
-            Executed="CreateConstantVector3"/>
-        <CommandBinding Command="{StaticResource Commands.CreateVector3AddNode}" Executed="CreateVector3AddNode">
-        </CommandBinding>
-        <CommandBinding 
-            Command="{StaticResource Commands.DeleteConnection}" 
-            Executed="DeleteConnection_Executed" 
-            />
+        <CommandBinding Command="{StaticResource Commands.CreateNode}" Executed="CreateNode_Executed" />
+        <CommandBinding Command="{StaticResource Commands.CreateConstantVector3}" Executed="CreateConstantVector3"/>
+        <CommandBinding Command="{StaticResource Commands.CreateConstantVector4}" Executed="CreateConstantVector4"/>
+        <CommandBinding Command="{StaticResource Commands.CreateVector3AddNode}" Executed="CreateVector3AddNode"/>
+        <CommandBinding Command="{StaticResource Commands.CreateVector4AddNode}" Executed="CreateVector4AddNode"/>
+        <CommandBinding Command="{StaticResource Commands.DeleteConnection}" Executed="DeleteConnection_Executed" />
         <CommandBinding Command="{StaticResource Commands.CreateSineNode}" Executed="CreateSineNode"></CommandBinding>
         <CommandBinding Command="{StaticResource Commands.CreateTimeNode}" Executed="CreateTimeNode"></CommandBinding>
         <CommandBinding Command="{StaticResource Commands.CreateVariableVector3}" Executed="CreateVariableVector3"></CommandBinding>
         <CommandBinding Command="{StaticResource Commands.CreateTextureNode}" Executed="CreateTextureNode"></CommandBinding>
+        <CommandBinding Command="{StaticResource Commands.CreateViewspaceNormalNode}" Executed="CreateViewspaceNormalNode"></CommandBinding>
     </Window.CommandBindings>
     
     <Grid>
