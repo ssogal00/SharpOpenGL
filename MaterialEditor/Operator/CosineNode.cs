@@ -25,6 +25,18 @@ namespace MaterialEditor
             return string.Empty;
         }
 
+        public override string GetExpressionForOutput(int outputIndex)
+        {
+            if(InputConnectors[0].AttachedConnections.Count == 1 && outputIndex == 0)
+            {
+                var expression = GetExpressionForInput(0);
+
+                return string.Format("cos({0})", expression);
+            }
+
+            return string.Empty;
+        }
+
         protected override void CreateInputOutputConnectors()
         {
             base.CreateInputOutputConnectors();

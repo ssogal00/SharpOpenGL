@@ -27,7 +27,27 @@ namespace MaterialEditor.Operator
             return string.Empty;
         }
 
+        protected override bool IsConnectionValidForEvaluation()
+        {
+            if (InputConnectors[0].AttachedConnections.Count == 1 && InputConnectors[1].AttachedConnections.Count == 1)
+            {
+                return true;
+            }
 
+            return false;
+        }
+
+        public override string GetExpressionForOutput(int outputIndex)
+        {
+            if (IsConnectionValidForEvaluation())
+            {
+                var expressionA = GetExpressionForInput(0);
+                var expressionB = GetExpressionForInput(1);
+                return string.Format("{0}*{1}", expressionA, expressionB);
+            }
+
+            return string.Empty;
+        }
 
         protected override void CreateInputOutputConnectors()
         {
