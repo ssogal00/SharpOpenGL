@@ -27,12 +27,7 @@ namespace MaterialEditor
             : base(name)
         {   
         }
-
-        public override string ToExpression()
-        {
-            return string.Format("vec4({0}, {1}, {2}, {3})", XValue, YValue, ZValue, WValue);
-        }
-
+              
         public override string GetExpressionForOutput(int outputIndex)
         {
             if(outputIndex == 0)

@@ -21,12 +21,7 @@ namespace MaterialEditor
         {
             this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3,0));
         }
-
-        public override string ToExpression()
-        {
-            return string.Format("vec3({0}, {1}, {2})", XValue, YValue, ZValue);
-        }
-
+        
         public override string GetExpressionForOutput(int outputIndex)
         {
             if (outputIndex == 0)

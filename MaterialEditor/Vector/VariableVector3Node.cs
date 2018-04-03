@@ -32,30 +32,7 @@ namespace MaterialEditor
         {
         }
 
-        public override string ToExpression()
-        {
-            string xExpression = "0";
-            string yExpression = "0";
-            string zExpression = "0";
-
-            if (InputConnectors[0].AttachedConnections.Count == 1)
-            {
-                xExpression = InputConnectors[0].AttachedConnections[0].SourceNodeModel.ToExpression();
-            }            
-
-            if(InputConnectors[1].AttachedConnections.Count == 1)
-            {
-                yExpression = InputConnectors[1].AttachedConnections[0].SourceNodeModel.ToExpression();
-            }
-
-            if(InputConnectors[2].AttachedConnections.Count == 1)
-            {
-                zExpression = InputConnectors[2].AttachedConnections[0].SourceNodeModel.ToExpression();
-            }
-
-            return string.Format("vec3({0},{1},{2})", xExpression, yExpression, zExpression);
-        }
-
+      
         public override string GetExpressionForOutput(int outputIndex)
         {
             if (outputIndex == 0)

@@ -34,36 +34,43 @@ namespace MaterialEditor
         {
         }
 
-        public override string ToExpression()
+        public override string GetExpressionForOutput(int outputIndex)
         {
-            string xExpression = "0";
-            string yExpression = "0";
-            string zExpression = "0";
-            string wExpression = "0";
-
-            if (InputConnectors[0].AttachedConnections.Count == 1)
+            if(outputIndex == 0)
             {
-                xExpression = InputConnectors[0].AttachedConnections[0].SourceNodeModel.ToExpression();
+                string xExpression = "0";
+                string yExpression = "0";
+                string zExpression = "0";
+                string wExpression = "0";
+
+                if (InputConnectors[0].AttachedConnections.Count == 1)
+                {
+                    xExpression = GetExpressionForInput(0);
+                }
+
+                if (InputConnectors[1].AttachedConnections.Count == 1)
+                {
+                    yExpression = GetExpressionForInput(1);
+                }
+
+                if (InputConnectors[2].AttachedConnections.Count == 1)
+                {
+                    zExpression = GetExpressionForInput(2);
+                }
+
+                if (InputConnectors[3].AttachedConnections.Count == 1)
+                {
+                    wExpression = GetExpressionForInput(3);
+                }
+
+
+                return string.Format("vec4({0},{1},{2},{3})", xExpression, yExpression, zExpression, wExpression);
             }
 
-            if (InputConnectors[1].AttachedConnections.Count == 1)
-            {
-                yExpression = InputConnectors[1].AttachedConnections[0].SourceNodeModel.ToExpression();
-            }
-
-            if (InputConnectors[2].AttachedConnections.Count == 1)
-            {
-                zExpression = InputConnectors[2].AttachedConnections[0].SourceNodeModel.ToExpression();
-            }
-
-            if (InputConnectors[3].AttachedConnections.Count == 1)
-            {
-                wExpression = InputConnectors[3].AttachedConnections[0].SourceNodeModel.ToExpression();
-            }
-
-
-            return string.Format("vec4({0},{1},{2},{3})", xExpression, yExpression, zExpression, wExpression);
+            return string.Empty;
         }
+
+        
 
         public float XValue
         {

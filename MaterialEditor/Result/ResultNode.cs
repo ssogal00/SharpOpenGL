@@ -21,14 +21,16 @@ namespace MaterialEditor
             InputConnectors.Add(new ConnectorViewModel("Normal", ConnectorDataType.ConstantVector4,1));
         }
 
-        public override string ToExpression()
+        public string GetDiffuseColorCode()
         {
-            if(this.InputConnectors[0].AttachedConnections.Count == 1)
-            {
-                return InputConnectors[0].AttachedConnections[0].SourceConnector.ParentNode.ToExpression();
-            }
-
-            return "No compile result";
+            return GetExpressionForInput(0);
         }
+
+        public string GetNormalColorCode()
+        {
+            return GetExpressionForInput(1);
+        }
+
+
     }
 }

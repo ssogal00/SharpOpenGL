@@ -90,9 +90,11 @@ namespace MaterialEditor
             else
             {
                 fsTemplate = fsTemplate.Replace("{sampler2DVariableDeclaration}", "");
-            }            
+            }
 
-            var diffuseColorCode = shaderNetwork.CurrentSelectedNode.ToExpression();
+            var resultNode = (ResultNode)shaderNetwork.CurrentSelectedNode;
+
+            var diffuseColorCode = resultNode.GetDiffuseColorCode();
 
             if(diffuseColorCode.Length > 0)
             {

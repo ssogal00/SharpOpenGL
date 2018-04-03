@@ -62,12 +62,6 @@ namespace MaterialEditor
         /// </summary>
         private bool isSelected = false;
 
-        public virtual string ToExpression()
-        {
-            return string.Empty;
-        }
-
-       
         #endregion Private Data Members
 
         public NodeViewModel()

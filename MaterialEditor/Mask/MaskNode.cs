@@ -12,14 +12,14 @@ namespace MaterialEditor
         public MaskRNode()
             :base ("Mask R")
         {}
-
-        public override string ToExpression()
+       
+        public override string GetExpressionForOutput(int outputIndex)
         {
-            if (InputConnectors[0].AttachedConnections.Count == 1)
+            if(outputIndex == 0 && InputConnectors[0].AttachedConnections.Count == 1)
             {
-                var expressionA = InputConnectors[0].AttachedConnections[0].SourceNodeModel.ToExpression();                
+                var expressionA = GetExpressionForInput(0);
 
-                return string.Format("({0}).r", expressionA);
+                return string.Format("({0}).r", expressionA);                
             }
 
             return string.Empty;

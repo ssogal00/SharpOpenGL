@@ -19,11 +19,6 @@ namespace MaterialEditor
             OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat,0));
         }
 
-        public override string ToExpression()
-        {
-            return string.Format("{0}", floatValue);
-        }
-
         protected float floatValue = 0;
 
         public float Value

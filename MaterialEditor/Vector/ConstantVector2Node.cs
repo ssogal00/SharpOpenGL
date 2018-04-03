@@ -22,11 +22,6 @@ namespace MaterialEditor
         {            
         }
 
-        public override string ToExpression()
-        {
-            return string.Format("vec2({0},{1})", XValue, YValue);
-        }
-
         public override string GetExpressionForOutput(int outputIndex)
         {
             if(outputIndex == 0)
