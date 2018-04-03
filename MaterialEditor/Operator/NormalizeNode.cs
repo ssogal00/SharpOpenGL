@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace MaterialEditor.Operator
 {
-    class NormalizeNode        
+    public class NormalizeNode : NodeViewModel
     {
+        public NormalizeNode(string name)
+            :base(name)
+        {
+        }
+
+
 
     }
 }

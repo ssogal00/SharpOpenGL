@@ -85,17 +85,21 @@ namespace MaterialEditor
             {
                 if (InputConnectors[index].AttachedConnections.Count == 1)
                 {
-                    var sourceModel = InputConnectors[index].AttachedConnections[0].SourceNodeModel;
+                    var sourceModel     = InputConnectors[index].AttachedConnections[0].SourceNodeModel;
                     var sourceConnector = InputConnectors[index].AttachedConnections[0].SourceConnector;
-                    var destConnector = InputConnectors[index].AttachedConnections[0].DestConnector;
+                    var destConnector   = InputConnectors[index].AttachedConnections[0].DestConnector;
+
+                    var result = sourceModel.GetExpressionForOutput(sourceConnector.Index);
 
                     if (sourceConnector.DataType != destConnector.DataType)
                     {
-                        //
-
+                        if(ConnectionHelper.SupportsCast(sourceConnector.DataType, destConnector.DataType))
+                        {
+                            result = ConnectionHelper.GetCastString(result, sourceConnector.DataType, destConnector.DataType);
+                        }
                     }
 
-                    return sourceModel.GetExpressionForOutput(sourceConnector.Index);
+                    return result;
                 }
             }
 

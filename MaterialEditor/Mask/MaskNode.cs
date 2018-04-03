@@ -8,7 +8,6 @@ namespace MaterialEditor
 {   
     public class MaskRNode : NodeViewModel
     {
-
         public MaskRNode()
             :base ("Mask R")
         {}
@@ -33,6 +32,33 @@ namespace MaterialEditor
             // output
             this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat, 0));
         }
+    }
 
+    public class MaskGNode : NodeViewModel
+    {
+        public MaskGNode()
+            : base("Mask G")
+        { }
+
+        public override string GetExpressionForOutput(int outputIndex)
+        {
+            if (outputIndex == 0 && InputConnectors[0].AttachedConnections.Count == 1)
+            {
+                var expressionA = GetExpressionForInput(0);
+
+                return string.Format("({0}).g", expressionA);
+            }
+
+            return string.Empty;
+        }
+
+        protected override void CreateInputOutputConnectors()
+        {
+            // input
+            this.InputConnectors.Add(new ConnectorViewModel("In", ConnectorDataType.ConstantVector4, 0));
+
+            // output
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat, 0));
+        }
     }
 }

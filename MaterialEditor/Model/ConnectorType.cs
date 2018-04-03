@@ -34,9 +34,45 @@ namespace MaterialEditor
             
             return false;
         }
+
+        public static string GetCastString(string original, ConnectorDataType from, ConnectorDataType to)
+        {
+            // vec4 => vec3
+            if(from == ConnectorDataType.ConstantVector4 && to == ConnectorDataType.ConstantVector3)
+            {
+                return string.Format("({0}).xyz", original);
+            }
+
+            // vec4 => vec2
+            if(from == ConnectorDataType.ConstantVector4 && to == ConnectorDataType.ConstantVector2)
+            {
+                return string.Format("({0}).xy", original);
+            }
+
+            // vec4 => float
+            if (from == ConnectorDataType.ConstantVector4 && to == ConnectorDataType.ConstantFloat)
+            {
+                return string.Format("({0}).x", original);
+            }
+
+            // vec3 => vec4
+            if (from == ConnectorDataType.ConstantVector3 && to == ConnectorDataType.ConstantVector4)
+            {
+                return string.Format("vec4({0}, 0)", original);
+            }
+
+
+
+            return original ;
+        }
         
         public static bool SupportsCast(ConnectorDataType from, ConnectorDataType to)
         {
+            if(from == to)
+            {
+                return true;
+            }
+
             // vector4 => vector3
             if(from == ConnectorDataType.ConstantVector4 && to == ConnectorDataType.ConstantVector3)
             {
