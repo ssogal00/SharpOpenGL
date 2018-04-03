@@ -31,11 +31,7 @@ namespace MaterialEditor
             get;set;
         }
 
-        public override string ToExpression()
-        {
-            return UniformVariableName;
-        }
-
+      
         public override string GetExpressionForOutput(int outputIndex)
         {
             if(outputIndex == 0)

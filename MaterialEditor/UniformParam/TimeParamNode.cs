@@ -13,8 +13,9 @@ namespace MaterialEditor
         {
         }
 
-        public override string ToExpression()
-        {
+       
+        public override string GetExpressionForOutput(int outputIndex)
+        {   
             return "time";
         }
 

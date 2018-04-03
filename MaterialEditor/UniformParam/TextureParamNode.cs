@@ -54,12 +54,7 @@ namespace MaterialEditor
                 OnPropertyChanged("ImageSource");
             }
         }
-
-        public override string ToExpression()
-        {
-            return string.Format("texture({0} ,InTexCoord)", UniformName);
-        }
-
+        
         public override string GetExpressionForOutput(int outputIndex)
         {
             if(OutputConnectors.Count > outputIndex)
