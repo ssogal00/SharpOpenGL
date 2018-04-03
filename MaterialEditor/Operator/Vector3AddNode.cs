@@ -13,18 +13,7 @@ namespace MaterialEditor
         {
         }
 
-        public override string ToExpression()
-        {   
-            if(InputConnectors[0].AttachedConnections.Count == 1 && InputConnectors[1].AttachedConnections.Count == 1)
-            {
-                var expressionA = InputConnectors[0].AttachedConnections[0].SourceNodeModel.ToExpression();
-                var expressionB = InputConnectors[1].AttachedConnections[0].SourceNodeModel.ToExpression();
-
-                return string.Format("{0} + {1}", expressionA, expressionB);
-            }
-
-            return string.Empty;
-        }
+        
 
         public override string GetExpressionForOutput(int outputIndex)
         {

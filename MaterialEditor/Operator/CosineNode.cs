@@ -13,18 +13,7 @@ namespace MaterialEditor
         {
         }
 
-        public override string ToExpression()
-        {
-            if (InputConnectors[0].AttachedConnections.Count == 1)
-            {
-                var expressionA = InputConnectors[0].AttachedConnections[0].SourceConnector.ParentNode.ToExpression();
-
-                return string.Format("cos({0})", expressionA);
-            }
-
-            return string.Empty;
-        }
-
+        
         public override string GetExpressionForOutput(int outputIndex)
         {
             if(InputConnectors[0].AttachedConnections.Count == 1 && outputIndex == 0)
