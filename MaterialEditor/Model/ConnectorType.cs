@@ -16,6 +16,7 @@ namespace MaterialEditor
     public enum ConnectorDataType
     {
         InvalidDataType,
+        MultipleDataType,
         ConstantVector4,
         ConstantVector3,
         ConstantVector2,

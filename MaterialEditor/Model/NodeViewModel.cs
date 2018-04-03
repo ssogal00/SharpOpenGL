@@ -73,7 +73,7 @@ namespace MaterialEditor
         {
             this.name = name;
             CreateInputOutputConnectors();
-        }
+        }        
 
         protected virtual void CreateInputOutputConnectors() { }
 

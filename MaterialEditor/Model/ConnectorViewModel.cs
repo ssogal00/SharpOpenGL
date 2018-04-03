@@ -44,6 +44,31 @@ namespace MaterialEditor
             this.Index = index;
         }
 
+        public ConnectorViewModel(string name, ConnectorDataType[] dataTypeList , int index)
+        {
+            this.DataType = ConnectorDataType.MultipleDataType;
+            this.CompatibleDataTypeList = dataTypeList;
+            this.IsMultipleDataTypeAllowed = true;
+            this.Index = index;
+        }
+
+        private ConnectorDataType[] compatibleDataTypeList = null;
+
+        public ConnectorDataType[] CompatibleDataTypeList
+        {
+            get { return compatibleDataTypeList; }
+            private set
+            {
+                compatibleDataTypeList = value;
+            }
+        }
+
+        public bool IsMultipleDataTypeAllowed
+        {
+            get;
+            internal set;
+        }
+
         public int Index
         {
             get;
