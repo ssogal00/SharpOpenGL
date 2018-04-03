@@ -36,6 +36,16 @@ namespace MaterialEditor
             return UniformVariableName;
         }
 
+        public override string GetExpressionForOutput(int outputIndex)
+        {
+            if(outputIndex == 0)
+            {
+                return UniformVariableName;
+            }
+
+            return string.Empty;
+        }
+
         protected override void CreateInputOutputConnectors()
         {
             base.CreateInputOutputConnectors();

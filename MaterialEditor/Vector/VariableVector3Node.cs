@@ -56,6 +56,35 @@ namespace MaterialEditor
             return string.Format("vec3({0},{1},{2})", xExpression, yExpression, zExpression);
         }
 
+        public override string GetExpressionForOutput(int outputIndex)
+        {
+            if (outputIndex == 0)
+            {
+                string xExpression = "0";
+                string yExpression = "0";
+                string zExpression = "0";
+
+                if (InputConnectors[0].AttachedConnections.Count == 1)
+                {
+                    xExpression = GetExpressionForInput(0);
+                }
+
+                if (InputConnectors[1].AttachedConnections.Count == 1)
+                {
+                    yExpression = GetExpressionForInput(1);
+                }
+
+                if (InputConnectors[2].AttachedConnections.Count == 1)
+                {
+                    zExpression = GetExpressionForInput(2);
+                }
+
+                return string.Format("vec3({0},{1},{2})", xExpression, yExpression, zExpression);
+            }
+
+            return string.Empty;
+        }
+
         public float XValue
         {
             get

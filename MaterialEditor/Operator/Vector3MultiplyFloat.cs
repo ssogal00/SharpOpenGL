@@ -27,6 +27,8 @@ namespace MaterialEditor.Operator
             return string.Empty;
         }
 
+
+
         protected override void CreateInputOutputConnectors()
         {
             // input
