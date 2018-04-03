@@ -15,11 +15,13 @@ namespace MaterialEditor
         protected override void CreateInputOutputConnectors()
         {
             base.CreateInputOutputConnectors();
-            this.InputConnectors.Add(new ConnectorViewModel("X", ConnectorDataType.ConstantFloat));
-            this.InputConnectors.Add(new ConnectorViewModel("Y", ConnectorDataType.ConstantFloat));
-            this.InputConnectors.Add(new ConnectorViewModel("Z", ConnectorDataType.ConstantFloat));
-            this.InputConnectors.Add(new ConnectorViewModel("W", ConnectorDataType.ConstantFloat));
-            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4));
+
+            this.InputConnectors.Add(new ConnectorViewModel("X", ConnectorDataType.ConstantFloat,0));
+            this.InputConnectors.Add(new ConnectorViewModel("Y", ConnectorDataType.ConstantFloat,1));
+            this.InputConnectors.Add(new ConnectorViewModel("Z", ConnectorDataType.ConstantFloat,2));
+            this.InputConnectors.Add(new ConnectorViewModel("W", ConnectorDataType.ConstantFloat,3));
+
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4,0));
         }
 
         public VariableVector4Node()

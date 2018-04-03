@@ -39,7 +39,7 @@ namespace MaterialEditor
         protected override void CreateInputOutputConnectors()
         {
             base.CreateInputOutputConnectors();
-            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat));
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat,0));
         }
     }
 }

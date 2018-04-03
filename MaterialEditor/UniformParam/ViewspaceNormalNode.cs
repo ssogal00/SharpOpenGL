@@ -12,7 +12,7 @@ namespace MaterialEditor.UniformParam
         protected override void CreateInputOutputConnectors()
         {
             base.CreateInputOutputConnectors();
-            OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4));
+            OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4,0));
         }
     }
 }

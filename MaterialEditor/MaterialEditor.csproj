@@ -71,7 +71,7 @@
     </ApplicationDefinition>
     <Compile Include="ConnectionBadIndicator.cs" />
     <Compile Include="ConnectionOkIndicator.cs" />
-    <Compile Include="ConnectionTranslator.cs" />
+    <Compile Include="ConnectionTypeCaster.cs" />
     <Compile Include="Constant\ConstantFloatNode.cs" />
     <Compile Include="CurvedArrow.cs" />
     <Compile Include="ConnectorInput.cs" />

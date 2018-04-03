@@ -67,11 +67,7 @@ namespace MaterialEditor
             return string.Empty;
         }
 
-        public virtual string GetOuputExpression(int outputIndex)
-        {
-            return string.Empty;
-        }
-      
+       
         #endregion Private Data Members
 
         public NodeViewModel()
@@ -86,6 +82,36 @@ namespace MaterialEditor
         }
 
         protected virtual void CreateInputOutputConnectors() { }
+
+        protected virtual bool IsConnectionValidForEvaluation() { return true; }
+
+        protected virtual string GetExpressionForInput(int index)
+        {
+            if (InputConnectors.Count > index)
+            {
+                if (InputConnectors[index].AttachedConnections.Count == 1)
+                {
+                    var sourceModel = InputConnectors[index].AttachedConnections[0].SourceNodeModel;
+                    var sourceConnector = InputConnectors[index].AttachedConnections[0].SourceConnector;
+                    var destConnector = InputConnectors[index].AttachedConnections[0].DestConnector;
+
+                    if (sourceConnector.DataType != destConnector.DataType)
+                    {
+                        //
+
+                    }
+
+                    return sourceModel.GetExpressionForOutput(sourceConnector.Index);
+                }
+            }
+
+            return string.Empty;
+        }
+
+        public virtual string GetExpressionForOutput(int outputIndex)
+        {
+            return string.Empty;
+        }
 
         /// <summary>
         /// The name of the node.

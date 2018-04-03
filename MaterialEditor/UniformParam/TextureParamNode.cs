@@ -60,7 +60,7 @@ namespace MaterialEditor
             return string.Format("texture({0} ,InTexCoord)", UniformName);
         }
 
-        public override string GetOuputExpression(int outputIndex)
+        public override string GetExpressionForOutput(int outputIndex)
         {
             if(OutputConnectors.Count > outputIndex)
             {

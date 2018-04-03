@@ -33,9 +33,9 @@ namespace MaterialEditor
             return string.Format("vec4({0}, {1}, {2}, {3})", XValue, YValue, ZValue, WValue);
         }
 
-        public override string GetOuputExpression(int outputIndex)
+        public override string GetExpressionForOutput(int outputIndex)
         {
-            if(OutputConnectors.Count > outputIndex)
+            if(outputIndex == 0)
             {
                 return string.Format("vec4({0}, {1}, {2}, {3})", XValue, YValue, ZValue, WValue);
             }

@@ -28,8 +28,12 @@ namespace MaterialEditor
         protected override void CreateInputOutputConnectors()
         {
             base.CreateInputOutputConnectors();
-            InputConnectors.Add(new ConnectorViewModel("In", ConnectorDataType.ConstantFloat));
-            OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat));
+
+            // input
+            InputConnectors.Add(new ConnectorViewModel("In", ConnectorDataType.ConstantFloat, 0));
+
+            // output
+            OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat, 0));
         }
     }
 }

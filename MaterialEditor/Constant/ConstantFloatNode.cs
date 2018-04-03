@@ -15,7 +15,8 @@ namespace MaterialEditor
         protected override void CreateInputOutputConnectors()
         {
             base.CreateInputOutputConnectors();
-            OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat));
+            // output
+            OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat,0));
         }
 
         public override string ToExpression()
