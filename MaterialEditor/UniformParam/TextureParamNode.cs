@@ -27,7 +27,10 @@ namespace MaterialEditor
         {
             base.CreateInputOutputConnectors();
 
-            OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4));
+            OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4,0));
+            OutputConnectors.Add(new ConnectorViewModel("R", ConnectorDataType.ConstantFloat,1));
+            OutputConnectors.Add(new ConnectorViewModel("G", ConnectorDataType.ConstantFloat,2));            
+            OutputConnectors.Add(new ConnectorViewModel("A", ConnectorDataType.ConstantFloat,3));
         }        
 
         public string UniformName
@@ -55,6 +58,31 @@ namespace MaterialEditor
         public override string ToExpression()
         {
             return string.Format("texture({0} ,InTexCoord)", UniformName);
+        }
+
+        public override string GetOuputExpression(int outputIndex)
+        {
+            if(OutputConnectors.Count > outputIndex)
+            {
+                if(outputIndex == 0)
+                {
+                    return string.Format("texture({0} ,InTexCoord)", UniformName);
+                }
+                else if(outputIndex == 1)
+                {
+                    return string.Format("texture({0} ,InTexCoord).r", UniformName);
+                }
+                else if (outputIndex == 2)
+                {
+                    return string.Format("texture({0} ,InTexCoord).g", UniformName);
+                }
+                else if (outputIndex == 3)
+                {
+                    return string.Format("texture({0} ,InTexCoord).b", UniformName);
+                }
+            }
+
+            return string.Empty;
         }
     }
 }

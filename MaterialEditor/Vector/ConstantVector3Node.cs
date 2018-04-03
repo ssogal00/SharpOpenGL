@@ -13,18 +13,27 @@ namespace MaterialEditor
 
         public ConstantVector3Node()
         {
-            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3));
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3,0));
         }
 
         public ConstantVector3Node(string name)
             : base(name)
         {
-            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3));
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3,0));
         }
 
         public override string ToExpression()
         {
             return string.Format("vec3({0}, {1}, {2})", XValue, YValue, ZValue);
+        }
+
+        public override string GetOuputExpression(int outputIndex)
+        {
+            if (OutputConnectors.Count > outputIndex)
+            {
+                return string.Format("vec3({0}, {1}, {2})", XValue, YValue, ZValue);
+            }
+            return string.Empty;
         }
 
         public float XValue

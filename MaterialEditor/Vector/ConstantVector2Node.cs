@@ -27,6 +27,16 @@ namespace MaterialEditor
             return string.Format("vec2({0},{1})", XValue, YValue);
         }
 
+        public override string GetOuputExpression(int outputIndex)
+        {
+            if(OutputConnectors.Count > outputIndex)
+            {
+                return string.Format("vec2({0},{1})", XValue, YValue);
+            }
+
+            return string.Empty;
+        }
+
         protected override void CreateInputOutputConnectors()
         {
             this.OutputConnectors.Add(new ConnectorViewModel("Out"));

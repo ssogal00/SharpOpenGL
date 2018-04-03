@@ -15,7 +15,7 @@ namespace MaterialEditor
         {
             base.CreateInputOutputConnectors();
 
-            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4));
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector4,0));
         }
 
         public ConstantVector4Node()
@@ -33,15 +33,11 @@ namespace MaterialEditor
             return string.Format("vec4({0}, {1}, {2}, {3})", XValue, YValue, ZValue, WValue);
         }
 
-        public override string ToExpression(ConnectorDataType castType)
+        public override string GetOuputExpression(int outputIndex)
         {
-            if(castType == ConnectorDataType.ConstantVector3)
+            if(OutputConnectors.Count > outputIndex)
             {
-                return string.Format("vec3({0},{1},{2})", XValue, YValue, ZValue);
-            }
-            else if(castType == ConnectorDataType.ConstantVector2)
-            {
-                return string.Format("vec2({0},{1})", XValue, YValue);
+                return string.Format("vec4({0}, {1}, {2}, {3})", XValue, YValue, ZValue, WValue);
             }
 
             return string.Empty;

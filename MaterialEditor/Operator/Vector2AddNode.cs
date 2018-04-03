@@ -15,9 +15,21 @@ namespace MaterialEditor
 
         public override string ToExpression()
         {
-            if (InputConnectors[0].AttachedConnections.Count == 1 && InputConnectors[1].AttachedConnections.Count == 1)
+            if (InputConnectors[0].IsConnectionAttached && InputConnectors[1].IsConnectionAttached)
             {
                 var expressionA = InputConnectors[0].AttachedConnections[0].SourceConnector.ParentNode.ToExpression();
+
+                if(InputConnectors[0].AttachedConnections[0].SourceConnector.DataType != 
+                    InputConnectors[0].AttachedConnections[0].DestConnector.DataType)
+                {
+                    if(ConnectionHelper.SupportsCast(
+                        InputConnectors[0].AttachedConnections[0].SourceConnector.DataType,
+                        InputConnectors[0].AttachedConnections[0].DestConnector.DataType))
+                    {
+                        
+                    }
+                }
+
                 var expressionB = InputConnectors[1].AttachedConnections[0].SourceConnector.ParentNode.ToExpression();
 
                 return string.Format("{0} + {1}", expressionA, expressionB);
@@ -28,9 +40,12 @@ namespace MaterialEditor
 
         protected override void CreateInputOutputConnectors()
         {
-            this.InputConnectors.Add(new ConnectorViewModel("A", ConnectorDataType.ConstantVector2));
-            this.InputConnectors.Add(new ConnectorViewModel("B", ConnectorDataType.ConstantVector2));
-            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector2));
+            // input 
+            this.InputConnectors.Add(new ConnectorViewModel("A", ConnectorDataType.ConstantVector2, 0));
+            this.InputConnectors.Add(new ConnectorViewModel("B", ConnectorDataType.ConstantVector2, 1));
+
+            // output
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector2, 0));
         }
     }
 }

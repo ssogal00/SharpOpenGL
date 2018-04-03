@@ -67,7 +67,7 @@ namespace MaterialEditor
             return string.Empty;
         }
 
-        public virtual string ToExpression(ConnectorDataType castType)
+        public virtual string GetOuputExpression(int outputIndex)
         {
             return string.Empty;
         }

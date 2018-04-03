@@ -28,9 +28,12 @@ namespace MaterialEditor
 
         protected override void CreateInputOutputConnectors()
         {
-            this.InputConnectors.Add(new ConnectorViewModel("A", ConnectorDataType.ConstantVector3));
-            this.InputConnectors.Add(new ConnectorViewModel("B", ConnectorDataType.ConstantVector3));
-            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3));
+            // input
+            this.InputConnectors.Add(new ConnectorViewModel("A", ConnectorDataType.ConstantVector3, 0));
+            this.InputConnectors.Add(new ConnectorViewModel("B", ConnectorDataType.ConstantVector3 ,1));
+
+            // output
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantVector3,0));
         }        
     }
 }

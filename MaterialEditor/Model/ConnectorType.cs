@@ -61,6 +61,19 @@ namespace MaterialEditor
                 return true;
             }
 
+            // vector3 => float
+            if(from == ConnectorDataType.ConstantVector3 && to == ConnectorDataType.ConstantFloat)
+            {
+                return true;
+            }
+
+            // vector3 => vector2
+            if(from == ConnectorDataType.ConstantVector3 && to == ConnectorDataType.ConstantVector2)
+            {
+                return true;
+            }
+
+            // vector2 => float
             if(from == ConnectorDataType.ConstantVector2 && to == ConnectorDataType.ConstantFloat)
             {
                 return true;
