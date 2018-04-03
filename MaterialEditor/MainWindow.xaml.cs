@@ -309,7 +309,7 @@ namespace MaterialEditor
         private void CreateViewspaceNormalNode(object sender, ExecutedRoutedEventArgs e)
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
-            //this.ViewModel.CreateNode<TextureParamNode>("Texture Param", newNodePosition);
+            this.ViewModel.CreateNode<ViewspaceNormalNode>("Viewspace Normal", newNodePosition);
         }
 
         private void OnBtnCompileClick(object sender, RoutedEventArgs e)
