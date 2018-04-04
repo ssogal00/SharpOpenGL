@@ -62,6 +62,11 @@ namespace MaterialEditor
                 return string.Format("vec4({0}, 0)", original);
             }
 
+            // vec2 => vec3
+            if (from == ConnectorDataType.ConstantVector2 && to == ConnectorDataType.ConstantVector3)
+            {
+                return string.Format("vec3({0}, 0)", original);
+            }
 
 
             return original ;
