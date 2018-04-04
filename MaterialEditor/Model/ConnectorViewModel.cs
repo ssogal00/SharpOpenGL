@@ -93,9 +93,20 @@ namespace MaterialEditor
             internal set;
         }
 
+        private ConnectorDataType dataType = ConnectorDataType.InvalidDataType;
+
         public ConnectorDataType DataType
         {
-            get;set;
+            get
+            {
+                return dataType;
+            }
+
+            set
+            {
+                dataType = value;
+                OnPropertyChanged("DataType");
+            }
         }
 
         /// <summary>

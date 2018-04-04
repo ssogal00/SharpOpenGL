@@ -39,11 +39,11 @@
 
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:ConnectorItem}">                    
-                    <Ellipse Width="15" Height="15"
+                <ControlTemplate TargetType="{x:Type local:ConnectorItem}">
+                    <Ellipse Width="15" Height="15" Name="connectorEllipse"          
                         Stroke="{StaticResource nodeBorderBrush}"
                         Fill="{StaticResource connectorBackgroundBrush}"
-                    />
+                    />                   
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -93,7 +93,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- The 'ConnectorItem' or anchor point for the connector. -->
-            <local:ConnectorItem Grid.Column="0" Width="15" Height="15" Cursor="Hand"/>
+            <local:ConnectorItem  Grid.Column="0" Width="15" Height="15" Cursor="Hand"/>
             <!-- The name of the connector. -->
             <TextBlock Grid.Column="1" Margin="10,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" Foreground="White"/>
         </Grid>
