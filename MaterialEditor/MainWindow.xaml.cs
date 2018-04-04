@@ -312,6 +312,12 @@ namespace MaterialEditor
             this.ViewModel.CreateNode<ViewspaceNormalNode>("Viewspace Normal", newNodePosition);
         }
 
+        private void CreateViewspacePositionNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<ViewspacePositionNode>("Viewspace Position", newNodePosition);
+        }
+
         private void OnBtnCompileClick(object sender, RoutedEventArgs e)
         {   
             liveMaterial.Compile(this.ViewModel.Network);

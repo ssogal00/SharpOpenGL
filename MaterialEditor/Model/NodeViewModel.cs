@@ -127,7 +127,7 @@ namespace MaterialEditor
                     return;
                 }
 
-                name = value;
+                name = value;                
 
                 OnPropertyChanged("Name");
             }

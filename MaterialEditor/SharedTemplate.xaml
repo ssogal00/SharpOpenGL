@@ -122,7 +122,7 @@
     </DataTemplate>
 
 
-    <DataTemplate x:Key="nodeViewModelTemplate">
+    <DataTemplate x:Key="nodeViewModelTemplate">        
         <Grid MinWidth="120" Margin="10,6,10,6">
             <!-- This rectangle is the main visual for the node. -->
             <Rectangle

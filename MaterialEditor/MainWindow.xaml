@@ -36,6 +36,7 @@
             <RoutedUICommand x:Key="Commands.CreateTimeNode"/>
             <RoutedUICommand x:Key="Commands.CreateTextureNode"></RoutedUICommand>
             <RoutedUICommand x:Key="Commands.CreateViewspaceNormalNode"></RoutedUICommand>
+            <RoutedUICommand x:Key="Commands.CreateViewspacePositionNode"></RoutedUICommand>
             
             
             <DataTemplate DataType="{x:Type local:ConnectionOkIndicator}">
@@ -125,7 +126,11 @@
             </DataTemplate>
 
 
-            <Style TargetType="{x:Type local:NodeItem}">
+            <Style TargetType="{x:Type local:NodeItem}">                
+                <Setter Property="X" Value="{Binding X}"/>
+                <Setter Property="Y" Value="{Binding Y}"/>
+                <Setter Property="ZIndex" Value="{Binding ZIndex}"/>
+                <Setter Property="IsSelected" Value="{Binding IsSelected}"/>                
                 <Setter Property="ParentNetworkView" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:NetworkView}}, Path=.}"></Setter>
                 <Setter Property="Canvas.Left" Value="{Binding X, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
                 </Setter>
@@ -219,6 +224,7 @@
             <Separator></Separator>
             <MenuItem Header="Create Texture Node" Command="{StaticResource Commands.CreateTextureNode}"></MenuItem>
             <MenuItem Header="Create Viewspace Normal Node" Command="{StaticResource Commands.CreateViewspaceNormalNode}"></MenuItem>
+            <MenuItem Header="Create Viewspace Position Node" Command="{StaticResource Commands.CreateViewspacePositionNode}"></MenuItem>
         </ContextMenu>
     </Window.ContextMenu>
 
@@ -234,6 +240,7 @@
         <CommandBinding Command="{StaticResource Commands.CreateVariableVector3}" Executed="CreateVariableVector3"></CommandBinding>
         <CommandBinding Command="{StaticResource Commands.CreateTextureNode}" Executed="CreateTextureNode"></CommandBinding>
         <CommandBinding Command="{StaticResource Commands.CreateViewspaceNormalNode}" Executed="CreateViewspaceNormalNode"></CommandBinding>
+        <CommandBinding Command="{StaticResource Commands.CreateViewspacePositionNode}" Executed="CreateViewspacePositionNode"></CommandBinding>
     </Window.CommandBindings>
     
     <Grid>
