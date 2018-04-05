@@ -11,6 +11,7 @@ namespace MaterialEditor.Operator
         public NormalizeNode(string name)
             :base(name)
         {
+
         }
 
 

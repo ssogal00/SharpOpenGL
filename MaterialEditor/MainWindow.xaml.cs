@@ -42,9 +42,7 @@ namespace MaterialEditor
         {
             fAngle += 1.0f;
 
-            
-
-            this.Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(fAngle)) * Matrix4.CreateScale(0.1f);
+            //this.Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(fAngle)) * Matrix4.CreateScale(0.1f);
 
             mGlControl.Invalidate();
         }
@@ -352,6 +350,24 @@ namespace MaterialEditor
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
             this.ViewModel.CreateNode<ViewspacePositionNode>("Viewspace Position", newNodePosition);
+        }
+
+        private void CreateMinNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<MinNode>("Min", newNodePosition);
+        }
+
+        private void CreateMaxNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<MaxNode>("Max", newNodePosition);
+        }
+
+        private void CreateAbsNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<AbsNode>("Abs", newNodePosition);
         }
 
         private void OnBtnCompileClick(object sender, RoutedEventArgs e)

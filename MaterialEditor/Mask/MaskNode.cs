@@ -61,4 +61,32 @@ namespace MaterialEditor
             this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat, 0));
         }
     }
+
+    public class MaskBNode : NodeViewModel
+    {
+        public MaskBNode()
+            : base("Mask B")
+        { }
+
+        public override string GetExpressionForOutput(int outputIndex)
+        {
+            if (outputIndex == 0 && InputConnectors[0].AttachedConnections.Count == 1)
+            {
+                var expressionA = GetExpressionForInput(0);
+
+                return string.Format("({0}).b", expressionA);
+            }
+
+            return string.Empty;
+        }
+
+        protected override void CreateInputOutputConnectors()
+        {
+            // input
+            this.InputConnectors.Add(new ConnectorViewModel("In", ConnectorDataType.ConstantVector4, 0));
+
+            // output
+            this.OutputConnectors.Add(new ConnectorViewModel("Out", ConnectorDataType.ConstantFloat, 0));
+        }
+    }
 }

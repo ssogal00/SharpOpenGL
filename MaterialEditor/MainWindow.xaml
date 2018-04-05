@@ -37,7 +37,9 @@
             <RoutedUICommand x:Key="Commands.CreateTextureNode"></RoutedUICommand>
             <RoutedUICommand x:Key="Commands.CreateViewspaceNormalNode"></RoutedUICommand>
             <RoutedUICommand x:Key="Commands.CreateViewspacePositionNode"></RoutedUICommand>
-            
+            <RoutedUICommand x:Key="Commands.CreateAbs"></RoutedUICommand>
+            <RoutedUICommand x:Key="Commands.CreateMin"></RoutedUICommand>
+            <RoutedUICommand x:Key="Commands.CreateMax"></RoutedUICommand>
             
             <DataTemplate DataType="{x:Type local:ConnectionOkIndicator}">
                 <Grid
@@ -223,8 +225,14 @@
             <MenuItem Header="Create Time Node" Command="{StaticResource Commands.CreateTimeNode}"></MenuItem>
             <Separator></Separator>
             <MenuItem Header="Create Texture Node" Command="{StaticResource Commands.CreateTextureNode}"></MenuItem>
+            <Separator></Separator>
             <MenuItem Header="Create Viewspace Normal Node" Command="{StaticResource Commands.CreateViewspaceNormalNode}"></MenuItem>
             <MenuItem Header="Create Viewspace Position Node" Command="{StaticResource Commands.CreateViewspacePositionNode}"></MenuItem>
+            <Separator></Separator>
+            <MenuItem Header="Create Abs Node" Command="{StaticResource Commands.CreateAbs}"></MenuItem>
+            <MenuItem Header="Create Min Node" Command="{StaticResource Commands.CreateMin}"></MenuItem>
+            <MenuItem Header="Create Max Node" Command="{StaticResource Commands.CreateMax}"></MenuItem>
+            
         </ContextMenu>
     </Window.ContextMenu>
 
@@ -241,6 +249,10 @@
         <CommandBinding Command="{StaticResource Commands.CreateTextureNode}" Executed="CreateTextureNode"></CommandBinding>
         <CommandBinding Command="{StaticResource Commands.CreateViewspaceNormalNode}" Executed="CreateViewspaceNormalNode"></CommandBinding>
         <CommandBinding Command="{StaticResource Commands.CreateViewspacePositionNode}" Executed="CreateViewspacePositionNode"></CommandBinding>
+        <CommandBinding Command="{StaticResource Commands.CreateAbs}" Executed="CreateAbsNode"></CommandBinding>
+        <CommandBinding Command="{StaticResource Commands.CreateMin}" Executed="CreateMinNode"></CommandBinding>
+        <CommandBinding Command="{StaticResource Commands.CreateMax}" Executed="CreateMaxNode"></CommandBinding>
+        
     </Window.CommandBindings>
     
     <Grid>
