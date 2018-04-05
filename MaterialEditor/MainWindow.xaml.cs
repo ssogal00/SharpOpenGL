@@ -5,8 +5,6 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL.StaticMesh;
 using System;
-using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows;
 
 using Core.MaterialBase;
@@ -15,9 +13,10 @@ using SharpOpenGL;
 using Core.CustomEvent;
 using SharpOpenGL.GBufferDraw;
 using Core.Texture;
-using System.Timers;
 using System.Windows.Threading;
 using System.Diagnostics;
+using System.IO;
+using MaterialEditor.Utils;
 
 namespace MaterialEditor
 {
@@ -36,6 +35,7 @@ namespace MaterialEditor
 
             watch.Start();
         }
+
 
 
         private void Tick(object sender, EventArgs e)
@@ -82,6 +82,8 @@ namespace MaterialEditor
         protected ObjMesh Mesh = new ObjMesh();
 
         protected float fAngle = 0.0f;
+
+        protected ImpObservableCollection<TextureFile> textureFileList = new ImpObservableCollection<TextureFile>();
 
         private void GLControlLoad(object sender, EventArgs e)
         {
@@ -145,6 +147,22 @@ namespace MaterialEditor
             ScreenBlit.Blit(MyGbuffer.ColorBufferObject, 0, 0, 1, 1);            
             
             mGlControl.SwapBuffers();
+        }
+
+        protected void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var texturelist = Directory.EnumerateFiles("./Resources/SponzaTexture");
+
+            foreach(var texture in texturelist)
+            {
+                var fullPath = Path.GetFullPath(texture);
+                if (texture.EndsWith(".dds"))
+                {
+                    textureFileList.Add(new TextureFile(fullPath));
+                }
+            }
+
+            this.textureListView.ItemsSource = textureFileList;
         }
 
         private void GLControlResize(object sender, EventArgs e)

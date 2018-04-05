@@ -42,8 +42,18 @@
                 <ControlTemplate TargetType="{x:Type local:ConnectorItem}">
                     <Ellipse Width="15" Height="15" Name="connectorEllipse"          
                         Stroke="{StaticResource nodeBorderBrush}"
+                        StrokeThickness="2"
                         Fill="{StaticResource connectorBackgroundBrush}"
-                    />                   
+                    />
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding DataType}" Value="ConstantFloat">
+                            <Setter TargetName="connectorEllipse" Property="Stroke" Value="Orange">
+                            </Setter>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding DataType}" Value="ConstantVector3">
+                            <Setter TargetName="connectorEllipse" Property="Stroke" Value="Magenta"></Setter>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

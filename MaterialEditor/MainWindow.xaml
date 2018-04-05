@@ -8,7 +8,7 @@
         xmlns:OpenTK="clr-namespace:OpenTK;assembly=OpenTK.GLControl"
         xmlns:ac="clr-namespace:AdornedControl;assembly=AdornedControl"
         mc:Ignorable="d"
-        Title="Material Editor" Height="512" Width="1024">
+        Title="Material Editor" Height="540" Width="1080" Loaded="OnLoaded">
 
     <Window.DataContext>
         <local:MainWindowViewModel></local:MainWindowViewModel>
@@ -312,9 +312,23 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
-
                     <Button Click="OnBtnCompileClick">Compile</Button>
+                    <ListView Grid.Row="1" x:Name="textureListView">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="5"></UniformGrid>
+                            </ItemsPanelTemplate>                            
+                        </ItemsControl.ItemsPanel>
+                        <ListView.ItemTemplate>                            
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="64" Height="64" Source="{Binding ImageSource}"></Image>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
             </ScrollViewer>
         </Grid>

@@ -89,7 +89,7 @@ namespace SharpOpenGL
 
             OnWindowResize += Blur.OnWindowResized;
             OnWindowResize += LightPostProcess.OnWindowResized;
-
+            
             MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");            
 
             /*Mesh = ObjMesh.LoadSerialized("sponza.serialized");

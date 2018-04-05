@@ -87,6 +87,7 @@
     <Compile Include="Operator\Vector4AddNode.cs" />
     <Compile Include="Operator\Vector4MultiplyFloat.cs" />
     <Compile Include="Result\ResultNode.cs" />
+    <Compile Include="TextureFile.cs" />
     <Compile Include="UniformParam\FloatUniformVariableNode.cs" />
     <Compile Include="UniformParam\TexCoordNode.cs" />
     <Compile Include="UniformParam\TextureParamNode.cs" />
