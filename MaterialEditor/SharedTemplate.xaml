@@ -40,10 +40,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:ConnectorItem}">
-                    <Ellipse Width="15" Height="15" Name="connectorEllipse"          
+                    <Grid>
+                        <Border BorderThickness="10" Visibility="Visible" BorderBrush="Transparent" Width="40">
+                        </Border>
+                        <Ellipse Width="15" Height="15" Name="connectorEllipse"          
                         Stroke="{StaticResource nodeBorderBrush}"                        
                         Fill="{StaticResource connectorBackgroundBrush}"
-                    />
+                        />
+                    </Grid>
+                    
+
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding DataType}" Value="ConstantFloat">
                             <Setter TargetName="connectorEllipse" Property="Stroke" Value="Orange">
@@ -95,21 +101,21 @@
         />
 
     <DataTemplate x:Key="inputConnectorTemplate">
-        <Grid Margin="0,2,0,0">
+        <Grid Margin="0,4,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <!-- The 'ConnectorItem' or anchor point for the connector. -->
-            <local:ConnectorItem  Grid.Column="0" Width="15" Height="15" Cursor="Hand"/>
+            <local:ConnectorItem  Grid.Column="0" Width="Auto" Height="15" Cursor="Hand" Panel.ZIndex="2"/>
             <!-- The name of the connector. -->
-            <TextBlock Grid.Column="1" Margin="10,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" Foreground="White"/>
+            <TextBlock x:Name="inputTextBlock" Grid.Column="1" Margin="-10,0,0,0" Text="{Binding Name}" VerticalAlignment="Center" Foreground="White" Panel.ZIndex="1"/>
         </Grid>
     </DataTemplate>
 
     <DataTemplate x:Key="outputConnectorTemplate">
-        <Grid HorizontalAlignment="Right" Margin="0,2,0,0">
+        <Grid HorizontalAlignment="Right" Margin="0,4,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -117,15 +123,17 @@
 
             <!-- The name of the connector. -->
             <TextBlock Grid.Column="0" Text="{Binding Name}" VerticalAlignment="Center" Margin="0,0,5,0" Foreground="White"/>
-            <Grid Grid.Column="1" Width="15" Height="15" Cursor="Hand">
+            <Grid Grid.Column="1" Width="Auto" Height="15" Cursor="Hand" Margin="-10,0,0,0">
                 <!-- The 'ConnectorItem' or anchor point for the connector. -->
                 <local:ConnectorItem />
                 <!-- Show a black dot at the start of the arrow when connected. -->
-                <Ellipse Visibility="{Binding IsConnectionAttached, Converter={StaticResource booleanToVisibilityConverter}}"
+                <Border Width="15" Height="15">
+                    <Ellipse Visibility="{Binding IsConnectionAttached, Converter={StaticResource booleanToVisibilityConverter}}"
                     Margin="3"
                     Fill="{StaticResource connectionBrush}"
                     IsHitTestVisible="False"
                     />
+                </Border>
             </Grid>
         </Grid>
     </DataTemplate>
@@ -159,7 +167,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <!-- spacer -->
-                    <RowDefinition Height="5" />
+                    <RowDefinition Height="1" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
@@ -176,7 +184,7 @@
                 </Grid>
 
                 <!-- Displays the node's input connectors. -->
-                <ItemsControl Margin="7"
+                <ItemsControl Margin="-4,2,7,7"
                                 Grid.Column="0"
                                 Grid.Row="2"
                                 ItemsSource="{Binding InputConnectors}"
@@ -187,7 +195,7 @@
                 </ContentControl>
 
                 <!-- Displays the node's output connectors. -->
-                <ItemsControl Margin="7"
+                <ItemsControl Margin="7,2,-4,7"
                                 Grid.Column="2"
                                 Grid.Row="2"
                                 ItemsSource="{Binding OutputConnectors}"
