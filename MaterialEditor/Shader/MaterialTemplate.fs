@@ -34,11 +34,16 @@ vec3 GetNormalColor()
 }
 
 
+float GetSpecularColor()
+{
+	return {specularColorCode};
+}
+
 
 void main()
 {   
     DiffuseColor = GetDiffuseColor();
     NormalColor.xyz = GetNormalColor();
-	NormalColor.a = 0;
+	NormalColor.a = GetSpecularColor();
     PositionColor = vec4(InPosition, 0);
 }

@@ -108,6 +108,13 @@ namespace MaterialEditor
                 fsTemplate = fsTemplate.Replace("{normalColorCode}", normalColorCode);
             }
 
+            var specularColorCode = resultNode.GetSpecularColorCode();
+
+            if (specularColorCode.Length > 0)
+            {
+                fsTemplate = fsTemplate.Replace("{specularColorCode}", specularColorCode);
+            }
+
             // if compile succeeds
             if(Compile(vsTemplate, fsTemplate))
             {

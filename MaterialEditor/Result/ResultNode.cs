@@ -19,7 +19,7 @@ namespace MaterialEditor
             // input
             InputConnectors.Add(new ConnectorViewModel("Albedo", ConnectorDataType.ConstantVector4,0));
             InputConnectors.Add(new ConnectorViewModel("Normal", ConnectorDataType.ConstantVector4,1));
-            InputConnectors.Add(new ConnectorViewModel("Specular", ConnectorDataType.ConstantVector4,2));
+            InputConnectors.Add(new ConnectorViewModel("Specular", ConnectorDataType.ConstantFloat,2));
         }
 
         public string GetDiffuseColorCode()
@@ -28,8 +28,8 @@ namespace MaterialEditor
         }
 
         public string GetNormalColorCode()
-        {
-            return GetExpressionForInput(1);
+        {   
+            return GetExpressionForInput(1);            
         }
 
         public string GetSpecularColorCode()

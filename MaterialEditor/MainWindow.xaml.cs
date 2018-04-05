@@ -382,6 +382,12 @@ namespace MaterialEditor
             this.ViewModel.CreateNode<AbsNode>("Abs", newNodePosition);
         }
 
+        private void CreateConstantFloatNode(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newNodePosition = Mouse.GetPosition(networkControl);
+            this.ViewModel.CreateNode<ConstantFloatNode>("Float", newNodePosition);
+        }
+
         private void OnBtnCompileClick(object sender, RoutedEventArgs e)
         {   
             liveMaterial.Compile(this.ViewModel.Network);

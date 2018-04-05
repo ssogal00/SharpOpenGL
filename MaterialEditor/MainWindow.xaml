@@ -26,6 +26,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <RoutedUICommand x:Key="Commands.CreateNode" />
+            <RoutedUICommand x:Key="Commands.CreateConstantFloat"/>
             <RoutedUICommand x:Key="Commands.CreateConstantVector3"/>
             <RoutedUICommand x:Key="Commands.CreateConstantVector4"/>
             <RoutedUICommand x:Key="Commands.CreateVariableVector3"/>
@@ -213,7 +214,8 @@
     </Window.Resources>
 
     <Window.ContextMenu>
-        <ContextMenu>            
+        <ContextMenu>
+            <MenuItem Header="Create Constant Float" Command="{StaticResource Commands.CreateConstantFloat}"></MenuItem>
             <MenuItem Header="Create Constant Vector3" Command="{StaticResource Commands.CreateConstantVector3}"></MenuItem>
             <MenuItem Header="Create Constant Vector4" Command="{StaticResource Commands.CreateConstantVector4}"></MenuItem>
             <MenuItem Header="Create Variable Vector3" Command="{StaticResource Commands.CreateVariableVector3}"></MenuItem>
@@ -236,8 +238,9 @@
         </ContextMenu>
     </Window.ContextMenu>
 
-    <Window.CommandBindings>
+    <Window.CommandBindings>        
         <CommandBinding Command="{StaticResource Commands.CreateNode}" Executed="CreateNode_Executed" />
+        <CommandBinding Command="{StaticResource Commands.CreateConstantFloat}" Executed="CreateConstantFloatNode"/>
         <CommandBinding Command="{StaticResource Commands.CreateConstantVector3}" Executed="CreateConstantVector3"/>
         <CommandBinding Command="{StaticResource Commands.CreateConstantVector4}" Executed="CreateConstantVector4"/>
         <CommandBinding Command="{StaticResource Commands.CreateVector3AddNode}" Executed="CreateVector3AddNode"/>

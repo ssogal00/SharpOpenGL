@@ -96,6 +96,7 @@
     <Compile Include="UniformParam\TimeParamNode.cs" />
     <Compile Include="UniformParam\Vector3UniformVariableNode.cs" />
     <Compile Include="UniformParam\Vector4UniformVariableNode.cs" />
+    <Compile Include="UniformParam\ViewDirNode.cs" />
     <Compile Include="UniformParam\ViewspaceNormalNode.cs" />
     <Compile Include="UniformParam\ViewspacePositionNode.cs" />
     <Compile Include="Vector\ConstantVector2Node.cs" />

@@ -12,6 +12,16 @@ namespace MaterialEditor
             : base("Float")
         { }
 
+
+        public override string GetExpressionForOutput(int outputIndex)
+        {
+            if(outputIndex == 0)
+            {
+                return string.Format("({0})", Value);
+            }
+
+            return string.Empty;
+        }
         protected override void CreateInputOutputConnectors()
         {
             base.CreateInputOutputConnectors();
