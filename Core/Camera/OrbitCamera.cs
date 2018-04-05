@@ -41,7 +41,8 @@ namespace Core.Camera
         {
             var vDir = (LookAtLocation - EyeLocation).Normalized();
 
-            DestEyeLocation = vDir * fAmount + EyeLocation;
+            EyeLocation = vDir * fAmount + EyeLocation;
+            UpdateViewMatrix();            
         }
 
         public float CameraDistance = 10;

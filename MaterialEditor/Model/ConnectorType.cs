@@ -21,21 +21,11 @@ namespace MaterialEditor
         ConstantVector3,
         ConstantVector2,
         ConstantFloat,
-        ConstantInt,        
+        ConstantInt,
     }
 
     public static class ConnectionHelper
     {
-        public static bool IsCompatibleConnector(ConnectorDataType a, ConnectorDataType b)
-        {
-            if(a == b)
-            {
-                return true;
-            }
-            
-            return false;
-        }
-
         public static string GetCastString(string original, ConnectorDataType from, ConnectorDataType to)
         {
             // vec4 => vec3
@@ -68,8 +58,13 @@ namespace MaterialEditor
                 return string.Format("vec3({0}, 0)", original);
             }
 
+            // vec2 => vec4
+            if(from == ConnectorDataType.ConstantVector2 && to == ConnectorDataType.ConstantVector4)
+            {
+                return string.Format("vec4({0},{1},0,0)", original);
+            }
 
-            return original ;
+             return original ;
         }
         
         public static bool SupportsCast(ConnectorDataType from, ConnectorDataType to)
@@ -115,8 +110,14 @@ namespace MaterialEditor
                 return true;
             }
 
+            // vector2 => vector4
+            if (from == ConnectorDataType.ConstantVector2 && to == ConnectorDataType.ConstantVector4)
+            {
+                return true;
+            }
+
             // vector2 => float
-            if(from == ConnectorDataType.ConstantVector2 && to == ConnectorDataType.ConstantFloat)
+            if (from == ConnectorDataType.ConstantVector2 && to == ConnectorDataType.ConstantFloat)
             {
                 return true;
             }

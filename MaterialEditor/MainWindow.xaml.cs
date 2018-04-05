@@ -6,6 +6,7 @@ using OpenTK.Graphics.OpenGL;
 using SharpOpenGL.StaticMesh;
 using System;
 using System.Windows;
+using System.Windows.Forms;
 
 using Core.MaterialBase;
 using System.Windows.Input;
@@ -42,7 +43,7 @@ namespace MaterialEditor
         {
             fAngle += 1.0f;
 
-            //this.Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(fAngle)) * Matrix4.CreateScale(0.1f);
+            this.Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(fAngle)) * Matrix4.CreateScale(0.1f);
 
             mGlControl.Invalidate();
         }
@@ -149,10 +150,7 @@ namespace MaterialEditor
 
             LightPostProcess.Render(MyGbuffer.GetPositionAttachment, MyGbuffer.GetColorAttachement, MyGbuffer.GetNormalAttachment);
             
-            //ScreenBlit.Blit(MyGbuffer.NormalBufferObject, 2, 2, 1, 1);
             ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
-
-            //ScreenBlit.Blit(MyGbuffer.ColorBufferObject, 0, 0, 1, 1);            
             
             mGlControl.SwapBuffers();
         }
@@ -171,6 +169,20 @@ namespace MaterialEditor
             }
 
             this.textureListView.ItemsSource = textureFileList;
+        }
+
+        public void GLControlMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                Camera.MoveForward(1);
+            }
+            else
+            {
+                Camera.MoveForward(-1);
+            }
+
+            Transform.View = Camera.View;
         }
 
         private void GLControlResize(object sender, EventArgs e)
