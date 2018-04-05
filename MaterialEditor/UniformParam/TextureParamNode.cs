@@ -16,9 +16,7 @@ namespace MaterialEditor
 
         public TextureParamNode()
             :base("TextureParam")
-        {
-            //var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "Resources", "SponzaTexture", "Background_Albedo.dds");
-            //ImageSource = new BitmapImage(new Uri(imagePath));
+        {   
             UniformName = string.Format("Texture_{0}", TextureParamCount);
             TextureParamCount++;
         }
