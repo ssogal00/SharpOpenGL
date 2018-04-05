@@ -66,6 +66,8 @@ namespace MaterialEditor
         
         protected SharpOpenGL.GBufferDraw.Transform Transform = new SharpOpenGL.GBufferDraw.Transform();
 
+        protected SharpOpenGL.PostProcess.DeferredLight LightPostProcess = null;
+
         protected Texture2D test = null;
         protected GBuffer MyGbuffer = new GBuffer(100,100);
         protected BlitToScreen ScreenBlit = new BlitToScreen();        
@@ -89,12 +91,15 @@ namespace MaterialEditor
         {
             GL.ClearColor(System.Drawing.Color.LightGray);
 
-            DeferredMaterial = new SharpOpenGL.GBufferDraw.GBufferDraw();            
+            DeferredMaterial = new SharpOpenGL.GBufferDraw.GBufferDraw();
+            LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
 
             WindowCreateEvent += MyGbuffer.OnResourceCreate;
             WindowCreateEvent += Sampler.OnResourceCreate;
+            WindowCreateEvent += LightPostProcess.OnResourceCreate;
 
-            WindowResizeEvent += MyGbuffer.OnWindowResized;            
+            WindowResizeEvent += LightPostProcess.OnWindowResized;
+            WindowResizeEvent += MyGbuffer.OnWindowResized;
 
             ScreenBlit.OnResourceCreate(sender, e);
             ScreenBlit.SetGridSize(1, 1);
@@ -140,11 +145,16 @@ namespace MaterialEditor
                 DeferredMaterial.Setup();
                 DeferredMaterial.SetUniformBufferValue<Transform>("Transform", ref Transform);
                 Mesh.Draw(DeferredMaterial);
-            }            
-
+            }
+            
             MyGbuffer.Unbind();
 
-            ScreenBlit.Blit(MyGbuffer.ColorBufferObject, 0, 0, 1, 1);            
+            LightPostProcess.Render(MyGbuffer.GetPositionAttachment, MyGbuffer.GetColorAttachement, MyGbuffer.GetNormalAttachment);
+            
+            //ScreenBlit.Blit(MyGbuffer.NormalBufferObject, 2, 2, 1, 1);
+            ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
+
+            //ScreenBlit.Blit(MyGbuffer.ColorBufferObject, 0, 0, 1, 1);            
             
             mGlControl.SwapBuffers();
         }
@@ -321,7 +331,15 @@ namespace MaterialEditor
         private void CreateTextureNode(object sender, ExecutedRoutedEventArgs e)
         {
             var newNodePosition = Mouse.GetPosition(networkControl);
-            this.ViewModel.CreateNode<TextureParamNode>("Texture Param", newNodePosition);
+
+            if (textureListView != null && textureListView.SelectedIndex != -1)
+            {
+                if (textureFileList.Count > textureListView.SelectedIndex)
+                {
+                    var newNode = this.ViewModel.CreateNode<TextureParamNode>("Texture Param", newNodePosition);
+                    newNode.ImageSource = textureFileList[textureListView.SelectedIndex].ImageSource;
+                }
+            }
         }
 
         private void CreateViewspaceNormalNode(object sender, ExecutedRoutedEventArgs e)

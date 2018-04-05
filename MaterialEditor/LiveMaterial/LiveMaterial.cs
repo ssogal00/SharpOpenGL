@@ -99,7 +99,14 @@ namespace MaterialEditor
             if(diffuseColorCode.Length > 0)
             {
                 fsTemplate = fsTemplate.Replace("{diffuseColorCode}", diffuseColorCode);
-            }            
+            }
+
+            var normalColorCode = resultNode.GetNormalColorCode();
+
+            if(normalColorCode.Length > 0)
+            {
+                fsTemplate = fsTemplate.Replace("{normalColorCode}", normalColorCode);
+            }
 
             // if compile succeeds
             if(Compile(vsTemplate, fsTemplate))

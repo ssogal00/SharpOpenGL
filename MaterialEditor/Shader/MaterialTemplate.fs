@@ -21,9 +21,24 @@ vec4 GetDiffuseColor()
     return {diffuseColorCode};
 }
 
+vec3 GetNormalColor()
+{
+	mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
+								    InBinormal.x, InBinormal.y, InBinormal.z, 
+								    InNormal.x, InNormal.y, InNormal.z);
+
+	vec3 NormalMapNormal = (2.0f * (({normalColorCode}).xyz) - vec3(1.0f));
+	vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
+
+	return BumpNormal;
+}
+
+
+
 void main()
 {   
     DiffuseColor = GetDiffuseColor();
-    NormalColor.xyz = InNormal.xyz;
+    NormalColor.xyz = GetNormalColor();
+	NormalColor.a = 0;
     PositionColor = vec4(InPosition, 0);
 }

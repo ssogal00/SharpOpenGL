@@ -440,7 +440,7 @@ namespace MaterialEditor
             this.Network.Nodes.Remove(node);
         }
 
-        public NodeViewModel CreateNode<T>(string name, Point nodeLocation) 
+        public T CreateNode<T>(string name, Point nodeLocation) 
             where T : NodeViewModel, new()
         {
             var node = new T();
