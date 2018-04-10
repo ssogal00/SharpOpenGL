@@ -14,7 +14,7 @@ namespace Core.Buffer
         public StaticVertexBuffer()
         {
             m_BufferTarget = BufferTarget.ArrayBuffer;
-            m_Hint = BufferUsageHint.StaticDraw;
+            hint = BufferUsageHint.StaticDraw;
         }
         
         public void BindVertexAttribute()

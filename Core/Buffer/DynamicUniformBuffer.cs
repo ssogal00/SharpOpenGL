@@ -16,13 +16,13 @@ namespace Core.Buffer
         public DynamicUniformBuffer()            
         {
             m_BufferTarget  = BufferTarget.UniformBuffer;
-            m_Hint          = BufferUsageHint.DynamicDraw;            
+            hint          = BufferUsageHint.DynamicDraw;            
         }
 
         public DynamicUniformBuffer(ShaderProgram ProgramObject, string UniformBlockName)
         {
             m_BufferTarget = BufferTarget.UniformBuffer;
-            m_Hint = BufferUsageHint.DynamicDraw;
+            hint = BufferUsageHint.DynamicDraw;
 
             if (ProgramObject.IsProgramLinked())
             {

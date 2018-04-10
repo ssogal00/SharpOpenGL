@@ -13,7 +13,7 @@ namespace Core.Buffer
         public DynamicVertexBuffer()
         {
             m_BufferTarget = BufferTarget.ArrayBuffer;
-            m_Hint = BufferUsageHint.DynamicDraw;
+            hint = BufferUsageHint.DynamicDraw;
         }
 
         public void BindVertexAttribute()

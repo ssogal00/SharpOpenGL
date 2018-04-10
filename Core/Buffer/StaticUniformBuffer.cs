@@ -14,7 +14,7 @@ namespace Core.Buffer
         public StaticUniformBuffer()
         {
             m_BufferTarget = BufferTarget.UniformBuffer;
-            m_Hint = BufferUsageHint.StaticDraw;
+            hint = BufferUsageHint.StaticDraw;
         }
     }
 }

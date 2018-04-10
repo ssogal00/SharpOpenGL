@@ -103,8 +103,6 @@ namespace MaterialEditor
             ScreenBlit.OnResourceCreate(sender, e);
             ScreenBlit.SetGridSize(1, 1);
 
-            MyGbuffer.OnResourceCreate(this, e);
-
             WindowCreateEvent(this, e);
 
             test = new Texture2D();

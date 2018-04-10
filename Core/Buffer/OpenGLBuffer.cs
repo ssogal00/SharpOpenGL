@@ -9,18 +9,18 @@ namespace Core.Buffer
     {
         public OpenGLBuffer()
         {
-            m_BufferObject = GL.GenBuffer();
+            bufferObject = GL.GenBuffer();
         }
 
         public void Dispose()
         {
             Unbind();
-            GL.DeleteBuffer(m_BufferObject);
+            GL.DeleteBuffer(bufferObject);
         }
 
         public void Bind()
         {
-            GL.BindBuffer(m_BufferTarget, m_BufferObject);
+            GL.BindBuffer(m_BufferTarget, bufferObject);
             bBind = true;
         }
 
@@ -42,7 +42,7 @@ namespace Core.Buffer
                 Bind();
             }         
             
-            GL.BufferData(m_BufferTarget, Size, Data, m_Hint);            
+            GL.BufferData(m_BufferTarget, Size, Data, hint);            
         }
 
         public void BufferData<T>(ref T Data) where T : struct
@@ -53,7 +53,7 @@ namespace Core.Buffer
             }
             
             var Size = new IntPtr(Marshal.SizeOf(Data));
-            GL.BufferData<T>(m_BufferTarget, Size, ref Data, m_Hint);            
+            GL.BufferData<T>(m_BufferTarget, Size, ref Data, hint);            
         }
      
         public void BufferWholeData<T>(ref T Data) where T: struct
@@ -83,7 +83,7 @@ namespace Core.Buffer
             if (Data != null)
             {
                 var Size = new IntPtr(Marshal.SizeOf(Data[0]) * Data.Length);
-                GL.BufferData<T>(m_BufferTarget, Size, Data, m_Hint);
+                GL.BufferData<T>(m_BufferTarget, Size, Data, hint);
             }
         }
 
@@ -94,13 +94,13 @@ namespace Core.Buffer
                 Bind();
             }            
             
-            GL.BindBufferBase(BufferRangeTarget.UniformBuffer, BindingPoint, m_BufferObject);            
+            GL.BindBufferBase(BufferRangeTarget.UniformBuffer, BindingPoint, bufferObject);            
         }
         
         public BufferUsageHint UsageHint
         {
-            get { return m_Hint; }
-            set { m_Hint = value; }
+            get { return hint; }
+            set { hint = value; }
         }
 
         public BufferTarget Target 
@@ -111,15 +111,15 @@ namespace Core.Buffer
 
         public int BufferObject
         {
-            get { return m_BufferObject; }
-            protected set { m_BufferObject = value; }
+            get { return bufferObject; }
+            protected set { bufferObject = value; }
         }
 
         protected BufferTarget m_BufferTarget;
 
-        protected BufferUsageHint m_Hint;
+        protected BufferUsageHint hint;
 
-        protected int m_BufferObject = 0;
+        protected int bufferObject = 0;
 
         protected bool bBind = false;
     }
