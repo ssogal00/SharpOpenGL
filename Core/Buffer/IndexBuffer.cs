@@ -13,7 +13,7 @@ namespace Core.Buffer
     {
         public IndexBuffer()
         {
-            m_BufferTarget = BufferTarget.ElementArrayBuffer;
+            bufferTarget = BufferTarget.ElementArrayBuffer;
             hint = BufferUsageHint.DynamicDraw;
         }
     }

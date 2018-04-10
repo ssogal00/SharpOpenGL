@@ -12,7 +12,7 @@ namespace Core.Buffer
     {
         public DynamicVertexBuffer()
         {
-            m_BufferTarget = BufferTarget.ArrayBuffer;
+            bufferTarget = BufferTarget.ArrayBuffer;
             hint = BufferUsageHint.DynamicDraw;
         }
 

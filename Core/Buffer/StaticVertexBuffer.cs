@@ -13,7 +13,7 @@ namespace Core.Buffer
     {
         public StaticVertexBuffer()
         {
-            m_BufferTarget = BufferTarget.ArrayBuffer;
+            bufferTarget = BufferTarget.ArrayBuffer;
             hint = BufferUsageHint.StaticDraw;
         }
         

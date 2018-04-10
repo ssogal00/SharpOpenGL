@@ -13,7 +13,7 @@ namespace Core.Buffer
     {
         public StaticUniformBuffer()
         {
-            m_BufferTarget = BufferTarget.UniformBuffer;
+            bufferTarget = BufferTarget.UniformBuffer;
             hint = BufferUsageHint.StaticDraw;
         }
     }

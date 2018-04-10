@@ -20,7 +20,7 @@ namespace Core.Buffer
 
         public void Bind()
         {
-            GL.BindBuffer(m_BufferTarget, bufferObject);
+            GL.BindBuffer(bufferTarget, bufferObject);
             bBind = true;
         }
 
@@ -31,7 +31,7 @@ namespace Core.Buffer
 
         public void Unbind()
         {
-            GL.BindBuffer(m_BufferTarget, 0);
+            GL.BindBuffer(bufferTarget, 0);
             bBind = false;
         }
 
@@ -42,7 +42,7 @@ namespace Core.Buffer
                 Bind();
             }         
             
-            GL.BufferData(m_BufferTarget, Size, Data, hint);            
+            GL.BufferData(bufferTarget, Size, Data, hint);            
         }
 
         public void BufferData<T>(ref T Data) where T : struct
@@ -53,7 +53,7 @@ namespace Core.Buffer
             }
             
             var Size = new IntPtr(Marshal.SizeOf(Data));
-            GL.BufferData<T>(m_BufferTarget, Size, ref Data, hint);            
+            GL.BufferData<T>(bufferTarget, Size, ref Data, hint);            
         }
      
         public void BufferWholeData<T>(ref T Data) where T: struct
@@ -62,7 +62,7 @@ namespace Core.Buffer
             {
                 Bind();
             }
-            GL.BufferSubData<T>(m_BufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
+            GL.BufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
 	    }
 
         public void BufferSubData<T>(ref T Data, int Offset) where T : struct
@@ -71,7 +71,7 @@ namespace Core.Buffer
             {
                 Bind();
             }
-            GL.BufferSubData<T>(m_BufferTarget, new IntPtr(Offset), Marshal.SizeOf(Data), ref Data);
+            GL.BufferSubData<T>(bufferTarget, new IntPtr(Offset), Marshal.SizeOf(Data), ref Data);
         }
 
         public void BufferData<T>(ref T[] Data) where T: struct
@@ -83,7 +83,7 @@ namespace Core.Buffer
             if (Data != null)
             {
                 var Size = new IntPtr(Marshal.SizeOf(Data[0]) * Data.Length);
-                GL.BufferData<T>(m_BufferTarget, Size, Data, hint);
+                GL.BufferData<T>(bufferTarget, Size, Data, hint);
             }
         }
 
@@ -105,8 +105,8 @@ namespace Core.Buffer
 
         public BufferTarget Target 
         { 
-            get { return m_BufferTarget; }
-            protected set { m_BufferTarget = value; }
+            get { return bufferTarget; }
+            protected set { bufferTarget = value; }
         }
 
         public int BufferObject
@@ -115,7 +115,7 @@ namespace Core.Buffer
             protected set { bufferObject = value; }
         }
 
-        protected BufferTarget m_BufferTarget;
+        protected BufferTarget bufferTarget;
 
         protected BufferUsageHint hint;
 
