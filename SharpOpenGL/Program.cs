@@ -64,7 +64,7 @@ namespace SharpOpenGL
             Formatter<DefaultResolver, OpenTK.Vector2>.Register(new Vector2Formatter<DefaultResolver>());
             Formatter<DefaultResolver, OpenTK.Vector4>.Register(new Vector4Formatter<DefaultResolver>());
 
-            VSync = VSyncMode.On;
+            VSync = VSyncMode.Off;
 
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
