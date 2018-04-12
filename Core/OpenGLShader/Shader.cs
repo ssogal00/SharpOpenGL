@@ -18,16 +18,16 @@ namespace Core.OpenGLShader
 
         public void CompileShader(string ShaderSourceCode)
         {
-            GL.ShaderSource(m_ShaderObject, ShaderSourceCode);
-            GL.CompileShader(m_ShaderObject);            
+            GL.ShaderSource(shaderObject, ShaderSourceCode);
+            GL.CompileShader(shaderObject);            
 
             int nStatus;
-            GL.GetShader(m_ShaderObject, ShaderParameter.CompileStatus, out nStatus);
+            GL.GetShader(shaderObject, ShaderParameter.CompileStatus, out nStatus);
 
             if (nStatus != 1)
             {
                 string ShaderErrLog;
-                GL.GetShaderInfoLog(m_ShaderObject, out ShaderErrLog);
+                GL.GetShaderInfoLog(shaderObject, out ShaderErrLog);
 
                 Console.WriteLine(ShaderErrLog);
             }
@@ -35,17 +35,17 @@ namespace Core.OpenGLShader
 
         public bool CompileShader(string shaderSourceCode, out string errorlog)
         {
-            GL.ShaderSource(m_ShaderObject, shaderSourceCode);
-            GL.CompileShader(m_ShaderObject);
+            GL.ShaderSource(shaderObject, shaderSourceCode);
+            GL.CompileShader(shaderObject);
 
             errorlog = string.Empty;
 
             int nStatus;
-            GL.GetShader(m_ShaderObject, ShaderParameter.CompileStatus, out nStatus);
+            GL.GetShader(shaderObject, ShaderParameter.CompileStatus, out nStatus);
 
             if (nStatus != 1)
             {
-                GL.GetShaderInfoLog(m_ShaderObject, out errorlog);
+                GL.GetShaderInfoLog(shaderObject, out errorlog);
 
                 return false;
             }
@@ -55,14 +55,14 @@ namespace Core.OpenGLShader
 
         public int ShaderObject 
         {
-            get { return m_ShaderObject; }
+            get { return shaderObject; }
 
             protected set
             {
-                m_ShaderObject = value;
+                shaderObject = value;
             }
         }
 
-        private int m_ShaderObject = 0;
+        private int shaderObject = 0;
     }
 }

@@ -10,11 +10,16 @@ using System.Diagnostics;
 
 namespace Core.OpenGLShader
 {
-    public class ShaderProgram
+    public class ShaderProgram : IDisposable
     {
         public ShaderProgram()
         {
             ProgramObject = GL.CreateProgram();
+        }
+
+        public void Dispose()
+        {
+            DeleteProgram();
         }
 
         public ShaderProgram(VertexShader VS, FragmentShader FS)
