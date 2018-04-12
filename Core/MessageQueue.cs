@@ -10,6 +10,13 @@ using System.Threading;
 namespace Core
 {
 
+    public enum MessageQueueState
+    {
+        Stopped, 
+        Running, 
+        Stopping,
+    }
+
     public struct MessageInfo
     {
         public MessageInfo(Action<object> callback, object message)
@@ -47,19 +54,97 @@ namespace Core
 
         private void Run()
         {
+            List<MessageInfo> currentQueue = new List<MessageInfo>();
 
+            do
+            {
+                lock (queue)
+                {
+                    if (queue.Count > 0)
+                    {
+                        currentQueue.AddRange(queue);
+                        queue.Clear();
+                    }
+                    else
+                    {
+                        Monitor.Wait(queue);
+                        currentQueue.AddRange(queue);
+                        queue.Clear();
+                    }
+                }
+
+                ProcessCurrentQueue(currentQueue);
+                currentQueue.Clear();
+            } while (state == MessageQueueState.Running);
+
+            lock(queue)
+            {
+                state = MessageQueueState.Stopped;
+            }
         }
 
         public void ProcessQueue()
         {
+            List<MessageInfo> currentQueue = null;
+
+            lock (queue)
+            {
+                if (state != MessageQueueState.Stopped)
+                {
+
+                }
+
+                if (queue.Count > 0)
+                {
+                    state = MessageQueueState.Running;
+                    currentQueue = new List<MessageInfo>(queue);
+                    queue.Clear();
+                }
+            }
+
+            if(currentQueue != null)
+            {
+                ProcessCurrentQueue(currentQueue);
+                lock(queue)
+                {
+                    state = MessageQueueState.Stopped;
+                }
+            }
         }
 
         public void Dispose()
         {
         }
 
+        private void ProcessCurrentQueue(List<MessageInfo> currentQueue)
+        {
+            for(int i = 0; i < currentQueue.Count; ++i)
+            {
+                if(state == MessageQueueState.Stopping)
+                {
+                    lock(queue)
+                    {
+                        currentQueue.RemoveRange(0, i);
+                        queue.InsertRange(0, currentQueue);
+                    }
+                    break;
+                }
+
+                MessageInfo message = currentQueue[i];
+                if(message.Callback != null)
+                {
+                    message.Callback(message.Message);
+                }
+                else
+                {
+
+                }
+            }
+        }
+
         
 
         private List<MessageInfo> queue = new List<MessageInfo>();
+        private MessageQueueState state;
     }
 }
