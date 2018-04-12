@@ -22,7 +22,7 @@ namespace Core
             IB.BufferData<uint>(ref IndexList);
         }
 
-        protected void BindVertexAndIndexBuffer()
+        public void BindVertexAndIndexBuffer()
         {
             VB.Bind();
             IB.Bind();
@@ -31,7 +31,10 @@ namespace Core
 
         public void SetupData(ref T[] VertexList, ref uint[] IndexList)
         {
+            VB.Bind();
             VB.BufferData<T>(ref VertexList);
+
+            IB.Bind();
             IB.BufferData<uint>(ref IndexList);
             IndexCount = IndexList.Count();
             bReadyToDraw = true;
