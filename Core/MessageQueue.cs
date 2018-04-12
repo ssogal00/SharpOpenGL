@@ -47,6 +47,16 @@ namespace Core
 
         public void StartInAnotherThread()
         {
+
+            lock(queue)
+            {
+                if (state != MessageQueueState.Stopped)
+                {
+                    throw new InvalidOperationException("message queue is already running");
+                }
+
+                state = MessageQueueState.Running;
+            }
             Thread thread = new Thread(Run);
             thread.IsBackground = true;
             thread.Start();
@@ -83,6 +93,16 @@ namespace Core
             }
         }
 
+        public void Terminate()
+        {
+            Post(StopQueue, null);
+        }
+
+        private void StopQueue(object userData)
+        {
+            state = MessageQueueState.Stopping;
+        }
+
         public void ProcessQueue()
         {
             List<MessageInfo> currentQueue = null;
@@ -91,7 +111,7 @@ namespace Core
             {
                 if (state != MessageQueueState.Stopped)
                 {
-
+                    throw new InvalidOperationException("The Message Queue is already running");
                 }
 
                 if (queue.Count > 0)
