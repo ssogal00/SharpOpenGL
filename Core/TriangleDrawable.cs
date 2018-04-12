@@ -10,7 +10,7 @@ namespace Core
         {  
         }
 
-        public virtual void Draw()
+        public override void Draw()
         {
             if (bReadyToDraw)
             {
@@ -23,7 +23,7 @@ namespace Core
             }
         }
 
-        public virtual void Draw(uint Offset, uint Count)
+        public override void Draw(uint Offset, uint Count)
         {
             if(bReadyToDraw)
             {

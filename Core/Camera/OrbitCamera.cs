@@ -54,7 +54,7 @@ namespace Core.Camera
             set { DestEyeLocation = value;}
         }
 
-        public void OnWindowResized(object sender, ScreenResizeEventArgs eventArgs)
+        public override void OnWindowResized(object sender, ScreenResizeEventArgs eventArgs)
         {
             var Width = eventArgs.Width;
             var Height = eventArgs.Height;
