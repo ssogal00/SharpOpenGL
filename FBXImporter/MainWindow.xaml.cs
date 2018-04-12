@@ -83,7 +83,7 @@ namespace FBXImporter
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            Camera.UpdateCameraDistance();
+            //Camera.UpdateCameraDistance();
             Camera.UpdateViewMatrix();
             Camera.UpdateProjMatrix();
             
@@ -95,15 +95,15 @@ namespace FBXImporter
             LineTransform.Model = ModelTransform.Model;
 
             TestMaterial.Use();
-            TestMaterial.SetTransformBlockData(ref ModelTransform);
+            TestMaterial.SetUniformBufferValue<SharpOpenGL.BasicMaterial.Transform>("Transform", ref ModelTransform);
 
             if(MyFBXMesh != null)
             {                
-               // MyFBXMesh.Draw();
+               MyFBXMesh.Draw();
             }
 
              Simple.Use();
-             Simple.SetTransformBlockData(ref LineTransform);
+             Simple.SetUniformBufferValue<SharpOpenGL.SimpleMaterial.Transform>("Transform", ref LineTransform);
              if(MyFBXMesh != null)
              {
                 // MyFBXMesh.DrawBoneHierarchy();
@@ -130,7 +130,7 @@ namespace FBXImporter
             Camera.EyeLocation = new Vector3(0, 0, -10);
             Camera.LookAtLocation = new Vector3(0, 0, 0);
 
-            Camera.UpdateCameraDistance();
+            /*Camera.UpdateCameraDistance();*/
             Camera.UpdateViewMatrix();
             Camera.UpdateProjMatrix();
 
