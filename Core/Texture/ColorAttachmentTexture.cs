@@ -15,16 +15,16 @@ namespace Core.Texture
 
         protected void RecreateTexture()
         {
-            if (m_TextureObject != 0)
+            if (textureObject != 0)
             {
-                GL.DeleteTexture(m_TextureObject);
-                m_TextureObject = GL.GenTexture();
+                GL.DeleteTexture(textureObject);
+                textureObject = GL.GenTexture();
             }
         }
 
         public override void Bind()
         {
-            GL.BindTexture(TextureTarget.Texture2D, m_TextureObject);            
+            GL.BindTexture(TextureTarget.Texture2D, textureObject);            
         }
 
         public void Alloc()
@@ -46,6 +46,6 @@ namespace Core.Texture
         protected PixelInternalFormat textureFormat;
         public PixelInternalFormat TextureFormat => textureFormat;
 
-        public int GetTextureObject => m_TextureObject;        
+        public int GetTextureObject => textureObject;        
     }
 }

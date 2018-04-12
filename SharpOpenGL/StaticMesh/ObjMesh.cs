@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using ZeroFormatter;
 using ZeroFormatter.Internal;
+using Core;
 
 using ObjMeshVertexAttribute = Core.Primitive.PNTT_VertexAttribute;
 
@@ -24,6 +25,7 @@ namespace SharpOpenGL.StaticMesh
         // Vertex Buffer and Index buffer to render
         StaticVertexBuffer<ObjMeshVertexAttribute> VB = null;
         IndexBuffer IB = null;
+        TriangleDrawable<ObjMeshVertexAttribute> meshdrawable = null;
 
         // serialized fields
         // vertices

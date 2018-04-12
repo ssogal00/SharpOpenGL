@@ -9,7 +9,7 @@ namespace Core.Texture
     {
         public TextureBase()
         {
-            m_TextureObject = GL.GenTexture();
+            textureObject = GL.GenTexture();
             m_Sampler = new Sampler();
             m_Sampler.SetMagFilter(TextureMagFilter.Linear);
             m_Sampler.SetMinFilter(TextureMinFilter.Linear);
@@ -19,8 +19,8 @@ namespace Core.Texture
         {
             if (IsValid)
             {
-                GL.DeleteTexture(m_TextureObject);
-                m_TextureObject = -1;
+                GL.DeleteTexture(textureObject);
+                textureObject = -1;
             }
         }
 
@@ -28,7 +28,7 @@ namespace Core.Texture
         {
             if (IsValid)
             {
-                GL.BindTexture(TextureTarget.Texture2D, m_TextureObject);
+                GL.BindTexture(TextureTarget.Texture2D, textureObject);
             }
         }
 
@@ -51,17 +51,17 @@ namespace Core.Texture
         {
             get
             {
-                return m_TextureObject != -1;
+                return textureObject != -1;
             }
         }
 
         public int Width { get { return m_Width; } }
         public int Height { get { return m_Height; } }
-        public int TextureObject { get { return m_TextureObject; } }
+        public int TextureObject { get { return textureObject; } }
 
         protected int m_Width = 0;
         protected int m_Height = 0;
-        protected int m_TextureObject = -1;
+        protected int textureObject = -1;
 
         protected Sampler m_Sampler = null;
         protected string m_TextureName = "";

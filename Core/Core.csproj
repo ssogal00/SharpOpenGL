@@ -82,6 +82,7 @@
     <Compile Include="MaterialBase\MaterialBase.cs" />
     <Compile Include="MathHelper\MathHelper.cs" />
     <Compile Include="MessageQueue.cs" />
+    <Compile Include="OpenGLContext.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
     <Compile Include="RenderResource.cs" />

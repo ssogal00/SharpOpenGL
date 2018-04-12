@@ -80,7 +80,7 @@ namespace Core
 
         public virtual void Draw(uint Offset , uint Count)
         {
-
+            //
         }
 
         protected StaticVertexBuffer<T> VB = null;

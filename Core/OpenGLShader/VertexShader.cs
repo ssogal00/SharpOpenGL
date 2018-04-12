@@ -15,6 +15,6 @@ namespace Core.OpenGLShader
         public VertexShader()
         {
             ShaderObject = GL.CreateShader(ShaderType.VertexShader);
-        }        
+        }
     }
 }

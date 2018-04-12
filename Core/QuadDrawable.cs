@@ -12,10 +12,7 @@ namespace Core
         {
             if (bReadyToDraw)
             {
-                VB.Bind();
-                IB.Bind();
-
-                VB.BindVertexAttribute();
+                BindVertexAndIndexBuffer();
 
                 GL.DrawElements(PrimitiveType.Quads, IndexCount, DrawElementsType.UnsignedInt, 0);
             }

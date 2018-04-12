@@ -15,10 +15,10 @@ namespace Core.Texture
 
         protected void RecreateTexture()
         {
-            if(m_TextureObject != 0)
+            if(textureObject != 0)
             {
-                GL.DeleteTexture(m_TextureObject);
-                m_TextureObject = GL.GenTexture();
+                GL.DeleteTexture(textureObject);
+                textureObject = GL.GenTexture();
             }
         }
 
@@ -39,6 +39,6 @@ namespace Core.Texture
         }
         
 
-        public int GetTextureObject => m_TextureObject;        
+        public int GetTextureObject => textureObject;        
     }
 }

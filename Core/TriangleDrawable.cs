@@ -14,11 +14,7 @@ namespace Core
         {
             if (bReadyToDraw)
             {
-                VB.Bind();
-                IB.Bind();
-
-                VB.BindVertexAttribute();
-
+                BindVertexAndIndexBuffer();
                 GL.DrawElements(PrimitiveType.Triangles, IndexCount, DrawElementsType.UnsignedInt, 0);
             }
         }
@@ -27,9 +23,7 @@ namespace Core
         {
             if(bReadyToDraw)
             {
-                VB.Bind();
-                IB.Bind();
-                VB.BindVertexAttribute();
+                BindVertexAndIndexBuffer();
 
                 var ByteOffset = new IntPtr(Offset * sizeof(uint));
 

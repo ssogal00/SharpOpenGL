@@ -12,7 +12,7 @@ namespace Core
         public OpenGLContext(OpenTK.GameWindow window)
         {
             this.window = window;
-        }
+        }        
 
         private OpenTK.GameWindow window = null;
 
@@ -20,5 +20,7 @@ namespace Core
         {
             window.MakeCurrent();
         }
+
+
     }
 }

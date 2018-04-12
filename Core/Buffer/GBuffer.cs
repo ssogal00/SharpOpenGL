@@ -6,13 +6,18 @@ using Core.CustomEvent;
 
 namespace Core.Buffer
 {
-    public class GBuffer
+    public class GBuffer 
     {        
         public GBuffer(int width, int height)
         {
             BufferHeight = height;
-            BufferWidth = width;
-              
+            BufferWidth = width;              
+        }
+
+        public GBuffer()
+        {
+            BufferWidth = 1024;
+            BufferHeight = 768;
         }
 
         private void CreateGBuffer()
