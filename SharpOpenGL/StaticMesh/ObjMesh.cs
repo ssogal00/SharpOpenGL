@@ -229,9 +229,7 @@ namespace SharpOpenGL.StaticMesh
 
         public void Draw(Core.MaterialBase.MaterialBase material)
         {
-            VB.Bind();
-            IB.Bind();
-            VB.BindVertexAttribute();
+            meshdrawable.BindVertexAndIndexBuffer();
 
             foreach (var section in MeshSectionList)
             {
@@ -270,24 +268,28 @@ namespace SharpOpenGL.StaticMesh
                     }
                 }
 
-                var ByteOffset = new IntPtr(section.StartIndex * sizeof(uint));
-                GL.DrawElements(PrimitiveType.Triangles, (int)(section.EndIndex - section.StartIndex), DrawElementsType.UnsignedInt, ByteOffset);
+                //var ByteOffset = new IntPtr(section.StartIndex * sizeof(uint));
+                // GL.DrawElements(PrimitiveType.Triangles, (int)(section.EndIndex - section.StartIndex), DrawElementsType.UnsignedInt, ByteOffset);
+                meshdrawable.Draw(section.StartIndex, (uint)(section.EndIndex - section.StartIndex));
             }
         }
         
         public void PrepareToDraw()
         {
-            VB = new StaticVertexBuffer<ObjMeshVertexAttribute>();
-            IB = new IndexBuffer();
+            //VB = new StaticVertexBuffer<ObjMeshVertexAttribute>();
+            //IB = new IndexBuffer();
 
-            VB.Bind();
+            meshdrawable = new TriangleDrawable<ObjMeshVertexAttribute>();
+
+            //VB.Bind();
             var Arr = Vertices.ToArray();
-            VB.BufferData<ObjMeshVertexAttribute>(ref Arr);
-            VB.BindVertexAttribute();
+            //VB.BufferData<ObjMeshVertexAttribute>(ref Arr);
+            //VB.BindVertexAttribute();
 
-            IB.Bind();
+            //IB.Bind();
             var IndexArr = VertexIndices.ToArray();
-            IB.BufferData<uint>(ref IndexArr);
+            //IB.BufferData<uint>(ref IndexArr);
+            meshdrawable.SetupData(ref Arr, ref IndexArr);
         }
 
         public void LoadTextures()
