@@ -1,7 +1,7 @@
 ﻿using OpenTK;
 using System;
 using Core.CustomEvent;
-
+using System.Windows.Forms;
 
 namespace Core.Camera
 {
@@ -13,6 +13,18 @@ namespace Core.Camera
         public OrbitCamera(float fFOV, float fAspectRatio, float fNear, float fFar)            
             : base(fFOV, fAspectRatio, fNear, fFar)
         {            
+        }
+
+        public override void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.W)
+            {
+                MoveForward(-1);
+            }
+            else if(e.KeyCode == Keys.S)
+            {
+                MoveForward(1);
+            }
         }
 
         public override void Tick(double fDeltaSeconds)
