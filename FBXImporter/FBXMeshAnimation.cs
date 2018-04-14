@@ -132,7 +132,7 @@ namespace FBXImporter
 
             if(MeshDrawable != null)
             {
-                MeshDrawable.Draw();
+                //MeshDrawable.Draw();
             }
         }
 

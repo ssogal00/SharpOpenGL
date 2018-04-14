@@ -30,15 +30,6 @@ public class BasicMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-	public void SetTestTexture2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"TestTexture", TextureObject);
-	}
-
-	public void SetTestTexture2D(int TextureObject, Sampler sampler)
-	{
-		SetTexture(@"TestTexture", TextureObject);
-	}
 
 	public static string GetVSSourceCode()
 	{
@@ -80,12 +71,11 @@ in vec3 Color;
 in vec2 OutTexCoord;
 out vec4 FragColor;
 
-uniform sampler2D TestTexture;
 
 
 void main()
 {   
-    FragColor = texture(TestTexture, OutTexCoord);
+    FragColor = vec4(1,0,0,1);
 }";
 	}
 }

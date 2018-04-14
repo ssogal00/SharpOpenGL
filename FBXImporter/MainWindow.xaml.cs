@@ -24,6 +24,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL.BasicMaterial;
 using SharpOpenGL.SimpleMaterial;
+using SharpOpenGL.StaticMesh;
 
 namespace FBXImporter
 {
@@ -41,7 +42,7 @@ namespace FBXImporter
             {
                 TestParsedFbxMesh = SdkWrapper.ImportFBXMesh("FBXSample.FBX");
                 TestAnimStack = SdkWrapper.ImportFBXAnimation("ActiveSkill01.FBX");
-                TestAnimation = new ParsedFBXAnimation(TestParsedFbxMesh, TestAnimStack);
+                TestAnimation = new ParsedFBXAnimation(TestParsedFbxMesh, TestAnimStack);                
 
                 MyFBXMesh = new FBXMesh();                
             }
@@ -62,6 +63,8 @@ namespace FBXImporter
                 MyFBXMesh.SetFBXMeshInfo(TestParsedFbxMesh);
             }
 
+            cube = new Core.Cube();
+            
             for (int i = 0; i < 100; i++)
             {
                 AnimList.Add(new FBXMeshAnimation(TestAnimation, i));
@@ -82,12 +85,7 @@ namespace FBXImporter
             GL.Enable(EnableCap.DepthTest);
 
             GL.ClearColor(1, 1, 1, 1);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            if(MyFBXMesh != null)
-            {
-                Camera.EyeLocation = MyFBXMesh.MinVertex;
-            }
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);            
             
             Camera.UpdateViewMatrix();
             Camera.UpdateProjMatrix();
@@ -99,20 +97,20 @@ namespace FBXImporter
             LineTransform.Proj = Camera.Proj;
             LineTransform.Model = ModelTransform.Model;
 
-            TestMaterial.Use();
+            TestMaterial.Setup();
             TestMaterial.SetUniformBufferValue<SharpOpenGL.BasicMaterial.Transform>("Transform", ref ModelTransform);
 
             if(MyFBXMesh != null)
             {                
-               MyFBXMesh.Draw();
+               //MyFBXMesh.Draw();
             }
 
-             Simple.Use();
-             Simple.SetUniformBufferValue<SharpOpenGL.SimpleMaterial.Transform>("Transform", ref LineTransform);
-             if(MyFBXMesh != null)
-             {
-                MyFBXMesh.DrawBoneHierarchy();
-             }
+            Simple.Setup();
+            Simple.SetUniformBufferValue<SharpOpenGL.SimpleMaterial.Transform>("Transform", ref LineTransform);
+            if(MyFBXMesh != null)
+            {
+                //MyFBXMesh.DrawBoneHierarchy();
+            }
 
             if(AnimList != null)
             {
@@ -142,19 +140,22 @@ namespace FBXImporter
             screenResizeEvent.Height = GlControl.Size.Height;
             
             Camera.OnWindowResized(this, screenResizeEvent);
-                        
+
+            Camera.AspectRatio = fAspectRatio;
             Camera.FOV = MathHelper.PiOver6;
             Camera.Near = 1;
             Camera.Far = 10000;
-            Camera.EyeLocation = new Vector3(0, 0, 300);
-            
-            Camera.LookAtLocation = new Vector3(MyFBXMesh.MinVertex);            
-            
+            Camera.EyeLocation = new Vector3(10, 10, 10);
+            Camera.DestLocation = new Vector3(10, 10, 10);
+            Camera.LookAtLocation = new Vector3(0, 0, 0);
+
             Camera.UpdateViewMatrix();
             Camera.UpdateProjMatrix();
 
-            ModelTransform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
-            ModelTransform.Model = Matrix4.CreateScale(0.01f) ;               
+
+            ModelTransform.Proj = Camera.Proj;
+            ModelTransform.Model = Matrix4.CreateScale(0.01f);
+            ModelTransform.View = Camera.View;
         }
 
         protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
@@ -163,8 +164,7 @@ namespace FBXImporter
         
         protected Matrix4 ModelView = new Matrix4();
         protected Matrix4 Projection = new Matrix4();
-        // protected OrbitCamera Camera = new OrbitCamera();
-        protected FreeCamera Camera = new FreeCamera();
+        protected OrbitCamera Camera = new OrbitCamera();        
 
         protected SharpOpenGL.BasicMaterial.Transform ModelTransform = new SharpOpenGL.BasicMaterial.Transform();
         protected SharpOpenGL.SimpleMaterial.Transform LineTransform = new SharpOpenGL.SimpleMaterial.Transform();
@@ -175,6 +175,8 @@ namespace FBXImporter
 
         protected FBXMesh MyFBXMesh = null;
         protected FBXMeshAnimation MyFBXAnim = null;
+
+        protected Core.Cube cube = null;
 
         List<FBXMeshAnimation> AnimList = new List<FBXMeshAnimation>();
 

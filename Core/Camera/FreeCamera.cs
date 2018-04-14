@@ -85,6 +85,14 @@ namespace Core.Camera
             {
                 MoveBackward();
             }
+            else if (e.KeyCode == Keys.E)
+            {
+                RotateRight();
+            }
+            else if (e.KeyCode == Keys.Q)
+            {
+                RotateLeft();
+            }
         }
 
 
