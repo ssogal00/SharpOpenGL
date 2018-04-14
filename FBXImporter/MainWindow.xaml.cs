@@ -76,14 +76,14 @@ namespace FBXImporter
 
 
         private void GLControlPaint(object sender, System.Windows.Forms.PaintEventArgs e)
-        {
+        {            
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.DepthTest);
 
+            GL.ClearColor(1, 1, 1, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            //Camera.UpdateCameraDistance();
+            
             Camera.UpdateViewMatrix();
             Camera.UpdateProjMatrix();
             
@@ -106,7 +106,7 @@ namespace FBXImporter
              Simple.SetUniformBufferValue<SharpOpenGL.SimpleMaterial.Transform>("Transform", ref LineTransform);
              if(MyFBXMesh != null)
              {
-                // MyFBXMesh.DrawBoneHierarchy();
+                MyFBXMesh.DrawBoneHierarchy();
              }
 
             if(AnimList != null)
@@ -117,25 +117,38 @@ namespace FBXImporter
             GlControl.SwapBuffers();
         }
 
+        protected void OnKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+        {            
+            if (Camera != null)
+            {
+                Camera.OnKeyDown(sender, e);
+                GlControl.Invalidate();
+            }
+        }
+
         private void GLControlResize(object sender, EventArgs e)
         {
             GL.Viewport(0, 0, GlControl.Size.Width, GlControl.Size.Height);
 
             float fAspectRatio = GlControl.Size.Width / (float) GlControl.Size.Height;
 
-            Camera.AspectRatio = fAspectRatio;
+            var screenResizeEvent = new Core.CustomEvent.ScreenResizeEventArgs();
+            screenResizeEvent.Width = GlControl.Size.Width;
+            screenResizeEvent.Height = GlControl.Size.Height;
+            
+            Camera.OnWindowResized(this, screenResizeEvent);
+                        
             Camera.FOV = MathHelper.PiOver6;
             Camera.Near = 1;
             Camera.Far = 10000;
-            Camera.EyeLocation = new Vector3(0, 0, -10);
+            Camera.EyeLocation = new Vector3(10, 0, 0);
             Camera.LookAtLocation = new Vector3(0, 0, 0);
-
-            /*Camera.UpdateCameraDistance();*/
+            
             Camera.UpdateViewMatrix();
             Camera.UpdateProjMatrix();
 
             ModelTransform.Proj = Matrix4.CreatePerspectiveFieldOfView(Camera.FOV, fAspectRatio, Camera.Near, Camera.Far);
-            ModelTransform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitX, -OpenTK.MathHelper.PiOver2) * Matrix4.CreateScale(0.015f) ;               
+            ModelTransform.Model = Matrix4.CreateScale(0.01f) ;               
         }
 
         protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
@@ -144,7 +157,8 @@ namespace FBXImporter
         
         protected Matrix4 ModelView = new Matrix4();
         protected Matrix4 Projection = new Matrix4();
-        protected OrbitCamera Camera = new OrbitCamera();
+        // protected OrbitCamera Camera = new OrbitCamera();
+        protected FreeCamera Camera = new FreeCamera();
 
         protected SharpOpenGL.BasicMaterial.Transform ModelTransform = new SharpOpenGL.BasicMaterial.Transform();
         protected SharpOpenGL.SimpleMaterial.Transform LineTransform = new SharpOpenGL.SimpleMaterial.Transform();

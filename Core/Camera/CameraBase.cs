@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Windows;
 
 using Core.Tickable;
 using Core.CustomEvent;
@@ -61,6 +62,9 @@ namespace Core.Camera
         public Vector3 LookAtLocation = new Vector3();
         
         public virtual void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+        { }
+
+        public virtual void OnKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         { }
 
         public virtual void OnWindowResized(object sender, ScreenResizeEventArgs eventArgs)

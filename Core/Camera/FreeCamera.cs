@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Graphics;
 
@@ -73,6 +74,19 @@ namespace Core.Camera
         {
             m_fYaw += m_fRotateAmount;
         }
+
+        public override void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.W)
+            {
+                MoveForward();
+            }
+            else if(e.KeyCode == Keys.S)
+            {
+                MoveBackward();
+            }
+        }
+
 
         public override void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
         {
