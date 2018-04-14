@@ -22,9 +22,7 @@ namespace SharpOpenGL.StaticMesh
     public class ObjMesh
     {
         // 
-        // Vertex Buffer and Index buffer to render
-        StaticVertexBuffer<ObjMeshVertexAttribute> VB = null;
-        IndexBuffer IB = null;
+        // Vertex Buffer and Index buffer to render        
         TriangleDrawable<ObjMeshVertexAttribute> meshdrawable = null;
 
         // serialized fields
