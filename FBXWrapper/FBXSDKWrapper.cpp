@@ -74,6 +74,49 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 	ResultMesh->BoneMap = ParseFbxMeshBone(Mesh);
 	ResultMesh->RootBone= ParseBoneHierarchy(Scene->GetRootNode());
 
+	ResultMesh->MinVertex->X = FLT_MAX;
+	ResultMesh->MinVertex->Y = FLT_MAX;
+	ResultMesh->MinVertex->Z = FLT_MAX;
+
+	ResultMesh->MaxVertex->X = FLT_MIN;
+	ResultMesh->MaxVertex->Y = FLT_MIN;
+	ResultMesh->MaxVertex->Z = FLT_MIN;
+
+	for (int i = 0; i < ResultMesh->VertexList->Count; ++i)
+	{
+		if (ResultMesh->MinVertex->X > ResultMesh->VertexList[i].X)
+		{
+			ResultMesh->MinVertex->X = ResultMesh->VertexList[i].X;
+		}
+
+		if (ResultMesh->MinVertex->Y > ResultMesh->VertexList[i].Y)
+		{
+			ResultMesh->MinVertex->Y = ResultMesh->VertexList[i].Y;
+		}
+
+		if (ResultMesh->MinVertex->Z > ResultMesh->VertexList[i].Z)
+		{
+			ResultMesh->MinVertex->Z = ResultMesh->VertexList[i].Z;
+		}
+
+		if (ResultMesh->MaxVertex->X < ResultMesh->VertexList[i].X)
+		{
+			ResultMesh->MaxVertex->X = ResultMesh->VertexList[i].X;
+		}
+
+		if (ResultMesh->MaxVertex->Y < ResultMesh->VertexList[i].Y)
+		{
+			ResultMesh->MaxVertex->Y = ResultMesh->VertexList[i].Y;
+		}
+
+		if (ResultMesh->MaxVertex->Z < ResultMesh->VertexList[i].Z)
+		{
+			ResultMesh->MaxVertex->Z = ResultMesh->VertexList[i].Z;
+		}
+	}
+
+	
+
 	for (BoneIterator It(ResultMesh->RootBone); !It.IsEnd(); It.MoveNext())
 	{
 		ParsedFBXMeshBone^ CurrentBone = It.Current();

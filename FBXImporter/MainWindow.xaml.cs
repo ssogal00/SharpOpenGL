@@ -83,6 +83,11 @@ namespace FBXImporter
 
             GL.ClearColor(1, 1, 1, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            if(MyFBXMesh != null)
+            {
+                Camera.EyeLocation = MyFBXMesh.MinVertex;
+            }
             
             Camera.UpdateViewMatrix();
             Camera.UpdateProjMatrix();
@@ -141,8 +146,9 @@ namespace FBXImporter
             Camera.FOV = MathHelper.PiOver6;
             Camera.Near = 1;
             Camera.Far = 10000;
-            Camera.EyeLocation = new Vector3(10, 0, 0);
-            Camera.LookAtLocation = new Vector3(0, 0, 0);
+            Camera.EyeLocation = new Vector3(0, 0, 300);
+            
+            Camera.LookAtLocation = new Vector3(MyFBXMesh.MinVertex);            
             
             Camera.UpdateViewMatrix();
             Camera.UpdateProjMatrix();

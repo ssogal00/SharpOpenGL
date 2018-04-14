@@ -19,6 +19,10 @@ namespace FBXWrapper
 		Dictionary<int, List<SkinningInfo^>^>^ SkinningInfoMap = gcnew Dictionary<int, List<SkinningInfo^>^>();
 		Dictionary<System::String^, ParsedFBXMeshBone^>^ BoneMap = gcnew Dictionary<System::String^, ParsedFBXMeshBone^>();
 		List<unsigned int>^ IndexList = gcnew List<unsigned int>();
+
+		OpenTK::Vector3^ MinVertex = gcnew OpenTK::Vector3();
+		OpenTK::Vector3^ MaxVertex = gcnew OpenTK::Vector3();
+		
 		ParsedFBXMeshBone^ RootBone = nullptr;
 		int PolygonCount = 0;
 	};
