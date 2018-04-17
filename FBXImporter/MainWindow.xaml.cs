@@ -25,12 +25,12 @@ namespace FBXImporter
         public MainWindow()
         {
             InitializeComponent();
-            var SdkWrapper = new FBXWrapper.FBXSDKWrapper();
+            var sdkWrapper = new FBXWrapper.FBXSDKWrapper();
 
-            if (SdkWrapper.InitializeSDK())
+            if (sdkWrapper.InitializeSDK())
             {
-                TestParsedFbxMesh = SdkWrapper.ImportFBXMesh("FBXSample.FBX");
-                TestAnimStack = SdkWrapper.ImportFBXAnimation("ActiveSkill01.FBX");
+                TestParsedFbxMesh = sdkWrapper.ImportFBXMesh("FBXSample.FBX");
+                TestAnimStack = sdkWrapper.ImportFBXAnimation("ActiveSkill01.FBX");
                 TestAnimation = new ParsedFBXAnimation(TestParsedFbxMesh, TestAnimStack);                
 
                 MyFBXMesh = new FBXMesh();                
