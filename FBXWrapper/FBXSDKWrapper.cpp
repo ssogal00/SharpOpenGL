@@ -74,6 +74,26 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 	ResultMesh->BoneMap = ParseFbxMeshBone(Mesh);
 	ResultMesh->RootBone= ParseBoneHierarchy(Scene->GetRootNode());
 
+	const bool bHasVertexCache = Mesh->GetDeformerCount(FbxDeformer::eVertexCache) && (static_cast<FbxVertexCacheDeformer*>(Mesh->GetDeformer(0, FbxDeformer::eVertexCache)))->Active.Get();
+	const bool bHasShape = Mesh->GetShapeCount() > 0;
+	const bool bHasSkin = Mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
+
+	if(bHasSkin)
+	{
+		const int skinCount = Mesh->GetDeformerCount(FbxDeformer::eSkin);
+		int clusterCount = 0;
+
+		for(int skinIndex = 0; skinIndex < skinCount; ++skinIndex)
+		{
+			clusterCount += ((FbxSkin*)(Mesh->GetDeformer(skinIndex, FbxDeformer::eSkin)))->GetClusterCount();
+		}
+
+		if(clusterCount > 0)
+		{
+			ComputeSkinDeformation(Mesh);
+		}
+	}
+
 	ResultMesh->MinVertex->X = FLT_MAX;
 	ResultMesh->MinVertex->Y = FLT_MAX;
 	ResultMesh->MinVertex->Z = FLT_MAX;
@@ -154,6 +174,66 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 	}
 	 
 	return ResultMesh;
+}
+
+void FBXSDKWrapper::ComputeSkinDeformation(FbxMesh* mesh)
+{
+	FbxSkin* pSkinDeformer = (FbxSkin*)mesh->GetDeformer(0, FbxDeformer::eSkin);
+	FbxSkin::EType skinningType = pSkinDeformer->GetSkinningType();
+
+	if(skinningType == FbxSkin::eLinear || skinningType== FbxSkin::eRigid)
+	{
+		ComputeLinearDeformation(mesh);
+	}
+	else if(skinningType == FbxSkin::eDualQuaternion)
+	{
+		
+	}
+	else if(skinningType == FbxSkin::eBlend)
+	{
+		int nVertexCount = mesh->GetControlPointsCount();
+	}
+}
+
+void FBXSDKWrapper::ComputeLinearDeformation(FbxMesh* mesh)
+{
+	FbxCluster::ELinkMode eClusterMode = ((FbxSkin*)mesh->GetDeformer(0, FbxDeformer::eSkin))->GetCluster(0)->GetLinkMode();
+
+	const int nVertexCount = mesh->GetControlPointsCount();
+	FbxAMatrix* pClusterDeformation = new FbxAMatrix[nVertexCount];
+	memset(pClusterDeformation, 0, nVertexCount * sizeof(FbxAMatrix));
+
+	double* pClusterWeight = new double[nVertexCount];
+	memset(pClusterWeight, 0, nVertexCount * sizeof(double));
+
+
+	if(eClusterMode == FbxCluster::eAdditive)
+	{
+		for(int i = 0; i < nVertexCount; ++i)
+		{
+			pClusterDeformation[i].SetIdentity();
+		}
+	}
+
+	const int nSkinCount = mesh->GetDeformerCount(FbxDeformer::eSkin);
+	for(int skinIndex = 0; skinIndex < nSkinCount; ++skinIndex)
+	{
+		FbxSkin* pSkinDeformer = (FbxSkin*)mesh->GetDeformer(skinIndex, FbxDeformer::eSkin);
+		int nClusterCount = pSkinDeformer->GetClusterCount();
+
+		for(int clusterIndex = 0; clusterIndex < nClusterCount; ++clusterIndex)
+		{
+			FbxCluster* pCluster = pSkinDeformer->GetCluster(clusterIndex);
+			if(!pCluster->GetLink())
+			{
+				continue;
+			}
+			
+			FbxAMatrix vertexTransformationMatrix;
+
+		}
+
+	}
 }
 
 List<Vector3>^ FBXSDKWrapper::ParseFbxMeshVertex(FbxMesh* Mesh)

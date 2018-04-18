@@ -37,6 +37,9 @@ namespace FBXWrapper
 		List<OpenTK::Vector3>^ ParseFbxControlPointList(FbxMesh* Mesh);
 		Dictionary<System::String^, ParsedFBXMeshBone^>^	ParseFbxMeshBone(FbxMesh* Mesh);
 		ParsedFBXMeshBone^ ParseBoneHierarchy(FbxNode* SceneRootNode);
+
+		void ComputeSkinDeformation(FbxMesh* mesh);
+		void ComputeLinearDeformation(FbxMesh* mesh);
 		
 		FbxNode* FindFirstBoneNode(FbxNode* SceneRootNode);
 		void ParseBoneHierarchyRecursive(FbxNode* VisitNode, ParsedFBXMeshBone^ ParentBone);
