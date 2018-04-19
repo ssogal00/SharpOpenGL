@@ -36,6 +36,9 @@
     <ClCompile Include="ParsedFBXAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GetPosition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FBXSDKWrapper.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SkinningInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GetPosition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

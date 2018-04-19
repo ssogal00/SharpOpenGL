@@ -236,6 +236,21 @@ void FBXSDKWrapper::ComputeLinearDeformation(FbxMesh* mesh)
 	}
 }
 
+void FBXSDKWrapper::ComputeClusterDeformation(FbxAMatrix& globalPosition, FbxMesh* pMesh, FbxCluster* pCluster, FbxAMatrix& vertexTransformMatrix, FbxTime time, FbxPose* pPose)
+{
+	FbxCluster::ELinkMode eClusterMode = pCluster->GetLinkMode();
+
+	if (eClusterMode == FbxCluster::eAdditive && pCluster->GetAssociateModel())
+	{
+
+	}
+	else
+	{
+
+	}
+}
+
+
 List<Vector3>^ FBXSDKWrapper::ParseFbxMeshVertex(FbxMesh* Mesh)
 {
 	const int nPolygonCount = Mesh->GetPolygonCount();
