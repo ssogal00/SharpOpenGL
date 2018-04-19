@@ -3,6 +3,7 @@
 #include "FBXSDKWrapper.h"
 #include "BoneIterator.h"
 #include "ParsedFBXAnimStack.h"
+#include "GetPosition.h"
 #include <msclr/marshal_cppstd.h>
 
 using namespace msclr::interop;
@@ -195,7 +196,7 @@ void FBXSDKWrapper::ComputeSkinDeformation(FbxMesh* mesh)
 	}
 }
 
-void FBXSDKWrapper::ComputeLinearDeformation(FbxMesh* mesh)
+void FBXSDKWrapper::ComputeLinearDeformation(FbxAMatrix& globalPosition, FbxMesh* mesh, FbxCluster* pCluster, FbxAMatrix& vertexTransformMatrix, FbxTime time, FbxPose* pPose)
 {
 	FbxCluster::ELinkMode eClusterMode = ((FbxSkin*)mesh->GetDeformer(0, FbxDeformer::eSkin))->GetCluster(0)->GetLinkMode();
 
@@ -230,23 +231,70 @@ void FBXSDKWrapper::ComputeLinearDeformation(FbxMesh* mesh)
 			}
 			
 			FbxAMatrix vertexTransformationMatrix;
+			ComputeClusterDeformation(globalPosition, mesh, pCluster, vertexTransformMatrix, time, pPose);
 
+			int vertexIndexCount = pCluster->GetControlPointIndicesCount();
+			
+			for (int i = 0; i < vertexIndexCount; ++i)
+			{
+				int index = pCluster->GetControlPointIndices()[i];
+				if (index >= nVertexCount)
+				{
+					continue;
+				}
+
+				double weight = pCluster->GetControlPointWeights()[i];
+
+				if(weight == 0.0)
+				{
+					continue;
+				}
+
+
+			}
 		}
-
 	}
 }
 
-void FBXSDKWrapper::ComputeClusterDeformation(FbxAMatrix& globalPosition, FbxMesh* pMesh, FbxCluster* pCluster, FbxAMatrix& vertexTransformMatrix, FbxTime time, FbxPose* pPose)
+void FBXSDKWrapper::ComputeClusterDeformation(FbxAMatrix& globalPosition, 
+	FbxMesh* pMesh, FbxCluster* pCluster, FbxAMatrix& vertexTransformMatrix, FbxTime time, FbxPose* pPose)
 {
 	FbxCluster::ELinkMode eClusterMode = pCluster->GetLinkMode();
 
+	FbxAMatrix referenceGlobalInitPosition;
+	FbxAMatrix referenceGlobalCurrentPosition;
+	
+	FbxAMatrix clusterGlobalInitPosition;
+	FbxAMatrix clusterGlobalCurrentPosition;
+
+	FbxAMatrix clusterRelativeInitPosition;
+	FbxAMatrix clusterRelativeCurrentPositionInverse;
+
+	FbxAMatrix associateGlobalInitPosition;
+	FbxAMatrix associateGlobalCurrentPosition;
+
+	FbxAMatrix referenceGeometry;
+	
 	if (eClusterMode == FbxCluster::eAdditive && pCluster->GetAssociateModel())
 	{
+		pCluster->GetTransformAssociateModelMatrix();
 
 	}
 	else
 	{
+		pCluster->GetTransformMatrix(referenceGlobalInitPosition);
+		referenceGlobalCurrentPosition = globalPosition;
+		
+		referenceGeometry = GetGeometry(pMesh->GetNode());
+		referenceGlobalInitPosition = referenceGeometry;
 
+		pCluster->GetTransformLinkMatrix(clusterGlobalInitPosition);
+		clusterGlobalCurrentPosition = GetGlobalPosition(pCluster->GetLink(), time, pPose);
+
+		clusterRelativeInitPosition = clusterGlobalInitPosition.Inverse() * referenceGlobalInitPosition;
+		clusterRelativeCurrentPositionInverse = referenceGlobalCurrentPosition.Inverse() * clusterGlobalCurrentPosition;
+
+		vertexTransformMatrix = clusterRelativeCurrentPositionInverse * clusterRelativeInitPosition;
 	}
 }
 

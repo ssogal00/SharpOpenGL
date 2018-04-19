@@ -5,6 +5,7 @@ FbxAMatrix GetGlobalPosition(FbxNode* pNode, const FbxTime& time, FbxPose* pPose
 {
 	FbxAMatrix globalPosition;
 
+	bool bPositionFound = false;
 
 	if (pPose)
 	{
@@ -12,9 +13,37 @@ FbxAMatrix GetGlobalPosition(FbxNode* pNode, const FbxTime& time, FbxPose* pPose
 
 		if (nodeIndex > -1)
 		{
+			if (pPose->IsBindPose() || !pPose->IsLocalMatrix(nodeIndex))
+			{
+				globalPosition = GetPoseMatrix(pPose, nodeIndex);
+			}
+			else
+			{
+				FbxAMatrix parentGlobalPosition;
 
+				if (pParentGlobalPosition != nullptr)
+				{
+					parentGlobalPosition = *pParentGlobalPosition;
+				}
+				else
+				{
+					if (pNode->GetParent())
+					{
+						parentGlobalPosition = GetGlobalPosition(pNode->GetParent(), time, pPose);
+					}
+				}
+
+				FbxAMatrix localPosition = GetPoseMatrix(pPose, nodeIndex);
+				globalPosition = parentGlobalPosition * localPosition;
+			}
+
+			bPositionFound = true;
 		}
+	}
 
+	if (!bPositionFound)
+	{
+		globalPosition = pNode->EvaluateGlobalTransform(time);
 	}
 
 	return globalPosition;
