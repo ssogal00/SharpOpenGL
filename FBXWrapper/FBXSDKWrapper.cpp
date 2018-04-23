@@ -105,7 +105,7 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 	{
 		const int skinCount = Mesh->GetDeformerCount(FbxDeformer::eSkin);
 
-		pVertexArray = new 
+		pVertexArray = new FbxVector4[vertexCount];
 
 		int clusterCount = 0;
 
@@ -116,7 +116,9 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 
 		if(clusterCount > 0)
 		{
-			ComputeSkinDeformation(Mesh, startTime, );
+			FbxAMatrix identity;
+			identity.SetIdentity();
+			ComputeSkinDeformation(identity, Mesh, startTime, pVertexArray, pPose);
 		}
 	}
 
