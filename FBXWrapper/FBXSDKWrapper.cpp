@@ -178,7 +178,7 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 	return ResultMesh;
 }
 
-void FBXSDKWrapper::ComputeSkinDeformation(FbxMesh* mesh)
+void FBXSDKWrapper::void ComputeSkinDeformation(FbxAMatrix& gloablPosition, FbxMesh* mesh, FbxTime& time, FbxVector4* pVertexArray, FbxPose* pPose)
 {
 	FbxSkin* pSkinDeformer = (FbxSkin*)mesh->GetDeformer(0, FbxDeformer::eSkin);
 	FbxSkin::EType skinningType = pSkinDeformer->GetSkinningType();

@@ -38,7 +38,7 @@ namespace FBXWrapper
 		Dictionary<System::String^, ParsedFBXMeshBone^>^	ParseFbxMeshBone(FbxMesh* Mesh);
 		ParsedFBXMeshBone^ ParseBoneHierarchy(FbxNode* SceneRootNode);
 
-		void ComputeSkinDeformation(FbxMesh* mesh);
+		void ComputeSkinDeformation(FbxAMatrix& gloablPosition, FbxMesh* mesh, FbxTime& time, FbxVector4* pVertexArray, FbxPose* pPose);
 		void ComputeLinearDeformation(FbxAMatrix& globalPosition, FbxMesh* pMesh, FbxCluster* pCluster, FbxAMatrix& vertexTransformMatrix, FbxTime time, FbxPose* pPose);
 		void ComputeClusterDeformation(FbxAMatrix& globalPosition, FbxMesh* pMesh, FbxCluster* pCluster, FbxAMatrix& vertexTransformMatrix, FbxTime time, FbxPose* pPose);		
 
