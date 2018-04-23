@@ -80,9 +80,33 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 	const bool bHasShape = Mesh->GetShapeCount() > 0;
 	const bool bHasSkin = Mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
 
+	FbxArray<FbxString*> animStackNameArray;
+	Scene->FillAnimStackNameArray(animStackNameArray);
+
+	const int poseCount = Scene->GetPoseCount();
+	FbxPose* pPose = Scene->GetPose(0);
+
+	FbxTakeInfo* pCurrentTakeInfo = Scene->GetTakeInfo(*(animStackNameArray[0]));
+
+	FbxTime startTime;
+	FbxTime stopTime;
+
+	if(pCurrentTakeInfo)
+	{
+		startTime = pCurrentTakeInfo->mLocalTimeSpan.GetStart();
+		stopTime = pCurrentTakeInfo->mLocalTimeSpan.GetStop();
+	}
+
+	FbxVector4* pVertexArray = nullptr;
+
+	const int vertexCount = Mesh->GetControlPointsCount();
+	
 	if(bHasSkin)
 	{
 		const int skinCount = Mesh->GetDeformerCount(FbxDeformer::eSkin);
+
+		pVertexArray = new 
+
 		int clusterCount = 0;
 
 		for(int skinIndex = 0; skinIndex < skinCount; ++skinIndex)
@@ -92,7 +116,7 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 
 		if(clusterCount > 0)
 		{
-			ComputeSkinDeformation(Mesh);
+			ComputeSkinDeformation(Mesh, startTime, );
 		}
 	}
 
@@ -178,14 +202,14 @@ ParsedFBXMesh^ FBXSDKWrapper::ParseFbxMesh(FbxMesh* Mesh, FbxNode* Node)
 	return ResultMesh;
 }
 
-void FBXSDKWrapper::void ComputeSkinDeformation(FbxAMatrix& gloablPosition, FbxMesh* mesh, FbxTime& time, FbxVector4* pVertexArray, FbxPose* pPose)
+void FBXSDKWrapper::ComputeSkinDeformation(FbxAMatrix& gloablPosition, FbxMesh* mesh, FbxTime& time, FbxVector4* pVertexArray, FbxPose* pPose)
 {
 	FbxSkin* pSkinDeformer = (FbxSkin*)mesh->GetDeformer(0, FbxDeformer::eSkin);
 	FbxSkin::EType skinningType = pSkinDeformer->GetSkinningType();
 
 	if(skinningType == FbxSkin::eLinear || skinningType== FbxSkin::eRigid)
 	{
-		//ComputeLinearDeformation(mesh);
+		ComputeLinearDeformation(gloablPosition, mesh, time, pVertexArray, pPose);
 	}
 	else if(skinningType == FbxSkin::eDualQuaternion)
 	{
@@ -197,7 +221,8 @@ void FBXSDKWrapper::void ComputeSkinDeformation(FbxAMatrix& gloablPosition, FbxM
 	}
 }
 
-void FBXSDKWrapper::ComputeLinearDeformation(FbxAMatrix& globalPosition, FbxMesh* mesh, FbxCluster* pCluster, FbxAMatrix& vertexTransformMatrix, FbxTime time, FbxPose* pPose)
+void FBXSDKWrapper::ComputeLinearDeformation(FbxAMatrix& globalPosition, 
+	FbxMesh* mesh, FbxTime time, FbxVector4* pVertexArray, FbxPose* pPose)
 {
 	FbxCluster::ELinkMode eClusterMode = ((FbxSkin*)mesh->GetDeformer(0, FbxDeformer::eSkin))->GetCluster(0)->GetLinkMode();
 
@@ -208,7 +233,6 @@ void FBXSDKWrapper::ComputeLinearDeformation(FbxAMatrix& globalPosition, FbxMesh
 	double* pClusterWeight = new double[nVertexCount];
 	memset(pClusterWeight, 0, nVertexCount * sizeof(double));
 
-
 	if(eClusterMode == FbxCluster::eAdditive)
 	{
 		for(int i = 0; i < nVertexCount; ++i)
@@ -216,7 +240,7 @@ void FBXSDKWrapper::ComputeLinearDeformation(FbxAMatrix& globalPosition, FbxMesh
 			pClusterDeformation[i].SetIdentity();
 		}
 	}
-
+	
 	const int nSkinCount = mesh->GetDeformerCount(FbxDeformer::eSkin);
 	for(int skinIndex = 0; skinIndex < nSkinCount; ++skinIndex)
 	{
@@ -232,7 +256,7 @@ void FBXSDKWrapper::ComputeLinearDeformation(FbxAMatrix& globalPosition, FbxMesh
 			}
 			
 			FbxAMatrix vertexTransformationMatrix;
-			ComputeClusterDeformation(globalPosition, mesh, pCluster, vertexTransformMatrix, time, pPose);
+			ComputeClusterDeformation(globalPosition, mesh, pCluster, vertexTransformationMatrix, time, pPose);
 
 			int vertexIndexCount = pCluster->GetControlPointIndicesCount();
 			
@@ -252,7 +276,7 @@ void FBXSDKWrapper::ComputeLinearDeformation(FbxAMatrix& globalPosition, FbxMesh
 					continue;
 				}
 
-				FbxAMatrix influence = vertexTransformMatrix;
+				FbxAMatrix influence = vertexTransformationMatrix;
 				MatrixScale(influence, weight);
 
 				if(eClusterMode == FbxCluster::eAdditive)
@@ -267,6 +291,28 @@ void FBXSDKWrapper::ComputeLinearDeformation(FbxAMatrix& globalPosition, FbxMesh
 
 					pClusterWeight[index] += weight;
 				}
+			}
+		}
+	}
+
+	for(int i = 0; i < nVertexCount; ++i)
+	{
+		FbxVector4 srcVertex = pVertexArray[i];
+		FbxVector4 destVertex = pVertexArray[i];
+
+		double weight = pClusterWeight[i];
+
+		if(weight != 0)
+		{
+			destVertex = pClusterDeformation[i].MultT(srcVertex);
+			if(eClusterMode == FbxCluster::eNormalize)
+			{
+				destVertex /= weight;
+			}
+			else if(eClusterMode == FbxCluster::eTotalOne)
+			{
+				srcVertex *= (1.0 - weight);
+				destVertex += srcVertex;
 			}
 		}
 	}
