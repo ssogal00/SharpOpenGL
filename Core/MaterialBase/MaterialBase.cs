@@ -35,8 +35,6 @@ namespace Core.MaterialBase
         {
         }
 
-       
-
         protected virtual void CleanUpUniformBufferMap()
         {
             if(UniformBufferMap != null)

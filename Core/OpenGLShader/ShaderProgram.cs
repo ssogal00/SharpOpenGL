@@ -12,7 +12,33 @@ namespace Core.OpenGLShader
 {
     public class ShaderProgram : IDisposable
     {
-        protected List<string> uniformBlockNameList = new List<string>();
+        protected List<string> cachedUniformBufferNames = new List<string>();
+
+        protected List<string> cachedUniformVarNames = new List<string>();
+
+        protected List<string> cachedSamplerNames = new List<string>();
+
+        protected void CacheShaderProgramInfo()
+        {
+            cachedUniformBufferNames = GetActiveUniformBlockNames();
+            cachedUniformVarNames = GetActiveUniformNames();
+            cachedSamplerNames = GetSampler2DNames();
+        }
+
+        public bool ContainsUniformBuffer(string name)
+        {
+            return cachedUniformBufferNames.Contains(name);
+        }
+
+        public bool ContainsUniformVariable(string name)
+        {
+            return cachedUniformVarNames.Contains(name);
+        }
+
+        public bool ContainsSampler(string name)
+        {
+            return cachedSamplerNames.Contains(name);
+        }
 
         public ShaderProgram()
         {
@@ -29,10 +55,23 @@ namespace Core.OpenGLShader
             AttachShader(VS);
             AttachShader(FS);
             string Result;
-            LinkProgram(out Result);
+            Debug.Assert(LinkProgram(out Result));
+
+            CacheShaderProgramInfo();
         }
 
-        
+        public ShaderProgram(VertexShader vs, FragmentShader fs, TesselControlShader tc, TesselEvalShader te)
+        {
+            AttachShader(vs);
+            AttachShader(fs);
+            AttachShader(tc);
+            AttachShader(te);
+
+            string Result;
+            Debug.Assert(LinkProgram(out Result));
+
+            CacheShaderProgramInfo();
+        }
 
         public void DeleteProgram()
         {

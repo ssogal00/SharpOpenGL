@@ -85,6 +85,8 @@
     <Compile Include="MessageQueue.cs" />
     <Compile Include="OpenGLContext.cs" />
     <Compile Include="OpenGLShader\ProgramPipeline.cs" />
+    <Compile Include="OpenGLShader\TesselControlShader.cs" />
+    <Compile Include="OpenGLShader\TesselEvalShader.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
     <Compile Include="RenderResource.cs" />
