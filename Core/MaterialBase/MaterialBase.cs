@@ -31,6 +31,9 @@ namespace Core.MaterialBase
             Initialize();
         }
 
+        
+
+
         public MaterialBase()
         {
         }

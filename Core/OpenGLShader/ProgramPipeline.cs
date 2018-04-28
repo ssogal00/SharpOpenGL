@@ -21,24 +21,24 @@ namespace Core.OpenGLShader
             pipelineObject = -1;
         }
 
-        public void UseVertexShaderProgram(int vertexShaderObject)
+        public void UseVertexShaderProgram(int vsProgramObject)
         {
-            GL.UseProgramStages(pipelineObject, ProgramStageMask.VertexShaderBit, vertexShaderObject);
+            GL.UseProgramStages(pipelineObject, ProgramStageMask.VertexShaderBit, vsProgramObject);
         }
 
-        public void UseFragmentShaderProgram(int fragmentShaderObject)
+        public void UseFragmentShaderProgram(int fsProgramObject)
         {
-            GL.UseProgramStages(pipelineObject, ProgramStageMask.FragmentShaderBit, fragmentShaderObject);
+            GL.UseProgramStages(pipelineObject, ProgramStageMask.FragmentShaderBit, fsProgramObject);
         }
 
-        public void UseTessEvalShaderProgram(int tesselationShaderObject)
+        public void UseTessEvalShaderProgram(int teProgramObject)
         {
-            GL.UseProgramStages(pipelineObject, ProgramStageMask.TessEvaluationShaderBit, tesselationShaderObject);
+            GL.UseProgramStages(pipelineObject, ProgramStageMask.TessEvaluationShaderBit, teProgramObject);
         }
 
-        public void UseTessControlShaderProgram(int tesselationShaderObject)
+        public void UseTessControlShaderProgram(int tcProgramObject)
         {
-            GL.UseProgramStages(pipelineObject, ProgramStageMask.TessControlShaderBit, tesselationShaderObject);
+            GL.UseProgramStages(pipelineObject, ProgramStageMask.TessControlShaderBit, tcProgramObject);
         }
 
         public void Bind()

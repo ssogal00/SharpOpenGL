@@ -100,7 +100,7 @@ namespace Core.OpenGLShader
 
             return true;
         }
-
+        
         public void UseProgram()
         {
             GL.UseProgram(ProgramObject);
