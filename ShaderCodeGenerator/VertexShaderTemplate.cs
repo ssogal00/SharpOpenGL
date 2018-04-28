@@ -65,13 +65,13 @@ foreach(var UniformBlockName in VSProgram.GetActiveUniformBlockNames())
 public class VertexShaderBase
 {
 	ShaderProgram VSProgram;
-	Core.OpenGLShader.VertexShader VSShader;
+	Core.OpenGLShader.VertexShader vsShader;
 
 	public VertexShaderBase(ShaderProgram programObject)
 	{
 		VSProgram = programObject;
-		VSShader.CompileShader(GetShaderSourceCode());
-		VSProgram.AttachShader(VSShader);
+		vsShader.CompileShader(GetShaderSourceCode());
+		VSProgram.AttachShader(vsShader);
 		Initialize();
 	}
 

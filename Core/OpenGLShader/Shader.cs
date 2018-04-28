@@ -9,12 +9,17 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core.OpenGLShader
 {
-    public class Shader
+    public class Shader : IDisposable
     {
         public Shader()
         {            
-        }        
+        }
 
+        public void Dispose()
+        {
+            GL.DeleteShader(shaderObject);
+            shaderObject = -1;
+        }
 
         public void CompileShader(string ShaderSourceCode)
         {
@@ -63,6 +68,6 @@ namespace Core.OpenGLShader
             }
         }
 
-        private int shaderObject = 0;
+        private int shaderObject = -1;
     }
 }

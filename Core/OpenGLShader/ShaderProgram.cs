@@ -12,6 +12,8 @@ namespace Core.OpenGLShader
 {
     public class ShaderProgram : IDisposable
     {
+        protected List<string> uniformBlockNameList = new List<string>();
+
         public ShaderProgram()
         {
             ProgramObject = GL.CreateProgram();
@@ -29,6 +31,8 @@ namespace Core.OpenGLShader
             string Result;
             LinkProgram(out Result);
         }
+
+        
 
         public void DeleteProgram()
         {

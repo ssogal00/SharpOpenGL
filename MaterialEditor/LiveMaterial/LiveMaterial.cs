@@ -166,13 +166,13 @@ namespace MaterialEditor
         {
             string errorlog;            
 
-            bool bVSCompileSuccess = VSShader.CompileShader(vsCode, out errorlog);
-            bool bFSCompileSuccess = FSShader.CompileShader(fsCode, out errorlog);
+            bool bVSCompileSuccess = vsShader.CompileShader(vsCode, out errorlog);
+            bool bFSCompileSuccess = fsShader.CompileShader(fsCode, out errorlog);
 
             MaterialProgram = new Core.OpenGLShader.ShaderProgram();
 
-            MaterialProgram.AttachShader(VSShader);
-            MaterialProgram.AttachShader(FSShader);
+            MaterialProgram.AttachShader(vsShader);
+            MaterialProgram.AttachShader(fsShader);
 
             string linkResult;
 

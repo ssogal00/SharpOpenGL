@@ -55,13 +55,13 @@ foreach(var Sampler in ProgramObject.GetSampler2DNames())
 public class FragmentShaderBase
 {
 	ShaderProgram FSProgram;
-	Core.OpenGLShader.FragmentShader FSShader;
+	Core.OpenGLShader.FragmentShader fsShader;
 
 	public FragmentShaderBase(ShaderProgram programObject)
 	{
 		FSProgram = programObject;			
-		FSShader.CompileShader(GetShaderSourceCode());
-		FSProgram.AttachShader(FSShader);
+		fsShader.CompileShader(GetShaderSourceCode());
+		FSProgram.AttachShader(fsShader);
 	}
 ");
             
