@@ -74,6 +74,29 @@ namespace Core.Buffer
             GL.BufferSubData<T>(bufferTarget, new IntPtr(Offset), Marshal.SizeOf(Data), ref Data);
         }
 
+        public void GetBufferWholeData<T>(ref T Data) where T : struct
+        {
+            if(!IsBind)
+            {
+                Bind();
+            }
+            GL.GetBufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
+        }
+
+        public T GetBufferWholeData<T>() where T: struct
+        {
+            T result = new T();
+
+            if(!IsBind)
+            {
+                Bind();
+            }
+
+            GL.GetBufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(result), ref result);
+
+            return result;
+        }
+
         public void BufferData<T>(ref T[] Data) where T: struct
         {
             if (!IsBind)

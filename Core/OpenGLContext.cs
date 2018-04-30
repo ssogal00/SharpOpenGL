@@ -17,6 +17,8 @@ namespace Core
 
         private OpenTK.GameWindow window = null;
 
+        public static EventHandler<EventArgs> OpenGLContextCreated;
+
         public void MakeCurrent()
         {
             window.MakeCurrent();
