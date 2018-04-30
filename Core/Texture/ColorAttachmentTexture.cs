@@ -29,7 +29,6 @@ namespace Core.Texture
 
         public void Alloc()
         {
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb16f, m_Width, m_Height, 0, PixelFormat.Rgba, PixelType.Float, new IntPtr(0));
         }
 
         public void Resize(int newWidth, int newHeight)
@@ -40,7 +39,6 @@ namespace Core.Texture
             m_Width = newWidth;
             m_Height = newHeight;
             Bind();
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb16f, m_Width, m_Height, 0, PixelFormat.Rgba, PixelType.Float, new IntPtr(0));            
         }
 
         protected PixelInternalFormat textureFormat;
