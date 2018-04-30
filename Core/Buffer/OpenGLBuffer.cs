@@ -110,6 +110,17 @@ namespace Core.Buffer
             }
         }
 
+        public IntPtr MapBuffer(BufferAccess access)
+        {
+            if(!IsBind)
+            {
+                Bind();
+            }
+            return GL.MapBuffer(bufferTarget, access);
+        }
+
+
+
         public void BindBufferBase(int BindingPoint)
         {
             if (!IsBind)
