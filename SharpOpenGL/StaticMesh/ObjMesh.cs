@@ -97,7 +97,23 @@ namespace SharpOpenGL.StaticMesh
             return result;
         }
 
-        public static async Task<ObjMesh> LoadMeshAsync(string FilePath, string MtlPath)
+        public static async Task<ObjMesh> LoadSerializedAsync(string path)
+        {
+            Debug.Assert(File.Exists(path));
+            ObjMesh result = new ObjMesh();
+
+            await Task.Factory.StartNew(
+            () =>
+            {
+                byte[] data = File.ReadAllBytes(path);
+                result = ZeroFormatter.ZeroFormatterSerializer.Deserialize<ObjMesh>(data);
+            });
+
+            return result;
+        }
+        
+
+        public static async Task<ObjMesh> ImportMeshAsync(string FilePath, string MtlPath)
         {
             Debug.Assert(File.Exists(FilePath) && File.Exists(MtlPath));
 

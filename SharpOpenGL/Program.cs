@@ -12,6 +12,7 @@ using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
 using TestShaderVS = SharpOpenGL.BasicMaterial;
 using Core.CustomEvent;
 using Core.Texture;
+using Core;
 
 using SharpOpenGL.GBufferDraw;
 using ZeroFormatter;
@@ -58,8 +59,12 @@ namespace SharpOpenGL
 
         protected Texture2D TestTexture = null;
 
+        protected OpenGLContext openglContext = null;
+
         protected override void OnLoad(EventArgs e)
         {
+            openglContext = new OpenGLContext(this);
+
             Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
             Formatter<DefaultResolver, OpenTK.Vector2>.Register(new Vector2Formatter<DefaultResolver>());
             Formatter<DefaultResolver, OpenTK.Vector4>.Register(new Vector4Formatter<DefaultResolver>());
@@ -89,12 +94,12 @@ namespace SharpOpenGL
 
             OnWindowResize += Blur.OnWindowResized;
             OnWindowResize += LightPostProcess.OnWindowResized;
-            
-            MeshLoadTask = ObjMesh.LoadMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");            
 
-            /*Mesh = ObjMesh.LoadSerialized("sponza.serialized");
-            Mesh.PrepareToDraw();
-            Mesh.LoadTextures();*/
+            //MeshLoadTask = ObjMesh.ImportMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
+            MeshLoadTask = ObjMesh.LoadSerializedAsync("sponza.serialized");
+
+            var a = openglContext.GetMaxElementsVertices();
+            var b =  openglContext.GetMaxElementsIndices();
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
@@ -120,7 +125,7 @@ namespace SharpOpenGL
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            base.OnUpdateFrame(e);            
+            base.OnUpdateFrame(e);
 
             if(MeshLoadTask != null)
             {

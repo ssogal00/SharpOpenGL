@@ -10,9 +10,6 @@ namespace Core.Texture
         public TextureBase()
         {
             textureObject = GL.GenTexture();
-            m_Sampler = new Sampler();
-            m_Sampler.SetMagFilter(TextureMagFilter.Linear);
-            m_Sampler.SetMinFilter(TextureMinFilter.Linear);
         }
 
         public void Dispose()
@@ -42,7 +39,7 @@ namespace Core.Texture
         {
             if (IsValid)
             {
-                m_Sampler.BindSampler(Unit);
+                Sampler.DefaultLinearSampler.BindSampler(Unit);
                 GL.Uniform1(SamplerLoc, (int)(Unit - TextureUnit.Texture0));
             }
         }

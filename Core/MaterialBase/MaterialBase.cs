@@ -10,19 +10,25 @@ namespace Core.MaterialBase
     public class MaterialBase
     {
         protected ShaderProgram MaterialProgram = null;
-        protected Core.OpenGLShader.VertexShader VSShader = new Core.OpenGLShader.VertexShader();
-        protected Core.OpenGLShader.FragmentShader FSShader = new Core.OpenGLShader.FragmentShader();
+        protected Core.OpenGLShader.VertexShader vertexShader = null;
+        protected Core.OpenGLShader.FragmentShader fragmentShader = null;
+        protected Core.OpenGLShader.TesselControlShader tesselControlShader = null;
+        protected Core.OpenGLShader.TesselEvalShader tesselEvaluationShader = null;
+        
         protected string CompileResult = "";
 
         public MaterialBase(string vertexShaderCode, string fragmentShaderCode)
         {
+            vertexShader = new VertexShader();
+            fragmentShader = new FragmentShader();
+
             MaterialProgram = new Core.OpenGLShader.ShaderProgram();
 
-            VSShader.CompileShader(vertexShaderCode);
-            FSShader.CompileShader(fragmentShaderCode);
+            vertexShader.CompileShader(vertexShaderCode);
+            fragmentShader.CompileShader(fragmentShaderCode);
 
-            MaterialProgram.AttachShader(VSShader);
-            MaterialProgram.AttachShader(FSShader);
+            MaterialProgram.AttachShader(vertexShader);
+            MaterialProgram.AttachShader(fragmentShader);
 
             bool bSuccess = MaterialProgram.LinkProgram(out CompileResult);
 
@@ -31,7 +37,31 @@ namespace Core.MaterialBase
             Initialize();
         }
 
-        
+        public MaterialBase(string vertexShaderCode, string fragmentShaderCode, string tesselControlShaderCode, string tesselEvalShaderCode)
+        {
+            vertexShader = new VertexShader();
+            fragmentShader = new FragmentShader();
+            tesselControlShader = new TesselControlShader();
+            tesselEvaluationShader = new TesselEvalShader();
+
+            MaterialProgram = new Core.OpenGLShader.ShaderProgram();
+
+            vertexShader.CompileShader(vertexShaderCode);
+            fragmentShader.CompileShader(fragmentShaderCode);
+            tesselControlShader.CompileShader(tesselControlShaderCode);
+            tesselEvaluationShader.CompileShader(tesselEvalShaderCode);
+
+            MaterialProgram.AttachShader(vertexShader);
+            MaterialProgram.AttachShader(fragmentShader);
+            MaterialProgram.AttachShader(tesselControlShader);
+            MaterialProgram.AttachShader(tesselEvaluationShader);
+
+            bool bSuccess = MaterialProgram.LinkProgram(out CompileResult);
+
+            Debug.Assert(bSuccess == true);
+
+            Initialize();
+        }
 
 
         public MaterialBase()
