@@ -79,6 +79,7 @@
     <Compile Include="Camera\OrbitCamera.cs" />
     <Compile Include="CustomEvent\ScreenResizeEventArgs.cs" />
     <Compile Include="DrawableBase.cs" />
+    <Compile Include="ImportableResource.cs" />
     <Compile Include="LineDrawable.cs" />
     <Compile Include="MaterialBase\MaterialBase.cs" />
     <Compile Include="MathHelper\MathHelper.cs" />
