@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace SharpOpenGL.Scene
 {
-    class SceneBase
+    public class SceneBase
     {
+
+        public void Draw()
+        {
+
+        }
     }
 }

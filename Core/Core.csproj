@@ -64,6 +64,7 @@
     <Compile Include="BindState.cs" />
     <Compile Include="CustomSerialize\MatrixSerialize.cs" />
     <Compile Include="CustomSerialize\VectorSerialize.cs" />
+    <Compile Include="DrawingState.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="IBindable.cs" />
     <Compile Include="Buffer\DynamicUniformBuffer.cs" />
