@@ -69,7 +69,7 @@ public class GBufferDraw : MaterialBase
 
 	public static string GetVSSourceCode()
 	{
-		return @"#version 430 core
+		return @"#version 450 core
 
 
 uniform Transform
@@ -117,7 +117,7 @@ void main()
 	public static string GetFSSourceCode()
 	{
 		return @"
-#version 430 core
+#version 450 core
 
 
 layout(location=0) in vec3 InPosition;

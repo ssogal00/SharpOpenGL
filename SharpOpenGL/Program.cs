@@ -132,7 +132,7 @@ namespace SharpOpenGL
                 if(MeshLoadTask.IsCompleted)
                 {
                     Mesh = MeshLoadTask.Result;
-                    Mesh.SaveSerialized("sponza.serialized");
+                    //Mesh.SaveSerialized("sponza.serialized");
                     Mesh.PrepareToDraw();
                     Mesh.LoadTextures();
                     MeshLoadTask = null;

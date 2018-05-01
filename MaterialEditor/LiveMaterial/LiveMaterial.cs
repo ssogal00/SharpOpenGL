@@ -23,15 +23,14 @@ namespace MaterialEditor
         
         public LiveMaterial()
         {
+            vertexShader = new VertexShader();
+            fragmentShader = new FragmentShader();
         }
 
         public bool IsValid()
         {
             return lastCompileSuccess;
         }
-        
-
-
 
         public override void Setup()
         {
@@ -164,15 +163,15 @@ namespace MaterialEditor
 
         protected bool Compile(string vsCode, string fsCode)
         {
-            string errorlog;            
+            string errorlog = "";            
 
-            bool bVSCompileSuccess = vsShader.CompileShader(vsCode, out errorlog);
-            bool bFSCompileSuccess = fsShader.CompileShader(fsCode, out errorlog);
+            bool bVSCompileSuccess = vertexShader.CompileShader(vsCode, out errorlog);
+            bool bFSCompileSuccess = fragmentShader.CompileShader(fsCode, out errorlog);
 
             MaterialProgram = new Core.OpenGLShader.ShaderProgram();
 
-            MaterialProgram.AttachShader(vsShader);
-            MaterialProgram.AttachShader(fsShader);
+            MaterialProgram.AttachShader(vertexShader);
+            MaterialProgram.AttachShader(fragmentShader);
 
             string linkResult;
 

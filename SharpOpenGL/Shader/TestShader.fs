@@ -1,5 +1,5 @@
 
-#version 430 core
+#version 450 core
 
 in vec3 Color;
 in vec2 OutTexCoord;

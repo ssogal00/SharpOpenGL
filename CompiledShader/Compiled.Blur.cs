@@ -42,7 +42,7 @@ public class Blur : MaterialBase
 
 	public static string GetVSSourceCode()
 	{
-		return @"#version 430
+		return @"#version 450
 
 layout (location = 0) in vec3 VertexPosition;
 layout (location = 1) in vec2 VertexTexCoord;
@@ -59,7 +59,7 @@ void main()
 
 	public static string GetFSSourceCode()
 	{
-		return @"#version 430
+		return @"#version 450
 
 in vec2 TexCoord;
 

@@ -33,7 +33,7 @@ public class SimpleMaterial : MaterialBase
 
 	public static string GetVSSourceCode()
 	{
-		return @"#version 430 core
+		return @"#version 450 core
 
 
 uniform Transform
@@ -54,7 +54,7 @@ void main()
 	public static string GetFSSourceCode()
 	{
 		return @"
-#version 430 core
+#version 450 core
 
 in vec3 Color;
 in vec2 OutTexCoord;

@@ -42,7 +42,7 @@ public class ScreenSpaceDraw : MaterialBase
 
 	public static string GetVSSourceCode()
 	{
-		return @"#version 430 core
+		return @"#version 450 core
 
 
 layout(location=0) in vec3 VertexPosition;
@@ -60,7 +60,7 @@ void main()
 	public static string GetFSSourceCode()
 	{
 		return @"
-#version 430 core
+#version 450 core
 
 in vec2 OutTexCoord;
 
