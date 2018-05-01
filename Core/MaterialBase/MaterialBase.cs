@@ -259,10 +259,12 @@ namespace Core.MaterialBase
             }
         }
 
-        public void SetUniformVector2ArrayData(string varName, ref float[] data )
+        public void SetUniformVarData(string varName, ref OpenTK.Matrix4 data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVector2ArrayData(varName, ref data);
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, data);
+            }
         }
 
         public void SetUniformVector3ArrayData(string varName, ref float[] data)
