@@ -25,6 +25,8 @@ namespace MaterialEditor
         {
             vertexShader = new VertexShader();
             fragmentShader = new FragmentShader();
+            tesselControlShader = new TesselControlShader();
+            tesselEvaluationShader = new TesselEvalShader();
         }
 
         public bool IsValid()
@@ -168,10 +170,19 @@ namespace MaterialEditor
             bool bVSCompileSuccess = vertexShader.CompileShader(vsCode, out errorlog);
             bool bFSCompileSuccess = fragmentShader.CompileShader(fsCode, out errorlog);
 
+            string tcCode = File.ReadAllText("./Resources/Shader/TesselControl.shader");
+            bool bTCCompileSuccess = tesselControlShader.CompileShader(tcCode, out errorlog);
+
+            string teCode = File.ReadAllText("./Resources/Shader/TesselEvaluation.shader");
+            bool bTECompileSuccess = tesselEvaluationShader.CompileShader(teCode, out errorlog);
+            
+
             MaterialProgram = new Core.OpenGLShader.ShaderProgram();
 
             MaterialProgram.AttachShader(vertexShader);
             MaterialProgram.AttachShader(fragmentShader);
+            //MaterialProgram.AttachShader(tesselControlShader);
+            //MaterialProgram.AttachShader(tesselEvaluationShader);
 
             string linkResult;
 

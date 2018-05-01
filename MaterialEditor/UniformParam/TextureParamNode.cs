@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.IO;
 using System.Windows.Media.Imaging;
+using Core.MaterialBase;
 
 
 namespace MaterialEditor
@@ -59,19 +60,19 @@ namespace MaterialEditor
             {
                 if(outputIndex == 0)
                 {
-                    return string.Format("texture({0} ,InTexCoord)", UniformName);
+                    return string.Format("texture({0} , {1}.TexCoord)", UniformName, MaterialBase.StageInputName);
                 }
                 else if(outputIndex == 1)
                 {
-                    return string.Format("texture({0} ,InTexCoord).r", UniformName);
+                    return string.Format("texture({0} , {1}.TexCoord).r", UniformName, MaterialBase.StageInputName);
                 }
                 else if (outputIndex == 2)
                 {
-                    return string.Format("texture({0} ,InTexCoord).g", UniformName);
+                    return string.Format("texture({0} , {1}.TexCoord).g", UniformName, MaterialBase.StageInputName);
                 }
                 else if (outputIndex == 3)
                 {
-                    return string.Format("texture({0} ,InTexCoord).b", UniformName);
+                    return string.Format("texture({0} , {1}.TexCoord).b", UniformName, MaterialBase.StageInputName);
                 }
             }
 

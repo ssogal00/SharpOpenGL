@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.MaterialBase;
 
 namespace MaterialEditor
 {
@@ -19,7 +20,7 @@ namespace MaterialEditor
         {
             if(outputIndex == 0)
             {
-                return string.Format("InNormal.xyz");
+                return string.Format("{0}.Normal.xyz", MaterialBase.StageInputName);
             }
 
             return string.Empty;
