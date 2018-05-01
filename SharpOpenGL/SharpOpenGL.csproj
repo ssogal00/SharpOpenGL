@@ -74,6 +74,7 @@
     <Compile Include="PostProcess\Blur.cs" />
     <Compile Include="PostProcess\PostProcess.cs" />
     <Compile Include="Scene\SceneBase.cs" />
+    <Compile Include="Scene\TesselationScene.cs" />
     <Compile Include="StaticMesh\ObjMesh.cs" />
     <Compile Include="StaticMesh\ObjMeshMaterial.cs" />
     <Compile Include="StaticMesh\ObjMeshSection.cs" />
