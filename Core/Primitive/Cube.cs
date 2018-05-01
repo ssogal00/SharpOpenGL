@@ -11,38 +11,41 @@ namespace Core
     {
         public Cube()
         {
-            triangleDrawble = new TriangleDrawable<PT_VertexAttribute>();
+            patchDrawable = new PatchDrawable<P_VertexAttribute>();
 
-            List<PT_VertexAttribute> vertexList = new List<PT_VertexAttribute>();
+            List<P_VertexAttribute> vertexList = new List<P_VertexAttribute>();
             List<uint> indexList = new List<uint>();
-            // upper left            
-            vertexList.Add(new PT_VertexAttribute(new OpenTK.Vector3(-1, 1, 1), new OpenTK.Vector2(0, 1)));
-            // upper right
-            vertexList.Add(new PT_VertexAttribute(new OpenTK.Vector3(1, 1, 1), new OpenTK.Vector2( 1, 1)));
-            // lower right
-            vertexList.Add(new PT_VertexAttribute(new OpenTK.Vector3(1, -1, 1), new OpenTK.Vector2(0, 0)));
+            
+            vertexList.Add(new P_VertexAttribute(new OpenTK.Vector3(-0.25f, -0.25f, -0.25f)));
+            vertexList.Add(new P_VertexAttribute(new OpenTK.Vector3(-0.25f, 0.25f, -0.25f)));
+            vertexList.Add(new P_VertexAttribute(new OpenTK.Vector3(0.25f, -0.25f, -0.25f)));
+            vertexList.Add(new P_VertexAttribute(new OpenTK.Vector3(0.25f, 0.25f, -0.25f)));
 
-            // upper left
-            vertexList.Add(new PT_VertexAttribute(new OpenTK.Vector3(-1, 1, 1), new OpenTK.Vector2(0, 0)));
-            // lower Right
-            vertexList.Add(new PT_VertexAttribute(new OpenTK.Vector3(1, -1, 1), new OpenTK.Vector2(0, 0)));
-            // lower left
-            vertexList.Add(new PT_VertexAttribute(new OpenTK.Vector3(-1, -1, 1), new OpenTK.Vector2(0, 0)));            
+            vertexList.Add(new P_VertexAttribute(new OpenTK.Vector3(0.25f, -0.25f, 0.25f)));
+            vertexList.Add(new P_VertexAttribute(new OpenTK.Vector3(0.25f, 0.25f, 0.25f)));
+            vertexList.Add(new P_VertexAttribute(new OpenTK.Vector3(-0.25f, -0.25f, 0.25f)));
+            vertexList.Add(new P_VertexAttribute(new OpenTK.Vector3(-0.25f, 0.25f, 0.25f)));
+
+            uint[] indexArray = 
+            {
+                0, 1, 2, 3,
+                2, 3, 4, 5,
+                4, 5, 6, 7,
+                6, 7, 0, 1,
+                0, 2, 6, 4,
+                1, 7, 3, 5
+            };
 
             var vertexArray = vertexList.ToArray();
-            var indexArray = Enumerable.Range(0, vertexList.Count).Select(x => (uint)x).ToArray();
 
-            triangleDrawble.SetupData(ref vertexArray, ref indexArray);
+            patchDrawable.SetupData(ref vertexArray, ref indexArray);
         }
 
         public void Draw()
         {
-            if (triangleDrawble != null)
-            {
-                triangleDrawble.Draw();
-            }
+            patchDrawable.Draw();
         }
 
-        TriangleDrawable<PT_VertexAttribute> triangleDrawble = null;
+        PatchDrawable<P_VertexAttribute> patchDrawable = null;
     }
 }
