@@ -8,17 +8,13 @@ using OpenTK.Input;
 using SharpOpenGL.StaticMesh;
 using System;
 using System.Threading.Tasks;
-using TestShaderVertexAttributes = SharpOpenGL.BasicMaterial.VertexAttribute;
-using TestShaderVS = SharpOpenGL.BasicMaterial;
 using Core.CustomEvent;
 using Core.Texture;
 using Core;
-
 using SharpOpenGL.GBufferDraw;
-using ZeroFormatter;
 using ZeroFormatter.Formatters;
 using Core.CustomSerialize;
-using ZeroFormatter.Internal;
+
 
 
 namespace SharpOpenGL
@@ -44,8 +40,7 @@ namespace SharpOpenGL
         protected SharpOpenGL.PostProcess.DeferredLight LightPostProcess = null;
 
         protected ObjMesh Mesh = new ObjMesh();
-        protected GBuffer MyGBuffer = new GBuffer(1024, 768);
-        protected RenderTarget MyGBuffer2 = new RenderTarget(1024, 768, 3);
+        protected GBuffer MyGBuffer = new GBuffer(1024, 768);        
 
 
         private Task<ObjMesh> MeshLoadTask = null;
@@ -106,11 +101,7 @@ namespace SharpOpenGL
         {
             // init screen blit
             ScreenBlit.OnResourceCreate(sender, e);
-            ScreenBlit.SetGridSize(3, 3);
-
-            //
-            GBufferMaterial = new SharpOpenGL.GBufferDraw.GBufferDraw();
-            GBufferMaterial.Use();
+            ScreenBlit.SetGridSize(3, 3);            
 
             Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
             Blur.OnResourceCreate(this, e);

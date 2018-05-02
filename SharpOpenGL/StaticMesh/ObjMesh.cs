@@ -281,29 +281,17 @@ namespace SharpOpenGL.StaticMesh
                         material.SetUniformVarData("SpecularMapExist", 0);
                     }
                 }
-
-                //var ByteOffset = new IntPtr(section.StartIndex * sizeof(uint));
-                // GL.DrawElements(PrimitiveType.Triangles, (int)(section.EndIndex - section.StartIndex), DrawElementsType.UnsignedInt, ByteOffset);
+                
                 meshdrawable.Draw(section.StartIndex, (uint)(section.EndIndex - section.StartIndex));
             }
         }
         
         public void PrepareToDraw()
         {
-            //VB = new StaticVertexBuffer<ObjMeshVertexAttribute>();
-            //IB = new IndexBuffer();
-
-            meshdrawable = new TriangleDrawable<ObjMeshVertexAttribute>();
-
-            //VB.Bind();
-            var Arr = Vertices.ToArray();
-            //VB.BufferData<ObjMeshVertexAttribute>(ref Arr);
-            //VB.BindVertexAttribute();
-
-            //IB.Bind();
-            var IndexArr = VertexIndices.ToArray();
-            //IB.BufferData<uint>(ref IndexArr);
-            meshdrawable.SetupData(ref Arr, ref IndexArr);
+            meshdrawable = new TriangleDrawable<ObjMeshVertexAttribute>();         
+            var Arr = Vertices.ToArray();            
+            var IndexArr = VertexIndices.ToArray();            
+            meshdrawable.SetupData(ref Arr, ref IndexArr);            
         }
 
         public void LoadTextures()

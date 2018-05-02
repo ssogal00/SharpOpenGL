@@ -22,8 +22,7 @@ namespace SharpOpenGL.Scene
         protected Cube cube = null;
 
         protected BlitToScreen screenBlit = null;
-
-        protected GBufferDraw.GBufferDraw gbufferMaterial = null;
+                
 
         private Matrix4 Projection;
         private Matrix4 Model;
@@ -33,9 +32,6 @@ namespace SharpOpenGL.Scene
         {
             // create camera
             camera = new OrbitCamera();
-
-            //
-            gbufferMaterial = new GBufferDraw.GBufferDraw();
 
             gbuffer = new GBuffer(1024,768);
 
