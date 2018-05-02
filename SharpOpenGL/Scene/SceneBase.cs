@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Camera;
 using Core.Buffer;
+using Core.CustomEvent;
 
 namespace SharpOpenGL.Scene
 {
@@ -13,18 +14,21 @@ namespace SharpOpenGL.Scene
         public SceneBase()
         {
         }
-
-        public virtual void CreateSceneResources()
-        {
-            gBuffer = new GBuffer(1024,768);
-        }
         
         public virtual void Draw()
         {
 
         }
 
+        public virtual void CreateSceneResources()
+        { }
+
+        public virtual void OnResize(object sender, ScreenResizeEventArgs args)
+        { }
+
         protected CameraBase camera = null;
-        protected GBuffer gBuffer = null;
+        protected GBuffer gbuffer = null;
+        protected int width = 1024;
+        protected int height = 768;
     }
 }

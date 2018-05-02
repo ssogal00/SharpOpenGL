@@ -6,7 +6,7 @@ using Core.CustomEvent;
 
 namespace Core.Buffer
 {
-    public class GBuffer 
+    public class GBuffer : IBindable
     {        
         public GBuffer(int width, int height)
         {

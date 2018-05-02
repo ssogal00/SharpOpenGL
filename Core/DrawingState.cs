@@ -23,4 +23,21 @@ namespace Core
         
         private int ePrevPolygonMode = (int)PolygonMode.Fill;
     }
+
+    public class ScopedBind : IDisposable
+    {
+        public ScopedBind(IBindable bindable)
+        {
+            this.bindable = bindable;
+            this.bindable.Bind();
+        }
+
+        public void Dispose()
+        {
+            this.bindable.Unbind();
+        }
+
+        private IBindable bindable = null;
+    }
+    
 }

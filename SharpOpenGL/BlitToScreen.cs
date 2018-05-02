@@ -17,9 +17,8 @@ namespace SharpOpenGL
             //            
         }
 
-        public void OnResourceCreate(object sender, System.EventArgs eventArgs)
+        public void Create()
         {
-            // 
             Material = new ScreenSpaceDraw.ScreenSpaceDraw();
 
             VB = new StaticVertexBuffer<PT_VertexAttribute>();
@@ -28,6 +27,11 @@ namespace SharpOpenGL
             // feed index buffer
             uint[] IndexArray = { 0, 1, 2, 3, 4, 5 };
             IB.BufferData<uint>(ref IndexArray);
+        }
+
+        public void OnResourceCreate(object sender, System.EventArgs eventArgs)
+        {
+            Create();
         }
         
         public void Blit(TextureBase texture)
