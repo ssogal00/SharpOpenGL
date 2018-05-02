@@ -24,11 +24,7 @@ namespace SharpOpenGL
         protected Matrix4 ModelView = new Matrix4();
         protected Matrix4 Projection = new Matrix4();
         
-        protected FreeCamera FreeCam = new FreeCamera();
-        protected DynamicUniformBuffer TransformBuffer = null;
-        protected DynamicUniformBuffer ColorBuffer = null;
-
-        //protected TestShaderVS.Transform Transform = new TestShaderVS.Transform();
+        protected FreeCamera FreeCam = new FreeCamera();        
         protected SharpOpenGL.GBufferDraw.Transform Transform = new SharpOpenGL.GBufferDraw.Transform();
 
         protected ShaderProgram ProgramObject = null;
