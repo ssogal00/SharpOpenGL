@@ -24,7 +24,10 @@ namespace SharpOpenGL.Scene
         { }
 
         public virtual void OnResize(object sender, ScreenResizeEventArgs args)
-        { }
+        {
+        }
+
+        public virtual void OnResize(int width, int height) { }
         
         protected CameraBase camera = null;
         protected GBuffer gbuffer = null;

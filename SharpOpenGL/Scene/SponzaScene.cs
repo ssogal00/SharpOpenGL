@@ -19,6 +19,7 @@ namespace SharpOpenGL.Scene
         private ObjMesh sponzaMesh = null;
         private MaterialBase gbufferDrawMaterial = null;
         private DeferredLight lightPostProcess = null;
+        private BlitToScreen blitToScreen = null;
 
         public SponzaScene()
         {
@@ -33,6 +34,10 @@ namespace SharpOpenGL.Scene
             gbufferDrawMaterial = new GBufferDraw.GBufferDraw();
 
             lightPostProcess = new DeferredLight();
+
+            blitToScreen = new BlitToScreen();
+            blitToScreen.Create();
+            blitToScreen.SetGridSize(3, 3);
         }
 
         public override void Draw()
@@ -52,6 +57,7 @@ namespace SharpOpenGL.Scene
                 }
             }
 
+            // draw to gbuffer
             using (var scoped = new ScopedBind(gbuffer))
             {
                 gbufferDrawMaterial.Setup();
@@ -60,7 +66,8 @@ namespace SharpOpenGL.Scene
                 lightPostProcess.Render(gbuffer.GetPositionAttachment, gbuffer.GetColorAttachement, gbuffer.GetNormalAttachment);
             }
 
-
+            //
+            blitToScreen.Blit(gbuffer.GetColorAttachement, 0, 0, 3, 3);
         }
     }
 }
