@@ -34,5 +34,19 @@ namespace Core
 
             return result;
         }
+
+        public static float[] Flatten(this List<OpenTK.Vector4> vectorList)
+        {
+            float[] result = new float[vectorList.Count() * 4];
+            for (int i = 0; i < vectorList.Count(); i++)
+            {
+                result[4 * i] = vectorList[i].X;
+                result[4 * i + 1] = vectorList[i].Y;
+                result[4 * i + 2] = vectorList[i].Z;
+                result[4 * i + 3] = vectorList[i].W;
+            }
+
+            return result;
+        }
     }
 }
