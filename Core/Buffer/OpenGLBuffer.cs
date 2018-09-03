@@ -12,6 +12,12 @@ namespace Core.Buffer
             bufferObject = GL.GenBuffer();
         }
 
+        public OpenGLBuffer(string debugName)
+         : this()
+        {
+            DebugName = debugName;
+        }
+
         public void Dispose()
         {
             Unbind();
@@ -156,5 +162,7 @@ namespace Core.Buffer
         protected int bufferObject = 0;
 
         protected bool bBind = false;
+
+        public string DebugName = "";
     }
 }

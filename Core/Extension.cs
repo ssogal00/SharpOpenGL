@@ -8,6 +8,20 @@ namespace Core
 {
     public static class Extension
     {
+        public static void BindAndExecute(this IBindable bindable, Action action)
+        {
+            bindable.Bind();
+            action();
+            bindable.Unbind();
+        }
+
+        public static void BindAndExecute<T>(this IBindable bindable, Action<T> action, T param)
+        {
+            bindable.Bind();
+            action(param);
+            bindable.Unbind();
+        }
+
         public static float[] Flatten(this List<OpenTK.Vector2> vectorList)
         {
             float[] result = new float[vectorList.Count() * 2];

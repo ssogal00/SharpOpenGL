@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Buffer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -14,7 +15,7 @@ namespace Core
         {
             this.window = window;
         }
-
+        
         private OpenTK.GameWindow window = null;
 
         public static EventHandler<EventArgs> OpenGLContextCreated;

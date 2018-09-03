@@ -13,6 +13,8 @@ namespace Core.CustomSerialize
 {
     public class MatrixSerialize
     {
+        
+
         public class Matrix2Formatter<TTypeResolver> : Formatter<TTypeResolver, OpenTK.Matrix2>
         where TTypeResolver : ITypeResolver, new()
         {
