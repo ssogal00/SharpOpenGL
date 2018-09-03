@@ -55,9 +55,16 @@ namespace SharpOpenGL.StaticMesh
 
         }
 
-        public override Task ImportAssetAsync()
+        public async Task ImportAssetAsync()
         {
-            return null;
+            await Task.Factory.StartNew(() =>
+            {
+                this.Load(ObjFilePath, MtlFilePath);
+            });
+
+
+
+            return;
         }
 
         

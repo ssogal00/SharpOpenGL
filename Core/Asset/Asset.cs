@@ -12,9 +12,9 @@ namespace Core.Asset
         {   
         }
 
-        public virtual Task ImportAssetAsync()
+        public async virtual Task ImportAssetAsync()
         {
-            return null;
+            return;
         }
 
         public virtual bool Save()
