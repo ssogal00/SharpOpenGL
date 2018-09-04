@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Asset
+namespace SharpOpenGL.Asset
 {
-    public class Asset
+    public class AssetBase
     {
         public virtual void ImportAssetSync()
         {   
@@ -17,9 +17,21 @@ namespace Core.Asset
             return;
         }
 
-        public virtual bool Save()
-        {
-            return true;
+        public virtual void LoadAssetSync()
+        { 
         }
+
+        public async virtual Task LoadAssetAsync()
+        {
+            return;
+        }
+
+        public virtual void SaveImportedAsset()
+        {
+
+        }
+
+        protected string ImportedAssetPath = "";
+
     }
 }
