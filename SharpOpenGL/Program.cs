@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Core.CustomEvent;
 using Core.Texture;
 using Core;
-using SharpOpenGL.GBufferDraw;
 using ZeroFormatter.Formatters;
 using Core.CustomSerialize;
+
 
 
 
@@ -87,6 +87,10 @@ namespace SharpOpenGL
             OnWindowResize += LightPostProcess.OnWindowResized;
 
             //MeshLoadTask = ObjMesh.ImportMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
+            var staticMesh = new StaticMeshAsset("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
+
+            staticMesh.ImportAssetSync();
+
             MeshLoadTask = ObjMesh.LoadSerializedAsync("sponza.serialized");
 
             var a = openglContext.GetMaxElementsVertices();

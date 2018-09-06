@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZeroFormatter;
 
 namespace SharpOpenGL.Asset
 {
@@ -26,12 +27,12 @@ namespace SharpOpenGL.Asset
             return;
         }
 
-        public virtual void SaveImportedAsset()
+        public virtual void SaveImportedAsset(string path)
         {
 
         }
 
-        protected string ImportedAssetPath = "";
-
+        [Index(0)]
+        public virtual string SavedAssetPath { get; protected set; } = "";
     }
 }

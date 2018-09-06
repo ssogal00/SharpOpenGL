@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+
 using System.Threading.Tasks;
 using OpenTK;
 using Core.Primitive;
 using ZeroFormatter;
-using SharpOpenGL.Asset;
+
 
 namespace SharpOpenGL.StaticMesh
 {
@@ -34,26 +34,31 @@ namespace SharpOpenGL.StaticMesh
 
         [Index(5)] public virtual bool HasTexCoordinate { get; protected set; } = false;
 
+        [Index(6)] public virtual bool HasMaterialFile { get; protected set; } = false;
+
+
         protected string ObjFilePath = "";
         protected string MtlFilePath = "";
         
 
         // only used for mesh loading
         // will be cleared after mesh load
-        List<Vector3> VertexList = new List<Vector3>();
-        List<Vector2> TexCoordList = new List<Vector2>();
-        List<Vector3> NormalList = new List<Vector3>();
-        List<Vector4> TangentList = new List<Vector4>();
+        List<Vector3> TempVertexList = new List<Vector3>();
+        List<Vector2> TempTexCoordList = new List<Vector2>();
+        List<Vector3> TempNormalList = new List<Vector3>();
+        List<Vector4> TempTangentList = new List<Vector4>();
 
         List<uint> VertexIndexList = new List<uint>();
         List<uint> TexCoordIndexList = new List<uint>();
         List<uint> NormalIndexList = new List<uint>();
 
+        // import sync
         public override void ImportAssetSync()
         {
             this.Import(ObjFilePath, MtlFilePath);
         }
 
+        // import async
         public override async Task ImportAssetAsync()
         {
             await Task.Factory.StartNew(() =>
@@ -61,7 +66,30 @@ namespace SharpOpenGL.StaticMesh
                 this.Import(ObjFilePath, MtlFilePath);
             });
         }
-        
+
+        // save
+        public override void SaveImportedAsset(string path)
+        {
+            var bytesarray = ZeroFormatter.ZeroFormatterSerializer.Serialize<StaticMeshAsset>(this);
+            using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
+            {
+                fs.Write(bytesarray, 0, bytesarray.Count());
+            }
+        }
+
+
+        private void Clear()
+        {
+            //
+            TempVertexList.Clear();
+            TempTexCoordList.Clear();
+            TempNormalList.Clear();
+            TempTangentList.Clear();
+            //
+            VertexIndexList.Clear();
+            TexCoordIndexList.Clear();
+            NormalIndexList.Clear();
+        }
 
         public StaticMeshAsset(string objFilePath, string mtlFilePath)
         {
@@ -69,9 +97,19 @@ namespace SharpOpenGL.StaticMesh
             MtlFilePath = mtlFilePath;
         }
 
+        public StaticMeshAsset(string objFilePath)
+        {
+            ObjFilePath = objFilePath;
+            MtlFilePath = "";
+            HasMaterialFile = false;
+        }
+
         public void Import(string FilePath, string MtlPath)
         {
-            ParseMtlFile(MtlPath);
+            if (File.Exists(MtlPath))
+            {
+                ParseMtlFile(MtlPath);
+            }
 
             if (File.Exists(FilePath))
             {
@@ -94,7 +132,7 @@ namespace SharpOpenGL.StaticMesh
                             VN.Y = Convert.ToSingle(tokens[2]);
                             VN.Z = Convert.ToSingle(tokens[3]);
 
-                            NormalList.Add(VN);
+                            TempNormalList.Add(VN);
                         }
                     }
                     else if (Trimmedline.StartsWith("v "))
@@ -110,7 +148,7 @@ namespace SharpOpenGL.StaticMesh
 
                             //UpdateMinMaxVertex(ref V);
 
-                            VertexList.Add(V);
+                            TempVertexList.Add(V);
                         }
                     }
                     else if (Trimmedline.StartsWith("vt"))
@@ -125,7 +163,7 @@ namespace SharpOpenGL.StaticMesh
                             V.X = Convert.ToSingle(tokens[1]);
                             V.Y = Convert.ToSingle(tokens[2]);
 
-                            TexCoordList.Add(V);
+                            TempTexCoordList.Add(V);
                         }
                     }
                     else if (Trimmedline.StartsWith("f "))
@@ -213,17 +251,17 @@ namespace SharpOpenGL.StaticMesh
             for (int i = 0; i < VertexIndexList.Count(); ++i)
             {
                 var V1 = new PNTT_VertexAttribute();
-                V1.VertexPosition = VertexList[(int)VertexIndexList[i]];
+                V1.VertexPosition = TempVertexList[(int)VertexIndexList[i]];
 
                 if (HasTexCoordinate)
                 {
-                    V1.TexCoord = TexCoordList[(int)TexCoordIndexList[i]];
-                    V1.Tangent = TangentList[(int)VertexIndexList[i]];
+                    V1.TexCoord = TempTexCoordList[(int)TexCoordIndexList[i]];
+                    V1.Tangent = TempTangentList[(int)VertexIndexList[i]];
                 }
 
                 if (HasNormal)
                 {
-                    V1.VertexNormal = NormalList[(int)NormalIndexList[i]];
+                    V1.VertexNormal = TempNormalList[(int)NormalIndexList[i]];
                 }
                 Vertices.Add(V1);
             }
@@ -234,7 +272,7 @@ namespace SharpOpenGL.StaticMesh
             List<Vector3> tan1Accum = new List<Vector3>();
             List<Vector3> tan2Accum = new List<Vector3>();
 
-            for (uint i = 0; i < VertexList.Count(); ++i)
+            for (uint i = 0; i < TempVertexList.Count(); ++i)
             {
                 tan1Accum.Add(new Vector3(0, 0, 0));
                 tan2Accum.Add(new Vector3(0, 0, 0));
@@ -242,19 +280,19 @@ namespace SharpOpenGL.StaticMesh
 
             for (uint i = 0; i < VertexIndexList.Count(); i++)
             {
-                TangentList.Add(new Vector4(0, 0, 0, 0));
+                TempTangentList.Add(new Vector4(0, 0, 0, 0));
             }
 
             // Compute the tangent vector
             for (uint i = 0; i < VertexIndexList.Count(); i += 3)
             {
-                var p1 = VertexList[(int)VertexIndexList[(int)i]];
-                var p2 = VertexList[(int)VertexIndexList[(int)i + 1]];
-                var p3 = VertexList[(int)VertexIndexList[(int)i + 2]];
+                var p1 = TempVertexList[(int)VertexIndexList[(int)i]];
+                var p2 = TempVertexList[(int)VertexIndexList[(int)i + 1]];
+                var p3 = TempVertexList[(int)VertexIndexList[(int)i + 2]];
 
-                var tc1 = TexCoordList[(int)TexCoordIndexList[(int)i]];
-                var tc2 = TexCoordList[(int)TexCoordIndexList[(int)i + 1]];
-                var tc3 = TexCoordList[(int)TexCoordIndexList[(int)i + 2]];
+                var tc1 = TempTexCoordList[(int)TexCoordIndexList[(int)i]];
+                var tc2 = TempTexCoordList[(int)TexCoordIndexList[(int)i + 1]];
+                var tc3 = TempTexCoordList[(int)TexCoordIndexList[(int)i + 2]];
 
                 Vector3 q1 = p2 - p1;
                 Vector3 q2 = p3 - p1;
@@ -290,7 +328,7 @@ namespace SharpOpenGL.StaticMesh
 
             for (uint i = 0; i < VertexIndexList.Count(); ++i)
             {
-                var n = NormalList[(int)NormalIndexList[(int)i]];
+                var n = TempNormalList[(int)NormalIndexList[(int)i]];
                 var t1 = tan1Accum[(int)VertexIndexList[(int)i]];
                 var t2 = tan2Accum[(int)VertexIndexList[(int)i]];
 
@@ -320,7 +358,7 @@ namespace SharpOpenGL.StaticMesh
                     temp = lastValidTangent.Xyz;
                 }
 
-                TangentList[(int)i] = new Vector4(temp.X, temp.Y, temp.Z, W);
+                TempTangentList[(int)i] = new Vector4(temp.X, temp.Y, temp.Z, W);
             }
 
             tan1Accum.Clear();
@@ -328,94 +366,90 @@ namespace SharpOpenGL.StaticMesh
         }
 
         protected void ParseMtlFile(string MtlPath)
-        {
-            if (File.Exists(MtlPath))
+        {   
+            var Lines = File.ReadAllLines(MtlPath);
+            ObjMeshMaterial NewMaterial = null;
+            foreach (var line in Lines)
             {
-                var Lines = File.ReadAllLines(MtlPath);
-                ObjMeshMaterial NewMaterial = null;
-                foreach (var line in Lines)
+                var TrimmedLine = line.TrimStart(new char[] { ' ', '\t' });
+
+                if (TrimmedLine.StartsWith("newmtl"))
                 {
-                    var TrimmedLine = line.TrimStart(new char[] { ' ', '\t' });
+                    var Tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    if (TrimmedLine.StartsWith("newmtl"))
+                    if (Tokens.Count() == 2)
                     {
-                        var Tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-
-                        if (Tokens.Count() == 2)
-                        {
-                            NewMaterial = new ObjMeshMaterial();
-                            NewMaterial.MaterialName = Tokens[1];
-                        }
-                    }
-                    else if (TrimmedLine.StartsWith("map_Kd"))
-                    {
-                        var Tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                        if (Tokens.Count() == 2)
-                        {
-                            if (NewMaterial != null)
-                            {
-                                NewMaterial.DiffuseMap = Tokens[1];
-                            }
-                        }
-                    }
-                    else if (TrimmedLine.StartsWith("map_bump"))
-                    {
-                        var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                        if (tokens.Count() == 2)
-                        {
-                            if (NewMaterial != null)
-                            {
-                                NewMaterial.NormalMap = tokens[1];
-                            }
-                        }
-                    }
-                    else if (TrimmedLine.StartsWith("map_Ka"))
-                    {
-                        var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                        if (tokens.Count() == 2)
-                        {
-                            if (NewMaterial != null)
-                            {
-                                NewMaterial.SpecularMap = tokens[1];
-                            }
-                        }
-                    }
-                    else if (TrimmedLine.StartsWith("map_Ns"))
-                    {
-                        var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                        if (tokens.Count() == 2)
-                        {
-                            if (NewMaterial != null)
-                            {
-                                NewMaterial.RoughnessMap = tokens[1];
-                            }
-                        }
-                    }
-                    else if (TrimmedLine.StartsWith("map_d"))
-                    {
-                        var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
-                        if (tokens.Count() == 2)
-                        {
-                            if (NewMaterial != null)
-                            {
-                                NewMaterial.MaskMap = tokens[1];
-                            }
-                        }
-                    }
-                    else if (TrimmedLine.Length == 0 && NewMaterial != null)
-                    {
-                        MaterialMap.Add(NewMaterial.MaterialName, NewMaterial);
-                        NewMaterial = null;
+                        NewMaterial = new ObjMeshMaterial();
+                        NewMaterial.MaterialName = Tokens[1];
                     }
                 }
-
-                if (NewMaterial != null)
+                else if (TrimmedLine.StartsWith("map_Kd"))
+                {
+                    var Tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (Tokens.Count() == 2)
+                    {
+                        if (NewMaterial != null)
+                        {
+                            NewMaterial.DiffuseMap = Tokens[1];
+                        }
+                    }
+                }
+                else if (TrimmedLine.StartsWith("map_bump"))
+                {
+                    var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (tokens.Count() == 2)
+                    {
+                        if (NewMaterial != null)
+                        {
+                            NewMaterial.NormalMap = tokens[1];
+                        }
+                    }
+                }
+                else if (TrimmedLine.StartsWith("map_Ka"))
+                {
+                    var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (tokens.Count() == 2)
+                    {
+                        if (NewMaterial != null)
+                        {
+                            NewMaterial.SpecularMap = tokens[1];
+                        }
+                    }
+                }
+                else if (TrimmedLine.StartsWith("map_Ns"))
+                {
+                    var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (tokens.Count() == 2)
+                    {
+                        if (NewMaterial != null)
+                        {
+                            NewMaterial.RoughnessMap = tokens[1];
+                        }
+                    }
+                }
+                else if (TrimmedLine.StartsWith("map_d"))
+                {
+                    var tokens = TrimmedLine.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (tokens.Count() == 2)
+                    {
+                        if (NewMaterial != null)
+                        {
+                            NewMaterial.MaskMap = tokens[1];
+                        }
+                    }
+                }
+                else if (TrimmedLine.Length == 0 && NewMaterial != null)
                 {
                     MaterialMap.Add(NewMaterial.MaterialName, NewMaterial);
                     NewMaterial = null;
                 }
             }
-        }
 
+            if (NewMaterial != null)
+            {
+                MaterialMap.Add(NewMaterial.MaterialName, NewMaterial);
+                NewMaterial = null;
+            }
+        }
     }
 }
