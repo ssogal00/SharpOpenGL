@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Asset\AssetBase.cs" />
+    <Compile Include="Asset\AssetInfo.cs" />
     <Compile Include="Asset\AssetManager.cs" />
     <Compile Include="Asset\CubeMapTextureAsset.cs" />
     <Compile Include="Asset\ShaderAsset.cs" />

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ZeroFormatter;
 using System.IO;
 using OpenTK.Graphics.ES11;
+using SharpOpenGL.StaticMesh;
 
 namespace SharpOpenGL.Asset
 {
@@ -13,7 +14,14 @@ namespace SharpOpenGL.Asset
     {
         [Index(0)] public List<AssetInfo> AssetInfoList { get; protected set; } = new List<AssetInfo>();
 
-        protected void DiscoverStaticMesh()
+        protected static AssetManager SingletonInstance = new AssetManager();
+
+        public static AssetManager Get()
+        {
+            return SingletonInstance;
+        }
+
+        public void DiscoverStaticMesh()
         {
             List<string> objFileList = new List<string>();
             List<string> mtlFileList = new List<string>();
@@ -29,13 +37,22 @@ namespace SharpOpenGL.Asset
                     mtlFileList.Add(file);
                 }
             }
-            
+
+            foreach (var objfile in objFileList)
+            {
+                var filename = Path.GetFileNameWithoutExtension(objfile);
+
+                var mtlFileName = mtlFileList.Where(x => Path.GetFileNameWithoutExtension(x).StartsWith(filename)).FirstOrDefault();
+
+                if (mtlFileName != null)
+                {
+                    var staticMesh = new StaticMeshAsset(objfile, mtlFileName);
+                    staticMesh.ImportAssetSync();
+                }
+            }
+
 
         }
 
-        protected void ImportStaticMesh()
-        {
-
-        }
     }
 }

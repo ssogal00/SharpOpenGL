@@ -13,8 +13,7 @@ using Core.Texture;
 using Core;
 using ZeroFormatter.Formatters;
 using Core.CustomSerialize;
-
-
+using SharpOpenGL.Asset;
 
 
 namespace SharpOpenGL
@@ -86,10 +85,7 @@ namespace SharpOpenGL
             OnWindowResize += Blur.OnWindowResized;
             OnWindowResize += LightPostProcess.OnWindowResized;
 
-            //MeshLoadTask = ObjMesh.ImportMeshAsync("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
-            var staticMesh = new StaticMeshAsset("./Resources/ObjMesh/sponza2.obj", "./Resources/ObjMesh/sponzaPBR.mtl");
-
-            staticMesh.ImportAssetSync();
+            AssetManager.Get().DiscoverStaticMesh();
 
             MeshLoadTask = ObjMesh.LoadSerializedAsync("sponza.serialized");
 
