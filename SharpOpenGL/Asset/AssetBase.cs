@@ -7,8 +7,13 @@ using ZeroFormatter;
 
 namespace SharpOpenGL.Asset
 {
+    [ZeroFormattable]
     public class AssetBase
     {
+        public AssetBase()
+        {
+        }
+
         public virtual void ImportAssetSync()
         {   
         }
@@ -31,8 +36,5 @@ namespace SharpOpenGL.Asset
         {
 
         }
-
-        [Index(0)]
-        public virtual string SavedAssetPath { get; protected set; } = "";
     }
 }

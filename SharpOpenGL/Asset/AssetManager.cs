@@ -16,16 +16,23 @@ namespace SharpOpenGL.Asset
 
         protected static AssetManager SingletonInstance = new AssetManager();
 
+        protected Dictionary<string, AssetBase> AssetMap = new Dictionary<string, AssetBase>();
+
+        protected static string ImportedDirectory = "./Resources/Imported";
+
         public static AssetManager Get()
         {
             return SingletonInstance;
         }
+
+        
 
         public void DiscoverStaticMesh()
         {
             List<string> objFileList = new List<string>();
             List<string> mtlFileList = new List<string>();
 
+            // discover importable obj , mtl files first
             foreach (var file in Directory.EnumerateFiles("./Resources/ObjMesh"))
             {
                 if (file.EndsWith(".obj"))
@@ -42,14 +49,31 @@ namespace SharpOpenGL.Asset
             {
                 var filename = Path.GetFileNameWithoutExtension(objfile);
 
+                var importedPath = Path.GetFullPath (Path.Combine(ImportedDirectory, "StaticMesh", filename + ".staticmesh"));
+
+                if (File.Exists(importedPath))
+                {
+                    continue;
+                }
+                
                 var mtlFileName = mtlFileList.Where(x => Path.GetFileNameWithoutExtension(x).StartsWith(filename)).FirstOrDefault();
 
                 if (mtlFileName != null)
                 {
                     var staticMesh = new StaticMeshAsset(objfile, mtlFileName);
                     staticMesh.ImportAssetSync();
+
+                    if(Directory.Exists("./Resources/Imported/StaticMesh") == false)
+                    {
+                        Directory.CreateDirectory("./Resources/Imported/StaticMesh");
+                    }
+
+                    string importedAssetPath = Path.Combine("./Resources/Imported/StaticMesh", Path.GetFileNameWithoutExtension(objfile) + ".staticmesh");
+                    staticMesh.SaveImportedAsset(importedAssetPath);
+                    AssetMap.Add(filename + ".staticmesh", staticMesh);
                 }
             }
+            
 
 
         }

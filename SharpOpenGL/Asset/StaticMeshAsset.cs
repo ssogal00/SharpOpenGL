@@ -11,6 +11,7 @@ using ZeroFormatter;
 
 namespace SharpOpenGL.StaticMesh
 {
+    [ZeroFormattable]
     public class StaticMeshAsset : Asset.AssetBase
     {   
         // serialized fields
@@ -104,6 +105,10 @@ namespace SharpOpenGL.StaticMesh
             HasMaterialFile = false;
         }
 
+        public StaticMeshAsset()
+        {
+        }
+
         public void Import(string FilePath, string MtlPath)
         {
             if (File.Exists(MtlPath))
@@ -184,21 +189,27 @@ namespace SharpOpenGL.StaticMesh
                             VertexIndexList.Add(Index2 - 1);
                             VertexIndexList.Add(Index3 - 1);
 
-                            uint TexIndex1 = Convert.ToUInt32(Token1[1]);
-                            uint TexIndex2 = Convert.ToUInt32(Token2[1]);
-                            uint TexIndex3 = Convert.ToUInt32(Token3[1]);
+                            if (HasTexCoordinate)
+                            {
+                                uint TexIndex1 = Convert.ToUInt32(Token1[1]);
+                                uint TexIndex2 = Convert.ToUInt32(Token2[1]);
+                                uint TexIndex3 = Convert.ToUInt32(Token3[1]);
 
-                            TexCoordIndexList.Add(TexIndex1 - 1);
-                            TexCoordIndexList.Add(TexIndex2 - 1);
-                            TexCoordIndexList.Add(TexIndex3 - 1);
+                                TexCoordIndexList.Add(TexIndex1 - 1);
+                                TexCoordIndexList.Add(TexIndex2 - 1);
+                                TexCoordIndexList.Add(TexIndex3 - 1);
+                            }
 
-                            uint NormIndex1 = Convert.ToUInt32(Token1[2]);
-                            uint NormIndex2 = Convert.ToUInt32(Token2[2]);
-                            uint NormIndex3 = Convert.ToUInt32(Token3[2]);
+                            if (HasNormal)
+                            {
+                                uint NormIndex1 = Convert.ToUInt32(Token1[2]);
+                                uint NormIndex2 = Convert.ToUInt32(Token2[2]);
+                                uint NormIndex3 = Convert.ToUInt32(Token3[2]);
 
-                            NormalIndexList.Add(NormIndex1 - 1);
-                            NormalIndexList.Add(NormIndex2 - 1);
-                            NormalIndexList.Add(NormIndex3 - 1);
+                                NormalIndexList.Add(NormIndex1 - 1);
+                                NormalIndexList.Add(NormIndex2 - 1);
+                                NormalIndexList.Add(NormIndex3 - 1);
+                            }
 
                             VertexIndices.Add((uint) VertexIndices.Count);
                             VertexIndices.Add((uint) VertexIndices.Count);
@@ -243,7 +254,8 @@ namespace SharpOpenGL.StaticMesh
             }
 
             GenerateVertices();
-            
+
+            Clear();
         }
 
         protected void GenerateVertices()
