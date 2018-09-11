@@ -25,6 +25,15 @@ namespace SharpOpenGL.Asset
             return SingletonInstance;
         }
 
+        public T GetAsset<T>(string name) where T : AssetBase
+        {
+            if (AssetMap.ContainsKey(name))
+            {
+                return (T) AssetMap[name];
+            }
+
+            return null;
+        }
         
 
         public void DiscoverStaticMesh()
