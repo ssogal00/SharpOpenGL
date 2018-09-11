@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZeroFormatter;
+using System.IO;
 
 namespace SharpOpenGL.Asset
 {
@@ -23,13 +24,21 @@ namespace SharpOpenGL.Asset
             return;
         }
 
-        public virtual void LoadAssetSync()
-        { 
+        public static T LoadAssetSync<T>(string path)
+        {
+            byte[] data = File.ReadAllBytes(path);
+            T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
+            return asset;
         }
 
-        public async virtual Task LoadAssetAsync()
+        public static async Task<T> LoadAssetAsync<T>(string path)
         {
-            return;
+            return await Task.Factory.StartNew(() =>
+            {
+                byte[] data = File.ReadAllBytes(path);
+                T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
+                return asset;
+            });
         }
 
         public virtual void SaveImportedAsset(string path)

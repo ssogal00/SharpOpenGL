@@ -67,7 +67,7 @@ namespace SharpOpenGL.StaticMesh
                 this.Import(ObjFilePath, MtlFilePath);
             });
         }
-
+        
         // save
         public override void SaveImportedAsset(string path)
         {
