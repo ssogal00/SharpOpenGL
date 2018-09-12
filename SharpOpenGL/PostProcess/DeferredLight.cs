@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Core;
 using Core.Texture;
 using Core.CustomEvent;
-using OpenTK.Graphics;
-using OpenTK;
+
 
 namespace SharpOpenGL.PostProcess
 {
@@ -39,13 +35,12 @@ namespace SharpOpenGL.PostProcess
             PostProcessMaterial.SetTexture("DiffuseTex", colorInput);
             PostProcessMaterial.SetTexture("NormalTex", normalInput);
 
-            PostProcessMaterial.SetUniformBufferValue<SharpOpenGL.LightMaterial.Light>("Light", ref m_LightInfo);           
+            PostProcessMaterial.SetUniformBufferValue<SharpOpenGL.LightMaterial.Light>("Light", ref m_LightInfo);
 
-            Output.PrepareToDraw();
-
-            BlitToScreenSpace();
-
-            Output.Unbind();
+            Output.BindAndExecute(() =>
+            {
+                this.BlitToScreenSpace();
+            });
         }
 
         //

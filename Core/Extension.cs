@@ -15,13 +15,33 @@ namespace Core
             bindable.Unbind();
         }
 
-        public static void BindAndExecute<T>(this IBindable bindable, Action<T> action, T param)
+        public static void BindAndExecute(this IBindable bindable, Action action, params IBindable[] bindableList)
         {
+            //
             bindable.Bind();
-            action(param);
+            foreach (var each in bindableList)
+            {
+                each.Bind();
+            }
+
+            //
+            action();
+
+            //
             bindable.Unbind();
+            foreach(var each in bindableList)
+            {
+                each.Unbind();
+            }
         }
         
+        public static T BindAndExecute<T>(this IBindable bindable, Func<T> function)
+        {
+            bindable.Bind();
+            var ret = function();
+            bindable.Unbind();
+            return ret;
+        }
 
         public static float[] Flatten(this List<OpenTK.Vector2> vectorList)
         {

@@ -57,5 +57,7 @@ namespace Core.Buffer
         protected int frameBufferObject = 0;
 
         protected bool bBind = false;
+
+        protected string DebugName = "";
     }
 }

@@ -14,12 +14,18 @@ namespace Core
             return Instance;
         }
 
-        public void SetCurrentVertexBufferBound(string vertexBufferName)
+        public void SetBoundVertexBuffer(string vertexBufferName)
         {
             CurrentVertexBufferBound = vertexBufferName;
         }
 
+        public void SetBoundFrameBuffer(string frameBufferName)
+        {
+            CurrentVertexBufferBound = frameBufferName;
+        }
+
         protected string CurrentVertexBufferBound = "";
         protected string CurrentIndexBufferBound = "";
+        protected string CurrentFrameBufferBound = "";
     }
 }
