@@ -7,6 +7,7 @@ using Core.VertexCustomAttribute;
 using Core.Primitive;
 using OpenTK.Graphics.OpenGL;
 using Core.CustomEvent;
+using Core;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -35,10 +36,11 @@ namespace SharpOpenGL.PostProcess
 
         protected void BlitToScreenSpace()
         {
-            VB.Bind();
-            IB.Bind();
-            PT_VertexAttribute.VertexAttributeBinding();            
-            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+            using (var s = new ScopedBind(VB, IB))
+            {
+                PT_VertexAttribute.VertexAttributeBinding();
+                GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+            }
         }
 
         public virtual void Render(TextureBase Input0)
