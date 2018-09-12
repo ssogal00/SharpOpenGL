@@ -61,11 +61,7 @@ namespace SharpOpenGL.StaticMesh
         public void DrawWithoutMtl(Core.MaterialBase.MaterialBase material)
         {
             meshdrawable.BindVertexAndIndexBuffer();
-
-            foreach (var section in MeshAsset.MeshSectionList)
-            {
-                meshdrawable.Draw(section.StartIndex, (uint)(section.EndIndex - section.StartIndex));
-            }
+            meshdrawable.Draw(0, (uint) MeshAsset.VertexIndices.Count);
         }
         
         public void Draw(Core.MaterialBase.MaterialBase material)
