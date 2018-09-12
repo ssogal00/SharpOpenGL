@@ -34,12 +34,17 @@ namespace SharpOpenGL.Asset
 
             return null;
         }
-        
+
 
         public void DiscoverStaticMesh()
         {
             List<string> objFileList = new List<string>();
             List<string> mtlFileList = new List<string>();
+
+            if (Directory.Exists("./Resources/Imported/StaticMesh") == false)
+            {
+                Directory.CreateDirectory("./Resources/Imported/StaticMesh");
+            }
 
             // discover importable obj , mtl files first
             foreach (var file in Directory.EnumerateFiles("./Resources/ObjMesh"))
@@ -79,11 +84,6 @@ namespace SharpOpenGL.Asset
                 {
                     var staticMesh = new StaticMeshAsset(objfile, mtlFileName);
                     staticMesh.ImportAssetSync();
-
-                    if(Directory.Exists("./Resources/Imported/StaticMesh") == false)
-                    {
-                        Directory.CreateDirectory("./Resources/Imported/StaticMesh");
-                    }
 
                     string importedAssetPath = Path.Combine("./Resources/Imported/StaticMesh", Path.GetFileNameWithoutExtension(objfile) + ".staticmesh");
                     staticMesh.SaveImportedAsset(importedAssetPath);

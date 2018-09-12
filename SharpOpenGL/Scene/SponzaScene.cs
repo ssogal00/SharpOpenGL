@@ -29,7 +29,7 @@ namespace SharpOpenGL.Scene
         {
             base.CreateSceneResources();
 
-            meshLoadingTask = ObjMesh.LoadSerializedAsync("sponza.serialized");
+            
 
             gbufferDrawMaterial = new GBufferDraw.GBufferDraw();
 

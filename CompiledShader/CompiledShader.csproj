@@ -58,6 +58,7 @@
     <Compile Include="Compiled.BasicMaterial.cs" />
     <Compile Include="Compiled.Blur.cs" />
     <Compile Include="Compiled.GBufferDraw.cs" />
+    <Compile Include="Compiled.GBufferWithoutTexture.cs" />
     <Compile Include="Compiled.LightMaterial.cs" />
     <Compile Include="Compiled.ScreenSpaceDraw.cs" />
     <Compile Include="Compiled.SimpleMaterial.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="CompiledVertexAttributes.BasicMaterial.cs" />
     <Compile Include="CompiledVertexAttributes.Blur.cs" />
     <Compile Include="CompiledVertexAttributes.GBufferDraw.cs" />
+    <Compile Include="CompiledVertexAttributes.GBufferWithoutTexture.cs" />
     <Compile Include="CompiledVertexAttributes.LightMaterial.cs" />
     <Compile Include="CompiledVertexAttributes.ScreenSpaceDraw.cs" />
     <Compile Include="CompiledVertexAttributes.SimpleMaterial.cs" />

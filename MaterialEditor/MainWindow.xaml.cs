@@ -80,7 +80,7 @@ namespace MaterialEditor
         protected DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer(DispatcherPriority.Normal);
         protected LiveMaterial liveMaterial = null;
 
-        protected ObjMesh Mesh = new ObjMesh();
+        protected ObjMesh Mesh = null;
 
         protected float fAngle = 0.0f;
 
@@ -108,7 +108,7 @@ namespace MaterialEditor
             test = new Texture2D();
             test.Load("./Resources/SponzaTexture/Sponza_Bricks_a_Albedo.tga");
 
-            Mesh.Load("./Resources/ObjMesh/myteapot.obj", "./Resources/ObjMesh/myteapot.mtl");
+            //Mesh.Load("./Resources/ObjMesh/myteapot.obj", "./Resources/ObjMesh/myteapot.mtl");
             Mesh.PrepareToDraw();
             Mesh.LoadTextures();
 

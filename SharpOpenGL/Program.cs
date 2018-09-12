@@ -27,14 +27,13 @@ namespace SharpOpenGL
         protected SharpOpenGL.GBufferDraw.Transform Transform = new SharpOpenGL.GBufferDraw.Transform();
 
         protected ShaderProgram ProgramObject = null;
-
-        protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
-        protected SharpOpenGL.GBufferDraw.GBufferDraw GBufferMaterial = null;
+        
         protected Core.MaterialBase.MaterialBase BaseTest = null;
+        protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
         protected SharpOpenGL.PostProcess.BlurPostProcess Blur = null;
         protected SharpOpenGL.PostProcess.DeferredLight LightPostProcess = null;
 
-        protected ObjMesh Mesh = new ObjMesh();
+        protected ObjMesh Mesh = null;
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);        
 
 
@@ -87,10 +86,9 @@ namespace SharpOpenGL
 
             AssetManager.Get().DiscoverStaticMesh();
 
-            MeshLoadTask = ObjMesh.LoadSerializedAsync("sponza.serialized");
-
-            var a = openglContext.GetMaxElementsVertices();
-            var b =  openglContext.GetMaxElementsIndices();
+            Mesh = new ObjMesh(AssetManager.Get().GetAsset<StaticMeshAsset>("sponza2.staticmesh"));
+            Mesh.PrepareToDraw();
+            Mesh.LoadTextures();
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
@@ -108,6 +106,8 @@ namespace SharpOpenGL
             //            
             BaseTest = new SharpOpenGL.GBufferDraw.GBufferDraw();
             BaseTest.Setup();
+
+            DefaultMaterial = new GBufferWithoutTexture.GBufferWithoutTexture();
         }       
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -139,9 +139,13 @@ namespace SharpOpenGL
             
             MyGBuffer.BindAndExecute(() =>
             {
-                BaseTest.Setup();
-                BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
-                Mesh.Draw(BaseTest);
+                //BaseTest.Setup();
+                //BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
+                //Mesh.Draw(BaseTest);
+
+                DefaultMaterial.Setup();
+                DefaultMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
+                Mesh.Draw(DefaultMaterial);
             });
 
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
