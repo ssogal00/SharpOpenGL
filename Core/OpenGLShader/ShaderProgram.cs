@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace Core.OpenGLShader
 {
-    public class ShaderProgram : IDisposable
+    public class ShaderProgram : IBindable
     {
         protected List<string> cachedUniformBufferNames = new List<string>();
 
@@ -44,10 +44,15 @@ namespace Core.OpenGLShader
         {
             ProgramObject = GL.CreateProgram();
         }
-
-        public void Dispose()
+        
+        public void Bind()
         {
-            DeleteProgram();
+            UseProgram();
+        }
+
+        public void Unbind()
+        {
+            GL.UseProgram(0);
         }
 
         public ShaderProgram(VertexShader VS, FragmentShader FS)
@@ -104,7 +109,7 @@ namespace Core.OpenGLShader
         public void UseProgram()
         {
             GL.UseProgram(ProgramObject);
-        }
+        }        
 
         public bool IsProgramLinked()
         {

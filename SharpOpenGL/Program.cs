@@ -138,16 +138,12 @@ namespace SharpOpenGL
             Transform.View = FreeCam.View;
             Transform.Proj = FreeCam.Proj;
             
-            MyGBuffer.Bind();
-            MyGBuffer.Clear();
-            MyGBuffer.PrepareToDraw();            
-            BaseTest.Setup();
-            BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
-
-            
-
-            Mesh.Draw(BaseTest);
-            MyGBuffer.Unbind();
+            MyGBuffer.BindAndExecute(() =>
+            {
+                BaseTest.Setup();
+                BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
+                Mesh.Draw(BaseTest);
+            });
 
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
 

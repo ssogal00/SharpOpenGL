@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Core.Texture
 {
-    public class RenderTarget
+    public class RenderTarget : IBindable
     {
         public RenderTarget(int width, int height, int attachmentCount)
         {
@@ -17,6 +17,7 @@ namespace Core.Texture
         public void Bind()
         {
             FrameBufferObject.Bind();
+            PrepareToDraw();
         }
 
         public void Clear()
@@ -42,7 +43,6 @@ namespace Core.Texture
 
         public virtual void PrepareToDraw()
         {
-            Bind();
             Clear();
 
             GL.Viewport(0, 0, BufferWidth, BufferHeight);            

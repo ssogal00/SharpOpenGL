@@ -8,7 +8,18 @@ namespace Core
 {
     public class BindState
     {
+        protected static BindState Instance = new BindState();
+        public static BindState Get()
+        {
+            return Instance;
+        }
 
-        public string CurrentVertexBufferBound = "";
+        public void SetCurrentVertexBufferBound(string vertexBufferName)
+        {
+            CurrentVertexBufferBound = vertexBufferName;
+        }
+
+        protected string CurrentVertexBufferBound = "";
+        protected string CurrentIndexBufferBound = "";
     }
 }
