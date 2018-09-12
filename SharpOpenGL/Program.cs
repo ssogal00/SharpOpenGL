@@ -203,7 +203,7 @@ namespace SharpOpenGL
         {
             using (MainWindow example = new MainWindow())            
             {   
-                example.Run(120);
+                example.Run(200);
             }
         }
     }
