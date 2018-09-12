@@ -8,11 +8,24 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core.Buffer
 {
-    public class FrameBuffer : IDisposable
+    public class FrameBuffer : IDisposable, IBindable
     {
+        static protected int FrameBufferCount = 0;
+
         public FrameBuffer()
         {
             frameBufferObject = GL.GenFramebuffer();
+#if DEBUG
+            DebugName = string.Format("FrameBuffer_{0}", FrameBufferCount++);
+#endif
+        }
+
+        public FrameBuffer(string debugName)
+            : this()
+        {
+#if DEBUG
+            DebugName = debugName;
+#endif
         }
 
         public void Dispose()
@@ -22,6 +35,9 @@ namespace Core.Buffer
 
         public void Bind()
         {
+#if DEBUG
+            BindState.Get().SetBoundFrameBuffer(DebugName);
+#endif
             GL.BindFramebuffer(FramebufferTarget.Framebuffer, frameBufferObject);
             bBind = true;
         }
@@ -30,6 +46,9 @@ namespace Core.Buffer
         {
             if (IsBind)
             {
+#if DEBUG
+                BindState.Get().SetBoundFrameBuffer("");
+#endif
                 GL.BindFramebuffer(FramebufferTarget.Framebuffer, 0);
                 bBind = false;
             }

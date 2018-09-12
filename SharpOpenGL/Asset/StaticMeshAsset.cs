@@ -37,9 +37,11 @@ namespace SharpOpenGL.StaticMesh
 
         [Index(6)] public virtual bool HasMaterialFile { get; protected set; } = false;
 
+        [Index(7)]
+        public virtual string ObjFilePath { get; set; } = "";
 
-        protected string ObjFilePath = "";
-        protected string MtlFilePath = "";
+        [Index(8)]
+        public virtual string MtlFilePath { get; set; } = "";
         
 
         // only used for mesh loading
@@ -96,6 +98,7 @@ namespace SharpOpenGL.StaticMesh
         {
             ObjFilePath = objFilePath;
             MtlFilePath = mtlFilePath;
+            HasMaterialFile = true;
         }
 
         public StaticMeshAsset(string objFilePath)

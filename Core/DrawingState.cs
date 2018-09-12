@@ -26,18 +26,25 @@ namespace Core
 
     public class ScopedBind : IDisposable
     {
-        public ScopedBind(IBindable bindable)
+        public ScopedBind(params IBindable[] bindableList)
         {
-            this.bindable = bindable;
-            this.bindable.Bind();
+            foreach(var each in bindableList)
+            {
+                each.Bind();
+            }
+
+            BindableList = bindableList;
         }
 
         public void Dispose()
         {
-            this.bindable.Unbind();
+            foreach(var each in BindableList)
+            {
+                each.Unbind();
+            }
         }
 
-        private IBindable bindable = null;
+        private IBindable[] BindableList = null;
     }
     
 }

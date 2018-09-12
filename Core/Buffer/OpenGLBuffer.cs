@@ -5,7 +5,7 @@ using OpenTK;
 
 namespace Core.Buffer
 {
-    public abstract class OpenGLBuffer : IDisposable
+    public abstract class OpenGLBuffer : IDisposable, IBindable
     {
         public OpenGLBuffer()
         {

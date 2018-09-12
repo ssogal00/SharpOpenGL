@@ -23,7 +23,7 @@ namespace Core.Buffer
         private void CreateGBuffer()
         {
             // 
-            FrameBufferObject = new FrameBuffer();
+            FrameBufferObject = new FrameBuffer("GBuffer Framebuffer");
             FrameBufferObject.Bind();
 
             PositionAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight);
