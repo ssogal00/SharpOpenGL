@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace Core.Texture
 {
-    public class RenderTarget : IBindable
+    public class RenderTarget : RenderResource, IBindable
     {
         public RenderTarget(int width, int height, int attachmentCount)
         {
@@ -35,12 +35,7 @@ namespace Core.Texture
         {
             Resize(e.Width, e.Height);
         }
-
-        public void OnResourceCreate(object sender, EventArgs e)
-        {
-            Create();
-        }
-
+        
         public virtual void PrepareToDraw()
         {
             Clear();
@@ -86,7 +81,7 @@ namespace Core.Texture
             FrameBufferObject.Unbind();
         }
 
-        public void Create()
+        public override void Initialize()
         {
             FrameBufferObject = new FrameBuffer();
             ColorAttachment0 = new ColorAttachmentTexture(BufferWidth, BufferHeight);

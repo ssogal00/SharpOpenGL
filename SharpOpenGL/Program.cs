@@ -34,10 +34,7 @@ namespace SharpOpenGL
         protected SharpOpenGL.PostProcess.DeferredLight LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
 
         protected ObjMesh Mesh = null;
-        protected GBuffer MyGBuffer = new GBuffer(1024, 768);        
-
-
-        private Task<ObjMesh> MeshLoadTask = null;
+        protected GBuffer MyGBuffer = new GBuffer(1024, 768);
 
         public event EventHandler<EventArgs> OnResourceCreate;
         public event EventHandler<ScreenResizeEventArgs> OnWindowResize;
@@ -99,18 +96,6 @@ namespace SharpOpenGL
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-
-            if(MeshLoadTask != null)
-            {
-                if(MeshLoadTask.IsCompleted)
-                {
-                    Mesh = MeshLoadTask.Result;
-                    Mesh.PrepareToDraw();
-                    Mesh.LoadTextures();
-                    MeshLoadTask = null;
-                }
-                return;
-            }
 
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);

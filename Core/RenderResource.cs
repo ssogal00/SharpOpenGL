@@ -26,16 +26,18 @@ namespace Core
 
         public virtual void OnGLContextCreated(object sender, EventArgs e)
         {
+            Initialize();
         }
 
         public virtual void Initialize()
         {
+            bInit = true;
         }
 
         public virtual void OnWindowResize(object sender, CustomEvent.ScreenResizeEventArgs e)
         {
         }
 
-        protected bool bContextCreatedCalled = false;
+        protected bool bInit = false;
     }
 }

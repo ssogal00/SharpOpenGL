@@ -34,8 +34,6 @@ namespace SharpOpenGL.PostProcess
         {
             PostProcessMaterial.Setup();
             PostProcessMaterial.SetTexture("ColorTex", input);
-            //PostProcessMaterial.SetUniformVector2ArrayData("BlurOffsets", ref m_Offset);
-            //PostProcessMaterial.SetUniformVector2ArrayData("BlurWeights", ref m_Weight);
             
             Output.PrepareToDraw();
 

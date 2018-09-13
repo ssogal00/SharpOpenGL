@@ -15,6 +15,9 @@ namespace Core.MaterialBase
         protected Core.OpenGLShader.TesselControlShader tesselControlShader = null;
         protected Core.OpenGLShader.TesselEvalShader tesselEvaluationShader = null;
 
+        protected string VertexShaderCode = "";
+        protected string FragmentShaderCode = "";
+
         public static readonly string StageOutputName = "stage_out";
         public static readonly string StageInputName = "stage_in";
 
