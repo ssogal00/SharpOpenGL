@@ -17,15 +17,15 @@ namespace SharpOpenGL.PostProcess
         {   
         }
 
-        public override void OnWindowResized(object sender, ScreenResizeEventArgs e)
+        public override void OnWindowResize(object sender, ScreenResizeEventArgs e)
         {
-            base.OnWindowResized(sender, e);
+            base.OnWindowResize(sender, e);
             UpdateOffsetAndWeight(e.Width, e.Height);
         }
 
-        public override void OnResourceCreate(object sender, EventArgs e)
+        public override void OnGLContextCreated(object sender, EventArgs e)
         {
-            base.OnResourceCreate(sender, e);
+            base.OnGLContextCreated(sender, e);
 
             PostProcessMaterial = new SharpOpenGL.Blur.Blur();
         }

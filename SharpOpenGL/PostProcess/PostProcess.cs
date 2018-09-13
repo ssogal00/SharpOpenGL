@@ -11,13 +11,13 @@ using Core;
 
 namespace SharpOpenGL.PostProcess
 {
-    public abstract class PostProcessBase
+    public abstract class PostProcessBase : RenderResource
     {   
         public PostProcessBase()
         {   
         }
 
-        public virtual void OnResourceCreate(object sender, EventArgs e)
+        public override void OnGLContextCreated(object sender, EventArgs e)
         {
             VB = new StaticVertexBuffer<PT_VertexAttribute>();
             IB = new IndexBuffer();
@@ -29,7 +29,7 @@ namespace SharpOpenGL.PostProcess
             UpdateIndexBuffer();
         }
 
-        public virtual void OnWindowResized(object sender, ScreenResizeEventArgs e)
+        public override void OnWindowResize(object sender, ScreenResizeEventArgs e)
         {
             Output.OnWindowResize(sender, e);
         }

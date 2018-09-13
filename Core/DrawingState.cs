@@ -36,6 +36,15 @@ namespace Core
             BindableList = bindableList;
         }
 
+        public ScopedBind(IEnumerable<IBindable> bindableList)
+        {
+            foreach(var each in bindableList)
+            {
+                each.Bind();
+            }
+            BindableList = bindableList.ToArray();
+        }
+
         public void Dispose()
         {
             foreach(var each in BindableList)

@@ -30,8 +30,8 @@ namespace SharpOpenGL
         
         protected Core.MaterialBase.MaterialBase BaseTest = null;
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
-        protected SharpOpenGL.PostProcess.BlurPostProcess Blur = null;
-        protected SharpOpenGL.PostProcess.DeferredLight LightPostProcess = null;
+        protected SharpOpenGL.PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
+        protected SharpOpenGL.PostProcess.DeferredLight LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
 
         protected ObjMesh Mesh = null;
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);        
@@ -67,22 +67,18 @@ namespace SharpOpenGL
             GL.ClearColor(System.Drawing.Color.White);            
 
             // register resource create event handler            
-            OnResourceCreate += this.ResourceCreate;
-            OnResourceCreate += MyGBuffer.OnResourceCreate;
+            OnResourceCreate += this.ResourceCreate;            
             OnResourceCreate += Sampler.OnResourceCreate;
 
             // resigter window resize event handler
-            //OnWindowResize += Camera.OnWindowResized;
             OnWindowResize += FreeCam.OnWindowResized;
-            OnWindowResize += MyGBuffer.OnWindowResized;
-            
+
+            OnResourceCreate += RenderResource.OnOpenGLContextCreated;
+            OnWindowResize += RenderResource.OnWindowResized;
+
             OnResourceCreate(this, e);
-
-            // OnKeyEvent += Camera.OnKeyDown;
+            
             OnKeyEvent += FreeCam.OnKeyDown;
-
-            OnWindowResize += Blur.OnWindowResized;
-            OnWindowResize += LightPostProcess.OnWindowResized;
 
             AssetManager.Get().DiscoverStaticMesh();
 
@@ -95,14 +91,7 @@ namespace SharpOpenGL
         {
             // init screen blit
             ScreenBlit.OnResourceCreate(sender, e);
-            ScreenBlit.SetGridSize(3, 3);            
-
-            Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
-            Blur.OnResourceCreate(this, e);
-
-            LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
-            LightPostProcess.OnResourceCreate(this, e);
-
+            ScreenBlit.SetGridSize(3, 3);
             //            
             BaseTest = new SharpOpenGL.GBufferDraw.GBufferDraw();
             BaseTest.Setup();

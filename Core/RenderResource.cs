@@ -9,22 +9,22 @@ namespace Core
 {    
     public class RenderResource : IDisposable
     {
-        public static EventHandler<EventArgs> OnResourceCreated;
+        public static EventHandler<EventArgs> OnOpenGLContextCreated;
         public static EventHandler<CustomEvent.ScreenResizeEventArgs> OnWindowResized;
 
         public RenderResource()
         {
-            OnResourceCreated += this.OnCreateResource;
+            OnOpenGLContextCreated += this.OnGLContextCreated;
             OnWindowResized += this.OnWindowResize;
         }
 
         public virtual void Dispose()
         {
-            OnResourceCreated -= this.OnCreateResource;
+            OnOpenGLContextCreated -= this.OnGLContextCreated;
             OnWindowResized -= this.OnWindowResize;
         }
 
-        public virtual void OnCreateResource(object sender, EventArgs e)
+        public virtual void OnGLContextCreated(object sender, EventArgs e)
         {
         }
 

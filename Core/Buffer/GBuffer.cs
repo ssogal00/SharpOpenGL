@@ -6,7 +6,7 @@ using Core.CustomEvent;
 
 namespace Core.Buffer
 {
-    public class GBuffer : IBindable
+    public class GBuffer : RenderResource, IBindable
     {        
         public GBuffer(int width, int height)
         {
@@ -50,12 +50,12 @@ namespace Core.Buffer
             FrameBufferObject.Unbind();
         }
 
-        public void OnResourceCreate(object sender, EventArgs e)
+        public override void OnGLContextCreated(object sender, EventArgs e)
         {
             CreateGBuffer();
         }
 
-        public void OnWindowResized(object sender, ScreenResizeEventArgs e)
+        public override void OnWindowResize(object sender, ScreenResizeEventArgs e)
         {
             Resize(e.Width, e.Height);
         }
