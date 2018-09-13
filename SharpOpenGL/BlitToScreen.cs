@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace SharpOpenGL
 {
-    public class BlitToScreen
+    public class BlitToScreen : RenderResource
     {
         public BlitToScreen()
         {
@@ -29,8 +29,8 @@ namespace SharpOpenGL
             IB.BufferData<uint>(ref IndexArray);
         }
 
-        public void OnResourceCreate(object sender, System.EventArgs eventArgs)
-        {
+        public override void OnGLContextCreated(object sender, System.EventArgs eventArgs)
+        {            
             Create();
         }
         

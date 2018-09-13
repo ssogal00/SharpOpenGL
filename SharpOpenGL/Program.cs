@@ -77,7 +77,9 @@ namespace SharpOpenGL
             OnWindowResize += RenderResource.OnWindowResized;
 
             OnResourceCreate(this, e);
-            
+
+            ScreenBlit.SetGridSize(3, 3);
+
             OnKeyEvent += FreeCam.OnKeyDown;
 
             AssetManager.Get().DiscoverStaticMesh();
@@ -89,13 +91,8 @@ namespace SharpOpenGL
 
         protected void ResourceCreate(object sender, EventArgs e)
         {
-            // init screen blit
-            ScreenBlit.OnResourceCreate(sender, e);
-            ScreenBlit.SetGridSize(3, 3);
-            //            
             BaseTest = new SharpOpenGL.GBufferDraw.GBufferDraw();
             BaseTest.Setup();
-
             DefaultMaterial = new GBufferWithoutTexture.GBufferWithoutTexture();
         }       
 
