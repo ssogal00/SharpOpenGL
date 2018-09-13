@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using Core.Buffer;
 using System.Diagnostics;
 
 namespace Core.OpenGLShader
@@ -60,6 +57,7 @@ namespace Core.OpenGLShader
             AttachShader(VS);
             AttachShader(FS);
             string Result;
+            GL.ProgramParameter(ProgramObject, ProgramParameterName.ProgramBinaryRetrievableHint, 1);
             Debug.Assert(LinkProgram(out Result));
 
             CacheShaderProgramInfo();
@@ -225,7 +223,7 @@ namespace Core.OpenGLShader
         public void SetUniformVarData(string VarName, ref OpenTK.Matrix3x2 Data)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
-            GL.UniformMatrix3x2(Loc, false, ref Data);
+            GL.UniformMatrix3x2(Loc, false, ref Data);            
         }
 
         public void SetUniformVector2ArrayData(string VarName, ref float[] Data)
@@ -274,9 +272,10 @@ namespace Core.OpenGLShader
 
                 return result;
             }
-
             return 0;
         }
+
+     
 
         /// <summary>
         /// Return Block Count in Shader Program
@@ -469,10 +468,14 @@ namespace Core.OpenGLShader
 
                     return result;
                 }
-            }            
-
+            }
+            
             return result;
         }
+
+        
+
+        
 
         /// <summary>
         /// Return whether this block is referenced by Vertex Shader
@@ -590,7 +593,7 @@ namespace Core.OpenGLShader
         {
             var result = new List<string>();
             if(ProgramLinked)
-            {
+            {                
                 var Count = GetActiveUniformCount();
 
                 for (int i = 0; i < Count; ++i)
@@ -619,7 +622,19 @@ namespace Core.OpenGLShader
             return -1;
         }
 
-        
+        public int GetProgramBinaryLength()
+        {
+            if(ProgramLinked)
+            {
+                byte[] data = new byte[1024 * 1024 * 1024];
+                int outLength;
+                BinaryFormat outFormat;
+                GL.GetProgramBinary(ProgramObject, 1024 * 1024 * 1024, out outLength, out outFormat, data);
+                return outLength;
+            }
+
+            return 0;
+        }
         public List<int> GetUniformVariableOffsetsInBlock(int nBlockIndex)
         {
             if(ProgramLinked)

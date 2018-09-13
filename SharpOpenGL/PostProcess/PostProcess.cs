@@ -17,14 +17,10 @@ namespace SharpOpenGL.PostProcess
         {   
         }
 
-        public override void OnGLContextCreated(object sender, EventArgs e)
+        public override void Initialize()
         {
             VB = new StaticVertexBuffer<PT_VertexAttribute>();
             IB = new IndexBuffer();
-
-            Output = new RenderTarget(1024,768, 1);
-            Output.Create();
-
             UpdateVertexBuffer();
             UpdateIndexBuffer();
         }
@@ -61,7 +57,7 @@ namespace SharpOpenGL.PostProcess
             return Output;
         }
 
-        protected RenderTarget Output = null;
+        protected RenderTarget Output = new RenderTarget(1024, 768, 1);
 
         protected Core.MaterialBase.MaterialBase PostProcessMaterial = null;
                 
