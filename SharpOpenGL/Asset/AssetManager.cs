@@ -12,8 +12,6 @@ namespace SharpOpenGL.Asset
 {
     public class AssetManager
     {
-        [Index(0)] public List<AssetInfo> AssetInfoList { get; protected set; } = new List<AssetInfo>();
-
         protected static AssetManager SingletonInstance = new AssetManager();
 
         protected Dictionary<string, AssetBase> AssetMap = new Dictionary<string, AssetBase>();

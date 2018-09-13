@@ -1,16 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Buffer;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using Core.Texture;
 
 namespace Core
 {
     public class OpenGLContext
     {
+        protected static OpenGLContext Singleton = new OpenGLContext(null);
+
+        public static OpenGLContext Get() { return Singleton; }
+
+        public void SetGameWindow(OpenTK.GameWindow window)
+        {
+            this.window = window;
+        }
+
+        public TextureBase CreateTexture()
+        {
+            return null;
+        }
+
+        public bool IsValid { get { return this.window != null; } }
+
         public OpenGLContext(OpenTK.GameWindow window)
         {
             this.window = window;

@@ -24,22 +24,21 @@ namespace SharpOpenGL.PostProcess
 
             PostProcessMaterial = new SharpOpenGL.LightMaterial.LightMaterial();
             m_LightInfo.LightAmbient = new OpenTK.Vector3(0.1f, 0.1f, 0.1f);
-            m_LightInfo.LightDiffuse = new OpenTK.Vector3(0.7f, 0.7f, 0.70f);
+            m_LightInfo.LightDiffuse = new OpenTK.Vector3(1.0f, 1.0f, 1.0f);
             m_LightInfo.LightDir = new OpenTK.Vector3(0,1,1);
         }
 
         public override void Render(TextureBase positionInput, TextureBase colorInput, TextureBase normalInput)
         {
-            PostProcessMaterial.Setup();
-            PostProcessMaterial.SetTexture("PositionTex", positionInput);
-            PostProcessMaterial.SetTexture("DiffuseTex", colorInput);
-            PostProcessMaterial.SetTexture("NormalTex", normalInput);
-
-            PostProcessMaterial.SetUniformBufferValue<SharpOpenGL.LightMaterial.Light>("Light", ref m_LightInfo);
-
-            Output.BindAndExecute(() =>
+            Output.BindAndExecute(PostProcessMaterial, () =>
             {
-                this.BlitToScreenSpace();
+                PostProcessMaterial.SetTexture("PositionTex", positionInput);
+                PostProcessMaterial.SetTexture("DiffuseTex", colorInput);
+                PostProcessMaterial.SetTexture("NormalTex", normalInput);
+
+                PostProcessMaterial.SetUniformBufferValue<SharpOpenGL.LightMaterial.Light>("Light", ref m_LightInfo);
+
+                BlitToScreenSpace();
             });
         }
 

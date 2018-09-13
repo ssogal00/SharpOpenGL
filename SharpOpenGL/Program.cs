@@ -48,11 +48,11 @@ namespace SharpOpenGL
 
         protected Texture2D TestTexture = null;
 
-        protected OpenGLContext openglContext = null;
+        
 
         protected override void OnLoad(EventArgs e)
         {
-            openglContext = new OpenGLContext(this);
+            OpenGLContext.Get().SetGameWindow(this);
 
             Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
             Formatter<DefaultResolver, OpenTK.Vector2>.Register(new Vector2Formatter<DefaultResolver>());

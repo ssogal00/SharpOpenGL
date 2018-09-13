@@ -28,8 +28,14 @@ namespace Core
         {
         }
 
+        public virtual void Initialize()
+        {
+        }
+
         public virtual void OnWindowResize(object sender, CustomEvent.ScreenResizeEventArgs e)
         {
         }
+
+        protected bool bContextCreatedCalled = false;
     }
 }
