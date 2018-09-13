@@ -15,10 +15,23 @@ namespace Core
             bindable.Unbind();
         }
 
-        public static void BindAndExecute(this IBindable bindable, Action action, params IBindable[] bindableList)
+        public static void BindAndExecute(this IBindable first, IBindable second, Action action)
         {
-            //
-            bindable.Bind();
+            first.Bind(); second.Bind();
+            action();
+            first.Unbind(); second.Unbind();
+        }
+
+        public static void BindAndExecute(this IBindable first, IBindable second, IBindable third, Action action)
+        {
+            first.Bind(); second.Bind(); third.Bind();
+            action();
+            first.Unbind(); second.Unbind(); third.Unbind();
+        }
+
+        public static void BindAndExecute(this IEnumerable<IBindable> bindableList, Action action)
+        {
+            //            
             foreach (var each in bindableList)
             {
                 each.Bind();
@@ -27,8 +40,7 @@ namespace Core
             //
             action();
 
-            //
-            bindable.Unbind();
+            //            
             foreach(var each in bindableList)
             {
                 each.Unbind();

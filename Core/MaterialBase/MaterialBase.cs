@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core.MaterialBase
 {
-    public class MaterialBase
+    public class MaterialBase : IBindable
     {
         protected ShaderProgram MaterialProgram = null;
         protected Core.OpenGLShader.VertexShader vertexShader = null;
@@ -156,6 +156,16 @@ namespace Core.MaterialBase
             Core.Texture.Sampler.DefaultLinearSampler.BindSampler(textureUnitToBind);
             var SamplerLoc = MaterialProgram.GetSampler2DUniformLocation(name);
             GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, 0);
+        }
+
+        public void Bind()
+        {
+            Setup();
+        }
+
+        public void Unbind()
+        {
+
         }
 
         public virtual void Setup()
