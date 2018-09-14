@@ -21,13 +21,13 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C7791532-CE38-47A3-B1CE-9E4CFCCE94E2}</ProjectGuid>
     <RootNamespace>FBXWrapper</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>true</CLRSupport>
   </PropertyGroup>
@@ -163,11 +163,6 @@
     <ClInclude Include="ParsedFBXMesh.h" />
     <ClInclude Include="ParsedFBXMeshBone.h" />
     <ClInclude Include="SkinningInfo.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="OpenTK">
-      <HintPath>..\SharpOpenGL\lib\OpenTK\OpenTK.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
