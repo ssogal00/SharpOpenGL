@@ -48,11 +48,16 @@ namespace Core.OpenGLShader
         {
             int result = 0;
             GL.GetInteger(GetPName.NumProgramBinaryFormats, out result);
-            GL.ProgramBinary(ProgramObject, 0, binarydata, binarydata.Length);
+            var formats = new int[result];
+            GL.GetInteger(GetPName.ProgramBinaryFormats, formats);
+            
+            GL.ProgramBinary(ProgramObject, (BinaryFormat)formats[0], binarydata, binarydata.Length);
 
             string linkresult = "";
 
-            LinkProgram(out linkresult);
+            bool bSuccess = LinkProgram(out linkresult);
+
+            Debug.Assert(bSuccess);
         }
 
         public void Bind()
@@ -412,7 +417,8 @@ namespace Core.OpenGLShader
             {
                 if (nBlockIndex < GetActiveUniformBlockCount())
                 {
-                    var SB = new StringBuilder();
+                    //var SB = new StringBuilder();
+                    string SB = "";
 
                     int length = 0;
 
@@ -420,9 +426,9 @@ namespace Core.OpenGLShader
 
                     int dummy = 0;
 
-                    GL.GetActiveUniformBlockName(ProgramObject, nBlockIndex, length, out dummy, SB);
+                    GL.GetActiveUniformBlockName(ProgramObject, nBlockIndex, length, out dummy, out SB);
 
-                    return SB.ToString();
+                    return SB;
                 }
             }
 
@@ -731,11 +737,11 @@ namespace Core.OpenGLShader
 
                     ActiveAttribType Type = ActiveAttribType.None;
 
-                    StringBuilder sb = new StringBuilder();
+                    string sb = "";
 
-                    GL.GetActiveAttrib(ProgramObject, index, nBuffSize, out nLength, out nSize, out Type, sb);
+                    GL.GetActiveAttrib(ProgramObject, index, nBuffSize, out nLength, out nSize, out Type, out sb);
 
-                    var attributeLocation = GetAttributeLocation(sb.ToString());
+                    var attributeLocation = GetAttributeLocation(sb);
 
                     result.Add(new VertexAttribute(attributeLocation, Type, sb.ToString()));
                 }

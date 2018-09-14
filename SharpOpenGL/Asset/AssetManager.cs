@@ -46,14 +46,18 @@ namespace SharpOpenGL.Asset
 
             var root = XElement.Load("./Resources/Shader/MaterialList.xml");
 
+            // import first
             foreach (var node in root.Descendants("Material"))
             {
-                int result = 0;
-                GL.GetInteger(GetPName.NumProgramBinaryFormats, out result);
-                var binaryFormatList = new int[result];
-                GL.GetInteger(GetPName.ProgramBinaryFormats, binaryFormatList);
-
                 string materialName = node.Attribute("name").Value;
+
+                string importedFileName = string.Format("./Resources/Imported/Shader/{0}.material", materialName);
+
+                if(File.Exists(importedFileName))
+                {
+                    continue;
+                }
+
                 string vsPath = Path.Combine("./Resources", "Shader", node.Attribute("vertexShader").Value);
                 string fsPath = Path.Combine("./Resources", "Shader", node.Attribute("fragmentShader").Value);
                 var vs = new VertexShader();
@@ -70,13 +74,18 @@ namespace SharpOpenGL.Asset
 
                 program.GetProgramBinary(ref data, out binaryLength);
 
-                string importedFileName = string.Format("./Resources/Imported/Shader/{0}.material", materialName);
-
                 using (var filestream = new FileStream(importedFileName, FileMode.CreateNew))
                 {
                     filestream.Write(data, 0, binaryLength);
                 }
             }
+
+            //
+            //foreach(var file in Directory.EnumerateFiles("./Resources/Imported/Shader"))
+            //{
+            //    var bytes = File.ReadAllBytes(file);
+            //    var newProgram =  new ShaderProgram(ref bytes);
+            //}
         }
 
 
