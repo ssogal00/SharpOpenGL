@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZeroFormatter;
 using System.IO;
-using OpenTK.Graphics.ES11;
 using SharpOpenGL.StaticMesh;
+using System.Xml.Linq;
+using Core.OpenGLShader;
+using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.Asset
 {
@@ -31,6 +30,53 @@ namespace SharpOpenGL.Asset
             }
 
             return null;
+        }
+
+        public void DiscoverShader()
+        {
+            if(File.Exists("./Resources/Shader/MaterialList.xml") == false)
+            {
+                return;
+            }
+
+            if(Directory.Exists("./Resources/Imported/Shader") == false)
+            {
+                Directory.CreateDirectory("./Resources/Imported/Shader");
+            }
+
+            var root = XElement.Load("./Resources/Shader/MaterialList.xml");
+
+            foreach (var node in root.Descendants("Material"))
+            {
+                int result = 0;
+                GL.GetInteger(GetPName.NumProgramBinaryFormats, out result);
+                var binaryFormatList = new int[result];
+                GL.GetInteger(GetPName.ProgramBinaryFormats, binaryFormatList);
+
+                string materialName = node.Attribute("name").Value;
+                string vsPath = Path.Combine("./Resources", "Shader", node.Attribute("vertexShader").Value);
+                string fsPath = Path.Combine("./Resources", "Shader", node.Attribute("fragmentShader").Value);
+                var vs = new VertexShader();
+                var fs = new FragmentShader();
+
+                vs.CompileShader(File.ReadAllText(vsPath));
+                fs.CompileShader(File.ReadAllText(fsPath));
+
+                var program = new ShaderProgram(vs, fs);
+
+                byte[] data = new byte[1024 * 1024 * 512]; // 512kb
+
+                int binaryLength = 0;
+
+                program.GetProgramBinary(ref data, out binaryLength);
+
+                string importedFileName = string.Format("./Resources/Imported/Shader/{0}.material", materialName);
+
+                using (var filestream = new FileStream(importedFileName, FileMode.CreateNew))
+                {
+                    filestream.Write(data, 0, binaryLength);
+                }
+            }
         }
 
 

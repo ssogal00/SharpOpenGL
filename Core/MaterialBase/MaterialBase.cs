@@ -23,6 +23,12 @@ namespace Core.MaterialBase
 
         protected string CompileResult = "";
 
+        public MaterialBase(ShaderProgram program)
+        {
+            MaterialProgram = program;
+            Initialize();
+        }
+
         public MaterialBase(string vertexShaderCode, string fragmentShaderCode)
         {
             vertexShader = new VertexShader();

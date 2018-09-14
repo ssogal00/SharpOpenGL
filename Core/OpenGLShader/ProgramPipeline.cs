@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core.OpenGLShader
 {
-    public class ProgramPipeline : IDisposable
+    public class ProgramPipeline : IDisposable, IBindable
     {
 
         public ProgramPipeline()
@@ -19,6 +19,11 @@ namespace Core.OpenGLShader
         {
             GL.DeleteProgramPipeline(pipelineObject);
             pipelineObject = -1;
+        }
+
+        public void UseVertexShaderProgram(VertexShader shader)
+        {
+            //GL.UseProgramStages(pipelineObject, ProgramStageMask.VertexShaderBit,);
         }
 
         public void UseVertexShaderProgram(int vsProgramObject)
@@ -44,6 +49,11 @@ namespace Core.OpenGLShader
         public void Bind()
         {
             GL.BindProgramPipeline(pipelineObject);
+        }
+
+        public void Unbind()
+        {
+            GL.BindProgramPipeline(0);
         }
 
         public bool IsValid => pipelineObject != -1;

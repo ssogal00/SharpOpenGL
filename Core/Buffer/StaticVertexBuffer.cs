@@ -10,8 +10,7 @@ using OpenTK.Graphics.OpenGL;
 namespace Core.Buffer
 {
     public class StaticVertexBuffer<T> : OpenGLBuffer where T : struct
-    {
-        static int VertexBufferCount = 0;
+    {   
         public StaticVertexBuffer()
         {
             bufferTarget = BufferTarget.ArrayBuffer;

@@ -89,6 +89,7 @@
     <Compile Include="OpenGLContext.cs" />
     <Compile Include="OpenGLShader\ProgramPipeline.cs" />
     <Compile Include="OpenGLShader\SeparableShaderProgram.cs" />
+    <Compile Include="OpenGLShader\ShaderProgramBase.cs" />
     <Compile Include="OpenGLShader\TesselControlShader.cs" />
     <Compile Include="OpenGLShader\TesselEvalShader.cs" />
     <Compile Include="PatchDrawable.cs" />

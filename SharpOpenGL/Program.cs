@@ -79,6 +79,7 @@ namespace SharpOpenGL
 
             OnKeyEvent += FreeCam.OnKeyDown;
 
+            AssetManager.Get().DiscoverShader();
             AssetManager.Get().DiscoverStaticMesh();
 
             Mesh = new ObjMesh(AssetManager.Get().GetAsset<StaticMeshAsset>("sponza2.staticmesh"));
