@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+
 using System.Diagnostics;
 
 namespace Core.OpenGLShader
@@ -43,23 +44,6 @@ namespace Core.OpenGLShader
             ProgramObject = GL.CreateProgram();
         }
 
-        public ShaderProgramBase( ref byte[] binarydata)
-            :this()
-        {
-            int result = 0;
-            GL.GetInteger(GetPName.NumProgramBinaryFormats, out result);
-            var formats = new int[result];
-            GL.GetInteger(GetPName.ProgramBinaryFormats, formats);
-            
-            GL.ProgramBinary(ProgramObject, (BinaryFormat)formats[0], binarydata, binarydata.Length);
-
-            string linkresult = "";
-
-            bool bSuccess = LinkProgram(out linkresult);
-
-            Debug.Assert(bSuccess);
-        }
-
         public void Bind()
         {
             UseProgram();
@@ -69,7 +53,6 @@ namespace Core.OpenGLShader
         {
             GL.UseProgram(0);
         }
-
         
 
         public void DeleteProgram()
