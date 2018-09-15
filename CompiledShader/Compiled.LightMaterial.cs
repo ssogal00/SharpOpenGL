@@ -39,24 +39,6 @@ public class LightMaterial : MaterialBase
 	{
 		SetTexture(@"DiffuseTex", TextureObject);
 	}
-	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"NormalTex", TextureObject);
-	}
-
-	public void SetNormalTex2D(int TextureObject, Sampler sampler)
-	{
-		SetTexture(@"NormalTex", TextureObject);
-	}
-	public void SetPositionTex2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"PositionTex", TextureObject);
-	}
-
-	public void SetPositionTex2D(int TextureObject, Sampler sampler)
-	{
-		SetTexture(@"PositionTex", TextureObject);
-	}
 
 	public static string GetVSSourceCode()
 	{
@@ -92,9 +74,9 @@ void main()
 	{
 		return @"#version 450
 
-uniform sampler2D PositionTex;
-uniform sampler2D DiffuseTex;
-uniform sampler2D NormalTex;
+layout (location = 0 , binding = 0) uniform sampler2D PositionTex;
+layout (location = 1 , binding = 1) uniform sampler2D DiffuseTex;
+layout (location = 2 , binding = 2) uniform sampler2D NormalTex;
 
 layout (location = 0 ) in vec3 InPosition;
 layout (location = 1 ) in vec2 InTexCoord;
@@ -159,13 +141,15 @@ void main()
 	vec3 Half = normalize(LightDir + ViewDir);
 
 
-    vec3 diffuse = max(dot(Normal.xyz, LightDir), 0.0) * Color * LightDiffuse;
+    // vec3 diffuse = max(dot(Normal.xyz, LightDir), 0.0) * Color * LightDiffuse;
+    vec3 diffuse = Color;
+    // vec4 diffuse = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, Color);
 
     vec3 specular = pow(max(dot(Normal.xyz, Half), 0) , 64.0) * vec3(Normal.a);
 
 
 	vec4 FinalColor;
-    FinalColor.xyz = diffuse + specular;
+    FinalColor.xyz = diffuse.xyz ;
     
     FragColor = FinalColor;
 }

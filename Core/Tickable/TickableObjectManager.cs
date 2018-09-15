@@ -12,10 +12,14 @@ namespace Core.Tickable
 
         public static void Tick(double fDeltaSeconds)
         {
+            CurrentTime += fDeltaSeconds;
+
             foreach(var Obj in ObjectList)
             {
                 Obj.Tick(fDeltaSeconds);
             }
         }
+
+        public static double CurrentTime = 0;
     }
 }

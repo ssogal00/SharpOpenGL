@@ -2,6 +2,7 @@
 using Core;
 using Core.Texture;
 using Core.CustomEvent;
+using Core.Tickable;
 
 
 namespace SharpOpenGL.PostProcess
@@ -30,6 +31,10 @@ namespace SharpOpenGL.PostProcess
 
         public override void Render(TextureBase positionInput, TextureBase colorInput, TextureBase normalInput)
         {
+            m_LightInfo.LightDir.X = -(float) Math.Sin(TickableObjectManager.CurrentTime);
+            m_LightInfo.LightDir.Y = -(float)Math.Sin(TickableObjectManager.CurrentTime);
+
+
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
                 PostProcessMaterial.SetTexture("PositionTex", positionInput);

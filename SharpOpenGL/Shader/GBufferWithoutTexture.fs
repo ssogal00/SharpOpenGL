@@ -15,7 +15,7 @@ layout (location = 2) out vec4 NormalColor;
 
 void main()
 {   
-    DiffuseColor = vec4(0.9,0.7,0.7,0);
+    DiffuseColor = vec4(0.9,0.0,0.0,0);
 
     NormalColor.xyz = InNormal.xyz;
     
