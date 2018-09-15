@@ -13,12 +13,7 @@ namespace Core.OpenGLShader
             : base()
         {
         }
-
-        public ShaderProgram(ref byte[] binarydata)
-            : base(ref binarydata)
-        {
-        }
-
+        
         public ShaderProgram(VertexShader VS, FragmentShader FS)
         {
             AttachShader(VS);
