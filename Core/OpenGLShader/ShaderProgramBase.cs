@@ -580,7 +580,7 @@ namespace Core.OpenGLShader
                 {
                     int size;
                     ActiveUniformType type;
-
+                    
                     GL.GetActiveUniform(ProgramObject, i, out size, out type);
 
                     if (type == ActiveUniformType.Sampler2D)
@@ -778,7 +778,7 @@ namespace Core.OpenGLShader
                 {
                     int Index = -1;
                     GL.GetActiveUniformBlock(m_ProgramObject, BlockIndex, ActiveUniformBlockParameter.UniformBlockBinding, out Index);
-
+                    
                     return Index;
                 }
             }

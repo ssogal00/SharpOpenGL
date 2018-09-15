@@ -1,18 +1,9 @@
-﻿using Core.Buffer;
+﻿using Core;
 using Core.Texture;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using ZeroFormatter;
-using ZeroFormatter.Internal;
-using Core;
-
 using ObjMeshVertexAttribute = Core.Primitive.PNTT_VertexAttribute;
 
 

@@ -24,7 +24,7 @@ uniform int NormalMapExist;
 
 void main()
 {   
-    DiffuseColor = vec4(0.9,0.9,0.9,0);
+    DiffuseColor = vec4(0.7,0.7,0.7,0);
 
     NormalColor.xyz = InNormal.xyz;
     

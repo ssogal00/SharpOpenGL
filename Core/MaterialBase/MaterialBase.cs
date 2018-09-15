@@ -115,6 +115,7 @@ namespace Core.MaterialBase
             if (samplerNames.Count > 0)
             {
                 SamplerMap = new Dictionary<string, TextureUnit>();
+                
             }
 
             for (int i = 0; i < samplerNames.Count; ++i)
@@ -143,12 +144,11 @@ namespace Core.MaterialBase
             {
                 return;
             }
-
-            var textureUnitToBind = SamplerMap[name];
-            GL.ActiveTexture(textureUnitToBind);
-            texture.Bind();
+            
             var Loc = MaterialProgram.GetSampler2DUniformLocation(name);
-            texture.BindShader(textureUnitToBind, Loc);
+            GL.ActiveTexture(TextureUnit.Texture0 + Loc);
+            texture.Bind();
+            texture.BindShader(TextureUnit.Texture0 + Loc, Loc);
         }
 
         public void SetTexture(string name, int TextureObject)
