@@ -82,7 +82,7 @@ namespace SharpOpenGL
             AssetManager.Get().DiscoverShader();
             AssetManager.Get().DiscoverStaticMesh();
 
-            Mesh = new ObjMesh(AssetManager.Get().GetAsset<StaticMeshAsset>("sponza2.staticmesh"));
+            Mesh = new ObjMesh(AssetManager.Get().GetAsset<StaticMeshAsset>("myteapot2.staticmesh"));
             Mesh.PrepareToDraw();
             Mesh.LoadTextures();
         }
@@ -112,7 +112,7 @@ namespace SharpOpenGL
             MyGBuffer.BindAndExecute(BaseTest, () =>
             {
                 BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
-                Mesh.Draw(BaseTest);
+                Mesh.DrawWithoutMtl(DefaultMaterial);
             });
 
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);

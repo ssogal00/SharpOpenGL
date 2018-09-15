@@ -95,18 +95,9 @@ layout (location = 0) out vec4 PositionColor;
 layout (location = 1) out vec4 DiffuseColor;
 layout (location = 2) out vec4 NormalColor;
 
-uniform sampler2D DiffuseTex;
-uniform sampler2D NormalTex;
-uniform sampler2D MaskTex;
-uniform sampler2D SpecularTex;
-
-uniform int SpecularMapExist;
-uniform int MaskMapExist;
-uniform int NormalMapExist;
-
 void main()
 {   
-    DiffuseColor = vec4(0.7,0.7,0.7,0);
+    DiffuseColor = vec4(0.9,0.7,0.7,0);
 
     NormalColor.xyz = InNormal.xyz;
     
