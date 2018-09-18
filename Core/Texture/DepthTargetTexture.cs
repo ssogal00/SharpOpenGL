@@ -34,7 +34,7 @@ namespace Core.Texture
         }
 
         public void Alloc()
-        {
+        {   
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Depth24Stencil8, m_Width, m_Height, 0, PixelFormat.DepthComponent, PixelType.Float, new IntPtr(0));
         }
         

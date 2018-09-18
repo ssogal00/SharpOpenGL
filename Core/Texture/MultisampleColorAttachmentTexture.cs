@@ -45,6 +45,7 @@ namespace Core.Texture
             m_Height = newHeight;
             Bind();
             
+            
             GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, textureFormat, m_Width, m_Height, false);
         }
 
