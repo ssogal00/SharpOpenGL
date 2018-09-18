@@ -13,7 +13,7 @@ namespace Core.Texture
             m_Height = heightParam;
         }
 
-        protected void RecreateTexture()
+        protected virtual void RecreateTexture()
         {
             if(textureObject != 0)
             {
@@ -22,7 +22,7 @@ namespace Core.Texture
             }
         }
 
-        public void Resize(int newWidth, int newHeight)
+        public virtual void Resize(int newWidth, int newHeight)
         {
             Debug.Assert(newWidth > 0 && newHeight > 0);
 
@@ -33,7 +33,7 @@ namespace Core.Texture
             Alloc();
         }
 
-        public void Alloc()
+        protected virtual void Alloc()
         {   
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Depth24Stencil8, m_Width, m_Height, 0, PixelFormat.DepthComponent, PixelType.Float, new IntPtr(0));
         }

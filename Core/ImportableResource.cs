@@ -8,6 +8,6 @@ namespace Core
 {
     public class ImportableResource
     {
-        public virtual async void Import() { }
+        public virtual void Import() { }
     }
 }

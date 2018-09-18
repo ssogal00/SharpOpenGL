@@ -9,22 +9,11 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core.Texture
 {
-    public class MultisampleDepthTargetTexture : TextureBase
+    public class MultisampleDepthTargetTexture : DepthTargetTexture
     {
         public MultisampleDepthTargetTexture(int widthParam, int heightParam)
-            : base()
+            : base(widthParam, heightParam)
         {
-            m_Width = widthParam;
-            m_Height = heightParam;
-        }
-
-        protected void RecreateTexture()
-        {
-            if (textureObject != 0)
-            {
-                GL.DeleteTexture(textureObject);
-                textureObject = GL.GenTexture();
-            }
         }
 
         public override void Bind()
@@ -35,7 +24,7 @@ namespace Core.Texture
             }
         }
 
-        public void Resize(int newWidth, int newHeight)
+        public override void Resize(int newWidth, int newHeight)
         {
             Debug.Assert(newWidth > 0 && newHeight > 0);
 
@@ -46,12 +35,11 @@ namespace Core.Texture
             Alloc();
         }
 
-        public void Alloc()
+        protected override void Alloc()
         {   
             GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, PixelInternalFormat.Depth24Stencil8, m_Width, m_Height, false);
         }
 
-
-        public int GetTextureObject => textureObject;
+        protected int SampleCount = 4;
     }
 }
