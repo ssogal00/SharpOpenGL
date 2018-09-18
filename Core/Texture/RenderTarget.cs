@@ -171,7 +171,7 @@ namespace Core.Texture
 
         protected Core.Buffer.FrameBuffer FrameBufferObject = null;
 
-        DrawBuffersEnum[] AttchmentsEnums = null;
+        protected DrawBuffersEnum[] AttchmentsEnums = null;
 
         public int RenderTargetWidth => BufferWidth;
         public int RenderTargetHeight => BufferHeight;

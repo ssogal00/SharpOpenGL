@@ -13,7 +13,6 @@ using Core;
 using ZeroFormatter.Formatters;
 using Core.CustomSerialize;
 using SharpOpenGL.Asset;
-using Core.Texture;
 
 
 namespace SharpOpenGL
