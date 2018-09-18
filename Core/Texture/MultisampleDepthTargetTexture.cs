@@ -1,12 +1,17 @@
-﻿using OpenTK.Graphics.OpenGL;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using OpenTK.Graphics.OpenGL;
 
 namespace Core.Texture
 {
-    public class DepthTargetTexture : TextureBase
+    public class MultisampleDepthTargetTexture : TextureBase
     {
-        public DepthTargetTexture(int widthParam, int heightParam)
+        public MultisampleDepthTargetTexture(int widthParam, int heightParam)
             : base()
         {
             m_Width = widthParam;
@@ -15,7 +20,7 @@ namespace Core.Texture
 
         protected void RecreateTexture()
         {
-            if(textureObject != 0)
+            if (textureObject != 0)
             {
                 GL.DeleteTexture(textureObject);
                 textureObject = GL.GenTexture();
@@ -37,8 +42,8 @@ namespace Core.Texture
         {
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Depth24Stencil8, m_Width, m_Height, 0, PixelFormat.DepthComponent, PixelType.Float, new IntPtr(0));
         }
-        
 
-        public int GetTextureObject => textureObject;        
+
+        public int GetTextureObject => textureObject;
     }
 }

@@ -1,12 +1,16 @@
-﻿using OpenTK.Graphics.OpenGL;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 
 namespace Core.Texture
 {
-    public class ColorAttachmentTexture : TextureBase
+    class MultisampleColorAttachmentTexture : TextureBase
     {
-        public ColorAttachmentTexture(int widthParam, int heightParam, PixelInternalFormat format = PixelInternalFormat.Rgba16f)
+        public MultisampleColorAttachmentTexture(int widthParam, int heightParam, PixelInternalFormat format = PixelInternalFormat.Rgba16f)
         {
             m_Width = widthParam;
             m_Height = heightParam;
@@ -18,18 +22,18 @@ namespace Core.Texture
             if (textureObject != 0)
             {
                 GL.DeleteTexture(textureObject);
-                textureObject = GL.GenTexture();
+                GL.CreateTextures(TextureTarget.Texture2DMultisample, 1, out textureObject);
             }
         }
 
         public override void Bind()
         {
-            GL.BindTexture(TextureTarget.Texture2D, textureObject);            
+            GL.BindTexture(TextureTarget.Texture2DMultisample, textureObject);
         }
 
         public void Alloc()
         {
-            GL.TexImage2D(TextureTarget.Texture2D, 0, textureFormat, m_Width, m_Height, 0, PixelFormat.Rgba, PixelType.Float, new IntPtr(0));
+            GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, textureFormat, m_Width, m_Height, false);
         }
 
         public void Resize(int newWidth, int newHeight)
@@ -40,12 +44,13 @@ namespace Core.Texture
             m_Width = newWidth;
             m_Height = newHeight;
             Bind();
-            GL.TexImage2D(TextureTarget.Texture2D, 0, textureFormat, m_Width, m_Height, 0, PixelFormat.Rgba, PixelType.Float, new IntPtr(0));
+            
+            GL.TexImage2DMultisample(TextureTargetMultisample.Texture2DMultisample, 4, textureFormat, m_Width, m_Height, false);
         }
 
         protected PixelInternalFormat textureFormat;
         public PixelInternalFormat TextureFormat => textureFormat;
 
-        public int GetTextureObject => textureObject;        
+        public int GetTextureObject => textureObject;
     }
 }
