@@ -101,6 +101,7 @@
     <Compile Include="Texture\DepthTargetTexture.cs" />
     <Compile Include="Texture\ColorAttachmentTexture.cs" />
     <Compile Include="Texture\MultisampleColorAttachmentTexture.cs" />
+    <Compile Include="Texture\MultisampleDepthTargetTexture.cs" />
     <Compile Include="Texture\RenderTarget.cs" />
     <Compile Include="Texture\Texture2DMultiSample.cs" />
     <Compile Include="Texture\TextureBase.cs" />
