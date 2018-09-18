@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace Core.Texture
 {
-    class MultisampleColorAttachmentTexture : TextureBase
+    public class MultisampleColorAttachmentTexture : TextureBase
     {
         public MultisampleColorAttachmentTexture(int widthParam, int heightParam, PixelInternalFormat format = PixelInternalFormat.Rgba16f)
         {

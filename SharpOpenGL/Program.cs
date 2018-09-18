@@ -7,13 +7,13 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using SharpOpenGL.StaticMesh;
 using System;
-using System.Threading.Tasks;
 using Core.CustomEvent;
 using Core.Texture;
 using Core;
 using ZeroFormatter.Formatters;
 using Core.CustomSerialize;
 using SharpOpenGL.Asset;
+using Core.Texture;
 
 
 namespace SharpOpenGL
@@ -27,7 +27,8 @@ namespace SharpOpenGL
         protected SharpOpenGL.GBufferDraw.Transform Transform = new SharpOpenGL.GBufferDraw.Transform();
 
         protected ShaderProgram ProgramObject = null;
-        
+
+        protected Core.Texture.MultisampleRenderTarget MSRenderTarget = new MultisampleRenderTarget(1024,768, 1);
         protected Core.MaterialBase.MaterialBase BaseTest = null;
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
         protected SharpOpenGL.PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
