@@ -11,9 +11,11 @@ namespace Core.Texture
 {
     public static class FreeImageHelper
     {
-        public static IntPtr Load(string FilePath)
+        public static IntPtr Load(string FilePath, out int Width, out int Height)
         {
             FIBITMAP DIB = new FIBITMAP();
+
+            Width = Height = 0;
 
             if (!File.Exists(FilePath))
             {
@@ -39,12 +41,22 @@ namespace Core.Texture
                 DIB = FreeImage.Load(FileType, FilePath, FREE_IMAGE_LOAD_FLAGS.DEFAULT);
             }
 
-            var Format = FreeImage.GetPixelFormat(DIB);
-
+            if(DIB == null)
+            {
+                Debug.Assert(false, "DIB is null");
+            }
+                        
+            // get bit
             DIB = FreeImage.ConvertTo32Bits(DIB);
             IntPtr Bytes = FreeImage.GetBits(DIB);
 
-            FreeImage.Unload(DIB);
+            // get width height
+            Width = (int) FreeImage.GetWidth(DIB);
+            Height = (int) FreeImage.GetHeight(DIB);
+            //
+
+            
+            
 
             return Bytes;
         }

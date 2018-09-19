@@ -107,6 +107,7 @@
     <Compile Include="Texture\MultisampleDepthTargetTexture.cs" />
     <Compile Include="Texture\MultisampleRenderTarget.cs" />
     <Compile Include="Texture\RenderTarget.cs" />
+    <Compile Include="Texture\ScopedFreeImage.cs" />
     <Compile Include="Texture\Texture2DMultiSample.cs" />
     <Compile Include="Texture\TextureBase.cs" />
     <Compile Include="TriangleDrawable.cs" />
