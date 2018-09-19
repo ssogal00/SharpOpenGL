@@ -20,7 +20,7 @@ namespace Core.Buffer
             BufferHeight = 768;
         }
 
-        private void CreateGBuffer()
+        protected virtual void CreateGBuffer()
         {
             // 
             FrameBufferObject = new FrameBuffer("GBuffer Framebuffer");
@@ -104,7 +104,7 @@ namespace Core.Buffer
         }
         
 
-        private void Resize(int newWidth, int newHeight)
+        protected virtual void Resize(int newWidth, int newHeight)
         {
             Debug.Assert(newWidth > 0 && newHeight > 0);
 
