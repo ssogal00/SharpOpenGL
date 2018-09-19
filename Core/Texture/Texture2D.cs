@@ -26,19 +26,6 @@ namespace Core.Texture
             }
         }
 
-        public void LoadBitmap(string FilePath)
-        {
-            using(var bitmap = new Bitmap(FilePath))
-            {
-                var bmpData = bitmap.LockBits(new Rectangle(0,0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, bitmap.PixelFormat);
-
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb, bitmap.Width, bitmap.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, bmpData.Scan0);
-
-                bitmap.UnlockBits(bmpData);
-            }            
-        }
-        
-
         public void Load(string FilePath)
         {
             if(!File.Exists(FilePath))
