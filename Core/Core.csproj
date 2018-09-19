@@ -99,8 +99,10 @@
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
     <Compile Include="RenderResource.cs" />
+    <Compile Include="Texture\CubemapTexture.cs" />
     <Compile Include="Texture\DepthTargetTexture.cs" />
     <Compile Include="Texture\ColorAttachmentTexture.cs" />
+    <Compile Include="Texture\FreeImageHelper.cs" />
     <Compile Include="Texture\MultisampleColorAttachmentTexture.cs" />
     <Compile Include="Texture\MultisampleDepthTargetTexture.cs" />
     <Compile Include="Texture\MultisampleRenderTarget.cs" />
