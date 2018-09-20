@@ -23,15 +23,15 @@ namespace SharpOpenGL
         protected Matrix4 Projection = new Matrix4();
         
         protected FreeCamera FreeCam = new FreeCamera();        
-        protected SharpOpenGL.GBufferDraw.Transform Transform = new SharpOpenGL.GBufferDraw.Transform();
+        protected GBufferDraw.Transform Transform = new GBufferDraw.Transform();
 
         protected ShaderProgram ProgramObject = null;
 
-        protected Core.Texture.MultisampleRenderTarget MSRenderTarget = new MultisampleRenderTarget(1024,768, 1);
+        protected MultisampleRenderTarget MSRenderTarget = new MultisampleRenderTarget(1024,768, 1);
         protected Core.MaterialBase.MaterialBase BaseTest = null;
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
-        protected SharpOpenGL.PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
-        protected SharpOpenGL.PostProcess.DeferredLight LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
+        protected PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
+        protected PostProcess.DeferredLight LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
 
         protected ObjMesh Mesh = null;
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
@@ -108,12 +108,12 @@ namespace SharpOpenGL
 
             Transform.View = FreeCam.View;
             Transform.Proj = FreeCam.Proj;
-            
+                        
             MyGBuffer.BindAndExecute(BaseTest, () =>
             {
                 BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
                 Mesh.Draw(BaseTest);
-            });
+            }); 
 
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
             
