@@ -22,7 +22,7 @@ namespace ShaderCompiler
             MaterialName = _MaterialName;
         }
 
-        protected override string GetCodeContents()
+        public override string GetCodeContents()
         {
             var template = new MaterialTemplate(VSProgram, FSProgram, VSSourceCode, FSSourceCode, MaterialName);
             return template.TransformText();

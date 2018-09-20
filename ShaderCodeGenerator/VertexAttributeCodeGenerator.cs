@@ -14,13 +14,19 @@ namespace ShaderCompiler
 
         public VertexAttributeCodeGenerator(ShaderProgram ProgramObject, string Name)
         {
-            m_Template = new VertexAttributeTemplate(ProgramObject, Name + "VertexAttributes");
-            NameSpace = string.Format("SharpOpenGL.{0}", Name);
+            m_Template = new VertexAttributeTemplate(ProgramObject, Name);
+            NameSpace = Name;
         }
 
-        protected override string GetCodeContents()
+        public override string GetCodeContents()
         {
-            return m_Template.TransformText();
+            var sb = new StringBuilder();
+            sb.AppendLine(string.Format("namespace {0}", NameSpace));
+            sb.AppendLine("{");
+            sb.Append(m_Template.TransformText());
+            sb.AppendLine("}");
+
+            return sb.ToString();
         }
     }
 }

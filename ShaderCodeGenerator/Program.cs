@@ -35,6 +35,8 @@ namespace ShaderCompiler
                     {
                         string materialXml = Path.Combine(args[0], "MaterialList.xml");
                         string dir = Path.GetDirectoryName(materialXml);
+                        string vertexAttributeContents = "";
+
                         if(File.Exists(materialXml))
                         {
                             var Root = XElement.Load(materialXml);
@@ -69,25 +71,19 @@ namespace ShaderCompiler
                                 }
 
                                 var gen = new VertexAttributeCodeGenerator(vsProgram, materialName);
-
-                                var test = gen.GetCode();
-
-                                var VertexAttributeOutputFilename = string.Format("CompiledVertexAttributes.{0}.cs", materialName);
-
-                                File.WriteAllText(Path.Combine(args[1], VertexAttributeOutputFilename), test);
-
-                                //Console.Write(test);
+                                vertexAttributeContents += gen.GetCodeContents();                                
 
                                 var UniformCodeGen = new ShaderUniformCodeGenerator(vsProgram, materialName);
-
                                 var test2 = UniformCodeGen.GetCode();
 
                                 var ShaderVariableOutputFilename = string.Format("CompiledShaderVariables.{0}.cs", materialName);
-
                                 File.WriteAllText(Path.Combine(args[1], ShaderVariableOutputFilename), UniformCodeGen.GetCode());
-
-                                //Console.Write(test2);
+                                
                             }
+
+                            var VertexAttributeOutputFilename = "CompiledVertexAttributes.cs";
+                            File.WriteAllText(Path.Combine(args[1], VertexAttributeOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(vertexAttributeContents));
+                            
                         }
                     }
                 }

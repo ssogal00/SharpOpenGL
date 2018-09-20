@@ -16,7 +16,7 @@ namespace ShaderCompiler
             NameSpace = string.Format("SharpOpenGL.{0}", Name);
         }
 
-        protected override string GetCodeContents()
+        public override string GetCodeContents()
         {
             StringBuilder sb = new StringBuilder();
 

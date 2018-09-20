@@ -8,7 +8,7 @@ namespace ShaderCompiler
 {
     public class CodeGenerator
     {
-        protected List<string> DependencyList = new List<string>
+        static protected List<string> DependencyList = new List<string>
         {
             "System",
             "System.Runtime.InteropServices",
@@ -26,7 +26,7 @@ namespace ShaderCompiler
 
         public string NameSpace = "";
 
-        public string GetCode()
+        public virtual string GetCode()
         {
             StringBuilder Builder = new StringBuilder("");
 
@@ -43,7 +43,24 @@ namespace ShaderCompiler
             return Builder.ToString();
         }
 
-        protected virtual string GetCodeContents()
+        public static string GetCodeWithNamesapceAndDependency(string CodeToWrap)
+        {
+            StringBuilder Builder = new StringBuilder("");
+
+            foreach (var Dependency in DependencyList)
+            {
+                Builder.AppendLine(string.Format("using {0};", Dependency));
+            }
+
+            Builder.AppendLine("namespace SharpOpenGL");
+            Builder.AppendLine("{");
+            Builder.AppendLine(CodeToWrap);
+            Builder.AppendLine("}");
+
+            return Builder.ToString();
+        }
+
+        public virtual string GetCodeContents()
         {
             return "";
         }

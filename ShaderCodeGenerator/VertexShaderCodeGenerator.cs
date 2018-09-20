@@ -17,7 +17,7 @@ namespace ShaderCompiler
             SourceCode = ShaderSourceCode;
         }
 
-        protected override string GetCodeContents()
+        public override string GetCodeContents()
         {
             var template = new VertexShaderTemplate(Program, "", SourceCode);
             return template.TransformText();
