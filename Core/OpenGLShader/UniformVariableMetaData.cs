@@ -45,6 +45,10 @@ namespace Core.OpenGLShader
                 case ActiveUniformType.Float:
                     VariableTypeString = typeof(System.Single).ToString();
                     break;
+
+                case ActiveUniformType.Int:
+                    VariableTypeString = typeof(System.Int32).ToString();
+                    break;
             }
             
             VariableOffset = nOffset;

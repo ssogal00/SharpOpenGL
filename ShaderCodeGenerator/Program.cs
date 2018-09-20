@@ -76,8 +76,11 @@ namespace ShaderCompiler
                                 var gen = new VertexAttributeCodeGenerator(vsProgram, materialName);
                                 vertexAttributeContents += gen.GetCodeContents();                                
 
-                                var UniformCodeGen = new ShaderUniformCodeGenerator(vsProgram, materialName);
-                                uniformVariableContents += UniformCodeGen.GetCodeContents();
+                                var vsUniformCodeGen = new ShaderUniformCodeGenerator(vsProgram, materialName);
+                                uniformVariableContents += vsUniformCodeGen.GetCodeContents();
+
+                                var fsUniformCodeGen = new ShaderUniformCodeGenerator(fsProgram, materialName);
+                                uniformVariableContents += fsUniformCodeGen.GetCodeContents();
                             }
 
                             var VertexAttributeOutputFilename = "CompiledVertexAttributes.cs";
