@@ -25,7 +25,14 @@ namespace ShaderCompiler
         public override string GetCodeContents()
         {
             var template = new MaterialTemplate(VSProgram, FSProgram, VSSourceCode, FSSourceCode, MaterialName);
-            return template.TransformText();
+
+            var sb = new StringBuilder();
+            sb.AppendLine("namespace " + MaterialName);
+            sb.AppendLine("{");
+            sb.AppendLine(template.TransformText());
+            sb.AppendLine("}");
+
+            return sb.ToString();
         }
 
         ShaderProgram VSProgram;

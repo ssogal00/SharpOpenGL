@@ -38,6 +38,7 @@ namespace ShaderCompiler
 
                         string vertexAttributeContents = "";
                         string uniformVariableContents = "";
+                        string materialContents = "";
 
                         if(File.Exists(materialXml))
                         {
@@ -67,9 +68,9 @@ namespace ShaderCompiler
                                 {
                                     var materialCode = new MaterialCodeGenerator(vsProgram, fsProgram, File.ReadAllText(Path.Combine(dir, vsPath)), File.ReadAllText(Path.Combine(dir, fsPath)), materialName );
 
-                                    var codeContents = materialCode.GetCode();
+                                    var codeContents = materialCode.GetCodeContents();
 
-                                    File.WriteAllText(Path.Combine(args[1], string.Format("Compiled.{0}.cs", materialName)), codeContents);
+                                    materialContents += codeContents;
                                 }
 
                                 var gen = new VertexAttributeCodeGenerator(vsProgram, materialName);
@@ -77,10 +78,6 @@ namespace ShaderCompiler
 
                                 var UniformCodeGen = new ShaderUniformCodeGenerator(vsProgram, materialName);
                                 uniformVariableContents += UniformCodeGen.GetCodeContents();
-
-                                var ShaderVariableOutputFilename = string.Format("CompiledShaderVariables.{0}.cs", materialName);
-                                File.WriteAllText(Path.Combine(args[1], ShaderVariableOutputFilename), UniformCodeGen.GetCode());
-                                
                             }
 
                             var VertexAttributeOutputFilename = "CompiledVertexAttributes.cs";
@@ -89,6 +86,8 @@ namespace ShaderCompiler
                             var UniformVariableOutputFilename = "CompiledUniformVariable.cs";
                             File.WriteAllText(Path.Combine(args[1], UniformVariableOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(uniformVariableContents));
 
+                            var CompiledMaterialOutputFilename = "CompiledMaterial.cs";
+                            File.WriteAllText(Path.Combine(args[1], CompiledMaterialOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(materialContents));
                         }
                     }
                 }
