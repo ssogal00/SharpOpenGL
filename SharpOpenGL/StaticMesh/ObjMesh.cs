@@ -58,45 +58,50 @@ namespace SharpOpenGL.StaticMesh
         public void Draw(Core.MaterialBase.MaterialBase material)
         {
             meshdrawable.BindVertexAndIndexBuffer();
-
-            foreach (var section in MeshAsset.MeshSectionList)
+            
+            foreach( var sectionlist in MeshAsset.MeshSectionList.GroupBy(x => x.SectionName))
             {
-                if (MeshAsset.MaterialMap.ContainsKey(section.SectionName))
+                var sectionName = sectionlist.First().SectionName;
+                // setup
+                if (MeshAsset.MaterialMap.ContainsKey(sectionName))
                 {
-                    material.SetTexture("DiffuseTex", TextureMap[MeshAsset.MaterialMap[section.SectionName].DiffuseMap]);
+                    material.SetTexture("DiffuseTex", TextureMap[MeshAsset.MaterialMap[sectionName].DiffuseMap]);
 
-                    if(MeshAsset.MaterialMap[section.SectionName].NormalMap != null)
+                    if (MeshAsset.MaterialMap[sectionName].NormalMap != null)
                     {
                         material.SetUniformVarData("NormalMapExist", 1);
-                        material.SetTexture("NormalTex", TextureMap[MeshAsset.MaterialMap[section.SectionName].NormalMap]);
+                        material.SetTexture("NormalTex", TextureMap[MeshAsset.MaterialMap[sectionName].NormalMap]);
                     }
                     else
                     {
                         material.SetUniformVarData("NormalMapExist", 0);
                     }
 
-                    if (MeshAsset.MaterialMap[section.SectionName].MaskMap != null)
+                    if (MeshAsset.MaterialMap[sectionName].MaskMap != null)
                     {
                         material.SetUniformVarData("MaskMapExist", 1);
-                        material.SetTexture("MaskTex", TextureMap[MeshAsset.MaterialMap[section.SectionName].MaskMap]);
+                        material.SetTexture("MaskTex", TextureMap[MeshAsset.MaterialMap[sectionName].MaskMap]);
                     }
                     else
                     {
                         material.SetUniformVarData("MaskMapExist", 0);
                     }
 
-                    if(MeshAsset.MaterialMap[section.SectionName].SpecularMap != null)
+                    if (MeshAsset.MaterialMap[sectionName].SpecularMap != null)
                     {
                         material.SetUniformVarData("SpecularMapExist", 1);
-                        material.SetTexture("SpecularTex", TextureMap[MeshAsset.MaterialMap[section.SectionName].SpecularMap]);
+                        material.SetTexture("SpecularTex", TextureMap[MeshAsset.MaterialMap[sectionName].SpecularMap]);
                     }
                     else
                     {
                         material.SetUniformVarData("SpecularMapExist", 0);
                     }
                 }
-                
-                meshdrawable.Draw(section.StartIndex, (uint)(section.EndIndex - section.StartIndex));
+
+                foreach (var section in sectionlist)
+                {
+                    meshdrawable.Draw(section.StartIndex, (uint)(section.EndIndex - section.StartIndex));
+                }
             }
         }
         
