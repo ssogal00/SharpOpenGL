@@ -11,13 +11,15 @@ namespace Core.Texture
     {
         public ScopedFreeImage(string imagePath)
         {
-            FreeImageHelper.Load(imagePath, out Width, out Height);
+            bitmap = FreeImageHelper.Load(imagePath, out Width, out Height);
+            Bytes = FreeImage.GetBits(bitmap);
         }
         public void Dispose()
         {
             FreeImage.Unload(bitmap);
         }
 
+        public IntPtr Bytes;
         public FIBITMAP bitmap;
         public int Width = 0;
         public int Height = 0;
