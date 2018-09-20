@@ -1,0 +1,109 @@
+using System;
+using System.Runtime.InteropServices;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
+using Core;
+using Core.Buffer;
+using Core.OpenGLShader;
+using Core.Texture;
+using Core.VertexCustomAttribute;
+using Core.MaterialBase;
+using ZeroFormatter;
+using ZeroFormatter.Formatters;
+namespace SharpOpenGL
+{
+namespace BasicMaterial
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=16)]
+public struct ColorBlock
+{
+	[FieldOffset(0)]
+	public OpenTK.Vector3 Value;
+}
+
+
+[StructLayout(LayoutKind.Explicit,Size=192)]
+public struct Transform
+{
+	[FieldOffset(0)]
+	public OpenTK.Matrix4 Model;
+	[FieldOffset(64)]
+	public OpenTK.Matrix4 View;
+	[FieldOffset(128)]
+	public OpenTK.Matrix4 Proj;
+}
+}
+namespace SimpleMaterial
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=192)]
+public struct Transform
+{
+	[FieldOffset(0)]
+	public OpenTK.Matrix4 Model;
+	[FieldOffset(64)]
+	public OpenTK.Matrix4 View;
+	[FieldOffset(128)]
+	public OpenTK.Matrix4 Proj;
+}
+}
+namespace ScreenSpaceDraw
+{
+}
+namespace GBufferDraw
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=192)]
+public struct Transform
+{
+	[FieldOffset(0)]
+	public OpenTK.Matrix4 Model;
+	[FieldOffset(64)]
+	public OpenTK.Matrix4 View;
+	[FieldOffset(128)]
+	public OpenTK.Matrix4 Proj;
+}
+}
+namespace GBufferWithoutTexture
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=192)]
+public struct Transform
+{
+	[FieldOffset(0)]
+	public OpenTK.Matrix4 Model;
+	[FieldOffset(64)]
+	public OpenTK.Matrix4 View;
+	[FieldOffset(128)]
+	public OpenTK.Matrix4 Proj;
+}
+}
+namespace Blur
+{
+}
+namespace LightMaterial
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=64)]
+public struct Light
+{
+	[FieldOffset(0)]
+	public OpenTK.Vector3 LightDir;
+	[FieldOffset(16)]
+	public OpenTK.Vector3 LightAmbient;
+	[FieldOffset(32)]
+	public OpenTK.Vector3 LightDiffuse;
+	[FieldOffset(48)]
+	public OpenTK.Vector3 LightSpecular;
+	[FieldOffset(60)]
+	public System.Single LightSpecularShininess;
+}
+}
+
+}

@@ -35,7 +35,9 @@ namespace ShaderCompiler
                     {
                         string materialXml = Path.Combine(args[0], "MaterialList.xml");
                         string dir = Path.GetDirectoryName(materialXml);
+
                         string vertexAttributeContents = "";
+                        string uniformVariableContents = "";
 
                         if(File.Exists(materialXml))
                         {
@@ -74,7 +76,7 @@ namespace ShaderCompiler
                                 vertexAttributeContents += gen.GetCodeContents();                                
 
                                 var UniformCodeGen = new ShaderUniformCodeGenerator(vsProgram, materialName);
-                                var test2 = UniformCodeGen.GetCode();
+                                uniformVariableContents += UniformCodeGen.GetCodeContents();
 
                                 var ShaderVariableOutputFilename = string.Format("CompiledShaderVariables.{0}.cs", materialName);
                                 File.WriteAllText(Path.Combine(args[1], ShaderVariableOutputFilename), UniformCodeGen.GetCode());
@@ -83,7 +85,10 @@ namespace ShaderCompiler
 
                             var VertexAttributeOutputFilename = "CompiledVertexAttributes.cs";
                             File.WriteAllText(Path.Combine(args[1], VertexAttributeOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(vertexAttributeContents));
-                            
+
+                            var UniformVariableOutputFilename = "CompiledUniformVariable.cs";
+                            File.WriteAllText(Path.Combine(args[1], UniformVariableOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(uniformVariableContents));
+
                         }
                     }
                 }
