@@ -31,7 +31,11 @@ namespace ShaderCompiler
                     context.MakeCurrent(windowInfo);
 
                     context.LoadAll();
-                    if (Directory.Exists(args[0]))
+
+                    var shaderpath = Path.GetFullPath(args[0]);
+                    var outputpath = Path.GetFullPath(args[1]);
+
+                    if (Directory.Exists(shaderpath))
                     {
                         string materialXml = Path.Combine(args[0], "MaterialList.xml");
                         string dir = Path.GetDirectoryName(materialXml);
@@ -77,20 +81,25 @@ namespace ShaderCompiler
                                 vertexAttributeContents += gen.GetCodeContents();                                
 
                                 var vsUniformCodeGen = new ShaderUniformCodeGenerator(vsProgram, materialName);
-                                uniformVariableContents += vsUniformCodeGen.GetCodeContents();
+                                var vertexUniformVariableContents = vsUniformCodeGen.GetCodeContents();
+                                uniformVariableContents += vertexUniformVariableContents;
 
                                 var fsUniformCodeGen = new ShaderUniformCodeGenerator(fsProgram, materialName);
-                                uniformVariableContents += fsUniformCodeGen.GetCodeContents();
+                                var fragmentUniformVariableContents = fsUniformCodeGen.GetCodeContents();
+                                if (vertexUniformVariableContents != fragmentUniformVariableContents)
+                                {
+                                    uniformVariableContents += fragmentUniformVariableContents;
+                                }
                             }
 
                             var VertexAttributeOutputFilename = "CompiledVertexAttributes.cs";
-                            File.WriteAllText(Path.Combine(args[1], VertexAttributeOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(vertexAttributeContents));
+                            File.WriteAllText(Path.Combine(outputpath, VertexAttributeOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(vertexAttributeContents));
 
                             var UniformVariableOutputFilename = "CompiledUniformVariable.cs";
-                            File.WriteAllText(Path.Combine(args[1], UniformVariableOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(uniformVariableContents));
+                            File.WriteAllText(Path.Combine(outputpath, UniformVariableOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(uniformVariableContents));
 
                             var CompiledMaterialOutputFilename = "CompiledMaterial.cs";
-                            File.WriteAllText(Path.Combine(args[1], CompiledMaterialOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(materialContents));
+                            File.WriteAllText(Path.Combine(outputpath, CompiledMaterialOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(materialContents));
                         }
                     }
                 }

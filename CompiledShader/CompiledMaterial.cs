@@ -702,5 +702,66 @@ void main()
 	}
 }
 }
+namespace CubemapMaterial
+{
+
+public class CubemapMaterial : MaterialBase
+{
+	public CubemapMaterial() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450 core
+
+uniform mat4 ViewMatrix;
+out vec3 TexCoord;
+
+void main()
+{
+    vec3[4] vertices = vec3[4]( vec3(-1, -1, 1),
+								vec3( 1, -1, 1),
+								vec3(-1,  1, 1),
+								vec3( 1,  1, 1) );
+	
+	TexCoord = mat3(ViewMatrix) * vertices[gl_VertexID];
+
+	gl_Position = vec4(vertices[gl_VertexID], 1.0);
+}
+";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"
+
+#version 450 core
+
+layout (location=0) in vec3 TexCoord;
+
+layout (location=0, binding=0) uniform samplerCube texCubemap;
+
+layout (location=0) out vec4 Color;
+
+void main()
+{
+    Color = texture(texCubemap, TexCoord);
+}";
+	}
+}
+}
 
 }

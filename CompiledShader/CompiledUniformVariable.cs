@@ -35,6 +35,9 @@ public struct Transform
 	public OpenTK.Matrix4 Proj;
 }
 }
+namespace BasicMaterial
+{
+}
 namespace SimpleMaterial
 {
 
@@ -49,6 +52,9 @@ public struct Transform
 	[FieldOffset(128)]
 	public OpenTK.Matrix4 Proj;
 }
+}
+namespace SimpleMaterial
+{
 }
 namespace ScreenSpaceDraw
 {
@@ -68,6 +74,9 @@ public struct Transform
 	public OpenTK.Matrix4 Proj;
 }
 }
+namespace GBufferDraw
+{
+}
 namespace GBufferWithoutTexture
 {
 
@@ -82,6 +91,9 @@ public struct Transform
 	[FieldOffset(128)]
 	public OpenTK.Matrix4 Proj;
 }
+}
+namespace GBufferWithoutTexture
+{
 }
 namespace Blur
 {
@@ -104,6 +116,9 @@ public struct Light
 	[FieldOffset(60)]
 	public System.Single LightSpecularShininess;
 }
+}
+namespace CubemapMaterial
+{
 }
 
 }

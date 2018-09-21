@@ -726,7 +726,10 @@ namespace Core.OpenGLShader
 
                     var attributeLocation = GetAttributeLocation(sb);
 
-                    result.Add(new VertexAttribute(attributeLocation, Type, sb.ToString()));
+                    if (attributeLocation >= 0)
+                    {
+                        result.Add(new VertexAttribute(attributeLocation, Type, sb.ToString()));
+                    }
                 }
             }
 

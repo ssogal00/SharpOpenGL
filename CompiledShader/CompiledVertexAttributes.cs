@@ -212,5 +212,19 @@ public struct VertexAttribute
 	}
 }
 }
+namespace CubemapMaterial
+{
+
+
+[ZeroFormattable]
+[StructLayout(LayoutKind.Explicit,Size=0)]
+public struct VertexAttribute
+{
+
+	public static void VertexAttributeBinding()
+	{
+	}
+}
+}
 
 }
