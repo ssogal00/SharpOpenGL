@@ -127,6 +127,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Shader\Blur.fs" />
+    <None Include="Shader\Blur.vs" />
     <None Include="Shader\Cubemap.fs" />
     <None Include="Shader\Cubemap.vs" />
     <None Include="Shader\DeferredLight.fs" />

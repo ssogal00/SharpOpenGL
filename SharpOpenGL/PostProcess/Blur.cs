@@ -32,14 +32,11 @@ namespace SharpOpenGL.PostProcess
 
         public override void Render(TextureBase input)
         {
-            PostProcessMaterial.Setup();
-            PostProcessMaterial.SetTexture("ColorTex", input);
-            
-            Output.PrepareToDraw();
-
-            BlitToScreenSpace();
-
-            Output.Unbind();
+            Output.BindAndExecute(PostProcessMaterial, () =>
+            {
+                PostProcessMaterial.SetTexture("ColorTex", input);
+                BlitToScreenSpace();
+            });
         }
 
         protected ColorAttachmentTexture Input = null;

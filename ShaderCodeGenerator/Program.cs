@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Text;
 using Core.OpenGLShader;
 
+using System.Diagnostics;
 using OpenTK;
 using OpenTK.Platform;
 using OpenTK.Graphics;
@@ -75,6 +76,14 @@ namespace ShaderCompiler
                                     var codeContents = materialCode.GetCodeContents();
 
                                     materialContents += codeContents;
+                                }
+                                else
+                                {
+                                    var sb = new StringBuilder();
+                                    sb.AppendLine(string.Format(@"Vertex Shader : {0} , Error : {1}", vsPath, vsResult));
+                                    sb.AppendLine(string.Format(@"Fragment Shader : {0}, Error : {1}", fsPath, fsResult));
+                                    //MessageBox.Show(CompileResult);
+                                    Debug.Assert(false, sb.ToString());
                                 }
 
                                 var gen = new VertexAttributeCodeGenerator(vsProgram, materialName);

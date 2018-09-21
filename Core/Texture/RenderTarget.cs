@@ -2,6 +2,8 @@
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Configuration;
 
 namespace Core.Texture
 {
@@ -22,7 +24,7 @@ namespace Core.Texture
 
         public void Clear()
         {
-            GL.ClearColor(1, 1, 1, 1);
+            GL.ClearColor(ClearColor);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
         
@@ -180,5 +182,7 @@ namespace Core.Texture
         protected int BufferHeight = 480;
         
         protected int AttachmentCount = 1;
+
+        public System.Drawing.Color ClearColor = Color.White;
     }
 }

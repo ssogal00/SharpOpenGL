@@ -11,6 +11,7 @@ namespace Core.Texture
     public class CubemapTexture : TextureBase
     {
         public CubemapTexture()
+        : base()
         {
             
         }
@@ -22,8 +23,6 @@ namespace Core.Texture
                 GL.BindTexture(TextureTarget.TextureCubeMap,textureObject);
             }
         }
-
-        
         
         public void Load()
         {
@@ -38,8 +37,8 @@ namespace Core.Texture
             {
                 using (var texture = new ScopedFreeImage(textureList[i]))
                 {
-                    GL.TexSubImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, 0, 0,
-                        texture.Width, texture.Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, ref texture.Bytes);
+                    GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, PixelInternalFormat.Rgba, texture.Width, texture.Height,0,
+                        OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, texture.Bytes);
                 }
             }
         }

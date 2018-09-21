@@ -1,7 +1,6 @@
 ﻿using System;
 using Core;
 using Core.Texture;
-using Core.CustomEvent;
 using Core.Tickable;
 
 
@@ -12,11 +11,6 @@ namespace SharpOpenGL.PostProcess
         public DeferredLight()
             : base()
         {
-        }
-
-        public override void OnWindowResize(object sender, ScreenResizeEventArgs e)
-        {
-            base.OnWindowResize(sender, e);            
         }
 
         public override void OnGLContextCreated(object sender, EventArgs e)

@@ -63,7 +63,7 @@ namespace SharpOpenGL
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.DepthTest);
 
-            GL.ClearColor(System.Drawing.Color.White);            
+            GL.ClearColor(System.Drawing.Color.DarkGray);            
 
             // register resource create event handler            
             OnResourceCreate += this.ResourceCreate;            
@@ -77,7 +77,7 @@ namespace SharpOpenGL
 
             OnResourceCreate(this, e);
 
-            ScreenBlit.SetGridSize(3, 3);
+            ScreenBlit.SetGridSize(2, 2);
 
             OnKeyEvent += FreeCam.OnKeyDown;
 
@@ -103,6 +103,7 @@ namespace SharpOpenGL
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.DepthTest);            
+            GL.Enable(EnableCap.TextureCubeMap);
 
             TickableObjectManager.Tick(e.Time);
 
@@ -115,12 +116,16 @@ namespace SharpOpenGL
             {
                 BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
                 Mesh.Draw(BaseTest);
-            }); 
+            });
 
-            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);            
-            ScreenBlit.Blit(MyGBuffer.NormalBufferObject, 2, 2, 1, 1);
+            // Blur.Render(MyGBuffer.GetColorAttachement);
+            SkyboxPostProcess.Render();
+            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
 
-            ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0,0,3,3);
+            // ScreenBlit.Blit(Blur.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
+            ScreenBlit.Blit(SkyboxPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
+            ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 1, 1, 1, 1);
+
 
             SwapBuffers();
         }

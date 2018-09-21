@@ -502,15 +502,6 @@ public class Blur : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"ColorTex", TextureObject);
-	}
-
-	public void SetColorTex2D(int TextureObject, Sampler sampler)
-	{
-		SetTexture(@"ColorTex", TextureObject);
-	}
 
 	public static string GetVSSourceCode()
 	{
@@ -545,12 +536,12 @@ void main()
 {
 	vec4 color = vec4(0,0,0,0);
     
-    for( int i = 0; i < 9; i++ )
-    {
-        color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;        
-    }
+    //for( int i = 0; i < 9; i++ )
+    //{
+     //   color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;        
+//    }
 	        
-    FragColor = color;
+    FragColor = vec4(TexCoord, 0, 0);
 }";
 	}
 }
@@ -722,6 +713,15 @@ public class CubemapMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
+	public void SettexCubemap2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"texCubemap", TextureObject);
+	}
+
+	public void SettexCubemap2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"texCubemap", TextureObject);
+	}
 
 	public static string GetVSSourceCode()
 	{
@@ -734,11 +734,13 @@ layout(location=1) in vec2 TexCoord;
 uniform mat4 ViewMatrix;
 
 layout(location=0) out vec3 OutTexCoord;
+layout(location=1) out vec2 TexCoord2;
   
 void main()
 {	
 	OutTexCoord = mat3(ViewMatrix) * VertexPosition;
-	gl_Position = vec4(VertexPosition.xyz, 1.0);
+	TexCoord2 = TexCoord;
+	gl_Position = vec4(VertexPosition.xy, 0, 1.0);
 }
 ";
 	}
@@ -746,19 +748,20 @@ void main()
 	public static string GetFSSourceCode()
 	{
 		return @"
-
 #version 450 core
 
-layout (location=0) in vec3 TexCoord;
+layout (location=0) in vec3 CubemapTexCoord;
+layout (location=1) in vec2 InTexCoord;
 
 layout (location=0, binding=0) uniform samplerCube texCubemap;
 
-layout (location=0) out vec4 Color;
+layout (location=0) out vec4 FragColor;
 
 void main()
 {
-    // Color = texture(texCubemap, TexCoord) * vec4(1,0,0,0);
-    Color = vec4(1,0,0,0);
+    vec4 Color = texture(texCubemap, CubemapTexCoord);
+    FragColor = Color;
+    //FragColor = vec4(InTexCoord, 0, 0);
 }";
 	}
 }

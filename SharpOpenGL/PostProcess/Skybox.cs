@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Core;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -16,6 +17,8 @@ namespace SharpOpenGL.PostProcess
         public override void OnGLContextCreated(object sender, EventArgs e)
         {
             base.OnGLContextCreated(sender, e);
+
+            Output.ClearColor = Color.Crimson;
 
             PostProcessMaterial = new CubemapMaterial.CubemapMaterial();
 
@@ -38,6 +41,6 @@ namespace SharpOpenGL.PostProcess
 
         protected CubemapTexture cubemapTexture = null;
 
-        public OpenTK.Matrix4 ViewMatrix;
+        public OpenTK.Matrix4 ViewMatrix = Matrix4.Identity;
     }
 }
