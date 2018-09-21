@@ -87,32 +87,32 @@ namespace SharpOpenGL.PostProcess
             var EachVertex = new PT_VertexAttribute();
 
             // uppper left
-            EachVertex.VertexPosition = new OpenTK.Vector3(-1, 1, 0);
+            EachVertex.VertexPosition = new OpenTK.Vector3(-1, 1, 1);
             EachVertex.TexCoord = new OpenTK.Vector2(0, 1);
             VertexList.Add(EachVertex);
 
             // lower right
-            EachVertex.VertexPosition = new OpenTK.Vector3(1, -1, 0);
+            EachVertex.VertexPosition = new OpenTK.Vector3(1, -1, 1);
             EachVertex.TexCoord = new OpenTK.Vector2(1, 0);
             VertexList.Add(EachVertex);
 
             // lower left
-            EachVertex.VertexPosition = new OpenTK.Vector3(-1, -1, 0);
+            EachVertex.VertexPosition = new OpenTK.Vector3(-1, -1, 1);
             EachVertex.TexCoord = new OpenTK.Vector2(0, 0);
             VertexList.Add(EachVertex);
 
             // upper left
-            EachVertex.VertexPosition = new OpenTK.Vector3(-1, 1, 0);
+            EachVertex.VertexPosition = new OpenTK.Vector3(-1, 1, 1);
             EachVertex.TexCoord = new OpenTK.Vector2(0, 1);
             VertexList.Add(EachVertex);
 
             // upper right
-            EachVertex.VertexPosition = new OpenTK.Vector3(1, 1, 0);
+            EachVertex.VertexPosition = new OpenTK.Vector3(1, 1, 1);
             EachVertex.TexCoord = new OpenTK.Vector2(1, 1);
             VertexList.Add(EachVertex);
 
             // lower right
-            EachVertex.VertexPosition = new OpenTK.Vector3(1, -1, 0);
+            EachVertex.VertexPosition = new OpenTK.Vector3(1, -1, 1);
             EachVertex.TexCoord = new OpenTK.Vector2(1, 0);
             VertexList.Add(EachVertex);
 

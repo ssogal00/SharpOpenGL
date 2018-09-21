@@ -90,6 +90,7 @@
     <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="Light\LightBase.cs" />
     <Compile Include="PostProcess\DeferredLight.cs" />
+    <Compile Include="PostProcess\Skybox.cs" />
     <Compile Include="RenderCommand.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="PostProcess\Blur.cs" />
