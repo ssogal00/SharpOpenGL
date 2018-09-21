@@ -587,6 +587,10 @@ namespace Core.OpenGLShader
                     {
                         result.Add(GL.GetActiveUniformName(ProgramObject, i));
                     }
+                    else if (type == ActiveUniformType.SamplerCube)
+                    {
+                        result.Add(GL.GetActiveUniformName(ProgramObject, i));
+                    }
                 }
             }
 

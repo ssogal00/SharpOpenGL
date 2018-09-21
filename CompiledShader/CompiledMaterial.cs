@@ -733,7 +733,7 @@ layout(location=1) in vec2 TexCoord;
 
 uniform mat4 ViewMatrix;
 
-out vec3 OutTexCoord;
+layout(location=0) out vec3 OutTexCoord;
   
 void main()
 {	
@@ -757,7 +757,8 @@ layout (location=0) out vec4 Color;
 
 void main()
 {
-    Color = texture(texCubemap, TexCoord);
+    // Color = texture(texCubemap, TexCoord) * vec4(1,0,0,0);
+    Color = vec4(1,0,0,0);
 }";
 	}
 }

@@ -6,7 +6,7 @@ layout(location=1) in vec2 TexCoord;
 
 uniform mat4 ViewMatrix;
 
-out vec3 OutTexCoord;
+layout(location=0) out vec3 OutTexCoord;
   
 void main()
 {	

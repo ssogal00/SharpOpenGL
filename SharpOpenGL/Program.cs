@@ -13,6 +13,7 @@ using Core;
 using ZeroFormatter.Formatters;
 using Core.CustomSerialize;
 using SharpOpenGL.Asset;
+using SharpOpenGL.PostProcess;
 
 
 namespace SharpOpenGL
@@ -31,7 +32,8 @@ namespace SharpOpenGL
         protected Core.MaterialBase.MaterialBase BaseTest = null;
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
         protected PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
-        protected PostProcess.DeferredLight LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
+        protected PostProcess.DeferredLight LightPostProcess = new DeferredLight();
+        protected PostProcess.Skybox SkyboxPostProcess = new Skybox();
 
         protected ObjMesh Mesh = null;
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
@@ -108,16 +110,16 @@ namespace SharpOpenGL
 
             Transform.View = FreeCam.View;
             Transform.Proj = FreeCam.Proj;
-                        
+
             MyGBuffer.BindAndExecute(BaseTest, () =>
             {
                 BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
                 Mesh.Draw(BaseTest);
             }); 
 
-            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
-            
+            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);            
             ScreenBlit.Blit(MyGBuffer.NormalBufferObject, 2, 2, 1, 1);
+
             ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0,0,3,3);
 
             SwapBuffers();

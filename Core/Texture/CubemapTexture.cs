@@ -38,7 +38,7 @@ namespace Core.Texture
             {
                 using (var texture = new ScopedFreeImage(textureList[i]))
                 {
-                    GL.TexSubImage2D(TextureTarget.TextureCubeMapPositiveX, 0, 0, 0,
+                    GL.TexSubImage2D(TextureTarget.TextureCubeMapPositiveX + i, 0, 0, 0,
                         texture.Width, texture.Height, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, ref texture.Bytes);
                 }
             }
