@@ -1,16 +1,15 @@
 #version 450 core
 
+
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec2 TexCoord;
+
 uniform mat4 ViewMatrix;
-out vec3 TexCoord;
 
+out vec3 OutTexCoord;
+  
 void main()
-{
-    vec3[4] vertices = vec3[4]( vec3(-1, -1, 1),
-								vec3( 1, -1, 1),
-								vec3(-1,  1, 1),
-								vec3( 1,  1, 1) );
-	
-	TexCoord = mat3(ViewMatrix) * vertices[gl_VertexID];
-
-	gl_Position = vec4(vertices[gl_VertexID], 1.0);
+{	
+	OutTexCoord = mat3(ViewMatrix) * VertexPosition;
+	gl_Position = vec4(VertexPosition.xyz, 1.0);
 }
