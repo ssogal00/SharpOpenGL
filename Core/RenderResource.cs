@@ -38,6 +38,11 @@ namespace Core
         {
         }
 
+        public virtual void Load(string assetPath)
+        {
+        }
+        
+
         protected bool bInit = false;
     }
 }

@@ -3,7 +3,6 @@ using OpenTK.Graphics.OpenGL;
 using FreeImageAPI;
 using Core.Texture;
 
-
 namespace Core.Texture
 {
     public class Texture2D : TextureBase

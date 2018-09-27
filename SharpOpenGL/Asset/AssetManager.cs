@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.IO;
 using SharpOpenGL.StaticMesh;
 using System.Xml.Linq;
 using Core.OpenGLShader;
 using OpenTK.Graphics.OpenGL;
+using System.Threading.Tasks;
+using ZeroFormatter;
 
 namespace SharpOpenGL.Asset
 {
     public class AssetManager
     {
-        protected static AssetManager SingletonInstance = new AssetManager();
+        private static object AssetMapLock = new object();
 
-        protected Dictionary<string, AssetBase> AssetMap = new Dictionary<string, AssetBase>();
+        protected static AssetManager SingletonInstance = new AssetManager();               
+
+        protected static ConcurrentDictionary<string, AssetBase> AssetMap = new ConcurrentDictionary<string, AssetBase>();
 
         protected static string ImportedDirectory = "./Resources/Imported";
 
@@ -30,6 +35,26 @@ namespace SharpOpenGL.Asset
             }
 
             return null;
+        }
+
+        public static T LoadAssetSync<T>(string path) where T : AssetBase
+        {
+            byte[] data = File.ReadAllBytes(path);
+            T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
+            AssetMap.TryAdd(Path.GetFileName(path), asset);
+            asset.OnPostLoad();
+            return asset;
+        }
+
+        public static async Task<T> LoadAssetAsync<T>(string path) where T : AssetBase
+        {
+            return await Task.Factory.StartNew(() =>
+            {
+                byte[] data = File.ReadAllBytes(path);
+                T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
+                AssetMap.TryAdd(Path.GetFileName(path), asset);
+                return asset;
+            });
         }
 
         public void DiscoverShader()
@@ -79,13 +104,6 @@ namespace SharpOpenGL.Asset
                     filestream.Write(data, 0, binaryLength);
                 }
             }
-
-            //
-            //foreach(var file in Directory.EnumerateFiles("./Resources/Imported/Shader"))
-            //{
-            //    var bytes = File.ReadAllBytes(file);
-            //    var newProgram =  new ShaderProgram(ref bytes);
-            //}
         }
 
 
@@ -114,7 +132,7 @@ namespace SharpOpenGL.Asset
 
             foreach (var file in Directory.EnumerateFiles(Path.Combine(ImportedDirectory, "StaticMesh")))
             {
-                var staticMeshAsset = AssetBase.LoadAssetSync<StaticMeshAsset>(file);
+                var staticMeshAsset = AssetManager.LoadAssetSync<StaticMeshAsset>(file);
                 var name = Path.GetFileName(file);
                 Console.WriteLine("[AssetManager] Found {0}...", name);
                 AssetMap.Add(name, staticMeshAsset);

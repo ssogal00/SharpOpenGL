@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FreeImageAPI;
+using System.IO;
 
 namespace Core.Texture
 {
@@ -11,7 +12,15 @@ namespace Core.Texture
     {
         public ScopedFreeImage(string imagePath)
         {
-            bitmap = FreeImageHelper.Load(imagePath, out Width, out Height);
+            if (File.Exists(imagePath) == false)
+            {
+                bitmap = FreeImageHelper.Load("./Resources/Texture/Checker.png", out Width, out Height);
+            }
+            else
+            {
+                bitmap = FreeImageHelper.Load(imagePath, out Width, out Height);
+            }
+            
             Bytes = FreeImage.GetBits(bitmap);
         }
         public void Dispose()

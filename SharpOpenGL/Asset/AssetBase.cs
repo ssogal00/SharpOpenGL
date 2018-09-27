@@ -19,26 +19,15 @@ namespace SharpOpenGL.Asset
         {   
         }
 
-        public async virtual Task ImportAssetAsync()
+        public virtual Task ImportAssetAsync()
         {
-            return;
+            return null;
         }
 
-        public static T LoadAssetSync<T>(string path)
+        
+        public virtual void OnPostLoad()
         {
-            byte[] data = File.ReadAllBytes(path);
-            T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
-            return asset;
-        }
 
-        public static async Task<T> LoadAssetAsync<T>(string path)
-        {
-            return await Task.Factory.StartNew(() =>
-            {
-                byte[] data = File.ReadAllBytes(path);
-                T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
-                return asset;
-            });
         }
 
         public virtual void SaveImportedAsset(string path)

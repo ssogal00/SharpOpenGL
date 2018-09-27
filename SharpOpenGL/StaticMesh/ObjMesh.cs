@@ -26,15 +26,6 @@ namespace SharpOpenGL.StaticMesh
         public bool HasNormal => bHasNormal;
         [IgnoreFormat]
         public bool HasTexCoord => bHasTexCoordinate;
-
-        protected float MinX = float.MaxValue;
-        protected float MaxX = float.MinValue;
-
-        protected float MinY = float.MaxValue;
-        protected float MaxY = float.MinValue;
-
-        protected float MinZ = float.MaxValue;
-        protected float MaxZ = float.MinValue;       
         
         [IgnoreFormat]
         public virtual Vector3 MinVertex { get; set; } = new Vector3(0, 0, 0);
@@ -110,7 +101,8 @@ namespace SharpOpenGL.StaticMesh
             meshdrawable = new TriangleDrawable<ObjMeshVertexAttribute>();         
             var Arr = MeshAsset.Vertices.ToArray();            
             var IndexArr = MeshAsset.VertexIndices.ToArray();            
-            meshdrawable.SetupData(ref Arr, ref IndexArr);            
+            meshdrawable.SetupData(ref Arr, ref IndexArr);
+            LoadTextures();
         }
 
         public void LoadTextures()
@@ -165,36 +157,7 @@ namespace SharpOpenGL.StaticMesh
         }
 
         
-        protected void UpdateMinMaxVertex(ref OpenTK.Vector3 newVertex)
-        {
-            // update X
-            if(newVertex.X > MaxX)
-            {
-                MaxX = newVertex.X;
-            }
-            if(newVertex.X < MinX)
-            {
-                MinX = newVertex.X;
-            }
-
-            if (newVertex.Y > MaxY)
-            {
-                MaxY = newVertex.Y;
-            }
-            if (newVertex.Y < MinY)
-            {
-                MinY = newVertex.Y;
-            }
-
-            if (newVertex.Z > MaxZ)
-            {
-                MaxZ = newVertex.Z;
-            }
-            if (newVertex.Z < MinZ)
-            {
-                MinZ = newVertex.Z;
-            }
-        }
+        
      
     }
 }

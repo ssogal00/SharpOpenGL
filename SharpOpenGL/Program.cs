@@ -35,7 +35,7 @@ namespace SharpOpenGL
         protected PostProcess.DeferredLight LightPostProcess = new DeferredLight();
         protected PostProcess.Skybox SkyboxPostProcess = new Skybox();
 
-        protected ObjMesh Mesh = null;
+        protected StaticMeshAsset Mesh = null;
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
 
         public event EventHandler<EventArgs> OnResourceCreate;
@@ -82,11 +82,8 @@ namespace SharpOpenGL
             OnKeyEvent += FreeCam.OnKeyDown;
 
             AssetManager.Get().DiscoverShader();
-            AssetManager.Get().DiscoverStaticMesh();
 
-            Mesh = new ObjMesh(AssetManager.Get().GetAsset<StaticMeshAsset>("sponza2.staticmesh"));
-            Mesh.PrepareToDraw();
-            Mesh.LoadTextures();
+            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
@@ -118,15 +115,13 @@ namespace SharpOpenGL
                 Mesh.Draw(BaseTest);
             });
 
-            // Blur.Render(MyGBuffer.GetColorAttachement);
+            
             SkyboxPostProcess.ViewMatrix = FreeCam.View;
             SkyboxPostProcess.Render();
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
-
-            // ScreenBlit.Blit(Blur.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
+            
             ScreenBlit.Blit(SkyboxPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
             ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 1, 1, 1, 1);
-
 
             SwapBuffers();
         }

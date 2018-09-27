@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using Core;
 using System.Threading.Tasks;
 using OpenTK;
 using Core.Primitive;
 using ZeroFormatter;
+using Core.Texture;
 
 
 namespace SharpOpenGL.StaticMesh
@@ -42,7 +43,24 @@ namespace SharpOpenGL.StaticMesh
 
         [Index(8)]
         public virtual string MtlFilePath { get; set; } = "";
-        
+
+        [Index(9)]
+        public virtual Vector3 MinVertex { get; set; } = new Vector3();
+
+        [Index(10)]
+        public virtual Vector3 MaxVertex { get; set; } = new Vector3();
+
+        [Index(11)]
+        public virtual Vector3 CenterVertex { get; set; }
+
+        protected float MinX = float.MaxValue;
+        protected float MaxX = float.MinValue;
+
+        protected float MinY = float.MaxValue;
+        protected float MaxY = float.MinValue;
+
+        protected float MinZ = float.MaxValue;
+        protected float MaxZ = float.MinValue;
 
         // only used for mesh loading
         // will be cleared after mesh load
@@ -54,6 +72,10 @@ namespace SharpOpenGL.StaticMesh
         List<uint> VertexIndexList = new List<uint>();
         List<uint> TexCoordIndexList = new List<uint>();
         List<uint> NormalIndexList = new List<uint>();
+
+        // for rendering
+        TriangleDrawable<PNTT_VertexAttribute> meshdrawable = null;
+        Dictionary<string, Texture2D> TextureMap = new Dictionary<string, Texture2D>();
 
         // import sync
         public override void ImportAssetSync()
@@ -78,6 +100,20 @@ namespace SharpOpenGL.StaticMesh
             {
                 fs.Write(bytesarray, 0, bytesarray.Count());
             }
+        }
+
+        public override void OnPostLoad()
+        {
+            base.OnPostLoad();
+
+            // setup vertex index buffer
+            meshdrawable = new TriangleDrawable<PNTT_VertexAttribute>();
+            var Arr = Vertices.ToArray();
+            var IndexArr = VertexIndices.ToArray();
+            meshdrawable.SetupData(ref Arr, ref IndexArr);
+
+            // load texture
+            LoadTextures();
         }
 
 
@@ -154,7 +190,7 @@ namespace SharpOpenGL.StaticMesh
                             V.Y = Convert.ToSingle(tokens[2]);
                             V.Z = Convert.ToSingle(tokens[3]);
 
-                            //UpdateMinMaxVertex(ref V);
+                            UpdateMinMaxVertex(ref V);
 
                             TempVertexList.Add(V);
                         }
@@ -251,6 +287,12 @@ namespace SharpOpenGL.StaticMesh
                 }
             }
 
+            // update min,max,center
+            MinVertex = new Vector3(MinX, MinY, MinZ);
+            MaxVertex = new Vector3(MaxX, MaxY, MaxZ);
+            CenterVertex = (MinVertex + MaxVertex) / 2;
+
+
             if (HasTexCoordinate)
             {
                 GenerateTangents();
@@ -259,6 +301,37 @@ namespace SharpOpenGL.StaticMesh
             GenerateVertices();
 
             Clear();
+        }
+
+        protected void UpdateMinMaxVertex(ref OpenTK.Vector3 newVertex)
+        {
+            // update X
+            if (newVertex.X > MaxX)
+            {
+                MaxX = newVertex.X;
+            }
+            if (newVertex.X < MinX)
+            {
+                MinX = newVertex.X;
+            }
+
+            if (newVertex.Y > MaxY)
+            {
+                MaxY = newVertex.Y;
+            }
+            if (newVertex.Y < MinY)
+            {
+                MinY = newVertex.Y;
+            }
+
+            if (newVertex.Z > MaxZ)
+            {
+                MaxZ = newVertex.Z;
+            }
+            if (newVertex.Z < MinZ)
+            {
+                MinZ = newVertex.Z;
+            }
         }
 
         protected void GenerateVertices()
@@ -378,6 +451,102 @@ namespace SharpOpenGL.StaticMesh
 
             tan1Accum.Clear();
             tan2Accum.Clear();
+        }
+
+        protected void LoadTextures()
+        {
+            foreach (var Mtl in MaterialMap)
+            {
+                if (Mtl.Value.DiffuseMap.Length > 0)
+                {
+                    if (!TextureMap.ContainsKey(Mtl.Value.DiffuseMap))
+                    {
+                        var TextureObj = new Texture2D();
+                        TextureObj.Load(Mtl.Value.DiffuseMap);
+                        TextureMap.Add(Mtl.Value.DiffuseMap, TextureObj);
+                    }
+                }
+
+                if (Mtl.Value.NormalMap != null)
+                {
+                    if (!TextureMap.ContainsKey(Mtl.Value.NormalMap))
+                    {
+                        var textureObj = new Texture2D();
+                        textureObj.Load(Mtl.Value.NormalMap);
+                        TextureMap.Add(Mtl.Value.NormalMap, textureObj);
+                    }
+                }
+
+                if (Mtl.Value.SpecularMap != null)
+                {
+                    if (!TextureMap.ContainsKey(Mtl.Value.SpecularMap))
+                    {
+                        var textureObj = new Texture2D();
+                        textureObj.Load(Mtl.Value.SpecularMap);
+                        TextureMap.Add(Mtl.Value.SpecularMap, textureObj);
+                    }
+                }
+
+                if (Mtl.Value.MaskMap != null)
+                {
+                    if (!TextureMap.ContainsKey(Mtl.Value.MaskMap))
+                    {
+                        var textureObj = new Texture2D();
+                        textureObj.Load(Mtl.Value.MaskMap);
+                        TextureMap.Add(Mtl.Value.MaskMap, textureObj);
+                    }
+                }
+            }
+        }
+
+        public void Draw(Core.MaterialBase.MaterialBase material)
+        {
+            meshdrawable.BindVertexAndIndexBuffer();
+
+            foreach (var sectionlist in MeshSectionList.GroupBy(x => x.SectionName))
+            {
+                var sectionName = sectionlist.First().SectionName;
+                // setup
+                if (MaterialMap.ContainsKey(sectionName))
+                {
+                    material.SetTexture("DiffuseTex", TextureMap[MaterialMap[sectionName].DiffuseMap]);
+
+                    if (MaterialMap[sectionName].NormalMap != null)
+                    {
+                        material.SetUniformVarData("NormalMapExist", 1);
+                        material.SetTexture("NormalTex", TextureMap[MaterialMap[sectionName].NormalMap]);
+                    }
+                    else
+                    {
+                        material.SetUniformVarData("NormalMapExist", 0);
+                    }
+
+                    if (MaterialMap[sectionName].MaskMap != null)
+                    {
+                        material.SetUniformVarData("MaskMapExist", 1);
+                        material.SetTexture("MaskTex", TextureMap[MaterialMap[sectionName].MaskMap]);
+                    }
+                    else
+                    {
+                        material.SetUniformVarData("MaskMapExist", 0);
+                    }
+
+                    if (MaterialMap[sectionName].SpecularMap != null)
+                    {
+                        material.SetUniformVarData("SpecularMapExist", 1);
+                        material.SetTexture("SpecularTex", TextureMap[MaterialMap[sectionName].SpecularMap]);
+                    }
+                    else
+                    {
+                        material.SetUniformVarData("SpecularMapExist", 0);
+                    }
+                }
+
+                foreach (var section in sectionlist)
+                {
+                    meshdrawable.Draw(section.StartIndex, (uint)(section.EndIndex - section.StartIndex));
+                }
+            }
         }
 
         protected void ParseMtlFile(string MtlPath)
