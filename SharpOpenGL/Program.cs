@@ -119,6 +119,7 @@ namespace SharpOpenGL
             });
 
             // Blur.Render(MyGBuffer.GetColorAttachement);
+            SkyboxPostProcess.ViewMatrix = FreeCam.View;
             SkyboxPostProcess.Render();
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
 
