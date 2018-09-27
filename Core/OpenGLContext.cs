@@ -12,7 +12,7 @@ namespace Core
 
         public void SetGameWindow(OpenTK.GameWindow window)
         {
-            this.window = window;
+            this.window = window;            
         }
 
         public TextureBase CreateTexture()
@@ -27,7 +27,16 @@ namespace Core
             this.window = window;
         }
         
+        public void SetMainThreadId(int threadId)
+        {
+            mainThreadId = threadId;
+        }
+
+        public int MainTheadId { get { return mainThreadId; } }
+
         private OpenTK.GameWindow window = null;
+
+        private int mainThreadId = 0;
 
         public static EventHandler<EventArgs> OpenGLContextCreated;
 

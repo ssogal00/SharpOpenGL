@@ -27,7 +27,7 @@ namespace SharpOpenGL.Asset
             return SingletonInstance;
         }
 
-        public T GetAsset<T>(string name) where T : AssetBase
+        public static T GetAsset<T>(string name) where T : AssetBase
         {
             if (AssetMap.ContainsKey(name))
             {
@@ -39,6 +39,13 @@ namespace SharpOpenGL.Asset
 
         public static T LoadAssetSync<T>(string path) where T : AssetBase
         {
+            var cachedAsset = GetAsset<T>(Path.GetFileName(path));
+
+            if (cachedAsset != null)
+            {
+                return cachedAsset;
+            }
+
             byte[] data = File.ReadAllBytes(path);
             T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
             AssetMap.TryAdd(Path.GetFileName(path), asset);
@@ -50,9 +57,22 @@ namespace SharpOpenGL.Asset
         {
             return await Task.Factory.StartNew(() =>
             {
+                var cachedAsset = GetAsset<T>(Path.GetFileName(path));
+
+                if (cachedAsset != null)
+                {
+                    return cachedAsset;
+                }
+
                 byte[] data = File.ReadAllBytes(path);
                 T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
                 AssetMap.TryAdd(Path.GetFileName(path), asset);
+
+                MainThreadQueue.Get().Enqueue(() =>
+                {
+                    asset.OnPostLoad();
+                });
+                
                 return asset;
             });
         }
@@ -135,7 +155,7 @@ namespace SharpOpenGL.Asset
                 var staticMeshAsset = AssetManager.LoadAssetSync<StaticMeshAsset>(file);
                 var name = Path.GetFileName(file);
                 Console.WriteLine("[AssetManager] Found {0}...", name);
-                AssetMap.Add(name, staticMeshAsset);
+                AssetMap.TryAdd(name, staticMeshAsset);
             }
 
             foreach (var objfile in objFileList)
@@ -158,7 +178,7 @@ namespace SharpOpenGL.Asset
 
                     string importedAssetPath = Path.Combine("./Resources/Imported/StaticMesh", Path.GetFileNameWithoutExtension(objfile) + ".staticmesh");
                     staticMesh.SaveImportedAsset(importedAssetPath);
-                    AssetMap.Add(filename + ".staticmesh", staticMesh);
+                    AssetMap.TryAdd(filename + ".staticmesh", staticMesh);
                 }
                 else
                 {
@@ -172,7 +192,7 @@ namespace SharpOpenGL.Asset
 
                     string importedAssetPath = Path.Combine("./Resources/Imported/StaticMesh", Path.GetFileNameWithoutExtension(objfile) + ".staticmesh");
                     staticMesh.SaveImportedAsset(importedAssetPath);
-                    AssetMap.Add(filename + ".staticmesh", staticMesh);
+                    AssetMap.TryAdd(filename + ".staticmesh", staticMesh);
                 }
             }
         }

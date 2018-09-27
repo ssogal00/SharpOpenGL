@@ -48,6 +48,6 @@ namespace Core.Texture
         protected string NegativeY = "./Resources/Cubemap/uffizi-y.jpg";
         protected string PositiveY = "./Resources/Cubemap/uffizi+y.jpg";
         protected string NegativeZ = "./Resources/Cubemap/uffizi-z.jpg";
-        protected string PositiveZ = "./Resources/Cubemap/uffizi+x.jpg";
+        protected string PositiveZ = "./Resources/Cubemap/uffizi+z.jpg";
     }
 }

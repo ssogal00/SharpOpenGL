@@ -14,7 +14,8 @@ using ZeroFormatter.Formatters;
 using Core.CustomSerialize;
 using SharpOpenGL.Asset;
 using SharpOpenGL.PostProcess;
-
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SharpOpenGL
 {
@@ -36,6 +37,7 @@ namespace SharpOpenGL
         protected PostProcess.Skybox SkyboxPostProcess = new Skybox();
 
         protected StaticMeshAsset Mesh = null;
+        protected Task<StaticMeshAsset> MeshLoadTask = null;
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
 
         public event EventHandler<EventArgs> OnResourceCreate;
@@ -47,11 +49,16 @@ namespace SharpOpenGL
 
         protected Texture2D TestTexture = null;
 
-        
+        protected int mainThreadId;
+
+        public int MainThreadId { get { return mainThreadId; } }
 
         protected override void OnLoad(EventArgs e)
         {
+            mainThreadId = Thread.CurrentThread.ManagedThreadId;
+
             OpenGLContext.Get().SetGameWindow(this);
+            OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
             Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
             Formatter<DefaultResolver, OpenTK.Vector2>.Register(new Vector2Formatter<DefaultResolver>());
@@ -83,7 +90,8 @@ namespace SharpOpenGL
 
             AssetManager.Get().DiscoverShader();
 
-            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
+            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/myteapot.staticmesh");
+            MeshLoadTask = AssetManager.LoadAssetAsync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");            
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
@@ -96,6 +104,9 @@ namespace SharpOpenGL
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
+
+            //
+            MainThreadQueue.Get().Execute();
 
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
@@ -115,10 +126,10 @@ namespace SharpOpenGL
                 Mesh.Draw(BaseTest);
             });
 
-            
+            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
+
             SkyboxPostProcess.ViewMatrix = FreeCam.View;
             SkyboxPostProcess.Render();
-            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
             
             ScreenBlit.Blit(SkyboxPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
             ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 1, 1, 1, 1);

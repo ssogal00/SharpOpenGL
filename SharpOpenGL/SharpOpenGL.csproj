@@ -89,6 +89,7 @@
     <Compile Include="BlitToScreen.cs" />
     <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="Light\LightBase.cs" />
+    <Compile Include="MainThreadQueue.cs" />
     <Compile Include="PostProcess\DeferredLight.cs" />
     <Compile Include="PostProcess\Skybox.cs" />
     <Compile Include="RenderCommand.cs" />
@@ -181,9 +182,11 @@ if not exist $(TargetDir)\Resources\SponzaTexture mkdir $(TargetDir)\Resources\S
 if not exist $(TargetDir)\Resources\ObjMesh mkdir $(TargetDir)\Resources\ObjMesh
 if not exist $(TargetDir)\Resources\Shader mkdir $(TargetDir)\Resources\Shader
 if not exist $(TargetDir)\Resources\Cubemap mkdir $(TargetDir)\Resources\Cubemap
+if not exist $(TargetDir)\Resources\Texture mkdir $(TargetDir)\Resources\Texture
 xcopy /D /Y /S $(ProjectDir)\Resources\SponzaTexture $(TargetDir)\Resources\SponzaTexture
 xcopy /D /Y /S $(ProjectDir)\Resources\ObjMesh $(TargetDir)\Resources\ObjMesh
 xcopy /D /Y /S $(ProjectDir)\Resources\Cubemap $(TargetDir)\Resources\Cubemap
+xcopy /D /Y /S $(ProjectDir)\Resources\Texture $(TargetDir)\Resources\Texture
 xcopy /D /Y /S $(ProjectDir)\Shader $(TargetDir)\Resources\Shader
 xcopy /F /Y /S $(ProjectDir)\lib\FreeImage.dll $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
