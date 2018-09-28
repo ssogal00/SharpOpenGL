@@ -2,7 +2,6 @@
 using Core.OpenGLShader;
 using System.Collections.Generic;
 using System.Diagnostics;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace Core.MaterialBase

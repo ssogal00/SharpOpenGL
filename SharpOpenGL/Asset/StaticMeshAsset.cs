@@ -13,7 +13,7 @@ using Core.Texture;
 namespace SharpOpenGL.StaticMesh
 {
     [ZeroFormattable]
-    public class StaticMeshAsset : Asset.AssetBase
+    public class StaticMeshAsset : Core.AssetBase
     {   
         // serialized fields
         // vertices

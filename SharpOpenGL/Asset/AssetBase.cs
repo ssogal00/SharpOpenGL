@@ -8,32 +8,5 @@ using System.IO;
 
 namespace SharpOpenGL.Asset
 {
-    public class AssetBase
-    {
-        public AssetBase()
-        {
-        }
-
-        public virtual void ImportAssetSync()
-        {   
-        }
-
-        public virtual Task ImportAssetAsync()
-        {
-            return null;
-        }
-
-        
-        public virtual void OnPostLoad()
-        {
-            bReady = true;
-        }
-
-        public virtual void SaveImportedAsset(string path)
-        {
-
-        }
-
-        protected bool bReady = false;
-    }
+    
 }
