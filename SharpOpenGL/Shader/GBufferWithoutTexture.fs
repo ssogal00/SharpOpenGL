@@ -2,7 +2,7 @@
 #version 450 core
 
 
-layout(location=0) in vec3 InPosition;
+layout(location=0) in vec4 InPosition;
 layout(location=1) in vec2 InTexCoord;
 layout(location=2) in vec3 InNormal;
 layout(location=3) in vec3 InTangent;
@@ -21,5 +21,5 @@ void main()
     
     NormalColor.a = 0;    
 
-    PositionColor = vec4(InPosition, 0);
+    PositionColor = InPosition;
 }

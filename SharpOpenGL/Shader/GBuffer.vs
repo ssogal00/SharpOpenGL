@@ -19,7 +19,7 @@ layout(location=2) in vec2 TexCoord;
 layout(location=3) in vec4 Tangent;
 
 
-layout(location=0) out vec3 OutPosition;
+layout(location=0) out vec4 OutPosition;
 layout(location=1) out vec2 OutTexCoord;
 layout(location=2) out vec3 OutNormal;
 layout(location=3) out vec3 OutTangent;
@@ -32,7 +32,7 @@ void main()
 
 	OutTexCoord = TexCoord;
 	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
-	OutPosition =   (ModelView * vec4(VertexPosition, 1)).xyz;
+	OutPosition =   (ModelView * vec4(VertexPosition, 1));
 	
 	OutNormal =  normalize(mat3(ModelView) * VertexNormal);	
 

@@ -33,7 +33,7 @@ namespace Core.Texture
             FrameBufferObject.Unbind();
         }
 
-        public void OnWindowResize(object sender, Core.CustomEvent.ScreenResizeEventArgs e)
+        public override void OnWindowResize(object sender, Core.CustomEvent.ScreenResizeEventArgs e)
         {
             Resize(e.Width, e.Height);
         }
@@ -45,6 +45,25 @@ namespace Core.Texture
             GL.Viewport(0, 0, BufferWidth, BufferHeight);            
 
             GL.DrawBuffers(1, AttchmentsEnums);
+        }
+
+        public virtual void Copy(RenderTarget target)
+        {
+            FrameBufferObject.Bind();
+            
+            // 
+            GL.FramebufferTexture2D(FramebufferTarget.ReadFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorAttachment0.GetTextureObject, 0);
+            GL.ReadBuffer(ReadBufferMode.ColorAttachment0);
+
+            //
+            GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, target.GetColorAttachment0TextureObject(), 0);
+            GL.DrawBuffer(DrawBufferMode.ColorAttachment1);
+
+            GL.BlitFramebuffer(0, 0, this.BufferWidth, this.BufferHeight, 
+                               0, 0, target.BufferWidth, target.BufferHeight, 
+                               ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+
+            FrameBufferObject.Unbind();
         }
 
         protected virtual void Resize(int newWidth, int newHeight)

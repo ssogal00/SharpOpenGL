@@ -2,7 +2,7 @@
 #version 450 core
 
 
-layout(location=0) in vec3 InPosition;
+layout(location=0) in vec4 InPosition;
 layout(location=1) in vec2 InTexCoord;
 layout(location=2) in vec3 InNormal;
 layout(location=3) in vec3 InTangent;
@@ -41,6 +41,11 @@ void main()
     	DiffuseColor = texture(DiffuseTex, InTexCoord);
     }
 
+    if(InPosition.w == 0)
+    {
+        DiffuseColor = vec4(1,0,0,0);
+    }
+
     mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
 								    InBinormal.x, InBinormal.y, InBinormal.z, 
 								    InNormal.x, InNormal.y, InNormal.z);
@@ -66,5 +71,5 @@ void main()
         NormalColor.a = 0;
     }
 
-    PositionColor = vec4(InPosition, 0);
+    PositionColor = InPosition;
 }

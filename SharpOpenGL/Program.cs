@@ -29,7 +29,7 @@ namespace SharpOpenGL
 
         protected ShaderProgram ProgramObject = null;
 
-        protected MultisampleRenderTarget MSRenderTarget = new MultisampleRenderTarget(1024,768, 1);
+        protected RenderTarget testRenderTarget = new RenderTarget(1024, 768, 1);
         protected Core.MaterialBase.MaterialBase BaseTest = null;
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
         protected PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
@@ -38,6 +38,7 @@ namespace SharpOpenGL
 
         protected StaticMeshAsset Mesh = null;
         protected Task<StaticMeshAsset> MeshLoadTask = null;
+        protected Task<StaticMeshAsset> MeshLoadTask2 = null;
         protected GBuffer MyGBuffer = new GBuffer(1024, 768);
 
         public event EventHandler<EventArgs> OnResourceCreate;
@@ -91,7 +92,8 @@ namespace SharpOpenGL
             AssetManager.Get().DiscoverShader();
 
             Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/myteapot.staticmesh");
-            MeshLoadTask = AssetManager.LoadAssetAsync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");            
+            MeshLoadTask = AssetManager.LoadAssetAsync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
+            MeshLoadTask2 = AssetManager.LoadAssetAsync<StaticMeshAsset>("./Resources/Imported/StaticMesh/bunny.staticmesh");
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
@@ -130,9 +132,12 @@ namespace SharpOpenGL
 
             SkyboxPostProcess.ViewMatrix = FreeCam.View;
             SkyboxPostProcess.Render();
+
+            SkyboxPostProcess.GetOutputTextureObject().Copy(testRenderTarget);
             
             ScreenBlit.Blit(SkyboxPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
-            ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 1, 1, 1, 1);
+            ScreenBlit.Blit(testRenderTarget.GetColorAttachment0TextureObject(), 1, 1, 1, 1);
+            //ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 1, 1, 1, 1);
 
             SwapBuffers();
         }

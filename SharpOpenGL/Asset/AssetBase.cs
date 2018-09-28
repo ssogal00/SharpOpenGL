@@ -8,7 +8,6 @@ using System.IO;
 
 namespace SharpOpenGL.Asset
 {
-    [ZeroFormattable]
     public class AssetBase
     {
         public AssetBase()
@@ -27,12 +26,14 @@ namespace SharpOpenGL.Asset
         
         public virtual void OnPostLoad()
         {
-
+            bReady = true;
         }
 
         public virtual void SaveImportedAsset(string path)
         {
 
         }
+
+        protected bool bReady = false;
     }
 }
