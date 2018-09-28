@@ -33,5 +33,7 @@ namespace SharpOpenGL.Scene
         protected GBuffer gbuffer = null;
         protected int width = 1024;
         protected int height = 768;
+
+        protected List<SceneObject> SceneObjectList = new List<SceneObject>();
     }
 }

@@ -6,10 +6,9 @@ using System.IO;
 using SharpOpenGL.StaticMesh;
 using System.Xml.Linq;
 using Core.OpenGLShader;
-using OpenTK.Graphics.OpenGL;
 using System.Threading.Tasks;
-using ZeroFormatter;
 using Core;
+using Core.MaterialBase;
 
 namespace SharpOpenGL.Asset
 {
@@ -81,6 +80,18 @@ namespace SharpOpenGL.Asset
             if(Directory.Exists("./Resources/Imported/Shader") == false)
             {
                 Directory.CreateDirectory("./Resources/Imported/Shader");
+            }
+
+            var compiledShaderAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(x => x.GetName().Name == "CompiledShader");
+            var types = compiledShaderAssembly.GetTypes();
+
+            foreach(var t in types)
+            {
+                if (t.IsSubclassOf(typeof(Core.MaterialBase.MaterialBase)))
+                {
+                    var instance = (MaterialBase) Activator.CreateInstance(t);
+
+                }
             }
 
             var root = XElement.Load("./Resources/Shader/MaterialList.xml");
