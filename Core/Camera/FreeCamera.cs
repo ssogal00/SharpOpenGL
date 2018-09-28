@@ -25,41 +25,41 @@ namespace Core.Camera
             EyeLocation = new Vector3(5, 5, 5);
         }
         
-        public void MoveForward()
+        public override void MoveForward()
         {
             var vMoveDir = m_RotationMatrix.Row2;
             var vMove = Vector3.Multiply(vMoveDir, fMoveAmount);
             EyeLocation += vMove;
         }
 
-        public void MoveBackward()
+        public override void MoveBackward()
         {
             var vMoveDir = m_RotationMatrix.Row2;
             var vMove = Vector3.Multiply(vMoveDir, fMoveAmount);
             EyeLocation -= vMove;
         }
 
-        public void MoveRight()
+        public override void MoveRight()
         {
             var RightDir = m_RotationMatrix.Row0;
             var vMove = Vector3.Multiply(RightDir, fMoveAmount);
             EyeLocation -= vMove;
         }
 
-        public void MoveLeft()
+        public override void MoveLeft()
         {
             var RightDir = m_RotationMatrix.Row0;
             var vMove = Vector3.Multiply(RightDir, fMoveAmount);
             EyeLocation += vMove;
         }        
 
-        public void MoveUpward()
+        public override void MoveUpward()
         {
             var vMove = Vector3.Multiply(UpDir, fMoveAmount);
             EyeLocation += vMove;
         }
 
-        public void MoveDownward()
+        public override void MoveDownward()
         {
             var vMove = Vector3.Multiply(UpDir, fMoveAmount);
             EyeLocation -= vMove;
@@ -144,7 +144,7 @@ namespace Core.Camera
             ViewMatrix = Matrix4.LookAt(EyeLocation, EyeLocation + Vector3.Multiply(m_RotationMatrix.Row2, 1.0f), Vector3.UnitY);
         }
 
-        protected float m_fYaw = 0;
+        protected float m_fYaw = -90;
 
         protected float m_fPitch = 0;
 

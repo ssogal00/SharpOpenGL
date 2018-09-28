@@ -8,6 +8,7 @@ namespace Core.Camera
     public class OrbitCamera : CameraBase
     {
         public OrbitCamera()
+            : base(OpenTK.MathHelper.PiOver6, 1.0f, 1.0f, 10000.0f)
         { }
 
         public OrbitCamera(float fFOV, float fAspectRatio, float fNear, float fFar)            
@@ -19,11 +20,11 @@ namespace Core.Camera
         {
             if(e.KeyCode == Keys.W)
             {
-                MoveForward(-1);
+                MoveForward();
             }
             else if(e.KeyCode == Keys.S)
             {
-                MoveForward(1);
+                MoveBackward();
             }
         }
 
@@ -49,16 +50,25 @@ namespace Core.Camera
             ViewMatrix = Matrix4.LookAt(EyeLocation, LookAtLocation, Vector3.UnitY);
         }
 
-        public void MoveForward(float fAmount)
+        public override void MoveForward()
         {
             var vDir = (LookAtLocation - EyeLocation).Normalized();
 
-            EyeLocation = vDir * fAmount + EyeLocation;
-            UpdateViewMatrix();            
+            EyeLocation = vDir * MoveAmount + EyeLocation;
+            UpdateViewMatrix();
+        }
+
+        public override void MoveBackward()
+        {
+            var vDir = (LookAtLocation - EyeLocation).Normalized();
+            EyeLocation = vDir * (-MoveAmount) + EyeLocation;
+            UpdateViewMatrix();
         }
 
         public float CameraDistance = 10;
         public float DestCameraDistance = 10;
+
+        protected float MoveAmount = 1.0f;
 
         public Vector3 DestLocation
         {

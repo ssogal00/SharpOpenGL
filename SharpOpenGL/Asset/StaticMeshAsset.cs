@@ -53,6 +53,20 @@ namespace SharpOpenGL.StaticMesh
         [Index(11)]
         public virtual Vector3 CenterVertex { get; set; }
 
+        [IgnoreFormat]
+        public float XExtent => Math.Abs(MaxVertex.X - MinVertex.X);
+
+        [IgnoreFormat]
+        public float HalfXExtent => XExtent / 2.0f;
+
+        [IgnoreFormat]
+        public float HalfYExtent => YExtent / 2.0f;
+
+        [IgnoreFormat]
+        public float YExtent => Math.Abs(MaxVertex.Y - MinVertex.Y);
+        [IgnoreFormat]
+        public float ZExtent => Math.Abs(MaxVertex.Z - MinVertex.Z);
+
         protected float MinX = float.MaxValue;
         protected float MaxX = float.MinValue;
 
@@ -455,6 +469,10 @@ namespace SharpOpenGL.StaticMesh
 
         protected void LoadTextures()
         {
+            var DefaultTexObj = new Texture2D();
+            DefaultTexObj.Load("./Resources/Texture/Checker.png");
+            TextureMap.Add("Default", DefaultTexObj);
+
             foreach (var Mtl in MaterialMap)
             {
                 if (Mtl.Value.DiffuseMap.Length > 0)
@@ -502,6 +520,13 @@ namespace SharpOpenGL.StaticMesh
         public void Draw(Core.MaterialBase.MaterialBase material)
         {
             meshdrawable.BindVertexAndIndexBuffer();
+
+            if(MaterialMap.Count == 0)
+            {
+                material.SetTexture("DiffuseTex", TextureMap["Default"]);
+                meshdrawable.Draw(0, (uint)(VertexIndices.Count));
+                return;
+            }
 
             foreach (var sectionlist in MeshSectionList.GroupBy(x => x.SectionName))
             {

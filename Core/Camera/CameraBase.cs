@@ -43,6 +43,18 @@ namespace Core.Camera
             get { return ProjMatrix; }
         }
 
+        public virtual void MoveForward() {}
+
+        public virtual void MoveBackward() {}
+
+        public virtual void MoveRight() {}
+
+        public virtual void MoveLeft() {}
+
+        public virtual void MoveUpward() {}
+
+        public virtual void MoveDownward() {}
+
         public virtual void UpdateViewMatrix()
         {
             ViewMatrix = Matrix4.LookAt(EyeLocation, EyeLocation + Vector3.Multiply(LookAtDir ,1.0f), Vector3.UnitY);

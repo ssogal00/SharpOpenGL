@@ -23,8 +23,11 @@ namespace SharpOpenGL
     {
         protected Matrix4 ModelView = new Matrix4();
         protected Matrix4 Projection = new Matrix4();
-        
-        protected FreeCamera FreeCam = new FreeCamera();        
+
+        protected CameraBase CurrentCam = null;
+        protected FreeCamera  FreeCam = new FreeCamera();
+        protected OrbitCamera OribitCam = new OrbitCamera();
+
         protected GBufferDraw.Transform Transform = new GBufferDraw.Transform();
 
         protected ShaderProgram ProgramObject = null;
@@ -93,7 +96,7 @@ namespace SharpOpenGL
 
             AssetManager.Get().DiscoverShader();
 
-            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/myteapot.staticmesh");
+            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sherry3.staticmesh");
             MeshLoadTask = AssetManager.LoadAssetAsync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
             MeshLoadTask2 = AssetManager.LoadAssetAsync<StaticMeshAsset>("./Resources/Imported/StaticMesh/bunny.staticmesh");
         }
@@ -176,10 +179,9 @@ namespace SharpOpenGL
             OnWindowResize(this, eventArgs);
 
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(FreeCam.FOV, fAspectRatio, FreeCam.Near, FreeCam.Far);
-            Transform.Model = Matrix4.CreateScale(0.06f);
-            Transform.View = Matrix4.LookAt(new Vector3(10, 0, 0), new Vector3(0, 0, 0), Vector3.UnitY);
-
-            
+            Transform.Model = Matrix4.CreateScale(1.0f);
+            FreeCam.EyeLocation = Mesh.CenterVertex + new Vector3(Mesh.XExtent, 0, 0);
+            Transform.View = Matrix4.LookAt(Mesh.MaxVertex, Mesh.CenterVertex, Vector3.UnitY);
         }
     }
 

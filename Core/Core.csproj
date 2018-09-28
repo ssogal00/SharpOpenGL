@@ -99,6 +99,7 @@
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
     <Compile Include="RenderResource.cs" />
+    <Compile Include="Singleton.cs" />
     <Compile Include="Texture\CubemapTexture.cs" />
     <Compile Include="Texture\DepthTargetTexture.cs" />
     <Compile Include="Texture\ColorAttachmentTexture.cs" />
