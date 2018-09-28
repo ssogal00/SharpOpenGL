@@ -4,12 +4,8 @@ using Core.Texture;
 
 namespace Core
 {
-    public class OpenGLContext
+    public class OpenGLContext : Singleton<OpenGLContext>
     {
-        protected static OpenGLContext Singleton = new OpenGLContext(null);
-
-        public static OpenGLContext Get() { return Singleton; }
-
         public void SetGameWindow(OpenTK.GameWindow window)
         {
             this.window = window;            
@@ -21,6 +17,11 @@ namespace Core
         }
 
         public bool IsValid { get { return this.window != null; } }
+
+        public OpenGLContext()
+        {
+            this.window = null;
+        }
 
         public OpenGLContext(OpenTK.GameWindow window)
         {

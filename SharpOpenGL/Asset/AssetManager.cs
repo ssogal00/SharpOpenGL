@@ -9,23 +9,17 @@ using Core.OpenGLShader;
 using OpenTK.Graphics.OpenGL;
 using System.Threading.Tasks;
 using ZeroFormatter;
+using Core;
 
 namespace SharpOpenGL.Asset
 {
-    public class AssetManager
+    public class AssetManager : Singleton<AssetManager>
     {
         private static object AssetMapLock = new object();
-
-        protected static AssetManager SingletonInstance = new AssetManager();               
 
         protected static ConcurrentDictionary<string, AssetBase> AssetMap = new ConcurrentDictionary<string, AssetBase>();
 
         protected static string ImportedDirectory = "./Resources/Imported";
-
-        public static AssetManager Get()
-        {
-            return SingletonInstance;
-        }
 
         public static T GetAsset<T>(string name) where T : AssetBase
         {

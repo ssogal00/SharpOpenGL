@@ -96,7 +96,7 @@ namespace SharpOpenGL
 
             AssetManager.Get().DiscoverShader();
 
-            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sherry3.staticmesh");
+            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/myteapot.staticmesh");
             MeshLoadTask = AssetManager.LoadAssetAsync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
             MeshLoadTask2 = AssetManager.LoadAssetAsync<StaticMeshAsset>("./Resources/Imported/StaticMesh/bunny.staticmesh");
         }

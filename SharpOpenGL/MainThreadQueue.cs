@@ -6,15 +6,8 @@ using Core;
 
 namespace SharpOpenGL
 {
-    public class MainThreadQueue 
+    public class MainThreadQueue : Singleton<MainThreadQueue>
     {
-        static MainThreadQueue Singleton = new MainThreadQueue();
-
-        static public MainThreadQueue Get()
-        {
-            return Singleton;
-        }
-
         public void Enqueue(Action action)
         {
             Queue.Enqueue(action);
