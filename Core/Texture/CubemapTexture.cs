@@ -30,7 +30,7 @@ namespace Core.Texture
 
             string [] textureList = new string[]
             {
-                PositiveX, NegativeX, PositiveY, NegativeY, PositiveZ, NegativeZ
+                PositiveX, NegativeX,  NegativeY,PositiveY, PositiveZ, NegativeZ
             };
 
             for (int i = 0; i < textureList.Length; ++i)
@@ -43,11 +43,11 @@ namespace Core.Texture
             }
         }
 
-        protected string NegativeX = "./Resources/Cubemap/uffizi-x.jpg";
-        protected string PositiveX = "./Resources/Cubemap/uffizi+x.jpg";
-        protected string NegativeY = "./Resources/Cubemap/uffizi-y.jpg";
-        protected string PositiveY = "./Resources/Cubemap/uffizi+y.jpg";
-        protected string NegativeZ = "./Resources/Cubemap/uffizi-z.jpg";
-        protected string PositiveZ = "./Resources/Cubemap/uffizi+z.jpg";
+        protected string NegativeX = "./Resources/Cubemap/SKYBOX_xneg.png";
+        protected string PositiveX = "./Resources/Cubemap/SKYBOX_xpos.png";
+        protected string NegativeY = "./Resources/Cubemap/SKYBOX_yneg.png";
+        protected string PositiveY = "./Resources/Cubemap/SKYBOX_ypos.png";
+        protected string NegativeZ = "./Resources/Cubemap/SKYBOX_zneg.png";
+        protected string PositiveZ = "./Resources/Cubemap/SKYBOX_zpos.png";
     }
 }

@@ -63,7 +63,6 @@ namespace Core.Buffer
         public void Bind()
         {
             FrameBufferObject.Bind();
-            Clear();
             PrepareToDraw();
         }
 

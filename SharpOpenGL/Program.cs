@@ -67,9 +67,11 @@ namespace SharpOpenGL
 
             VSync = VSyncMode.Off;
 
+
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.TextureCubeMap);            
 
             GL.ClearColor(System.Drawing.Color.DarkGray);            
 
@@ -110,11 +112,6 @@ namespace SharpOpenGL
             //
             MainThreadQueue.Get().Execute();
 
-            GL.CullFace(CullFaceMode.Back);
-            GL.FrontFace(FrontFaceDirection.Cw);
-            GL.Enable(EnableCap.DepthTest);            
-            GL.Enable(EnableCap.TextureCubeMap);
-
             TickableObjectManager.Tick(e.Time);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -122,22 +119,27 @@ namespace SharpOpenGL
             Transform.View = FreeCam.View;
             Transform.Proj = FreeCam.Proj;
 
+            // draw cubemap first
+            SkyboxPostProcess.ViewMatrix = FreeCam.View;
+            SkyboxPostProcess.Render();
+
+            // 
+            MyGBuffer.BindAndExecute(
+            () =>
+            {
+                MyGBuffer.Clear();
+            });
+
+            SkyboxPostProcess.GetOutputTextureObject().Copy(MyGBuffer.GetColorAttachement);
+
             MyGBuffer.BindAndExecute(BaseTest, () =>
             {
                 BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
                 Mesh.Draw(BaseTest);
             });
 
-            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
-
-            SkyboxPostProcess.ViewMatrix = FreeCam.View;
-            SkyboxPostProcess.Render();
-
-            SkyboxPostProcess.GetOutputTextureObject().Copy(testRenderTarget);
-            
-            ScreenBlit.Blit(SkyboxPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
-            ScreenBlit.Blit(testRenderTarget.GetColorAttachment0TextureObject(), 1, 1, 1, 1);
-            //ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 1, 1, 1, 1);
+            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);            
+            ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 2, 2);
 
             SwapBuffers();
         }
