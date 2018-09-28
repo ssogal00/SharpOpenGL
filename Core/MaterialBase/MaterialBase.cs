@@ -6,7 +6,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core.MaterialBase
 {
-    public class MaterialBase : IBindable
+    public class MaterialBase : Core.AssetBase, IBindable
     {
         protected ShaderProgram MaterialProgram = null;
         protected Core.OpenGLShader.VertexShader vertexShader = null;

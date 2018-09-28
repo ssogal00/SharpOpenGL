@@ -90,43 +90,7 @@ namespace SharpOpenGL.Asset
                 if (t.IsSubclassOf(typeof(Core.MaterialBase.MaterialBase)))
                 {
                     var instance = (MaterialBase) Activator.CreateInstance(t);
-
-                }
-            }
-
-            var root = XElement.Load("./Resources/Shader/MaterialList.xml");
-
-            // import first
-            foreach (var node in root.Descendants("Material"))
-            {
-                string materialName = node.Attribute("name").Value;
-
-                string importedFileName = string.Format("./Resources/Imported/Shader/{0}.material", materialName);
-
-                if(File.Exists(importedFileName))
-                {
-                    continue;
-                }
-
-                string vsPath = Path.Combine("./Resources", "Shader", node.Attribute("vertexShader").Value);
-                string fsPath = Path.Combine("./Resources", "Shader", node.Attribute("fragmentShader").Value);
-                var vs = new VertexShader();
-                var fs = new FragmentShader();
-
-                vs.CompileShader(File.ReadAllText(vsPath));
-                fs.CompileShader(File.ReadAllText(fsPath));
-
-                var program = new ShaderProgram(vs, fs);
-
-                byte[] data = new byte[1024 * 1024 * 512]; // 512kb
-
-                int binaryLength = 0;
-
-                program.GetProgramBinary(ref data, out binaryLength);
-
-                using (var filestream = new FileStream(importedFileName, FileMode.CreateNew))
-                {
-                    filestream.Write(data, 0, binaryLength);
+                    AssetMap.TryAdd(t.Name, instance);
                 }
             }
         }
