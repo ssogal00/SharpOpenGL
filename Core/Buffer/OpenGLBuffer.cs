@@ -98,14 +98,6 @@ namespace Core.Buffer
             Bind();
             return GL.MapBuffer(bufferTarget, access);
         }
-
-
-
-        public void BindBufferBase(int BindingPoint)
-        {
-            Bind();
-            GL.BindBufferBase(BufferRangeTarget.UniformBuffer, BindingPoint, bufferObject);            
-        }
         
         public BufferUsageHint UsageHint
         {
