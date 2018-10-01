@@ -52,12 +52,8 @@ namespace Core.Buffer
         }
 
         public void BufferData<T>(ref T Data) where T : struct
-        {
-            if (!IsBind)
-            {
-                Bind();
-            }
-            
+        {   
+            Bind();
             var Size = new IntPtr(Marshal.SizeOf(Data));
             GL.BufferData<T>(bufferTarget, Size, ref Data, hint);            
         }
@@ -129,11 +125,7 @@ namespace Core.Buffer
 
         public void BindBufferBase(int BindingPoint)
         {
-            if (!IsBind)
-            {
-                Bind();
-            }            
-            
+            Bind();
             GL.BindBufferBase(BufferRangeTarget.UniformBuffer, BindingPoint, bufferObject);            
         }
         

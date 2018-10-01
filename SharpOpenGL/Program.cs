@@ -96,7 +96,7 @@ namespace SharpOpenGL
 
             AssetManager.Get().DiscoverShader();
 
-            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
+            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/myteapot.staticmesh");
             BaseTest = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
             DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
         }
@@ -179,7 +179,7 @@ namespace SharpOpenGL
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(FreeCam.FOV, fAspectRatio, FreeCam.Near, FreeCam.Far);
             Transform.View = Matrix4.LookAt(Mesh.MaxVertex, Mesh.CenterVertex, Vector3.UnitY);
 
-            ModelMatrix.Model = Matrix4.CreateScale(0.40f);
+            ModelMatrix.Model = Matrix4.CreateScale(1.500f);
             FreeCam.EyeLocation = Mesh.CenterVertex + new Vector3(Mesh.XExtent, 0, 0);            
         }
     }

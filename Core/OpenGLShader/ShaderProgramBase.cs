@@ -769,10 +769,15 @@ namespace Core.OpenGLShader
             {
                 var BlockIndex = GetUniformBlockIndex(BlockName);
 
+                Debug.Assert(BlockIndex != -1);
+
                 if (BlockIndex < ActiveUniformBlockCount)
                 {
-                    GL.UniformBlockBinding(ProgramObject, BlockIndex, m_UniformBlockBindingIndex);
-                    m_UniformBlockBindingIndex++;
+                    GL.UniformBlockBinding(ProgramObject, BlockIndex, BlockIndex);
+                }
+                else
+                {
+                    Debug.Assert(false);
                 }
             }
         }
@@ -799,7 +804,7 @@ namespace Core.OpenGLShader
             {
                 var BlockIndex = GetUniformBlockIndex(BlockName);
 
-                return BlockIndex;
+                return BlockIndex;                
             }
 
             return -1;
