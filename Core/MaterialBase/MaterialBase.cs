@@ -182,10 +182,9 @@ namespace Core.MaterialBase
 
             if (UniformBufferMap != null)
             {
-                int index = 0;
                 foreach (var uniformBuffer in UniformBufferMap)
                 {
-                    uniformBuffer.Value.BindBufferBase(0);
+                    MaterialProgram.BindUniformBlock(uniformBuffer.Key);
                 }
             }
         }
@@ -209,6 +208,7 @@ namespace Core.MaterialBase
         {
             if(HasUniformBuffer(bufferName))
             {
+                UniformBufferMap[bufferName].BindBufferBase(UniformBufferMap[bufferName].UniformBufferBlockIndex);
                 UniformBufferMap[bufferName].BufferData(ref data);
             }
         }

@@ -43,11 +43,7 @@ namespace Core.Buffer
 
         public void BufferData(IntPtr Size, IntPtr Data)
         {
-            if(!IsBind)
-            {
-                Bind();
-            }         
-            
+            Bind();
             GL.BufferData(bufferTarget, Size, Data, hint);            
         }
 
@@ -59,29 +55,20 @@ namespace Core.Buffer
         }
      
         public void BufferWholeData<T>(ref T Data) where T: struct
-        {
-            if (!IsBind)
-            {
-                Bind();
-            }
+        {            
+            Bind();
             GL.BufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
 	    }
 
         public void BufferSubData<T>(ref T Data, int Offset) where T : struct
         {
-            if(!IsBind)
-            {
-                Bind();
-            }
+            Bind();
             GL.BufferSubData<T>(bufferTarget, new IntPtr(Offset), Marshal.SizeOf(Data), ref Data);
         }
 
         public void GetBufferWholeData<T>(ref T Data) where T : struct
         {
-            if(!IsBind)
-            {
-                Bind();
-            }
+            Bind();
             GL.GetBufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
         }
 
@@ -89,10 +76,7 @@ namespace Core.Buffer
         {
             T result = new T();
 
-            if(!IsBind)
-            {
-                Bind();
-            }
+            Bind();
 
             GL.GetBufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(result), ref result);
 
@@ -101,10 +85,7 @@ namespace Core.Buffer
 
         public void BufferData<T>(ref T[] Data) where T: struct
         {
-            if (!IsBind)
-            {
-                Bind();
-            }
+            Bind();
             if (Data != null)
             {
                 var Size = new IntPtr(Marshal.SizeOf(Data[0]) * Data.Length);
@@ -114,10 +95,7 @@ namespace Core.Buffer
 
         public IntPtr MapBuffer(BufferAccess access)
         {
-            if(!IsBind)
-            {
-                Bind();
-            }
+            Bind();
             return GL.MapBuffer(bufferTarget, access);
         }
 
