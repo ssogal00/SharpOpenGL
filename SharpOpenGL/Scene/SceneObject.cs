@@ -16,9 +16,5 @@ namespace SharpOpenGL.Scene
 
         [Index(1)]
         public virtual float Scale { get; set; } = 1.0f;
-
-
     }
-
-
 }

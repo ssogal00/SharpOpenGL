@@ -266,10 +266,13 @@ public class GBufferDraw : MaterialBase
 	{
 		return @"#version 450 core
 
-
-uniform Transform
+uniform ModelTransform
 {
 	mat4x4 Model;
+};
+
+uniform CameraTransform
+{
 	mat4x4 View;
 	mat4x4 Proj;
 };
@@ -414,10 +417,13 @@ public class GBufferWithoutTexture : MaterialBase
 	{
 		return @"#version 450 core
 
-
-uniform Transform
+uniform ModelTransform
 {
 	mat4x4 Model;
+};
+
+uniform CameraTransform
+{
 	mat4x4 View;
 	mat4x4 Proj;
 };

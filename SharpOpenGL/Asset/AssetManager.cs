@@ -84,10 +84,10 @@ namespace SharpOpenGL.Asset
 
             var compiledShaderAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(x => x.GetName().Name == "CompiledShader");
             var types = compiledShaderAssembly.GetTypes();
-
+                
             foreach(var t in types)
             {
-                if (t.IsSubclassOf(typeof(Core.MaterialBase.MaterialBase)))
+                if (t.IsSubclassOf(typeof(MaterialBase)))
                 {
                     var instance = (MaterialBase) Activator.CreateInstance(t);
                     AssetMap.TryAdd(t.Name, instance);

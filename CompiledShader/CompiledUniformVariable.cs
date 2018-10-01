@@ -63,15 +63,21 @@ namespace GBufferDraw
 {
 
 
-[StructLayout(LayoutKind.Explicit,Size=192)]
-public struct Transform
+[StructLayout(LayoutKind.Explicit,Size=128)]
+public struct CameraTransform
+{
+	[FieldOffset(0)]
+	public OpenTK.Matrix4 View;
+	[FieldOffset(64)]
+	public OpenTK.Matrix4 Proj;
+}
+
+
+[StructLayout(LayoutKind.Explicit,Size=64)]
+public struct ModelTransform
 {
 	[FieldOffset(0)]
 	public OpenTK.Matrix4 Model;
-	[FieldOffset(64)]
-	public OpenTK.Matrix4 View;
-	[FieldOffset(128)]
-	public OpenTK.Matrix4 Proj;
 }
 }
 namespace GBufferDraw
@@ -81,15 +87,21 @@ namespace GBufferWithoutTexture
 {
 
 
-[StructLayout(LayoutKind.Explicit,Size=192)]
-public struct Transform
+[StructLayout(LayoutKind.Explicit,Size=128)]
+public struct CameraTransform
+{
+	[FieldOffset(0)]
+	public OpenTK.Matrix4 View;
+	[FieldOffset(64)]
+	public OpenTK.Matrix4 Proj;
+}
+
+
+[StructLayout(LayoutKind.Explicit,Size=64)]
+public struct ModelTransform
 {
 	[FieldOffset(0)]
 	public OpenTK.Matrix4 Model;
-	[FieldOffset(64)]
-	public OpenTK.Matrix4 View;
-	[FieldOffset(128)]
-	public OpenTK.Matrix4 Proj;
 }
 }
 namespace GBufferWithoutTexture

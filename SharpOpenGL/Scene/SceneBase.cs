@@ -17,7 +17,6 @@ namespace SharpOpenGL.Scene
         
         public virtual void Draw()
         {
-
         }
 
         public virtual void CreateSceneResources()

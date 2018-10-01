@@ -16,19 +16,19 @@ using SharpOpenGL.Asset;
 using SharpOpenGL.PostProcess;
 using System.Threading;
 using System.Threading.Tasks;
+using Core.MaterialBase;
+using SharpOpenGL.GBufferDraw;
 
 namespace SharpOpenGL
 {
     public class MainWindow : GameWindow
     {
-        protected Matrix4 ModelView = new Matrix4();
-        protected Matrix4 Projection = new Matrix4();
-
         protected CameraBase CurrentCam = null;
         protected FreeCamera  FreeCam = new FreeCamera();
         protected OrbitCamera OribitCam = new OrbitCamera();
 
-        protected GBufferDraw.Transform Transform = new GBufferDraw.Transform();
+        protected GBufferDraw.ModelTransform ModelMatrix = new GBufferDraw.ModelTransform();
+        protected GBufferDraw.CameraTransform Transform = new GBufferDraw.CameraTransform();
 
         protected ShaderProgram ProgramObject = null;
 
@@ -97,16 +97,13 @@ namespace SharpOpenGL
             AssetManager.Get().DiscoverShader();
 
             Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
-            //MeshLoadTask = AssetManager.LoadAssetAsync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
-            //MeshLoadTask2 = AssetManager.LoadAssetAsync<StaticMeshAsset>("./Resources/Imported/StaticMesh/bunny.staticmesh");
+            BaseTest = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
+            DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
         {
-            BaseTest = new SharpOpenGL.GBufferDraw.GBufferDraw();
-            BaseTest.Setup();
-            DefaultMaterial = new GBufferWithoutTexture.GBufferWithoutTexture();
-        }       
+        }
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
@@ -137,7 +134,8 @@ namespace SharpOpenGL
 
             MyGBuffer.BindAndExecute(BaseTest, () =>
             {
-                BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.Transform>("Transform", ref Transform);
+                BaseTest.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
+                BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
                 Mesh.Draw(BaseTest);
             });
 
@@ -179,9 +177,10 @@ namespace SharpOpenGL
             OnWindowResize(this, eventArgs);
 
             Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(FreeCam.FOV, fAspectRatio, FreeCam.Near, FreeCam.Far);
-            Transform.Model = Matrix4.CreateScale(1.0f);
-            FreeCam.EyeLocation = Mesh.CenterVertex + new Vector3(Mesh.XExtent, 0, 0);
             Transform.View = Matrix4.LookAt(Mesh.MaxVertex, Mesh.CenterVertex, Vector3.UnitY);
+
+            ModelMatrix.Model = Matrix4.CreateScale(0.40f);
+            FreeCam.EyeLocation = Mesh.CenterVertex + new Vector3(Mesh.XExtent, 0, 0);            
         }
     }
 

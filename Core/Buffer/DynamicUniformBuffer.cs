@@ -26,9 +26,11 @@ namespace Core.Buffer
 
             if (ProgramObject.IsProgramLinked())
             {
-                BindingPoint = ProgramObject.GetUniformBlockBindingPoint(UniformBlockName);
+                UniformBufferBlockIndex = ProgramObject.GetUniformBlockBindingPoint(UniformBlockName);
             }
         }
+
+        public int UniformBufferBlockIndex = -1;
 
         int BindingPoint = -1;
     }

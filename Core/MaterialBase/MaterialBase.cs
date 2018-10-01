@@ -185,7 +185,7 @@ namespace Core.MaterialBase
                 int index = 0;
                 foreach (var uniformBuffer in UniformBufferMap)
                 {
-                    uniformBuffer.Value.BindBufferBase(index++);
+                    uniformBuffer.Value.BindBufferBase(0);
                 }
             }
         }

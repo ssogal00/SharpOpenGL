@@ -14,7 +14,7 @@ namespace SharpOpenGL.Scene
 {
     public class SponzaScene : SceneBase
     {
-        protected Transform tranform = new Transform();
+        protected CameraTransform tranform = new CameraTransform();
         private Task<ObjMesh> meshLoadingTask = null;
         private ObjMesh sponzaMesh = null;
         private MaterialBase gbufferDrawMaterial = null;
@@ -61,7 +61,7 @@ namespace SharpOpenGL.Scene
             using (var scoped = new ScopedBind(gbuffer))
             {
                 gbufferDrawMaterial.Setup();
-                gbufferDrawMaterial.SetUniformBufferValue<Transform>("Transform", ref tranform);
+                gbufferDrawMaterial.SetUniformBufferValue<CameraTransform>("Transform", ref tranform);
                 sponzaMesh.Draw(gbufferDrawMaterial);
                 lightPostProcess.Render(gbuffer.GetPositionAttachment, gbuffer.GetColorAttachement, gbuffer.GetNormalAttachment);
             }

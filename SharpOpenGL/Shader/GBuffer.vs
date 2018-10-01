@@ -1,9 +1,12 @@
 #version 450 core
 
-
-uniform Transform
+uniform ModelTransform
 {
 	mat4x4 Model;
+};
+
+uniform CameraTransform
+{
 	mat4x4 View;
 	mat4x4 Proj;
 };

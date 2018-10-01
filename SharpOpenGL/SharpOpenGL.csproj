@@ -89,6 +89,7 @@
     <Compile Include="BlitToScreen.cs" />
     <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="Light\LightBase.cs" />
+    <Compile Include="Light\PointLight.cs" />
     <Compile Include="Light\SpotLight.cs" />
     <Compile Include="MainThreadQueue.cs" />
     <Compile Include="PostProcess\DeferredLight.cs" />
