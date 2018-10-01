@@ -24,6 +24,19 @@ namespace Core
         private int ePrevPolygonMode = (int)PolygonMode.Fill;
     }
 
+    public class ScopedDepthDisable : IDisposable
+    {
+        public ScopedDepthDisable()
+        {
+            GL.Disable(EnableCap.DepthTest);
+        }
+
+        public void Dispose()
+        {
+            GL.Enable(EnableCap.DepthTest);
+        }
+    }
+
     public class ScopedBind : IDisposable
     {
         public ScopedBind(params IBindable[] bindableList)
