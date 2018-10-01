@@ -129,6 +129,8 @@ namespace Core.MaterialBase
 
             BuildSamplerMap();
 
+            var attrList = MaterialProgram.GetActiveVertexAttributeList();
+
             UniformVariableNames = MaterialProgram.GetActiveUniformNames();
         }
 

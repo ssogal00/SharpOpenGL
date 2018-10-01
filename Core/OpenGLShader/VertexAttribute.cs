@@ -1,21 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
-
-using System.Reflection;
-
-using System.Runtime.InteropServices;
 
 using Core.OpenGLType;
 
 namespace Core.OpenGLShader
 {
-    public class VertexAttribute
+    public class VertexAttribute : IComparable
     {
         public VertexAttribute(int nLocation, ActiveAttribType _AttributeType, string _Name)
         {
@@ -26,7 +16,16 @@ namespace Core.OpenGLShader
             AttributeTypeString = OpenGLTypeHelper.FromVertexAttributeType(AttributeType);
             Size                = OpenGLTypeHelper.GetAttributeTypeSizeInBytes(AttributeType);
             ComponentType       = OpenGLTypeHelper.GetComponentTypeFromAttribType(AttributeType);
-        }        
+        }
+
+        public int CompareTo(object rhs)
+        {
+            var attribute = (VertexAttribute)rhs;
+
+
+            return 0;
+        }
+
 
         public int AttributeLocation { get; set; }
         public int Size { get; set; }

@@ -43,6 +43,9 @@ namespace Core.OpenGLType
                
                 case ActiveUniformType.FloatVec3:
                     return OpenTK.Vector3.SizeInBytes;
+
+                case ActiveUniformType.FloatVec4:
+                    return OpenTK.Vector4.SizeInBytes;
             }
 
             return -1;
