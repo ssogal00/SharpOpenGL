@@ -9,5 +9,6 @@ namespace SharpOpenGL.Scene
     public class StaticMeshObject : SceneObject
     {
         
+        
     }
 }

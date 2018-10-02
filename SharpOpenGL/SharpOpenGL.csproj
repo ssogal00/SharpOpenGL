@@ -101,6 +101,7 @@
     <Compile Include="Scene\SceneBase.cs" />
     <Compile Include="Scene\SceneObject.cs" />
     <Compile Include="Scene\SponzaScene.cs" />
+    <Compile Include="Scene\StaticMeshObject.cs" />
     <Compile Include="Scene\TesselationScene.cs" />
     <Compile Include="StaticMesh\ObjMesh.cs" />
     <Compile Include="StaticMesh\ObjMeshMaterial.cs" />

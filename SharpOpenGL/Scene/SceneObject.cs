@@ -18,6 +18,6 @@ namespace SharpOpenGL.Scene
 
         public virtual void Draw() { }
 
-        public virtual void Draw(MaterialBase) { }
+        public virtual void Draw(MaterialBase material) { }
     }
 }
