@@ -108,6 +108,11 @@ namespace SharpOpenGL
         {
             base.OnUpdateFrame(e);
 
+            if(this.WindowState == OpenTK.WindowState.Minimized)
+            {
+                return;
+            }
+
             //
             MainThreadQueue.Get().Execute();
 
@@ -181,7 +186,7 @@ namespace SharpOpenGL
             Transform.View = Matrix4.LookAt(Mesh.MaxVertex, Mesh.CenterVertex, Vector3.UnitY);
 
             ModelMatrix.Model = Matrix4.CreateScale(1.500f);
-            FreeCam.EyeLocation = Mesh.CenterVertex + new Vector3(Mesh.XExtent, 0, 0);            
+            FreeCam.Destination = FreeCam.EyeLocation = Mesh.CenterVertex + new Vector3(Mesh.XExtent, 0, 0);
         }
     }
 
