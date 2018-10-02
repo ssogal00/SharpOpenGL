@@ -2,9 +2,10 @@
 using System.Drawing;
 using Core;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using Core.MaterialBase;
 using Core.Texture;
+using SharpOpenGL.StaticMesh;
+using SharpOpenGL.Asset;
+using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -18,29 +19,38 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            Output.ClearColor = Color.Crimson;
+            Output.ClearColor = Color.AntiqueWhite;
 
             PostProcessMaterial = new CubemapMaterial.CubemapMaterial();
 
             cubemapTexture = new CubemapTexture();
           
             cubemapTexture.Load();
+            
+            SphereMesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
         }
 
         public override void Render()
         {
-            Output.BindAndExecute(PostProcessMaterial, () =>
+            using (var dummy = new ScopedDepthFunc(DepthFunction.Lequal))
             {
-                // 
-                PostProcessMaterial.SetUniformVarData("ViewMatrix", ref ViewMatrix);
-                PostProcessMaterial.SetTexture("texCubemap", cubemapTexture);
-                //
-                BlitToScreenSpace();
-            });
+                Output.BindAndExecute(PostProcessMaterial, () =>
+                {
+                    PostProcessMaterial.SetUniformVarData("ModelMatrix", ref ModelMatrix);
+                    PostProcessMaterial.SetUniformVarData("ViewMatrix", ref ViewMatrix);
+                    PostProcessMaterial.SetUniformVarData("ProjMatrix", ref ProjMatrix);
+                    PostProcessMaterial.SetTexture("texCubemap", cubemapTexture);
+                    SphereMesh.Draw();
+                });
+            }
         }
 
         protected CubemapTexture cubemapTexture = null;
 
         public OpenTK.Matrix4 ViewMatrix = Matrix4.Identity;
+        public OpenTK.Matrix4 ProjMatrix = Matrix4.Identity;
+        public OpenTK.Matrix4 ModelMatrix = Matrix4.Identity;
+
+        protected StaticMeshAsset SphereMesh = null;
     }
 }

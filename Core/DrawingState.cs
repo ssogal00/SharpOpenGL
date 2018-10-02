@@ -24,17 +24,67 @@ namespace Core
         private int ePrevPolygonMode = (int)PolygonMode.Fill;
     }
 
-    public class ScopedDepthDisable : IDisposable
+    public class ScopedDepthFunc : IDisposable
     {
-        public ScopedDepthDisable()
+        public ScopedDepthFunc(DepthFunction func)
         {
-            GL.Disable(EnableCap.DepthTest);
+            GL.GetInteger(GetPName.DepthFunc, out prevFunc);
+            GL.DepthFunc(func);
         }
 
         public void Dispose()
         {
-            GL.Enable(EnableCap.DepthTest);
+            GL.DepthFunc((DepthFunction)prevFunc);
         }
+
+        private int prevFunc;
+    }
+
+    public class ScopedEnable : IDisposable
+    {
+        public ScopedEnable(EnableCap enable)
+        {
+            enabled = enable;
+            GL.Enable(enable);
+        }
+
+        public void Dispose()
+        {
+            GL.Disable(enabled);
+        }
+
+        private EnableCap enabled;
+    }
+
+    public class ScopedDisable : IDisposable
+    {
+        public ScopedDisable(EnableCap disable)
+        {
+            disabled = disable;
+            GL.Disable(disabled);
+        }
+
+        public void Dispose()
+        {
+            GL.Enable(disabled);
+        }
+
+        private EnableCap disabled;
+    }
+    public class ScopedCullFace : IDisposable
+    {
+        public ScopedCullFace(CullFaceMode NewMode)
+        {
+            GL.GetInteger(GetPName.CullFaceMode, out OriginalMode);
+            GL.CullFace(NewMode);
+        }
+
+        public void Dispose()
+        {
+            GL.CullFace((CullFaceMode) OriginalMode);
+        }
+
+        private int OriginalMode = (int)CullFaceMode.Back;
     }
 
     public class ScopedBind : IDisposable

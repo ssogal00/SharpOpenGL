@@ -12,5 +12,4 @@ void main()
 {
     vec4 Color = texture(texCubemap, -CubemapTexCoord);
     FragColor = Color;
-    //FragColor = vec4(InTexCoord, 0, 0);
 }

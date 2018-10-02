@@ -71,6 +71,7 @@ namespace SharpOpenGL
             VSync = VSyncMode.Off;
 
 
+            GL.Enable(EnableCap.CullFace);
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.DepthTest);
@@ -96,7 +97,7 @@ namespace SharpOpenGL
 
             AssetManager.Get().DiscoverShader();
 
-            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/myteapot.staticmesh");
+            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
             BaseTest = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
             DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
         }
@@ -120,7 +121,9 @@ namespace SharpOpenGL
             Transform.Proj = FreeCam.Proj;
 
             // draw cubemap first
+            SkyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(FreeCam.EyeLocation);
             SkyboxPostProcess.ViewMatrix = FreeCam.View;
+            SkyboxPostProcess.ProjMatrix = FreeCam.Proj;
             SkyboxPostProcess.Render();
 
             // 
