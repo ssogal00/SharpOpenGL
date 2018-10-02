@@ -70,7 +70,7 @@ namespace SharpOpenGL
 
             VSync = VSyncMode.Off;
             
-            GL.CullFace(CullFaceMode.Back);
+            GL.CullFace(CullFaceMode.Back);            
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.TextureCubeMap);            
