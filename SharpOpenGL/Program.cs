@@ -97,7 +97,7 @@ namespace SharpOpenGL
 
             AssetManager.Get().DiscoverShader();
 
-            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
+            Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
             BaseTest = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
             DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
         }

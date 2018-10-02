@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using Core.Camera;
 using Core.Buffer;
 using Core.CustomEvent;
+using Core.MaterialBase;
 
 namespace SharpOpenGL.Scene
 {
@@ -17,6 +16,23 @@ namespace SharpOpenGL.Scene
         
         public virtual void Draw()
         {
+            foreach(var obj in SceneObjectList)
+            {
+                obj.Draw();
+            }
+        }
+
+        public virtual void Draw(MaterialBase material)
+        {
+            foreach(var obj in SceneObjectList)
+            {
+                obj.Draw(material);
+            }
+        }
+
+        public void AddSceneObject(SceneObject newSceneObject)
+        {
+            SceneObjectList.Add(newSceneObject);
         }
 
         public virtual void CreateSceneResources()
