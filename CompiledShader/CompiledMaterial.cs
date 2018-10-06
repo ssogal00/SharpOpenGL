@@ -781,5 +781,157 @@ void main()
 	}
 }
 }
+namespace MSGBufferMaterial
+{
+
+public class MSGBufferMaterial : MaterialBase
+{
+	public MSGBufferMaterial() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450 core
+
+uniform ModelTransform
+{
+	mat4x4 Model;
+};
+
+uniform CameraTransform
+{
+	mat4x4 View;
+	mat4x4 Proj;
+};
+
+uniform mat4 NormalMatrix;
+
+uniform vec3 Value;
+
+
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec3 VertexNormal;
+layout(location=2) in vec2 TexCoord;
+layout(location=3) in vec4 Tangent;
+
+
+layout(location=0) out vec4 OutPosition;
+layout(location=1) out vec2 OutTexCoord;
+layout(location=2) out vec3 OutNormal;
+layout(location=3) out vec3 OutTangent;
+layout(location=4) out vec3 OutBinormal;
+
+  
+void main()
+{	
+	mat4 ModelView = View * Model;
+
+	OutTexCoord = TexCoord;
+	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
+	OutPosition =   (ModelView * vec4(VertexPosition, 1));
+	
+	OutNormal =  normalize(mat3(ModelView) * VertexNormal);	
+
+	OutTangent = normalize(mat3(ModelView) * vec3(Tangent));
+
+	vec3 binormal = (cross( VertexNormal, Tangent.xyz )) * Tangent.w;
+	OutBinormal = normalize(mat3(ModelView) * binormal);	
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"
+#version 450 core
+
+
+layout(location=0) in vec4 InPosition;
+layout(location=1) in vec2 InTexCoord;
+layout(location=2) in vec3 InNormal;
+layout(location=3) in vec3 InTangent;
+layout(location=4) in vec3 InBinormal;
+
+
+layout (location = 0) out vec4 PositionColor;
+layout (location = 1) out vec4 DiffuseColor;
+layout (location = 2) out vec4 NormalColor;
+
+layout (location = 0, binding=0) uniform sampler2DMS DiffuseTex;
+layout (location = 1, binding=1) uniform sampler2DMS NormalTex;
+layout (location = 2, binding=2) uniform sampler2DMS MaskTex;
+layout (location = 3, binding=3) uniform sampler2DMS SpecularTex;
+
+uniform int SpecularMapExist;
+uniform int MaskMapExist;
+uniform int NormalMapExist;
+
+void main()
+{   
+    ivec2 TexCoord = ivec2(InTexCoord);
+    if(MaskMapExist > 0)
+    {
+        vec4 MaskValue = texelFetch(MaskTex, TexCoord,0);
+    	if(MaskValue.x > 0)
+    	{
+    		DiffuseColor = texelFetch(DiffuseTex, TexCoord,0);            
+    	}
+    	else
+    	{
+    		discard;
+    	}
+    }
+    else
+    {
+    	DiffuseColor = texelFetch(DiffuseTex, TexCoord,0);
+    }
+
+    if(InPosition.w == 0)
+    {
+        DiffuseColor = vec4(1,0,0,0);
+    }
+
+    mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
+								    InBinormal.x, InBinormal.y, InBinormal.z, 
+								    InNormal.x, InNormal.y, InNormal.z);
+
+    if(NormalMapExist > 0)
+    {
+        vec3 NormalMapNormal = (2.0f * (texelFetch( NormalTex, TexCoord,0 ).xyz) - vec3(1.0f));
+	    vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
+	
+        NormalColor.xyz = BumpNormal.xyz;
+    }
+    else
+    {
+        NormalColor.xyz = InNormal.xyz;
+    }
+
+    if(SpecularMapExist > 0)
+    {
+        NormalColor.a = texelFetch(SpecularTex, TexCoord,0).x;
+    }
+    else
+    {
+        NormalColor.a = 0;
+    }
+
+    PositionColor = InPosition;
+}";
+	}
+}
+}
 
 }

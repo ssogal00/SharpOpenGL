@@ -8,4 +8,5 @@
 	<Material name="Blur" vertexShader="Blur.vs" fragmentShader="Blur.fs"/>
 	<Material name="LightMaterial" vertexShader="DeferredLight.vs" fragmentShader="DeferredLight.fs"/>
 	<Material name="CubemapMaterial" vertexShader="Cubemap.vs" fragmentShader="Cubemap.fs"/>
+	<Material name="MSGBufferMaterial" vertexShader="MultisampleGBuffer.vs" fragmentShader="MultisampleGBuffer.fs"/>
 </MaterialList>

@@ -42,7 +42,8 @@ namespace SharpOpenGL
         protected StaticMeshAsset Mesh = null;
         protected Task<StaticMeshAsset> MeshLoadTask = null;
         protected Task<StaticMeshAsset> MeshLoadTask2 = null;
-        protected GBuffer MyGBuffer = new GBuffer(1024, 768);
+        protected GBuffer MyGBuffer = new GBuffer(1024,768);
+        protected MultisampleGBuffer multisampleGBuffer = new MultisampleGBuffer(1024,768);
 
         public event EventHandler<EventArgs> OnResourceCreate;
         public event EventHandler<ScreenResizeEventArgs> OnWindowResize;

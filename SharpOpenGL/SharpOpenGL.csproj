@@ -140,6 +140,8 @@
     <None Include="Shader\DeferredLight.vs" />
     <None Include="Shader\GBuffer.fs" />
     <None Include="Shader\GBuffer.vs" />
+    <None Include="Shader\MultisampleGBuffer.fs" />
+    <None Include="Shader\MultisampleGBuffer.vs" />
     <None Include="Shader\Screen.fs" />
     <None Include="Shader\Screen.vs" />
     <None Include="Shader\TestShader.vs" />

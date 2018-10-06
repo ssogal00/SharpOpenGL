@@ -110,7 +110,7 @@ namespace Core.Camera
             if(span.TotalSeconds < 1)
             {
                 MoveAcc++;
-                MoveAcc = Math.Min(MoveAcc, 4);
+                MoveAcc = Math.Min(MoveAcc, 6);
             }
 
             LastKeyStrokeTime = DateTime.Now;

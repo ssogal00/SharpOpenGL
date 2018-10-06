@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 using Core.Texture;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace Core.Buffer
 {
     public class MultisampleGBuffer : GBuffer
     {
+        public MultisampleGBuffer(int width, int height)
+        : base(width, height)
+        {
+        }
+
         protected override void CreateGBuffer()
         {
             FrameBufferObject = new FrameBuffer("GBuffer Framebuffer");
