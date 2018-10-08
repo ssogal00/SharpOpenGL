@@ -56,7 +56,22 @@ namespace Core.Camera
 
         public override void UpdateViewMatrix()
         {
-            ViewMatrix = Matrix4.LookAt(EyeLocation, LookAtLocation, Vector3.UnitY);
+            var dir = (LookAtLocation - EyeLocation).Normalized();
+            var right = Vector3.Cross(dir, Vector3.UnitY).Normalized();
+            var up = Vector3.Cross(right, dir).Normalized();
+
+            Matrix3 test = new Matrix3();
+            test.Row0 = right;
+            test.Row1 = up;
+            test.Row2 = dir;
+
+            test = test * Matrix3.CreateRotationY(OpenTK.MathHelper.DegreesToRadians(180));
+
+            ViewMatrix.Row0 = new Vector4(test.Row0,0);
+            ViewMatrix.Row1 = new Vector4(test.Row1, 0);
+            ViewMatrix.Row2 = new Vector4(test.Row2, 0);
+            ViewMatrix.Row3 = new Vector4(EyeLocation,1);
+            ViewMatrix.Invert();
         }
 
         public override void MoveForward()
