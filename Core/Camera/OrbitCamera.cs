@@ -26,6 +26,14 @@ namespace Core.Camera
             {
                 MoveBackward();
             }
+            else if(e.KeyCode == Keys.A)
+            {
+                RotateLeft();
+            }
+            else if(e.KeyCode == Keys.D)
+            {
+                RotateRight();
+            }
         }
 
         public override void Tick(double fDeltaSeconds)
@@ -63,6 +71,16 @@ namespace Core.Camera
             var vDir = (LookAtLocation - EyeLocation).Normalized();
             EyeLocation = vDir * (-MoveAmount) + EyeLocation;
             UpdateViewMatrix();
+        }
+
+        public override void RotateRight()
+        {
+            
+        }
+
+        public override void RotateLeft()
+        {
+            
         }
 
         public float CameraDistance = 10;

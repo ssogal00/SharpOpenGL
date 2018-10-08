@@ -25,7 +25,7 @@ namespace SharpOpenGL
     {
         protected CameraBase CurrentCam = null;
         protected FreeCamera  FreeCam = new FreeCamera();
-        protected OrbitCamera OribitCam = new OrbitCamera();
+        protected OrbitCamera OrbitCam = new OrbitCamera();
 
         protected GBufferDraw.ModelTransform ModelMatrix = new GBufferDraw.ModelTransform();
         protected GBufferDraw.CameraTransform Transform = new GBufferDraw.CameraTransform();
@@ -63,6 +63,8 @@ namespace SharpOpenGL
         {
             mainThreadId = Thread.CurrentThread.ManagedThreadId;
 
+            CurrentCam = FreeCam;
+
             OpenGLContext.Get().SetGameWindow(this);
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
@@ -94,6 +96,9 @@ namespace SharpOpenGL
             ScreenBlit.SetGridSize(2, 2);
 
             OnKeyDownEvent += FreeCam.OnKeyDown;
+            OnKeyDownEvent += OrbitCam.OnKeyDown;
+            OnKeyDownEvent += this.HandleKeyDownEvent;
+            
             OnKeyUpEvent += FreeCam.OnKeyUp;
 
             AssetManager.Get().DiscoverShader();
@@ -105,6 +110,21 @@ namespace SharpOpenGL
 
         protected void ResourceCreate(object sender, EventArgs e)
         {
+        }
+
+        protected void SwitchCameraMode()
+        {
+            // 
+            if(CurrentCam == FreeCam)
+            {
+                OrbitCam.EyeLocation = FreeCam.EyeLocation;
+                OrbitCam.LookAtLocation = FreeCam.EyeLocation + FreeCam.GetLookAtDir() * 30.0f;
+                CurrentCam = OrbitCam;
+            }
+            else
+            {
+                CurrentCam = FreeCam;
+            }
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -122,14 +142,14 @@ namespace SharpOpenGL
             TickableObjectManager.Tick(e.Time);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-            Transform.View = FreeCam.View;
-            Transform.Proj = FreeCam.Proj;
+            
+            Transform.View = CurrentCam.View;
+            Transform.Proj = CurrentCam.Proj;
 
             // draw cubemap first
-            SkyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(FreeCam.EyeLocation);
-            SkyboxPostProcess.ViewMatrix = FreeCam.View;
-            SkyboxPostProcess.ProjMatrix = FreeCam.Proj;
+            SkyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CurrentCam.EyeLocation);
+            SkyboxPostProcess.ViewMatrix = CurrentCam.View;
+            SkyboxPostProcess.ProjMatrix = CurrentCam.Proj;
             SkyboxPostProcess.Render();
 
             // 
@@ -159,6 +179,14 @@ namespace SharpOpenGL
             base.OnKeyDown(e);
 
             OnKeyDownEvent(this, e);
+        }
+
+        public void HandleKeyDownEvent(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            if(e.Key == Key.F1)
+            {
+                SwitchCameraMode();
+            }
         }
 
         protected override void OnKeyUp(OpenTK.Input.KeyboardKeyEventArgs e)

@@ -27,6 +27,11 @@ namespace Core.Camera
             EyeLocation = new Vector3(5, 5, 5);
             Destination = EyeLocation;
         }
+
+        public Vector3 GetLookAtDir()
+        {
+            return m_RotationMatrix.Row2;
+        }
         
         public override void MoveForward()
         {
@@ -72,12 +77,12 @@ namespace Core.Camera
             Destination = EyeLocation - vMove;
         }
 
-        public void RotateRight()
+        public override void RotateRight()
         {
             Yaw -= m_fRotateAmount;
         }
 
-        public void RotateLeft()
+        public override void RotateLeft()
         {
             Yaw += m_fRotateAmount;
         }
