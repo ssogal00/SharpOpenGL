@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenTK;
 
 namespace Core
 {
     public static class Extension
     {
+        
         public static void BindAndExecute(this IBindable bindable, Action action)
         {
             bindable.Bind();
@@ -97,3 +97,4 @@ namespace Core
         }
     }
 }
+

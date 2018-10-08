@@ -200,6 +200,7 @@ namespace Core.Camera
         protected float Elapsed = 0;
 
         bool bMoving = false;
+        bool bRotating = false;
 
         int SpeedIndex = 0;
 

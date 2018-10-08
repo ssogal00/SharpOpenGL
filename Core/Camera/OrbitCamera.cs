@@ -63,20 +63,38 @@ namespace Core.Camera
         {
             var vDir = (LookAtLocation - EyeLocation).Normalized();
 
-            EyeLocation = vDir * MoveAmount + EyeLocation;
-            UpdateViewMatrix();
+            DestEyeLocation = vDir * MoveAmount + EyeLocation;
         }
 
         public override void MoveBackward()
         {
-            var vDir = (LookAtLocation - EyeLocation).Normalized();
-            EyeLocation = vDir * (-MoveAmount) + EyeLocation;
-            UpdateViewMatrix();
+            var vDir = -(LookAtLocation - EyeLocation).Normalized();
+
+            DestEyeLocation = vDir * MoveAmount + EyeLocation;
         }
 
         public override void RotateRight()
         {
+            Yaw += OpenTK.MathHelper.DegreesToRadians(3.0f);
+
+            var distance = (float)(LookAtLocation - EyeLocation).Length;
+
+            var current = new Vector4(LookAtLocation, 1.0f);
+
+            var rotmatrix = Matrix4.CreateRotationY(Yaw);
             
+            var transmatrix = Matrix4.CreateTranslation(distance, 0, 0);
+
+            var translation = new Vector4(distance, 0, 0, 0) * rotmatrix;
+
+            var length = translation.Length;
+
+            Console.WriteLine(length);
+
+            DestEyeLocation = EyeLocation = LookAtLocation + translation.Xyz;
+
+            Console.WriteLine("Eye {0} {1} {2}", EyeLocation.X, EyeLocation.Y, EyeLocation.Z);
+            Console.WriteLine("LookAt {0} {1} {2}", LookAtLocation.X, LookAtLocation.Y, LookAtLocation.Z);
         }
 
         public override void RotateLeft()
@@ -113,5 +131,7 @@ namespace Core.Camera
         }
 
         protected Vector3 DestEyeLocation = new Vector3();
+
+        protected float Yaw = 0;
     }    
 }

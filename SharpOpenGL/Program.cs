@@ -117,7 +117,7 @@ namespace SharpOpenGL
             if(CurrentCam == FreeCam)
             {
                 OrbitCam.DestLocation = OrbitCam.EyeLocation = FreeCam.EyeLocation;
-                OrbitCam.LookAtLocation = FreeCam.EyeLocation + FreeCam.GetLookAtDir() * 100.0f;
+                OrbitCam.LookAtLocation = FreeCam.EyeLocation + FreeCam.GetLookAtDir() * 50.0f;
                 OrbitCam.AspectRatio = FreeCam.AspectRatio;
                 OrbitCam.FOV = FreeCam.FOV;
                 CurrentCam = OrbitCam;
@@ -193,6 +193,14 @@ namespace SharpOpenGL
             if(e.Key == Key.F1)
             {
                 SwitchCameraMode();
+            }
+            else if(e.Key == Key.F2)
+            {
+                CurrentCam.FOV += OpenTK.MathHelper.DegreesToRadians(1.0f);
+            }
+            else if(e.Key == Key.F3)
+            {
+                CurrentCam.FOV -= OpenTK.MathHelper.DegreesToRadians(1.0f);
             }
         }
 

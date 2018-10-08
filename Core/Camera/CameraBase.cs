@@ -60,7 +60,7 @@ namespace Core.Camera
         public virtual void RotateLeft() { }
         public virtual void UpdateViewMatrix()
         {
-            ViewMatrix = Matrix4.LookAt(EyeLocation, EyeLocation + Vector3.Multiply(LookAtDir ,1.0f), Vector3.UnitY);
+            
         }
 
         public virtual void UpdateProjMatrix()
