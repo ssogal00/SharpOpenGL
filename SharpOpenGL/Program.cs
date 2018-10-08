@@ -48,7 +48,8 @@ namespace SharpOpenGL
         public event EventHandler<EventArgs> OnResourceCreate;
         public event EventHandler<ScreenResizeEventArgs> OnWindowResize;
 
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyEvent;
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyDownEvent;
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyUpEvent;
 
         protected BlitToScreen ScreenBlit = new BlitToScreen();
 
@@ -92,7 +93,8 @@ namespace SharpOpenGL
 
             ScreenBlit.SetGridSize(2, 2);
 
-            OnKeyEvent += FreeCam.OnKeyDown;
+            OnKeyDownEvent += FreeCam.OnKeyDown;
+            OnKeyUpEvent += FreeCam.OnKeyUp;
 
             AssetManager.Get().DiscoverShader();
 
@@ -156,7 +158,14 @@ namespace SharpOpenGL
         {
             base.OnKeyDown(e);
 
-            OnKeyEvent(this, e);
+            OnKeyDownEvent(this, e);
+        }
+
+        protected override void OnKeyUp(OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            base.OnKeyUp(e);
+
+            OnKeyUpEvent(this, e);
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)

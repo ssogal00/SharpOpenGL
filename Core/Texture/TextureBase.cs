@@ -20,6 +20,10 @@ namespace Core.Texture
                 textureObject = -1;
             }
         }
+        public virtual void Load(string path)
+        {
+
+        }
 
         public virtual void Bind()
         {

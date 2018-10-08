@@ -29,8 +29,6 @@ namespace SharpOpenGL.Scene
         {
             base.CreateSceneResources();
 
-            
-
             gbufferDrawMaterial = new GBufferDraw.GBufferDraw();
 
             lightPostProcess = new DeferredLight();

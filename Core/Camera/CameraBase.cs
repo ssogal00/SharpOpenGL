@@ -79,6 +79,12 @@ namespace Core.Camera
         public virtual void OnKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         { }
 
+        public virtual void OnKeyUp(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+        { }
+
+        public virtual void OnKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+        { }
+
         public virtual void OnWindowResized(object sender, ScreenResizeEventArgs eventArgs)
         {
             var Width = eventArgs.Width;

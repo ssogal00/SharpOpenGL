@@ -13,6 +13,5 @@ namespace Core.Texture
         {
             GL.CreateTextures(TextureTarget.Texture2DMultisample, 1, out textureObject);
         }
-
     }
 }

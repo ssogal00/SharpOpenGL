@@ -22,7 +22,7 @@ namespace Core.Texture
             }
         }
 
-        public void Load(string FilePath)
+        public override void Load(string FilePath)
         {
             using (var bitmap = new ScopedFreeImage(FilePath))
             {

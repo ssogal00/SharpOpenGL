@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Input;
 
 namespace Core.Camera
 {
@@ -29,7 +30,6 @@ namespace Core.Camera
         
         public override void MoveForward()
         {
-            UpdateMoveKeyStrokeCount();
             var vMoveDir = m_RotationMatrix.Row2;
             var vMove = Vector3.Multiply(vMoveDir, GetMoveAmount());
             Destination = EyeLocation + vMove;
@@ -37,7 +37,6 @@ namespace Core.Camera
 
         public override void MoveBackward()
         {
-            UpdateMoveKeyStrokeCount();
             var vMoveDir = m_RotationMatrix.Row2;
             var vMove = Vector3.Multiply(vMoveDir, GetMoveAmount());
             Destination = EyeLocation - vMove;
@@ -45,7 +44,7 @@ namespace Core.Camera
 
         public override void MoveRight()
         {
-            UpdateMoveKeyStrokeCount();
+         
             var RightDir = m_RotationMatrix.Row0;
             var vMove = Vector3.Multiply(RightDir, GetMoveAmount());
             Destination = EyeLocation - vMove;
@@ -53,7 +52,7 @@ namespace Core.Camera
 
         public override void MoveLeft()
         {
-            UpdateMoveKeyStrokeCount();
+         
             var RightDir = m_RotationMatrix.Row0;
             var vMove = Vector3.Multiply(RightDir, GetMoveAmount());
             Destination = EyeLocation + vMove;
@@ -61,14 +60,14 @@ namespace Core.Camera
 
         public override void MoveUpward()
         {
-            UpdateMoveKeyStrokeCount();
+         
             var vMove = Vector3.Multiply(UpDir, GetMoveAmount());
             Destination = EyeLocation + vMove;
         }
 
         public override void MoveDownward()
         {
-            UpdateMoveKeyStrokeCount();
+         
             var vMove = Vector3.Multiply(UpDir, GetMoveAmount());
             Destination = EyeLocation - vMove;
         }
@@ -83,55 +82,50 @@ namespace Core.Camera
             Yaw += m_fRotateAmount;
         }
 
-        public override void OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.W)
-            {
-                MoveForward();
-            }
-            else if(e.KeyCode == Keys.S)
-            {
-                MoveBackward();
-            }
-            else if (e.KeyCode == Keys.E)
-            {
-                RotateRight();
-            }
-            else if (e.KeyCode == Keys.Q)
-            {
-                RotateLeft();
-            }
-        }
-
-        private void UpdateMoveKeyStrokeCount()
+        private void UpdateMoveSpeed()
         {
             TimeSpan span = DateTime.Now - LastKeyStrokeTime;
 
-            if(span.TotalSeconds < 1)
+            if(span.TotalSeconds < 0.1)
             {
-                MoveAcc++;
-                MoveAcc = Math.Min(MoveAcc, 6);
+                SpeedIndex++;
+                SpeedIndex = Math.Min(SpeedIndex, SpeedList.Count - 1);
             }
-
             LastKeyStrokeTime = DateTime.Now;
         }
 
         private float GetMoveAmount()
         {
-            return (float) Math.Exp((double)MoveAcc);
+            return 30.0f;
+        }
+
+        public override void OnKeyUp(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            if(MoveKeys.Contains(e.Key))
+            {
+                bMoving = false;
+                SpeedIndex = 0;
+            }
         }
 
         public override void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
         {
+            if (MoveKeys.Contains(e.Key))
+            {
+                MoveStarted = EyeLocation;
+                bMoving = true;
+                UpdateMoveSpeed();
+            }
+
             if(e.Key == OpenTK.Input.Key.W)
             {
-                MoveForward();
+                MoveForward();                
             }
             else if(e.Key == OpenTK.Input.Key.S)
             {
                 MoveBackward();
             }
-            else if(e.Key == OpenTK.Input.Key.D)
+            else if (e.Key == OpenTK.Input.Key.D)
             {
                 MoveRight();
             }
@@ -159,22 +153,22 @@ namespace Core.Camera
 
         public override void Tick(double fDeltaSeconds)
         {
-            if( (Destination - EyeLocation).Length > 1 )
+            if(bMoving)
             {
-                Elapsed = Math.Max(Elapsed, 0.01f);
-                EyeLocation += (Destination - EyeLocation) * (MoveSeconds / Elapsed);
-                Elapsed += (float) fDeltaSeconds;
-                bMoving = true;
+                Elapsed += (float)fDeltaSeconds;
+                var vDir = (Destination - MoveStarted);
+                vDir.Normalize();
+                EyeLocation += vDir * (float)fDeltaSeconds * SpeedList[SpeedIndex];
             }
             else
             {
-                EyeLocation = Destination;
+                Elapsed = 0;
                 bMoving = false;
             }
 
             if((DateTime.Now - LastKeyStrokeTime).TotalSeconds > 1)
             {
-                MoveAcc = 0;
+                SpeedIndex = 0;
             }
 
             UpdateViewMatrix();
@@ -199,13 +193,19 @@ namespace Core.Camera
 
         public Vector3 Destination;
 
-        protected float MoveSeconds = 0.3f;
+        protected Vector3 MoveStarted;
+
+        protected float MoveSeconds = 0.1f;
 
         protected float Elapsed = 0;
 
         bool bMoving = false;
 
-        int MoveAcc = 0;
+        int SpeedIndex = 0;
+
+        protected List<float> SpeedList = new List<float> {32,64,128,256,512,1024};
+
+        private List<OpenTK.Input.Key> MoveKeys = new List<OpenTK.Input.Key>{ Key.W, Key.A, Key.S, Key.D, Key.Z, Key.X };
 
         DateTime LastKeyStrokeTime;
     }
