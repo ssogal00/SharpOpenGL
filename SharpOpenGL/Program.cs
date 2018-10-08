@@ -95,8 +95,7 @@ namespace SharpOpenGL
 
             ScreenBlit.SetGridSize(2, 2);
 
-            OnKeyDownEvent += FreeCam.OnKeyDown;
-            OnKeyDownEvent += OrbitCam.OnKeyDown;
+            OnKeyDownEvent += FreeCam.OnKeyDown;            
             OnKeyDownEvent += this.HandleKeyDownEvent;
             
             OnKeyUpEvent += FreeCam.OnKeyUp;
@@ -117,13 +116,21 @@ namespace SharpOpenGL
             // 
             if(CurrentCam == FreeCam)
             {
-                OrbitCam.EyeLocation = FreeCam.EyeLocation;
-                OrbitCam.LookAtLocation = FreeCam.EyeLocation + FreeCam.GetLookAtDir() * 30.0f;
+                OrbitCam.DestLocation = OrbitCam.EyeLocation = FreeCam.EyeLocation;
+                OrbitCam.LookAtLocation = FreeCam.EyeLocation + FreeCam.GetLookAtDir() * 100.0f;
+                OrbitCam.AspectRatio = FreeCam.AspectRatio;
+                OrbitCam.FOV = FreeCam.FOV;
                 CurrentCam = OrbitCam;
+
+                OnKeyDownEvent -= FreeCam.OnKeyDown;
+                OnKeyDownEvent += OrbitCam.OnKeyDown;
             }
             else
             {
                 CurrentCam = FreeCam;
+
+                OnKeyDownEvent -= OrbitCam.OnKeyDown;
+                OnKeyDownEvent += FreeCam.OnKeyDown;
             }
         }
 

@@ -2,6 +2,7 @@
 using System;
 using Core.CustomEvent;
 using System.Windows.Forms;
+using OpenTK.Input;
 
 namespace Core.Camera
 {
@@ -16,21 +17,21 @@ namespace Core.Camera
         {            
         }
 
-        public override void OnKeyDown(object sender, KeyEventArgs e)
+        public override void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
         {
-            if(e.KeyCode == Keys.W)
+            if(e.Key == OpenTK.Input.Key.W)
             {
                 MoveForward();
             }
-            else if(e.KeyCode == Keys.S)
+            else if(e.Key == OpenTK.Input.Key.S)
             {
                 MoveBackward();
             }
-            else if(e.KeyCode == Keys.A)
+            else if(e.Key == OpenTK.Input.Key.A)
             {
                 RotateLeft();
             }
-            else if(e.KeyCode == Keys.D)
+            else if(e.Key == OpenTK.Input.Key.D)
             {
                 RotateRight();
             }
