@@ -156,5 +156,8 @@ public struct ModelTransform
 namespace MSGBufferMaterial
 {
 }
+namespace DepthVisualizeMaterial
+{
+}
 
 }

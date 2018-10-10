@@ -93,6 +93,7 @@
     <Compile Include="Light\SpotLight.cs" />
     <Compile Include="MainThreadQueue.cs" />
     <Compile Include="PostProcess\DeferredLight.cs" />
+    <Compile Include="PostProcess\DepthVisualize.cs" />
     <Compile Include="PostProcess\Skybox.cs" />
     <Compile Include="RenderCommand.cs" />
     <Compile Include="Material.cs" />

@@ -933,5 +933,71 @@ void main()
 	}
 }
 }
+namespace DepthVisualizeMaterial
+{
+
+public class DepthVisualizeMaterial : MaterialBase
+{
+	public DepthVisualizeMaterial() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"ColorTex", TextureObject);
+	}
+
+	public void SetColorTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"ColorTex", TextureObject);
+	}
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450 core
+
+
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec2 TexCoord;
+
+out vec2 OutTexCoord;
+  
+void main()
+{	
+	OutTexCoord = TexCoord;	    
+	gl_Position = vec4(VertexPosition.xyz, 1.0);
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"
+#version 450 core
+
+in vec2 OutTexCoord;
+
+uniform sampler2D ColorTex;
+
+out vec4 FragColor;
+
+void main() 
+{      
+
+    FragColor = texture(ColorTex, OutTexCoord);    
+}";
+	}
+}
+}
 
 }

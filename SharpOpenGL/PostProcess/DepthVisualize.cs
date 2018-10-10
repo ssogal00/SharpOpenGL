@@ -9,5 +9,7 @@ namespace SharpOpenGL.PostProcess
         public DepthVisualize ()
             :base()
         { }
+
+
     }
 }
