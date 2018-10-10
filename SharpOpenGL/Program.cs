@@ -216,6 +216,7 @@ namespace SharpOpenGL
             {
                 CurrentCam.FOV -= OpenTK.MathHelper.DegreesToRadians(1.0f);
             }
+
         }
 
         protected override void OnKeyUp(OpenTK.Input.KeyboardKeyEventArgs e)

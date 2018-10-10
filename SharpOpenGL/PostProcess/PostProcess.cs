@@ -62,6 +62,8 @@ namespace SharpOpenGL.PostProcess
             return Output;
         }
 
+        public RenderTarget OutputRenderTarget => Output;
+
         protected RenderTarget Output = new RenderTarget(1024, 768, 1);
 
         protected Core.MaterialBase.MaterialBase PostProcessMaterial = null;
