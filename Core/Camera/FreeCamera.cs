@@ -39,10 +39,6 @@ namespace Core.Camera
             {
                 return (m_RotationMatrix.Row2 - m_RotationMatrix.Row0).Normalized();
             }
-            else if (MoveKeyDictionary[Key.W])
-            {
-                return (m_RotationMatrix.Row2).Normalized();
-            }
             else if (MoveKeyDictionary[Key.S] && MoveKeyDictionary[Key.A])
             {
                 return (-m_RotationMatrix.Row2 + m_RotationMatrix.Row0).Normalized();
@@ -51,6 +47,10 @@ namespace Core.Camera
             {
                 return (-m_RotationMatrix.Row2 - m_RotationMatrix.Row0).Normalized();
             }
+            else if (MoveKeyDictionary[Key.W])
+            {
+                return (m_RotationMatrix.Row2).Normalized();
+            }            
             else if(MoveKeyDictionary[Key.S])
             {
                 return -m_RotationMatrix.Row2;
@@ -63,8 +63,16 @@ namespace Core.Camera
             {
                 return -m_RotationMatrix.Row0;
             }
+            else if(MoveKeyDictionary[Key.Z])
+            {
+                return Vector3.UnitY;
+            }
+            else if(MoveKeyDictionary[Key.X])
+            {
+                return -Vector3.UnitY;
+            }
 
-                return Vector3.UnitX;
+            return Vector3.UnitX;
         }
 
         protected void Move()
