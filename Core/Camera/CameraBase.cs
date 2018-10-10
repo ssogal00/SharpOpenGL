@@ -54,10 +54,12 @@ namespace Core.Camera
         public virtual void MoveUpward() {}
 
         public virtual void MoveDownward() {}
-
         public virtual void RotateRight() { }
-
         public virtual void RotateLeft() { }
+
+        public virtual void RotatePitchDownward() { }
+        public virtual void RotatePitchUpward() { }
+
         public virtual void UpdateViewMatrix()
         {
             

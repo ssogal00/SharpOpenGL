@@ -35,15 +35,19 @@ namespace Core.Camera
             {
                 RotateRight();
             }
+            else if(e.Key == Key.Q)
+            {
+                RotatePitchDownward();
+            }
         }
 
         public override void Tick(double fDeltaSeconds)
         {
-            var vDir = (DestEyeLocation - EyeLocation).Normalized();
+            var vDir = (DestEyeLocation - EyeLocation);
 
             if(vDir.Length > 1)
             {
-                EyeLocation = vDir * 0.01f + EyeLocation;                
+                EyeLocation = vDir * 0.01f + EyeLocation;
             }
             else
             {
@@ -61,49 +65,55 @@ namespace Core.Camera
 
         public override void MoveForward()
         {
-            var vDir = (LookAtLocation - EyeLocation).Normalized();
+            var vDir = (EyeLocation - LookAtLocation).Normalized();
 
-            DestEyeLocation = vDir * MoveAmount + EyeLocation;
+            DistanceToLookAt -= MoveAmount;
+            DistanceToLookAt = Math.Max(DistanceToLookAt, 1);
+
+            DestEyeLocation = LookAtLocation + DistanceToLookAt * vDir;
         }
 
         public override void MoveBackward()
         {
-            var vDir = -(LookAtLocation - EyeLocation).Normalized();
+            var vDir = (EyeLocation - LookAtLocation).Normalized();
 
-            DestEyeLocation = vDir * MoveAmount + EyeLocation;
+            DistanceToLookAt += MoveAmount;
+
+            DestEyeLocation = LookAtLocation + DistanceToLookAt * vDir;
+        }
+
+        private Vector3 GetDestEyeLocation()
+        {
+            var current = new Vector4(LookAtLocation, 1.0f);
+            var rotmatrix = Matrix4.CreateRotationX(Pitch) * Matrix4.CreateRotationY(Yaw);
+            var translation = rotmatrix * new Vector4(DistanceToLookAt, 0, 0, 1);
+
+            return LookAtLocation + translation.Xyz;
         }
 
         public override void RotateRight()
         {
             Yaw += OpenTK.MathHelper.DegreesToRadians(3.0f);
-
-            var distance = (float)(LookAtLocation - EyeLocation).Length;
-
-            var current = new Vector4(LookAtLocation, 1.0f);
-
-            var rotmatrix = Matrix4.CreateRotationY(Yaw);
-            
-            var transmatrix = Matrix4.CreateTranslation(distance, 0, 0);
-
-            var translation = new Vector4(distance, 0, 0, 0) * rotmatrix;
-
-            var length = translation.Length;
-
-            Console.WriteLine(length);
-
-            DestEyeLocation = EyeLocation = LookAtLocation + translation.Xyz;
-
-            Console.WriteLine("Eye {0} {1} {2}", EyeLocation.X, EyeLocation.Y, EyeLocation.Z);
-            Console.WriteLine("LookAt {0} {1} {2}", LookAtLocation.X, LookAtLocation.Y, LookAtLocation.Z);
+            DestEyeLocation = GetDestEyeLocation();
         }
 
         public override void RotateLeft()
         {
-            
+            Yaw -= OpenTK.MathHelper.DegreesToRadians(3.0f);
+            DestEyeLocation = GetDestEyeLocation();
         }
 
-        public float CameraDistance = 10;
-        public float DestCameraDistance = 10;
+        public override void RotatePitchDownward()
+        {
+            Pitch -= OpenTK.MathHelper.DegreesToRadians(3.0f);
+            DestEyeLocation = GetDestEyeLocation();
+        }
+
+        public override void RotatePitchUpward()
+        {
+            Pitch += OpenTK.MathHelper.DegreesToRadians(3.0f);
+            DestEyeLocation = GetDestEyeLocation();
+        }
 
         protected float MoveAmount = 1.0f;
 
@@ -133,5 +143,12 @@ namespace Core.Camera
         protected Vector3 DestEyeLocation = new Vector3();
 
         protected float Yaw = 0;
+        protected float Pitch = 0;
+        
+        public void SetDistanceToLookAt(float newValue)
+        {
+            DistanceToLookAt = newValue;
+        }
+        protected float DistanceToLookAt = 50.0f;
     }    
 }

@@ -120,6 +120,7 @@ namespace SharpOpenGL
             {
                 OrbitCam.DestLocation = OrbitCam.EyeLocation = FreeCam.EyeLocation;
                 OrbitCam.LookAtLocation = FreeCam.EyeLocation + FreeCam.GetLookAtDir() * 50.0f;
+                OrbitCam.SetDistanceToLookAt(50.0f);
                 OrbitCam.AspectRatio = FreeCam.AspectRatio;
                 OrbitCam.FOV = FreeCam.FOV;
                 CurrentCam = OrbitCam;
