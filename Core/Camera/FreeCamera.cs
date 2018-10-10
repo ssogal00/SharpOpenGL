@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Input;
+using Core;
 
 namespace Core.Camera
 {
@@ -26,6 +27,51 @@ namespace Core.Camera
         public Vector3 GetLookAtDir()
         {
             return m_RotationMatrix.Row2;
+        }
+
+        private Vector3 GetMoveDirection()
+        {
+            if (MoveKeyDictionary[Key.W] && MoveKeyDictionary[Key.A])
+            {
+                return (m_RotationMatrix.Row2 + m_RotationMatrix.Row0).Normalized();
+            }
+            else if (MoveKeyDictionary[Key.W] && MoveKeyDictionary[Key.D])
+            {
+                return (m_RotationMatrix.Row2 - m_RotationMatrix.Row0).Normalized();
+            }
+            else if (MoveKeyDictionary[Key.W])
+            {
+                return (m_RotationMatrix.Row2).Normalized();
+            }
+            else if (MoveKeyDictionary[Key.S] && MoveKeyDictionary[Key.A])
+            {
+                return (-m_RotationMatrix.Row2 + m_RotationMatrix.Row0).Normalized();
+            }
+            else if (MoveKeyDictionary[Key.S] && MoveKeyDictionary[Key.D])
+            {
+                return (-m_RotationMatrix.Row2 - m_RotationMatrix.Row0).Normalized();
+            }
+            else if(MoveKeyDictionary[Key.S])
+            {
+                return -m_RotationMatrix.Row2;
+            }
+            else if(MoveKeyDictionary[Key.A])
+            {
+                return m_RotationMatrix.Row0;
+            }
+            else if(MoveKeyDictionary[Key.D])
+            {
+                return -m_RotationMatrix.Row0;
+            }
+
+                return Vector3.UnitX;
+        }
+
+        protected void Move()
+        {
+            var vMoveDir = GetMoveDirection();
+            var vMove = Vector3.Multiply(vMoveDir, GetMoveAmount());
+            Destination = EyeLocation + vMove;
         }
         
         public override void MoveForward()
@@ -106,6 +152,11 @@ namespace Core.Camera
                 bMoving = false;
                 SpeedIndex = 0;
             }
+
+            if(MoveKeyDictionary.ContainsKey(e.Key))
+            {
+                MoveKeyDictionary[e.Key] = false;
+            }
         }
 
         public override void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
@@ -117,31 +168,13 @@ namespace Core.Camera
                 UpdateMoveSpeed();
             }
 
-            if(e.Key == OpenTK.Input.Key.W)
+            if(MoveKeyDictionary.ContainsKey(e.Key))
             {
-                MoveForward();                
+                MoveKeyDictionary[e.Key] = true;
+                Move();
             }
-            else if(e.Key == OpenTK.Input.Key.S)
-            {
-                MoveBackward();
-            }
-            else if (e.Key == OpenTK.Input.Key.D)
-            {
-                MoveRight();
-            }
-            else if(e.Key == OpenTK.Input.Key.A)
-            {
-                MoveLeft();
-            }
-            else if(e.Key == OpenTK.Input.Key.Z)
-            {
-                MoveUpward();
-            }
-            else if(e.Key == OpenTK.Input.Key.X)
-            {
-                MoveDownward();
-            }
-            else if(e.Key == OpenTK.Input.Key.E)
+
+            if (e.Key == OpenTK.Input.Key.E)
             {
                 RotateRight();
             }
@@ -207,6 +240,16 @@ namespace Core.Camera
         protected List<float> SpeedList = new List<float> {32,64,128,256,512,1024};
 
         private List<OpenTK.Input.Key> MoveKeys = new List<OpenTK.Input.Key>{ Key.W, Key.A, Key.S, Key.D, Key.Z, Key.X };
+
+        private Dictionary<OpenTK.Input.Key, bool> MoveKeyDictionary = new Dictionary<Key, bool>
+        {
+            {Key.W, false },
+            {Key.A, false },
+            {Key.S, false },
+            {Key.D, false },
+            {Key.Z, false },
+            {Key.X, false }
+        };
 
         DateTime LastKeyStrokeTime;
     }

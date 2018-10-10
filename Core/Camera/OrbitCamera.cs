@@ -39,6 +39,10 @@ namespace Core.Camera
             {
                 RotatePitchDownward();
             }
+            else if(e.Key == Key.E)
+            {
+                RotatePitchUpward();
+            }
         }
 
         public override void Tick(double fDeltaSeconds)
