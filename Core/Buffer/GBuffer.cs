@@ -144,6 +144,11 @@ namespace Core.Buffer
             get { return NormalAttachment; }
         }
 
+        public DepthTargetTexture GetDepthAttachment
+        {
+            get { return DepthAttachment; }
+        }
+
         protected ColorAttachmentTexture PositionAttachment = null;
         protected ColorAttachmentTexture ColorAttachment = null;
         protected ColorAttachmentTexture NormalAttachment = null;

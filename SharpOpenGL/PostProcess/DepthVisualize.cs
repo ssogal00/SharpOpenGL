@@ -1,4 +1,5 @@
 ﻿using System;
+using Core;
 using Core.Texture;
 using SharpOpenGL.Asset;
 using System.Diagnostics;
@@ -23,7 +24,12 @@ namespace SharpOpenGL.PostProcess
 
         public override void Render(TextureBase Input0)
         {
-            
+            Output.BindAndExecute(PostProcessMaterial, ()=>
+            {
+                PostProcessMaterial.SetTexture("DepthTex", Input0);
+                PostProcessMaterial.SetUniformVarData("MaxDepth", 10000.0f);
+                BlitToScreenSpace();
+            });
         }
 
     }

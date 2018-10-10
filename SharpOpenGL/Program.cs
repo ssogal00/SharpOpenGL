@@ -37,6 +37,7 @@ namespace SharpOpenGL
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
         protected PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
         protected PostProcess.DeferredLight LightPostProcess = new DeferredLight();
+        protected DepthVisualize DepthVisualizePostProcess = new DepthVisualize();
         protected PostProcess.Skybox SkyboxPostProcess = new Skybox();
 
         protected StaticMeshAsset Mesh = null;
@@ -92,6 +93,8 @@ namespace SharpOpenGL
             OnResourceCreate += RenderResource.OnOpenGLContextCreated;
             OnWindowResize += RenderResource.OnWindowResized;
 
+            AssetManager.Get().DiscoverShader();
+
             OnResourceCreate(this, e);
 
             ScreenBlit.SetGridSize(2, 2);
@@ -99,9 +102,7 @@ namespace SharpOpenGL
             OnKeyDownEvent += FreeCam.OnKeyDown;            
             OnKeyDownEvent += this.HandleKeyDownEvent;
             
-            OnKeyUpEvent += FreeCam.OnKeyUp;
-
-            AssetManager.Get().DiscoverShader();
+            OnKeyUpEvent += FreeCam.OnKeyUp;            
 
             Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
             Sphere = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
@@ -189,7 +190,9 @@ namespace SharpOpenGL
                 }
             });
 
-            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);            
+            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
+            DepthVisualizePostProcess.Render(MyGBuffer.GetDepthAttachment);
+
             ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 2, 2);
 
             SwapBuffers();

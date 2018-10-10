@@ -953,15 +953,6 @@ public class DepthVisualizeMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"ColorTex", TextureObject);
-	}
-
-	public void SetColorTex2D(int TextureObject, Sampler sampler)
-	{
-		SetTexture(@"ColorTex", TextureObject);
-	}
 
 	public static string GetVSSourceCode()
 	{
@@ -987,14 +978,15 @@ void main()
 
 in vec2 OutTexCoord;
 
-uniform sampler2D ColorTex;
+uniform sampler2D DepthTex;
+uniform float MaxDepth;
 
 out vec4 FragColor;
 
 void main() 
 {      
-
-    FragColor = texture(ColorTex, OutTexCoord);    
+    vec4 value = texture(DepthTex, OutTexCoord);
+    FragColor = vec4(1, 0, 0, 1);
 }";
 	}
 }

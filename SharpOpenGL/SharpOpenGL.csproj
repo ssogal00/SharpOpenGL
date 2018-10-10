@@ -139,6 +139,7 @@
     <None Include="Shader\Cubemap.vs" />
     <None Include="Shader\DeferredLight.fs" />
     <None Include="Shader\DeferredLight.vs" />
+    <None Include="Shader\DepthVisualize.vs" />
     <None Include="Shader\GBuffer.fs" />
     <None Include="Shader\GBuffer.vs" />
     <None Include="Shader\MultisampleGBuffer.fs" />
@@ -154,6 +155,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Shader\DepthVisualize.fs" />
     <Content Include="Shader\TestShader.fs" />
   </ItemGroup>
   <ItemGroup>
