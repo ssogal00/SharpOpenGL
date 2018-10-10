@@ -1,6 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-
+using Core.Texture;
+using SharpOpenGL.Asset;
+using System.Diagnostics;
+using SharpOpenGL.DepthVisualizeMaterial;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -10,6 +12,19 @@ namespace SharpOpenGL.PostProcess
             :base()
         { }
 
+        public override void OnGLContextCreated(object sender, EventArgs e)
+        {
+            base.OnGLContextCreated(sender, e);
+
+            PostProcessMaterial = AssetManager.GetAsset<DepthVisualizeMaterial.DepthVisualizeMaterial>("DepthVisualizeMaterial");
+
+            Debug.Assert(PostProcessMaterial != null);
+        }
+
+        public override void Render(TextureBase Input0)
+        {
+            
+        }
 
     }
 }
