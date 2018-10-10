@@ -40,6 +40,7 @@ namespace SharpOpenGL
         protected PostProcess.Skybox SkyboxPostProcess = new Skybox();
 
         protected StaticMeshAsset Mesh = null;
+        protected StaticMeshAsset Sphere = null;
         protected Task<StaticMeshAsset> MeshLoadTask = null;
         protected Task<StaticMeshAsset> MeshLoadTask2 = null;
         protected GBuffer MyGBuffer = new GBuffer(1024,768);
@@ -103,6 +104,7 @@ namespace SharpOpenGL
             AssetManager.Get().DiscoverShader();
 
             Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
+            Sphere = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
             BaseTest = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
             DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
         }
@@ -173,6 +175,17 @@ namespace SharpOpenGL
                 BaseTest.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
                 BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
                 Mesh.Draw(BaseTest);
+
+                if(CurrentCam == OrbitCam)
+                {
+                    using (var dummy = new WireFrameMode())
+                    {
+                        ModelTransform modelMatrix = new ModelTransform();
+                        modelMatrix.Model = Matrix4.CreateTranslation(CurrentCam.LookAtLocation);
+                        BaseTest.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelMatrix);
+                        Sphere.Draw(BaseTest);
+                    }
+                }
             });
 
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);            
