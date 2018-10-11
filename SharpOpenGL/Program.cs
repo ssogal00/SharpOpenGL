@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.MaterialBase;
 using SharpOpenGL.GBufferDraw;
+using System.Drawing;
 
 namespace SharpOpenGL
 {
@@ -152,6 +153,7 @@ namespace SharpOpenGL
 
             TickableObjectManager.Tick(e.Time);
 
+            GL.ClearColor (Color.White);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             
             Transform.View = CurrentCam.View;
@@ -170,7 +172,7 @@ namespace SharpOpenGL
                 MyGBuffer.Clear();
             });
 
-            SkyboxPostProcess.GetOutputTextureObject().Copy(MyGBuffer.GetColorAttachement);
+            SkyboxPostProcess.GetOutputRenderTarget().Copy(MyGBuffer.GetColorAttachement);
 
             MyGBuffer.BindAndExecute(BaseTest, () =>
             {
@@ -190,10 +192,10 @@ namespace SharpOpenGL
                 }
             });
 
-            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
             DepthVisualizePostProcess.Render(MyGBuffer.GetDepthAttachment);
-
-            ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 2, 2);
+            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
+            ScreenBlit.Blit(LightPostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 2, 2);
+            ScreenBlit.Blit(DepthVisualizePostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
 
             SwapBuffers();
         }

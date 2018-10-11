@@ -6,6 +6,7 @@ using Core.Texture;
 using SharpOpenGL.StaticMesh;
 using SharpOpenGL.Asset;
 using OpenTK.Graphics.OpenGL;
+using Core.MaterialBase;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -21,7 +22,6 @@ namespace SharpOpenGL.PostProcess
 
             Output.ClearColor = Color.AntiqueWhite;
 
-            PostProcessMaterial = new CubemapMaterial.CubemapMaterial();
 
             cubemapTexture = new CubemapTexture();
           

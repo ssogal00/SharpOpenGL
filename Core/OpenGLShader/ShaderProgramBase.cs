@@ -87,6 +87,7 @@ namespace Core.OpenGLShader
         {
             GL.UseProgram(ProgramObject);
         }
+        
 
         public bool IsProgramLinked()
         {

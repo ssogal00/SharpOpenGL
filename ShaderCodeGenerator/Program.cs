@@ -83,6 +83,7 @@ namespace ShaderCompiler
                                     sb.AppendLine(string.Format(@"Vertex Shader : {0} , Error : {1}", vsPath, vsResult));
                                     sb.AppendLine(string.Format(@"Fragment Shader : {0}, Error : {1}", fsPath, fsResult));
                                     //MessageBox.Show(CompileResult);
+                                    Console.Write(sb.ToString());
                                     Debug.Assert(false, sb.ToString());
                                 }
 

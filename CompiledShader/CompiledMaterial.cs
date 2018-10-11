@@ -953,6 +953,15 @@ public class DepthVisualizeMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
+	public void SetDepthTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"DepthTex", TextureObject);
+	}
+
+	public void SetDepthTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"DepthTex", TextureObject);
+	}
 
 	public static string GetVSSourceCode()
 	{
@@ -962,8 +971,8 @@ public class DepthVisualizeMaterial : MaterialBase
 layout(location=0) in vec3 VertexPosition;
 layout(location=1) in vec2 TexCoord;
 
-out vec2 OutTexCoord;
-  
+layout(location=0) out vec2 OutTexCoord;
+
 void main()
 {	
 	OutTexCoord = TexCoord;	    
@@ -976,17 +985,18 @@ void main()
 		return @"
 #version 450 core
 
-in vec2 OutTexCoord;
+layout (location=0) in vec2 InTexCoord;
+layout (location=0) out vec4 FragColor;
 
-uniform sampler2D DepthTex;
-uniform float MaxDepth;
-
-out vec4 FragColor;
+layout (location=0, binding=0) uniform sampler2D DepthTex;
+uniform float Far;
+uniform float Near;
 
 void main() 
-{      
-    vec4 value = texture(DepthTex, OutTexCoord);
-    FragColor = vec4(1, 0, 0, 1);
+{   
+    FragColor = texture(DepthTex, InTexCoord);
+
+    FragColor.xyz = vec3((FragColor.x - Near) / (Far - Near));
 }";
 	}
 }

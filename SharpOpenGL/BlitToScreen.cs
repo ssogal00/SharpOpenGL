@@ -36,44 +36,56 @@ namespace SharpOpenGL
         
         public void Blit(TextureBase texture)
         {
-            Material.BindAndExecute(VB, IB, () =>
+            using (var depthDisable = new ScopedDisable(EnableCap.DepthTest))
             {
-                PT_VertexAttribute.VertexAttributeBinding();
-                Material.SetColorTex2D(texture);
-                GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
-            });
+                Material.BindAndExecute(VB, IB, () =>
+                {
+                    PT_VertexAttribute.VertexAttributeBinding();
+                    Material.SetColorTex2D(texture);
+                    GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+                });
+            }
         }
 
         public void Blit(TextureBase texture, int rowIndex, int colIndex, int gridRowSpan, int gridColSpan)
         {
-            Material.Use();
-            UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);
-            VB.Bind();
-            IB.Bind();
-            PT_VertexAttribute.VertexAttributeBinding();
-            Material.SetColorTex2D(texture);
-            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+            using (var depthDisable = new ScopedDisable(EnableCap.DepthTest))
+            {
+                Material.BindAndExecute(VB,IB,() =>
+                {
+                    UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);                    
+                    PT_VertexAttribute.VertexAttributeBinding();
+                    Material.SetColorTex2D(texture);
+                    GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+                });
+            }
         }
 
         public void Blit(int textureObject)
         {
-            Material.Use();            
-            VB.Bind();
-            IB.Bind();
-            PT_VertexAttribute.VertexAttributeBinding();
-            Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
-            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+            using (var depthDisable = new ScopedDisable(EnableCap.DepthTest))
+            {
+                Material.BindAndExecute(VB, IB, () =>
+                {
+                      PT_VertexAttribute.VertexAttributeBinding();
+                      Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
+                      GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+                });
+            }
         }
 
         public void Blit(int textureObject, int rowIndex, int colIndex, int gridRowSpan, int gridColSpan)
         {
-            Material.Use();
-            VB.Bind();
-            IB.Bind();
-            UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);            
-            PT_VertexAttribute.VertexAttributeBinding();
-            Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
-            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);            
+            using (var depthDisable = new ScopedDisable(EnableCap.DepthTest))
+            {
+                Material.BindAndExecute(VB,IB, () =>
+                {
+                    UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);
+                    PT_VertexAttribute.VertexAttributeBinding();
+                    Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
+                    GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+                });
+            }
         }
 
         public void SetGridSize(int newGridRow, int newGridCol)

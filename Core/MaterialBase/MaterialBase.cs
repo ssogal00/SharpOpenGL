@@ -175,7 +175,7 @@ namespace Core.MaterialBase
 
         public void Unbind()
         {
-
+            GL.UseProgram(0);
         }
 
         public virtual void Setup()

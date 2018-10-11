@@ -1,9 +1,9 @@
 ﻿using System;
 using Core;
 using Core.Texture;
-using SharpOpenGL.Asset;
 using System.Diagnostics;
-using SharpOpenGL.DepthVisualizeMaterial;
+using System.Windows;
+using System.Drawing;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -17,17 +17,20 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = AssetManager.GetAsset<DepthVisualizeMaterial.DepthVisualizeMaterial>("DepthVisualizeMaterial");
+            PostProcessMaterial = new DepthVisualizeMaterial.DepthVisualizeMaterial();
 
             Debug.Assert(PostProcessMaterial != null);
         }
 
         public override void Render(TextureBase Input0)
         {
+            Output.ClearColor = Color.Violet;
+
             Output.BindAndExecute(PostProcessMaterial, ()=>
             {
                 PostProcessMaterial.SetTexture("DepthTex", Input0);
-                PostProcessMaterial.SetUniformVarData("MaxDepth", 10000.0f);
+                PostProcessMaterial.SetUniformVarData("Far", 10000.0f);
+                PostProcessMaterial.SetUniformVarData("Near", 1.0f);
                 BlitToScreenSpace();
             });
         }
