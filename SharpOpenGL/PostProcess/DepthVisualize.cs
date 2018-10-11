@@ -29,7 +29,7 @@ namespace SharpOpenGL.PostProcess
             Output.BindAndExecute(PostProcessMaterial, ()=>
             {
                 PostProcessMaterial.SetTexture("DepthTex", Input0);
-                PostProcessMaterial.SetUniformVarData("Far", 10000.0f);
+                PostProcessMaterial.SetUniformVarData("Far", 100.0f);
                 PostProcessMaterial.SetUniformVarData("Near", 1.0f);
                 BlitToScreenSpace();
             });

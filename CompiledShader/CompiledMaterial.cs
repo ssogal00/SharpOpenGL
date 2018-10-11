@@ -996,7 +996,14 @@ void main()
 {   
     FragColor = texture(DepthTex, InTexCoord);
 
-    FragColor.xyz = vec3((FragColor.x - Near) / (Far - Near));
+    if(FragColor.x > 100)
+    {
+        FragColor.xyz = vec3(1);
+    }
+    else
+    {
+        FragColor.xyz = vec3((FragColor.x - Near) / (Far - Near));
+    }
 }";
 	}
 }
