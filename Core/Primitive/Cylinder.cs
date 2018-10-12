@@ -3,6 +3,7 @@ using Core.Buffer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Core.Primitive
 {
@@ -10,6 +11,8 @@ namespace Core.Primitive
     {
         public Cylinder(float radius, float height, uint count)
         {
+            Debug.Assert(radius > 0 && height > 0 && count >= 6);
+
             Radius = radius;
             Height = height;
             Count = count;
@@ -18,13 +21,13 @@ namespace Core.Primitive
         public override void Initialize()
         {
             base.Initialize();
-            VB = new StaticVertexBuffer<PNC_VertexAttribute>();            
+            VB = new StaticVertexBuffer<PNC_VertexAttribute>();
         }
+
 
         protected void GenerateVertices()
         {
-            var VertexList = new List<PNC_VertexAttribute>();
-            var IndexList = new List<uint>();
+            VertexList.Clear();
 
             // bottom
             var bottomCenter = new PNC_VertexAttribute(new Vector3(0, 0, 0), -Vector3.UnitX, Color);
@@ -123,8 +126,9 @@ namespace Core.Primitive
 
         protected float Height = 0;
         protected float Radius = 0;
-        protected uint Count = 4;
+        protected uint Count = 10;
 
+        protected List<PNC_VertexAttribute> VertexList = new List<PNC_VertexAttribute>();
         protected StaticVertexBuffer<PNC_VertexAttribute> VB = null;
         protected IndexBuffer IB = null;
         protected Vector3 Color = new Vector3(1, 0, 0);
