@@ -96,6 +96,8 @@
     <Compile Include="OpenGLShader\TesselControlShader.cs" />
     <Compile Include="OpenGLShader\TesselEvalShader.cs" />
     <Compile Include="PatchDrawable.cs" />
+    <Compile Include="Primitive\Cone.cs" />
+    <Compile Include="Primitive\Cylinder.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
     <Compile Include="RenderResource.cs" />

@@ -154,6 +154,43 @@ namespace Core.Primitive
         }
     }
 
+    // Position
+    // Normal
+    // Color
+    [ZeroFormattable]
+    [StructLayout(LayoutKind.Explicit, Size = 36)]
+    public struct PNC_VertexAttribute
+    {
+        [Index(0)]
+        [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
+        public OpenTK.Vector3 VertexPosition;
+
+        [Index(1)]
+        [FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
+        public OpenTK.Vector3 VertexNormal;
+
+        [Index(2)]
+        [FieldOffset(24), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
+        public OpenTK.Vector3 VertexColor;
+
+        public PNC_VertexAttribute(OpenTK.Vector3 position, OpenTK.Vector3 normal, OpenTK.Vector3 color)
+        {
+            VertexPosition = position;
+            VertexNormal = normal;
+            VertexColor = color;
+        }
+
+        public static void VertexAttributeBinding()
+        {
+            GL.EnableVertexAttribArray(0);
+            GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 36, new IntPtr(0));
+            GL.EnableVertexAttribArray(1);
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 36, new IntPtr(12));
+            GL.EnableVertexAttribArray(2);
+            GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, 36, new IntPtr(24));
+        }
+    }
+
     // position
     // normal
     // texcoord
