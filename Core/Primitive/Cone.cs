@@ -30,23 +30,49 @@ namespace Core.Primitive
                 var y1 = Radius * Math.Cos(rad1);
                 var z1 = Radius * Math.Sin(rad1);
                 var position1 = new Vector3(0, (float)y1, (float)z1);
-                var normal1 = -Vector3.UnitX;
 
                 // add V1
-                VertexList.Add(new PNC_VertexAttribute(position1, normal1, Color));
+                VertexList.Add(new PNC_VertexAttribute(position1, -Vector3.UnitX, Color));
 
                 var rad2 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * (i + 1));
                 var y2 = Radius * Math.Cos(rad2);
                 var z2 = Radius * Math.Sin(rad2);
                 var position2 = new Vector3(0, (float)y2, (float)z2);
-                var normal2 = -Vector3.UnitX;
 
                 // add V2
-                VertexList.Add(new PNC_VertexAttribute(position2, normal2, Color));
+                VertexList.Add(new PNC_VertexAttribute(position2, -Vector3.UnitX, Color));
             }
 
             var topCenter = new PNC_VertexAttribute(new Vector3(Height, 0, 0), Vector3.UnitX, Color);
 
+            for(var i = 0; i < Count; ++i)
+            {
+                var rad1 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * i);
+                var y1 = Radius * Math.Cos(rad1);
+                var z1 = Radius * Math.Sin(rad1);
+                var position1 = new Vector3(0, (float)y1, (float)z1);
+
+                var rad2 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * (i + 1));
+                var y2 = Radius * Math.Cos(rad2);
+                var z2 = Radius * Math.Sin(rad2);
+                var position2 = new Vector3(0, (float)y2, (float)z2);
+
+                var d1 = (position2 - new Vector3(Height, 0, 0));
+                var d2 = (position1 - new Vector3(Height, 0, 0));
+
+                var normal= Vector3.Cross(d2, d1).Normalized();
+
+                // add top center
+                VertexList.Add(new PNC_VertexAttribute(new Vector3(Height, 0,0), normal, Color));
+
+                // add V1
+                VertexList.Add(new PNC_VertexAttribute(position1, normal, Color));
+
+                // add V2
+                VertexList.Add(new PNC_VertexAttribute(position2, normal, Color));
+
+            }
+             
 
 
         }
