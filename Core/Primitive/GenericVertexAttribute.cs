@@ -3,7 +3,6 @@ using OpenTK.Graphics.OpenGL;
 using System;
 using System.Runtime.InteropServices;
 using ZeroFormatter;
-using ZeroFormatter.Internal;
 using OpenTK;
 
 namespace Core.Primitive

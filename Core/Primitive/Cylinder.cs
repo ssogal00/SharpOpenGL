@@ -31,6 +31,8 @@ namespace Core.Primitive
 
             var vertexArray = VertexList.ToArray();            
             VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
+
+            VertexList.Clear();
         }
 
         public void Draw(MaterialBase.MaterialBase material)
@@ -142,7 +144,7 @@ namespace Core.Primitive
 
             VertexCount = VertexList.Count;
         }
-
+        
         protected float Height = 0;
         protected float Radius = 0;
         protected uint Count = 10;

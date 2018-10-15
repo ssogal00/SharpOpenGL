@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace Core
 {
@@ -94,6 +95,11 @@ namespace Core
             }
 
             return result;
+        }
+
+        public static int GetComponentCount(this Vector3 dummy)
+        {
+            return 3;
         }
     }
 }

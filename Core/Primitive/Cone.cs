@@ -26,6 +26,8 @@ namespace Core.Primitive
 
             var vertexArray = VertexList.ToArray();
             VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
+
+            VertexList.Clear();
         }
 
         public void Draw(MaterialBase.MaterialBase material)
