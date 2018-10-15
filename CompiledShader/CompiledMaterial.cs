@@ -518,10 +518,10 @@ public class GBufferPNC : MaterialBase
 	{
 		return @"#version 450 core
 
-uniform ModelTransform
-{
-	mat4x4 Model;
-};
+
+
+uniform	mat4x4 Model;
+
 
 uniform CameraTransform
 {
@@ -546,7 +546,6 @@ layout(location=2) out vec3 OutNormal;
 void main()
 {	
 	mat4 ModelView = View * Model;
-
 	OutColor = VertexColor;
 	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
 	OutPosition =   (ModelView * vec4(VertexPosition, 1));	
