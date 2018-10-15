@@ -107,6 +107,30 @@ public struct ModelTransform
 namespace GBufferWithoutTexture
 {
 }
+namespace GBufferPNC
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=128)]
+public struct CameraTransform
+{
+	[FieldOffset(0)]
+	public OpenTK.Matrix4 View;
+	[FieldOffset(64)]
+	public OpenTK.Matrix4 Proj;
+}
+
+
+[StructLayout(LayoutKind.Explicit,Size=64)]
+public struct ModelTransform
+{
+	[FieldOffset(0)]
+	public OpenTK.Matrix4 Model;
+}
+}
+namespace GBufferPNC
+{
+}
 namespace Blur
 {
 }

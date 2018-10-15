@@ -1,9 +1,11 @@
 ﻿using System;
 using Core.Buffer;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Core.MaterialBase;
+using OpenTK.Graphics.OpenGL;
+
 
 namespace Core.Primitive
 {
@@ -21,9 +23,23 @@ namespace Core.Primitive
         public override void Initialize()
         {
             base.Initialize();
+            GenerateVertices();
             VB = new StaticVertexBuffer<PNC_VertexAttribute>();
+            VB.Bind();
+            var vertexArray = VertexList.ToArray();
+            
+            VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
+            
         }
 
+        public void Draw(MaterialBase.MaterialBase material)
+        {
+            PNC_VertexAttribute.VertexAttributeBinding();
+            using (var dummy = new ScopedBind(VB))
+            {
+                GL.DrawArrays(PrimitiveType.Triangles, 0, VertexCount);
+            }
+        }
 
         protected void GenerateVertices()
         {
@@ -122,13 +138,20 @@ namespace Core.Primitive
                 VertexList.Add(new PNC_VertexAttribute(v4, norm2, Color));
                 VertexList.Add(new PNC_VertexAttribute(v3, norm2, Color));
             }
+
+            VertexCount = VertexList.Count;
         }
 
         protected float Height = 0;
         protected float Radius = 0;
         protected uint Count = 10;
 
+        protected int VertexCount = 0;
+
         protected List<PNC_VertexAttribute> VertexList = new List<PNC_VertexAttribute>();
+        protected List<uint> IndexList = new List<uint>();
+
+
         protected StaticVertexBuffer<PNC_VertexAttribute> VB = null;
         protected IndexBuffer IB = null;
         protected Vector3 Color = new Vector3(1, 0, 0);

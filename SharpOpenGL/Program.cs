@@ -19,6 +19,7 @@ using System.Threading.Tasks;
 using Core.MaterialBase;
 using SharpOpenGL.GBufferDraw;
 using System.Drawing;
+using Core.Primitive;
 
 namespace SharpOpenGL
 {
@@ -34,13 +35,15 @@ namespace SharpOpenGL
         protected ShaderProgram ProgramObject = null;
 
         protected RenderTarget testRenderTarget = new RenderTarget(1024, 768, 1);
-        protected Core.MaterialBase.MaterialBase BaseTest = null;
+        protected Core.MaterialBase.MaterialBase GBufferMaterial = null;
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
+        protected Core.MaterialBase.MaterialBase GBufferPNCMaterial = null;
         protected PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
         protected PostProcess.DeferredLight LightPostProcess = new DeferredLight();
         protected DepthVisualize DepthVisualizePostProcess = new DepthVisualize();
         protected PostProcess.Skybox SkyboxPostProcess = new Skybox();
 
+        protected Cylinder TestCyliner = new Cylinder(10 , 100, 10);
         protected StaticMeshAsset Mesh = null;
         protected StaticMeshAsset Sphere = null;
         protected Task<StaticMeshAsset> MeshLoadTask = null;
@@ -107,8 +110,9 @@ namespace SharpOpenGL
 
             Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
             Sphere = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
-            BaseTest = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
+            GBufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
             DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
+            GBufferPNCMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferPNC");
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
@@ -174,20 +178,25 @@ namespace SharpOpenGL
 
             SkyboxPostProcess.GetOutputRenderTarget().Copy(MyGBuffer.GetColorAttachement);
 
-            MyGBuffer.BindAndExecute(BaseTest, () =>
+            MyGBuffer.BindAndExecute(GBufferMaterial, () =>
             {
-                BaseTest.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
-                BaseTest.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
-                Mesh.Draw(BaseTest);
+                GBufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
+                GBufferMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
+                Mesh.Draw(GBufferMaterial);
 
                 if(CurrentCam == OrbitCam)
                 {
                     using (var dummy = new WireFrameMode())
                     {
-                        ModelTransform modelMatrix = new ModelTransform();
-                        modelMatrix.Model = Matrix4.CreateTranslation(CurrentCam.LookAtLocation);
-                        BaseTest.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelMatrix);
-                        Sphere.Draw(BaseTest);
+                        GBufferPNCMaterial.BindAndExecute
+                        (()=>
+                        {
+                            ModelTransform modelMatrix = new ModelTransform();
+                            modelMatrix.Model = Matrix4.CreateTranslation(CurrentCam.LookAtLocation);
+                            GBufferPNCMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelMatrix);
+                            TestCyliner.Draw(GBufferPNCMaterial);
+                        }
+                        );
                     }
                 }
             });
@@ -195,7 +204,7 @@ namespace SharpOpenGL
             DepthVisualizePostProcess.Render(MyGBuffer.GetDepthAttachment);
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
             ScreenBlit.Blit(LightPostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 2, 2);
-            ScreenBlit.Blit(DepthVisualizePostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
+            //ScreenBlit.Blit(DepthVisualizePostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
 
             SwapBuffers();
         }
