@@ -23,6 +23,7 @@ namespace Core.Primitive
         public override void Initialize()
         {
             base.Initialize();
+
             GenerateVertices();
 
             VB = new StaticVertexBuffer<PNC_VertexAttribute>();

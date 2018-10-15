@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using OpenTK;
 using System.Diagnostics;
+using Core.Buffer;
+using OpenTK.Graphics.OpenGL;
 
 namespace Core.Primitive
 {
-    public class Cone
+    public class Cone : RenderResource
     {
         public Cone(float radius, float height, uint count)
         {
@@ -14,6 +15,26 @@ namespace Core.Primitive
             Radius = radius;
             Height = height;
             Count = count;
+        }
+
+        public override void Initialize()
+        {
+            GenerateVertices();
+
+            VB = new StaticVertexBuffer<PNC_VertexAttribute>();
+            VB.Bind();
+
+            var vertexArray = VertexList.ToArray();
+            VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
+        }
+
+        public void Draw(MaterialBase.MaterialBase material)
+        {
+            using (var dummy = new ScopedBind(VB))
+            {
+                PNC_VertexAttribute.VertexAttributeBinding();
+                GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
+            }
         }
 
         protected void GenerateVertices()
@@ -71,16 +92,20 @@ namespace Core.Primitive
                 VertexList.Add(new PNC_VertexAttribute(position2, normal, Color));
 
             }
-             
 
-
+            VertexCount = VertexList.Count;
         }
 
-        protected List<PNC_VertexAttribute> VertexList = new List<PNC_VertexAttribute>();
+        
 
         protected float Radius = 1.0f;
         protected float Height = 10.0f;
         protected uint Count = 10;
         protected Vector3 Color = new Vector3(1, 0, 0);
+
+        protected int VertexCount = 0;
+
+        protected List<PNC_VertexAttribute> VertexList = new List<PNC_VertexAttribute>();
+        protected StaticVertexBuffer<PNC_VertexAttribute> VB = null;
     }
 }

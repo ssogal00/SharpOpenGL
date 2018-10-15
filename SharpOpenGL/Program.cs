@@ -43,7 +43,8 @@ namespace SharpOpenGL
         protected DepthVisualize DepthVisualizePostProcess = new DepthVisualize();
         protected PostProcess.Skybox SkyboxPostProcess = new Skybox();
 
-        protected Cylinder TestCyliner = new Cylinder(10 , 10, 12);
+        protected Cylinder TestCyliner = new Cylinder(10, 10, 12);
+        protected Cone TestCone = new Cone(10, 20, 12);
         protected StaticMeshAsset Mesh = null;
         protected StaticMeshAsset Sphere = null;
         protected Task<StaticMeshAsset> MeshLoadTask = null;
@@ -195,7 +196,7 @@ namespace SharpOpenGL
                             modelMatrix.Model = Matrix4.CreateTranslation(CurrentCam.LookAtLocation);
                             GBufferPNCMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelMatrix);
                             GBufferPNCMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
-                            TestCyliner.Draw(GBufferPNCMaterial);
+                            TestCone.Draw(GBufferPNCMaterial);
                         }
                         );
                     }
