@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Core.Primitive
 {
@@ -12,6 +10,7 @@ namespace Core.Primitive
     {
         public Cone(float radius, float height, uint count)
         {
+            Debug.Assert(radius > 0 && height > 0 && count > 0);
             Radius = radius;
             Height = height;
             Count = count;
@@ -27,16 +26,16 @@ namespace Core.Primitive
                 VertexList.Add(bottomCenter);
 
                 var rad1 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * i);
-                var y1 = Radius * Math.Cos(rad1);
-                var z1 = Radius * Math.Sin(rad1);
+                var y1 = Radius * Math.Sin(rad1);
+                var z1 = Radius * Math.Cos(rad1);
                 var position1 = new Vector3(0, (float)y1, (float)z1);
 
                 // add V1
                 VertexList.Add(new PNC_VertexAttribute(position1, -Vector3.UnitX, Color));
 
                 var rad2 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * (i + 1));
-                var y2 = Radius * Math.Cos(rad2);
-                var z2 = Radius * Math.Sin(rad2);
+                var y2 = Radius * Math.Sin(rad2);
+                var z2 = Radius * Math.Cos(rad2);
                 var position2 = new Vector3(0, (float)y2, (float)z2);
 
                 // add V2
@@ -48,13 +47,13 @@ namespace Core.Primitive
             for(var i = 0; i < Count; ++i)
             {
                 var rad1 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * i);
-                var y1 = Radius * Math.Cos(rad1);
-                var z1 = Radius * Math.Sin(rad1);
+                var y1 = Radius * Math.Sin(rad1);
+                var z1 = Radius * Math.Cos(rad1);
                 var position1 = new Vector3(0, (float)y1, (float)z1);
 
                 var rad2 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * (i + 1));
-                var y2 = Radius * Math.Cos(rad2);
-                var z2 = Radius * Math.Sin(rad2);
+                var y2 = Radius * Math.Sin(rad2);
+                var z2 = Radius * Math.Cos(rad2);
                 var position2 = new Vector3(0, (float)y2, (float)z2);
 
                 var d1 = (position2 - new Vector3(Height, 0, 0));

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Core.MaterialBase;
 using OpenTK.Graphics.OpenGL;
-
+using System.Linq;
 
 namespace Core.Primitive
 {
@@ -24,20 +24,20 @@ namespace Core.Primitive
         {
             base.Initialize();
             GenerateVertices();
+
             VB = new StaticVertexBuffer<PNC_VertexAttribute>();
-            VB.Bind();
-            var vertexArray = VertexList.ToArray();
-            
+            VB.Bind();            
+
+            var vertexArray = VertexList.ToArray();            
             VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
-            
         }
 
         public void Draw(MaterialBase.MaterialBase material)
         {
-            PNC_VertexAttribute.VertexAttributeBinding();
             using (var dummy = new ScopedBind(VB))
             {
-                GL.DrawArrays(PrimitiveType.Triangles, 0, VertexCount);
+                PNC_VertexAttribute.VertexAttributeBinding();
+                GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
             }
         }
 
@@ -54,8 +54,8 @@ namespace Core.Primitive
                 VertexList.Add(bottomCenter);
 
                 var rad1 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * i);
-                var y1 = Radius * Math.Cos(rad1);
-                var z1 = Radius * Math.Sin(rad1);
+                var y1 = Radius * Math.Sin(rad1);
+                var z1 = Radius * Math.Cos(rad1);
                 var position1 = new Vector3(0,(float)y1, (float)z1);
                 var normal1 = -Vector3.UnitX;
                 
@@ -63,8 +63,8 @@ namespace Core.Primitive
                 VertexList.Add(new PNC_VertexAttribute(position1, normal1, Color));
 
                 var rad2 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * (i+1));
-                var y2 = Radius * Math.Cos(rad2);
-                var z2 = Radius * Math.Sin(rad2);
+                var y2 = Radius * Math.Sin(rad2);
+                var z2 = Radius * Math.Cos(rad2);
                 var position2 = new Vector3(0, (float)y2, (float)z2);
                 var normal2 = -Vector3.UnitX;
 
@@ -80,14 +80,14 @@ namespace Core.Primitive
                 VertexList.Add(topCenter);
 
                 var rad1 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * i);
-                var y1 = Radius * Math.Cos(rad1);
-                var z1 = Radius * Math.Sin(rad1);
+                var y1 = Radius * Math.Sin(rad1);
+                var z1 = Radius * Math.Cos(rad1);
                 var position1 = new Vector3(Height, (float)y1, (float)z1);
                 var normal1 = Vector3.UnitX;
 
                 var rad2 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * i);
-                var y2 = Radius * Math.Cos(rad2);
-                var z2 = Radius * Math.Sin(rad2);
+                var y2 = Radius * Math.Sin(rad2);
+                var z2 = Radius * Math.Cos(rad2);
                 var position2 = new Vector3(Height, (float)y2, (float)z2);
                 var normal2 = Vector3.UnitX;
 
@@ -111,10 +111,10 @@ namespace Core.Primitive
                 var rad1 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * i);
                 var rad2 = OpenTK.MathHelper.DegreesToRadians((360 / (double)Count) * (i+1));
 
-                var y1 = Radius * Math.Cos(rad1);
-                var z1 = Radius * Math.Sin(rad1);
-                var y2 = Radius * Math.Cos(rad2);
-                var z2 = Radius * Math.Sin(rad2);
+                var y1 = Radius * Math.Sin(rad1);
+                var z1 = Radius * Math.Cos(rad1);
+                var y2 = Radius * Math.Sin(rad2);
+                var z2 = Radius * Math.Cos(rad2);
 
                 var v1 = new Vector3(0, (float)y1, (float)z1);
                 var v2 = new Vector3(Height, (float)y1, (float)z1);
