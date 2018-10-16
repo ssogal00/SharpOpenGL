@@ -104,6 +104,7 @@ namespace Core.Camera
         protected Vector3 LookAtDir = new Vector3(1, 0, 0);        
 
         protected float FieldOfView;
+        
         protected Matrix4 ProjMatrix = new Matrix4();
         protected Matrix4 ViewMatrix = new Matrix4();
     }
