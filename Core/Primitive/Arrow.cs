@@ -30,7 +30,7 @@ namespace Core.Primitive
             ArrowHead.Draw(material);
         }
 
-        
+        public Matrix4 ModelMatrix = Matrix4.Identity;
 
         protected Cylinder ArrowBody = new Cylinder(4,20,10);
         protected Cone ArrowHead = new Cone(6,5,10);
