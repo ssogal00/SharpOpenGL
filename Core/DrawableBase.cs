@@ -2,6 +2,7 @@
 using System.Linq;
 using OpenTK.Graphics.OpenGL;
 
+
 namespace Core
 {
     public class DrawableBase<T>  where T : struct 
@@ -12,37 +13,62 @@ namespace Core
             IB = new IndexBuffer();
         }
 
-        protected void SetupVertexData(ref T[] VertexList)
+        public void SetupVertexData(ref T[] VertexList)
         {
+            VB.Bind();
             VB.BufferData<T>(ref VertexList);
+            VertexCount = VertexList.Count();
+
+            bReadyToDraw = true;
         }
 
-        protected void SetupIndexData(ref uint[] IndexList)
+        protected void BindVertexBuffer()
         {
-            IB.BufferData<uint>(ref IndexList);
+            VB.Bind();
+            VB.BindVertexAttribute();
+        }
+
+        protected void BindIndexBuffer()
+        {
+            IB.Bind();
         }
 
         public void BindVertexAndIndexBuffer()
         {
-            VB.Bind();
-            IB.Bind();
-            VB.BindVertexAttribute();
+            BindVertexBuffer();
+            BindIndexBuffer();
         }
 
         public void SetupData(ref T[] VertexList, ref uint[] IndexList)
         {
             VB.Bind();
             VB.BufferData<T>(ref VertexList);
+            VertexCount = VertexList.Count();
 
             IB.Bind();
             IB.BufferData<uint>(ref IndexList);
             IndexCount = IndexList.Count();
+
             bReadyToDraw = true;
         }
-      
+
+        public virtual void Draw(uint Offset, uint Count)
+        {
+            //
+        }
+
         public virtual void Draw()
         {
             
+        }
+
+        public virtual void DrawPrimitiveWithoutIndex(PrimitiveType type)
+        {
+            if (bReadyToDraw)
+            {
+                BindVertexBuffer();
+                GL.DrawArrays(type, 0, VertexCount);
+            }
         }
 
         public virtual void DrawPrimitive(PrimitiveType type)
@@ -80,15 +106,12 @@ namespace Core
                 GL.DrawElements(PrimitiveType.LineStrip, IndexCount, DrawElementsType.UnsignedInt, 0);
             }
         }
-
-        public virtual void Draw(uint Offset , uint Count)
-        {
-            //
-        }
+        
 
         protected StaticVertexBuffer<T> VB = null;
         protected IndexBuffer IB = null;
 
+        protected int VertexCount = 0;
         protected int IndexCount = 0;
         protected bool bReadyToDraw = false;
     }

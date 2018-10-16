@@ -30,6 +30,8 @@ namespace Core.Primitive
             ArrowHead.Draw(material);
         }
 
+        
+
         protected Cylinder ArrowBody = new Cylinder(4,20,10);
         protected Cone ArrowHead = new Cone(6,5,10);
         protected float Length = 10.0f;

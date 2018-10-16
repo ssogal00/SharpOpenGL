@@ -198,7 +198,7 @@ namespace SharpOpenGL
                             modelMatrix.Model = Matrix4.CreateTranslation(CurrentCam.LookAtLocation);
                             GBufferPNCMaterial.SetUniformVarData("Model", ref modelMatrix.Model);
                             GBufferPNCMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
-                            TestArrow.Draw(GBufferPNCMaterial);
+                            TestCyliner.Draw(GBufferPNCMaterial);
                         }
                         );
                     }

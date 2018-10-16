@@ -26,22 +26,16 @@ namespace Core.Primitive
 
             GenerateVertices();
 
-            VB = new StaticVertexBuffer<PNC_VertexAttribute>();
-            VB.Bind();            
-
-            var vertexArray = VertexList.ToArray();            
-            VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
+            drawable = new DrawableBase<PNC_VertexAttribute>();
+            var vertexArray = VertexList.ToArray();
+            drawable.SetupVertexData(ref vertexArray);
 
             VertexList.Clear();
         }
 
         public void Draw(MaterialBase.MaterialBase material)
         {
-            using (var dummy = new ScopedBind(VB))
-            {
-                PNC_VertexAttribute.VertexAttributeBinding();
-                GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
-            }
+            drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
         }
 
         protected void GenerateVertices()
@@ -152,11 +146,8 @@ namespace Core.Primitive
         protected int VertexCount = 0;
 
         protected List<PNC_VertexAttribute> VertexList = new List<PNC_VertexAttribute>();
-        protected List<uint> IndexList = new List<uint>();
 
-
-        protected StaticVertexBuffer<PNC_VertexAttribute> VB = null;
-        protected IndexBuffer IB = null;
+        protected DrawableBase<PNC_VertexAttribute> drawable = null;
         protected Vector3 Color = new Vector3(1, 0, 0);
     }
 }
