@@ -87,7 +87,8 @@ namespace SharpOpenGL
             GL.CullFace(CullFaceMode.Back);            
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.TextureCubeMap);            
+            GL.Enable(EnableCap.TextureCubeMap);
+            GL.Enable(EnableCap.TextureCubeMapSeamless);
 
             GL.ClearColor(System.Drawing.Color.DarkGray);            
 
