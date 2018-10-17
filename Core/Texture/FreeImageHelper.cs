@@ -1,16 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using FreeImageAPI;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Drawing;
+
 
 namespace Core.Texture
 {
     public static class FreeImageHelper
     {
+        public static void SaveAsBmp(ref byte[] Data, int width, int height, string FileName)
+        {
+            Debug.Assert(width > 0 && height > 0);
+
+            using (var bitmap = new Bitmap(width, height))
+            {
+                var bitmapData = bitmap.LockBits(new Rectangle(0, 0, width, height), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+                Marshal.Copy(Data, 0, bitmapData.Scan0, Data.Length);
+                bitmap.UnlockBits(bitmapData);
+                bool bSaved = FreeImage.SaveBitmap(bitmap, FileName);
+            }
+        }
+
         public static FIBITMAP Load(string FilePath, out int Width, out int Height)
         {
             FIBITMAP DIB = new FIBITMAP();

@@ -25,6 +25,11 @@ namespace Core.Texture
 
         }
 
+        public virtual byte[] GetTexImage()
+        {
+            return null;
+        }
+
         public virtual void Bind()
         {
             if (IsValid)

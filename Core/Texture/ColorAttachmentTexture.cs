@@ -43,6 +43,15 @@ namespace Core.Texture
             GL.TexImage2D(TextureTarget.Texture2D, 0, textureFormat, m_Width, m_Height, 0, PixelFormat.Rgba, PixelType.Float, new IntPtr(0));
         }
 
+        public override byte[] GetTexImage()
+        {
+            Bind();
+            var data = new byte[m_Width * m_Height * 4];
+            GL.GetTexImage<byte>(TextureTarget.Texture2D, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data);
+            Unbind();
+            return data;
+        }
+
         protected PixelInternalFormat textureFormat;
         public PixelInternalFormat TextureFormat => textureFormat;
 

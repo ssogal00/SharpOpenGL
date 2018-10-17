@@ -123,6 +123,17 @@ namespace SharpOpenGL
         {
         }
 
+        protected void ScreenCaptureGBuffer()
+        {
+            var colorData = MyGBuffer.GetColorAttachement.GetTexImage();
+            var width = MyGBuffer.GetColorAttachement.Width;
+            var height = MyGBuffer.GetColorAttachement.Height;
+            FreeImageHelper.SaveAsBmp(ref colorData, width, height, "ColorBuffer.bmp");
+
+            var normalData = MyGBuffer.GetNormalAttachment.GetTexImage();
+            FreeImageHelper.SaveAsBmp(ref normalData, width, height, "NormalBuffer.bmp");
+        }
+
         protected void SwitchCameraMode()
         {
             // 
@@ -209,7 +220,7 @@ namespace SharpOpenGL
             DepthVisualizePostProcess.Render(MyGBuffer.GetDepthAttachment);
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
             ScreenBlit.Blit(LightPostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 2, 2);
-            //ScreenBlit.Blit(DepthVisualizePostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
+            
 
             SwapBuffers();
         }
@@ -234,6 +245,10 @@ namespace SharpOpenGL
             else if(e.Key == Key.F3)
             {
                 CurrentCam.FOV -= OpenTK.MathHelper.DegreesToRadians(1.0f);
+            }
+            else if(e.Key == Key.F5)
+            {
+                ScreenCaptureGBuffer();
             }
 
         }

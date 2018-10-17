@@ -7,8 +7,7 @@ using OpenTK.Graphics.OpenGL;
 namespace Core
 {
     public static class Extension
-    {
-        
+    {   
         public static void BindAndExecute(this IBindable bindable, Action action)
         {
             bindable.Bind();

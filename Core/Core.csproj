@@ -101,6 +101,7 @@
     <Compile Include="Primitive\Cylinder.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="Primitive\Sphere.cs" />
+    <Compile Include="Primitive\Torus.cs" />
     <Compile Include="QuadDrawable.cs" />
     <Compile Include="RenderResource.cs" />
     <Compile Include="Singleton.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="VertexCustomAttribute\ComponentType.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="CustomAttribute\" />
     <Folder Include="StaticMesh\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
