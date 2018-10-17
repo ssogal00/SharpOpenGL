@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using Core;
 
 namespace Core.Primitive
 {
@@ -25,6 +26,7 @@ namespace Core.Primitive
             drawable = new DrawableBase<PNC_VertexAttribute>();
             var vertexArray = VertexList.ToArray();
             drawable.SetupVertexData(ref vertexArray);
+
 
             VertexList.Clear();
         }
@@ -108,12 +110,12 @@ namespace Core.Primitive
         }
 
         List<PNC_VertexAttribute> VertexList = new List<PNC_VertexAttribute>();
-        protected DrawableBase<PNC_VertexAttribute> drawable = null;
 
         int VertexCount = 0;
         protected float Radius = 10.0f;
         protected int StackCount = 10;
         protected int SectorCount = 10;
         protected Vector3 Color = new Vector3(1, 0, 0);
+        protected DrawableBase<PNC_VertexAttribute> drawable = null;
     }
 }
