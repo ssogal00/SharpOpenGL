@@ -231,7 +231,7 @@ namespace SharpOpenGL
         {
             base.OnKeyDown(e);
 
-            OnKeyDownEvent(this, e);
+            if (OnKeyDownEvent != null) OnKeyDownEvent(this, e);
         }
 
         public void HandleKeyDownEvent(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
@@ -278,9 +278,11 @@ namespace SharpOpenGL
 
             GL.Viewport(0, 0, Width, Height);
 
-            ScreenResizeEventArgs eventArgs = new ScreenResizeEventArgs();
-            eventArgs.Width = Width;
-            eventArgs.Height = Height;
+            ScreenResizeEventArgs eventArgs = new ScreenResizeEventArgs
+            {
+                Width = Width,
+                Height = Height
+            };
 
             float fAspectRatio = Width / (float) Height;
 

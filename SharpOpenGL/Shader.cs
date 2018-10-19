@@ -35,12 +35,9 @@ namespace SharpOpenGL
 
         public int ShaderObject 
         {
-            get { return m_ShaderObject; }
+            get => m_ShaderObject;
 
-            protected set
-            {
-                m_ShaderObject = value;
-            }
+            protected set => m_ShaderObject = value;
         }
 
         private int m_ShaderObject = 0;
