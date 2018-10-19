@@ -259,7 +259,7 @@ namespace SharpOpenGL
         {
             base.OnKeyUp(e);
 
-            OnKeyUpEvent(this, e);
+            if (OnKeyUpEvent != null) OnKeyUpEvent(this, e);
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
