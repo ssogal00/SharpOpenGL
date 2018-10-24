@@ -24,8 +24,56 @@ namespace SharpOpenGL.Font
             using (var fs = new FileStream(@"./Resources//Font/OpenSans-Regular.ttf", FileMode.Open))
             {
                 FontFamily font = fonts.Install(fs);
-                RenderText(new SixLabors.Fonts.Font(font, 72), "ABCDEFGHIJK", 512, 512);
+
+                var characters = Enumerable.Range(char.MinValue, 126).Select(c => (char) c).Where(c => !char.IsControl(c))
+                    .ToArray();
+
+                string allChars = new string(characters);
+
+                RenderText(new SixLabors.Fonts.Font(font, 72), allChars, 512, 512);
             }
+        }
+
+        public static void GetCorrectResolution(int resolution , int glyphCount, out int newResolution, out int newMargin)
+        {
+            int glyphMargin = 0;
+
+            while (resolution > 0)
+            {
+                glyphMargin = (int) (Math.Ceiling(resolution * 0.1));
+                var squareSize = resolution + glyphMargin;
+                var numGlyphsPerRow = (int) (Math.Ceiling(Math.Sqrt(glyphCount)));
+                var texSize = numGlyphsPerRow * squareSize;
+                int realTexSize = GetNextPowerOf2(texSize);
+                if (realTexSize <= 1024)
+                {
+                    break;
+                }
+
+                resolution -= 5;
+            }
+
+            if (resolution > 0)
+            {
+                newResolution = resolution;
+                newMargin = glyphMargin;
+            }
+            else
+            {
+                newResolution = 0;
+                newMargin = 0;
+            }
+        }
+
+        public static int GetNextPowerOf2(int n)
+        {
+            int returnValue = 1;
+            while (returnValue < n)
+            {
+                returnValue <<= 1;
+            }
+
+            return returnValue;
         }
 
         public static void RenderText(SixLabors.Fonts.Font font, string text, int width, int height)
@@ -37,7 +85,10 @@ namespace SharpOpenGL.Font
             {
                 img.Mutate(x => x.Fill(Rgba32.White));
 
-                IPathCollection shapes = TextBuilder.GenerateGlyphs(text, new SixLabors.Primitives.PointF(0f, 0f), new RendererOptions(font, 72));
+                var renderOption = new RendererOptions(font, 72);
+                renderOption.WrappingWidth = 10;
+                
+                IPathCollection shapes = TextBuilder.GenerateGlyphs(text, new SixLabors.Primitives.PointF(0f, 0f), renderOption);
                 img.Mutate(x => x.Fill(Rgba32.Black, shapes));
 
                 Directory.CreateDirectory(System.IO.Path.GetDirectoryName(fullPath));
