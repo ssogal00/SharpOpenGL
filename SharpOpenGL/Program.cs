@@ -20,6 +20,7 @@ using Core.MaterialBase;
 using SharpOpenGL.GBufferDraw;
 using System.Drawing;
 using Core.Primitive;
+using SharpOpenGL.Font;
 
 namespace SharpOpenGL
 {
@@ -119,6 +120,8 @@ namespace SharpOpenGL
             GBufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
             DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
             GBufferPNCMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferPNC");
+
+            FontHelper.TestRender();
         }
 
         protected void ResourceCreate(object sender, EventArgs e)

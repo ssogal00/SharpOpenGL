@@ -18,6 +18,16 @@ namespace SharpOpenGL.Font
 {
     public static class FontHelper
     {
+        public static void TestRender()
+        {
+            FontCollection fonts = new FontCollection();
+            using (var fs = new FileStream(@"./Resources//Font/OpenSans-Regular.ttf", FileMode.Open))
+            {
+                FontFamily font = fonts.Install(fs);
+                RenderText(new SixLabors.Fonts.Font(font, 72), "ABCDEFGHIJK", 512, 512);
+            }
+        }
+
         public static void RenderText(SixLabors.Fonts.Font font, string text, int width, int height)
         {
             string path = System.IO.Path.GetInvalidFileNameChars().Aggregate(text, (x, c) => x.Replace($"{c}", "-"));
