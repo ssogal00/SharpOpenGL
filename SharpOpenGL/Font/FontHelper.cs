@@ -43,6 +43,8 @@ namespace SharpOpenGL.Font
 
                 int realTexSize = GetNextPowerOf2(texSize);
 
+                Dictionary<char, GlyphInfo> glyphMap = new Dictionary<char, GlyphInfo>();
+                
                 using (Image<Rgba32> img = new Image<Rgba32>(realTexSize, realTexSize))
                 {
                     img.Mutate(x => x.Fill(Rgba32.White));
@@ -61,6 +63,11 @@ namespace SharpOpenGL.Font
                         var atlasY = row * squareSize;
                         var transform = Matrix3x2.Identity;
                         transform.Translation = new Vector2( atlasX, atlasY);
+
+                        var bounds = glyph.Item1.Bounds;
+                        
+                        glyphMap.Add(characters[i], new GlyphInfo(characters[i], atlasX / (float) realTexSize , atlasY / (float) realTexSize, bounds.Left, bounds.Top));
+
                         IPathCollection newGlyph = glyph.Item1.Transform(transform);
                         img.Mutate(x => x.Fill(Rgba32.Black, newGlyph));
                     }
