@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SharpOpenGL.Font;
+
 using System.Numerics;
 using SixLabors.Fonts;
 using SixLabors.Shapes;
-using SixLabors.Primitives;
+
 
 
 namespace SharpOpenGL.Font
@@ -23,16 +23,59 @@ namespace SharpOpenGL.Font
             FontCollection fonts = new FontCollection();
             using (var fs = new FileStream(@"./Resources//Font/OpenSans-Regular.ttf", FileMode.Open))
             {
-                FontFamily font = fonts.Install(fs);
+                FontFamily fontFamily = fonts.Install(fs);
+
+                var font = new SixLabors.Fonts.Font(fontFamily, 64);
 
                 var characters = Enumerable.Range(char.MinValue, 126).Select(c => (char) c).Where(c => !char.IsControl(c))
                     .ToArray();
 
-                string allChars = new string(characters);
+                int newResolution = 0;
+                int newMargin = 0;
 
-                RenderText(new SixLabors.Fonts.Font(font, 72), allChars, 512, 512);
+                GetCorrectResolution(64, characters.Length, out newResolution, out newMargin);
+
+                var squareSize = (newResolution + newMargin);
+
+                int numGlyphsPerRow = (int) Math.Ceiling(Math.Sqrt((float) characters.Length));
+
+                int texSize = (int) (numGlyphsPerRow) * squareSize;
+
+                int realTexSize = GetNextPowerOf2(texSize);
+
+                using (Image<Rgba32> img = new Image<Rgba32>(realTexSize, realTexSize))
+                {
+                    img.Mutate(x => x.Fill(Rgba32.White));
+
+                    for (int i = 0; i < characters.Length; ++i)
+                    {
+                        int row = i / numGlyphsPerRow;
+                        int col = i % numGlyphsPerRow;
+
+                        var renderOption = new RendererOptions(font, 72);
+                        (IPathCollection, IPathCollection, IPath) glyph =
+                            TextBuilder.GenerateGlyphsWithBox(new string(new char[] {characters[i]}),
+                                new SixLabors.Primitives.PointF(0f, 0f), renderOption);
+
+                        var atlasX = col * squareSize;
+                        var atlasY = row * squareSize;
+                        var transform = Matrix3x2.Identity;
+                        transform.Translation = new Vector2( atlasX, atlasY);
+                        IPathCollection newGlyph = glyph.Item1.Transform(transform);
+                        img.Mutate(x => x.Fill(Rgba32.Black, newGlyph));
+                    }
+
+                    using (FileStream fontAtlas = File.Create("fontatlas.png"))
+                    {
+                        img.SaveAsPng(fontAtlas);
+                    }
+
+                    
+                }
             }
         }
+
+        
 
         public static void GetCorrectResolution(int resolution , int glyphCount, out int newResolution, out int newMargin)
         {
@@ -65,7 +108,7 @@ namespace SharpOpenGL.Font
             }
         }
 
-        public static int GetNextPowerOf2(int n)
+        public static int GetNextPowerOf2(float n)
         {
             int returnValue = 1;
             while (returnValue < n)
@@ -81,15 +124,16 @@ namespace SharpOpenGL.Font
             string path = System.IO.Path.GetInvalidFileNameChars().Aggregate(text, (x, c) => x.Replace($"{c}", "-"));
             string fullPath = System.IO.Path.GetFullPath(System.IO.Path.Combine("Output", System.IO.Path.Combine(path)));
 
-            using (Image<Rgba32> img = new Image<Rgba32>(width, height))
+            var renderOption = new RendererOptions(font, 72);
+            (IPathCollection, IPathCollection, IPath) glyph = TextBuilder.GenerateGlyphsWithBox(text, new SixLabors.Primitives.PointF(0f, 0f), renderOption);
+            int heightPowerOf2 = GetNextPowerOf2(glyph.Item2.Bounds.Height);
+            int widthPowerOf2 = GetNextPowerOf2(glyph.Item2.Bounds.Width);
+
+
+            using (Image<Rgba32> img = new Image<Rgba32>(widthPowerOf2, heightPowerOf2))
             {
                 img.Mutate(x => x.Fill(Rgba32.White));
-
-                var renderOption = new RendererOptions(font, 72);
-                renderOption.WrappingWidth = 10;
-                
-                IPathCollection shapes = TextBuilder.GenerateGlyphs(text, new SixLabors.Primitives.PointF(0f, 0f), renderOption);
-                img.Mutate(x => x.Fill(Rgba32.Black, shapes));
+                img.Mutate(x => x.Fill(Rgba32.Black, glyph.Item1));
 
                 Directory.CreateDirectory(System.IO.Path.GetDirectoryName(fullPath));
 

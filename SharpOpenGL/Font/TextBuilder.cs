@@ -22,7 +22,7 @@ namespace SharpOpenGL.Font
             GlyphBuilder glyphBuilder = new GlyphBuilder(location);
 
             TextRenderer renderer = new TextRenderer(glyphBuilder);
-
+            
             renderer.RenderText(text, style);
 
             return (glyphBuilder.Paths, glyphBuilder.Boxes, glyphBuilder.TextBox);
