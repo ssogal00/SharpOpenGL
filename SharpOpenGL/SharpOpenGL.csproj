@@ -126,6 +126,7 @@
     <Compile Include="BlitToScreen.cs" />
     <Compile Include="Font\BaseGlyphBuilder.cs" />
     <Compile Include="Font\FontHelper.cs" />
+    <Compile Include="Font\FontManager.cs" />
     <Compile Include="Font\GlyphBuilder.cs" />
     <Compile Include="Font\GlyphInfo.cs" />
     <Compile Include="Font\PathGlyphBuilder.cs" />
