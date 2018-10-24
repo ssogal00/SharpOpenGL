@@ -125,6 +125,7 @@
     <Compile Include="Asset\Texture2DAsset.cs" />
     <Compile Include="BlitToScreen.cs" />
     <Compile Include="Font\BaseGlyphBuilder.cs" />
+    <Compile Include="Font\FontHelper.cs" />
     <Compile Include="Font\GlyphBuilder.cs" />
     <Compile Include="Font\PathGlyphBuilder.cs" />
     <Compile Include="Font\TextBuilder.cs" />
