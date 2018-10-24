@@ -77,7 +77,7 @@ namespace SharpOpenGL.Font
                         img.SaveAsPng(fontAtlas);
                     }
 
-                    
+
                 }
             }
         }
