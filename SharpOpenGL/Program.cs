@@ -121,7 +121,8 @@ namespace SharpOpenGL
             DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
             GBufferPNCMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferPNC");
 
-            FontHelper.TestRender();
+            FontManager.Get().Initialize();
+            FontManager.Get().RenderText(0,0, "Hello world");
         }
 
         protected void ResourceCreate(object sender, EventArgs e)

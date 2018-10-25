@@ -55,8 +55,7 @@ namespace SharpOpenGL.Font
                         int col = i % numGlyphsPerRow;
 
                         var renderOption = new RendererOptions(font, 72);
-                        (IPathCollection, IPathCollection, IPath) glyph =
-                            TextBuilder.GenerateGlyphsWithBox(new string(new char[] {characters[i]}),
+                        var glyph = TextBuilder.GenerateGlyphsWithBox(new string(new char[] {characters[i]}),
                                 new SixLabors.Primitives.PointF(0f, 0f), renderOption);
 
                         var atlasX = col * squareSize;

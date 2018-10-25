@@ -14,7 +14,10 @@ using Core;
 using Core.Buffer;
 using Core.Primitive;
 using Core.Texture;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using SixLabors.Primitives;
+
 
 namespace SharpOpenGL.Font
 {
@@ -24,7 +27,7 @@ namespace SharpOpenGL.Font
         public void Initialize()
         {
             BuildFontTextureAtlas();
-
+            VB = new DynamicVertexBuffer<PT_VertexAttribute>();
         }
 
         public void BuildFontTextureAtlas()
@@ -34,7 +37,7 @@ namespace SharpOpenGL.Font
             using (var fs = new FileStream(@"./Resources//Font/OpenSans-Regular.ttf", FileMode.Open))
             {
                 FontFamily fontFamily = fonts.Install(fs);
-                var font = new SixLabors.Fonts.Font(fontFamily, 64);
+                currentFont = new SixLabors.Fonts.Font(fontFamily, 64);
 
                 var characters = Enumerable.Range(char.MinValue, 126).Select(c => (char)c).Where(c => !char.IsControl(c)).ToArray();
 
@@ -43,15 +46,17 @@ namespace SharpOpenGL.Font
 
                 FontHelper.GetCorrectResolution(64, characters.Length, out newResolution, out newMargin);
 
-                var squareSize = (newResolution + newMargin);
+                squareSize = (newResolution + newMargin);
 
                 int numGlyphsPerRow = (int)Math.Ceiling(Math.Sqrt((float)characters.Length));
 
                 int texSize = (int)(numGlyphsPerRow) * squareSize;
 
-                realTextureSizeX = realTextureSizeY = FontHelper.GetNextPowerOf2(texSize);
+                realTextureSize = FontHelper.GetNextPowerOf2(texSize);
 
-                using (Image<Rgba32> img = new Image<Rgba32>(realTextureSizeX, realTextureSizeY))
+                textureDimension = (squareSize) / (float) realTextureSize;
+
+                using (Image<Rgba32> img = new Image<Rgba32>(realTextureSize, realTextureSize))
                 {
                     img.Mutate(x => x.Fill(Rgba32.White));
 
@@ -60,20 +65,20 @@ namespace SharpOpenGL.Font
                         int row = i / numGlyphsPerRow;
                         int col = i % numGlyphsPerRow;
 
-                        var renderOption = new RendererOptions(font, 72);
+                        var renderOption = new RendererOptions(currentFont, 72);
                         (IPathCollection, IPathCollection, IPath) glyph =
                             TextBuilder.GenerateGlyphsWithBox(new string(new char[] { characters[i] }),
                                 new SixLabors.Primitives.PointF(0f, 0f), renderOption);
 
                         var atlasX = col * squareSize;
                         var atlasY = row * squareSize;
-                        var transform = Matrix3x2.Identity;
-                        transform.Translation = new Vector2(atlasX, atlasY);
+                        var transform = System.Numerics.Matrix3x2.Identity;
+                        transform.Translation = new System.Numerics.Vector2(atlasX, atlasY);
 
                         var bounds = glyph.Item1.Bounds;
 
                         GlyphDictionary.Add(characters[i], new GlyphInfo(characters[i], 
-                            atlasX, atlasY, 
+                            atlasX / (float)realTextureSize, atlasY / (float) realTextureSize, 
                             bounds.Left, bounds.Top, 
                             bounds.Width, bounds.Height));
 
@@ -94,33 +99,62 @@ namespace SharpOpenGL.Font
 
         public void RenderText(float x, float y, string text)
         {
+            VertexList.Clear();
+
             using (var dummy = new ScopedDisable(EnableCap.DepthTest))
             {
+                var glyphList = TextBuilder.GenerateGlyphsWithBox(text, PointF.Empty, new RendererOptions(currentFont, 72));
+
+                int index = 0;
+                foreach (var box in glyphList.boxes)
+                {
+                    var v1 = new OpenTK.Vector3( box.Bounds.Left, box.Bounds.Top , 0);
+                    var v2 = new OpenTK.Vector3(box.Bounds.Right, box.Bounds.Top, 0);
+                    var v3 = new OpenTK.Vector3(box.Bounds.Left, box.Bounds.Bottom, 0);
+                    var v4 = new OpenTK.Vector3(box.Bounds.Right, box.Bounds.Bottom, 0);
+
+                    var texCoordX0 = GlyphDictionary[text[index]].AtlasX;
+                    var texCoordX1 = GlyphDictionary[text[index]].AtlasX + box.Bounds.Width / (float) realTextureSize;
+                    var texCoordY0 = GlyphDictionary[text[index]].AtlasY;
+                    var texCoordY1 = GlyphDictionary[text[index]].AtlasY + box.Bounds.Height / (float)realTextureSize;
+
+                    var texcoord1 = new OpenTK.Vector2(texCoordX0 , texCoordY0);
+                    var texcoord2 = new OpenTK.Vector2(texCoordX1, texCoordY0);
+                    var texcoord3 = new OpenTK.Vector2(texCoordX0, texCoordY1);
+                    var texcoord4 = new OpenTK.Vector2(texCoordX1, texCoordY1);
+
+                    index++;
+
+                    VertexList.Add(new PT_VertexAttribute(v1, texcoord1));
+                    VertexList.Add(new PT_VertexAttribute(v2, texcoord2));
+                    VertexList.Add(new PT_VertexAttribute(v3, texcoord3));
+                    VertexList.Add(new PT_VertexAttribute(v4, texcoord4));
+                }
+
                 VB.Bind();
                 VB.BindVertexAttribute();
+                var vertexArray = VertexList.ToArray();
+                VB.BufferData<PT_VertexAttribute>(ref vertexArray);
 
-                foreach (var ch in text)
-                {
-                    var glyphInfo = GlyphDictionary[ch];
-                    var texCoordLeft = glyphInfo.Left / (float) realTextureSizeX;
-                    var texCoordTop = glyphInfo.Top / (float) realTextureSizeY;
-                    var texCoordRight = (glyphInfo.Left + glyphInfo.Width) / (float) realTextureSizeX;
-                    var texCoordBottom = (glyphInfo.Left + glyphInfo.Width) / (float)realTextureSizeX;
-
-
-                }
+                
             }
         }
 
         // 
         private DynamicVertexBuffer<PT_VertexAttribute> VB = null;
+        private List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
         private Texture2D FontAtlas = null;
         //
         
         protected Dictionary<char, GlyphInfo> GlyphDictionary = new Dictionary<char, GlyphInfo>();
 
+        // texture atlas info
+        private float textureDimension = 0;
+        private int squareSize = 72;
+        private int realTextureSize = 512;
+        private bool bInitialized = false;
 
-        private int realTextureSizeX = 512;
-        private int realTextureSizeY = 512;
+        // 
+        private SixLabors.Fonts.Font currentFont = null;
     }
 }
