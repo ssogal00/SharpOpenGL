@@ -12,10 +12,12 @@ using SixLabors.Fonts;
 using SixLabors.Shapes;
 using Core;
 using Core.Buffer;
+using Core.MaterialBase;
 using Core.Primitive;
 using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using SharpOpenGL.Asset;
 using SixLabors.Primitives;
 
 
@@ -23,11 +25,12 @@ namespace SharpOpenGL.Font
 {
     public class FontManager : Singleton<FontManager>
     {
-
         public void Initialize()
         {
-            BuildFontTextureAtlas();
+            FontAtlas = new Texture2D();
             VB = new DynamicVertexBuffer<PT_VertexAttribute>();
+            FontRenderMaterial = AssetManager.LoadAssetSync<MaterialBase>("FontRenderMaterial");
+            BuildFontTextureAtlas();
         }
 
         public void BuildFontTextureAtlas()
@@ -86,15 +89,14 @@ namespace SharpOpenGL.Font
                         img.Mutate(x => x.Fill(Rgba32.Black, newGlyph));
                     }
 
-                    using (FileStream fontAtlas = File.Create("fontatlas.bmp"))
+                    using (FileStream fontAtlas = File.Create("fontatlas.png"))
                     {
-                        img.SaveAsBmp(fontAtlas);
+                        img.SaveAsPng(fontAtlas);
                     }
                 }
             }
-
-            FontAtlas = new Texture2D();
-            FontAtlas.Load("fontatlas.bmp");
+            
+            FontAtlas.Load("fontatlas.png");
         }
 
         public void RenderText(float x, float y, string text)
@@ -135,8 +137,8 @@ namespace SharpOpenGL.Font
                 VB.BindVertexAttribute();
                 var vertexArray = VertexList.ToArray();
                 VB.BufferData<PT_VertexAttribute>(ref vertexArray);
-
                 
+                GL.DrawArrays(PrimitiveType.TriangleStrip, 0, VertexList.Count);
             }
         }
 
@@ -144,6 +146,7 @@ namespace SharpOpenGL.Font
         private DynamicVertexBuffer<PT_VertexAttribute> VB = null;
         private List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
         private Texture2D FontAtlas = null;
+        private MaterialBase FontRenderMaterial = null;
         //
         
         protected Dictionary<char, GlyphInfo> GlyphDictionary = new Dictionary<char, GlyphInfo>();
