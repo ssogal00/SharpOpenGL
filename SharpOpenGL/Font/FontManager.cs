@@ -133,12 +133,14 @@ namespace SharpOpenGL.Font
                     VertexList.Add(new PT_VertexAttribute(v4, texcoord4));
                 }
 
-                VB.Bind();
-                VB.BindVertexAttribute();
-                var vertexArray = VertexList.ToArray();
-                VB.BufferData<PT_VertexAttribute>(ref vertexArray);
-                
-                GL.DrawArrays(PrimitiveType.TriangleStrip, 0, VertexList.Count);
+                FontRenderMaterial.BindAndExecute(VB, () =>
+                {
+                    VB.BindVertexAttribute();
+                    var vertexArray = VertexList.ToArray();
+                    VB.BufferData<PT_VertexAttribute>(ref vertexArray);
+                    FontRenderMaterial.SetUniformVarData("ScreenSize", new OpenTK.Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
+                    GL.DrawArrays(PrimitiveType.TriangleStrip, 0, VertexList.Count);
+                });
             }
         }
 

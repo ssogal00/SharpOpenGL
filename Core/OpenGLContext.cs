@@ -18,6 +18,9 @@ namespace Core
 
         public bool IsValid { get { return this.window != null; } }
 
+        public int WindowWidth => window.Width;
+        public int WindowHeight => window.Height;
+
         public OpenGLContext()
         {
             this.window = null;
