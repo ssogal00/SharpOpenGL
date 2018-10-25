@@ -175,5 +175,8 @@ namespace MSGBufferMaterial
 namespace DepthVisualizeMaterial
 {
 }
+namespace FontRenderMaterial
+{
+}
 
 }
