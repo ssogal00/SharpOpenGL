@@ -66,7 +66,10 @@ namespace SharpOpenGL.Font
 
                         var bounds = glyph.Item1.Bounds;
                         
-                        glyphMap.Add(characters[i], new GlyphInfo(characters[i], atlasX / (float) realTexSize , atlasY / (float) realTexSize, bounds.Left, bounds.Top));
+                        glyphMap.Add(characters[i], new GlyphInfo(characters[i], 
+                            atlasX , atlasY, 
+                            bounds.Left, bounds.Top,
+                            bounds.Width, bounds.Height));
 
                         IPathCollection newGlyph = glyph.Item1.Transform(transform);
                         img.Mutate(x => x.Fill(Rgba32.Black, newGlyph));

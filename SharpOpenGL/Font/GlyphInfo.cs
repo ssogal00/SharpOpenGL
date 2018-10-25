@@ -8,20 +8,24 @@ namespace SharpOpenGL.Font
 {
     public class GlyphInfo
     {
-        public GlyphInfo(char code, float atlasX, float atlasY, float advanceHorizontal, float adavanceVertical)
+        public GlyphInfo(char code, float atlasX, float atlasY, float left, float top, float width, float height)
         {
             CharCode = code;
             AtlasX = atlasX;
             AtlasY = atlasY;
-            AdvanceHorizontal = advanceHorizontal;
-            AdvanceVertical = adavanceVertical;
+            Left = left;
+            Top = top;
+            Width = width;
+            Height = height;
         }
 
         public char CharCode = 'a';
         public float AtlasX = 0;
         public float AtlasY = 0;
-        public float AdvanceHorizontal = 0;
-        public float AdvanceVertical = 0;
+        public float Left = 0;
+        public float Top = 0;
+        public float Width = 0;
+        public float Height = 0;
 
     }
 }
