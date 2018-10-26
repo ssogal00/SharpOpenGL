@@ -95,7 +95,7 @@ namespace SharpOpenGL.Font
                     {
                         for (int x = 0; x < realTextureSize; ++x)
                         {
-                            textureData[(y * realTextureSize + x)*2] = textureData[(y* realTextureSize + x)*2 + 1] = img[y,x].R;
+                            textureData[(y * realTextureSize + x)*2] = textureData[(y* realTextureSize + x)*2 + 1] = img[x, realTextureSize -1 - y].R;
                         }
                     }
                     

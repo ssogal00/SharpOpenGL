@@ -203,7 +203,7 @@ namespace SharpOpenGL
                 GBufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
                 GBufferMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
                 Mesh.Draw(GBufferMaterial);
-                FontManager.Get().RenderText(100, 200, "HelloworldEngine");
+                FontManager.Get().RenderText(100, 100, "Helloworld...");
 
                 if (CurrentCam == OrbitCam)
                 {
