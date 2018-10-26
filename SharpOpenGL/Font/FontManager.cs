@@ -82,8 +82,8 @@ namespace SharpOpenGL.Font
 
                         GlyphDictionary.Add(characters[i], new GlyphInfo(characters[i], 
                             atlasX / (float)realTextureSize, atlasY / (float) realTextureSize, 
-                            bounds.Left, bounds.Top, 
-                            bounds.Width, bounds.Height));
+                            bounds.Left / (float)realTextureSize, bounds.Top / (float)realTextureSize, 
+                            bounds.Width/ (float)realTextureSize, bounds.Height/ (float)realTextureSize));
 
                         IPathCollection newGlyph = glyph.Item1.Transform(transform);
                         img.Mutate(x => x.Fill(Rgba32.Black, newGlyph));
@@ -91,7 +91,7 @@ namespace SharpOpenGL.Font
 
                     using (FileStream fontAtlas = File.Create("fontatlas.png"))
                     {
-                        img.SaveAsPng(fontAtlas);
+                        img.SaveAsBmp(fontAtlas);
                     }
                 }
             }
@@ -110,15 +110,20 @@ namespace SharpOpenGL.Font
                 int index = 0;
                 foreach (var box in glyphList.boxes)
                 {
-                    var v1 = new OpenTK.Vector3( box.Bounds.Left, box.Bounds.Top , 0);
-                    var v2 = new OpenTK.Vector3(box.Bounds.Right, box.Bounds.Top, 0);
-                    var v3 = new OpenTK.Vector3(box.Bounds.Left, box.Bounds.Bottom, 0);
-                    var v4 = new OpenTK.Vector3(box.Bounds.Right, box.Bounds.Bottom, 0);
+                    var v1 = new OpenTK.Vector3(x + box.Bounds.Left, y - box.Bounds.Top , 0);
+                    var v2 = new OpenTK.Vector3(x + box.Bounds.Right, y - box.Bounds.Top, 0);
+                    var v3 = new OpenTK.Vector3(x + box.Bounds.Left, y - box.Bounds.Bottom, 0);
+                    var v4 = new OpenTK.Vector3(x + box.Bounds.Right, y - box.Bounds.Bottom, 0);
 
-                    var texCoordX0 = GlyphDictionary[text[index]].AtlasX;
-                    var texCoordX1 = GlyphDictionary[text[index]].AtlasX + box.Bounds.Width / (float) realTextureSize;
-                    var texCoordY0 = GlyphDictionary[text[index]].AtlasY;
-                    var texCoordY1 = GlyphDictionary[text[index]].AtlasY + box.Bounds.Height / (float)realTextureSize;
+                    var left = GlyphDictionary[text[index]].Left;
+                    var top = GlyphDictionary[text[index]].Top;
+                    var textureWidth = GlyphDictionary[text[index]].Width;
+                    var textureHeight = GlyphDictionary[text[index]].Height;                    
+
+                    var texCoordX0 = GlyphDictionary[text[index]].AtlasX + left;
+                    var texCoordX1 = GlyphDictionary[text[index]].AtlasX + left + textureWidth;
+                    var texCoordY0 = 1 - (GlyphDictionary[text[index]].AtlasY + top);
+                    var texCoordY1 = 1 - (GlyphDictionary[text[index]].AtlasY + top + textureHeight);
 
                     var texcoord1 = new OpenTK.Vector2(texCoordX0 , texCoordY0);
                     var texcoord2 = new OpenTK.Vector2(texCoordX1, texCoordY0);
@@ -129,8 +134,8 @@ namespace SharpOpenGL.Font
 
                     VertexList.Add(new PT_VertexAttribute(v1, texcoord1));
                     VertexList.Add(new PT_VertexAttribute(v2, texcoord2));
-                    VertexList.Add(new PT_VertexAttribute(v3, texcoord3));
                     VertexList.Add(new PT_VertexAttribute(v4, texcoord4));
+                    VertexList.Add(new PT_VertexAttribute(v3, texcoord3));
                 }
 
                 FontRenderMaterial.BindAndExecute(VB, () =>
@@ -138,8 +143,9 @@ namespace SharpOpenGL.Font
                     VB.BindVertexAttribute();
                     var vertexArray = VertexList.ToArray();
                     VB.BufferData<PT_VertexAttribute>(ref vertexArray);
+                    FontRenderMaterial.SetTexture("FontTexture", FontAtlas);
                     FontRenderMaterial.SetUniformVarData("ScreenSize", new OpenTK.Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
-                    GL.DrawArrays(PrimitiveType.TriangleStrip, 0, VertexList.Count);
+                    GL.DrawArrays(PrimitiveType.Quads, 0, VertexList.Count);
                 });
             }
         }

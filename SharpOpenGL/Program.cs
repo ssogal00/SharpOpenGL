@@ -122,7 +122,6 @@ namespace SharpOpenGL
             GBufferPNCMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferPNC");
 
             FontManager.Get().Initialize();
-            FontManager.Get().RenderText(0,0, "Hello world");
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
@@ -204,8 +203,9 @@ namespace SharpOpenGL
                 GBufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
                 GBufferMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
                 Mesh.Draw(GBufferMaterial);
+                FontManager.Get().RenderText(100, 100, "HelloworldEngine");
 
-                if(CurrentCam == OrbitCam)
+                if (CurrentCam == OrbitCam)
                 {
                     using (var dummy = new WireFrameMode())
                     {
