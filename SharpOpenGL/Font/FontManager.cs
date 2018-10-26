@@ -57,11 +57,13 @@ namespace SharpOpenGL.Font
 
                 realTextureSize = FontHelper.GetNextPowerOf2(texSize);
 
+                byte[] textureData = new byte[realTextureSize * realTextureSize * 2];
+
                 textureDimension = (squareSize) / (float) realTextureSize;
 
                 using (Image<Rgba32> img = new Image<Rgba32>(realTextureSize, realTextureSize))
                 {
-                    img.Mutate(x => x.Fill(Rgba32.White));
+                    img.Mutate(x => x.Fill(Rgba32.Black));
 
                     for (int i = 0; i < characters.Length; ++i)
                     {
@@ -86,30 +88,51 @@ namespace SharpOpenGL.Font
                             bounds.Width/ (float)realTextureSize, bounds.Height/ (float)realTextureSize));
 
                         IPathCollection newGlyph = glyph.Item1.Transform(transform);
-                        img.Mutate(x => x.Fill(Rgba32.Black, newGlyph));
+                        img.Mutate(x => x.Fill(Rgba32.White, newGlyph));
                     }
 
+                    for (int y = 0; y < realTextureSize; ++y)
+                    {
+                        for (int x = 0; x < realTextureSize; ++x)
+                        {
+                            textureData[(y * realTextureSize + x)*2] = textureData[(y* realTextureSize + x)*2 + 1] = img[y,x].R;
+                        }
+                    }
+                    
                     using (FileStream fontAtlas = File.Create("fontatlas.png"))
                     {
                         img.SaveAsBmp(fontAtlas);
                     }
                 }
+
+                //FontAtlas.Load("fontatlas.png");
+                FontAtlas.BindAtUnit(TextureUnit.Texture0);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.LuminanceAlpha, realTextureSize, realTextureSize,
+                0, PixelFormat.LuminanceAlpha, PixelType.UnsignedByte, textureData);
             }
             
-            FontAtlas.Load("fontatlas.png");
+            
         }
 
         public void RenderText(float x, float y, string text)
         {
             VertexList.Clear();
 
+            using (var blend = new ScopedEnable(EnableCap.Blend))
             using (var dummy = new ScopedDisable(EnableCap.DepthTest))
             {
-                var glyphList = TextBuilder.GenerateGlyphsWithBox(text, PointF.Empty, new RendererOptions(currentFont, 72));
+                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+
+                var glyphList = TextBuilder.GenerateGlyphsWithBox(text, PointF.Empty, new RendererOptions(currentFont, 72){ApplyKerning = true});
 
                 int index = 0;
                 foreach (var box in glyphList.boxes)
                 {
+                    if (GlyphDictionary.ContainsKey(text[index]) == false)
+                    {
+                        continue;
+                    }
+
                     var v1 = new OpenTK.Vector3(x + box.Bounds.Left, y - box.Bounds.Top , 0);
                     var v2 = new OpenTK.Vector3(x + box.Bounds.Right, y - box.Bounds.Top, 0);
                     var v3 = new OpenTK.Vector3(x + box.Bounds.Left, y - box.Bounds.Bottom, 0);
