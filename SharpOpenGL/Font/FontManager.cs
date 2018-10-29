@@ -6,8 +6,6 @@ using System.Linq;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-
-using System.Numerics;
 using SixLabors.Fonts;
 using SixLabors.Shapes;
 using Core;
@@ -15,7 +13,6 @@ using Core.Buffer;
 using Core.MaterialBase;
 using Core.Primitive;
 using Core.Texture;
-using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL.Asset;
 using SixLabors.Primitives;
@@ -27,7 +24,7 @@ namespace SharpOpenGL.Font
     {
         public void Initialize()
         {
-            FontAtlas = new Texture2D();
+            fontAtlas = new Texture2D();
             VB = new DynamicVertexBuffer<PT_VertexAttribute>();
             FontRenderMaterial = AssetManager.LoadAssetSync<MaterialBase>("FontRenderMaterial");
             BuildFontTextureAtlas();
@@ -106,12 +103,17 @@ namespace SharpOpenGL.Font
                 }
 
                 //FontAtlas.Load("fontatlas.png");
-                FontAtlas.BindAtUnit(TextureUnit.Texture0);
+                fontAtlas.BindAtUnit(TextureUnit.Texture0);
                 GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.LuminanceAlpha, realTextureSize, realTextureSize,
                 0, PixelFormat.LuminanceAlpha, PixelType.UnsignedByte, textureData);
             }
             
             
+        }
+
+        public void RenderText(string text)
+        {
+
         }
 
         public void RenderText(float x, float y, string text)
@@ -166,7 +168,7 @@ namespace SharpOpenGL.Font
                     VB.BindVertexAttribute();
                     var vertexArray = VertexList.ToArray();
                     VB.BufferData<PT_VertexAttribute>(ref vertexArray);
-                    FontRenderMaterial.SetTexture("FontTexture", FontAtlas);
+                    FontRenderMaterial.SetTexture("FontTexture", fontAtlas);
                     FontRenderMaterial.SetUniformVarData("ScreenSize", new OpenTK.Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
                     GL.DrawArrays(PrimitiveType.Quads, 0, VertexList.Count);
                 });
@@ -176,11 +178,11 @@ namespace SharpOpenGL.Font
         // 
         private DynamicVertexBuffer<PT_VertexAttribute> VB = null;
         private List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
-        private Texture2D FontAtlas = null;
+        private Texture2D fontAtlas = null;
         private MaterialBase FontRenderMaterial = null;
         //
         
-        protected Dictionary<char, GlyphInfo> GlyphDictionary = new Dictionary<char, GlyphInfo>();
+        public static Dictionary<char, GlyphInfo> GlyphDictionary =  new Dictionary<char, GlyphInfo>();
 
         // texture atlas info
         private float textureDimension = 0;
@@ -190,5 +192,17 @@ namespace SharpOpenGL.Font
 
         // 
         private SixLabors.Fonts.Font currentFont = null;
+
+        public SixLabors.Fonts.Font CurrentFont
+        {
+            get { return currentFont; }
+        }
+
+        public Texture2D FontAtlas
+        {
+            get { return fontAtlas; }
+        }
+
+        Dictionary<string, RenderText> renderTextDicationary = new Dictionary<string, RenderText>();
     }
 }
