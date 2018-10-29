@@ -119,10 +119,9 @@ namespace SharpOpenGL.Font
 
             using (var blend = new ScopedEnable(EnableCap.Blend))
             using (var dummy = new ScopedDisable(EnableCap.DepthTest))
+            using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))
             {
-                GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-
-                var glyphList = TextBuilder.GenerateGlyphsWithBox(text, PointF.Empty, new RendererOptions(currentFont, 72){ApplyKerning = true});
+                var glyphList = TextBuilder.GenerateGlyphsWithBox(text, PointF.Empty, new RendererOptions(currentFont, 72) { ApplyKerning = true });
 
                 int index = 0;
                 foreach (var box in glyphList.boxes)
@@ -132,7 +131,7 @@ namespace SharpOpenGL.Font
                         continue;
                     }
 
-                    var v1 = new OpenTK.Vector3(x + box.Bounds.Left, y - box.Bounds.Top , 0);
+                    var v1 = new OpenTK.Vector3(x + box.Bounds.Left, y - box.Bounds.Top, 0);
                     var v2 = new OpenTK.Vector3(x + box.Bounds.Right, y - box.Bounds.Top, 0);
                     var v3 = new OpenTK.Vector3(x + box.Bounds.Left, y - box.Bounds.Bottom, 0);
                     var v4 = new OpenTK.Vector3(x + box.Bounds.Right, y - box.Bounds.Bottom, 0);
@@ -140,14 +139,14 @@ namespace SharpOpenGL.Font
                     var left = GlyphDictionary[text[index]].Left;
                     var top = GlyphDictionary[text[index]].Top;
                     var textureWidth = GlyphDictionary[text[index]].Width;
-                    var textureHeight = GlyphDictionary[text[index]].Height;                    
+                    var textureHeight = GlyphDictionary[text[index]].Height;
 
                     var texCoordX0 = GlyphDictionary[text[index]].AtlasX + left;
                     var texCoordX1 = GlyphDictionary[text[index]].AtlasX + left + textureWidth;
                     var texCoordY0 = 1 - (GlyphDictionary[text[index]].AtlasY + top);
                     var texCoordY1 = 1 - (GlyphDictionary[text[index]].AtlasY + top + textureHeight);
 
-                    var texcoord1 = new OpenTK.Vector2(texCoordX0 , texCoordY0);
+                    var texcoord1 = new OpenTK.Vector2(texCoordX0, texCoordY0);
                     var texcoord2 = new OpenTK.Vector2(texCoordX1, texCoordY0);
                     var texcoord3 = new OpenTK.Vector2(texCoordX0, texCoordY1);
                     var texcoord4 = new OpenTK.Vector2(texCoordX1, texCoordY1);
