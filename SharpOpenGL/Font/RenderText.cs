@@ -12,11 +12,19 @@ using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.Font
 {
-    public class RenderText
+    public class RenderText : IDisposable
     {
         public RenderText(string textContent)
         {
             TextContent = textContent;
+        }
+
+        public void Dispose()
+        {
+            if (vb != null)
+            {
+                vb.Dispose();
+            }
         }
 
         public void Render(MaterialBase fontRenderMaterial)
@@ -81,6 +89,7 @@ namespace SharpOpenGL.Font
         public string TextContent = "";
 
         private DynamicVertexBuffer<PT_VertexAttribute> vb = null;
+
         private List<PT_VertexAttribute> vertexList = new List<PT_VertexAttribute>();
     }
 }
