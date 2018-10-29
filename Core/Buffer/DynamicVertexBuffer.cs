@@ -15,6 +15,16 @@ namespace Core.Buffer
         {
             bufferTarget = BufferTarget.ArrayBuffer;
             hint = BufferUsageHint.DynamicDraw;
+            ++Count;
+        }
+        public static int DynamicVertexBufferCount => Count;
+
+        protected static int Count = 0;
+
+        public new void Dispose()
+        {
+            base.Dispose();
+            --Count;
         }
 
         public List<VertexAttribute> GetVertexAttributeList()

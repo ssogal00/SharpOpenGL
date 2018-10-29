@@ -15,7 +15,19 @@ namespace Core.Buffer
         {
             bufferTarget = BufferTarget.ArrayBuffer;
             hint = BufferUsageHint.StaticDraw;
+            Count++;
         }
+
+        public new void Dispose()
+        {
+            base.Dispose();
+            Count--;
+        }
+
+        protected static int Count = 0;
+
+        public static int StaticVertexBufferCount => Count;
+
         
         public void BindVertexAttribute()
         {
