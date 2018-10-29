@@ -23,9 +23,8 @@ namespace SharpOpenGL.Font
         {
             fontRenderMaterial.BindAndExecute(vb, () =>
             {
+                vb.Bind();
                 vb.BindVertexAttribute();
-                var vertexArray = vertexList.ToArray();
-                vb.BufferData<PT_VertexAttribute>(ref vertexArray);
                 fontRenderMaterial.SetTexture("FontTexture", FontManager.Get().FontAtlas);
                 fontRenderMaterial.SetUniformVarData("ScreenSize", new OpenTK.Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
                 GL.DrawArrays(PrimitiveType.Quads, 0, vertexList.Count);
@@ -73,6 +72,10 @@ namespace SharpOpenGL.Font
                 vertexList.Add(new PT_VertexAttribute(v4, texcoord4));
                 vertexList.Add(new PT_VertexAttribute(v3, texcoord3));
             }
+
+            var vertexArray = vertexList.ToArray();
+            
+            vb.BufferData<PT_VertexAttribute>(ref vertexArray);
         }
 
         public string TextContent = "";

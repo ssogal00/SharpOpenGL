@@ -107,8 +107,6 @@ namespace SharpOpenGL.Font
                 GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.LuminanceAlpha, realTextureSize, realTextureSize,
                 0, PixelFormat.LuminanceAlpha, PixelType.UnsignedByte, textureData);
             }
-            
-            
         }
 
         public void RenderText(string text)
