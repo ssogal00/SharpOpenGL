@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
+using GetIndexedPName = OpenTK.Graphics.ES30.GetIndexedPName;
 
 namespace Core
 {
@@ -38,6 +39,26 @@ namespace Core
         }
 
         private int prevFunc;
+    }
+
+    public class ScopedBlendFunc : IDisposable
+    {
+        public ScopedBlendFunc(BlendingFactor srcFactor, BlendingFactor dstFactor)
+        {
+            // get prev blend mode
+            GL.GetInteger(GetPName.BlendSrcAlpha, out prevSrcAlpha);
+            GL.GetInteger(GetPName.BlendDstAlpha, out prevDstAlpha);
+
+            GL.BlendFunc(srcFactor, dstFactor);
+        }
+
+        public void Dispose()
+        {
+            GL.BlendFunc((BlendingFactor)prevSrcAlpha,  (BlendingFactor)prevDstAlpha);
+        }
+
+        private int prevSrcAlpha;
+        private int prevDstAlpha;
     }
 
     public class ScopedEnable : IDisposable
