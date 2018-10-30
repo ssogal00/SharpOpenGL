@@ -35,7 +35,7 @@ namespace SharpOpenGL.Font
         {
             //
             FontCollection fonts = new FontCollection();
-            using (var fs = new FileStream(@"./Resources//Font/ProggyClean.ttf", FileMode.Open))
+            using (var fs = new FileStream(@"./Resources//Font/consola.ttf", FileMode.Open))
             {
                 FontFamily fontFamily = fonts.Install(fs);
                 currentFont = new SixLabors.Fonts.Font(fontFamily, fontSize);
@@ -111,12 +111,12 @@ namespace SharpOpenGL.Font
             }
         }
 
-        public void RenderText(float x, float y, string text)
+        public void RenderText(float x, float y, string text, int fontSize)
         {
             
             if (renderTextDicationary.ContainsKey(text) == false)
             {
-                var newInstance = new TextInstance(text,x,y);
+                var newInstance = new TextInstance(text,x,y,fontSize);
                 renderTextDicationary.Add(text, newInstance);
             }
             
@@ -131,11 +131,13 @@ namespace SharpOpenGL.Font
         
         public static Dictionary<char, GlyphInfo> GlyphDictionary =  new Dictionary<char, GlyphInfo>();
 
+        public int FontSize => fontSize;
+
         // texture atlas info
         private float textureDimension = 0;
         private int squareSize = 72;
         private int dpi = 72;
-        private int fontSize = 72;
+        private int fontSize = 18;
         private int realTextureSize = 512;
         private bool bInitialized = false;
 

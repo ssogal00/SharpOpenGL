@@ -15,8 +15,9 @@ namespace SharpOpenGL.Font
 {
     public class TextInstance : IDisposable
     {
-        public TextInstance(string textContent, float x, float y)
+        public TextInstance(string textContent, float x, float y, int fontSize)
         {
+            this.fontSize = fontSize;
             TextContent = textContent;
             GenerateVertices(x,y);
         }
@@ -34,14 +35,11 @@ namespace SharpOpenGL.Font
             using (var blend = new ScopedEnable(EnableCap.Blend))
             using (var dummy = new ScopedDisable(EnableCap.DepthTest))
             using (var sampler = new Sampler())
-            //using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))
+            using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))
             {
-                sampler.SetMagFilter(TextureMagFilter.Linear);
-                sampler.SetMinFilter(TextureMinFilter.Linear);
-                sampler.BindSampler(TextureUnit.Texture0);
-
                 fontRenderMaterial.BindAndExecute(vb, () =>
                 {
+                    
                     vb.Bind();
                     vb.BindVertexAttribute();
                     fontRenderMaterial.SetTexture("FontTexture", FontManager.Get().FontAtlas);
@@ -66,10 +64,11 @@ namespace SharpOpenGL.Font
                     continue;
                 }
 
-                var v1 = new OpenTK.Vector3(originX + box.Bounds.Left, originY - box.Bounds.Top, 0);
-                var v2 = new OpenTK.Vector3(originX + box.Bounds.Right, originY - box.Bounds.Top, 0);
-                var v3 = new OpenTK.Vector3(originX + box.Bounds.Left, originY - box.Bounds.Bottom, 0);
-                var v4 = new OpenTK.Vector3(originX + box.Bounds.Right, originY - box.Bounds.Bottom, 0);
+                float fScale = (float) this.fontSize / (float) FontManager.Get().FontSize;
+                var v1 = new OpenTK.Vector3(originX + box.Bounds.Left  * fScale,  originY - box.Bounds.Top * fScale, 0);
+                var v2 = new OpenTK.Vector3(originX + box.Bounds.Right * fScale, originY - box.Bounds.Top * fScale, 0);
+                var v3 = new OpenTK.Vector3(originX + box.Bounds.Left * fScale, originY - box.Bounds.Bottom * fScale, 0);
+                var v4 = new OpenTK.Vector3(originX + box.Bounds.Right * fScale, originY - box.Bounds.Bottom * fScale, 0);
 
                 var left = FontManager.GlyphDictionary[TextContent[index]].Left;
                 var top = FontManager.GlyphDictionary[TextContent[index]].Top;
@@ -103,7 +102,7 @@ namespace SharpOpenGL.Font
 
         private bool bDrawBackground = false;
 
-
+        private int fontSize = 36;
 
         private DynamicVertexBuffer<PT_VertexAttribute> vb = null;
 
