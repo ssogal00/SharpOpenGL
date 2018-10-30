@@ -130,7 +130,7 @@
     <Compile Include="Font\GlyphBuilder.cs" />
     <Compile Include="Font\GlyphInfo.cs" />
     <Compile Include="Font\PathGlyphBuilder.cs" />
-    <Compile Include="Font\RenderText.cs" />
+    <Compile Include="Font\TextInstance.cs" />
     <Compile Include="Font\TextBuilder.cs" />
     <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="Light\LightBase.cs" />

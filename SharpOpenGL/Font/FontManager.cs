@@ -25,7 +25,6 @@ namespace SharpOpenGL.Font
         public void Initialize()
         {
             fontAtlas = new Texture2D();
-            VB = new DynamicVertexBuffer<PT_VertexAttribute>();
             FontRenderMaterial = AssetManager.LoadAssetSync<MaterialBase>("FontRenderMaterial");
             BuildFontTextureAtlas();
         }
@@ -108,72 +107,20 @@ namespace SharpOpenGL.Font
             }
         }
 
-        public void RenderText(string text)
-        {
-
-        }
-
         public void RenderText(float x, float y, string text)
         {
-            VertexList.Clear();
-
-            using (var blend = new ScopedEnable(EnableCap.Blend))
-            using (var dummy = new ScopedDisable(EnableCap.DepthTest))
-            using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))
+            
+            if (renderTextDicationary.ContainsKey(text) == false)
             {
-                var glyphList = TextBuilder.GenerateGlyphsWithBox(text, PointF.Empty, new RendererOptions(currentFont, 72) { ApplyKerning = true });
-
-                int index = 0;
-                foreach (var box in glyphList.boxes)
-                {
-                    if (GlyphDictionary.ContainsKey(text[index]) == false)
-                    {
-                        continue;
-                    }
-
-                    var v1 = new OpenTK.Vector3(x + box.Bounds.Left, y - box.Bounds.Top, 0);
-                    var v2 = new OpenTK.Vector3(x + box.Bounds.Right, y - box.Bounds.Top, 0);
-                    var v3 = new OpenTK.Vector3(x + box.Bounds.Left, y - box.Bounds.Bottom, 0);
-                    var v4 = new OpenTK.Vector3(x + box.Bounds.Right, y - box.Bounds.Bottom, 0);
-
-                    var left = GlyphDictionary[text[index]].Left;
-                    var top = GlyphDictionary[text[index]].Top;
-                    var textureWidth = GlyphDictionary[text[index]].Width;
-                    var textureHeight = GlyphDictionary[text[index]].Height;
-
-                    var texCoordX0 = GlyphDictionary[text[index]].AtlasX + left;
-                    var texCoordX1 = GlyphDictionary[text[index]].AtlasX + left + textureWidth;
-                    var texCoordY0 = 1 - (GlyphDictionary[text[index]].AtlasY + top);
-                    var texCoordY1 = 1 - (GlyphDictionary[text[index]].AtlasY + top + textureHeight);
-
-                    var texcoord1 = new OpenTK.Vector2(texCoordX0, texCoordY0);
-                    var texcoord2 = new OpenTK.Vector2(texCoordX1, texCoordY0);
-                    var texcoord3 = new OpenTK.Vector2(texCoordX0, texCoordY1);
-                    var texcoord4 = new OpenTK.Vector2(texCoordX1, texCoordY1);
-
-                    index++;
-
-                    VertexList.Add(new PT_VertexAttribute(v1, texcoord1));
-                    VertexList.Add(new PT_VertexAttribute(v2, texcoord2));
-                    VertexList.Add(new PT_VertexAttribute(v4, texcoord4));
-                    VertexList.Add(new PT_VertexAttribute(v3, texcoord3));
-                }
-
-                FontRenderMaterial.BindAndExecute(VB, () =>
-                {
-                    VB.BindVertexAttribute();
-                    var vertexArray = VertexList.ToArray();
-                    VB.BufferData<PT_VertexAttribute>(ref vertexArray);
-                    FontRenderMaterial.SetTexture("FontTexture", fontAtlas);
-                    FontRenderMaterial.SetUniformVarData("ScreenSize", new OpenTK.Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
-                    GL.DrawArrays(PrimitiveType.Quads, 0, VertexList.Count);
-                });
+                var newInstance = new TextInstance(text,x,y);
+                renderTextDicationary.Add(text, newInstance);
             }
+            
+            renderTextDicationary[text].Render(FontRenderMaterial);
         }
 
+        
         // 
-        private DynamicVertexBuffer<PT_VertexAttribute> VB = null;
-        private List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
         private Texture2D fontAtlas = null;
         private MaterialBase FontRenderMaterial = null;
         //
@@ -199,6 +146,6 @@ namespace SharpOpenGL.Font
             get { return fontAtlas; }
         }
 
-        Dictionary<string, RenderText> renderTextDicationary = new Dictionary<string, RenderText>();
+        Dictionary<string, TextInstance> renderTextDicationary = new Dictionary<string, TextInstance>();
     }
 }

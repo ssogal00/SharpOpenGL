@@ -12,11 +12,12 @@ using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.Font
 {
-    public class RenderText : IDisposable
+    public class TextInstance : IDisposable
     {
-        public RenderText(string textContent)
+        public TextInstance(string textContent, float x, float y)
         {
             TextContent = textContent;
+            GenerateVertices(x,y);
         }
 
         public void Dispose()
@@ -29,14 +30,20 @@ namespace SharpOpenGL.Font
 
         public void Render(MaterialBase fontRenderMaterial)
         {
-            fontRenderMaterial.BindAndExecute(vb, () =>
+            using (var blend = new ScopedEnable(EnableCap.Blend))
+            using (var dummy = new ScopedDisable(EnableCap.DepthTest))
+            using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))
             {
-                vb.Bind();
-                vb.BindVertexAttribute();
-                fontRenderMaterial.SetTexture("FontTexture", FontManager.Get().FontAtlas);
-                fontRenderMaterial.SetUniformVarData("ScreenSize", new OpenTK.Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
-                GL.DrawArrays(PrimitiveType.Quads, 0, vertexList.Count);
-            });
+                fontRenderMaterial.BindAndExecute(vb, () =>
+                {
+                    vb.Bind();
+                    vb.BindVertexAttribute();
+                    fontRenderMaterial.SetTexture("FontTexture", FontManager.Get().FontAtlas);
+                    fontRenderMaterial.SetUniformVarData("ScreenSize",
+                        new OpenTK.Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
+                    GL.DrawArrays(PrimitiveType.Quads, 0, vertexList.Count);
+                });
+            }
         }
 
         protected void GenerateVertices(float originX, float originY)
@@ -81,8 +88,8 @@ namespace SharpOpenGL.Font
                 vertexList.Add(new PT_VertexAttribute(v3, texcoord3));
             }
 
+            vb = new DynamicVertexBuffer<PT_VertexAttribute>();
             var vertexArray = vertexList.ToArray();
-            
             vb.BufferData<PT_VertexAttribute>(ref vertexArray);
         }
 
