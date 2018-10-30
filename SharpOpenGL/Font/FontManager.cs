@@ -33,7 +33,7 @@ namespace SharpOpenGL.Font
         {
             //
             FontCollection fonts = new FontCollection();
-            using (var fs = new FileStream(@"./Resources//Font/OpenSans-Regular.ttf", FileMode.Open))
+            using (var fs = new FileStream(@"./Resources//Font/consola.ttf", FileMode.Open))
             {
                 FontFamily fontFamily = fonts.Install(fs);
                 currentFont = new SixLabors.Fonts.Font(fontFamily, fontSize);
@@ -131,7 +131,7 @@ namespace SharpOpenGL.Font
         private float textureDimension = 0;
         private int squareSize = 72;
         private int dpi = 72;
-        private int fontSize = 32;
+        private int fontSize = 18;
         private int realTextureSize = 512;
         private bool bInitialized = false;
 
