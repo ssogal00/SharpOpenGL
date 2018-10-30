@@ -18,6 +18,8 @@ using SharpOpenGL.Asset;
 using SixLabors.Primitives;
 
 
+
+
 namespace SharpOpenGL.Font
 {
     public class FontManager : Singleton<FontManager>
@@ -33,7 +35,7 @@ namespace SharpOpenGL.Font
         {
             //
             FontCollection fonts = new FontCollection();
-            using (var fs = new FileStream(@"./Resources//Font/consola.ttf", FileMode.Open))
+            using (var fs = new FileStream(@"./Resources//Font/ProggyClean.ttf", FileMode.Open))
             {
                 FontFamily fontFamily = fonts.Install(fs);
                 currentFont = new SixLabors.Fonts.Font(fontFamily, fontSize);
@@ -101,6 +103,8 @@ namespace SharpOpenGL.Font
                     }
                 }
 
+                
+
                 fontAtlas.BindAtUnit(TextureUnit.Texture0);
                 GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.LuminanceAlpha, realTextureSize, realTextureSize,
                 0, PixelFormat.LuminanceAlpha, PixelType.UnsignedByte, textureData);
@@ -131,7 +135,7 @@ namespace SharpOpenGL.Font
         private float textureDimension = 0;
         private int squareSize = 72;
         private int dpi = 72;
-        private int fontSize = 18;
+        private int fontSize = 72;
         private int realTextureSize = 512;
         private bool bInitialized = false;
 

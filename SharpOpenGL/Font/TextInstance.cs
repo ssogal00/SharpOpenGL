@@ -4,6 +4,7 @@ using Core;
 using Core.Buffer;
 using Core.MaterialBase;
 using Core.Primitive;
+using Core.Texture;
 using SixLabors.Fonts;
 using SixLabors.Primitives;
 using SharpOpenGL;
@@ -32,8 +33,13 @@ namespace SharpOpenGL.Font
         {
             using (var blend = new ScopedEnable(EnableCap.Blend))
             using (var dummy = new ScopedDisable(EnableCap.DepthTest))
+            using (var sampler = new Sampler())
             //using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))
-            {   
+            {
+                sampler.SetMagFilter(TextureMagFilter.Linear);
+                sampler.SetMinFilter(TextureMinFilter.Linear);
+                sampler.BindSampler(TextureUnit.Texture0);
+
                 fontRenderMaterial.BindAndExecute(vb, () =>
                 {
                     vb.Bind();
@@ -94,6 +100,10 @@ namespace SharpOpenGL.Font
         }
 
         public string TextContent = "";
+
+        private bool bDrawBackground = false;
+
+
 
         private DynamicVertexBuffer<PT_VertexAttribute> vb = null;
 
