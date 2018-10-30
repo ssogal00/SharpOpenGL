@@ -33,7 +33,7 @@ namespace SharpOpenGL.Font
             using (var blend = new ScopedEnable(EnableCap.Blend))
             using (var dummy = new ScopedDisable(EnableCap.DepthTest))
             using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))
-            {
+            {   
                 fontRenderMaterial.BindAndExecute(vb, () =>
                 {
                     vb.Bind();

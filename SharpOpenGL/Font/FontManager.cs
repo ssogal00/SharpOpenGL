@@ -36,14 +36,14 @@ namespace SharpOpenGL.Font
             using (var fs = new FileStream(@"./Resources//Font/OpenSans-Regular.ttf", FileMode.Open))
             {
                 FontFamily fontFamily = fonts.Install(fs);
-                currentFont = new SixLabors.Fonts.Font(fontFamily, 64);
+                currentFont = new SixLabors.Fonts.Font(fontFamily, fontSize);
 
                 var characters = Enumerable.Range(char.MinValue, 126).Select(c => (char)c).Where(c => !char.IsControl(c)).ToArray();
 
                 int newResolution = 0;
                 int newMargin = 0;
 
-                FontHelper.GetCorrectResolution(64, characters.Length, out newResolution, out newMargin);
+                FontHelper.GetCorrectResolution(fontSize, characters.Length, out newResolution, out newMargin);
 
                 squareSize = (newResolution + newMargin);
 
@@ -66,7 +66,7 @@ namespace SharpOpenGL.Font
                         int row = i / numGlyphsPerRow;
                         int col = i % numGlyphsPerRow;
 
-                        var renderOption = new RendererOptions(currentFont, 72);
+                        var renderOption = new RendererOptions(currentFont, dpi);
                         (IPathCollection, IPathCollection, IPath) glyph =
                             TextBuilder.GenerateGlyphsWithBox(new string(new char[] { characters[i] }),
                                 new SixLabors.Primitives.PointF(0f, 0f), renderOption);
@@ -130,6 +130,8 @@ namespace SharpOpenGL.Font
         // texture atlas info
         private float textureDimension = 0;
         private int squareSize = 72;
+        private int dpi = 72;
+        private int fontSize = 32;
         private int realTextureSize = 512;
         private bool bInitialized = false;
 
