@@ -54,7 +54,7 @@ namespace SharpOpenGL.Font
         {
             vertexList.Clear();
 
-            var glyphList = TextBuilder.GenerateGlyphsWithBox(TextContent, PointF.Empty, new RendererOptions(FontManager.Get().CurrentFont, 72) {ApplyKerning = true});
+            var glyphList = TextBuilder.GenerateGlyphsWithBox(TextContent, PointF.Empty, new RendererOptions(FontManager.Get().CurrentFont, FontManager.Get().DPI) {ApplyKerning = true});
             int index = 0;
 
             foreach (var box in glyphList.boxes)

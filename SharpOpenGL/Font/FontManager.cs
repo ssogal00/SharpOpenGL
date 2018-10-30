@@ -133,6 +133,8 @@ namespace SharpOpenGL.Font
 
         public int FontSize => fontSize;
 
+        public int DPI => dpi;
+
         // texture atlas info
         private float textureDimension = 0;
         private int squareSize = 72;
