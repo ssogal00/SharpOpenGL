@@ -220,6 +220,10 @@
       <Project>{1115dd7b-beb3-4d5c-9528-9e852ecc63d5}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FreeTypeWrapper\FreeTypeWrapper.vcxproj">
+      <Project>{9d0ab4d9-ea47-4ccd-a0dc-5063f072356f}</Project>
+      <Name>FreeTypeWrapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

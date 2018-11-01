@@ -122,6 +122,9 @@ namespace SharpOpenGL
             GBufferPNCMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferPNC");
 
             FontManager.Get().Initialize();
+
+            var freetype = new FreeTypeLibWrapper.FreeType();
+            freetype.Initialize("./Resources/Font/test.ttf");
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
