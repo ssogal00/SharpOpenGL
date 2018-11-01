@@ -102,12 +102,9 @@ namespace SharpOpenGL.Font
                         img.SaveAsBmp(fontAtlas);
                     }
                 }
-
                 
-
-                fontAtlas.BindAtUnit(TextureUnit.Texture0);
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.LuminanceAlpha, realTextureSize, realTextureSize,
-                0, PixelFormat.LuminanceAlpha, PixelType.UnsignedByte, textureData);
+                //
+                fontAtlas.Load(textureData, realTextureSize,realTextureSize, PixelInternalFormat.LuminanceAlpha, PixelFormat.LuminanceAlpha);
             }
         }
 

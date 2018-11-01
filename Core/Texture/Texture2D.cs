@@ -33,6 +33,28 @@ namespace Core.Texture
             }
         }
 
+
+        public override void Load(string filePath, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
+        {
+            using (var bitmap = new ScopedFreeImage(filePath))
+            {
+                this.BindAtUnit(TextureUnit.Texture0);
+                m_Width = bitmap.Width;
+                m_Height = bitmap.Height;
+                GL.TexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, pixelFormat, PixelType.UnsignedByte, bitmap.Bytes);
+            }
+        }
+
+        public override void Load(byte[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
+        {
+            this.BindAtUnit(TextureUnit.Texture0);
+            m_Width = width;
+            m_Height = height;
+            GL.TexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, pixelFormat, PixelType.UnsignedByte, data);
+        }
+        
+        
+
         TextureUnit m_TextureUnitBinded;
     }
 }

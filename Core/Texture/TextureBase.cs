@@ -20,10 +20,17 @@ namespace Core.Texture
                 textureObject = -1;
             }
         }
+
         public virtual void Load(string path)
         {
-
         }
+
+        public virtual void Load(string path, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
+        {
+        }
+
+        public virtual void Load(byte[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
+        { }
 
         public virtual byte[] GetTexImage()
         {
