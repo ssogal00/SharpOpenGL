@@ -8,5 +8,6 @@ namespace FreeTypeLibWrapper
 	{
 	public:
 		static void Initialize(System::String^ filePath);
+
 	};
 }
