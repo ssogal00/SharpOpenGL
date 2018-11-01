@@ -1,8 +1,11 @@
 #include "FreeTypeLibWrapper.h"
 
+#define generic GenericFromFreeTypeLibrary
 #include "ft2build.h"
 #include "freetype/ftglyph.h"
-#include "freetype/freetype.h"
+#undef generic
+
+#include "FreeTypeLibWrapper.h"
 #include <msclr/marshal_cppstd.h>
 
 using namespace msclr::interop;
