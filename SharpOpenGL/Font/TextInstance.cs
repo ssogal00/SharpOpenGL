@@ -54,38 +54,39 @@ namespace SharpOpenGL.Font
         {
             vertexList.Clear();
 
-            var glyphList = TextBuilder.GenerateGlyphsWithBox(TextContent, PointF.Empty, new RendererOptions(FontManager.Get().CurrentFont, FontManager.Get().DPI) {ApplyKerning = true});
-            int index = 0;
+            var fXBasePosition = originX;
 
-            foreach (var box in glyphList.boxes)
+            var squareSize = FontManager.Get().SquareSize;
+            var textureDimension = FontManager.Get().TextureDimension;
+
+            foreach (var ch in TextContent)
             {
-                if (FontManager.GlyphDictionary.ContainsKey(TextContent[index]) == false)
+                if (FontManager.GlyphDictionary.ContainsKey(ch) == false)
                 {
                     continue;
                 }
 
-                float fScale = (float) this.fontSize / (float) FontManager.Get().FontSize;
-                var v1 = new OpenTK.Vector3(originX + box.Bounds.Left  * fScale,  originY - box.Bounds.Top * fScale, 0);
-                var v2 = new OpenTK.Vector3(originX + box.Bounds.Right * fScale, originY - box.Bounds.Top * fScale, 0);
-                var v3 = new OpenTK.Vector3(originX + box.Bounds.Left * fScale, originY - box.Bounds.Bottom * fScale, 0);
-                var v4 = new OpenTK.Vector3(originX + box.Bounds.Right * fScale, originY - box.Bounds.Bottom * fScale, 0);
+                var glyph = FontManager.GlyphDictionary[ch];
 
-                var left = FontManager.GlyphDictionary[TextContent[index]].Left;
-                var top = FontManager.GlyphDictionary[TextContent[index]].Top;
-                var textureWidth = FontManager.GlyphDictionary[TextContent[index]].Width;
-                var textureHeight = FontManager.GlyphDictionary[TextContent[index]].Height;
+                fXBasePosition += glyph.AdvanceHorizontal / (2.0f * 64.0f);
+                float X = fXBasePosition - (glyph.Width / (2.0f * 64.0f));
+                float Y = originY + (glyph.HoriBearingY) / (2.0f * 64.0f);
 
-                var texCoordX0 = FontManager.GlyphDictionary[TextContent[index]].AtlasX + left;
-                var texCoordX1 = FontManager.GlyphDictionary[TextContent[index]].AtlasX + left + textureWidth;
-                var texCoordY0 = 1 - (FontManager.GlyphDictionary[TextContent[index]].AtlasY + top);
-                var texCoordY1 = 1 - (FontManager.GlyphDictionary[TextContent[index]].AtlasY + top + textureHeight);
+                var v1 = new OpenTK.Vector3(-0.5f * squareSize / 2.0f + X, 0.5f * squareSize / 2.0f + Y, 0);
+                var v2 = new OpenTK.Vector3( 0.5f * squareSize / 2.0f + X, 0.5f * squareSize / 2.0f + Y, 0);
+                var v3 = new OpenTK.Vector3( 0.5f * squareSize / 2.0f + X, -0.5f * squareSize / 2.0f + Y, 0);
+                var v4 = new OpenTK.Vector3(-0.5f * squareSize / 2.0f + X, -0.5f * squareSize / 2.0f + Y, 0);
 
-                var texcoord1 = new OpenTK.Vector2(texCoordX0, texCoordY0);
-                var texcoord2 = new OpenTK.Vector2(texCoordX1, texCoordY0);
-                var texcoord3 = new OpenTK.Vector2(texCoordX0, texCoordY1);
-                var texcoord4 = new OpenTK.Vector2(texCoordX1, texCoordY1);
 
-                index++;
+                var texCoordX0 = glyph.AtlasX;
+                var texCoordX1 = glyph.AtlasX + textureDimension;
+                var texCoordY0 = glyph.AtlasY;
+                var texCoordY1 = glyph.AtlasY + textureDimension;
+
+                var texcoord1 = new OpenTK.Vector2(glyph.AtlasX, glyph.AtlasY);
+                var texcoord2 = new OpenTK.Vector2(glyph.AtlasX + textureDimension, glyph.AtlasY);
+                var texcoord3 = new OpenTK.Vector2(glyph.AtlasX + textureDimension, glyph.AtlasY + textureDimension);
+                var texcoord4 = new OpenTK.Vector2(glyph.AtlasX, glyph.AtlasY + textureDimension);
 
                 vertexList.Add(new PT_VertexAttribute(v1, texcoord1));
                 vertexList.Add(new PT_VertexAttribute(v2, texcoord2));

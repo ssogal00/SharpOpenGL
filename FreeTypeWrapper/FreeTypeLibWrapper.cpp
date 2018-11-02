@@ -35,15 +35,20 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath)
 
 	if(GetCorrectResolution(36,fontFace->num_glyphs,calculatedResolution, calculatedMargin))
 	{
+		squareSize = static_cast<float>(calculatedResolution + calculatedMargin);
+
 		FT_Set_Pixel_Sizes(fontFace, calculatedResolution, calculatedResolution);
 
 		const int numGlyphs = fontFace->num_glyphs;
-		float squareSize = static_cast<float>(calculatedResolution + calculatedMargin);
+
 		const int NumGlyphsPerRow = (int)ceilf(std::sqrtf(static_cast<float>(numGlyphs))); //=numRows (texture is a square)
 		const int TexSize = static_cast<int>((NumGlyphsPerRow) * squareSize);
 
 		//
 		int RealTexSize = NextPowerOf2(TexSize);
+		realTextureSize = RealTexSize;		
+		textureDimension = (squareSize) / (float)RealTexSize;
+
 		textureData->Capacity = RealTexSize * RealTexSize * 2;
 		for(int i =0 ; i< RealTexSize * RealTexSize * 2;++i)
 		{
@@ -69,15 +74,19 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath)
 			//Calculate glyph informations
 			GlyphInfo^ glyphInfo = gcnew GlyphInfo();
 			glyphInfo->CharCode = charcode;
-
 			// Get texture offset in the image
 			glyphInfo->AtlasX = (texAtlasX*squareSize) / (float)RealTexSize;
 			glyphInfo->AtlasY = (texAtlasY*squareSize) / (float)RealTexSize;
+			glyphInfo->HoriBearingX = glyph->metrics.horiBearingX;
+			glyphInfo->HoriBearingY = glyph->metrics.horiBearingY;
+			glyphInfo->HoriAdvance = glyph->metrics.horiAdvance;
+			glyphInfo->Width = glyph->metrics.width;
+			glyphInfo->Height = glyph->metrics.height;
 
 			//advance is stored in fractional pixel format (=1/64 pixels), as per free type specifications
 			glyphInfo->AdvanceHorizontal = static_cast<float>(glyph->advance.x);
 			glyphInfo->AdvanceVertical = static_cast<float>(glyph->advance.y);
-			glyphMap.Add(charcode, glyphInfo);
+			glyphMap->Add(charcode, glyphInfo);
 
 			//Copy the bitmap to the atlas
 			GenerateTextureFromGlyph(glyph, texAtlasX, texAtlasY, RealTexSize, calculatedResolution, calculatedMargin, false);
@@ -92,6 +101,18 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath)
 	}
 
 	return true;
+}
+
+FreeTypeLibWrapper::GlyphInfo^ FreeTypeLibWrapper::FreeType::GetGlyphInfo(unsigned long charCode)
+{
+	if (glyphMap->ContainsKey(charCode))
+	{
+		return glyphMap[charCode];
+	}
+	else
+	{
+		return nullptr;
+	}
 }
 
 void FreeTypeLibWrapper::FreeType::GenerateTextureFromGlyph(FT_GlyphSlot glyph, int atlasX, int atlasY, int texSize, int resolution, int marginSize, bool drawBorder)

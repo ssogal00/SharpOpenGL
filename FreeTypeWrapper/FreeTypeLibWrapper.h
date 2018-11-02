@@ -13,15 +13,23 @@ namespace FreeTypeLibWrapper
 	{
 	public:
 		bool Initialize(System::String^ filePath);
+		int GetRealTextureSize() { return realTextureSize; }
+		float GetSquareSize() { return squareSize; }
+		float GetTextureDimension() { return textureDimension; }
 		List<unsigned char>^ GetTextureData() { return textureData; }
+		Dictionary<unsigned long long, GlyphInfo^>^ GetGlyphInfoDictionary() { return glyphMap; }
+		GlyphInfo^ GetGlyphInfo(unsigned long charCode);
+
 	private:
 		bool GetCorrectResolution(int resolution, int numglyph, int& outNewResolution, int& outNewMargin);
 		int NextPowerOf2(const int n);
 		void SetPixel(int offset, int size, int x, int y, unsigned char val);
 		void GenerateTextureFromGlyph(FT_GlyphSlot glyph, int atlasX, int atlasY, int texSize, int resolution, int marginSize, bool drawBorder);
 
-		Dictionary<unsigned long, GlyphInfo^> glyphMap = gcnew Dictionary<unsigned long, GlyphInfo^>();
+		Dictionary<unsigned long long, GlyphInfo^>^ glyphMap = gcnew Dictionary<unsigned long long, GlyphInfo^>();
 		List<unsigned char>^ textureData = gcnew List<unsigned char>();
-
+		int realTextureSize = 0;
+		float textureDimension = 0;
+		float squareSize = 0;
 	};
 }
