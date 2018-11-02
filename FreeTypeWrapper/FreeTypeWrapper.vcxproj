@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="FreeTypeLibWrapper.h" />
+    <ClInclude Include="GlyphBox.h" />
     <ClInclude Include="GlyphInfo.h" />
   </ItemGroup>
   <ItemGroup>
