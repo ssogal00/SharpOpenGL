@@ -5,6 +5,7 @@ using Core.Buffer;
 using Core.MaterialBase;
 using Core.Primitive;
 using Core.Texture;
+using FreeImageAPI.Metadata;
 using SixLabors.Fonts;
 using SixLabors.Primitives;
 using SharpOpenGL;
@@ -51,6 +52,8 @@ namespace SharpOpenGL.Font
             }
         }
 
+
+
         protected void GenerateVertices(float originX, float originY)
         {
             vertexList.Clear();
@@ -85,10 +88,36 @@ namespace SharpOpenGL.Font
 
                 var halfSquare = (squareSize / 2.0f) * fScale;
 
+                var leftX = -0.5f * halfSquare + X;
+                var rightX = 0.5f * halfSquare + X;
+                var topY = -0.5f * halfSquare + Y;
+                var bottomY = 0.5f * halfSquare + Y;
+
+                // update boundary
+                if (left > leftX)
+                {
+                    left = leftX;
+                }
+                if (right < rightX)
+                {
+                    right = rightX;
+                }
+
+                if (bottom > bottomY)
+                {
+                    bottom = bottomY;
+                }
+
+                if (top < topY)
+                {
+                    top = topY;
+                }
+
                 var v1 = new OpenTK.Vector3(-0.5f * halfSquare + X, 0.5f * halfSquare + Y, 0);
                 var v2 = new OpenTK.Vector3( 0.5f * halfSquare + X, 0.5f * halfSquare + Y, 0);
                 var v3 = new OpenTK.Vector3( 0.5f * halfSquare + X, -0.5f * halfSquare + Y, 0);
                 var v4 = new OpenTK.Vector3(-0.5f * halfSquare + X, -0.5f * halfSquare + Y, 0);
+                
                 
                 var texcoord1 = new OpenTK.Vector2(glyph.AtlasX, glyph.AtlasY);
                 var texcoord2 = new OpenTK.Vector2(glyph.AtlasX + textureDimension, glyph.AtlasY);
@@ -116,5 +145,10 @@ namespace SharpOpenGL.Font
         private DynamicVertexBuffer<PT_VertexAttribute> vb = null;
 
         private List<PT_VertexAttribute> vertexList = new List<PT_VertexAttribute>();
+
+        private float left = float.MaxValue;
+        private float right = float.MinValue;
+        private float top = float.MinValue;
+        private float bottom = float.MaxValue;
     }
 }
