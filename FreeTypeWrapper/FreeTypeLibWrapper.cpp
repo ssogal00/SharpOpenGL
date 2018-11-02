@@ -8,12 +8,22 @@ using namespace System;
 using namespace System::Collections::Generic;
 #using <mscorlib.dll>
 
+void FreeTypeLibWrapper::FreeType::DeInitialize()
+{
+	if(pFontFace != nullptr)
+	{
+		delete pFontFace;
+		pFontFace = nullptr;
+	}
+
+	
+}
 
 bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _resolution, System::String^ characters)
 {
 	FT_Library testLib;
 
-	FT_Face fontFace;
+	pFontFace = new FT_Face();
 
 	FT_Error err = FT_Init_FreeType(&testLib);
 	if(err != 0)
@@ -25,12 +35,12 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 	std::string FileName = marshal_as<std::string>(filePath);
 	const int numGlyph = characters->Length;
 
-	if (FT_New_Face(testLib, FileName.c_str(), 0, &fontFace) != 0)
+	if (FT_New_Face(testLib, FileName.c_str(), 0, pFontFace) != 0)
 	{		
 		return false;
 	}
 
-	bool bUseKerning = FT_HAS_KERNING(fontFace);
+	bool bUseKerning = FT_HAS_KERNING(*pFontFace);
 
 	int calculatedResolution;
 	int calculatedMargin;
@@ -41,7 +51,7 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 	{
 		squareSize = static_cast<float>(calculatedResolution + calculatedMargin);
 
-		FT_Set_Pixel_Sizes(fontFace, calculatedResolution, calculatedResolution);
+		FT_Set_Pixel_Sizes(*pFontFace, calculatedResolution, calculatedResolution);
 
 		const int numGlyphs = numGlyph;
 
@@ -63,20 +73,20 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 		int texAtlasY = 0;
 		FT_UInt gindex = 0;
 		
-		for (FT_ULong charcode = FT_Get_First_Char(fontFace, &gindex); gindex != 0; charcode = FT_Get_Next_Char(fontFace, charcode, &gindex))		
+		for (FT_ULong charcode = FT_Get_First_Char(*pFontFace, &gindex); gindex != 0; charcode = FT_Get_Next_Char(*pFontFace, charcode, &gindex))		
 		{
 			if(charcode > 126)
 			{
 				continue;
 			}
 
-			FT_Error loadErr = FT_Load_Glyph(fontFace, gindex, FT_LOAD_DEFAULT);
+			FT_Error loadErr = FT_Load_Glyph(*pFontFace, gindex, FT_LOAD_DEFAULT);
 			if (loadErr != 0)
 			{
 				continue;
 			}
 
-			FT_GlyphSlot glyph = fontFace->glyph;
+			FT_GlyphSlot glyph = (*pFontFace)->glyph;
 			
 			FT_Render_Glyph(glyph, FT_RENDER_MODE_NORMAL);
 
@@ -111,8 +121,6 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 		}
 	}
 
-	FT_Done_FreeType(testLib);
-
 	return true;
 }
 
@@ -126,6 +134,15 @@ FreeTypeLibWrapper::GlyphInfo^ FreeTypeLibWrapper::FreeType::GetGlyphInfo(unsign
 	{
 		return nullptr;
 	}
+}
+
+signed long FreeTypeLibWrapper::FreeType::GetKerning(unsigned long long previous, unsigned long long current)
+{
+	FT_Vector KerningResult;
+	auto Previous = FT_Get_Char_Index(*pFontFace, previous);
+	auto Current = FT_Get_Char_Index(*pFontFace, current);
+	FT_Get_Kerning(*pFontFace, Previous, Current, FT_KERNING_DEFAULT, &KerningResult);
+	return KerningResult.x;
 }
 
 void FreeTypeLibWrapper::FreeType::GenerateTextureFromGlyph(FT_GlyphSlot glyph, int atlasX, int atlasY, int texSize, int resolution, int marginSize, bool drawBorder)

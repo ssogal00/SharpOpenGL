@@ -12,7 +12,7 @@ using FreeTypeLibWrapper;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL.Asset;
 using System.Diagnostics;
-
+using SixLabors.ImageSharp.Primitives;
 
 
 namespace SharpOpenGL.Font
@@ -25,6 +25,11 @@ namespace SharpOpenGL.Font
             FontRenderMaterial = AssetManager.LoadAssetSync<MaterialBase>("FontRenderMaterial");
             freeTypeLib = new FreeType();
             BuildFontTextureAtlas();
+        }
+
+        public long GetKerning(ulong previous, ulong current)
+        {
+            return freeTypeLib.GetKerning(previous, current);
         }
 
         public void BuildFontTextureAtlas()
@@ -92,7 +97,7 @@ namespace SharpOpenGL.Font
         private MaterialBase FontRenderMaterial = null;
         //
 
-        public static Dictionary<ulong, FreeTypeLibWrapper.GlyphInfo> GlyphDictionary = null;
+        public Dictionary<ulong, FreeTypeLibWrapper.GlyphInfo> GlyphDictionary = null;
 
         public int FontSize => fontSize;
 

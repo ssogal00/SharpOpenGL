@@ -9,6 +9,7 @@ using SixLabors.Fonts;
 using SixLabors.Primitives;
 using SharpOpenGL;
 using OpenTK.Graphics.OpenGL;
+using SixLabors.ImageSharp.Primitives;
 
 
 namespace SharpOpenGL.Font
@@ -59,17 +60,26 @@ namespace SharpOpenGL.Font
             var squareSize = FontManager.Get().SquareSize;
             var textureDimension = FontManager.Get().TextureDimension;
 
+            int index = 0;
+            ulong previous = 0;
+
             foreach (var ch in TextContent)
             {
-                if (FontManager.GlyphDictionary.ContainsKey(ch) == false)
+                if (FontManager.Get().GlyphDictionary.ContainsKey(ch) == false)
                 {
                     continue;
                 }
 
-                var fScale = 0.5f;
-                var glyph = FontManager.GlyphDictionary[ch];
+                long kerning = 0;
+                if (index > 0)
+                {
+                    kerning = FontManager.Get().GetKerning(previous, ch);
+                }
 
-                fXBasePosition += (glyph.AdvanceHorizontal / (2.0f * 64.0f)) * fScale;
+                var fScale = 1.0f;
+                var glyph = FontManager.Get().GlyphDictionary[ch];
+
+                fXBasePosition += ((glyph.AdvanceHorizontal ) / (2.0f * 64.0f)) * fScale;
                 float X = fXBasePosition - (glyph.Width / (2.0f * 64.0f)) * fScale;
                 float Y = originY + ((glyph.HoriBearingY) / (2.0f * 64.0f)) * fScale;
 
@@ -89,6 +99,9 @@ namespace SharpOpenGL.Font
                 vertexList.Add(new PT_VertexAttribute(v2, texcoord2));
                 vertexList.Add(new PT_VertexAttribute(v3, texcoord3));
                 vertexList.Add(new PT_VertexAttribute(v4, texcoord4));
+
+                index++;
+                previous = ch;
             }
 
             vb = new DynamicVertexBuffer<PT_VertexAttribute>();
@@ -97,8 +110,6 @@ namespace SharpOpenGL.Font
         }
 
         public string TextContent = "";
-
-        private bool bDrawBackground = false;
 
         private int fontSize = 36;
 
