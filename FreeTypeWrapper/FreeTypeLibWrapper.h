@@ -12,7 +12,7 @@ namespace FreeTypeLibWrapper
 	public ref class FreeType
 	{
 	public:
-		bool Initialize(System::String^ filePath);
+		bool Initialize(System::String^ filePath, int resolution);
 		int GetRealTextureSize() { return realTextureSize; }
 		float GetSquareSize() { return squareSize; }
 		float GetTextureDimension() { return textureDimension; }
@@ -31,5 +31,6 @@ namespace FreeTypeLibWrapper
 		int realTextureSize = 0;
 		float textureDimension = 0;
 		float squareSize = 0;
+		int resolution = 0;
 	};
 }

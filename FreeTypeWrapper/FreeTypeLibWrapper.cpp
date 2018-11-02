@@ -8,7 +8,7 @@ using namespace System::Collections::Generic;
 #using <mscorlib.dll>
 
 
-bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath)
+bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _resolution)
 {
 	FT_Library testLib;
 
@@ -33,7 +33,9 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath)
 	int calculatedResolution;
 	int calculatedMargin;
 
-	if(GetCorrectResolution(36,fontFace->num_glyphs,calculatedResolution, calculatedMargin))
+	resolution = _resolution;
+
+	if(GetCorrectResolution(resolution,fontFace->num_glyphs,calculatedResolution, calculatedMargin))
 	{
 		squareSize = static_cast<float>(calculatedResolution + calculatedMargin);
 
@@ -168,7 +170,7 @@ bool FreeTypeLibWrapper::FreeType::GetCorrectResolution(int resolution, int numg
 {
 	int GlyphMargin = 0;
 
-	int MaxTextureSize = 2048;
+	int MaxTextureSize = 4096;
 
 	while (resolution > 0)
 	{

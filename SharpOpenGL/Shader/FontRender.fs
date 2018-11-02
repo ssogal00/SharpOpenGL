@@ -10,5 +10,5 @@ out vec4 FragColor;
 void main()
 {   
 	vec4 TexCol = texture(FontTexture, TexCoord);
-    FragColor = TexCol;   
+    FragColor =vec4(1,0,0,TexCol.a);
 }

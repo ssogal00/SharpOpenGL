@@ -76,13 +76,7 @@ namespace SharpOpenGL.Font
                 var v2 = new OpenTK.Vector3( 0.5f * squareSize / 2.0f + X, 0.5f * squareSize / 2.0f + Y, 0);
                 var v3 = new OpenTK.Vector3( 0.5f * squareSize / 2.0f + X, -0.5f * squareSize / 2.0f + Y, 0);
                 var v4 = new OpenTK.Vector3(-0.5f * squareSize / 2.0f + X, -0.5f * squareSize / 2.0f + Y, 0);
-
-
-                var texCoordX0 = glyph.AtlasX;
-                var texCoordX1 = glyph.AtlasX + textureDimension;
-                var texCoordY0 = glyph.AtlasY;
-                var texCoordY1 = glyph.AtlasY + textureDimension;
-
+                
                 var texcoord1 = new OpenTK.Vector2(glyph.AtlasX, glyph.AtlasY);
                 var texcoord2 = new OpenTK.Vector2(glyph.AtlasX + textureDimension, glyph.AtlasY);
                 var texcoord3 = new OpenTK.Vector2(glyph.AtlasX + textureDimension, glyph.AtlasY + textureDimension);
