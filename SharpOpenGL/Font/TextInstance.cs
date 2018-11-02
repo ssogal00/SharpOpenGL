@@ -66,16 +66,19 @@ namespace SharpOpenGL.Font
                     continue;
                 }
 
+                var fScale = 0.5f;
                 var glyph = FontManager.GlyphDictionary[ch];
 
-                fXBasePosition += glyph.AdvanceHorizontal / (2.0f * 64.0f);
-                float X = fXBasePosition - (glyph.Width / (2.0f * 64.0f));
-                float Y = originY + (glyph.HoriBearingY) / (2.0f * 64.0f);
+                fXBasePosition += (glyph.AdvanceHorizontal / (2.0f * 64.0f)) * fScale;
+                float X = fXBasePosition - (glyph.Width / (2.0f * 64.0f)) * fScale;
+                float Y = originY + ((glyph.HoriBearingY) / (2.0f * 64.0f)) * fScale;
 
-                var v1 = new OpenTK.Vector3(-0.5f * squareSize / 2.0f + X, 0.5f * squareSize / 2.0f + Y, 0);
-                var v2 = new OpenTK.Vector3( 0.5f * squareSize / 2.0f + X, 0.5f * squareSize / 2.0f + Y, 0);
-                var v3 = new OpenTK.Vector3( 0.5f * squareSize / 2.0f + X, -0.5f * squareSize / 2.0f + Y, 0);
-                var v4 = new OpenTK.Vector3(-0.5f * squareSize / 2.0f + X, -0.5f * squareSize / 2.0f + Y, 0);
+                var halfSquare = (squareSize / 2.0f) * fScale;
+
+                var v1 = new OpenTK.Vector3(-0.5f * halfSquare + X, 0.5f * halfSquare + Y, 0);
+                var v2 = new OpenTK.Vector3( 0.5f * halfSquare + X, 0.5f * halfSquare + Y, 0);
+                var v3 = new OpenTK.Vector3( 0.5f * halfSquare + X, -0.5f * halfSquare + Y, 0);
+                var v4 = new OpenTK.Vector3(-0.5f * halfSquare + X, -0.5f * halfSquare + Y, 0);
                 
                 var texcoord1 = new OpenTK.Vector2(glyph.AtlasX, glyph.AtlasY);
                 var texcoord2 = new OpenTK.Vector2(glyph.AtlasX + textureDimension, glyph.AtlasY);

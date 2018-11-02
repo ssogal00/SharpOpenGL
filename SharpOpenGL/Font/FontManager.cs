@@ -37,7 +37,7 @@ namespace SharpOpenGL.Font
         {
             var characters = Enumerable.Range(char.MinValue, 126).Select(c => (char)c).Where(c => !char.IsControl(c)).ToArray();
             var charString = new string (characters);
-            bool bSuccess = freeTypeLib.Initialize("./Resources/Font/Test.ttf", 46, charString);
+            bool bSuccess = freeTypeLib.Initialize("./Resources/Font/Consola.ttf", 54, charString);
             if (bSuccess)
             {
                 GlyphDictionary = freeTypeLib.GetGlyphInfoDictionary();
