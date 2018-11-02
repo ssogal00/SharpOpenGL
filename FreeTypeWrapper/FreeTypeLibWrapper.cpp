@@ -1,6 +1,7 @@
 
 #include "FreeTypeLibWrapper.h"
 #include "GlyphInfo.h"
+#include "Windows.h"
 #include <msclr/marshal_cppstd.h>
 using namespace msclr::interop;
 using namespace System;
@@ -8,7 +9,7 @@ using namespace System::Collections::Generic;
 #using <mscorlib.dll>
 
 
-bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _resolution)
+bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _resolution, System::String^ characters)
 {
 	FT_Library testLib;
 
@@ -22,6 +23,7 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 	}
 
 	std::string FileName = marshal_as<std::string>(filePath);
+	const int numGlyph = characters->Length;
 
 	if (FT_New_Face(testLib, FileName.c_str(), 0, &fontFace) != 0)
 	{		
@@ -35,13 +37,13 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 
 	resolution = _resolution;
 
-	if(GetCorrectResolution(resolution,fontFace->num_glyphs,calculatedResolution, calculatedMargin))
+	if(GetCorrectResolution(resolution, numGlyph,calculatedResolution, calculatedMargin))
 	{
 		squareSize = static_cast<float>(calculatedResolution + calculatedMargin);
 
 		FT_Set_Pixel_Sizes(fontFace, calculatedResolution, calculatedResolution);
 
-		const int numGlyphs = fontFace->num_glyphs;
+		const int numGlyphs = numGlyph;
 
 		const int NumGlyphsPerRow = (int)ceilf(std::sqrtf(static_cast<float>(numGlyphs))); //=numRows (texture is a square)
 		const int TexSize = static_cast<int>((NumGlyphsPerRow) * squareSize);
@@ -61,8 +63,13 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 		int texAtlasY = 0;
 		FT_UInt gindex = 0;
 		
-		for (FT_ULong charcode = FT_Get_First_Char(fontFace, &gindex); gindex != 0; charcode = FT_Get_Next_Char(fontFace, charcode, &gindex))
+		for (FT_ULong charcode = FT_Get_First_Char(fontFace, &gindex); gindex != 0; charcode = FT_Get_Next_Char(fontFace, charcode, &gindex))		
 		{
+			if(charcode > 126)
+			{
+				continue;
+			}
+
 			FT_Error loadErr = FT_Load_Glyph(fontFace, gindex, FT_LOAD_DEFAULT);
 			if (loadErr != 0)
 			{
@@ -91,7 +98,7 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 			glyphMap->Add(charcode, glyphInfo);
 
 			//Copy the bitmap to the atlas
-			GenerateTextureFromGlyph(glyph, texAtlasX, texAtlasY, RealTexSize, calculatedResolution, calculatedMargin, true);
+			GenerateTextureFromGlyph(glyph, texAtlasX, texAtlasY, RealTexSize, calculatedResolution, calculatedMargin, false);
 
 			texAtlasX++;
 			if (texAtlasX >= NumGlyphsPerRow)
