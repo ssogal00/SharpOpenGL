@@ -39,7 +39,7 @@ namespace SharpOpenGL.Font
             {
                 fontRenderMaterial.BindAndExecute(vb, () =>
                 {
-                    
+
                     vb.Bind();
                     vb.BindVertexAttribute();
                     fontRenderMaterial.SetTexture("FontTexture", FontManager.Get().FontAtlas);
@@ -87,8 +87,8 @@ namespace SharpOpenGL.Font
 
                 vertexList.Add(new PT_VertexAttribute(v1, texcoord1));
                 vertexList.Add(new PT_VertexAttribute(v2, texcoord2));
-                vertexList.Add(new PT_VertexAttribute(v4, texcoord4));
                 vertexList.Add(new PT_VertexAttribute(v3, texcoord3));
+                vertexList.Add(new PT_VertexAttribute(v4, texcoord4));
             }
 
             vb = new DynamicVertexBuffer<PT_VertexAttribute>();
