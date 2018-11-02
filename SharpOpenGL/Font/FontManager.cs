@@ -63,7 +63,7 @@ namespace SharpOpenGL.Font
                             color.R = textureData[index];
                             color.G = textureData[index];
                             color.B = textureData[index];
-                            color.A = textureData[index];
+                            //color.A = textureData[index];
                             img[x, y] = color;
                         }
                     }
