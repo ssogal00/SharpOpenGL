@@ -2,21 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.Fonts;
-using SixLabors.Shapes;
 using Core;
-using Core.Buffer;
 using Core.MaterialBase;
-using Core.Primitive;
 using Core.Texture;
 using FreeTypeLibWrapper;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL.Asset;
-using SixLabors.Primitives;
 using System.Diagnostics;
 
 
@@ -107,10 +101,9 @@ namespace SharpOpenGL.Font
         // texture atlas info
         private float textureDimension = 0;
         private float squareSize = 0;
-        
+
         private int fontSize = 18;
         private int realTextureSize = 512;
-        private bool bInitialized = false;
 
         public float SquareSize => squareSize;
         public float TextureDimension => textureDimension;

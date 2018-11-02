@@ -97,6 +97,8 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 			glyphInfo->AdvanceVertical = static_cast<float>(glyph->advance.y);
 			glyphMap->Add(charcode, glyphInfo);
 
+
+			
 			//Copy the bitmap to the atlas
 			GenerateTextureFromGlyph(glyph, texAtlasX, texAtlasY, RealTexSize, calculatedResolution, calculatedMargin, false);
 
@@ -108,6 +110,8 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 			}
 		}
 	}
+
+	FT_Done_FreeType(testLib);
 
 	return true;
 }

@@ -5,6 +5,8 @@
 #include "GlyphInfo.h"
 #undef generic
 
+#include <map>
+
 using namespace System::Collections::Generic;
 
 namespace FreeTypeLibWrapper
@@ -28,6 +30,7 @@ namespace FreeTypeLibWrapper
 
 		Dictionary<unsigned long long, GlyphInfo^>^ glyphMap = gcnew Dictionary<unsigned long long, GlyphInfo^>();
 		List<unsigned char>^ textureData = gcnew List<unsigned char>();
+
 		int realTextureSize = 0;
 		float textureDimension = 0;
 		float squareSize = 0;
