@@ -125,6 +125,7 @@ namespace SharpOpenGL
 
             var freetype = new FreeTypeLibWrapper.FreeType();
             freetype.Initialize("./Resources/Font/test.ttf");
+            var textureData = freetype.GetTextureData();
         }
 
         protected void ResourceCreate(object sender, EventArgs e)

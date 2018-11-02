@@ -13,7 +13,7 @@ namespace FreeTypeLibWrapper
 	{
 	public:
 		bool Initialize(System::String^ filePath);
-
+		List<unsigned char>^ GetTextureData() { return textureData; }
 	private:
 		bool GetCorrectResolution(int resolution, int numglyph, int& outNewResolution, int& outNewMargin);
 		int NextPowerOf2(const int n);

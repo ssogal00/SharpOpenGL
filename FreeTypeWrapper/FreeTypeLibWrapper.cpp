@@ -3,6 +3,8 @@
 #include "GlyphInfo.h"
 #include <msclr/marshal_cppstd.h>
 using namespace msclr::interop;
+using namespace System;
+using namespace System::Collections::Generic;
 #using <mscorlib.dll>
 
 
@@ -42,8 +44,11 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath)
 
 		//
 		int RealTexSize = NextPowerOf2(TexSize);
-
 		textureData->Capacity = RealTexSize * RealTexSize * 2;
+		for(int i =0 ; i< RealTexSize * RealTexSize * 2;++i)
+		{
+			textureData->Add(0);
+		}
 
 		int texAtlasX = 0;
 		int texAtlasY = 0;
@@ -75,7 +80,7 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath)
 			glyphMap.Add(charcode, glyphInfo);
 
 			//Copy the bitmap to the atlas
-			//GenerateTextureFromGlyph(glyph, textureData, texAtlasX, texAtlasY, RealTexSize, Resolution, GlyphMargin, false);
+			GenerateTextureFromGlyph(glyph, texAtlasX, texAtlasY, RealTexSize, calculatedResolution, calculatedMargin, false);
 
 			texAtlasX++;
 			if (texAtlasX >= NumGlyphsPerRow)
@@ -91,7 +96,35 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath)
 
 void FreeTypeLibWrapper::FreeType::GenerateTextureFromGlyph(FT_GlyphSlot glyph, int atlasX, int atlasY, int texSize, int resolution, int marginSize, bool drawBorder)
 {
+	const int squareSize = resolution + marginSize;
+	const int baseOffset = atlasX * squareSize + atlasY * squareSize*texSize;
+
+	if (drawBorder)
+	{
+		for (int w = 0; w < squareSize; w++)
+		{
+			SetPixel(baseOffset, texSize, w, 0, 255);
+		}
+
+		for (int h = 1; h < squareSize; h++)
+		{
+			for (int w = 0; w < squareSize; w++)
+			{
+				SetPixel(baseOffset, texSize, w, h, (w == 0 || w == squareSize - 1) ? 255 : (h == squareSize - 1) ? 255 : 0);
+			}
+		}
+	}
+
+	const int gr = glyph->bitmap.rows;
+	const int gw = glyph->bitmap.width;
 	
+	for (int h = 0; h < gr; h++)
+	{
+		for (int w = 0; w < gw; w++)
+		{
+			SetPixel(baseOffset + marginSize, texSize, w, marginSize + h, glyph->bitmap.buffer[w + h * gw]);
+		}
+	}
 }
 
 void FreeTypeLibWrapper::FreeType::SetPixel(int offset, int size, int x, int y, unsigned char val)
