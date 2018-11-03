@@ -44,6 +44,9 @@ namespace SharpOpenGL
         protected DepthVisualize DepthVisualizePostProcess = new DepthVisualize();
         protected PostProcess.Skybox SkyboxPostProcess = new Skybox();
 
+        protected string consoleCommandString = ">";
+        private bool consoleCommandInputMode = false;
+
         protected Cylinder TestCyliner = new Cylinder(10, 10, 24);
         protected Cone TestCone = new Cone(10, 20, 12);
         protected Sphere TestSphere = new Core.Primitive.Sphere(10, 20, 20);
@@ -204,7 +207,7 @@ namespace SharpOpenGL
                 GBufferMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
                 Mesh.Draw(GBufferMaterial);
                 
-                FontManager.Get().RenderText(10, 100, "Helloworld world this is...");
+                FontManager.Get().RenderText(10, 100, consoleCommandString);
 
                 if (CurrentCam == OrbitCam)
                 {
@@ -241,6 +244,12 @@ namespace SharpOpenGL
 
         public void HandleKeyDownEvent(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
         {
+            if (consoleCommandInputMode)
+            {
+                consoleCommandString += e.Key.ToString();
+                return;
+            }
+
             if(e.Key == Key.F1)
             {
                 SwitchCameraMode();
@@ -257,7 +266,10 @@ namespace SharpOpenGL
             {
                 ScreenCaptureGBuffer();
             }
-
+            else if (e.Key == Key.Tilde)
+            {
+                consoleCommandInputMode = !consoleCommandInputMode;
+            }
         }
 
         protected override void OnKeyUp(OpenTK.Input.KeyboardKeyEventArgs e)

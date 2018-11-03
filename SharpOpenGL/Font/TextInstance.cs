@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Core;
+﻿using Core;
 using Core.Buffer;
 using Core.MaterialBase;
 using Core.Primitive;
 using Core.Texture;
-using FreeImageAPI.Metadata;
 using OpenTK;
-using SixLabors.Fonts;
-using SixLabors.Primitives;
-using SharpOpenGL;
 using OpenTK.Graphics.OpenGL;
-using SixLabors.ImageSharp.Primitives;
+using System;
+using System.Collections.Generic;
 
 
 namespace SharpOpenGL.Font
@@ -21,12 +16,18 @@ namespace SharpOpenGL.Font
         public TextInstance(string textContent, float x, float y)
         {
             TextContent = textContent;
+            originX = x;
+            originY = y;
             GenerateVertices(x,y);
         }
 
-        public void SetTextContent()
+        public void SetTextContent(string newTextContent)
         {
-
+            if (TextContent != newTextContent)
+            {
+                TextContent = newTextContent;
+                GenerateVertices(originX, originY);
+            }
         }
 
         public void Dispose()
@@ -81,11 +82,11 @@ namespace SharpOpenGL.Font
 
 
 
-        protected void GenerateVertices(float originX, float originY)
+        protected void GenerateVertices(float posX, float posY)
         {
             vertexList.Clear();
 
-            var fXBasePosition = originX;
+            var fXBasePosition = posX;
 
             var squareSize = FontManager.Get().SquareSize;
             var textureDimension = FontManager.Get().TextureDimension;
@@ -111,7 +112,7 @@ namespace SharpOpenGL.Font
 
                 fXBasePosition += ((glyph.AdvanceHorizontal ) / (2.0f * 64.0f)) * fScale;
                 float X = fXBasePosition - (glyph.Width / (2.0f * 64.0f)) * fScale;
-                float Y = originY + ((glyph.HoriBearingY) / (2.0f * 64.0f)) * fScale;
+                float Y = posY + ((glyph.HoriBearingY) / (2.0f * 64.0f)) * fScale;
 
                 var halfSquare = (squareSize / 2.0f) * fScale;
 
@@ -199,5 +200,8 @@ namespace SharpOpenGL.Font
         private float right = float.MinValue;
         private float top = float.MinValue;
         private float bottom = float.MaxValue;
+
+        private float originX = 0;
+        private float originY = 0;
     }
 }
