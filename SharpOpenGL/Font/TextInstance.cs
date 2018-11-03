@@ -18,11 +18,15 @@ namespace SharpOpenGL.Font
 {
     public class TextInstance : IDisposable
     {
-        public TextInstance(string textContent, float x, float y, int fontSize)
+        public TextInstance(string textContent, float x, float y)
         {
-            this.fontSize = fontSize;
             TextContent = textContent;
             GenerateVertices(x,y);
+        }
+
+        public void SetTextContent()
+        {
+
         }
 
         public void Dispose()
@@ -111,36 +115,44 @@ namespace SharpOpenGL.Font
 
                 var halfSquare = (squareSize / 2.0f) * fScale;
 
+                var halfWidth = ((glyph.Width) / (2.0f * 64.0f)) * fScale;
+                var halfHeight = ((glyph.Height) / (2.0f * 64.0f)) * fScale;
+
+                var boxLeft = -halfWidth + X;
+                var boxRight = halfWidth + X;
+                var boxTop =  halfHeight + Y;
+                var boxBottom = -halfHeight + Y;
+
+                // update boundary
+                if (left > boxLeft)
+                {
+                    left = boxLeft;
+                }
+                if (right < boxRight)
+                {
+                    right = boxRight;
+                }
+
+                if (top < boxTop)
+                {
+                    top = boxTop;
+                }
+
+                if (bottom > boxBottom)
+                {
+                    bottom = boxBottom;
+                }
+
+
                 var leftX = -0.5f * halfSquare + X;
                 var rightX = 0.5f * halfSquare + X;
                 var topY = 0.5f * halfSquare + Y;
                 var bottomY = -0.5f * halfSquare + Y;
 
-                // update boundary
-                if (left > leftX)
-                {
-                    left = leftX;
-                }
-                if (right < rightX)
-                {
-                    right = rightX;
-                }
-
-                if (top < topY)
-                {
-                    top = topY;
-                }
-
-                if (bottom > bottomY)
-                {
-                    bottom = bottomY;
-                }
-
                 var charvertex1 = new OpenTK.Vector3( leftX, topY, 0);
                 var charvertex2 = new OpenTK.Vector3( rightX, topY, 0);
                 var charvertex3 = new OpenTK.Vector3( rightX, bottomY, 0);
                 var charvertex4 = new OpenTK.Vector3( leftX, bottomY, 0);
-                
                 
                 var texcoord1 = new OpenTK.Vector2(glyph.AtlasX, glyph.AtlasY);
                 var texcoord2 = new OpenTK.Vector2(glyph.AtlasX + textureDimension, glyph.AtlasY);
@@ -176,8 +188,6 @@ namespace SharpOpenGL.Font
         }
 
         public string TextContent = "";
-
-        private int fontSize = 36;
 
         private DynamicVertexBuffer<PT_VertexAttribute> vb = null;
         private DynamicVertexBuffer<PT_VertexAttribute> boxVB = null;

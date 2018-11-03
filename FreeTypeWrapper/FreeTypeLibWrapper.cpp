@@ -110,7 +110,7 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 
 			
 			//Copy the bitmap to the atlas
-			GenerateTextureFromGlyph(glyph, texAtlasX, texAtlasY, RealTexSize, calculatedResolution, calculatedMargin, true);
+			GenerateTextureFromGlyph(glyph, texAtlasX, texAtlasY, RealTexSize, calculatedResolution, calculatedMargin, false);
 
 			texAtlasX++;
 			if (texAtlasX >= NumGlyphsPerRow)
