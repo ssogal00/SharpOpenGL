@@ -124,6 +124,7 @@
     <Compile Include="Asset\ShaderAsset.cs" />
     <Compile Include="Asset\Texture2DAsset.cs" />
     <Compile Include="BlitToScreen.cs" />
+    <Compile Include="ConsoleCommandManager.cs" />
     <Compile Include="Font\FontManager.cs" />
     <Compile Include="Font\TextInstance.cs" />
     <Compile Include="Light\DirectionalLight.cs" />
