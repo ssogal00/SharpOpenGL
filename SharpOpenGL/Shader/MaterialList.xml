@@ -12,4 +12,5 @@
 	<Material name="MSGBufferMaterial" vertexShader="MultisampleGBuffer.vs" fragmentShader="MultisampleGBuffer.fs"/>
 	<Material name="DepthVisualizeMaterial" vertexShader="DepthVisualize.vs" fragmentShader="DepthVisualize.fs"/>
 	<Material name="FontRenderMaterial" vertexShader="FontRender.vs" fragmentShader="FontRender.fs"/>
+	<Material name="FontBoxRenderMaterial" vertexShader="FontBoxRender.vs" fragmentShader="FontBoxRender.fs"/>
 </MaterialList>

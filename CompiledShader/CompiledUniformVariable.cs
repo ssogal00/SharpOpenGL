@@ -178,5 +178,8 @@ namespace DepthVisualizeMaterial
 namespace FontRenderMaterial
 {
 }
+namespace FontBoxRenderMaterial
+{
+}
 
 }

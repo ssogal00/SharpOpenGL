@@ -6,6 +6,7 @@ using Core.MaterialBase;
 using Core.Primitive;
 using Core.Texture;
 using FreeImageAPI.Metadata;
+using OpenTK;
 using SixLabors.Fonts;
 using SixLabors.Primitives;
 using SharpOpenGL;
@@ -32,6 +33,30 @@ namespace SharpOpenGL.Font
             }
         }
 
+        public void RenderWithBox(MaterialBase fontRenderMaterial, MaterialBase fontBoxRenderMaterial)
+        {
+            RenderBox(fontBoxRenderMaterial);
+            Render(fontRenderMaterial);
+        }
+
+        private void RenderBox(MaterialBase fontBoxRenderMaterial)
+        {
+            using (var blend = new ScopedEnable(EnableCap.Blend))
+            using (var dummy = new ScopedDisable(EnableCap.DepthTest))
+            using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))
+            {
+                fontBoxRenderMaterial.BindAndExecute(boxVB, () =>
+                {
+                    boxVB.BindVertexAttribute();
+                    fontBoxRenderMaterial.SetUniformVarData("ScreenSize",
+                        new OpenTK.Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
+                    fontBoxRenderMaterial.SetUniformVarData("BoxColor", new Vector3(0,0,0));
+                    fontBoxRenderMaterial.SetUniformVarData("BoxAlpha", 0.70f);
+                    GL.DrawArrays(PrimitiveType.Quads, 0, 4);
+                });
+            }
+        }
+
         public void Render(MaterialBase fontRenderMaterial)
         {
             using (var blend = new ScopedEnable(EnableCap.Blend))
@@ -40,9 +65,7 @@ namespace SharpOpenGL.Font
             using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))
             {
                 fontRenderMaterial.BindAndExecute(vb, () =>
-                {
-
-                    vb.Bind();
+                {   
                     vb.BindVertexAttribute();
                     fontRenderMaterial.SetTexture("FontTexture", FontManager.Get().FontAtlas);
                     fontRenderMaterial.SetUniformVarData("ScreenSize",
@@ -90,8 +113,8 @@ namespace SharpOpenGL.Font
 
                 var leftX = -0.5f * halfSquare + X;
                 var rightX = 0.5f * halfSquare + X;
-                var topY = -0.5f * halfSquare + Y;
-                var bottomY = 0.5f * halfSquare + Y;
+                var topY = 0.5f * halfSquare + Y;
+                var bottomY = -0.5f * halfSquare + Y;
 
                 // update boundary
                 if (left > leftX)
@@ -103,20 +126,20 @@ namespace SharpOpenGL.Font
                     right = rightX;
                 }
 
-                if (bottom > bottomY)
-                {
-                    bottom = bottomY;
-                }
-
                 if (top < topY)
                 {
                     top = topY;
                 }
 
-                var v1 = new OpenTK.Vector3(-0.5f * halfSquare + X, 0.5f * halfSquare + Y, 0);
-                var v2 = new OpenTK.Vector3( 0.5f * halfSquare + X, 0.5f * halfSquare + Y, 0);
-                var v3 = new OpenTK.Vector3( 0.5f * halfSquare + X, -0.5f * halfSquare + Y, 0);
-                var v4 = new OpenTK.Vector3(-0.5f * halfSquare + X, -0.5f * halfSquare + Y, 0);
+                if (bottom > bottomY)
+                {
+                    bottom = bottomY;
+                }
+
+                var charvertex1 = new OpenTK.Vector3( leftX, topY, 0);
+                var charvertex2 = new OpenTK.Vector3( rightX, topY, 0);
+                var charvertex3 = new OpenTK.Vector3( rightX, bottomY, 0);
+                var charvertex4 = new OpenTK.Vector3( leftX, bottomY, 0);
                 
                 
                 var texcoord1 = new OpenTK.Vector2(glyph.AtlasX, glyph.AtlasY);
@@ -124,10 +147,10 @@ namespace SharpOpenGL.Font
                 var texcoord3 = new OpenTK.Vector2(glyph.AtlasX + textureDimension, glyph.AtlasY + textureDimension);
                 var texcoord4 = new OpenTK.Vector2(glyph.AtlasX, glyph.AtlasY + textureDimension);
 
-                vertexList.Add(new PT_VertexAttribute(v1, texcoord1));
-                vertexList.Add(new PT_VertexAttribute(v2, texcoord2));
-                vertexList.Add(new PT_VertexAttribute(v3, texcoord3));
-                vertexList.Add(new PT_VertexAttribute(v4, texcoord4));
+                vertexList.Add(new PT_VertexAttribute(charvertex1, texcoord1));
+                vertexList.Add(new PT_VertexAttribute(charvertex2, texcoord2));
+                vertexList.Add(new PT_VertexAttribute(charvertex3, texcoord3));
+                vertexList.Add(new PT_VertexAttribute(charvertex4, texcoord4));
 
                 index++;
                 previous = ch;
@@ -136,6 +159,20 @@ namespace SharpOpenGL.Font
             vb = new DynamicVertexBuffer<PT_VertexAttribute>();
             var vertexArray = vertexList.ToArray();
             vb.BufferData<PT_VertexAttribute>(ref vertexArray);
+
+            var v1 = new OpenTK.Vector3(left, top, 0);
+            var v2 = new OpenTK.Vector3(right, top, 0);
+            var v3 = new OpenTK.Vector3(right, bottom, 0);
+            var v4 = new OpenTK.Vector3(left, bottom, 0);
+
+            boxVertexList.Add(new PT_VertexAttribute(v1, new Vector2(0,0)));
+            boxVertexList.Add(new PT_VertexAttribute(v2, new Vector2(1,0)));
+            boxVertexList.Add(new PT_VertexAttribute(v3, new Vector2(1,1)));
+            boxVertexList.Add(new PT_VertexAttribute(v4, new Vector2(0,1)));
+
+            var boxVertexArray = boxVertexList.ToArray();
+            boxVB = new DynamicVertexBuffer<PT_VertexAttribute>();
+            boxVB.BufferData<PT_VertexAttribute>(ref boxVertexArray);
         }
 
         public string TextContent = "";
@@ -143,8 +180,10 @@ namespace SharpOpenGL.Font
         private int fontSize = 36;
 
         private DynamicVertexBuffer<PT_VertexAttribute> vb = null;
+        private DynamicVertexBuffer<PT_VertexAttribute> boxVB = null;
 
         private List<PT_VertexAttribute> vertexList = new List<PT_VertexAttribute>();
+        private List<PT_VertexAttribute> boxVertexList = new List<PT_VertexAttribute>();
 
         private float left = float.MaxValue;
         private float right = float.MinValue;
