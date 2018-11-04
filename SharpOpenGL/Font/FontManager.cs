@@ -81,8 +81,13 @@ namespace SharpOpenGL.Font
             
         }
 
-        public void RenderText(float x, float y, string text)
+        public void RenderText(float x, float y, string text, bool bCache = false)
         {
+            if (text.Length == 0)
+            {
+                return;
+            }
+            
             if (renderTextDicationary.ContainsKey(text) == false)
             {
                 var newInstance = new TextInstance(text,x,y);

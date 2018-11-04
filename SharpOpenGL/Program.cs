@@ -113,7 +113,7 @@ namespace SharpOpenGL
 
             ScreenBlit.SetGridSize(2, 2);
 
-            OnKeyDownEvent += FreeCam.OnKeyDown;            
+            OnKeyDownEvent += FreeCam.OnKeyDown;
             OnKeyDownEvent += this.HandleKeyDownEvent;
             
             OnKeyUpEvent += FreeCam.OnKeyUp;            
@@ -207,7 +207,10 @@ namespace SharpOpenGL
                 GBufferMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
                 Mesh.Draw(GBufferMaterial);
                 
-                FontManager.Get().RenderText(10, 100, consoleCommandString);
+                if (ConsoleCommandManager.Get().IsActive)
+                {
+                    FontManager.Get().RenderText(10, 100, ConsoleCommandManager.Get().ConsoleCommandString);
+                }
 
                 if (CurrentCam == OrbitCam)
                 {
@@ -244,9 +247,10 @@ namespace SharpOpenGL
 
         public void HandleKeyDownEvent(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
         {
-            if (consoleCommandInputMode)
+            if (ConsoleCommandManager.Get().IsActive)
             {
-                consoleCommandString += e.Key.ToString();
+                ConsoleCommandManager.Get().OnKeyDown(e);
+                consoleCommandString = ConsoleCommandManager.Get().ConsoleCommandString;
                 return;
             }
 
@@ -268,7 +272,7 @@ namespace SharpOpenGL
             }
             else if (e.Key == Key.Tilde)
             {
-                consoleCommandInputMode = !consoleCommandInputMode;
+                ConsoleCommandManager.Get().ToggleActive();
             }
         }
 

@@ -66,6 +66,7 @@
     <Compile Include="Asset\AssetInfo.cs" />
     <Compile Include="BindState.cs" />
     <Compile Include="Buffer\MultisampleGBuffer.cs" />
+    <Compile Include="CustomAttribute\ConsoleCommandAttribute.cs" />
     <Compile Include="CustomSerialize\MatrixSerialize.cs" />
     <Compile Include="CustomSerialize\VectorSerialize.cs" />
     <Compile Include="DrawingState.cs" />
@@ -136,7 +137,6 @@
     <Compile Include="VertexCustomAttribute\ComponentType.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CustomAttribute\" />
     <Folder Include="StaticMesh\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
