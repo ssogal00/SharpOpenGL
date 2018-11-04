@@ -20,6 +20,13 @@ namespace Core.Camera
 
         }
 
+        public bool IsLocked = false;
+
+        public void ToggleLock()
+        {
+            IsLocked = !IsLocked;
+        }
+
         public CameraBase(float fFOV, float fAspectRatio, float fNear, float fFar)
         {
             FOV = fFOV;

@@ -273,6 +273,11 @@ namespace SharpOpenGL
             else if (e.Key == Key.Tilde)
             {
                 ConsoleCommandManager.Get().ToggleActive();
+
+                if (CurrentCam != null)
+                {
+                    CurrentCam.ToggleLock();
+                }
             }
         }
 

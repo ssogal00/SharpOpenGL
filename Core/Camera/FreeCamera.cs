@@ -155,7 +155,12 @@ namespace Core.Camera
 
         public override void OnKeyUp(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
         {
-            if(MoveKeys.Contains(e.Key))
+            if (IsLocked)
+            {
+                return;
+            }
+
+            if (MoveKeys.Contains(e.Key))
             {
                 bMoving = false;
                 SpeedIndex = 0;
@@ -169,6 +174,11 @@ namespace Core.Camera
 
         public override void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
         {
+            if (IsLocked)
+            {
+                return;
+            }
+
             if (MoveKeys.Contains(e.Key))
             {
                 MoveStarted = EyeLocation;
