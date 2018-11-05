@@ -3,14 +3,19 @@ using ZeroFormatter;
 using OpenTK;
 using Core.MaterialBase;
 
-namespace SharpOpenGL.Scene
+namespace Core.Primitive
 {
-    
     public interface ISceneObject
     {
         Vector3 Location { get; set; }
-        
-        float Scale { get; set; } 
+
+        float Scale { get; set; }
+
+        float Yaw { get; set; }
+
+        float Pitch { get; set; }
+
+        float Roll { get; set; }
 
         OpenTK.Matrix4 ModelMatrix
         {
@@ -19,6 +24,6 @@ namespace SharpOpenGL.Scene
 
         void Draw();
 
-        void Draw(MaterialBase material);
+        void Draw(MaterialBase.MaterialBase material);
     }
 }

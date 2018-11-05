@@ -5,6 +5,8 @@ using Core.Camera;
 using Core.Buffer;
 using Core.CustomEvent;
 using Core.MaterialBase;
+using Core.Primitive;
+
 
 namespace SharpOpenGL.Scene
 {

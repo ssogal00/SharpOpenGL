@@ -98,6 +98,8 @@
     <Compile Include="OpenGLShader\TesselEvalShader.cs" />
     <Compile Include="PatchDrawable.cs" />
     <Compile Include="Primitive\Arrow.cs" />
+    <Compile Include="Primitive\SceneObject.cs" />
+    <Compile Include="Primitive\ThreeAxis.cs" />
     <Compile Include="Primitive\Cone.cs" />
     <Compile Include="Primitive\Cylinder.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />

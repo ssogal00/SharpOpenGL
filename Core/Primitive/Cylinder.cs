@@ -9,8 +9,21 @@ using System.Linq;
 
 namespace Core.Primitive
 {
-    public class Cylinder : RenderResource
+    public class Cylinder : RenderResource, ISceneObject
     {
+        public Vector3 Location { get; set; } = new Vector3(0,0,0);
+
+        public  float Scale { get; set; } = 1.0f;
+
+        public OpenTK.Matrix4 ModelMatrix
+        {
+            get { return Matrix4.CreateScale(Scale) * Matrix4.CreateTranslation(Location); }
+        }
+
+        public float Yaw { get; set; } = 0;
+        public float Pitch { get; set; } = 0;
+        public float Roll { get; set; } = 0;
+
         public Cylinder(float radius, float height, uint count)
         {
             Debug.Assert(radius > 0 && height > 0 && count >= 6);
@@ -34,8 +47,13 @@ namespace Core.Primitive
         }
 
         public void Draw(MaterialBase.MaterialBase material)
-        {
+        {   
             drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+        }
+
+        public void Draw()
+        {
+
         }
 
         protected void GenerateVertices()
