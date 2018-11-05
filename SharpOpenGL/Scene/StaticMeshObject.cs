@@ -19,6 +19,10 @@ namespace SharpOpenGL.Scene
             }
         }
 
+        public float Yaw { get; set; } = 0;
+        public float Pitch { get; set; } = 0;
+        public float Roll { get; set; } = 0;
+
         public void Draw()
         {
 

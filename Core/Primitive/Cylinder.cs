@@ -48,6 +48,7 @@ namespace Core.Primitive
 
         public void Draw(MaterialBase.MaterialBase material)
         {   
+            material.SetUniformVarData("Model", ModelMatrix);
             drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
         }
 
