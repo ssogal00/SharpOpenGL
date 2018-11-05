@@ -30,7 +30,7 @@ namespace SharpOpenGL.Scene
             }
         }
 
-        public void AddSceneObject(SceneObject newSceneObject)
+        public void AddSceneObject(ISceneObject newSceneObject)
         {
             SceneObjectList.Add(newSceneObject);
         }
@@ -49,6 +49,6 @@ namespace SharpOpenGL.Scene
         protected int width = 1024;
         protected int height = 768;
 
-        protected List<SceneObject> SceneObjectList = new List<SceneObject>();
+        protected List<ISceneObject> SceneObjectList = new List<ISceneObject>();
     }
 }

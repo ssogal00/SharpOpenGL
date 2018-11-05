@@ -251,6 +251,10 @@ namespace SharpOpenGL
             {
                 ConsoleCommandManager.Get().OnKeyDown(e);
                 consoleCommandString = ConsoleCommandManager.Get().ConsoleCommandString;
+                if (ConsoleCommandManager.Get().IsActive == false)
+                {
+                    CurrentCam.ToggleLock();
+                }
                 return;
             }
 

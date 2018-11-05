@@ -6,17 +6,19 @@ using Core.MaterialBase;
 namespace SharpOpenGL.Scene
 {
     
-    public abstract class SceneObject
+    public interface ISceneObject
     {
+        Vector3 Location { get; set; }
         
-        public Vector3 Location { get; set; } = new Vector3(0, 0, 0);
-        
-        public float Scale { get; set; } = 1.0f;
-        
-        public OpenTK.Matrix4 ModelMatrix => OpenTK.Matrix4.CreateScale(Scale) * OpenTK.Matrix4.CreateTranslation(Location);
+        float Scale { get; set; } 
 
-        public virtual void Draw() { }
+        OpenTK.Matrix4 ModelMatrix
+        {
+            get;
+        }
 
-        public virtual void Draw(MaterialBase material) { }
+        void Draw();
+
+        void Draw(MaterialBase material);
     }
 }
