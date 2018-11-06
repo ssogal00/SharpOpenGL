@@ -2,6 +2,7 @@
 using Core.OpenGLShader;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.Remoting.Channels;
 using OpenTK.Graphics.OpenGL;
 
 namespace Core.MaterialBase
@@ -255,35 +256,68 @@ namespace Core.MaterialBase
             }
         }
 
-        public void SetUniformVarData(string varName, OpenTK.Vector4 data)
+        public void SetUniformVarData(string varName, ref OpenTK.Vector3 data)
         {
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, ref data);
+            }
+        }
+
+        public void SetUniformVarData(string varName, OpenTK.Vector4 data, bool bChecked=false)
+        {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
             if (UniformVariableNames.Contains(varName))
             {
                 MaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, OpenTK.Matrix3 data)
+        public void SetUniformVarData(string varName, OpenTK.Matrix3 data, bool bChecked=false)
         {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
             if (UniformVariableNames.Contains(varName))
             {
                 MaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, OpenTK.Matrix4 data)
+        private void CheckUniformVariableExist(string variablename)
         {
+            Debug.Assert(UniformVariableNames.Contains(variablename));
+        }
+
+        public void SetUniformVarData(string varName, OpenTK.Matrix4 data, bool bChecked = false)
+        {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
             if (UniformVariableNames.Contains(varName))
             {
                 MaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, ref OpenTK.Matrix4 data)
+        public void SetUniformVarData(string varName, ref OpenTK.Matrix4 data, bool bChecked = false)
         {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, data);
+                MaterialProgram.SetUniformVarData(varName, ref data);
             }
         }
 

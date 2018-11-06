@@ -11,18 +11,23 @@ namespace Core.Primitive
 {
     public class Cylinder : RenderResource, ISceneObject
     {
+        // @ ISceneobject interface
         public Vector3 Location { get; set; } = new Vector3(0,0,0);
 
         public  float Scale { get; set; } = 1.0f;
 
         public OpenTK.Matrix4 ModelMatrix
         {
-            get { return Matrix4.CreateScale(Scale) * Matrix4.CreateTranslation(Location); }
+            get
+            {
+                return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Location);
+            }
         }
-
+        
         public float Yaw { get; set; } = 0;
         public float Pitch { get; set; } = 0;
         public float Roll { get; set; } = 0;
+        // @ ISceneobject interface
 
         public Cylinder(float radius, float height, uint count)
         {
@@ -54,7 +59,6 @@ namespace Core.Primitive
 
         public void Draw()
         {
-
         }
 
         protected void GenerateVertices()

@@ -22,8 +22,6 @@ namespace Core.Primitive
             get;
         }
 
-        void Draw();
-
         void Draw(MaterialBase.MaterialBase material);
     }
 }

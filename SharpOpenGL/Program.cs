@@ -51,6 +51,7 @@ namespace SharpOpenGL
         protected Cone TestCone = new Cone(10, 20, 12);
         protected Sphere TestSphere = new Core.Primitive.Sphere(10, 20, 20);
         protected Torus TestTorus = new Core.Primitive.Torus(10, 2, 15);
+        protected Arrow TestArrow = new Arrow(10);
         
 
         protected StaticMeshAsset Mesh = null;
@@ -219,11 +220,9 @@ namespace SharpOpenGL
                         GBufferPNCMaterial.BindAndExecute
                         (() =>
                         {
-                            ModelTransform modelMatrix = new ModelTransform();
-                            modelMatrix.Model = Matrix4.CreateTranslation(CurrentCam.LookAtLocation);
-                            GBufferPNCMaterial.SetUniformVarData("Model", ref modelMatrix.Model);
+                            TestCyliner.Location = CurrentCam.LookAtLocation;
                             GBufferPNCMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
-                            TestTorus.Draw(GBufferPNCMaterial);
+                            TestCyliner.Draw(GBufferPNCMaterial);
                         }
                         );
                     }

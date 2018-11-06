@@ -20,7 +20,8 @@ namespace SharpOpenGL.Scene
         {
             foreach(var obj in SceneObjectList)
             {
-                obj.Draw();
+                
+                
             }
         }
 

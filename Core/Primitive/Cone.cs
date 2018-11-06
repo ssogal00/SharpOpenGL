@@ -4,11 +4,30 @@ using OpenTK;
 using System.Diagnostics;
 using Core.Buffer;
 using OpenTK.Graphics.OpenGL;
+using Core.Primitive;
 
 namespace Core.Primitive
 {
-    public class Cone : RenderResource
+    public class Cone : RenderResource, ISceneObject
     {
+        // @ ISceneobject interface
+        public Vector3 Location { get; set; } = new Vector3(0, 0, 0);
+
+        public float Scale { get; set; } = 1.0f;
+
+        public OpenTK.Matrix4 ModelMatrix
+        {
+            get
+            {
+                return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Location);
+            }
+        }
+
+        public float Yaw { get; set; } = 0;
+        public float Pitch { get; set; } = 0;
+        public float Roll { get; set; } = 0;
+        // @ ISceneobject interface
+
         public Cone(float radius, float height, uint count)
         {
             Debug.Assert(radius > 0 && height > 0 && count > 0);
@@ -34,6 +53,7 @@ namespace Core.Primitive
         {
             using (var dummy = new ScopedBind(VB))
             {
+                material.SetUniformVarData("Model", ModelMatrix);
                 PNC_VertexAttribute.VertexAttributeBinding();
                 GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
             }

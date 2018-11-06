@@ -15,8 +15,6 @@ void FreeTypeLibWrapper::FreeType::DeInitialize()
 		delete pFontFace;
 		pFontFace = nullptr;
 	}
-
-	
 }
 
 bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _resolution, System::String^ characters)
