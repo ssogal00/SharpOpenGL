@@ -17,7 +17,7 @@ namespace Core.Primitive
 
         public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
 
-        public OpenTK.Matrix4 ModelMatrix
+        public OpenTK.Matrix4 LocalMatrix
         {
             get
             {
@@ -55,7 +55,7 @@ namespace Core.Primitive
         {
             using (var dummy = new ScopedBind(VB))
             {
-                material.SetUniformVarData("Model", ModelMatrix * ParentMatrix);
+                material.SetUniformVarData("Model", LocalMatrix * ParentMatrix);
                 PNC_VertexAttribute.VertexAttributeBinding();
                 GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
             }
@@ -125,7 +125,7 @@ namespace Core.Primitive
         protected float Radius = 1.0f;
         protected float Height = 10.0f;
         protected uint Count = 10;
-        protected Vector3 Color = new Vector3(1, 0, 0);
+        public Vector3 Color = new Vector3(1, 0, 0);
 
         protected int VertexCount = 0;
 

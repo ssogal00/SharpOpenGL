@@ -13,7 +13,7 @@ namespace SharpOpenGL.Scene
 
         public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
 
-        public Matrix4 ModelMatrix
+        public Matrix4 LocalMatrix
         {
             get
             {

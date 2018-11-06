@@ -18,7 +18,7 @@ namespace Core.Primitive
 
         public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
 
-        public OpenTK.Matrix4 ModelMatrix
+        public OpenTK.Matrix4 LocalMatrix
         {
             get
             {
@@ -30,6 +30,8 @@ namespace Core.Primitive
         public float Pitch { get; set; } = 0;
         public float Roll { get; set; } = 0;
         // @ ISceneobject interface
+
+
 
         public Cylinder(float radius, float height, uint count)
         {
@@ -55,7 +57,7 @@ namespace Core.Primitive
 
         public void Draw(MaterialBase.MaterialBase material)
         {   
-            material.SetUniformVarData("Model", ModelMatrix * ParentMatrix, true);
+            material.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
             drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
         }
 
@@ -173,7 +175,7 @@ namespace Core.Primitive
         protected List<PNC_VertexAttribute> VertexList = new List<PNC_VertexAttribute>();
 
         protected DrawableBase<PNC_VertexAttribute> drawable = null;
-        protected Vector3 Color = new Vector3(1, 0, 0);
+        public Vector3 Color = new Vector3(1, 0, 0);
     }
 }
 

@@ -20,7 +20,7 @@ namespace Core.Primitive
 
         public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
 
-        public OpenTK.Matrix4 ModelMatrix
+        public OpenTK.Matrix4 LocalMatrix
         {
             get
             {
@@ -41,7 +41,14 @@ namespace Core.Primitive
 
         public Arrow(float arrowLength)
         {
-            ArrowHeadTranslation = new Vector3(10, 0, 0);
+            ArrowHeadTranslation = new Vector3(arrowLength, 0, 0);
+        }
+
+        public Arrow(float arrowLength, Vector3 color)
+        {
+            ArrowHeadTranslation=new Vector3(arrowLength, 0, 0);
+            ArrowBody.Color = color;
+            ArrowHead.Color = color;
         }
         
         public void Draw(MaterialBase.MaterialBase material)

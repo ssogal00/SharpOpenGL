@@ -16,7 +16,7 @@ namespace Core.Primitive
 
         public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
 
-        public OpenTK.Matrix4 ModelMatrix
+        public OpenTK.Matrix4 LocalMatrix
         {
             get
             {
@@ -35,15 +35,15 @@ namespace Core.Primitive
         public void Draw(MaterialBase.MaterialBase material)
         {
             // 
-            xAxis.ParentMatrix = ParentMatrix;
+            xAxis.ParentMatrix = LocalMatrix * ParentMatrix;
             xAxis.Draw(material);
 
             //
-            yAxis.ParentMatrix = Matrix4.CreateRotationZ(OpenTK.MathHelper.DegreesToRadians(90)) * ParentMatrix;
+            yAxis.ParentMatrix = Matrix4.CreateRotationZ(OpenTK.MathHelper.DegreesToRadians(90))* LocalMatrix * ParentMatrix;
             yAxis.Draw(material);
             //
 
-            zAxis.ParentMatrix = Matrix4.CreateRotationY(OpenTK.MathHelper.DegreesToRadians(-90)) * ParentMatrix;
+            zAxis.ParentMatrix = Matrix4.CreateRotationY(OpenTK.MathHelper.DegreesToRadians(-90)) *LocalMatrix* ParentMatrix;
             zAxis.Draw(material);
         }
         // @ ISceneobject interface
@@ -53,8 +53,8 @@ namespace Core.Primitive
         }
 
 
-        protected Arrow xAxis = new Arrow(10);
-        protected Arrow yAxis = new Arrow(10);
-        protected Arrow zAxis = new Arrow(10);
+        protected Arrow xAxis = new Arrow(10, new Vector3(1,0,0));
+        protected Arrow yAxis = new Arrow(10, new Vector3(0, 1, 0));
+        protected Arrow zAxis = new Arrow(10, new Vector3(0, 0, 1));
     }
 }

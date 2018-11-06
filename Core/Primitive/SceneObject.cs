@@ -23,7 +23,7 @@ namespace Core.Primitive
             set;
         }
 
-        OpenTK.Matrix4 ModelMatrix
+        OpenTK.Matrix4 LocalMatrix
         {
             get;
         }
