@@ -10,6 +10,7 @@ namespace Core.Primitive
     public class ThreeAxis : RenderResource , ISceneObject
     {
         // @ ISceneobject interface
+        public Vector3 Translation { get; set; } = new Vector3(0, 0, 0);
 
         public float Scale { get; set; } = 1.0f;
 
@@ -19,6 +20,7 @@ namespace Core.Primitive
         {
             get
             {
+                return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
             }
         }
 
@@ -33,13 +35,16 @@ namespace Core.Primitive
         public void Draw(MaterialBase.MaterialBase material)
         {
             // 
+            xAxis.ParentMatrix = ParentMatrix;
             xAxis.Draw(material);
 
             //
-            yAxis.Yaw = OpenTK.MathHelper.DegreesToRadians(90);
+            yAxis.ParentMatrix = Matrix4.CreateRotationZ(OpenTK.MathHelper.DegreesToRadians(90)) * ParentMatrix;
             yAxis.Draw(material);
             //
-            
+
+            zAxis.ParentMatrix = Matrix4.CreateRotationY(OpenTK.MathHelper.DegreesToRadians(-90)) * ParentMatrix;
+            zAxis.Draw(material);
         }
         // @ ISceneobject interface
 

@@ -37,6 +37,8 @@ namespace Core.Primitive
         public void Draw() { }
         // @ ISceneobject interface
 
+        public Vector3 Color= new Vector3(1,0,0);
+
         public Arrow(float arrowLength)
         {
             ArrowHeadTranslation = new Vector3(10, 0, 0);
