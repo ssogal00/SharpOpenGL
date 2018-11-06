@@ -216,48 +216,78 @@ namespace Core.MaterialBase
             }
         }
 
-        public void SetUniformVarData(string varName, float data)
+        public void SetUniformVarData(string varName, float data, bool bChecked = false)
         {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
             if (UniformVariableNames.Contains(varName))
             {
                 MaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, int data)
+        public void SetUniformVarData(string varName, int data, bool bChecked=false)
         {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
             if (UniformVariableNames.Contains(varName))
             {
                 MaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, OpenTK.Vector2 data)
+        public void SetUniformVarData(string varName, OpenTK.Vector2 data, bool bChecked = false)
         {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
             if (UniformVariableNames.Contains(varName))
             {
                 MaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, ref OpenTK.Vector2 data)
+        public void SetUniformVarData(string varName, ref OpenTK.Vector2 data, bool bChecked = false)
         {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
             if (UniformVariableNames.Contains(varName))
             {
                 MaterialProgram.SetUniformVarData(varName, data);
             }
         }        
 
-        public void SetUniformVarData(string varName, OpenTK.Vector3 data)
+        public void SetUniformVarData(string varName, OpenTK.Vector3 data, bool bChecked = false)
         {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
             if (UniformVariableNames.Contains(varName))
             {
                 MaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, ref OpenTK.Vector3 data)
+        public void SetUniformVarData(string varName, ref OpenTK.Vector3 data, bool bChecked = false)
         {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
             if (UniformVariableNames.Contains(varName))
             {
                 MaterialProgram.SetUniformVarData(varName, ref data);
