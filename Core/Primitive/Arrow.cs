@@ -14,15 +14,19 @@ namespace Core.Primitive
     public class Arrow : RenderResource, ISceneObject
     {
         // @ ISceneobject interface
-        public Vector3 Location { get; set; } = new Vector3(0, 0, 0);
+        public Vector3 Translation { get; set; } = new Vector3(0, 0, 0);
 
         public float Scale { get; set; } = 1.0f;
+
+        public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
 
         public OpenTK.Matrix4 ModelMatrix
         {
             get
             {
-                return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Location);
+                // TRS Matrix
+                // from right to left
+                return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
             }
         }
 
@@ -35,20 +39,25 @@ namespace Core.Primitive
 
         public Arrow(float arrowLength)
         {
-            Translation = Matrix4.CreateTranslation(20, 0, 0);
+            ArrowHeadTranslation = new Vector3(10, 0, 0);
         }
         
         public void Draw(MaterialBase.MaterialBase material)
         {
-            ArrowBody.Draw(material);
             //
+            ArrowBody.ParentMatrix = ParentMatrix;
+            ArrowBody.Draw(material);
+
+            //
+            ArrowHead.ParentMatrix = ParentMatrix;
+            ArrowHead.Translation = ArrowHeadTranslation;
             ArrowHead.Draw(material);
         }
 
-        protected Cylinder ArrowBody = new Cylinder(4,20,10);
-        protected Cone ArrowHead = new Cone(6,5,10);
+        protected Cylinder ArrowBody = new Cylinder(1,10,10);
+        protected Cone ArrowHead = new Cone(2,2,10);
         protected float Length = 10.0f;
 
-        protected Matrix4 Translation ;
+        protected Vector3 ArrowHeadTranslation ;
     }
 }

@@ -11,15 +11,17 @@ namespace Core.Primitive
     public class Cone : RenderResource, ISceneObject
     {
         // @ ISceneobject interface
-        public Vector3 Location { get; set; } = new Vector3(0, 0, 0);
+        public Vector3 Translation { get; set; } = new Vector3(0, 0, 0);
 
         public float Scale { get; set; } = 1.0f;
+
+        public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
 
         public OpenTK.Matrix4 ModelMatrix
         {
             get
             {
-                return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Location);
+                return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
             }
         }
 
@@ -53,7 +55,7 @@ namespace Core.Primitive
         {
             using (var dummy = new ScopedBind(VB))
             {
-                material.SetUniformVarData("Model", ModelMatrix);
+                material.SetUniformVarData("Model", ModelMatrix * ParentMatrix);
                 PNC_VertexAttribute.VertexAttributeBinding();
                 GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
             }

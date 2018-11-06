@@ -7,7 +7,7 @@ namespace Core.Primitive
 {
     public interface ISceneObject
     {
-        Vector3 Location { get; set; }
+        Vector3 Translation { get; set; }
 
         float Scale { get; set; }
 
@@ -17,11 +17,18 @@ namespace Core.Primitive
 
         float Roll { get; set; }
 
+        OpenTK.Matrix4 ParentMatrix
+        {
+            get;
+            set;
+        }
+
         OpenTK.Matrix4 ModelMatrix
         {
             get;
         }
 
         void Draw(MaterialBase.MaterialBase material);
+
     }
 }

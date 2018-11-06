@@ -7,15 +7,17 @@ namespace SharpOpenGL.Scene
 {
     public class StaticMeshObject : ISceneObject
     {
-        public Vector3 Location { get; set; }
+        public Vector3 Translation { get; set; }
 
         public float Scale { get; set; }
+
+        public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
 
         public Matrix4 ModelMatrix
         {
             get
             {
-                return Matrix4.CreateScale(Scale) * Matrix4.CreateTranslation(Location);
+                return Matrix4.CreateScale(Scale) * Matrix4.CreateTranslation(Translation);
             }
         }
 

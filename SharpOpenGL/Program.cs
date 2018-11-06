@@ -52,6 +52,7 @@ namespace SharpOpenGL
         protected Sphere TestSphere = new Core.Primitive.Sphere(10, 20, 20);
         protected Torus TestTorus = new Core.Primitive.Torus(10, 2, 15);
         protected Arrow TestArrow = new Arrow(10);
+        protected ThreeAxis TestAxis = new ThreeAxis();
         
 
         protected StaticMeshAsset Mesh = null;
@@ -220,9 +221,8 @@ namespace SharpOpenGL
                         GBufferPNCMaterial.BindAndExecute
                         (() =>
                         {
-                            TestCyliner.Location = CurrentCam.LookAtLocation;
                             GBufferPNCMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
-                            TestCyliner.Draw(GBufferPNCMaterial);
+                            TestAxis.Draw(GBufferPNCMaterial);
                         }
                         );
                     }
