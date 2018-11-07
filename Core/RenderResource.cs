@@ -10,18 +10,15 @@ namespace Core
     public class RenderResource : IDisposable
     {
         public static EventHandler<EventArgs> OnOpenGLContextCreated;
-        public static EventHandler<CustomEvent.ScreenResizeEventArgs> OnWindowResized;
 
         public RenderResource()
         {
             OnOpenGLContextCreated += this.OnGLContextCreated;
-            OnWindowResized += this.OnWindowResize;
         }
 
         public virtual void Dispose()
         {
             OnOpenGLContextCreated -= this.OnGLContextCreated;
-            OnWindowResized -= this.OnWindowResize;
         }
 
         public virtual void OnGLContextCreated(object sender, EventArgs e)
@@ -32,10 +29,6 @@ namespace Core
         public virtual void Initialize()
         {
             bInit = true;
-        }
-
-        public virtual void OnWindowResize(object sender, CustomEvent.ScreenResizeEventArgs e)
-        {
         }
 
         public virtual void Load(string assetPath)

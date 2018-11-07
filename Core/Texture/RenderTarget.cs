@@ -4,13 +4,15 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Configuration;
+using System.Runtime.Remoting;
 
 namespace Core.Texture
 {
-    public class RenderTarget : RenderResource, IBindable
+    public class RenderTarget : RenderResource, IBindable, IResizable
     {
         public RenderTarget(int width, int height, int attachmentCount)
         {
+            ResizableManager.Get().AddResizable(this);
             BufferWidth = width;
             BufferHeight = height;
             AttachmentCount = attachmentCount;
@@ -33,7 +35,7 @@ namespace Core.Texture
             FrameBufferObject.Unbind();
         }
 
-        public override void OnWindowResize(object sender, Core.CustomEvent.ScreenResizeEventArgs e)
+        public void OnResize(object sender, Core.CustomEvent.ScreenResizeEventArgs e)
         {
             Resize(e.Width, e.Height);
         }

@@ -14,7 +14,7 @@ namespace SharpOpenGL.PostProcess
     public abstract class PostProcessBase : RenderResource
     {   
         public PostProcessBase()
-        {   
+        {
         }
 
         public override void Initialize()
@@ -23,11 +23,6 @@ namespace SharpOpenGL.PostProcess
             IB = new IndexBuffer();
             UpdateVertexBuffer();
             UpdateIndexBuffer();
-        }
-
-        public override void OnWindowResize(object sender, ScreenResizeEventArgs e)
-        {
-            Output.OnWindowResize(sender, e);
         }
 
         protected void BlitToScreenSpace()

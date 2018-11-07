@@ -107,7 +107,7 @@ namespace SharpOpenGL
             OnWindowResize += FreeCam.OnWindowResized;
 
             OnResourceCreate += RenderResource.OnOpenGLContextCreated;
-            OnWindowResize += RenderResource.OnWindowResized;
+            OnWindowResize += ResizableManager.Get().ResizeEventHandler;
 
             AssetManager.Get().DiscoverShader();
 

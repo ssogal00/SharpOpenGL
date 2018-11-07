@@ -10,16 +10,17 @@ using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.PostProcess
 {
-    public class BlurPostProcess : SharpOpenGL.PostProcess.PostProcessBase
+    public class BlurPostProcess : SharpOpenGL.PostProcess.PostProcessBase, IResizable
     {
         public BlurPostProcess()
             : base()
-        {   
+        {
+            ResizableManager.Get().AddResizable(this);
+
         }
 
-        public override void OnWindowResize(object sender, ScreenResizeEventArgs e)
+        public void OnResize(object sender, ScreenResizeEventArgs e)
         {
-            base.OnWindowResize(sender, e);
             UpdateOffsetAndWeight(e.Width, e.Height);
         }
 

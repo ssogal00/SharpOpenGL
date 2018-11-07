@@ -6,16 +6,18 @@ using Core.CustomEvent;
 
 namespace Core.Buffer
 {
-    public class GBuffer : RenderResource, IBindable
+    public class GBuffer : RenderResource, IBindable, IResizable
     {        
         public GBuffer(int width, int height)
         {
+            ResizableManager.Get().AddResizable(this);
             BufferHeight = height;
             BufferWidth = width;              
         }
 
         public GBuffer()
         {
+            ResizableManager.Get().AddResizable(this);
             BufferWidth = 1024;
             BufferHeight = 768;
         }
@@ -55,7 +57,7 @@ namespace Core.Buffer
             CreateGBuffer();
         }
 
-        public override void OnWindowResize(object sender, ScreenResizeEventArgs e)
+        public void OnResize(object sender, ScreenResizeEventArgs e)
         {
             Resize(e.Width, e.Height);
         }

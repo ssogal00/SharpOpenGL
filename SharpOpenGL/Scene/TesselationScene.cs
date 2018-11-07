@@ -61,7 +61,7 @@ namespace SharpOpenGL.Scene
             this.width = Math.Max(1, args.Width);
             this.height = Math.Max(1, args.Height);
 
-            gbuffer.OnWindowResize(this, args);
+            gbuffer.OnResize(this, args);
 
             float fAspectRatio = width / (float)height;
 

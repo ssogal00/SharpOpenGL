@@ -86,6 +86,7 @@
     <Compile Include="CustomEvent\ScreenResizeEventArgs.cs" />
     <Compile Include="DrawableBase.cs" />
     <Compile Include="ImportableResource.cs" />
+    <Compile Include="IResizable.cs" />
     <Compile Include="LineDrawable.cs" />
     <Compile Include="MaterialBase\MaterialBase.cs" />
     <Compile Include="MathHelper\MathHelper.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Primitive\Torus.cs" />
     <Compile Include="QuadDrawable.cs" />
     <Compile Include="RenderResource.cs" />
+    <Compile Include="ResizableManager.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="Texture\CubemapTexture.cs" />
     <Compile Include="Texture\DepthTargetTexture.cs" />
