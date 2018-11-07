@@ -61,6 +61,7 @@ namespace SharpOpenGL
                     break;
 
                 case Key.Enter:
+                case Key.KeypadEnter:
                     ExecuteConsoleCommand(ConsoleCommandString);
                     IsActive = false;
                     break;
