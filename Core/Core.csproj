@@ -67,6 +67,7 @@
     <Compile Include="BindState.cs" />
     <Compile Include="Buffer\MultisampleGBuffer.cs" />
     <Compile Include="CustomAttribute\ConsoleCommandAttribute.cs" />
+    <Compile Include="CustomAttribute\UIAttribute.cs" />
     <Compile Include="CustomSerialize\MatrixSerialize.cs" />
     <Compile Include="CustomSerialize\VectorSerialize.cs" />
     <Compile Include="DrawingState.cs" />

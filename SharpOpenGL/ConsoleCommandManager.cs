@@ -34,6 +34,7 @@ namespace SharpOpenGL
                 case Key.CapsLock:
                 case Key.ShiftLeft:
                 case Key.ShiftRight:
+                case Key.NumLock:
                     break;
 
                 case Key.Tilde:
