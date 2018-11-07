@@ -117,7 +117,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Asset\AssetBase.cs" />
     <Compile Include="Asset\AssetInfo.cs" />
     <Compile Include="Asset\AssetManager.cs" />
     <Compile Include="Asset\CubeMapTextureAsset.cs" />
@@ -136,7 +135,6 @@
     <Compile Include="PostProcess\DepthVisualize.cs" />
     <Compile Include="PostProcess\PostProcessChain.cs" />
     <Compile Include="PostProcess\Skybox.cs" />
-    <Compile Include="RenderCommand.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="PostProcess\Blur.cs" />
     <Compile Include="PostProcess\PostProcess.cs" />
