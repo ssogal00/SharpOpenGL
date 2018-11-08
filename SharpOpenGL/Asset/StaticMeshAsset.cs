@@ -64,6 +64,7 @@ namespace SharpOpenGL.StaticMesh
 
         [IgnoreFormat]
         public float YExtent => Math.Abs(MaxVertex.Y - MinVertex.Y);
+
         [IgnoreFormat]
         public float ZExtent => Math.Abs(MaxVertex.Z - MinVertex.Z);
 
