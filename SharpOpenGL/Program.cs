@@ -32,10 +32,7 @@ namespace SharpOpenGL
 
         protected GBufferDraw.ModelTransform ModelMatrix = new GBufferDraw.ModelTransform();
         protected GBufferDraw.CameraTransform Transform = new GBufferDraw.CameraTransform();
-
-        protected ShaderProgram ProgramObject = null;
-
-        protected RenderTarget testRenderTarget = new RenderTarget(1024, 768, 1);
+        
         protected Core.MaterialBase.MaterialBase GBufferMaterial = null;
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
         protected Core.MaterialBase.MaterialBase GBufferPNCMaterial = null;
@@ -43,10 +40,7 @@ namespace SharpOpenGL
         protected PostProcess.DeferredLight LightPostProcess = new DeferredLight();
         protected DepthVisualize DepthVisualizePostProcess = new DepthVisualize();
         protected PostProcess.Skybox SkyboxPostProcess = new Skybox();
-
-        protected string consoleCommandString = ">";
-        private bool consoleCommandInputMode = false;
-
+        
         protected Cylinder TestCyliner = new Cylinder(10, 10, 24);
         protected Cone TestCone = new Cone(10, 20, 12);
         protected Sphere TestSphere = new Core.Primitive.Sphere(10, 20, 20);
@@ -54,13 +48,11 @@ namespace SharpOpenGL
         protected Arrow TestArrow = new Arrow(10);
         protected ThreeAxis TestAxis = new ThreeAxis();
         
-
         protected StaticMeshAsset Mesh = null;
         protected StaticMeshAsset Sphere = null;
         protected Task<StaticMeshAsset> MeshLoadTask = null;
         protected Task<StaticMeshAsset> MeshLoadTask2 = null;
         protected GBuffer MyGBuffer = new GBuffer(1024,768);
-        protected MultisampleGBuffer multisampleGBuffer = new MultisampleGBuffer(1024,768);
 
         public event EventHandler<EventArgs> OnResourceCreate;
         public event EventHandler<ScreenResizeEventArgs> OnWindowResize;
@@ -118,7 +110,7 @@ namespace SharpOpenGL
             OnKeyDownEvent += FreeCam.OnKeyDown;
             OnKeyDownEvent += this.HandleKeyDownEvent;
             
-            OnKeyUpEvent += FreeCam.OnKeyUp;            
+            OnKeyUpEvent += FreeCam.OnKeyUp;
 
             Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
             Sphere = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
@@ -234,7 +226,6 @@ namespace SharpOpenGL
             DepthVisualizePostProcess.Render(MyGBuffer.GetDepthAttachment);
             LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
             ScreenBlit.Blit(LightPostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 2, 2);
-            
 
             SwapBuffers();
         }
@@ -251,7 +242,6 @@ namespace SharpOpenGL
             if (ConsoleCommandManager.Get().IsActive)
             {
                 ConsoleCommandManager.Get().OnKeyDown(e);
-                consoleCommandString = ConsoleCommandManager.Get().ConsoleCommandString;
                 if (ConsoleCommandManager.Get().IsActive == false)
                 {
                     CurrentCam.ToggleLock();

@@ -131,6 +131,7 @@
     <Compile Include="Light\PointLight.cs" />
     <Compile Include="Light\SpotLight.cs" />
     <Compile Include="MainThreadQueue.cs" />
+    <Compile Include="Material\MaterialParameter.cs" />
     <Compile Include="PostProcess\DeferredLight.cs" />
     <Compile Include="PostProcess\DepthVisualize.cs" />
     <Compile Include="PostProcess\PostProcessChain.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Material.cs" />
     <Compile Include="PostProcess\Blur.cs" />
     <Compile Include="PostProcess\PostProcess.cs" />
+    <Compile Include="RenderPass.cs" />
     <Compile Include="Scene\SceneBase.cs" />
     <Compile Include="Scene\SponzaScene.cs" />
     <Compile Include="Scene\StaticMeshObject.cs" />
@@ -200,7 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Camera\" />
-    <Folder Include="Material\" />
     <Folder Include="VertexCustomAttribute\" />
   </ItemGroup>
   <ItemGroup>
