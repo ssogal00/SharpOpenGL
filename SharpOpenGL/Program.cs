@@ -101,6 +101,7 @@ namespace SharpOpenGL
             OnResourceCreate += RenderResource.OnOpenGLContextCreated;
             OnWindowResize += ResizableManager.Get().ResizeEventHandler;
 
+            AssetManager.Get().DiscoverStaticMesh();
             AssetManager.Get().DiscoverShader();
 
             OnResourceCreate(this, e);

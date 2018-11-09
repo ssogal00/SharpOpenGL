@@ -43,7 +43,7 @@ namespace SharpOpenGL
                 () =>
                 {
                     //
-                    gbuffer.Clear(Color.AntiqueWhite);
+                    gbuffer.Clear(Color.Black);
                     cameraTransform.Proj = orbitcam.Proj;
                     cameraTransform.View = orbitcam.View;
                     
