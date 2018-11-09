@@ -126,6 +126,7 @@
     <Compile Include="ConsoleCommandManager.cs" />
     <Compile Include="Font\FontManager.cs" />
     <Compile Include="Font\TextInstance.cs" />
+    <Compile Include="GridDrawer.cs" />
     <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="Light\LightBase.cs" />
     <Compile Include="Light\PointLight.cs" />
