@@ -136,6 +136,11 @@ namespace SharpOpenGL
             FreeImageHelper.SaveAsBmp(ref normalData, width, height, "NormalBuffer.bmp");
         }
 
+        protected void CaptureStaticMesh()
+        {
+            StaticMeshCapture.Get().Capture("./Resources/Imported/StaticMesh/myteapot.staticmesh");
+        }
+
         protected void SwitchCameraMode()
         {
             // 
@@ -198,7 +203,7 @@ namespace SharpOpenGL
             MyGBuffer.BindAndExecute(GBufferMaterial, () =>
             {
                 GBufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
-                GBufferMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
+                GBufferMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref Transform);
                 Mesh.Draw(GBufferMaterial);
                 
                 if (ConsoleCommandManager.Get().IsActive)
@@ -263,7 +268,7 @@ namespace SharpOpenGL
             }
             else if(e.Key == Key.F5)
             {
-                ScreenCaptureGBuffer();
+                CaptureStaticMesh();
             }
             else if (e.Key == Key.Tilde)
             {

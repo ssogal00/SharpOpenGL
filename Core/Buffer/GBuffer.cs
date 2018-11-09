@@ -52,6 +52,12 @@ namespace Core.Buffer
             FrameBufferObject.Unbind();
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            CreateGBuffer();
+        }
+
         public override void OnGLContextCreated(object sender, EventArgs e)
         {
             CreateGBuffer();

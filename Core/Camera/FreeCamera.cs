@@ -232,7 +232,7 @@ namespace Core.Camera
             ViewMatrix = Matrix4.LookAt(EyeLocation, EyeLocation + Vector3.Multiply(m_RotationMatrix.Row2, 1.0f), Vector3.UnitY);
         }
 
-        protected float Yaw = -90;
+        public float Yaw { get; set; } = -90.0f;
 
         protected float Pitch = 0;
 
