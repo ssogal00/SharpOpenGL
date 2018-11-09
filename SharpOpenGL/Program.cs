@@ -138,7 +138,7 @@ namespace SharpOpenGL
 
         protected void CaptureStaticMesh()
         {
-            StaticMeshCapture.Get().Capture("./Resources/Imported/StaticMesh/myteapot.staticmesh");
+            StaticMeshCapture.Get().Capture("./Resources/Imported/StaticMesh/pop.staticmesh");
         }
 
         protected void SwitchCameraMode()

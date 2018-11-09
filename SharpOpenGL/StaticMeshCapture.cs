@@ -27,26 +27,25 @@ namespace SharpOpenGL
             gbufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
 
             // setup camera to capture static mesh
-            freecam = new FreeCamera();
-            freecam.LookAtLocation = staticMeshAsset.CenterVertex;
+            orbitcam = new OrbitCamera();
+            orbitcam.LookAtLocation = staticMeshAsset.CenterVertex;
 
-            freecam.Destination = freecam.EyeLocation = staticMeshAsset.CenterVertex;
-            freecam.Yaw = -0;
+            var dir = new Vector3(1, 1, 1);
+            dir.Normalize();
 
-            freecam.UpdateViewMatrix();
-            freecam.UpdateProjMatrix();
+            orbitcam.EyeLocation = staticMeshAsset.CenterVertex + staticMeshAsset.XExtent * 1.5f *  dir;
+            orbitcam.UpdateViewMatrix();
+            orbitcam.UpdateProjMatrix();
 
             gbuffer.Initialize();
-            
             {   
                 gbuffer.BindAndExecute(gbufferMaterial,
                 () =>
                 {
                     //
                     gbuffer.Clear(Color.AntiqueWhite);
-                    cameraTransform.Proj = freecam.Proj;
-                    cameraTransform.View = freecam.View;
-
+                    cameraTransform.Proj = orbitcam.Proj;
+                    cameraTransform.View = orbitcam.View;
                     
                     modelTransform.Model = Matrix4.CreateScale(1.0f);
                     
@@ -65,10 +64,10 @@ namespace SharpOpenGL
         }
 
         private MaterialBase gbufferMaterial = null;
-        private GBuffer gbuffer = new GBuffer(1024,768);
-        private FreeCamera freecam = null;
-        private int width = 1024;
-        private int height = 768;
+        private GBuffer gbuffer = new GBuffer(640,480);
+        private OrbitCamera orbitcam = null;
+        private int width = 640;
+        private int height = 480;
         private float AspectRatio => (float) width / height;
         private CameraTransform cameraTransform = new CameraTransform();
         private  ModelTransform modelTransform = new ModelTransform();
