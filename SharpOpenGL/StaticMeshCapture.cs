@@ -29,8 +29,9 @@ namespace SharpOpenGL
             // setup camera to capture static mesh
             freecam = new FreeCamera();
             freecam.LookAtLocation = staticMeshAsset.CenterVertex;
-            freecam.Destination = freecam.EyeLocation = staticMeshAsset.CenterVertex + new Vector3(-staticMeshAsset.XExtent * 2, 0, 0);
-            freecam.Yaw = 0;
+
+            freecam.Destination = freecam.EyeLocation = staticMeshAsset.CenterVertex;
+            freecam.Yaw = -0;
 
             freecam.UpdateViewMatrix();
             freecam.UpdateProjMatrix();
