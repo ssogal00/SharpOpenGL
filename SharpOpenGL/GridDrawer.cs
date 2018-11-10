@@ -34,10 +34,10 @@ namespace SharpOpenGL
             }
             
             // grid y
-            for (float yStart = -halfExtent; yStart <= halfExtent; yStart += gridSize)
+            for (float zStart = -halfExtent; zStart <= halfExtent; zStart += gridSize)
             {
-                var v1 = new Vector3(yStart, 0, halfExtent);
-                var v2 = new Vector3(yStart, 0, -halfExtent);
+                var v1 = new Vector3(halfExtent, 0, zStart);
+                var v2 = new Vector3(-halfExtent, 0, zStart);
 
                 vertexList.Add(new P_VertexAttribute(v1)); vertexList.Add(new P_VertexAttribute(v2));
             }
@@ -69,7 +69,7 @@ namespace SharpOpenGL
                 material.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelTransform);
                 material.SetUniformVarData("LineColor", Vector3.UnitX);
 
-                GL.DrawArrays(PrimitiveType.Lines, 0, vertexList.Count);
+                GL.DrawArrays(PrimitiveType.Lines, 0, vertexCount);
             });
         }
 
@@ -77,8 +77,8 @@ namespace SharpOpenGL
         protected bool bInitialized = false;
         protected DynamicVertexBuffer<P_VertexAttribute> vertexBuffer = null;
         protected List<P_VertexAttribute> vertexList = new List<P_VertexAttribute>();
-        protected float halfExtent = 1000;
-        protected float gridSize = 10;
+        protected float halfExtent = 10000;
+        protected float gridSize = 100;
         protected int vertexCount = 0;
 
         GridRenderMaterial.ModelTransform modelTransform = new ModelTransform();

@@ -32,6 +32,8 @@ namespace SharpOpenGL
         protected Core.MaterialBase.MaterialBase GBufferMaterial = null;
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
         protected Core.MaterialBase.MaterialBase GBufferPNCMaterial = null;
+        protected Core.MaterialBase.MaterialBase GridMaterial = null;
+
         protected PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
         protected PostProcess.DeferredLight LightPostProcess = new DeferredLight();
         protected DepthVisualize DepthVisualizePostProcess = new DepthVisualize();
@@ -112,6 +114,7 @@ namespace SharpOpenGL
             GBufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
             DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
             GBufferPNCMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferPNC");
+            GridMaterial = AssetManager.LoadAssetSync<MaterialBase>("GridRenderMaterial");
 
             FontManager.Get().Initialize();
         }
@@ -182,6 +185,8 @@ namespace SharpOpenGL
                 GBufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
                 GBufferMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref Transform);
                 Mesh.Draw(GBufferMaterial);
+
+                GridDrawer.Get().Draw(GridMaterial);
                 
                 if (ConsoleCommandManager.Get().IsActive)
                 {
