@@ -199,7 +199,7 @@ namespace SharpOpenGL
                         GBufferPNCMaterial.BindAndExecute
                         (() =>
                         {
-                            TestAxis.ParentMatrix = Matrix4.CreateTranslation(CurrentCam.LookAtLocation);
+                            TestAxis.ParentMatrix = Matrix4.CreateTranslation(CameraManager.Get().CurrentCamera.LookAtLocation);
                             TestAxis.Scale = 0.4f;
                             GBufferPNCMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
                             TestAxis.Draw(GBufferPNCMaterial);
