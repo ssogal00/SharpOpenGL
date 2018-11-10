@@ -26,8 +26,6 @@ namespace SharpOpenGL
 {
     public class MainWindow : GameWindow
     {
-        protected CameraBase CurrentCam = null;
-
         protected GBufferDraw.ModelTransform ModelMatrix = new GBufferDraw.ModelTransform();
         protected GBufferDraw.CameraTransform Transform = new GBufferDraw.CameraTransform();
         
@@ -69,8 +67,6 @@ namespace SharpOpenGL
         protected override void OnLoad(EventArgs e)
         {
             mainThreadId = Thread.CurrentThread.ManagedThreadId;
-
-            CurrentCam = CameraManager.Get().CurrentCamera;
 
             OpenGLContext.Get().SetGameWindow(this);
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
@@ -230,7 +226,7 @@ namespace SharpOpenGL
                 ConsoleCommandManager.Get().OnKeyDown(e);
                 if (ConsoleCommandManager.Get().IsActive == false)
                 {
-                    CurrentCam.ToggleLock();
+                    CameraManager.Get().CurrentCamera.ToggleLock();
                 }
                 return;
             }
@@ -241,11 +237,11 @@ namespace SharpOpenGL
             }
             else if(e.Key == Key.F2)
             {
-                CurrentCam.FOV += OpenTK.MathHelper.DegreesToRadians(1.0f);
+                CameraManager.Get().CurrentCamera.FOV += OpenTK.MathHelper.DegreesToRadians(1.0f);
             }
             else if(e.Key == Key.F3)
             {
-                CurrentCam.FOV -= OpenTK.MathHelper.DegreesToRadians(1.0f);
+                CameraManager.Get().CurrentCamera.FOV -= OpenTK.MathHelper.DegreesToRadians(1.0f);
             }
             else if(e.Key == Key.F5)
             {
@@ -254,11 +250,7 @@ namespace SharpOpenGL
             else if (e.Key == Key.Tilde)
             {
                 ConsoleCommandManager.Get().ToggleActive();
-
-                if (CurrentCam != null)
-                {
-                    CurrentCam.ToggleLock();
-                }
+                CameraManager.Get().CurrentCamera.ToggleLock();
             }
         }
 
