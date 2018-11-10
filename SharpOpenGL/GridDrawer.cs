@@ -18,10 +18,8 @@ namespace SharpOpenGL
     {
         public GridDrawer()
         {
-            Debug.Assert(OpenGLContext.Get().IsValid);
-            SetupVertexBuffer();
         }
-
+        
         protected void SetupVertexBuffer()
         {
             vertexBuffer = new DynamicVertexBuffer<P_VertexAttribute>();
@@ -50,7 +48,12 @@ namespace SharpOpenGL
 
         public void Draw(MaterialBase material)
         {
-            
+            if (bInitialized == false)
+            {
+                SetupVertexBuffer();
+                bInitialized = true;
+            }
+
             material.BindAndExecute(vertexBuffer,() =>
             {
                 vertexBuffer.BindVertexAttribute();
@@ -58,6 +61,8 @@ namespace SharpOpenGL
             });
         }
 
+
+        protected bool bInitialized = false;
         protected DynamicVertexBuffer<P_VertexAttribute> vertexBuffer = null;
         protected List<P_VertexAttribute> vertexList = new List<P_VertexAttribute>();
         protected float halfExtent = 1000;
