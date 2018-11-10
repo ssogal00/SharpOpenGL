@@ -205,5 +205,8 @@ public struct ModelTransform
 namespace GridRenderMaterial
 {
 }
+namespace ThreeDTextRenderMaterial
+{
+}
 
 }

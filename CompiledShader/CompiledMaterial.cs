@@ -1282,5 +1282,74 @@ void main()
 	}
 }
 }
+namespace ThreeDTextRenderMaterial
+{
+
+public class ThreeDTextRenderMaterial : MaterialBase
+{
+	public ThreeDTextRenderMaterial() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetFontTexture2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"FontTexture", TextureObject);
+	}
+
+	public void SetFontTexture2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"FontTexture", TextureObject);
+	}
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450 core
+
+uniform mat4x4 Model;
+uniform mat4x4 View;
+uniform mat4x4 Proj;
+
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec2 TexCoord;
+
+layout(location=0) out vec2 OutTexCoord;
+  
+void main()
+{	
+	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
+	OutTexCoord = TexCoord;	
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"#version 450 core
+
+layout(location=0) in vec2 TexCoord;
+
+uniform vec3 TextColor;
+uniform sampler2D FontTexture;
+
+out vec4 FragColor;
+
+void main()
+{   
+	vec4 TexCol = texture(FontTexture, TexCoord);
+    FragColor =vec4(TextColor,TexCol.a);
+}";
+	}
+}
+}
 
 }

@@ -117,11 +117,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="3DText.cs" />
     <Compile Include="Asset\AssetInfo.cs" />
     <Compile Include="Asset\AssetManager.cs" />
     <Compile Include="Asset\CubeMapTextureAsset.cs" />
     <Compile Include="Asset\ShaderAsset.cs" />
     <Compile Include="Asset\Texture2DAsset.cs" />
+    <Compile Include="BillBoard.cs" />
     <Compile Include="BlitToScreen.cs" />
     <Compile Include="CameraManager.cs" />
     <Compile Include="ConsoleCommandManager.cs" />

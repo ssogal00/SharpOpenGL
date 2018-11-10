@@ -14,4 +14,5 @@
 	<Material name="FontRenderMaterial" vertexShader="FontRender.vs" fragmentShader="FontRender.fs"/>
 	<Material name="FontBoxRenderMaterial" vertexShader="FontBoxRender.vs" fragmentShader="FontBoxRender.fs"/>
 	<Material name="GridRenderMaterial" vertexShader="GridRender.vs" fragmentShader="GridRender.fs"/>
+	<Material name="ThreeDTextRenderMaterial" vertexShader="ThreeDTextRender.vs" fragmentShader="ThreeDTextRender.fs"/>
 </MaterialList>
