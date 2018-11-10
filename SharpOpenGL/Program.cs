@@ -33,6 +33,8 @@ namespace SharpOpenGL
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;
         protected Core.MaterialBase.MaterialBase GBufferPNCMaterial = null;
         protected Core.MaterialBase.MaterialBase GridMaterial = null;
+        protected Core.MaterialBase.MaterialBase ThreeDTextMaterial = null;
+        
 
         protected PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
         protected PostProcess.DeferredLight LightPostProcess = new DeferredLight();
@@ -45,6 +47,7 @@ namespace SharpOpenGL
         protected Torus TestTorus = new Core.Primitive.Torus(10, 2, 15);
         protected Arrow TestArrow = new Arrow(10);
         protected ThreeAxis TestAxis = new ThreeAxis();
+        protected ThreeDText TestText = null;
         
         protected StaticMeshAsset Mesh = null;
         protected StaticMeshAsset Sphere = null;
@@ -115,8 +118,11 @@ namespace SharpOpenGL
             DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
             GBufferPNCMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferPNC");
             GridMaterial = AssetManager.LoadAssetSync<MaterialBase>("GridRenderMaterial");
+            ThreeDTextMaterial = AssetManager.LoadAssetSync<MaterialBase>("ThreeDTextRenderMaterial");
 
             FontManager.Get().Initialize();
+
+            TestText = new ThreeDText("Hello World");
         }
 
         protected void ResourceCreate(object sender, EventArgs e)
@@ -187,6 +193,8 @@ namespace SharpOpenGL
                 Mesh.Draw(GBufferMaterial);
 
                 GridDrawer.Get().Draw(GridMaterial);
+
+                TestText.Draw(ThreeDTextMaterial);
                 
                 if (ConsoleCommandManager.Get().IsActive)
                 {

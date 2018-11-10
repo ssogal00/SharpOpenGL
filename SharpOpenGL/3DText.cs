@@ -11,7 +11,7 @@ using SharpOpenGL.Font;
 
 namespace SharpOpenGL
 {
-    class ThreeDText : ISceneObject
+    public class ThreeDText : RenderResource, ISceneObject
     {
         public string TextContent = "";
 
@@ -50,7 +50,11 @@ namespace SharpOpenGL
                        Matrix4.CreateTranslation(Translation);
             }
         }
-    
+
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
 
         public void Draw(MaterialBase material)
         {
@@ -63,6 +67,8 @@ namespace SharpOpenGL
                     material.SetUniformVarData("Model", LocalMatrix);
                     material.SetUniformVarData("View", CameraManager.Get().CurrentCameraView);
                     material.SetUniformVarData("Proj", CameraManager.Get().CurrentCameraProj);
+                    material.SetTexture("FontTexture", FontManager.Get().FontAtlas);
+                    GL.DrawArrays(PrimitiveType.Quads, 0 , vertexCount);
                 });
             }
         }
@@ -126,9 +132,16 @@ namespace SharpOpenGL
                 index++;
                 previous = ch;
             }
+
+            var vertexArray = vertexList.ToArray();
+            vertexBuffer.BufferData<PT_VertexAttribute>(ref vertexArray);
+            vertexCount = vertexArray.Length;
+            vertexList.Clear();
+            
         }
 
         protected DynamicVertexBuffer<PT_VertexAttribute> vertexBuffer = null;
         protected List<PT_VertexAttribute> vertexList = new List<PT_VertexAttribute>();
+        private int vertexCount = 0;
     }
 }
