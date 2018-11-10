@@ -27,8 +27,6 @@ namespace SharpOpenGL
     public class MainWindow : GameWindow
     {
         protected CameraBase CurrentCam = null;
-        protected FreeCamera  FreeCam = new FreeCamera();
-        protected OrbitCamera OrbitCam = new OrbitCamera();
 
         protected GBufferDraw.ModelTransform ModelMatrix = new GBufferDraw.ModelTransform();
         protected GBufferDraw.CameraTransform Transform = new GBufferDraw.CameraTransform();
@@ -72,7 +70,7 @@ namespace SharpOpenGL
         {
             mainThreadId = Thread.CurrentThread.ManagedThreadId;
 
-            CurrentCam = FreeCam;
+            CurrentCam = CameraManager.Get().CurrentCamera;
 
             OpenGLContext.Get().SetGameWindow(this);
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
@@ -96,7 +94,7 @@ namespace SharpOpenGL
             OnResourceCreate += Sampler.OnResourceCreate;
 
             // resigter window resize event handler
-            OnWindowResize += FreeCam.OnWindowResized;
+            OnWindowResize += CameraManager.Get().OnWindowResized;
 
             OnResourceCreate += RenderResource.OnOpenGLContextCreated;
             OnWindowResize += ResizableManager.Get().ResizeEventHandler;
@@ -108,10 +106,10 @@ namespace SharpOpenGL
 
             ScreenBlit.SetGridSize(2, 2);
 
-            OnKeyDownEvent += FreeCam.OnKeyDown;
+            OnKeyDownEvent += CameraManager.Get().OnKeyDown;
+            OnKeyUpEvent += CameraManager.Get().OnKeyUp;
+
             OnKeyDownEvent += this.HandleKeyDownEvent;
-            
-            OnKeyUpEvent += FreeCam.OnKeyUp;
 
             Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
             Sphere = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
@@ -145,25 +143,7 @@ namespace SharpOpenGL
         protected void SwitchCameraMode()
         {
             // 
-            if(CurrentCam == FreeCam)
-            {
-                OrbitCam.DestLocation = OrbitCam.EyeLocation = FreeCam.EyeLocation;
-                OrbitCam.LookAtLocation = FreeCam.EyeLocation + FreeCam.GetLookAtDir() * 50.0f;
-                OrbitCam.SetDistanceToLookAt(50.0f);
-                OrbitCam.AspectRatio = FreeCam.AspectRatio;
-                OrbitCam.FOV = FreeCam.FOV;
-                CurrentCam = OrbitCam;
-
-                OnKeyDownEvent -= FreeCam.OnKeyDown;
-                OnKeyDownEvent += OrbitCam.OnKeyDown;
-            }
-            else
-            {
-                CurrentCam = FreeCam;
-
-                OnKeyDownEvent -= OrbitCam.OnKeyDown;
-                OnKeyDownEvent += FreeCam.OnKeyDown;
-            }
+            CameraManager.Get().SwitchCamera();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -212,7 +192,7 @@ namespace SharpOpenGL
                     FontManager.Get().RenderText(10, 100, ConsoleCommandManager.Get().ConsoleCommandString);
                 }
 
-                if (CurrentCam == OrbitCam)
+                if (CameraManager.Get().IsOrbitCameraMode())
                 {
                     using (var dummy = new WireFrameMode())
                     {
@@ -315,11 +295,10 @@ namespace SharpOpenGL
 
             OnWindowResize(this, eventArgs);
 
-            Transform.Proj = Matrix4.CreatePerspectiveFieldOfView(FreeCam.FOV, fAspectRatio, FreeCam.Near, FreeCam.Far);
-            Transform.View = Matrix4.LookAt(Mesh.MaxVertex, Mesh.CenterVertex, Vector3.UnitY);
+            Transform.Proj = CameraManager.Get().CurrentCamera.Proj;
+            Transform.View = CameraManager.Get().CurrentCamera.View;
 
             ModelMatrix.Model = Matrix4.CreateScale(1.500f);
-            FreeCam.Destination = FreeCam.EyeLocation = Mesh.CenterVertex + new Vector3(Mesh.XExtent, 0, 0);
         }
     }
 

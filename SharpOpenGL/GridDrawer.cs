@@ -11,6 +11,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using SharpOpenGL.Asset;
+using SharpOpenGL.GridRenderMaterial;
 
 namespace SharpOpenGL
 {
@@ -43,11 +44,13 @@ namespace SharpOpenGL
 
             vertexBuffer.Bind();
             var vertexArray = vertexList.ToArray();
+            vertexCount = vertexArray.Length;
             vertexBuffer.BufferData<P_VertexAttribute>(ref vertexArray);
+            vertexList.Clear();
         }
 
         public void Draw(MaterialBase material)
-        {
+        {   
             if (bInitialized == false)
             {
                 SetupVertexBuffer();
@@ -57,6 +60,15 @@ namespace SharpOpenGL
             material.BindAndExecute(vertexBuffer,() =>
             {
                 vertexBuffer.BindVertexAttribute();
+
+                cameraTransform.Proj = CameraManager.Get().CurrentCamera.Proj;
+                cameraTransform.View = CameraManager.Get().CurrentCamera.View;
+                modelTransform.Model = Matrix4.Identity;
+
+                material.SetUniformBufferValue<CameraTransform>("CameraTransform", ref cameraTransform);
+                material.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelTransform);
+                material.SetUniformVarData("LineColor", Vector3.UnitX);
+
                 GL.DrawArrays(PrimitiveType.Lines, 0, vertexList.Count);
             });
         }
@@ -67,5 +79,10 @@ namespace SharpOpenGL
         protected List<P_VertexAttribute> vertexList = new List<P_VertexAttribute>();
         protected float halfExtent = 1000;
         protected float gridSize = 10;
+        protected int vertexCount = 0;
+
+        GridRenderMaterial.ModelTransform modelTransform = new ModelTransform();
+        GridRenderMaterial.CameraTransform cameraTransform = new CameraTransform();
+
     }
 }

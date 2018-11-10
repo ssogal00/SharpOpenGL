@@ -18,6 +18,8 @@ namespace Core
 
         public bool IsValid { get { return this.window != null; } }
 
+        public OpenTK.GameWindow GameWindow => window;
+
         public int WindowWidth => window.Width;
         public int WindowHeight => window.Height;
 
@@ -78,7 +80,5 @@ namespace Core
         {            
             return GL.GetInteger(GetPName.MaxTextureUnits);
         }
-
-        
     }
 }
