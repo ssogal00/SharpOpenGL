@@ -163,13 +163,13 @@ namespace SharpOpenGL
             GL.ClearColor (Color.White);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             
-            Transform.View = CurrentCam.View;
-            Transform.Proj = CurrentCam.Proj;
+            Transform.View = CameraManager.Get().CurrentCameraView;
+            Transform.Proj = CameraManager.Get().CurrentCameraProj;
 
             // draw cubemap first
-            SkyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CurrentCam.EyeLocation);
-            SkyboxPostProcess.ViewMatrix = CurrentCam.View;
-            SkyboxPostProcess.ProjMatrix = CurrentCam.Proj;
+            SkyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
+            SkyboxPostProcess.ViewMatrix = CameraManager.Get().CurrentCameraView;
+            SkyboxPostProcess.ProjMatrix = CameraManager.Get().CurrentCameraProj;
             SkyboxPostProcess.Render();
 
             // 

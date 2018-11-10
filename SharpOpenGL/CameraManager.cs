@@ -72,6 +72,12 @@ namespace SharpOpenGL
             }
         }
 
+        public Matrix4 CurrentCameraView => currentCamera.View;
+
+        public Matrix4 CurrentCameraProj => currentCamera.Proj;
+
+        public Vector3 CurrentCameraEye => currentCamera.EyeLocation;
+
         public CameraBase CurrentCamera => currentCamera;
 
         protected CameraBase currentCamera = null;
