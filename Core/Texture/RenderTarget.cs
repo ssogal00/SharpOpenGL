@@ -95,7 +95,7 @@ namespace Core.Texture
             FrameBufferObject.Unbind();
         }
 
-        protected virtual void Resize(int newWidth, int newHeight)
+        public virtual void Resize(int newWidth, int newHeight)
         {
             Debug.Assert(newWidth > 0 && newHeight > 0);
 

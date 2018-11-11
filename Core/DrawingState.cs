@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using GetIndexedPName = OpenTK.Graphics.ES30.GetIndexedPName;
 using Core.Buffer;
+using Core.Texture;
 
 namespace Core
 {
@@ -60,6 +61,26 @@ namespace Core
 
         private int prevSrcAlpha;
         private int prevDstAlpha;
+    }
+
+    public class ScopedRenderTargetBound : IDisposable
+    {
+        public ScopedRenderTargetBound(RenderTarget target)
+        {
+            // get original
+            GL.GetInteger(GetPName.DrawFramebufferBinding, out originalBounding);
+
+            // bind new buffer
+            target.Bind();
+        }
+
+        public void Dispose()
+        {
+            // restore original
+            GL.BindFramebuffer(FramebufferTarget.Framebuffer, originalBounding);
+        }
+        
+        protected int originalBounding = 0;
     }
 
     public class ScopedFrameBufferBound : IDisposable

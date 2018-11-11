@@ -119,31 +119,30 @@ namespace Core.Buffer
         {
             NormalAttachment.SaveAsBmp(filename);
         }
-        
+
         protected virtual void Resize(int newWidth, int newHeight)
         {
             Debug.Assert(newWidth > 0 && newHeight > 0);
 
-            FrameBufferObject.Bind();
+            using (var dummy = new ScopedFrameBufferBound(FrameBufferObject))
+            {
+                BufferWidth = newWidth;
+                BufferHeight = newHeight;
 
-            BufferWidth = newWidth;
-            BufferHeight = newHeight;
+                PositionAttachment.Resize(BufferWidth, BufferHeight);
+                ColorAttachment.Resize(BufferWidth, BufferHeight);
+                NormalAttachment.Resize(BufferWidth, BufferHeight);
+                DepthAttachment.Resize(BufferWidth, BufferHeight);
 
-            PositionAttachment.Resize(BufferWidth, BufferHeight);
-            ColorAttachment.Resize(BufferWidth, BufferHeight);
-            NormalAttachment.Resize(BufferWidth, BufferHeight);
-            DepthAttachment.Resize(BufferWidth, BufferHeight);
+                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, PositionAttachment.GetTextureObject, 0);
+                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, ColorAttachment.GetTextureObject, 0);
+                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment2, TextureTarget.Texture2D, NormalAttachment.GetTextureObject, 0);
+                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
 
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, PositionAttachment.GetTextureObject, 0);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, ColorAttachment.GetTextureObject, 0);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment2, TextureTarget.Texture2D, NormalAttachment.GetTextureObject, 0);
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
+                var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
 
-            var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
-
-            Debug.Assert(status == FramebufferErrorCode.FramebufferComplete);
-
-            FrameBufferObject.Unbind();
+                Debug.Assert(status == FramebufferErrorCode.FramebufferComplete);
+            }
         }
 
         public ColorAttachmentTexture GetColorAttachement

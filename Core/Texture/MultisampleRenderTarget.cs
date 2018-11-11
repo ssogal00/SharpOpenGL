@@ -16,7 +16,7 @@ namespace Core.Texture
         {
         }
 
-        protected override void Resize(int newWidth, int newHeight)
+        public override void Resize(int newWidth, int newHeight)
         {
             Debug.Assert(newWidth > 0 && newHeight > 0);
 
