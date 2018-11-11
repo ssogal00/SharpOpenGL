@@ -19,10 +19,11 @@ namespace Core.Texture
             AttachmentCount = attachmentCount;
         }
 
-        public RenderTarget(int width, int height, int attachmentCount, PixelInternalFormat internalFormat)
+        public RenderTarget(int width, int height, int attachmentCount, PixelInternalFormat internalFormat, bool includeDepthAttachment )
         : this(width, height, attachmentCount)
         {
             PixelFormat = internalFormat;
+            bIncludeDepthAttachment = includeDepthAttachment;
         }
 
         public void Bind()
@@ -104,10 +105,18 @@ namespace Core.Texture
             BufferHeight = newHeight;
 
             ColorAttachment0.Resize(BufferWidth, BufferHeight);
-            DepthAttachment.Resize(BufferWidth, BufferHeight);
+
+            if (bIncludeDepthAttachment)
+            {
+                DepthAttachment.Resize(BufferWidth, BufferHeight);
+            }
 
             GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorAttachment0.GetTextureObject, 0);
-            GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
+
+            if (bIncludeDepthAttachment)
+            {
+                GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
+            }
 
             //
             if (AttachmentCount > 1)
@@ -133,8 +142,13 @@ namespace Core.Texture
         public override void Initialize()
         {
             FrameBufferObject = new FrameBuffer();
+
             ColorAttachment0 = new ColorAttachmentTexture(BufferWidth, BufferHeight, PixelFormat);
-            DepthAttachment = new DepthTargetTexture(BufferWidth, BufferHeight);
+
+            if (bIncludeDepthAttachment)
+            {
+                DepthAttachment = new DepthTargetTexture(BufferWidth, BufferHeight);
+            }
 
             if(AttachmentCount > 1)
             {
@@ -227,7 +241,7 @@ namespace Core.Texture
         public int RenderTargetWidth => BufferWidth;
         public int RenderTargetHeight => BufferHeight;
 
-        
+        private bool bIncludeDepthAttachment = true;
 
         protected int BufferWidth = 640;
         protected int BufferHeight = 480;
