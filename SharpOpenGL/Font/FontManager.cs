@@ -96,7 +96,6 @@ namespace SharpOpenGL.Font
 
             renderTextDicationary[text].RenderWithBox(FontRenderMaterial, FontBoxRenderMaterial);
         }
-
         
         // 
         private Texture2D fontAtlas = null;

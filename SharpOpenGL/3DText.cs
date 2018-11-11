@@ -68,7 +68,7 @@ namespace SharpOpenGL
                     material.SetUniformVarData("View", CameraManager.Get().CurrentCameraView);
                     material.SetUniformVarData("Proj", CameraManager.Get().CurrentCameraProj);
                     material.SetTexture("FontTexture", FontManager.Get().FontAtlas);
-                    GL.DrawArrays(PrimitiveType.Quads, 0 , vertexCount);
+                    GL.DrawArrays(PrimitiveType.Quads, 0, vertexCount);
                 });
             }
         }
@@ -86,6 +86,7 @@ namespace SharpOpenGL
 
             float fXBasePosition = 0;
             float posY = 0;
+            float fakeDepth = 0;
 
             foreach (var ch in TextContent)
             {
@@ -114,10 +115,12 @@ namespace SharpOpenGL
                 var topY = 0.5f * halfSquare + Y;
                 var bottomY = -0.5f * halfSquare + Y;
 
-                var charvertex1 = new OpenTK.Vector3(leftX, topY, 0);
-                var charvertex2 = new OpenTK.Vector3(rightX, topY, 0);
-                var charvertex3 = new OpenTK.Vector3(rightX, bottomY, 0);
-                var charvertex4 = new OpenTK.Vector3(leftX, bottomY, 0);
+                var charvertex1 = new OpenTK.Vector3(leftX, topY, fakeDepth);
+                var charvertex2 = new OpenTK.Vector3(rightX, topY, fakeDepth);
+                var charvertex3 = new OpenTK.Vector3(rightX, bottomY, fakeDepth);
+                var charvertex4 = new OpenTK.Vector3(leftX, bottomY, fakeDepth);
+
+                fakeDepth -= 1.0f;
 
                 var texcoord1 = new OpenTK.Vector2(glyph.AtlasX, glyph.AtlasY);
                 var texcoord2 = new OpenTK.Vector2(glyph.AtlasX + textureDimension, glyph.AtlasY);
@@ -137,7 +140,6 @@ namespace SharpOpenGL
             vertexBuffer.BufferData<PT_VertexAttribute>(ref vertexArray);
             vertexCount = vertexArray.Length;
             vertexList.Clear();
-            
         }
 
         protected DynamicVertexBuffer<PT_VertexAttribute> vertexBuffer = null;

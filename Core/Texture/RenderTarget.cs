@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Configuration;
 using System.Runtime.Remoting;
+using System.Windows.Forms;
 
 namespace Core.Texture
 {
@@ -16,6 +17,12 @@ namespace Core.Texture
             BufferWidth = width;
             BufferHeight = height;
             AttachmentCount = attachmentCount;
+        }
+
+        public RenderTarget(int width, int height, int attachmentCount, PixelInternalFormat internalFormat)
+        : this(width, height, attachmentCount)
+        {
+            PixelFormat = internalFormat;
         }
 
         public void Bind()
@@ -126,7 +133,7 @@ namespace Core.Texture
         public override void Initialize()
         {
             FrameBufferObject = new FrameBuffer();
-            ColorAttachment0 = new ColorAttachmentTexture(BufferWidth, BufferHeight);
+            ColorAttachment0 = new ColorAttachmentTexture(BufferWidth, BufferHeight, PixelFormat);
             DepthAttachment = new DepthTargetTexture(BufferWidth, BufferHeight);
 
             if(AttachmentCount > 1)
@@ -211,12 +218,16 @@ namespace Core.Texture
         // and 1 depth attachment
         protected DepthTargetTexture DepthAttachment = null;
 
+        private PixelInternalFormat PixelFormat = PixelInternalFormat.Rgba16f;
+
         protected Core.Buffer.FrameBuffer FrameBufferObject = null;
 
         protected DrawBuffersEnum[] AttchmentsEnums = null;
 
         public int RenderTargetWidth => BufferWidth;
         public int RenderTargetHeight => BufferHeight;
+
+        
 
         protected int BufferWidth = 640;
         protected int BufferHeight = 480;

@@ -34,7 +34,8 @@ namespace SharpOpenGL
         protected Core.MaterialBase.MaterialBase GBufferPNCMaterial = null;
         protected Core.MaterialBase.MaterialBase GridMaterial = null;
         protected Core.MaterialBase.MaterialBase ThreeDTextMaterial = null;
-        
+
+        protected RenderTarget TestRenderTarget= new RenderTarget(1024, 768, 1,PixelInternalFormat.LuminanceAlpha);
 
         protected PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
         protected PostProcess.DeferredLight LightPostProcess = new DeferredLight();
