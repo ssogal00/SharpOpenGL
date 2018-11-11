@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Buffer;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 

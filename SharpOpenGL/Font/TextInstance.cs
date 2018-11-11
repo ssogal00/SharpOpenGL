@@ -196,6 +196,11 @@ namespace SharpOpenGL.Font
         private List<PT_VertexAttribute> vertexList = new List<PT_VertexAttribute>();
         private List<PT_VertexAttribute> boxVertexList = new List<PT_VertexAttribute>();
 
+        public float Left => left;
+        public float Right => right;
+        public float Top => top;
+        public float Bottom => bottom;
+
         private float left = float.MaxValue;
         private float right = float.MinValue;
         private float top = float.MinValue;

@@ -109,8 +109,17 @@ namespace Core.Buffer
             
             GL.DrawBuffers(3, attachments);
         }
-        
 
+        public void SaveColorAttachmentAsBmp(string filename)
+        {
+            ColorAttachment.SaveAsBmp(filename);
+        }
+
+        public void SaveNormalAttachmentAsBmp(string filename)
+        {
+            NormalAttachment.SaveAsBmp(filename);
+        }
+        
         protected virtual void Resize(int newWidth, int newHeight)
         {
             Debug.Assert(newWidth > 0 && newHeight > 0);

@@ -22,6 +22,12 @@ namespace Core.Texture
             }
         }
 
+        public void SaveAsBmp(string filename)
+        {
+            var colorData = GetTexImage();
+            FreeImageHelper.SaveAsBmp(ref colorData, this.Width, this.Height, filename);
+        }
+
         public override void Bind()
         {
             GL.BindTexture(TextureTarget.Texture2D, textureObject);            
