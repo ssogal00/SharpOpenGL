@@ -78,65 +78,65 @@ namespace Core.Texture
 
         public virtual void Copy(ColorAttachmentTexture target)
         {
-            FrameBufferObject.Bind();
+            using (var dummy = new ScopedFrameBufferBound(FrameBufferObject))
+            {
+                // 
+                GL.FramebufferTexture2D(FramebufferTarget.ReadFramebuffer, FramebufferAttachment.ColorAttachment0,
+                    TextureTarget.Texture2D, ColorAttachment0.GetTextureObject, 0);
+                GL.ReadBuffer(ReadBufferMode.ColorAttachment0);
 
-            // 
-            GL.FramebufferTexture2D(FramebufferTarget.ReadFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorAttachment0.GetTextureObject, 0);
-            GL.ReadBuffer(ReadBufferMode.ColorAttachment0);
+                //
+                GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment1,
+                    TextureTarget.Texture2D, target.TextureObject, 0);
+                GL.DrawBuffer(DrawBufferMode.ColorAttachment1);
 
-            //
-            GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, target.TextureObject, 0);
-            GL.DrawBuffer(DrawBufferMode.ColorAttachment1);
-
-            GL.BlitFramebuffer(0, 0, this.BufferWidth, this.BufferHeight,
-                               0, 0, target.Width, target.Height,
-                               ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
-
-            FrameBufferObject.Unbind();
+                GL.BlitFramebuffer(0, 0, this.BufferWidth, this.BufferHeight,
+                    0, 0, target.Width, target.Height,
+                    ClearBufferMask.ColorBufferBit, BlitFramebufferFilter.Linear);
+            }
         }
 
         public virtual void Resize(int newWidth, int newHeight)
         {
             Debug.Assert(newWidth > 0 && newHeight > 0);
 
-            FrameBufferObject.Bind();
-
-            BufferWidth = newWidth;
-            BufferHeight = newHeight;
-
-            ColorAttachment0.Resize(BufferWidth, BufferHeight);
-
-            if (bIncludeDepthAttachment)
+            using (var dummy = new ScopedFrameBufferBound(FrameBufferObject))
             {
-                DepthAttachment.Resize(BufferWidth, BufferHeight);
+                BufferWidth = newWidth;
+                BufferHeight = newHeight;
+
+                ColorAttachment0.Resize(BufferWidth, BufferHeight);
+
+                if (bIncludeDepthAttachment)
+                {
+                    DepthAttachment.Resize(BufferWidth, BufferHeight);
+                }
+
+                GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorAttachment0.GetTextureObject, 0);
+
+                if (bIncludeDepthAttachment)
+                {
+                    GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
+                }
+
+                //
+                if (AttachmentCount > 1)
+                {
+                    ColorAttachment1.Resize(BufferWidth, BufferHeight);
+                    GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, ColorAttachment1.GetTextureObject, 0);
+                }
+
+                //
+                if (AttachmentCount > 2)
+                {
+                    ColorAttachment2.Resize(BufferWidth, BufferHeight);
+                    GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment2, TextureTarget.Texture2D, ColorAttachment2.GetTextureObject, 0);
+                }
+
+                var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+
+                Debug.Assert(status == FramebufferErrorCode.FramebufferComplete);
             }
-
-            GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorAttachment0.GetTextureObject, 0);
-
-            if (bIncludeDepthAttachment)
-            {
-                GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
-            }
-
-            //
-            if (AttachmentCount > 1)
-            {
-                ColorAttachment1.Resize(BufferWidth, BufferHeight);
-                GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, ColorAttachment1.GetTextureObject, 0);
-            }
-
-            //
-            if(AttachmentCount > 2)
-            {
-                ColorAttachment2.Resize(BufferWidth, BufferHeight);
-                GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment2, TextureTarget.Texture2D, ColorAttachment2.GetTextureObject, 0);
-            }
-
-            var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
-
-            Debug.Assert(status == FramebufferErrorCode.FramebufferComplete);
-
-            FrameBufferObject.Unbind();
         }
 
         public override void Initialize()
