@@ -49,16 +49,27 @@ namespace SharpOpenGL.Scene
             });
 
             // draw to gbuffer
-            using (var scoped = new ScopedBind(gbuffer))
+            gbuffer.BindAndExecute(gbufferDrawMaterial, () =>
             {
-                gbufferDrawMaterial.Setup();
                 gbufferDrawMaterial.SetUniformBufferValue<CameraTransform>("Transform", ref tranform);
-                sponzaMesh.Draw(gbufferDrawMaterial);
-                lightPostProcess.Render(gbuffer.GetPositionAttachment, gbuffer.GetColorAttachement, gbuffer.GetNormalAttachment);
-            }
+            });
+
+            lightPostProcess.Render(gbuffer.GetPositionAttachment, gbuffer.GetColorAttachement, gbuffer.GetNormalAttachment);
 
             //
             blitToScreen.Blit(gbuffer.GetColorAttachement, 0, 0, 3, 3);
+        }
+
+        public void DrawSceneObjects()
+        {
+            foreach (var sceneObject in SceneObjects)
+            {
+                MaterialBase material = sceneObject.Key;
+                material.BindAndExecute(() =>
+                {
+                    
+                });
+            }
         }
     }
 }
