@@ -18,8 +18,10 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using System.IO;
 using Core;
+using Core.CustomSerialize;
 using MaterialEditor.Utils;
 using SharpOpenGL.Asset;
+using ZeroFormatter.Formatters;
 using MathHelper = OpenTK.MathHelper;
 
 namespace MaterialEditor
@@ -92,6 +94,10 @@ namespace MaterialEditor
         private void GLControlLoad(object sender, EventArgs e)
         {
             GL.ClearColor(System.Drawing.Color.LightGray);
+
+            Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
+            Formatter<DefaultResolver, OpenTK.Vector2>.Register(new Vector2Formatter<DefaultResolver>());
+            Formatter<DefaultResolver, OpenTK.Vector4>.Register(new Vector4Formatter<DefaultResolver>());
 
             AssetManager.Get().DiscoverStaticMesh();
             AssetManager.Get().DiscoverShader();

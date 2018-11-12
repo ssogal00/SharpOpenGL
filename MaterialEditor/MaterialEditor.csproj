@@ -62,6 +62,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="ZeroFormatter, Version=1.6.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ZeroFormatter.1.6.4\lib\net45\ZeroFormatter.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -216,10 +220,12 @@
 if not exist $(TargetDir)\Resources\SponzaTexture mkdir $(TargetDir)\Resources\SponzaTexture
 if not exist $(TargetDir)\Resources\ObjMesh mkdir $(TargetDir)\Resources\ObjMesh
 if not exist $(TargetDir)\Resources\Shader mkdir $(TargetDir)\Resources\Shader
+if not exist $(TargetDir)\Resources\Texture mkdir $(TargetDir)\Resources\Texture
 xcopy /D /Y /S $(SolutionDir)\SharpOpenGL\Resources\SponzaTexture $(TargetDir)\Resources\SponzaTexture
+xcopy /D /Y /S $(SolutionDir)\SharpOpenGL\Resources\Texture $(TargetDir)\Resources\Texture
 xcopy /D /Y /S $(SolutionDir)\SharpOpenGL\Resources\ObjMesh $(TargetDir)\Resources\ObjMesh
 xcopy /F /Y /S $(SolutionDir)\SharpOpenGL\lib\FreeImage.dll $(TargetDir)
-xcopy /F /Y /S $(SolutionDir)\MaterialEditor\Shader $(TargetDir)\Resources\Shader
+xcopy /F /Y /S $(SolutionDir)\SharpOpenGL\Shader $(TargetDir)\Resources\Shader
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
