@@ -18,25 +18,26 @@ namespace SharpOpenGL.Scene
         
         public virtual void Draw()
         {
-            foreach(var obj in SceneObjectList)
-            {
-                
-                
-            }
+            
         }
 
         public virtual void Draw(MaterialBase material)
         {
-            foreach(var obj in SceneObjectList)
+            
+        }
+
+        public void AddSceneObject(ISceneObject newSceneObject, MaterialBase material)
+        {
+            if (SceneObjects.ContainsKey(material))
             {
-                obj.Draw(material);
+                SceneObjects[material].Add(newSceneObject);
+            }
+            else
+            {
+                SceneObjects[material] = new List<ISceneObject> {newSceneObject};
             }
         }
 
-        public void AddSceneObject(ISceneObject newSceneObject)
-        {
-            SceneObjectList.Add(newSceneObject);
-        }
 
         public virtual void CreateSceneResources()
         { }
@@ -48,10 +49,11 @@ namespace SharpOpenGL.Scene
         public virtual void OnResize(int width, int height) { }
         
         protected CameraBase camera = null;
-        protected GBuffer gbuffer = null;
+        protected GBuffer gbuffer = new GBuffer(1024, 768);
         protected int width = 1024;
         protected int height = 768;
 
-        protected List<ISceneObject> SceneObjectList = new List<ISceneObject>();
+        protected Dictionary<MaterialBase, List<ISceneObject>> SceneObjects = new Dictionary<MaterialBase, List<ISceneObject>>();
+
     }
 }

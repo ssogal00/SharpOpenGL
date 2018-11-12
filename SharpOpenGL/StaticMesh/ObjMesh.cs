@@ -20,6 +20,7 @@ namespace SharpOpenGL.StaticMesh
 
         // 
         protected bool bHasNormal = false;
+
         protected bool bHasTexCoordinate = false;
 
         [IgnoreFormat]

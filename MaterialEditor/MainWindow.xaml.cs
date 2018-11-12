@@ -17,7 +17,10 @@ using Core.Texture;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.IO;
+using Core;
 using MaterialEditor.Utils;
+using SharpOpenGL.Asset;
+using MathHelper = OpenTK.MathHelper;
 
 namespace MaterialEditor
 {
@@ -43,7 +46,7 @@ namespace MaterialEditor
         {
             fAngle += 1.0f;
 
-            this.Transform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(fAngle)) * Matrix4.CreateScale(0.1f);
+            modelTransform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(fAngle)) * Matrix4.CreateScale(0.1f);
 
             mGlControl.Invalidate();
         }
@@ -58,12 +61,12 @@ namespace MaterialEditor
         }
 
         protected ShaderProgram ProgramObject;
-
-        protected OrbitCamera Camera = new OrbitCamera();
+        
         protected DynamicUniformBuffer TransformBuffer = null;
         protected DynamicUniformBuffer ColorBuffer = null;
-        
-        protected SharpOpenGL.GBufferDraw.Transform Transform = new SharpOpenGL.GBufferDraw.Transform();
+
+        protected SharpOpenGL.GBufferDraw.CameraTransform cameraTransform = new CameraTransform();
+        protected ModelTransform modelTransform = new ModelTransform();
 
         protected SharpOpenGL.PostProcess.DeferredLight LightPostProcess = null;
 
@@ -80,7 +83,7 @@ namespace MaterialEditor
         protected DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer(DispatcherPriority.Normal);
         protected LiveMaterial liveMaterial = null;
 
-        protected ObjMesh Mesh = null;
+        protected StaticMeshAsset mesh = null;
 
         protected float fAngle = 0.0f;
 
@@ -90,27 +93,13 @@ namespace MaterialEditor
         {
             GL.ClearColor(System.Drawing.Color.LightGray);
 
-            DeferredMaterial = new SharpOpenGL.GBufferDraw.GBufferDraw();
+            AssetManager.Get().DiscoverStaticMesh();
+            AssetManager.Get().DiscoverShader();
+
+            DeferredMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
             LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
-
-            WindowCreateEvent += MyGbuffer.OnResourceCreate;
-            WindowCreateEvent += Sampler.OnResourceCreate;
-            WindowCreateEvent += LightPostProcess.OnResourceCreate;
-
-            WindowResizeEvent += LightPostProcess.OnWindowResized;
-            WindowResizeEvent += MyGbuffer.OnWindowResized;
-
-            ScreenBlit.OnResourceCreate(sender, e);
-            ScreenBlit.SetGridSize(1, 1);
-
-            WindowCreateEvent(this, e);
-
-            test = new Texture2D();
-            test.Load("./Resources/SponzaTexture/Sponza_Bricks_a_Albedo.tga");
-
-            //Mesh.Load("./Resources/ObjMesh/myteapot.obj", "./Resources/ObjMesh/myteapot.mtl");
-            Mesh.PrepareToDraw();
-            Mesh.LoadTextures();
+            
+           
 
             liveMaterial = new LiveMaterial();
         }
@@ -130,25 +119,27 @@ namespace MaterialEditor
             if(liveMaterial != null && liveMaterial.IsValid())
             {
                 liveMaterial.Setup();
-                liveMaterial.SetUniformBufferValue<Transform>("Transform", ref Transform);
+                liveMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelTransform);
+                liveMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref cameraTransform);
 
                 var elapsedsec = (float) watch.ElapsedMilliseconds / 1000;
                 liveMaterial.SetUniformVarData("time", elapsedsec);
 
-                Mesh.Draw(liveMaterial);
+                mesh.Draw(liveMaterial);
             }
             else
             {
                 DeferredMaterial.Setup();
-                DeferredMaterial.SetUniformBufferValue<Transform>("Transform", ref Transform);
-                Mesh.Draw(DeferredMaterial);
+                liveMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelTransform);
+                liveMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref cameraTransform);
+                mesh.Draw(DeferredMaterial);
             }
             
             MyGbuffer.Unbind();
 
             LightPostProcess.Render(MyGbuffer.GetPositionAttachment, MyGbuffer.GetColorAttachement, MyGbuffer.GetNormalAttachment);
             
-            ScreenBlit.Blit(LightPostProcess.GetOutputTextureObject().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
+            ScreenBlit.Blit(LightPostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
             
             mGlControl.SwapBuffers();
         }
@@ -171,16 +162,7 @@ namespace MaterialEditor
 
         public void GLControlMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            if (e.Delta > 0)
-            {
-                Camera.MoveForward(1);
-            }
-            else
-            {
-                Camera.MoveForward(-1);
-            }
-
-            Transform.View = Camera.View;
+            
         }
 
         private void GLControlResize(object sender, EventArgs e)
@@ -197,21 +179,6 @@ namespace MaterialEditor
             }
 
             float fAspectRatio = mGlControl.Size.Width / (float)mGlControl.Size.Height;
-
-            Camera.AspectRatio = fAspectRatio;
-            Camera.FOV = MathHelper.PiOver6;
-            Camera.Near = 1;
-            Camera.Far = 10000;
-            Camera.EyeLocation = new Vector3(10, 10, 10);
-            Camera.DestLocation = new Vector3(10, 10, 10);
-            Camera.LookAtLocation = new Vector3(0, 0, 0);
-
-            Camera.UpdateViewMatrix();
-            Camera.UpdateProjMatrix();
-
-            Transform.Proj = Camera.Proj;
-            Transform.Model = Matrix4.CreateScale(0.1f);
-            Transform.View = Camera.View;
         }
 
         /// <summary>

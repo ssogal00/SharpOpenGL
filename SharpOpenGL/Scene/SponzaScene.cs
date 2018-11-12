@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ using SharpOpenGL.StaticMesh;
 using Core.MaterialBase;
 using SharpOpenGL.PostProcess;
 using Core;
+using Core.Buffer;
+using SharpOpenGL.Asset;
 
 
 namespace SharpOpenGL.Scene
@@ -23,16 +26,16 @@ namespace SharpOpenGL.Scene
 
         public SponzaScene()
         {
+
         }
 
         public override void CreateSceneResources()
         {
             base.CreateSceneResources();
 
-            gbufferDrawMaterial = new GBufferDraw.GBufferDraw();
+            gbufferDrawMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
 
             lightPostProcess = new DeferredLight();
-
             blitToScreen = new BlitToScreen();
             blitToScreen.Create();
             blitToScreen.SetGridSize(3, 3);
@@ -40,20 +43,10 @@ namespace SharpOpenGL.Scene
 
         public override void Draw()
         {
-            if(meshLoadingTask != null)
+            gbuffer.BindAndExecute(() =>
             {
-                if(!meshLoadingTask.IsCompleted)
-                {
-                    return;
-                }
-                else
-                {
-                    sponzaMesh = meshLoadingTask.Result;
-                    sponzaMesh.PrepareToDraw();
-                    sponzaMesh.LoadTextures();
-                    meshLoadingTask = null;
-                }
-            }
+                gbuffer.Clear(Color.White);
+            });
 
             // draw to gbuffer
             using (var scoped = new ScopedBind(gbuffer))
