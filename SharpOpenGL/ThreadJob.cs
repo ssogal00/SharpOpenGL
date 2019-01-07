@@ -23,6 +23,14 @@ namespace SharpOpenGL
             this.action = action;
         }
 
+        public override void Do()
+        {
+            if (this.action != null)
+            {
+                this.action();
+            }
+        }
+
         private Action action = null;
     }
 
@@ -34,7 +42,7 @@ namespace SharpOpenGL
         {
             texturePath = path;
         }
-        public virtual void Do()
+        public override void Do()
         {
 
         }

@@ -70,8 +70,22 @@ namespace SharpOpenGL
 
         public int MainThreadId { get { return mainThreadId; } }
 
+        RenderingThread renderingThread = new RenderingThread();
+        Thread renderThread = null;
+
+        protected override void OnUnload(EventArgs e)
+        {
+            renderingThread.RequestExit();
+            renderThread.Join();
+        }
+
         protected override void OnLoad(EventArgs e)
         {
+            renderThread = new Thread(renderingThread.Run);
+            renderThread.Priority = ThreadPriority.AboveNormal;
+            renderThread.Name = "RenderingThread";
+            renderThread.Start();
+
             mainThreadId = Thread.CurrentThread.ManagedThreadId;
 
             OpenGLContext.Get().SetGameWindow(this);
