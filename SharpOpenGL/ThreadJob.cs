@@ -16,6 +16,18 @@ namespace SharpOpenGL
         { }
     }
 
+    public class ActionJob : ThreadJob
+    {
+        public ActionJob(Action action)
+        {
+            this.action = action;
+        }
+
+        private Action action = null;
+    }
+
+
+
     public class TextureLoadJob : ThreadJob
     {
         public TextureLoadJob(string path)

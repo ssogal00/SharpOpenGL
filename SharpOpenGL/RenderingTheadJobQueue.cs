@@ -1,11 +1,14 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using Core;
 
 namespace SharpOpenGL
 {
-    public class RenderingTheadQueue : Singleton<RenderingTheadQueue>
+    public class RenderingTheadJobQueue : Singleton<RenderingTheadJobQueue>
     {
+       
+
         public void Enqueue(ThreadJob newJob)
         {
             JobQueue.Enqueue(newJob);
