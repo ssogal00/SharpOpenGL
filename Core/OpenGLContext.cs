@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using Core.Texture;
 
@@ -38,17 +39,33 @@ namespace Core
             mainThreadId = threadId;
         }
 
+        public void SetRenderingThreadId(int threadId)
+        {
+            renderingThreadId = threadId;
+        }
+
         public int MainTheadId { get { return mainThreadId; } }
+        public int RenderingThreadId
+        {
+            get { return renderingThreadId; }
+        }
 
         private OpenTK.GameWindow window = null;
 
         private int mainThreadId = 0;
+        private int renderingThreadId = 0;
 
         public static EventHandler<EventArgs> OpenGLContextCreated;
 
         public void MakeCurrent()
         {
             window.MakeCurrent();
+        }
+
+        public void Clear()
+        {   
+            GL.ClearColor(Color.White);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
         public int GetActiveTexture()

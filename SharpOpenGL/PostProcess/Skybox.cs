@@ -27,7 +27,7 @@ namespace SharpOpenGL.PostProcess
             cubemapTexture = new CubemapTexture();
           
             cubemapTexture.Load();
-            
+             
             SphereMesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
         }
 
