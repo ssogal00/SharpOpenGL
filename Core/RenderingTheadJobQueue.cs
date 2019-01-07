@@ -3,15 +3,18 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using Core;
 
-namespace SharpOpenGL
+namespace Core
 {
     public class RenderingTheadJobQueue : Singleton<RenderingTheadJobQueue>
     {
-       
-
         public void Enqueue(ThreadJob newJob)
         {
             JobQueue.Enqueue(newJob);
+        }
+
+        public void Enqueue(Action action)
+        {
+            JobQueue.Enqueue(new ActionJob(action));
         }
 
         public void Execute()

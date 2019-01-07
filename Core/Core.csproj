@@ -108,6 +108,8 @@
     <Compile Include="Primitive\Sphere.cs" />
     <Compile Include="Primitive\Torus.cs" />
     <Compile Include="QuadDrawable.cs" />
+    <Compile Include="RenderingTheadJobQueue.cs" />
+    <Compile Include="RenderingThread.cs" />
     <Compile Include="RenderResource.cs" />
     <Compile Include="ResizableManager.cs" />
     <Compile Include="Singleton.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="Texture\ScopedFreeImage.cs" />
     <Compile Include="Texture\Texture2DMultiSample.cs" />
     <Compile Include="Texture\TextureBase.cs" />
+    <Compile Include="ThreadJob.cs" />
     <Compile Include="TriangleDrawable.cs" />
     <Compile Include="OpenGLShader\FragmentShader.cs" />
     <Compile Include="OpenGLShader\Shader.cs" />

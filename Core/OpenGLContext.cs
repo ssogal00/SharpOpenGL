@@ -63,9 +63,13 @@ namespace Core
         }
 
         public void Clear()
-        {   
-            GL.ClearColor(Color.White);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        {
+            RenderingTheadJobQueue.Get().Enqueue(
+                new ActionJob(() =>
+                {
+                    GL.ClearColor(Color.White);
+                    GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+                }));
         }
 
         public int GetActiveTexture()
