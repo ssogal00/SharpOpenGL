@@ -263,13 +263,14 @@ if not exist $(TargetDir)\Resources\Shader mkdir $(TargetDir)\Resources\Shader
 if not exist $(TargetDir)\Resources\Cubemap mkdir $(TargetDir)\Resources\Cubemap
 if not exist $(TargetDir)\Resources\Font mkdir $(TargetDir)\Resources\Font
 if not exist $(TargetDir)\Resources\Texture mkdir $(TargetDir)\Resources\Texture
+if not exist $(TargetDir)\Resources\$(PlatformName) mkdir $(TargetDir)\Resources\$(PlatformName)
 xcopy /D /Y /S $(ProjectDir)\Resources\SponzaTexture $(TargetDir)\Resources\SponzaTexture
 xcopy /D /Y /S $(ProjectDir)\Resources\ObjMesh $(TargetDir)\Resources\ObjMesh
 xcopy /D /Y /S $(ProjectDir)\Resources\Cubemap $(TargetDir)\Resources\Cubemap
 xcopy /D /Y /S $(ProjectDir)\Resources\Texture $(TargetDir)\Resources\Texture
 xcopy /D /Y /S $(ProjectDir)\Resources\Font $(TargetDir)\Resources\Font
 xcopy /D /Y /S $(ProjectDir)\Shader $(TargetDir)\Resources\Shader
-xcopy /F /Y /S $(ProjectDir)\lib\FreeImage.dll $(TargetDir)
+xcopy /F /Y /S $(ProjectDir)\lib\FreeImage\Native\win32\FreeImage.dll $(TargetDir)
 xcopy /F /Y /S $(SolutionDir)\FreeTypeWrapper\lib\freetype-2.9.1\win32\freetype.dll $(TargetDir)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
