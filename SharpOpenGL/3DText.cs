@@ -86,7 +86,6 @@ namespace SharpOpenGL
 
             float fXBasePosition = 0;
             float posY = 0;
-            float fakeDepth = 0;
 
             foreach (var ch in TextContent)
             {
