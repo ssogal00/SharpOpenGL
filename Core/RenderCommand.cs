@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics;
+using Core.MaterialBase;
+using OpenTK.Graphics.OpenGL4;
 
 namespace Core
 {
@@ -28,23 +30,27 @@ namespace Core
 
     public class DrawCommand : RenderCommand
     {
-        public DrawCommand(IBindable vertexBuffer, IBindable indexBuffer)
+        public DrawCommand(MaterialBase.MaterialBase material, IBindable vertexBuffer, IBindable indexBuffer)
         {
+            MaterialToUse = material;
             VertexBuffer = vertexBuffer;
             IndexBuffer = indexBuffer;
         }
 
         public override void Execute()
         {
+            MaterialToUse.Bind();
             VertexBuffer.Bind();
             IndexBuffer.Bind();
 
             
-
+            
+            MaterialToUse.Unbind();
             VertexBuffer.Unbind();
             IndexBuffer.Unbind();
         }
 
+        private MaterialBase.MaterialBase MaterialToUse = null;
         private IBindable VertexBuffer = null;
         private IBindable IndexBuffer = null;
     }
