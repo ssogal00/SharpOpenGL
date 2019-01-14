@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace Core
 {
     public class UniformParameterSet
     {
-        protected Dictionary<string, UniformVariableParameter> ParamSet = new Dictionary<string, UniformVariableParameter>();
+        protected Dictionary<string, UniformVariableParameter> ParamSet =
+            new Dictionary<string, UniformVariableParameter>();
 
         public void SetParameters()
         {
@@ -20,7 +22,7 @@ namespace Core
         }
     }
 
-    public class UniformVariableParameter 
+    public class UniformVariableParameter
     {
         public UniformVariableParameter(string name, int location)
         {
@@ -36,9 +38,10 @@ namespace Core
         }
     }
 
+
     public class UniformVariableFloatParameter : UniformVariableParameter
     {
-        public UniformVariableFloatParameter(string name, int location, float value)
+        public UniformVariableFloatParameter(string name, int location, float value = 0.0f)
         : base(name, location)
         {
             FloatValue = value;
@@ -51,4 +54,27 @@ namespace Core
             GL.Uniform1(Location, FloatValue);
         }
     }
+
+    public class UniformVariableVec2Parameter : UniformVariableParameter
+    {
+        public UniformVariableVec2Parameter(string name, int location)
+            : base(name, location)
+        {   
+        }
+
+        public UniformVariableVec2Parameter(string name, int location, OpenTK.Vector2 value)
+            : base(name, location)
+        {
+            VectorValue = value;
+        }
+
+        protected OpenTK.Vector2 VectorValue = Vector2.Zero;
+
+        public override void SetParameter()
+        {
+            GL.Uniform2(Location, VectorValue);
+        }
+    }
+
+
 }
