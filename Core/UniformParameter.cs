@@ -22,7 +22,7 @@ namespace Core
         }
     }
 
-    public class UniformVariableParameter
+    public abstract class UniformVariableParameter
     {
         public UniformVariableParameter(string name, int location)
         {
@@ -36,6 +36,10 @@ namespace Core
         public virtual void SetParameter()
         {
         }
+
+        public virtual void SetValue(float newValue) { }
+        public virtual void SetValue(OpenTK.Vector2 newValue) { }
+        public virtual void SetValue(OpenTK.Vector3 newValue) { }
     }
 
 
