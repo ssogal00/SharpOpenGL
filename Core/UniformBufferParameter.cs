@@ -8,22 +8,28 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core
 {
-    public class UniformBufferParameter<T>
+    public class UniformBufferParameter<T> where T : struct
     {
-        public UniformBufferParameter(DynamicUniformBuffer bufferObject, string name, int programObject)
+        public UniformBufferParameter(int programObject, string name, ref T data)
         {
-            this.BufferName = name;
             this.ProgramObject = programObject;
-            this.BufferObject = bufferObject;
+            this.BufferObject = new DynamicUniformBuffer(programObject, name);
+            this.Data = data;
         }
 
         public void SetParameter()
         {
             BufferObject.Bind();
+            BufferObject.BufferData<T>(ref Data);
+        }
+
+        public void SetValue(ref T newValue)
+        {
+            Data = newValue;
         }
 
         protected DynamicUniformBuffer BufferObject = null;
-        private string BufferName = "";
         protected int ProgramObject = 0;
+        protected T Data = default(T);
     }
 }

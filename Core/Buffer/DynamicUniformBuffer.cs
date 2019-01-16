@@ -28,6 +28,12 @@ namespace Core.Buffer
             }
         }
 
+        public DynamicUniformBuffer(int ProgramObject, string UniformBlockName)
+        : this()
+        {   
+            UniformBufferBlockIndex = GL.GetUniformBlockIndex(ProgramObject, UniformBlockName);
+        }
+
         public override void Bind()
         {
             base.Bind();
