@@ -24,7 +24,7 @@ namespace Core.Buffer
             GL.DeleteBuffer(bufferObject);
         }
 
-        public void Bind()
+        public virtual void Bind()
         {
             GL.BindBuffer(bufferTarget, bufferObject);
             bBind = true;
