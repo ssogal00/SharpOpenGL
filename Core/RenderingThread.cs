@@ -9,12 +9,16 @@ namespace Core
 {
     public class RenderingThread
     {
+        public static int RenderingThreadId = 0;
+
         public RenderingThread()
         {
         }
 
         public void Run()
         {
+            RenderingThreadId = Thread.CurrentThread.ManagedThreadId;
+
             while (bRequestExist == false)
             {
                 RenderingTheadJobQueue.Get().ExecuteTimeSlice();

@@ -40,6 +40,8 @@ namespace Core
         public virtual void SetValue(float newValue) { }
         public virtual void SetValue(OpenTK.Vector2 newValue) { }
         public virtual void SetValue(OpenTK.Vector3 newValue) { }
+
+        public virtual void SetValue(OpenTK.Vector4 newValue) {}
     }
 
 
@@ -77,6 +79,27 @@ namespace Core
         public override void SetParameter()
         {
             GL.Uniform2(Location, VectorValue);
+        }
+    }
+
+    public class UniformVariableVec3Parameter : UniformVariableParameter
+    {
+        public UniformVariableVec3Parameter(string name, int location)
+            : base(name, location)
+        {
+        }
+
+        public UniformVariableVec3Parameter(string name, int location, OpenTK.Vector3 value)
+            : base(name, location)
+        {
+            VectorValue = value;
+        }
+
+        protected OpenTK.Vector3 VectorValue = Vector3.Zero;
+
+        public override void SetParameter()
+        {
+            GL.Uniform3(Location, VectorValue);
         }
     }
 
