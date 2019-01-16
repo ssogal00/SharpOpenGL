@@ -210,8 +210,8 @@ namespace Core.MaterialBase
         public void SetUniformBufferValue<T>(string bufferName, ref T data) where T : struct
         {
             if(HasUniformBuffer(bufferName))
-            {
-                UniformBufferMap[bufferName].BindBufferBase(UniformBufferMap[bufferName].UniformBufferBlockIndex);
+            {   
+                UniformBufferMap[bufferName].Bind();
                 UniformBufferMap[bufferName].BufferData(ref data);
             }
         }

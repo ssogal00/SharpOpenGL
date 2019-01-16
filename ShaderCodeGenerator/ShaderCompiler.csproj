@@ -114,13 +114,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="VertexAttributeTemplatePartial.cs" />
-    <Compile Include="VertexShaderCodeGenerator.cs" />
-    <Compile Include="VertexShaderTemplate.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>VertexShaderTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="VertexShaderTemplatePartial.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -164,10 +157,6 @@
     <Content Include="ShaderUniformTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ShaderUniformTemplate.cs</LastGenOutput>
-    </Content>
-    <Content Include="VertexShaderTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>VertexShaderTemplate.cs</LastGenOutput>
     </Content>
     <Content Include="VertexAttributeTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

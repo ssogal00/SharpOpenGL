@@ -42,12 +42,6 @@ namespace Core.Buffer
             GL.BindBufferBase(BufferRangeTarget.UniformBuffer, UniformBufferBlockIndex, bufferObject);
         }
 
-        public void BindBufferBase(int BindingPoint)
-        {
-            Bind();
-            GL.BindBufferBase(BufferRangeTarget.UniformBuffer, BindingPoint, bufferObject);
-        }
-
         public int UniformBufferBlockIndex = -1;
     }
 }
