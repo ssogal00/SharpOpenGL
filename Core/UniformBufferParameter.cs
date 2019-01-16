@@ -11,8 +11,11 @@ namespace Core
     public class UniformBufferSet
     {
         protected Dictionary<string, UniformBufferParameterBase> UniformBufferDictionary = new Dictionary<string, UniformBufferParameterBase>();
-        
 
+        public UniformBufferSet()
+        {
+
+        }
     }
 
     public abstract class UniformBufferParameterBase
