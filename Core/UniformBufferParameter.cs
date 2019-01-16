@@ -8,7 +8,20 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core
 {
-    public class UniformBufferParameter<T> where T : struct
+    public class UniformBufferSet
+    {
+        protected Dictionary<string, UniformBufferParameterBase> UniformBufferDictionary = new Dictionary<string, UniformBufferParameterBase>();
+        
+
+    }
+
+    public abstract class UniformBufferParameterBase
+    {
+        public virtual void SetParameter() { }
+    }
+
+
+    public class UniformBufferParameter<T> : UniformBufferParameterBase where T : struct
     {
         public UniformBufferParameter(int programObject, string name, ref T data)
         {
@@ -17,7 +30,7 @@ namespace Core
             this.Data = data;
         }
 
-        public void SetParameter()
+        public override void SetParameter()
         {
             BufferObject.Bind();
             BufferObject.BufferData<T>(ref Data);

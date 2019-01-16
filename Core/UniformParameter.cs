@@ -10,8 +10,7 @@ namespace Core
 {
     public class UniformParameterSet
     {
-        protected Dictionary<string, UniformVariableParameter> ParamSet =
-            new Dictionary<string, UniformVariableParameter>();
+        protected Dictionary<string, UniformVariableParameter> ParamSet = new Dictionary<string, UniformVariableParameter>();
 
         public void SetParameters()
         {
@@ -42,6 +41,8 @@ namespace Core
         public virtual void SetValue(OpenTK.Vector3 newValue) { }
 
         public virtual void SetValue(OpenTK.Vector4 newValue) {}
+        public virtual void SetValue(OpenTK.Matrix2 newValue) { }
+        public virtual void SetValue(OpenTK.Matrix4 newValue) { }
     }
 
 
