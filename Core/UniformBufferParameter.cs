@@ -9,7 +9,7 @@ namespace Core
 {
     public class UniformBufferParameter
     {
-        public UniformBufferParameter(string name, int bufferSize)
+        public UniformBufferParameter(string name, int bufferSize, )
         {
             BufferName = name;
             BufferSize = bufferSize;

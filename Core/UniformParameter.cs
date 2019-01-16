@@ -24,14 +24,14 @@ namespace Core
 
     public abstract class UniformVariableParameter
     {
-        public UniformVariableParameter(string name, int location)
+        public UniformVariableParameter(string name, int programObject)
         {
             ParamterName = name;
-            Location = location;
+            ProgramObject = programObject;
         }
 
         protected string ParamterName = "";
-        protected int Location = -1;
+        protected int ProgramObject = 0;
 
         public virtual void SetParameter()
         {
@@ -47,8 +47,8 @@ namespace Core
 
     public class UniformVariableFloatParameter : UniformVariableParameter
     {
-        public UniformVariableFloatParameter(string name, int location, float value = 0.0f)
-        : base(name, location)
+        public UniformVariableFloatParameter(string name, int programObject, float value = 0.0f)
+        : base(name, programObject)
         {
             FloatValue = value;
         }
@@ -57,19 +57,20 @@ namespace Core
 
         public override void SetParameter()
         {
+            var Location = GL.GetUniformLocation(this.ProgramObject, ParamterName);
             GL.Uniform1(Location, FloatValue);
         }
     }
 
     public class UniformVariableVec2Parameter : UniformVariableParameter
     {
-        public UniformVariableVec2Parameter(string name, int location)
-            : base(name, location)
+        public UniformVariableVec2Parameter(string name, int programObject)
+            : base(name, programObject)
         {   
         }
 
-        public UniformVariableVec2Parameter(string name, int location, OpenTK.Vector2 value)
-            : base(name, location)
+        public UniformVariableVec2Parameter(string name, int programObject, OpenTK.Vector2 value)
+            : base(name, programObject)
         {
             VectorValue = value;
         }
@@ -78,19 +79,20 @@ namespace Core
 
         public override void SetParameter()
         {
+            var Location = GL.GetUniformLocation(this.ProgramObject, ParamterName);
             GL.Uniform2(Location, VectorValue);
         }
     }
 
     public class UniformVariableVec3Parameter : UniformVariableParameter
     {
-        public UniformVariableVec3Parameter(string name, int location)
-            : base(name, location)
+        public UniformVariableVec3Parameter(string name, int programObject)
+            : base(name, programObject)
         {
         }
 
-        public UniformVariableVec3Parameter(string name, int location, OpenTK.Vector3 value)
-            : base(name, location)
+        public UniformVariableVec3Parameter(string name, int programObject, OpenTK.Vector3 value)
+            : base(name, programObject)
         {
             VectorValue = value;
         }
@@ -99,6 +101,7 @@ namespace Core
 
         public override void SetParameter()
         {
+            var Location = GL.GetUniformLocation(this.ProgramObject, ParamterName);
             GL.Uniform3(Location, VectorValue);
         }
     }
