@@ -27,9 +27,9 @@ namespace Core
             while (bRequestExist == false)
             {
                 //OpenGLContext.Get().MakeCurrent();
-                OpenGLContext.Get().Clear();
+                //OpenGLContext.Get().Clear();
                 RenderingThreadJobQueue.Get().ExecuteTimeSlice();
-                OpenGLContext.Get().SwapBuffers();
+                //OpenGLContext.Get().SwapBuffers();
             }
         }
 

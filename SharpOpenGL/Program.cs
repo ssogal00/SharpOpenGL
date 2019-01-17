@@ -1,12 +1,11 @@
 ﻿using Core.Buffer;
-using Core.Camera;
-using Core.OpenGLShader;
 using Core.Tickable;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using SharpOpenGL.StaticMesh;
 using System;
+using System.Windows.Forms;
 using Core.CustomEvent;
 using Core.Texture;
 using Core;
@@ -20,12 +19,27 @@ using Core.MaterialBase;
 using SharpOpenGL.GBufferDraw;
 using System.Drawing;
 using Core.Primitive;
+using OpenTK.Graphics;
 using SharpOpenGL.Font;
+using NativeWindow = OpenTK.NativeWindow;
 
 namespace SharpOpenGL
 {
     public class MainWindow : GameWindow
     {
+        public MainWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options,
+            DisplayDevice device)
+        : base(width, height,mode,title,options,device)
+        {
+        }
+
+        public MainWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options,
+            DisplayDevice device, int major, int minor, GraphicsContextFlags flags, IGraphicsContext sharedContext,
+            bool isSingleThreaded)
+            : base(width, height, mode, title, options, device, major, minor, flags, sharedContext, isSingleThreaded)
+        {
+        }
+
         protected GBufferDraw.ModelTransform ModelMatrix = new GBufferDraw.ModelTransform();
         protected GBufferDraw.CameraTransform Transform = new GBufferDraw.CameraTransform();
         
@@ -289,16 +303,6 @@ namespace SharpOpenGL
             if (OnKeyUpEvent != null) OnKeyUpEvent(this, e);
         }
 
-        protected override void OnMouseDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseDown(e);
-        }
-
-        protected override void OnMouseMove(MouseMoveEventArgs e)
-        {
-            base.OnMouseMove(e);
-        }
-
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -330,7 +334,14 @@ namespace SharpOpenGL
         [STAThread]
         static void Main()
         {
-            using (MainWindow example = new MainWindow())            
+            var form = new Form();
+
+            /*var nativeWindow = new NativeWindow(512,384,"MyEngine",GameWindowFlags.Default, GraphicsMode.Default,DisplayDevice.Default);
+            OpenTK.Graphics.GraphicsContext context = new OpenTK.Graphics.GraphicsContext(GraphicsMode.Default, nativeWindow.WindowInfo);
+            context.LoadAll();*/
+
+            using (MainWindow example = new MainWindow(1024,768,GraphicsMode.Default,"MyEngine",GameWindowFlags.Default,DisplayDevice.Default))            
+            //using (MainWindow example = new MainWindow(512, 384, GraphicsMode.Default, "MyEngine", GameWindowFlags.Default, DisplayDevice.Default, 4,0, GraphicsContextFlags.Default, null, true))
             {   
                 example.Run(200);
             }
