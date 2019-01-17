@@ -15,16 +15,22 @@ namespace Core
         {
         }
 
+        public bool IsIdle()
+        {
+            return RenderingThreadJobQueue.Get().IsJobQueueEmpty();
+        }
+
         public void Run()
         {
             RenderingThreadId = Thread.CurrentThread.ManagedThreadId;
 
             while (bRequestExist == false)
             {
-                RenderingTheadJobQueue.Get().ExecuteTimeSlice();
+                //OpenGLContext.Get().MakeCurrent();
+                OpenGLContext.Get().Clear();
+                RenderingThreadJobQueue.Get().ExecuteTimeSlice();
+                OpenGLContext.Get().SwapBuffers();
             }
-
-            Thread.Sleep(10);
         }
 
         public void RequestExit()

@@ -5,7 +5,7 @@ using Core;
 
 namespace Core
 {
-    public class RenderingTheadJobQueue : Singleton<RenderingTheadJobQueue>
+    public class RenderingThreadJobQueue : Singleton<RenderingThreadJobQueue>
     {
         public void Enqueue(ThreadJob newJob)
         {
@@ -15,6 +15,11 @@ namespace Core
         public void Enqueue(Action action)
         {
             JobQueue.Enqueue(new ActionJob(action));
+        }
+
+        public bool IsJobQueueEmpty()
+        {
+            return JobQueue.IsEmpty;
         }
 
         public void Execute()
@@ -45,9 +50,6 @@ namespace Core
                 var elapsed = stopwatch.ElapsedMilliseconds;
                 totalElapsed += elapsed;
             }
-            
-            //
-            //
         }
 
         ConcurrentQueue<ThreadJob> JobQueue = new ConcurrentQueue<ThreadJob>();

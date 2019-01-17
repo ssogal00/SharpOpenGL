@@ -12,7 +12,7 @@ namespace Core
     {
         protected Dictionary<string, UniformBufferParameterBase> UniformBufferDictionary = new Dictionary<string, UniformBufferParameterBase>();
 
-        public UniformBufferSet()
+        public UniformBufferSet(MaterialBase.MaterialBase material)
         {
 
         }

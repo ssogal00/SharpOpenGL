@@ -12,8 +12,6 @@ namespace Core
     {
         protected Dictionary<string, UniformVariableParameter> ParamSet = new Dictionary<string, UniformVariableParameter>();
 
-
-
         public void SetParameters()
         {
             foreach (var param in ParamSet.Values)

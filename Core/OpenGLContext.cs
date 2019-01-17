@@ -2,6 +2,8 @@
 using System.Drawing;
 using OpenTK.Graphics.OpenGL;
 using Core.Texture;
+using System.Diagnostics;
+using System.Threading;
 
 namespace Core
 {
@@ -62,27 +64,23 @@ namespace Core
             window.MakeCurrent();
         }
 
-        public void Clear()
+        protected void CheckInRenderThread()
         {
-            RenderingTheadJobQueue.Get().Enqueue(
-            () =>
-            {
-                GL.ClearColor(Color.White);
-                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            }
-                );
+            Debug.Assert(RenderingThreadId == Thread.CurrentThread.ManagedThreadId);
         }
 
+        public void Clear()
+        {   
+            CheckInRenderThread();
+            GL.ClearColor(Color.Brown);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        }
 
         public void SwapBuffers()
-        {
-            RenderingTheadJobQueue.Get().Enqueue(
-            () =>
-            {
-                window.SwapBuffers();
-            });
+        {   
+            CheckInRenderThread();
+            window.SwapBuffers();
         }
-        
 
         public int GetActiveTexture()
         {

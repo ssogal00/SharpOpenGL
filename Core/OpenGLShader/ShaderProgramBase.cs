@@ -24,6 +24,9 @@ namespace Core.OpenGLShader
             cachedSamplerNames = GetSampler2DNames();
         }
 
+        public List<string> CachedUniformBufferNames => cachedUniformBufferNames;
+        public List<string> CachedUniformVarNames => cachedUniformVarNames;
+
         public bool ContainsUniformBuffer(string name)
         {
             return cachedUniformBufferNames.Contains(name);
@@ -330,7 +333,7 @@ namespace Core.OpenGLShader
                     }
 
                     var uniformType = GetActiveUniformVariableType(i);
-                    if (uniformType == ActiveUniformType.Sampler2D)
+                    if (uniformType == ActiveUniformType.Sampler2D || uniformType == ActiveUniformType.SamplerCube)
                     {
                         continue;
                     }
