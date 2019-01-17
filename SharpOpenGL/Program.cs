@@ -349,27 +349,6 @@ namespace SharpOpenGL
                     testWindow.Run(200);
                 });
 
-            /*OpenTK.Graphics.GraphicsContext context = null;
-
-            RenderingThreadJobQueue.Get().Enqueue(
-                () =>
-                {
-                    try
-                    {
-                        var nativeWindow = new NativeWindow(512, 384, "MyEngine", GameWindowFlags.Default, GraphicsMode.Default, DisplayDevice.Default);
-                        context = new OpenTK.Graphics.GraphicsContext(GraphicsMode.Default, nativeWindow.WindowInfo);
-                        context.LoadAll();
-
-                        nativeWindow.Visible = true;
-                        nativeWindow.Cursor = MouseCursor.Default;
-                        context.MakeCurrent(nativeWindow.WindowInfo);
-                    }
-                    catch (Exception e)
-                    {
-                        var msg = e.Message;
-                    }
-                });*/
-
             while (true)
             {   
                 Thread.Sleep(1000/60);
