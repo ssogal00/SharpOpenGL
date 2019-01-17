@@ -334,17 +334,52 @@ namespace SharpOpenGL
         [STAThread]
         static void Main()
         {
-            var form = new Form();
+            RenderingThread renderingThread = new RenderingThread();
+            var renderThread = new Thread(renderingThread.Run);
+            renderThread.Priority = ThreadPriority.AboveNormal;
+            renderThread.Name = "RenderingThread";
+            renderThread.Start();
 
-            /*var nativeWindow = new NativeWindow(512,384,"MyEngine",GameWindowFlags.Default, GraphicsMode.Default,DisplayDevice.Default);
-            OpenTK.Graphics.GraphicsContext context = new OpenTK.Graphics.GraphicsContext(GraphicsMode.Default, nativeWindow.WindowInfo);
-            context.LoadAll();*/
+            RenderingThreadWindow testWindow = null;
 
-            using (MainWindow example = new MainWindow(1024,768,GraphicsMode.Default,"MyEngine",GameWindowFlags.Default,DisplayDevice.Default))            
-            //using (MainWindow example = new MainWindow(512, 384, GraphicsMode.Default, "MyEngine", GameWindowFlags.Default, DisplayDevice.Default, 4,0, GraphicsContextFlags.Default, null, true))
+            RenderingThreadJobQueue.Get().Enqueue(
+                () =>
+                {
+                    testWindow = new RenderingThreadWindow(512, 384); 
+                    testWindow.Run(200);
+                });
+
+            /*OpenTK.Graphics.GraphicsContext context = null;
+
+            RenderingThreadJobQueue.Get().Enqueue(
+                () =>
+                {
+                    try
+                    {
+                        var nativeWindow = new NativeWindow(512, 384, "MyEngine", GameWindowFlags.Default, GraphicsMode.Default, DisplayDevice.Default);
+                        context = new OpenTK.Graphics.GraphicsContext(GraphicsMode.Default, nativeWindow.WindowInfo);
+                        context.LoadAll();
+
+                        nativeWindow.Visible = true;
+                        nativeWindow.Cursor = MouseCursor.Default;
+                        context.MakeCurrent(nativeWindow.WindowInfo);
+                    }
+                    catch (Exception e)
+                    {
+                        var msg = e.Message;
+                    }
+                });*/
+
+            while (true)
             {   
-                example.Run(200);
+                Thread.Sleep(1000/60);
             }
+
+            //using (MainWindow example = new MainWindow(1024,768,GraphicsMode.Default,"MyEngine",GameWindowFlags.Default,DisplayDevice.Default))            
+            //using (MainWindow example = new MainWindow(512, 384, GraphicsMode.Default, "MyEngine", GameWindowFlags.Default, DisplayDevice.Default, 4,0, GraphicsContextFlags.Default, null, false))
+            //{   
+            //   example.Run(200);
+            //}
         }
     }
 }
