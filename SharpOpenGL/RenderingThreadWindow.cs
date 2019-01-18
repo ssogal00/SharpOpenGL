@@ -9,6 +9,7 @@ using Core.Buffer;
 using Core.CustomEvent;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using SharpOpenGL.Asset;
 using SharpOpenGL.PostProcess;
 
 namespace SharpOpenGL
@@ -27,7 +28,8 @@ namespace SharpOpenGL
             OnGLContextCreated = this.GLContextCreate;
             OnGLContextCreated += RenderResource.OnOpenGLContextCreated;
 
-            OnWindowResize = ResizableManager.Get().ResizeEventHandler;
+            OnWindowResize = CameraManager.Get().OnWindowResized;
+            OnWindowResize += ResizableManager.Get().ResizeEventHandler;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -55,7 +57,19 @@ namespace SharpOpenGL
         
         protected override void OnResize(EventArgs e)
         {
+            base.OnResize(e);
 
+            GL.Viewport(0, 0, Width, Height);
+
+            ScreenResizeEventArgs eventArgs = new ScreenResizeEventArgs
+            {
+                Width = Width,
+                Height = Height
+            };
+
+            float fAspectRatio = Width / (float)Height;
+
+            OnWindowResize(this, eventArgs);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -66,6 +80,20 @@ namespace SharpOpenGL
         {
             GL.ClearColor(Color.Brown);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
+
+            /*skyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
+            skyboxPostProcess.ViewMatrix = CameraManager.Get().CurrentCameraView;
+            skyboxPostProcess.ProjMatrix = CameraManager.Get().CurrentCameraProj;
+            skyboxPostProcess.Render();
+
+            renderGBuffer.BindAndExecute(
+                () =>
+                {
+                    renderGBuffer.Clear();
+                });
+
+            skyboxPostProcess.GetOutputRenderTarget().Copy(renderGBuffer.GetColorAttachement);*/
+
             SwapBuffers();
         }
     }

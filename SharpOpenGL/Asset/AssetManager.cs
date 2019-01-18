@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.IO;
+using System.Reflection;
 using SharpOpenGL.StaticMesh;
 using System.Xml.Linq;
 using Core.OpenGLShader;
@@ -86,18 +87,22 @@ namespace SharpOpenGL.Asset
             {
                 Directory.CreateDirectory("./Resources/Imported/Shader");
             }
-
-            var compiledShaderAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(x => x.GetName().Name == "CompiledShader");
+            
+            //var compiledShaderAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(x => x.GetName().Name == "CompiledShader");
+            var compiledShaderAssembly = Assembly.Load("CompiledShader");
             var types = compiledShaderAssembly.GetTypes();
-                
-            foreach(var t in types)
+            
+            RenderingThread.Get().Enqueue(() =>
             {
-                if (t.IsSubclassOf(typeof(MaterialBase)))
+                foreach (var t in types)
                 {
-                    var instance = (MaterialBase) Activator.CreateInstance(t);
-                    AssetMap.TryAdd(t.Name, instance);
+                    if (t.IsSubclassOf(typeof(MaterialBase)))
+                    {
+                        var instance = (MaterialBase)Activator.CreateInstance(t);
+                        AssetMap.TryAdd(t.Name, instance);
+                    }
                 }
-            }
+            });
         }
 
 

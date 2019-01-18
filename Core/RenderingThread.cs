@@ -11,7 +11,9 @@ namespace Core
 {
     public class RenderingThread : Singleton<RenderingThread>
     {
+        
         public static int RenderingThreadId = 0;
+        private Stopwatch stopwatch = new Stopwatch();
 
         public RenderingThread()
         {
@@ -67,8 +69,6 @@ namespace Core
 
         private void ExecuteTimeSlice(double milliseconds = 100)
         {
-            var stopwatch = new Stopwatch();
-
             double totalElapsed = 0;
 
             while (totalElapsed < milliseconds && JobQueue.IsEmpty == false)
@@ -78,10 +78,11 @@ namespace Core
 
                 stopwatch.Start();
                 job.Do();
-                stopwatch.Stop();
 
                 var elapsed = stopwatch.ElapsedMilliseconds;
                 totalElapsed += elapsed;
+
+                stopwatch.Reset();
             }
         }
 

@@ -357,6 +357,7 @@ namespace SharpOpenGL
                     RenderingThread.Get().RequestExit();
                     break;
                 }
+                Engine.Get().Tick();
                 Thread.Sleep(1000/60);
             }
 
