@@ -33,6 +33,16 @@ namespace SharpOpenGL
             window.Run(200);
         }
 
+        public bool IsInRenderingThread()
+        {
+            if (Thread.CurrentThread.ManagedThreadId == RenderingThreadId)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public void RequestExit()
         {
             bRequestExist = true;

@@ -21,6 +21,10 @@ namespace SharpOpenGL
 
         protected bool bFirstTick = true;
 
+        protected bool bInitialized = false;
+
+        public bool IsInitialized => bInitialized;
+
         public void Initialize()
         {
             Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
@@ -31,13 +35,15 @@ namespace SharpOpenGL
             
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
-            AssetManager.Get().DiscoverShader();
+            //AssetManager.Get().DiscoverShader();
             AssetManager.Get().DiscoverStaticMesh();
 
             while (RenderingThread.Get().IsIdle() == false)
             {
                 Thread.Sleep(0);
             }
+
+            bInitialized = true;
         }
 
         public void Tick()
