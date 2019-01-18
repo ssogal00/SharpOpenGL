@@ -42,7 +42,12 @@ namespace SharpOpenGL.Asset
             byte[] data = File.ReadAllBytes(path);
             T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
             AssetMap.TryAdd(Path.GetFileName(path), asset);
-            asset.OnPostLoad();
+            
+            RenderingThread.Get().Enqueue(
+                () =>
+                {
+                    asset.OnPostLoad();
+                });
             return asset;
         }
 
@@ -61,7 +66,7 @@ namespace SharpOpenGL.Asset
                 T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
                 AssetMap.TryAdd(Path.GetFileName(path), asset);
 
-                MainThreadQueue.Get().Enqueue(() =>
+                RenderingThread.Get().Enqueue(() =>
                 {
                     asset.OnPostLoad();
                 });

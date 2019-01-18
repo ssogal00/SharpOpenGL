@@ -334,31 +334,33 @@ namespace SharpOpenGL
         [STAThread]
         static void Main()
         {
-            RenderingThread renderingThread = new RenderingThread();
-            var renderThread = new Thread(renderingThread.Run);
+            var renderThread = new Thread(RenderingThread.Get().Run);
             renderThread.Priority = ThreadPriority.AboveNormal;
             renderThread.Name = "RenderingThread";
             renderThread.Start();
 
             RenderingThreadWindow testWindow = null;
 
-            RenderingThreadJobQueue.Get().Enqueue(
-                () =>
-                {
-                    testWindow = new RenderingThreadWindow(512, 384); 
-                    testWindow.Run(200);
-                });
+            RenderingThread.Get().Enqueue(
+            () =>
+            {
+                testWindow = new RenderingThreadWindow(512, 384); 
+                testWindow.Run(200);
+            });
+
+            Engine.Get().Initialize();
 
             while (true)
-            {   
+            {
+                if (Engine.Get().IsRequestExit)
+                {
+                    RenderingThread.Get().RequestExit();
+                    break;
+                }
                 Thread.Sleep(1000/60);
             }
 
-            //using (MainWindow example = new MainWindow(1024,768,GraphicsMode.Default,"MyEngine",GameWindowFlags.Default,DisplayDevice.Default))            
-            //using (MainWindow example = new MainWindow(512, 384, GraphicsMode.Default, "MyEngine", GameWindowFlags.Default, DisplayDevice.Default, 4,0, GraphicsContextFlags.Default, null, false))
-            //{   
-            //   example.Run(200);
-            //}
+            renderThread.Join();
         }
     }
 }

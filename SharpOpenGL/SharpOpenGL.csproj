@@ -147,6 +147,7 @@
     <Compile Include="BlitToScreen.cs" />
     <Compile Include="CameraManager.cs" />
     <Compile Include="ConsoleCommandManager.cs" />
+    <Compile Include="Engine.cs" />
     <Compile Include="Font\FontManager.cs" />
     <Compile Include="Font\TextInstance.cs" />
     <Compile Include="GridDrawer.cs" />
