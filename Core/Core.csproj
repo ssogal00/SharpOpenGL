@@ -109,7 +109,6 @@
     <Compile Include="Primitive\Sphere.cs" />
     <Compile Include="Primitive\Torus.cs" />
     <Compile Include="QuadDrawable.cs" />
-    <Compile Include="RenderingThread.cs" />
     <Compile Include="RenderResource.cs" />
     <Compile Include="ResizableManager.cs" />
     <Compile Include="SamplerParameter.cs" />

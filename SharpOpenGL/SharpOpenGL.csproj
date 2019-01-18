@@ -173,6 +173,7 @@
     <Compile Include="Material.cs" />
     <Compile Include="PostProcess\Blur.cs" />
     <Compile Include="PostProcess\PostProcess.cs" />
+    <Compile Include="RenderingThread.cs" />
     <Compile Include="RenderPass.cs" />
     <Compile Include="RenderingThreadWindow.cs" />
     <Compile Include="Scene\SceneBase.cs" />

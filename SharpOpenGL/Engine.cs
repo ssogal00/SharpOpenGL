@@ -36,7 +36,7 @@ namespace SharpOpenGL
 
             while (RenderingThread.Get().IsIdle() == false)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(0);
             }
         }
 

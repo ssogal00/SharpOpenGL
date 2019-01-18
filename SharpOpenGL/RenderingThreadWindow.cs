@@ -53,7 +53,6 @@ namespace SharpOpenGL
         {
             Engine.Get().RequestExit();
         }
-
         
         protected override void OnResize(EventArgs e)
         {
@@ -74,6 +73,7 @@ namespace SharpOpenGL
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
+            RenderingThread.Get().ExecuteTimeSlice();
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -81,7 +81,7 @@ namespace SharpOpenGL
             GL.ClearColor(Color.Brown);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
-            /*skyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
+            skyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
             skyboxPostProcess.ViewMatrix = CameraManager.Get().CurrentCameraView;
             skyboxPostProcess.ProjMatrix = CameraManager.Get().CurrentCameraProj;
             skyboxPostProcess.Render();
@@ -92,7 +92,7 @@ namespace SharpOpenGL
                     renderGBuffer.Clear();
                 });
 
-            skyboxPostProcess.GetOutputRenderTarget().Copy(renderGBuffer.GetColorAttachement);*/
+            skyboxPostProcess.GetOutputRenderTarget().Copy(renderGBuffer.GetColorAttachement);
 
             SwapBuffers();
         }

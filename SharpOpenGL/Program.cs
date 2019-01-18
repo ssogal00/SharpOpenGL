@@ -339,15 +339,6 @@ namespace SharpOpenGL
             renderThread.Name = "RenderingThread";
             renderThread.Start();
 
-            RenderingThreadWindow testWindow = null;
-
-            RenderingThread.Get().Enqueue(
-            () =>
-            {
-                testWindow = new RenderingThreadWindow(512, 384); 
-                testWindow.Run(200);
-            });
-
             Engine.Get().Initialize();
 
             while (true)

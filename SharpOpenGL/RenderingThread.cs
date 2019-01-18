@@ -6,14 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Core;
 
-namespace Core
+namespace SharpOpenGL
 {
     public class RenderingThread : Singleton<RenderingThread>
     {
         
         public static int RenderingThreadId = 0;
         private Stopwatch stopwatch = new Stopwatch();
+        private RenderingThreadWindow window = null;
 
         public RenderingThread()
         {
@@ -27,11 +29,8 @@ namespace Core
         public void Run()
         {
             RenderingThreadId = Thread.CurrentThread.ManagedThreadId;
-
-            while (bRequestExist == false)
-            {
-                ExecuteTimeSlice();
-            }
+            window = new RenderingThreadWindow(512, 384);
+            window.Run(200);
         }
 
         public void RequestExit()
@@ -67,7 +66,7 @@ namespace Core
             }
         }
 
-        private void ExecuteTimeSlice(double milliseconds = 100)
+        public void ExecuteTimeSlice(double milliseconds = 100)
         {
             double totalElapsed = 0;
 
