@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 using Core;
 using Core.Buffer;
 using Core.CustomEvent;
+using Core.MaterialBase;
 using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using SharpOpenGL.Asset;
+using SharpOpenGL.GBufferDraw;
 using SharpOpenGL.PostProcess;
+using SharpOpenGL.StaticMesh;
 
 namespace SharpOpenGL
 {
@@ -24,7 +27,15 @@ namespace SharpOpenGL
 
         protected Skybox skyboxPostProcess = new Skybox();
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
+        protected StaticMeshAsset sponzamesh = null;
         protected bool bInitialized = false;
+
+        protected GBufferDraw.ModelTransform ModelMatrix = new GBufferDraw.ModelTransform();
+        protected GBufferDraw.CameraTransform Transform = new GBufferDraw.CameraTransform();
+
+        protected MaterialBase GBufferMaterial = null;
+        protected MaterialBase GridMaterial = null;
+
 
         public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyDownEvent;
         public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyUpEvent;
@@ -61,6 +72,9 @@ namespace SharpOpenGL
 
             OnGLContextCreated(this, e);
 
+            sponzamesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
+            GBufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
+            GridMaterial = AssetManager.LoadAssetSync<MaterialBase>("GridRenderMaterial");
             bInitialized = true;
         }
 
@@ -122,8 +136,13 @@ namespace SharpOpenGL
             float fAspectRatio = Width / (float)Height;
 
             OnWindowResize(this, eventArgs);
-        }
 
+            Transform.Proj = CameraManager.Get().CurrentCamera.Proj;
+            Transform.View = CameraManager.Get().CurrentCamera.View;
+
+            ModelMatrix.Model = Matrix4.CreateScale(1.500f);
+        }
+        
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             RenderingThread.Get().ExecuteTimeSlice();
@@ -152,6 +171,16 @@ namespace SharpOpenGL
                 });
 
             skyboxPostProcess.GetOutputRenderTarget().Copy(renderGBuffer.GetColorAttachement);
+
+            renderGBuffer.BindAndExecute
+            (GBufferMaterial, () =>
+            {
+                GBufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
+                GBufferMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref Transform);
+                sponzamesh.Draw(GBufferMaterial);
+
+                GridDrawer.Get().Draw(GridMaterial);
+            });
 
             ScreenBlit.Blit(renderGBuffer.GetColorAttachement, 0, 0, 2, 2);
 
