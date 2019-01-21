@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 using Core;
 using Core.Buffer;
 using Core.CustomEvent;
+using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 using SharpOpenGL.Asset;
 using SharpOpenGL.PostProcess;
 
@@ -18,18 +20,30 @@ namespace SharpOpenGL
     {
         protected event EventHandler<EventArgs> OnGLContextCreated;
         protected event EventHandler<ScreenResizeEventArgs> OnWindowResize;
+        protected BlitToScreen ScreenBlit = new BlitToScreen();
 
         protected Skybox skyboxPostProcess = new Skybox();
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
+        protected bool bInitialized = false;
+
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyDownEvent;
+        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyUpEvent;
 
         public RenderingThreadWindow(int width, int height)
         :base (width, height)
         {
-            OnGLContextCreated = this.GLContextCreate;
+            this.Title = "MyEngine";
+
+            OnGLContextCreated += Sampler.OnResourceCreate;
             OnGLContextCreated += RenderResource.OnOpenGLContextCreated;
 
             OnWindowResize = CameraManager.Get().OnWindowResized;
             OnWindowResize += ResizableManager.Get().ResizeEventHandler;
+
+            OnKeyDownEvent += CameraManager.Get().OnKeyDown;
+            OnKeyUpEvent += CameraManager.Get().OnKeyUp;
+
+            OnKeyDownEvent += this.HandleKeyDownEvent;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -42,11 +56,50 @@ namespace SharpOpenGL
             GL.Enable(EnableCap.TextureCubeMap);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
 
+            AssetManager.Get().DiscoverShader();
+            ScreenBlit.SetGridSize(2,2);
+
             OnGLContextCreated(this, e);
+
+            bInitialized = true;
         }
 
-        protected void GLContextCreate(object o, EventArgs e)
+        protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)
         {
+            base.OnKeyDown(e);
+            if (OnKeyDownEvent != null) OnKeyDownEvent(this, e);
+        }
+
+
+        public void HandleKeyDownEvent(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            if (ConsoleCommandManager.Get().IsActive)
+            {
+                ConsoleCommandManager.Get().OnKeyDown(e);
+                if (ConsoleCommandManager.Get().IsActive == false)
+                {
+                    CameraManager.Get().CurrentCamera.ToggleLock();
+                }
+                return;
+            }
+
+            if (e.Key == Key.F1)
+            {
+                CameraManager.Get().SwitchCamera();
+            }
+            else if (e.Key == Key.F2)
+            {
+                CameraManager.Get().CurrentCamera.FOV += OpenTK.MathHelper.DegreesToRadians(1.0f);
+            }
+            else if (e.Key == Key.F3)
+            {
+                CameraManager.Get().CurrentCamera.FOV -= OpenTK.MathHelper.DegreesToRadians(1.0f);
+            }
+            else if (e.Key == Key.Tilde)
+            {
+                ConsoleCommandManager.Get().ToggleActive();
+                CameraManager.Get().CurrentCamera.ToggleLock();
+            }
         }
 
         protected override void OnUnload(EventArgs e)
@@ -81,7 +134,11 @@ namespace SharpOpenGL
             GL.ClearColor(Color.Brown);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
-          
+            if (bInitialized == false)
+            {
+                SwapBuffers();
+                return;
+            }
 
             skyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
             skyboxPostProcess.ViewMatrix = CameraManager.Get().CurrentCameraView;
@@ -95,6 +152,8 @@ namespace SharpOpenGL
                 });
 
             skyboxPostProcess.GetOutputRenderTarget().Copy(renderGBuffer.GetColorAttachement);
+
+            ScreenBlit.Blit(renderGBuffer.GetColorAttachement, 0, 0, 2, 2);
 
             SwapBuffers();
         }

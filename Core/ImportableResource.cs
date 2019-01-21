@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class ImportableResource
+    public abstract class ImportableResource
     {
-        public virtual void Import() { }
+        public abstract void Import();
     }
 }

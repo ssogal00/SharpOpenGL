@@ -96,21 +96,17 @@ namespace SharpOpenGL.Asset
                 Directory.CreateDirectory("./Resources/Imported/Shader");
             }
             
-            //var compiledShaderAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(x => x.GetName().Name == "CompiledShader");
             var compiledShaderAssembly = Assembly.Load("CompiledShader");
             var types = compiledShaderAssembly.GetTypes();
-            
-            RenderingThread.Get().Enqueue(() =>
+
+            foreach (var t in types)
             {
-                foreach (var t in types)
+                if (t.IsSubclassOf(typeof(MaterialBase)))
                 {
-                    if (t.IsSubclassOf(typeof(MaterialBase)))
-                    {
-                        var instance = (MaterialBase)Activator.CreateInstance(t);
-                        AssetMap.TryAdd(t.Name, instance);
-                    }
+                    var instance = (MaterialBase)Activator.CreateInstance(t);
+                    AssetMap.TryAdd(t.Name, instance);
                 }
-            });
+            }
         }
 
 

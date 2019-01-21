@@ -121,7 +121,7 @@ namespace SharpOpenGL
 
             // register resource create event handler            
             OnResourceCreate += this.ResourceCreate;            
-            OnResourceCreate += Sampler.OnResourceCreate;
+            
 
             // resigter window resize event handler
             OnWindowResize += CameraManager.Get().OnWindowResized;
@@ -275,7 +275,7 @@ namespace SharpOpenGL
 
             if(e.Key == Key.F1)
             {
-                SwitchCameraMode();
+                CameraManager.Get().SwitchCamera();
             }
             else if(e.Key == Key.F2)
             {
