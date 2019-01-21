@@ -48,7 +48,7 @@ namespace SharpOpenGL
             OnGLContextCreated += Sampler.OnResourceCreate;
             OnGLContextCreated += RenderResource.OnOpenGLContextCreated;
 
-            OnWindowResize = CameraManager.Get().OnWindowResized;
+            OnWindowResize += CameraManager.Get().OnWindowResized;
             OnWindowResize += ResizableManager.Get().ResizeEventHandler;
 
             OnKeyDownEvent += CameraManager.Get().OnKeyDown;
