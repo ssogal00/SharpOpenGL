@@ -117,9 +117,9 @@ namespace SharpOpenGL.StaticMesh
             }
         }
 
-        public override void OnPostLoad()
+        public override void InitializeInRenderThread()
         {
-            base.OnPostLoad();
+            base.InitializeInRenderThread();
 
             // setup vertex index buffer
             meshdrawable = new TriangleDrawable<PNTT_VertexAttribute>();

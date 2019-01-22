@@ -72,7 +72,7 @@ namespace SharpOpenGL
 
             OnGLContextCreated(this, e);
 
-            sponzamesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
+            sponzamesh = AssetManager.LoadAssetSync<StaticMeshAsset>("sponza2.staticmesh");
             GBufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
             GridMaterial = AssetManager.LoadAssetSync<MaterialBase>("GridRenderMaterial");
             bInitialized = true;

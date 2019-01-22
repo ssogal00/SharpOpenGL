@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using System.Reflection;
@@ -46,14 +47,14 @@ namespace SharpOpenGL.Asset
 
             if (RenderingThread.Get().IsInRenderingThread())
             {
-                asset.OnPostLoad();
+                asset.InitializeInRenderThread();
             }
             else
             {
                 RenderingThread.Get().Enqueue(
                 () =>
                 {
-                    asset.OnPostLoad();
+                    asset.InitializeInRenderThread();
                 });
             }
             
@@ -77,7 +78,7 @@ namespace SharpOpenGL.Asset
 
                 RenderingThread.Get().Enqueue(() =>
                 {
-                    asset.OnPostLoad();
+                    asset.InitializeInRenderThread();
                 });
                 
                 return asset;
@@ -86,6 +87,8 @@ namespace SharpOpenGL.Asset
 
         public void DiscoverShader()
         {
+            Debug.Assert(RenderingThread.Get().IsInRenderingThread());
+
             if(File.Exists("./Resources/Shader/MaterialList.xml") == false)
             {
                 return;

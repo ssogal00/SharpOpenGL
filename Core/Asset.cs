@@ -22,7 +22,7 @@ namespace Core
         }
 
 
-        public virtual void OnPostLoad()
+        public virtual void InitializeInRenderThread()
         {
             bReady = true;
         }
