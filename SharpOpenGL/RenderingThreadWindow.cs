@@ -81,7 +81,16 @@ namespace SharpOpenGL
         protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if (OnKeyDownEvent != null) OnKeyDownEvent(this, e);
+            OnKeyDownEvent?.Invoke(this, e);
+        }
+
+        protected override void OnKeyUp(OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            base.OnKeyUp(e);
+            if (OnKeyUpEvent != null)
+            {
+                OnKeyUpEvent(this, e);
+            }
         }
 
 

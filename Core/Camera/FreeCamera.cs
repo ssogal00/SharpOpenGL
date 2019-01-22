@@ -214,7 +214,6 @@ namespace Core.Camera
             else
             {
                 Elapsed = 0;
-                bMoving = false;
             }
 
             if((DateTime.Now - LastKeyStrokeTime).TotalSeconds > 1)
