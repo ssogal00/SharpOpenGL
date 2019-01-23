@@ -96,16 +96,6 @@ namespace SharpOpenGL
 
         public void HandleKeyDownEvent(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
         {
-            if (ConsoleCommandManager.Get().IsActive)
-            {
-                ConsoleCommandManager.Get().OnKeyDown(e);
-                if (ConsoleCommandManager.Get().IsActive == false)
-                {
-                    CameraManager.Get().CurrentCamera.ToggleLock();
-                }
-                return;
-            }
-
             if (e.Key == Key.F1)
             {
                 CameraManager.Get().SwitchCamera();
@@ -117,11 +107,6 @@ namespace SharpOpenGL
             else if (e.Key == Key.F3)
             {
                 CameraManager.Get().CurrentCamera.FOV -= OpenTK.MathHelper.DegreesToRadians(1.0f);
-            }
-            else if (e.Key == Key.Tilde)
-            {
-                ConsoleCommandManager.Get().ToggleActive();
-                CameraManager.Get().CurrentCamera.ToggleLock();
             }
         }
 

@@ -27,6 +27,10 @@ namespace SharpOpenGL
 {
     public class MainWindow : GameWindow
     {
+        public MainWindow()
+        :base (1024,768)
+        {
+        }
         public MainWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options,
             DisplayDevice device)
         : base(width, height,mode,title,options,device)
@@ -95,10 +99,10 @@ namespace SharpOpenGL
 
         protected override void OnLoad(EventArgs e)
         {
-            renderThread = new Thread(renderingThread.Run);
+            /*renderThread = new Thread(renderingThread.Run);
             renderThread.Priority = ThreadPriority.AboveNormal;
             renderThread.Name = "RenderingThread";
-            renderThread.Start();
+            renderThread.Start();*/
 
             mainThreadId = Thread.CurrentThread.ManagedThreadId;
 
@@ -120,7 +124,9 @@ namespace SharpOpenGL
             GL.ClearColor(System.Drawing.Color.DarkGray);            
 
             // register resource create event handler            
-            OnResourceCreate += this.ResourceCreate;            
+            OnResourceCreate += this.ResourceCreate;
+            OnResourceCreate += Sampler.OnResourceCreate;
+            
             
 
             // resigter window resize event handler
@@ -353,6 +359,11 @@ namespace SharpOpenGL
             }
 
             renderThread.Join();
+
+            /*using (MainWindow example = new MainWindow())
+            {
+                example.Run(200);
+            }*/
         }
     }
 }
