@@ -45,18 +45,18 @@ namespace SharpOpenGL.Asset
             T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
             AssetMap.TryAdd(Path.GetFileName(path), asset);
 
-            if (RenderingThread.Get().IsInRenderingThread())
+            //if (RenderingThread.Get().IsInRenderingThread())
             {
                 asset.InitializeInRenderThread();
             }
-            else
+            /*else
             {
                 RenderingThread.Get().Enqueue(
                 () =>
                 {
                     asset.InitializeInRenderThread();
                 });
-            }
+            }*/
             
             return asset;
         }
@@ -79,7 +79,8 @@ namespace SharpOpenGL.Asset
                 RenderingThread.Get().Enqueue(() =>
                 {
                     asset.InitializeInRenderThread();
-                });
+                }
+                );
                 
                 return asset;
             });
@@ -87,7 +88,7 @@ namespace SharpOpenGL.Asset
 
         public void DiscoverShader()
         {
-            Debug.Assert(RenderingThread.Get().IsInRenderingThread());
+            //Debug.Assert(RenderingThread.Get().IsInRenderingThread());
 
             if(File.Exists("./Resources/Shader/MaterialList.xml") == false)
             {

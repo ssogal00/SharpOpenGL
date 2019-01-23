@@ -29,7 +29,7 @@ namespace SharpOpenGL
         public void Run()
         {
             RenderingThreadId = Thread.CurrentThread.ManagedThreadId;
-            window = new RenderingThreadWindow(512, 384);
+            window = new RenderingThreadWindow(1024, 768);
             window.Run(200);
         }
 

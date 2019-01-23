@@ -43,6 +43,10 @@ namespace SharpOpenGL
         public RenderingThreadWindow(int width, int height)
         :base (width, height)
         {
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
             this.Title = "MyEngine";
 
             OnGLContextCreated += Sampler.OnResourceCreate;
@@ -55,10 +59,7 @@ namespace SharpOpenGL
             OnKeyUpEvent += CameraManager.Get().OnKeyUp;
 
             OnKeyDownEvent += this.HandleKeyDownEvent;
-        }
 
-        protected override void OnLoad(EventArgs e)
-        {
             VSync = VSyncMode.Off;
 
             GL.CullFace(CullFaceMode.Back);
@@ -139,17 +140,16 @@ namespace SharpOpenGL
             this.Title = string.Format("MyEngine({0}x{1})", Width, Height);
         }
         
-        protected override void OnUpdateFrame(FrameEventArgs e)
-        {
-            RenderingThread.Get().ExecuteTimeSlice();
-        }
-
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            base.OnUpdateFrame(e);
+
+            RenderingThread.Get().ExecuteTimeSlice();
+
             GL.ClearColor(Color.Brown);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
-            if (bInitialized == false)
+            if (bInitialized == false || Engine.Get().IsInitialized == false)
             {
                 SwapBuffers();
                 return;

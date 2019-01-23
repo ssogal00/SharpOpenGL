@@ -93,8 +93,8 @@ namespace SharpOpenGL
 
         protected override void OnUnload(EventArgs e)
         {
-            renderingThread.RequestExit();
-            renderThread.Join();
+            //renderingThread.RequestExit();
+            //renderThread.Join();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -329,6 +329,7 @@ namespace SharpOpenGL
             Transform.View = CameraManager.Get().CurrentCamera.View;
 
             ModelMatrix.Model = Matrix4.CreateScale(1.500f);
+            this.Title = string.Format("MyEngine({0}x{1})", Width, Height);
         }
     }
 
@@ -340,7 +341,7 @@ namespace SharpOpenGL
         [STAThread]
         static void Main()
         {
-            var renderThread = new Thread(RenderingThread.Get().Run);
+            /*var renderThread = new Thread(RenderingThread.Get().Run);
             renderThread.Priority = ThreadPriority.AboveNormal;
             renderThread.Name = "RenderingThread";
             renderThread.Start();
@@ -358,12 +359,12 @@ namespace SharpOpenGL
                 Thread.Sleep(1000/60);
             }
 
-            renderThread.Join();
+            renderThread.Join();*/
 
-            /*using (MainWindow example = new MainWindow())
+            using (MainWindow example = new MainWindow())
             {
                 example.Run(200);
-            }*/
+            }
         }
     }
 }
