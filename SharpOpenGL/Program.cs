@@ -53,11 +53,9 @@ namespace SharpOpenGL
         protected Core.MaterialBase.MaterialBase GridMaterial = null;
         protected Core.MaterialBase.MaterialBase ThreeDTextMaterial = null;
 
-        protected RenderTarget TestRenderTarget= new RenderTarget(1024, 768, 1,PixelInternalFormat.LuminanceAlpha, false);
-
-        protected PostProcess.BlurPostProcess Blur = new SharpOpenGL.PostProcess.BlurPostProcess();
-        protected PostProcess.DeferredLight LightPostProcess = new DeferredLight();
-        protected DepthVisualize DepthVisualizePostProcess = new DepthVisualize();
+        //protected RenderTarget TestRenderTarget= new RenderTarget(1024, 768, 1,PixelInternalFormat.LuminanceAlpha, false);
+        
+        
         protected PostProcess.Skybox SkyboxPostProcess = new Skybox();
         
         protected Cylinder TestCyliner = new Cylinder(10, 10, 24);
@@ -188,7 +186,7 @@ namespace SharpOpenGL
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            base.OnUpdateFrame(e);
+            //base.OnUpdateFrame(e);
 
             if(this.WindowState == OpenTK.WindowState.Minimized)
             {
@@ -253,9 +251,10 @@ namespace SharpOpenGL
                 }
             });
 
-            DepthVisualizePostProcess.Render(MyGBuffer.GetDepthAttachment);
-            LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
-            ScreenBlit.Blit(LightPostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 2, 2);
+            
+            ScreenBlit.Blit(MyGBuffer.GetColorAttachement, 0, 0, 2, 2);
+            //LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
+            //ScreenBlit.Blit(LightPostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 2, 2);
 
             SwapBuffers();
         }
@@ -341,7 +340,7 @@ namespace SharpOpenGL
         [STAThread]
         static void Main()
         {
-            /*var renderThread = new Thread(RenderingThread.Get().Run);
+            var renderThread = new Thread(RenderingThread.Get().Run);
             renderThread.Priority = ThreadPriority.AboveNormal;
             renderThread.Name = "RenderingThread";
             renderThread.Start();
@@ -359,12 +358,12 @@ namespace SharpOpenGL
                 Thread.Sleep(1000/60);
             }
 
-            renderThread.Join();*/
+            renderThread.Join();
 
-            using (MainWindow example = new MainWindow())
+            /*using (MainWindow example = new MainWindow())
             {
                 example.Run(200);
-            }
+            }*/
         }
     }
 }

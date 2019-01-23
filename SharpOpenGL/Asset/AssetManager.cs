@@ -45,18 +45,18 @@ namespace SharpOpenGL.Asset
             T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
             AssetMap.TryAdd(Path.GetFileName(path), asset);
 
-            //if (RenderingThread.Get().IsInRenderingThread())
+            if (RenderingThread.Get().IsInRenderingThread())
             {
                 asset.InitializeInRenderThread();
             }
-            /*else
+            else
             {
                 RenderingThread.Get().Enqueue(
                 () =>
                 {
                     asset.InitializeInRenderThread();
                 });
-            }*/
+            }
             
             return asset;
         }
