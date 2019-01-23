@@ -70,6 +70,7 @@
     <Compile Include="CustomAttribute\UIAttribute.cs" />
     <Compile Include="CustomSerialize\MatrixSerialize.cs" />
     <Compile Include="CustomSerialize\VectorSerialize.cs" />
+    <Compile Include="IImportable.cs" />
     <Compile Include="RenderCommand.cs" />
     <Compile Include="DrawingState.cs" />
     <Compile Include="Extension.cs" />

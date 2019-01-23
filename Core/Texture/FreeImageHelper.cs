@@ -4,6 +4,8 @@ using FreeImageAPI;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using OpenTK.Graphics.OpenGL;
+using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
 
 namespace Core.Texture
@@ -23,11 +25,12 @@ namespace Core.Texture
             }
         }
 
-        public static FIBITMAP Load(string FilePath, out int Width, out int Height)
+        public static FIBITMAP Load(string FilePath, out int Width, out int Height, out PixelFormat OutPixelFormat)
         {
             FIBITMAP DIB = new FIBITMAP();
 
             Width = Height = 0;
+            OutPixelFormat = PixelFormat.Max;
 
             if (!File.Exists(FilePath))
             {
@@ -59,7 +62,8 @@ namespace Core.Texture
             }
                         
             // get bit
-            DIB = FreeImage.ConvertTo32Bits(DIB);
+            
+            OutPixelFormat = FreeImage.GetPixelFormat(DIB);
 
             // get width height
             Width = (int) FreeImage.GetWidth(DIB);

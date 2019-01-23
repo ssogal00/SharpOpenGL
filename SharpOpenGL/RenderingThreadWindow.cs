@@ -150,6 +150,8 @@ namespace SharpOpenGL
             Transform.View = CameraManager.Get().CurrentCamera.View;
 
             ModelMatrix.Model = Matrix4.CreateScale(1.500f);
+
+            this.Title = string.Format("MyEngine({0}x{1})", Width, Height);
         }
         
         protected override void OnUpdateFrame(FrameEventArgs e)
