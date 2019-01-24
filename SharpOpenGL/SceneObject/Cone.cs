@@ -19,6 +19,10 @@ namespace SharpOpenGL
                 return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
             }
         }
+
+        public Cone()
+        {
+        }
         
         public Cone(float radius, float height, uint count)
         {
@@ -26,28 +30,37 @@ namespace SharpOpenGL
             Radius = radius;
             Height = height;
             Count = count;
+            Initialize();
         }
 
         public override void Initialize()
         {
             GenerateVertices();
 
-            VB = new StaticVertexBuffer<PNC_VertexAttribute>();
-            VB.Bind();
+            RenderingThread.Get().Enqueue(
+            () =>
+            {
+                VB = new StaticVertexBuffer<PNC_VertexAttribute>();
+                VB.Bind();
 
-            var vertexArray = VertexList.ToArray();
-            VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
+                var vertexArray = VertexList.ToArray();
+                VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
+                VertexList.Clear();
 
-            VertexList.Clear();
+                bReadyToDraw = true;
+            });
         }
 
         public override void Draw(MaterialBase material)
         {
-            using (var dummy = new ScopedBind(VB))
+            if(bReadyToDraw)
             {
-                material.SetUniformVarData("Model", LocalMatrix * ParentMatrix);
-                PNC_VertexAttribute.VertexAttributeBinding();
-                GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
+                using (var dummy = new ScopedBind(VB))
+                {
+                    material.SetUniformVarData("Model", LocalMatrix * ParentMatrix);
+                    PNC_VertexAttribute.VertexAttributeBinding();
+                    GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
+                }
             }
         }
 

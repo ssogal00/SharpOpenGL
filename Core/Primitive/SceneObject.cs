@@ -33,15 +33,7 @@ namespace Core.Primitive
 
         public SceneObject()
         {
-            // if opengl context not created
-            if (OpenGLContext.Get().IsValid == false)
-            {
-                OnOpenGLContextCreated += this.OnGLContextCreated;
-            }
-            else
-            {
-                Initialize();
-            }
+            SceneObjectManager.Get().AddSceneObject(this);
         }
        
         public virtual void OnGLContextCreated(object sender, EventArgs e)

@@ -8,6 +8,7 @@ using Core;
 using Core.CustomSerialize;
 using ZeroFormatter.Formatters;
 using System.Threading;
+using Core.Primitive;
 using Core.Tickable;
 using SharpOpenGL.Asset;
 
@@ -25,6 +26,8 @@ namespace SharpOpenGL
 
         public bool IsInitialized => bInitialized;
 
+        protected Cone testCone = new Cone(10, 20, 12);
+
         public void Initialize()
         {
             Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
@@ -34,9 +37,6 @@ namespace SharpOpenGL
             MainThreadId = Thread.CurrentThread.ManagedThreadId;
             
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
-
-            //AssetManager.Get().DiscoverShader();
-            //AssetManager.Get().DiscoverStaticMesh();
 
             while (RenderingThread.Get().IsIdle() == false)
             {

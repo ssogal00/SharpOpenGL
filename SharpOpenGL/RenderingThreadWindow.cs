@@ -8,6 +8,7 @@ using Core;
 using Core.Buffer;
 using Core.CustomEvent;
 using Core.MaterialBase;
+using Core.Primitive;
 using Core.Texture;
 using Core.Tickable;
 using OpenTK;
@@ -180,6 +181,8 @@ namespace SharpOpenGL
                 GBufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
                 GBufferMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref Transform);
                 sponzamesh.Draw(GBufferMaterial);
+
+                
 
                 GridDrawer.Get().Draw(GridMaterial);
             });

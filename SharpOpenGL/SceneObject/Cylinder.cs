@@ -33,21 +33,26 @@ namespace SharpOpenGL
 
         public override void Initialize()
         {
-            base.Initialize();
-
             GenerateVertices();
 
-            drawable = new DrawableBase<PNC_VertexAttribute>();
-            var vertexArray = VertexList.ToArray();
-            drawable.SetupVertexData(ref vertexArray);
+            RenderingThread.Get().Enqueue(() =>
+            {
+                drawable = new DrawableBase<PNC_VertexAttribute>();
+                var vertexArray = VertexList.ToArray();
+                drawable.SetupVertexData(ref vertexArray);
 
-            VertexList.Clear();
+                VertexList.Clear();
+                bReadyToDraw = true;
+            });
         }
 
         public override void Draw(MaterialBase material)
-        {   
-            material.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
-            drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+        {
+            if (bReadyToDraw)
+            {
+                material.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
+                drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+            }
         }
 
 
