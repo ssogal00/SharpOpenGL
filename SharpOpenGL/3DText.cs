@@ -11,7 +11,7 @@ using SharpOpenGL.Font;
 
 namespace SharpOpenGL
 {
-    public class ThreeDText : RenderResource, ISceneObject
+    public class ThreeDText : SceneObject
     {
         public string TextContent = "";
 
@@ -21,28 +21,8 @@ namespace SharpOpenGL
             GenerateVertices();
         }
 
-        // @ISceneObject interface
-        public Vector3 Translation { get; set; } = new Vector3(0,0,0);
 
-
-        public float Scale { get; set; } = 1.0f;
-
-
-        public float Yaw { get; set; } = 0.0f;
-
-
-        public float Pitch { get; set; } = 0.0f;
-
-
-        public float Roll { get; set; } = 0.0f;
-
-        public OpenTK.Matrix4 ParentMatrix
-        {
-            get;
-            set;
-        } = Matrix4.Identity;
-
-        public OpenTK.Matrix4 LocalMatrix
+        public override OpenTK.Matrix4 LocalMatrix
         {
             get
             {
@@ -56,7 +36,7 @@ namespace SharpOpenGL
             base.Initialize();
         }
 
-        public void Draw(MaterialBase material)
+        public override void Draw(MaterialBase material)
         {
             using (var blend = new ScopedEnable(EnableCap.Blend))
             using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))

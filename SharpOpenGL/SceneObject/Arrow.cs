@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Core.MaterialBase;
+using Core.Primitive;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 
-namespace Core.Primitive
+namespace SharpOpenGL
 {
     public class Arrow : SceneObject
     {
@@ -43,7 +44,7 @@ namespace Core.Primitive
             ArrowHead.Color = color;
         }
         
-        public override void Draw(MaterialBase.MaterialBase material)
+        public override void Draw(MaterialBase material)
         {
             //
             ArrowBody.ParentMatrix = ParentMatrix;

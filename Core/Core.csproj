@@ -71,6 +71,7 @@
     <Compile Include="CustomSerialize\MatrixSerialize.cs" />
     <Compile Include="CustomSerialize\VectorSerialize.cs" />
     <Compile Include="IImportable.cs" />
+    <Compile Include="Primitive\Line.cs" />
     <Compile Include="Primitive\SceneObject.cs" />
     <Compile Include="Primitive\SceneObjectManager.cs" />
     <Compile Include="RenderCommand.cs" />
@@ -103,13 +104,7 @@
     <Compile Include="OpenGLShader\TesselControlShader.cs" />
     <Compile Include="OpenGLShader\TesselEvalShader.cs" />
     <Compile Include="PatchDrawable.cs" />
-    <Compile Include="Primitive\Arrow.cs" />
-    <Compile Include="Primitive\ThreeAxis.cs" />
-    <Compile Include="Primitive\Cone.cs" />
-    <Compile Include="Primitive\Cylinder.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
-    <Compile Include="Primitive\Sphere.cs" />
-    <Compile Include="Primitive\Torus.cs" />
     <Compile Include="QuadDrawable.cs" />
     <Compile Include="RenderResource.cs" />
     <Compile Include="ResizableManager.cs" />
@@ -136,8 +131,6 @@
     <Compile Include="OpenGLShader\UniformVariableMetaData.cs" />
     <Compile Include="OpenGLShader\VertexAttribute.cs" />
     <Compile Include="OpenGLShader\VertexShader.cs" />
-    <Compile Include="Primitive\Cube.cs" />
-    <Compile Include="Primitive\Line.cs" />
     <Compile Include="Primitive\LineDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OpenGLShader\ShaderProgram.cs" />

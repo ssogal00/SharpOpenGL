@@ -5,8 +5,10 @@ using System.Diagnostics;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Core;
+using Core.MaterialBase;
+using Core.Primitive;
 
-namespace Core.Primitive
+namespace SharpOpenGL
 {
     public class Sphere : SceneObject
     {
@@ -42,7 +44,7 @@ namespace Core.Primitive
             VertexList.Clear();
         }
 
-        public override void Draw(MaterialBase.MaterialBase material)
+        public override void Draw(MaterialBase material)
         {
             material.SetUniformVarData("Model", LocalMatrix * ParentMatrix , true);
             drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);

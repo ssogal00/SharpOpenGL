@@ -55,5 +55,6 @@ namespace Core.Primitive
         }
 
         protected string ObjectName = "";
+        protected bool bReadyToDraw = false;
     }
 }

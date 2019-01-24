@@ -26,7 +26,7 @@ namespace SharpOpenGL.Scene
             
         }
 
-        public void AddSceneObject(ISceneObject newSceneObject, MaterialBase material)
+        public void AddSceneObject(SceneObject newSceneObject, MaterialBase material)
         {
             if (SceneObjects.ContainsKey(material))
             {
@@ -34,7 +34,7 @@ namespace SharpOpenGL.Scene
             }
             else
             {
-                SceneObjects[material] = new List<ISceneObject> {newSceneObject};
+                SceneObjects[material] = new List<SceneObject> {newSceneObject};
             }
         }
 
@@ -53,7 +53,7 @@ namespace SharpOpenGL.Scene
         protected int width = 1024;
         protected int height = 768;
 
-        protected Dictionary<MaterialBase, List<ISceneObject>> SceneObjects = new Dictionary<MaterialBase, List<ISceneObject>>();
+        protected Dictionary<MaterialBase, List<SceneObject>> SceneObjects = new Dictionary<MaterialBase, List<SceneObject>>();
 
     }
 }

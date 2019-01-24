@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core;
 using Core.Primitive;
 
-namespace Core
+namespace SharpOpenGL
 {
     public class Cube
     {

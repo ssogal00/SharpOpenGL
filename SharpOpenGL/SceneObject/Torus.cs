@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Core;
+using Core.MaterialBase;
+using Core.Primitive;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace Core.Primitive
+namespace SharpOpenGL
 {
     public class Torus : RenderResource
     {
@@ -30,7 +33,7 @@ namespace Core.Primitive
             VertexList.Clear();
         }
 
-        public void Draw(MaterialBase.MaterialBase material)
+        public void Draw(MaterialBase material)
         {
             drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
         }

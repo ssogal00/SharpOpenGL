@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using OpenTK;
 using System.Diagnostics;
+using Core;
 using Core.Buffer;
+using Core.MaterialBase;
 using OpenTK.Graphics.OpenGL;
 using Core.Primitive;
 
-namespace Core.Primitive
+namespace SharpOpenGL
 {
     public class Cone : SceneObject
     {
@@ -39,7 +41,7 @@ namespace Core.Primitive
             VertexList.Clear();
         }
 
-        public override void Draw(MaterialBase.MaterialBase material)
+        public override void Draw(MaterialBase material)
         {
             using (var dummy = new ScopedBind(VB))
             {

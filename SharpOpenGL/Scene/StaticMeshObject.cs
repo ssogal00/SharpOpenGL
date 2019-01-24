@@ -5,15 +5,9 @@ using OpenTK;
 
 namespace SharpOpenGL.Scene
 {
-    public class StaticMeshObject : ISceneObject
+    public class StaticMeshObject : SceneObject
     {
-        public Vector3 Translation { get; set; }
-
-        public float Scale { get; set; }
-
-        public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
-
-        public Matrix4 LocalMatrix
+        public override Matrix4 LocalMatrix
         {
             get
             {
@@ -21,16 +15,13 @@ namespace SharpOpenGL.Scene
             }
         }
 
-        public float Yaw { get; set; } = 0;
-        public float Pitch { get; set; } = 0;
-        public float Roll { get; set; } = 0;
 
         public void Draw()
         {
 
         }
 
-        public void Draw(MaterialBase material)
+        public override void Draw(MaterialBase material)
         {
         }
         

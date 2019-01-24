@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.MaterialBase;
+using Core.Primitive;
 using OpenTK;
 
-namespace Core.Primitive
+namespace SharpOpenGL
 {
     public class ThreeAxis : SceneObject
     {
@@ -23,7 +25,7 @@ namespace Core.Primitive
         {
         }
 
-        public override void Draw(MaterialBase.MaterialBase material)
+        public override void Draw(MaterialBase material)
         {
             // 
             xAxis.ParentMatrix = LocalMatrix * ParentMatrix;

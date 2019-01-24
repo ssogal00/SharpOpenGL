@@ -6,8 +6,10 @@ using System.Diagnostics;
 using Core.MaterialBase;
 using OpenTK.Graphics.OpenGL;
 using System.Linq;
+using Core;
+using Core.Primitive;
 
-namespace Core.Primitive
+namespace SharpOpenGL
 {
     public class Cylinder : SceneObject
     {
@@ -42,7 +44,7 @@ namespace Core.Primitive
             VertexList.Clear();
         }
 
-        public override void Draw(MaterialBase.MaterialBase material)
+        public override void Draw(MaterialBase material)
         {   
             material.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
             drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);

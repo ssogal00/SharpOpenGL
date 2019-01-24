@@ -60,8 +60,6 @@ namespace SharpOpenGL
         
         protected Cylinder TestCyliner = new Cylinder(10, 10, 24);
         protected Cone TestCone = new Cone(10, 20, 12);
-        protected Sphere TestSphere = new Core.Primitive.Sphere(10, 20, 20);
-        protected Torus TestTorus = new Core.Primitive.Torus(10, 2, 15);
         protected Arrow TestArrow = new Arrow(10);
         protected ThreeAxis TestAxis = new ThreeAxis();
         protected ThreeDText TestText = null;
