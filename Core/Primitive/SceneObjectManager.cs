@@ -45,6 +45,14 @@ namespace Core.Primitive
             }
         }
 
+        public void Tick(double delta)
+        {
+            foreach (var obj in SceneObjectList)
+            {
+                obj.Tick(delta);
+            }
+        }
+
         public void AddSceneObject(SceneObject obj)
         {
             SceneObjectList.Add(obj);

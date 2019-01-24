@@ -28,7 +28,8 @@ namespace SharpOpenGL
         public bool IsInitialized => bInitialized;
 
         //protected Cone testCone = new Cone(10, 20, 12);
-        protected ThreeAxis testAxis = new ThreeAxis();
+        // protected ThreeAxis testAxis = new ThreeAxis();
+        protected  Sphere testSphere = new Sphere(10,10,10);
 
         public void Initialize()
         {
@@ -57,6 +58,7 @@ namespace SharpOpenGL
             if (bFirstTick == false)
             {
                 TickableObjectManager.Tick(stopwatch.ElapsedMilliseconds * 0.001);
+                SceneObjectManager.Get().Tick(stopwatch.ElapsedMilliseconds * 0.001);
                 stopwatch.Reset();
             }
             
