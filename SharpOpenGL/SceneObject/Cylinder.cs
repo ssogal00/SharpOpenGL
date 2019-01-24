@@ -29,13 +29,14 @@ namespace SharpOpenGL
             Radius = radius;
             Height = height;
             Count = count;
+            Initialize();
         }
 
         public override void Initialize()
         {
             GenerateVertices();
 
-            RenderingThread.Get().Enqueue(() =>
+            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
             {
                 drawable = new DrawableBase<PNC_VertexAttribute>();
                 var vertexArray = VertexList.ToArray();

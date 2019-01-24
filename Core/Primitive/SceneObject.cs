@@ -47,6 +47,9 @@ namespace Core.Primitive
         }
 
         protected string ObjectName = "";
+
+        public bool IsReadyToDraw => bReadyToDraw;
+
         protected bool bReadyToDraw = false;
     }
 }

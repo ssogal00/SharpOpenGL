@@ -12,7 +12,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL
 {
-    public class Torus : RenderResource
+    public class Torus : SceneObject
     {
         public Torus(float radius1, float radius2, int sampleCount)
         {
@@ -20,22 +20,33 @@ namespace SharpOpenGL
             Radius1 = radius1;
             Radius2 = radius2;
             SampleCount = sampleCount;
+
+            Initialize();
         }
 
         public override void Initialize()
-        {
-            base.Initialize();
+        {   
             GenerateVertices();
-            drawable = new DrawableBase<PNC_VertexAttribute>();
-            var vertexArray = VertexList.ToArray();
-            drawable.SetupVertexData(ref vertexArray);
 
-            VertexList.Clear();
+            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread
+            (
+            ()=>
+            {
+                drawable = new DrawableBase<PNC_VertexAttribute>();
+                var vertexArray = VertexList.ToArray();
+                drawable.SetupVertexData(ref vertexArray);
+
+                VertexList.Clear();
+                bReadyToDraw = true;
+            });
         }
 
-        public void Draw(MaterialBase material)
+        public override void Draw(MaterialBase material)
         {
-            drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+            if (bReadyToDraw)
+            {
+                drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+            }
         }
 
         protected void GenerateVertices()

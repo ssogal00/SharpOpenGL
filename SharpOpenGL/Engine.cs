@@ -26,7 +26,8 @@ namespace SharpOpenGL
 
         public bool IsInitialized => bInitialized;
 
-        protected Cone testCone = new Cone(10, 20, 12);
+        //protected Cone testCone = new Cone(10, 20, 12);
+        protected ThreeAxis testAxis = new ThreeAxis();
 
         public void Initialize()
         {

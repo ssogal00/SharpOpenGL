@@ -37,6 +37,7 @@ namespace SharpOpenGL
 
         protected MaterialBase GBufferMaterial = null;
         protected MaterialBase GridMaterial = null;
+        protected MaterialBase WireframeMaterial = null;
 
 
         public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyDownEvent;
@@ -78,6 +79,7 @@ namespace SharpOpenGL
             sponzamesh = AssetManager.LoadAssetSync<StaticMeshAsset>("sponza2.staticmesh");
             GBufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
             GridMaterial = AssetManager.LoadAssetSync<MaterialBase>("GridRenderMaterial");
+            WireframeMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferPNC");
             bInitialized = true;
         }
 
@@ -182,9 +184,18 @@ namespace SharpOpenGL
                 GBufferMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref Transform);
                 sponzamesh.Draw(GBufferMaterial);
 
-                
-
                 GridDrawer.Get().Draw(GridMaterial);
+
+                using (var dummy = new WireFrameMode())
+                {
+                    WireframeMaterial.BindAndExecute
+                    (() =>
+                        {   
+                            WireframeMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
+                            SceneObjectManager.Get().Draw(WireframeMaterial);
+                        }
+                    );
+                }
             });
 
             ScreenBlit.Blit(renderGBuffer.GetColorAttachement, 0, 0, 2, 2);

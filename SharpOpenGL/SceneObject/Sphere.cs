@@ -29,27 +29,32 @@ namespace SharpOpenGL
             Radius = radius;
             StackCount = stackcount;
             SectorCount = sectorcount;
+
+            Initialize();
         }
         public override void Initialize()
-        {
-            base.Initialize();
-
+        {   
             GenerateVertices();
 
-            drawable = new DrawableBase<PNC_VertexAttribute>();
-            var vertexArray = VertexList.ToArray();
-            drawable.SetupVertexData(ref vertexArray);
+            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
+            {
+                drawable = new DrawableBase<PNC_VertexAttribute>();
+                var vertexArray = VertexList.ToArray();
+                drawable.SetupVertexData(ref vertexArray);
 
-
-            VertexList.Clear();
+                VertexList.Clear();
+                bReadyToDraw = true;
+            });
         }
 
         public override void Draw(MaterialBase material)
         {
-            material.SetUniformVarData("Model", LocalMatrix * ParentMatrix , true);
-            drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+            if (bReadyToDraw)
+            {
+                material.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
+                drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+            }
         }
-
 
         protected void GenerateVertices()
         {

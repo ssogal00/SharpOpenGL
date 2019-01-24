@@ -12,7 +12,7 @@ namespace SharpOpenGL
 {
     public class RenderingThread : Singleton<RenderingThread>
     {
-        
+
         public static int RenderingThreadId = 0;
         private Stopwatch stopwatch = new Stopwatch();
         private RenderingThreadWindow window = null;
@@ -49,6 +49,30 @@ namespace SharpOpenGL
         }
 
         private bool bRequestExist = false;
+
+        public void ExecuteImmediatelyIfRenderingThread(Action action)
+        {
+            if (IsInRenderingThread())
+            {
+                action();
+            }
+            else
+            {
+                Enqueue(action);
+            }
+        }
+
+        public void ExecuteImmediatelyIfRenderingThread(ThreadJob newJob)
+        {
+            if (IsInRenderingThread())
+            {
+                newJob.Do();
+            }
+            else
+            {
+                Enqueue(newJob);
+            }
+        }
 
 
         public void Enqueue(ThreadJob newJob)

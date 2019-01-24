@@ -46,14 +46,16 @@ namespace SharpOpenGL
         
         public override void Draw(MaterialBase material)
         {
-            //
-            ArrowBody.ParentMatrix = ParentMatrix;
-            ArrowBody.Draw(material);
+            if (ArrowBody.IsReadyToDraw && ArrowHead.IsReadyToDraw)
+            {
+                ArrowBody.ParentMatrix = ParentMatrix;
+                ArrowBody.Draw(material);
 
-            //
-            ArrowHead.ParentMatrix = ParentMatrix;
-            ArrowHead.Translation = ArrowHeadTranslation;
-            ArrowHead.Draw(material);
+                //
+                ArrowHead.ParentMatrix = ParentMatrix;
+                ArrowHead.Translation = ArrowHeadTranslation;
+                ArrowHead.Draw(material);
+            }
         }
 
         protected Cylinder ArrowBody = new Cylinder(1,10,10);

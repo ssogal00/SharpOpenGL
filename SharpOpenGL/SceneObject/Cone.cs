@@ -37,7 +37,7 @@ namespace SharpOpenGL
         {
             GenerateVertices();
 
-            RenderingThread.Get().Enqueue(
+            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(
             () =>
             {
                 VB = new StaticVertexBuffer<PNC_VertexAttribute>();

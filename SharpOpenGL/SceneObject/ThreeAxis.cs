@@ -27,26 +27,29 @@ namespace SharpOpenGL
 
         public override void Draw(MaterialBase material)
         {
-            // 
-            xAxis.ParentMatrix = LocalMatrix * ParentMatrix;
-            xAxis.Draw(material);
+            if (xAxis.IsReadyToDraw && yAxis.IsReadyToDraw && zAxis.IsReadyToDraw)
+            {
+                // 
+                xAxis.ParentMatrix = LocalMatrix * ParentMatrix;
+                xAxis.Draw(material);
 
-            //
-            yAxis.ParentMatrix = Matrix4.CreateRotationZ(OpenTK.MathHelper.DegreesToRadians(90))* LocalMatrix * ParentMatrix;
-            yAxis.Draw(material);
-            //
+                //
+                yAxis.ParentMatrix = Matrix4.CreateRotationZ(OpenTK.MathHelper.DegreesToRadians(90)) * LocalMatrix * ParentMatrix;
+                yAxis.Draw(material);
+                //
 
-            zAxis.ParentMatrix = Matrix4.CreateRotationY(OpenTK.MathHelper.DegreesToRadians(-90)) *LocalMatrix* ParentMatrix;
-            zAxis.Draw(material);
+                zAxis.ParentMatrix = Matrix4.CreateRotationY(OpenTK.MathHelper.DegreesToRadians(-90)) * LocalMatrix * ParentMatrix;
+                zAxis.Draw(material);
+            }
         }
         // @ ISceneobject interface
 
         public ThreeAxis()
-        {
+        {   
         }
 
 
-        protected Arrow xAxis = new Arrow(10, new Vector3(1,0,0));
+        protected Arrow xAxis = new Arrow(10, new Vector3(1, 0, 0));
         protected Arrow yAxis = new Arrow(10, new Vector3(0, 1, 0));
         protected Arrow zAxis = new Arrow(10, new Vector3(0, 0, 1));
     }
