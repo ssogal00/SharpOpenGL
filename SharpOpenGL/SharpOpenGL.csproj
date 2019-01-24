@@ -181,7 +181,6 @@
     <Compile Include="Scene\StaticMeshObject.cs" />
     <Compile Include="Scene\TesselationScene.cs" />
     <Compile Include="StaticMeshCapture.cs" />
-    <Compile Include="StaticMesh\ObjMesh.cs" />
     <Compile Include="StaticMesh\ObjMeshMaterial.cs" />
     <Compile Include="StaticMesh\ObjMeshSection.cs" />
     <Compile Include="Program.cs" />
