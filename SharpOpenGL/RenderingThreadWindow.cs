@@ -140,13 +140,15 @@ namespace SharpOpenGL
 
             this.Title = string.Format("MyEngine({0}x{1})", Width, Height);
         }
+
+        protected override void OnUpdateFrame(FrameEventArgs e)
+        {
+            base.OnUpdateFrame(e);
+            RenderingThread.Get().ExecuteTimeSlice();
+        }
         
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            base.OnUpdateFrame(e);
-
-            RenderingThread.Get().ExecuteTimeSlice();
-
             GL.ClearColor(Color.Brown);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 

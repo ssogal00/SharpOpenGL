@@ -33,7 +33,6 @@ namespace Core.Texture
             }
         }
 
-
         public override void Load(string filePath, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         {
             using (var bitmap = new ScopedFreeImage(filePath))

@@ -178,7 +178,6 @@
     <Compile Include="RenderPass.cs" />
     <Compile Include="RenderingThreadWindow.cs" />
     <Compile Include="Scene\SceneBase.cs" />
-    <Compile Include="Scene\SponzaScene.cs" />
     <Compile Include="Scene\StaticMeshObject.cs" />
     <Compile Include="Scene\TesselationScene.cs" />
     <Compile Include="StaticMeshCapture.cs" />
