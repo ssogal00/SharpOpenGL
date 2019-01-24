@@ -9,6 +9,7 @@ using Core.Buffer;
 using Core.CustomEvent;
 using Core.MaterialBase;
 using Core.Texture;
+using Core.Tickable;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
@@ -69,9 +70,9 @@ namespace SharpOpenGL
             GL.Enable(EnableCap.TextureCubeMapSeamless);
 
             AssetManager.Get().DiscoverShader();
-            ScreenBlit.SetGridSize(2,2);
-
+            AssetManager.Get().DiscoverStaticMesh();
             OnGLContextCreated(this, e);
+            ScreenBlit.SetGridSize(2, 2);
 
             sponzamesh = AssetManager.LoadAssetSync<StaticMeshAsset>("sponza2.staticmesh");
             GBufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");

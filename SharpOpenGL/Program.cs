@@ -28,7 +28,7 @@ namespace SharpOpenGL
     public class MainWindow : GameWindow
     {
         public MainWindow()
-        :base (1024,768)
+        :base (512,384)
         {
         }
         public MainWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options,
@@ -359,11 +359,6 @@ namespace SharpOpenGL
             }
 
             renderThread.Join();
-
-            /*using (MainWindow example = new MainWindow())
-            {
-                example.Run(200);
-            }*/
         }
     }
 }

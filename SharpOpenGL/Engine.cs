@@ -36,7 +36,7 @@ namespace SharpOpenGL
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
             //AssetManager.Get().DiscoverShader();
-            AssetManager.Get().DiscoverStaticMesh();
+            //AssetManager.Get().DiscoverStaticMesh();
 
             while (RenderingThread.Get().IsIdle() == false)
             {
@@ -45,6 +45,8 @@ namespace SharpOpenGL
 
             bInitialized = true;
         }
+
+        public bool SeperateRenderingThreadEnabled => bIsSperateRenderingThread;
 
         public void Tick()
         {
@@ -68,6 +70,8 @@ namespace SharpOpenGL
         }
 
         public bool IsRequestExit => bIsRequestExit;
+
+        protected bool bIsSperateRenderingThread = true;
 
         protected bool bIsRequestExit = false;
         
