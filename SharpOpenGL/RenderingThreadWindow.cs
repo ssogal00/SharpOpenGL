@@ -73,6 +73,7 @@ namespace SharpOpenGL
 
             AssetManager.Get().DiscoverShader();
             AssetManager.Get().DiscoverStaticMesh();
+
             OnGLContextCreated(this, e);
             ScreenBlit.SetGridSize(2, 2);
 

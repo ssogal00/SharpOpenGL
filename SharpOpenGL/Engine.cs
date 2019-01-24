@@ -11,6 +11,7 @@ using System.Threading;
 using Core.Primitive;
 using Core.Tickable;
 using SharpOpenGL.Asset;
+using SharpOpenGL.Font;
 
 namespace SharpOpenGL
 {
@@ -39,10 +40,7 @@ namespace SharpOpenGL
             
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
-            while (RenderingThread.Get().IsIdle() == false)
-            {
-                Thread.Sleep(0);
-            }
+            FontManager.Get().Initialize();
 
             bInitialized = true;
         }

@@ -21,11 +21,18 @@ namespace SharpOpenGL.Font
     {
         public void Initialize()
         {
-            fontAtlas = new Texture2D();
-            FontRenderMaterial = AssetManager.LoadAssetSync<MaterialBase>("FontRenderMaterial");
-            FontBoxRenderMaterial = AssetManager.LoadAssetSync<MaterialBase>("FontBoxRenderMaterial");
             freeTypeLib = new FreeType();
-            BuildFontTextureAtlas();
+
+            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread
+            (
+            () =>
+            {
+                fontAtlas = new Texture2D();
+                FontRenderMaterial = AssetManager.LoadAssetSync<MaterialBase>("FontRenderMaterial");
+                FontBoxRenderMaterial = AssetManager.LoadAssetSync<MaterialBase>("FontBoxRenderMaterial");
+                BuildFontTextureAtlas();
+            }
+            );
         }
 
         public long GetKerning(ulong previous, ulong current)
@@ -33,7 +40,7 @@ namespace SharpOpenGL.Font
             return freeTypeLib.GetKerning(previous, current);
         }
 
-        public void BuildFontTextureAtlas()
+        private void BuildFontTextureAtlas()
         {
             var characters = Enumerable.Range(char.MinValue, 126).Select(c => (char)c).Where(c => !char.IsControl(c)).ToArray();
             var charString = new string (characters);

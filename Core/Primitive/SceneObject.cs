@@ -50,6 +50,10 @@ namespace Core.Primitive
 
         public bool IsReadyToDraw => bReadyToDraw;
 
+        public bool IsVisible => bVisible;
+
         protected bool bReadyToDraw = false;
+
+        protected bool bVisible = true;
     }
 }

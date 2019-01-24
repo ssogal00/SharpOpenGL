@@ -3,7 +3,7 @@ using Core.MaterialBase;
 using Core.Primitive;
 using OpenTK;
 
-namespace SharpOpenGL.Scene
+namespace SharpOpenGL
 {
     public class StaticMeshObject : SceneObject
     {
@@ -14,6 +14,8 @@ namespace SharpOpenGL.Scene
                 return Matrix4.CreateScale(Scale) * Matrix4.CreateTranslation(Translation);
             }
         }
+
+
 
 
         public void Draw()

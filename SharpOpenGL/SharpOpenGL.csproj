@@ -184,7 +184,7 @@
     <Compile Include="SceneObject\ThreeAxis.cs" />
     <Compile Include="SceneObject\Torus.cs" />
     <Compile Include="Scene\SceneBase.cs" />
-    <Compile Include="Scene\StaticMeshObject.cs" />
+    <Compile Include="SceneObject\StaticMeshObject.cs" />
     <Compile Include="Scene\TesselationScene.cs" />
     <Compile Include="StaticMeshCapture.cs" />
     <Compile Include="StaticMesh\ObjMeshMaterial.cs" />
