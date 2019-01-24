@@ -7,16 +7,11 @@ using OpenTK;
 
 namespace Core.Primitive
 {
-    public class ThreeAxis : RenderResource , ISceneObject
+    public class ThreeAxis : SceneObject
     {
         // @ ISceneobject interface
-        public Vector3 Translation { get; set; } = new Vector3(0, 0, 0);
 
-        public float Scale { get; set; } = 1.0f;
-
-        public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
-
-        public OpenTK.Matrix4 LocalMatrix
+        public override OpenTK.Matrix4 LocalMatrix
         {
             get
             {
@@ -24,15 +19,11 @@ namespace Core.Primitive
             }
         }
 
-        public float Yaw { get; set; } = 0;
-        public float Pitch { get; set; } = 0;
-        public float Roll { get; set; } = 0;
-
         public void Draw()
         {
         }
 
-        public void Draw(MaterialBase.MaterialBase material)
+        public override void Draw(MaterialBase.MaterialBase material)
         {
             // 
             xAxis.ParentMatrix = LocalMatrix * ParentMatrix;

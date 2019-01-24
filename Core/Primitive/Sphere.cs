@@ -8,16 +8,11 @@ using Core;
 
 namespace Core.Primitive
 {
-    public class Sphere : RenderResource, ISceneObject
+    public class Sphere : SceneObject
     {
-        // @ ISceneobject interface
-        public Vector3 Translation { get; set; } = new Vector3(0, 0, 0);
+        
 
-        public float Scale { get; set; } = 1.0f;
-
-        public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
-
-        public OpenTK.Matrix4 LocalMatrix
+        public override OpenTK.Matrix4 LocalMatrix
         {
             get
             {
@@ -25,10 +20,6 @@ namespace Core.Primitive
             }
         }
 
-        public float Yaw { get; set; } = 0;
-        public float Pitch { get; set; } = 0;
-        public float Roll { get; set; } = 0;
-        // @ ISceneobject interface
 
         public Sphere(float radius, int stackcount, int sectorcount)
         {
@@ -51,7 +42,7 @@ namespace Core.Primitive
             VertexList.Clear();
         }
 
-        public void Draw(MaterialBase.MaterialBase material)
+        public override void Draw(MaterialBase.MaterialBase material)
         {
             material.SetUniformVarData("Model", LocalMatrix * ParentMatrix , true);
             drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);

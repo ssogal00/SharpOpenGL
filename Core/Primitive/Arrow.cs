@@ -11,16 +11,11 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core.Primitive
 {
-    public class Arrow : RenderResource, ISceneObject
+    public class Arrow : SceneObject
     {
         // @ ISceneobject interface
-        public Vector3 Translation { get; set; } = new Vector3(0, 0, 0);
 
-        public float Scale { get; set; } = 1.0f;
-
-        public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
-
-        public OpenTK.Matrix4 LocalMatrix
+        public override OpenTK.Matrix4 LocalMatrix
         {
             get
             {
@@ -30,9 +25,6 @@ namespace Core.Primitive
             }
         }
 
-        public float Yaw { get; set; } = 0;
-        public float Pitch { get; set; } = 0;
-        public float Roll { get; set; } = 0;
 
         public void Draw() { }
         // @ ISceneobject interface
@@ -51,7 +43,7 @@ namespace Core.Primitive
             ArrowHead.Color = color;
         }
         
-        public void Draw(MaterialBase.MaterialBase material)
+        public override void Draw(MaterialBase.MaterialBase material)
         {
             //
             ArrowBody.ParentMatrix = ParentMatrix;

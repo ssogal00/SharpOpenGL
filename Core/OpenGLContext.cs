@@ -9,19 +9,15 @@ namespace Core
 {
     public class OpenGLContext : Singleton<OpenGLContext>
     {
-        public void SetGameWindow(OpenTK.GameWindow window)
+        public void SetRenderingWindow(OpenTK.GameWindow window)
         {
             this.window = window;            
         }
 
-        public TextureBase CreateTexture()
-        {
-            return null;
-        }
-
+        
         public bool IsValid { get { return this.window != null; } }
 
-        public OpenTK.GameWindow GameWindow => window;
+        public OpenTK.GameWindow RenderingWindow => window;
 
         public int WindowWidth => window.Width;
         public int WindowHeight => window.Height;
@@ -29,11 +25,6 @@ namespace Core
         public OpenGLContext()
         {
             this.window = null;
-        }
-
-        public OpenGLContext(OpenTK.GameWindow window)
-        {
-            this.window = window;
         }
         
         public void SetMainThreadId(int threadId)
@@ -59,28 +50,12 @@ namespace Core
 
         public static EventHandler<EventArgs> OpenGLContextCreated;
 
-        public void MakeCurrent()
-        {
-            window.MakeCurrent();
-        }
-
         protected void CheckInRenderThread()
         {
             Debug.Assert(RenderingThreadId == Thread.CurrentThread.ManagedThreadId);
         }
 
-        public void Clear()
-        {   
-            CheckInRenderThread();
-            GL.ClearColor(Color.Brown);
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-        }
-
-        public void SwapBuffers()
-        {   
-            CheckInRenderThread();
-            window.SwapBuffers();
-        }
+        
 
         public int GetActiveTexture()
         {

@@ -1,40 +1,59 @@
-﻿
+﻿using System;
 using Core.CustomAttribute;
-using ZeroFormatter;
 using OpenTK;
-using Core.MaterialBase;
 
 namespace Core.Primitive
 {
-    public interface ISceneObject
+    public abstract class SceneObject
     {
         [ExposeUI("Translation")]
-        Vector3 Translation { get; set; }
+        public virtual Vector3 Translation { get; set; }
 
-        [ExposeUI]
-        float Scale { get; set; }
+        [ExposeUI] public virtual float Scale { get; set; } = 1.0f;
 
-        [ExposeUI, UIGroup("Rotation")]
-        float Yaw { get; set; }
+        [ExposeUI, UIGroup("Rotation")] public virtual float Yaw { get; set; } = 0;
 
-        [ExposeUI, UIGroup("Rotation")]
-        float Pitch { get; set; }
+        [ExposeUI, UIGroup("Rotation")] public virtual float Pitch { get; set; } = 0;
 
-        [ExposeUI, UIGroup("Rotation")]
-        float Roll { get; set; }
+        [ExposeUI, UIGroup("Rotation")] public virtual float Roll { get; set; } = 0;
 
-        OpenTK.Matrix4 ParentMatrix
-        {
-            get;
-            set;
-        }
+        public virtual OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
 
-        OpenTK.Matrix4 LocalMatrix
+        public virtual OpenTK.Matrix4 LocalMatrix
         {
             get;
         }
 
-        void Draw(MaterialBase.MaterialBase material);
+        public virtual void Tick(double elapsed) { }
 
+        public abstract void Draw(MaterialBase.MaterialBase material);
+
+        public static EventHandler<EventArgs> OnOpenGLContextCreated;
+        
+
+        public SceneObject()
+        {
+            // if opengl context not created
+            if (OpenGLContext.Get().IsValid == false)
+            {
+                OnOpenGLContextCreated += this.OnGLContextCreated;
+            }
+            else
+            {
+                Initialize();
+            }
+        }
+       
+        public virtual void OnGLContextCreated(object sender, EventArgs e)
+        {
+            Initialize();
+        }
+
+        public virtual void Initialize()
+        {
+
+        }
+
+        protected string ObjectName = "";
     }
 }

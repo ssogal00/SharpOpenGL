@@ -71,6 +71,8 @@
     <Compile Include="CustomSerialize\MatrixSerialize.cs" />
     <Compile Include="CustomSerialize\VectorSerialize.cs" />
     <Compile Include="IImportable.cs" />
+    <Compile Include="Primitive\SceneObject.cs" />
+    <Compile Include="Primitive\SceneObjectManager.cs" />
     <Compile Include="RenderCommand.cs" />
     <Compile Include="DrawingState.cs" />
     <Compile Include="Extension.cs" />
@@ -102,7 +104,6 @@
     <Compile Include="OpenGLShader\TesselEvalShader.cs" />
     <Compile Include="PatchDrawable.cs" />
     <Compile Include="Primitive\Arrow.cs" />
-    <Compile Include="Primitive\SceneObject.cs" />
     <Compile Include="Primitive\ThreeAxis.cs" />
     <Compile Include="Primitive\Cone.cs" />
     <Compile Include="Primitive\Cylinder.cs" />

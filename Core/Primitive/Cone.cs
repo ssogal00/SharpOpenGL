@@ -8,28 +8,16 @@ using Core.Primitive;
 
 namespace Core.Primitive
 {
-    public class Cone : RenderResource, ISceneObject
+    public class Cone : SceneObject
     {
-        // @ ISceneobject interface
-        public Vector3 Translation { get; set; } = new Vector3(0, 0, 0);
-
-        public float Scale { get; set; } = 1.0f;
-
-        public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
-
-        public OpenTK.Matrix4 LocalMatrix
+        public override OpenTK.Matrix4 LocalMatrix
         {
             get
             {
                 return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
             }
         }
-
-        public float Yaw { get; set; } = 0;
-        public float Pitch { get; set; } = 0;
-        public float Roll { get; set; } = 0;
-        // @ ISceneobject interface
-
+        
         public Cone(float radius, float height, uint count)
         {
             Debug.Assert(radius > 0 && height > 0 && count > 0);
@@ -51,7 +39,7 @@ namespace Core.Primitive
             VertexList.Clear();
         }
 
-        public void Draw(MaterialBase.MaterialBase material)
+        public override void Draw(MaterialBase.MaterialBase material)
         {
             using (var dummy = new ScopedBind(VB))
             {

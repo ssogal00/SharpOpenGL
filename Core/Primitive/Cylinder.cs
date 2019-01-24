@@ -9,29 +9,16 @@ using System.Linq;
 
 namespace Core.Primitive
 {
-    public class Cylinder : RenderResource, ISceneObject
+    public class Cylinder : SceneObject
     {
-        // @ ISceneobject interface
-        public Vector3 Translation { get; set; } = new Vector3(0,0,0);
 
-        public  float Scale { get; set; } = 1.0f;
-
-        public OpenTK.Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
-
-        public OpenTK.Matrix4 LocalMatrix
+        public override OpenTK.Matrix4 LocalMatrix
         {
             get
             {
                 return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
             }
         }
-        
-        public float Yaw { get; set; } = 0;
-        public float Pitch { get; set; } = 0;
-        public float Roll { get; set; } = 0;
-        // @ ISceneobject interface
-
-
 
         public Cylinder(float radius, float height, uint count)
         {
@@ -55,15 +42,12 @@ namespace Core.Primitive
             VertexList.Clear();
         }
 
-        public void Draw(MaterialBase.MaterialBase material)
+        public override void Draw(MaterialBase.MaterialBase material)
         {   
             material.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
             drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
         }
 
-        public void Draw()
-        {
-        }
 
         protected void GenerateVertices()
         {

@@ -104,7 +104,7 @@ namespace SharpOpenGL
 
             mainThreadId = Thread.CurrentThread.ManagedThreadId;
 
-            OpenGLContext.Get().SetGameWindow(this);
+            OpenGLContext.Get().SetRenderingWindow(this);
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
             Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
