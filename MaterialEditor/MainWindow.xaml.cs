@@ -99,10 +99,10 @@ namespace MaterialEditor
             Formatter<DefaultResolver, OpenTK.Vector2>.Register(new Vector2Formatter<DefaultResolver>());
             Formatter<DefaultResolver, OpenTK.Vector4>.Register(new Vector4Formatter<DefaultResolver>());
 
-            AssetManager.Get().DiscoverStaticMesh();
-            AssetManager.Get().DiscoverShader();
+            AssetManager.Get().ImportStaticMeshes();
+            AssetManager.Get().CompileShaders();
 
-            DeferredMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
+            DeferredMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
             LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
             
            

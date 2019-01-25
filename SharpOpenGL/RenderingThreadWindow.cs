@@ -71,16 +71,16 @@ namespace SharpOpenGL
             GL.Enable(EnableCap.TextureCubeMap);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
 
-            AssetManager.Get().DiscoverShader();
-            AssetManager.Get().DiscoverStaticMesh();
+            ShaderManager.Get().CompileShaders();
+            AssetManager.Get().ImportStaticMeshes();
 
             OnGLContextCreated(this, e);
             ScreenBlit.SetGridSize(2, 2);
 
             sponzamesh = AssetManager.LoadAssetSync<StaticMeshAsset>("sponza2.staticmesh");
-            GBufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
-            GridMaterial = AssetManager.LoadAssetSync<MaterialBase>("GridRenderMaterial");
-            WireframeMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferPNC");
+            GBufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
+            GridMaterial = ShaderManager.Get().GetMaterial("GridRenderMaterial");
+            WireframeMaterial = ShaderManager.Get().GetMaterial("GBufferPNC");
             bInitialized = true;
         }
 

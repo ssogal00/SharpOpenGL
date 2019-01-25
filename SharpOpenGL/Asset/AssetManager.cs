@@ -45,18 +45,13 @@ namespace SharpOpenGL.Asset
             T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
             AssetMap.TryAdd(Path.GetFileName(path), asset);
 
-            if (RenderingThread.Get().IsInRenderingThread())
-            {
-                asset.InitializeInRenderThread();
-            }
-            else
-            {
-                RenderingThread.Get().Enqueue(
+            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread
+            (
                 () =>
                 {
                     asset.InitializeInRenderThread();
-                });
-            }
+                }
+            );
             
             return asset;
         }
@@ -86,7 +81,7 @@ namespace SharpOpenGL.Asset
             });
         }
 
-        public void DiscoverShader()
+        public void CompileShaders()
         {
             //Debug.Assert(RenderingThread.Get().IsInRenderingThread());
 
@@ -114,7 +109,7 @@ namespace SharpOpenGL.Asset
         }
 
 
-        public void DiscoverStaticMesh()
+        public void ImportStaticMeshes()
         {
             List<string> objFileList = new List<string>();
             List<string> mtlFileList = new List<string>();

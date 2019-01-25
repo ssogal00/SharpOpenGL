@@ -15,9 +15,6 @@ namespace SharpOpenGL
             }
         }
 
-
-
-
         public void Draw()
         {
 
@@ -26,6 +23,5 @@ namespace SharpOpenGL
         public override void Draw(MaterialBase material)
         {
         }
-        
     }
 }

@@ -131,8 +131,8 @@ namespace SharpOpenGL
             OnResourceCreate += RenderResource.OnOpenGLContextCreated;
             OnWindowResize += ResizableManager.Get().ResizeEventHandler;
 
-            AssetManager.Get().DiscoverStaticMesh();
-            AssetManager.Get().DiscoverShader();
+            AssetManager.Get().ImportStaticMeshes();
+            AssetManager.Get().CompileShaders();
 
             OnResourceCreate(this, e);
 
@@ -145,11 +145,11 @@ namespace SharpOpenGL
 
             Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
             Sphere = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
-            GBufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
-            DefaultMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferWithoutTexture");
-            GBufferPNCMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferPNC");
-            GridMaterial = AssetManager.LoadAssetSync<MaterialBase>("GridRenderMaterial");
-            ThreeDTextMaterial = AssetManager.LoadAssetSync<MaterialBase>("ThreeDTextRenderMaterial");
+            GBufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
+            DefaultMaterial = ShaderManager.Get().GetMaterial("GBufferWithoutTexture");
+            GBufferPNCMaterial = ShaderManager.Get().GetMaterial("GBufferPNC");
+            GridMaterial = ShaderManager.Get().GetMaterial("GridRenderMaterial");
+            ThreeDTextMaterial = ShaderManager.Get().GetMaterial("ThreeDTextRenderMaterial");
 
             FontManager.Get().Initialize();
 

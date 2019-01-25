@@ -26,7 +26,7 @@ namespace SharpOpenGL
         {
             var staticMeshAsset = AssetManager.LoadAssetSync<StaticMeshAsset>(staticMeshAssetPath);
 
-            gbufferMaterial = AssetManager.LoadAssetSync<MaterialBase>("GBufferDraw");
+            gbufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
 
             // setup camera to capture static mesh
             orbitcam = new OrbitCamera();
