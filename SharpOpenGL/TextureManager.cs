@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Core.Texture;
+using SharpOpenGL.Asset;
 
 namespace SharpOpenGL
 {
@@ -12,8 +14,19 @@ namespace SharpOpenGL
     {
         public void ImportTextures()
         {
+            foreach (var file in Directory.EnumerateFiles("./Resources/SponzaTexture"))
+            {
+                if (file.EndsWith(".dds") || file.EndsWith(".jpg") || file.EndsWith(".tga") || file.EndsWith(".jpeg"))
+                {
+                    var textureAsset = new Texture2DAsset();
+                    
+                    //textureAsset.OriginalFilePath = file;
 
+                    // check if imported asset exist
 
+                    textureAsset.ImportAssetSync();
+                }
+            }
         }
 
         public Texture2D LoadTexture2D(string path)
@@ -32,8 +45,8 @@ namespace SharpOpenGL
             }
             return null;
         }
-        
 
+        protected int approxMemoryTotal = 0;
         Dictionary<string, TextureBase> TextureMap = new Dictionary<string, TextureBase>();
     }
 }
