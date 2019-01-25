@@ -25,7 +25,7 @@ namespace SharpOpenGL
         public void Capture(string staticMeshAssetPath)
         {
             var staticMeshAsset = AssetManager.LoadAssetSync<StaticMeshAsset>(staticMeshAssetPath);
-
+            var staticMeshObject = new StaticMeshObject(staticMeshAsset);
             gbufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
 
             // setup camera to capture static mesh
@@ -53,7 +53,7 @@ namespace SharpOpenGL
                     
                     gbufferMaterial.SetUniformBufferValue<GBufferDraw.CameraTransform>("CameraTransform", ref cameraTransform);
                     gbufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelTransform);
-                    staticMeshAsset.Draw(gbufferMaterial);
+                    staticMeshObject.Draw(gbufferMaterial);
 
                     FontManager.Get().RenderText(10, 100, "Hello");
                     //

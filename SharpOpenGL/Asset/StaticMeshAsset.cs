@@ -88,10 +88,6 @@ namespace SharpOpenGL.StaticMesh
         List<uint> TexCoordIndexList = new List<uint>();
         List<uint> NormalIndexList = new List<uint>();
 
-        // for rendering
-        TriangleDrawable<PNTT_VertexAttribute> meshdrawable = null;
-        Dictionary<string, Texture2D> TextureMap = new Dictionary<string, Texture2D>();
-
         // import sync
         public override void ImportAssetSync()
         {
@@ -116,21 +112,6 @@ namespace SharpOpenGL.StaticMesh
                 fs.Write(bytesarray, 0, bytesarray.Count());
             }
         }
-
-        public override void InitializeInRenderThread()
-        {
-            base.InitializeInRenderThread();
-
-            // setup vertex index buffer
-            meshdrawable = new TriangleDrawable<PNTT_VertexAttribute>();
-            var Arr = Vertices.ToArray();
-            var IndexArr = VertexIndices.ToArray();
-            meshdrawable.SetupData(ref Arr, ref IndexArr);
-
-            // load texture
-            LoadTextures();
-        }
-
 
         private void Clear()
         {
@@ -468,118 +449,7 @@ namespace SharpOpenGL.StaticMesh
             tan2Accum.Clear();
         }
 
-        protected void LoadTextures()
-        {
-            var DefaultTexObj = new Texture2D();
-            DefaultTexObj.Load("./Resources/Texture/Checker.png");
-            TextureMap.Add("Default", DefaultTexObj);
-
-            foreach (var Mtl in MaterialMap)
-            {
-                if (Mtl.Value.DiffuseMap.Length > 0)
-                {
-                    if (!TextureMap.ContainsKey(Mtl.Value.DiffuseMap))
-                    {
-                        var TextureObj = new Texture2D();
-                        TextureObj.Load(Mtl.Value.DiffuseMap);
-                        TextureMap.Add(Mtl.Value.DiffuseMap, TextureObj);
-                    }
-                }
-
-                if (Mtl.Value.NormalMap != null)
-                {
-                    if (!TextureMap.ContainsKey(Mtl.Value.NormalMap))
-                    {
-                        var textureObj = new Texture2D();
-                        textureObj.Load(Mtl.Value.NormalMap);
-                        TextureMap.Add(Mtl.Value.NormalMap, textureObj);
-                    }
-                }
-
-                if (Mtl.Value.SpecularMap != null)
-                {
-                    if (!TextureMap.ContainsKey(Mtl.Value.SpecularMap))
-                    {
-                        var textureObj = new Texture2D();
-                        textureObj.Load(Mtl.Value.SpecularMap);
-                        TextureMap.Add(Mtl.Value.SpecularMap, textureObj);
-                    }
-                }
-
-                if (Mtl.Value.MaskMap != null)
-                {
-                    if (!TextureMap.ContainsKey(Mtl.Value.MaskMap))
-                    {
-                        var textureObj = new Texture2D();
-                        textureObj.Load(Mtl.Value.MaskMap);
-                        TextureMap.Add(Mtl.Value.MaskMap, textureObj);
-                    }
-                }
-            }
-        }
-
-        public void Draw()
-        {
-            meshdrawable.BindVertexAndIndexBuffer();
-            meshdrawable.Draw(0, (uint)VertexIndices.Count);
-        }
-
-        public void Draw(Core.MaterialBase.MaterialBase material)
-        {
-            meshdrawable.BindVertexAndIndexBuffer();
-
-            if(MaterialMap.Count == 0)
-            {
-                material.SetTexture("DiffuseTex", TextureMap["Default"]);
-                meshdrawable.Draw(0, (uint)(VertexIndices.Count));
-                return;
-            }
-
-            foreach (var sectionlist in MeshSectionList.GroupBy(x => x.SectionName))
-            {
-                var sectionName = sectionlist.First().SectionName;
-                // setup
-                if (MaterialMap.ContainsKey(sectionName))
-                {
-                    material.SetTexture("DiffuseTex", TextureMap[MaterialMap[sectionName].DiffuseMap]);
-
-                    if (MaterialMap[sectionName].NormalMap != null)
-                    {
-                        material.SetUniformVarData("NormalMapExist", 1);
-                        material.SetTexture("NormalTex", TextureMap[MaterialMap[sectionName].NormalMap]);
-                    }
-                    else
-                    {
-                        material.SetUniformVarData("NormalMapExist", 0);
-                    }
-
-                    if (MaterialMap[sectionName].MaskMap != null)
-                    {
-                        material.SetUniformVarData("MaskMapExist", 1);
-                        material.SetTexture("MaskTex", TextureMap[MaterialMap[sectionName].MaskMap]);
-                    }
-                    else
-                    {
-                        material.SetUniformVarData("MaskMapExist", 0);
-                    }
-
-                    if (MaterialMap[sectionName].SpecularMap != null)
-                    {
-                        material.SetUniformVarData("SpecularMapExist", 1);
-                        material.SetTexture("SpecularTex", TextureMap[MaterialMap[sectionName].SpecularMap]);
-                    }
-                    else
-                    {
-                        material.SetUniformVarData("SpecularMapExist", 0);
-                    }
-                }
-
-                foreach (var section in sectionlist)
-                {
-                    meshdrawable.Draw(section.StartIndex, (uint)(section.EndIndex - section.StartIndex));
-                }
-            }
-        }
+       
 
         protected void ParseMtlFile(string MtlPath)
         {   

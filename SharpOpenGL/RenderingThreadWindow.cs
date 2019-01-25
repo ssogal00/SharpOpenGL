@@ -29,7 +29,7 @@ namespace SharpOpenGL
 
         protected Skybox skyboxPostProcess = new Skybox();
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
-        protected StaticMeshAsset sponzamesh = null;
+        protected StaticMeshObject sponzamesh = null;
         protected bool bInitialized = false;
 
         protected GBufferDraw.ModelTransform ModelMatrix = new GBufferDraw.ModelTransform();
@@ -77,7 +77,7 @@ namespace SharpOpenGL
             OnGLContextCreated(this, e);
             ScreenBlit.SetGridSize(2, 2);
 
-            sponzamesh = AssetManager.LoadAssetSync<StaticMeshAsset>("sponza2.staticmesh");
+            sponzamesh = new StaticMeshObject("sponza2.staticmesh");
             GBufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
             GridMaterial = ShaderManager.Get().GetMaterial("GridRenderMaterial");
             WireframeMaterial = ShaderManager.Get().GetMaterial("GBufferPNC");
@@ -187,7 +187,7 @@ namespace SharpOpenGL
 
                 GridDrawer.Get().Draw(GridMaterial);
 
-                using (var dummy = new WireFrameMode())
+                /*using (var dummy = new WireFrameMode())
                 {
                     WireframeMaterial.BindAndExecute
                     (() =>
@@ -196,7 +196,7 @@ namespace SharpOpenGL
                             SceneObjectManager.Get().Draw(WireframeMaterial);
                         }
                     );
-                }
+                }*/
             });
 
             ScreenBlit.Blit(renderGBuffer.GetColorAttachement, 0, 0, 2, 2);

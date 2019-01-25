@@ -16,8 +16,6 @@ namespace SharpOpenGL.Asset
 {
     public class AssetManager : Singleton<AssetManager>
     {
-        private static object AssetMapLock = new object();
-
         protected static ConcurrentDictionary<string, AssetBase> AssetMap = new ConcurrentDictionary<string, AssetBase>();
 
         protected static string ImportedDirectory = "./Resources/Imported";
@@ -44,14 +42,6 @@ namespace SharpOpenGL.Asset
             byte[] data = File.ReadAllBytes(path);
             T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
             AssetMap.TryAdd(Path.GetFileName(path), asset);
-
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread
-            (
-                () =>
-                {
-                    asset.InitializeInRenderThread();
-                }
-            );
             
             return asset;
         }
@@ -70,44 +60,15 @@ namespace SharpOpenGL.Asset
                 byte[] data = File.ReadAllBytes(path);
                 T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
                 AssetMap.TryAdd(Path.GetFileName(path), asset);
-
-                RenderingThread.Get().Enqueue(() =>
-                {
-                    asset.InitializeInRenderThread();
-                }
-                );
                 
                 return asset;
             });
         }
 
-        public void CompileShaders()
+        public void ImportTextures()
         {
-            //Debug.Assert(RenderingThread.Get().IsInRenderingThread());
 
-            if(File.Exists("./Resources/Shader/MaterialList.xml") == false)
-            {
-                return;
-            }
-
-            if(Directory.Exists("./Resources/Imported/Shader") == false)
-            {
-                Directory.CreateDirectory("./Resources/Imported/Shader");
-            }
-            
-            var compiledShaderAssembly = Assembly.Load("CompiledShader");
-            var types = compiledShaderAssembly.GetTypes();
-
-            foreach (var t in types)
-            {
-                if (t.IsSubclassOf(typeof(MaterialBase)))
-                {
-                    var instance = (MaterialBase)Activator.CreateInstance(t);
-                    AssetMap.TryAdd(t.Name, instance);
-                }
-            }
         }
-
 
         public void ImportStaticMeshes()
         {

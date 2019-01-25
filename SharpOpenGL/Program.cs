@@ -132,7 +132,6 @@ namespace SharpOpenGL
             OnWindowResize += ResizableManager.Get().ResizeEventHandler;
 
             AssetManager.Get().ImportStaticMeshes();
-            AssetManager.Get().CompileShaders();
 
             OnResourceCreate(this, e);
 
@@ -217,37 +216,7 @@ namespace SharpOpenGL
 
             SkyboxPostProcess.GetOutputRenderTarget().Copy(MyGBuffer.GetColorAttachement);
 
-            MyGBuffer.BindAndExecute(GBufferMaterial, () =>
-            {
-                GBufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
-                GBufferMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref Transform);
-                Mesh.Draw(GBufferMaterial);
-
-                GridDrawer.Get().Draw(GridMaterial);
-
-                TestText.Draw(ThreeDTextMaterial);
-                
-                if (ConsoleCommandManager.Get().IsActive)
-                {
-                    FontManager.Get().RenderText(10, 100, ConsoleCommandManager.Get().ConsoleCommandString);
-                }
-
-                if (CameraManager.Get().IsOrbitCameraMode())
-                {
-                    using (var dummy = new WireFrameMode())
-                    {
-                        GBufferPNCMaterial.BindAndExecute
-                        (() =>
-                        {
-                            TestAxis.ParentMatrix = Matrix4.CreateTranslation(CameraManager.Get().CurrentCamera.LookAtLocation);
-                            TestAxis.Scale = 0.4f;
-                            GBufferPNCMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
-                            TestAxis.Draw(GBufferPNCMaterial);
-                        }
-                        );
-                    }
-                }
-            });
+            
 
             
             ScreenBlit.Blit(MyGBuffer.GetColorAttachement, 0, 0, 2, 2);

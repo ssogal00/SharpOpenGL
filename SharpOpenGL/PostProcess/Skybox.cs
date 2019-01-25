@@ -27,8 +27,8 @@ namespace SharpOpenGL.PostProcess
             cubemapTexture = new CubemapTexture();
           
             cubemapTexture.Load();
-             
-            SphereMesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
+
+            sphereMeshObject = new StaticMeshObject("./Resources/Imported/StaticMesh/sphere3.staticmesh");
         }
 
         public override void Render()
@@ -41,7 +41,7 @@ namespace SharpOpenGL.PostProcess
                     PostProcessMaterial.SetUniformVarData("ViewMatrix", ref ViewMatrix);
                     PostProcessMaterial.SetUniformVarData("ProjMatrix", ref ProjMatrix);
                     PostProcessMaterial.SetTexture("texCubemap", cubemapTexture);
-                    SphereMesh.Draw();
+                    sphereMeshObject.Draw();
                 });
             }
         }
@@ -52,6 +52,6 @@ namespace SharpOpenGL.PostProcess
         public OpenTK.Matrix4 ProjMatrix = Matrix4.Identity;
         public OpenTK.Matrix4 ModelMatrix = Matrix4.Identity;
 
-        protected StaticMeshAsset SphereMesh = null;
+        protected StaticMeshObject sphereMeshObject = null;
     }
 }

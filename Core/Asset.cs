@@ -24,7 +24,6 @@ namespace Core
 
         public virtual void InitializeInRenderThread()
         {
-            bReady = true;
         }
 
         public virtual void SaveImportedAsset(string path)
