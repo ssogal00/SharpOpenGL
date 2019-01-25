@@ -51,6 +51,11 @@ namespace SharpOpenGL.Asset
             }
         }
 
+        public Texture2DAsset(string path)
+        {
+            this.OriginalFilePath = path;
+        }
+
         public override void InitializeInRenderThread()
         {
             base.InitializeInRenderThread();

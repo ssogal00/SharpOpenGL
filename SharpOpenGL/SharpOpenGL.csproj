@@ -194,6 +194,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shader.cs" />
     <Compile Include="Asset\StaticMeshAsset.cs" />
+    <Compile Include="TextureManager.cs" />
     <Compile Include="UniformBlock.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

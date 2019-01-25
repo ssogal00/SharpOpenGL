@@ -18,12 +18,16 @@ namespace SharpOpenGL
             {
                 if (file.EndsWith(".dds") || file.EndsWith(".jpg") || file.EndsWith(".tga") || file.EndsWith(".jpeg"))
                 {
-                    var textureAsset = new Texture2DAsset();
-                    
+                    var textureAsset = new Texture2DAsset(file);
                     //textureAsset.OriginalFilePath = file;
-
+                    
                     // check if imported asset exist
-
+                    string importedPath = "";
+                    if (File.Exists(importedPath))
+                    {
+                        Console.WriteLine(string.Format("{0} found...", importedPath));
+                    }
+                    // if not exist then import
                     textureAsset.ImportAssetSync();
                 }
             }
@@ -40,7 +44,6 @@ namespace SharpOpenGL
                 if (RenderingThread.Get().IsInRenderingThread())
                 {
                     var newTexture = new Texture2D();
-                    
                 }
             }
             return null;
