@@ -24,12 +24,18 @@ namespace SharpOpenGL.Asset
 
         [Index(4)] public virtual string OriginalFilePath { get; protected set; } = "";
 
+        [Index(5)]
+        public virtual PixelInternalFormat ImagePixelInternalFormat { get; protected set; } = PixelInternalFormat.Rgb;
+
+        [Index(6)]
+        public virtual OpenTK.Graphics.OpenGL.PixelFormat OpenglPixelFormat { get; protected set; } = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
+
         public override void ImportAssetSync()
         {
             using (var scopedImage = new ScopedFreeImage(OriginalFilePath))
             {
-                Width = scopedImage.Width;
-                Height = scopedImage.Height;
+                this.Width = scopedImage.Width;
+                this.Height = scopedImage.Height;
                 this.Bytes = new byte[scopedImage.ByteSize];
                 this.ByteLength = (int) scopedImage.ByteSize;
                 Marshal.Copy(scopedImage.Bytes, this.Bytes, 0, (int) scopedImage.ByteSize);
