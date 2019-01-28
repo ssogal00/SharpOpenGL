@@ -110,7 +110,6 @@
     <Compile Include="ResizableManager.cs" />
     <Compile Include="SamplerParameter.cs" />
     <Compile Include="ScopedStopWatch.cs" />
-    <Compile Include="TextureManager.cs" />
     <Compile Include="UniformBufferParameter.cs" />
     <Compile Include="UniformParameter.cs" />
     <Compile Include="Singleton.cs" />

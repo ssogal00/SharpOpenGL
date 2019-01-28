@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Core.Tickable
 {
     public static class TickableObjectManager
     {
-        public static List<TickableObject> ObjectList = new List<TickableObject>();
+        public static ConcurrentBag<TickableObject> ObjectList = new ConcurrentBag<TickableObject>();
 
         public static void Tick(double fDeltaSeconds)
         {

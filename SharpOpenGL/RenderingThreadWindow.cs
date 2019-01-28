@@ -73,6 +73,7 @@ namespace SharpOpenGL
 
             ShaderManager.Get().CompileShaders();
             AssetManager.Get().ImportStaticMeshes();
+            TextureManager.Get().ImportTextures();
 
             OnGLContextCreated(this, e);
             ScreenBlit.SetGridSize(2, 2);

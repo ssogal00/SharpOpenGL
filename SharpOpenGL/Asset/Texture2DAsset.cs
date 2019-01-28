@@ -30,6 +30,9 @@ namespace SharpOpenGL.Asset
         [Index(6)]
         public virtual OpenTK.Graphics.OpenGL.PixelFormat OpenglPixelFormat { get; protected set; } = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
 
+        // zeromatter requires parameterless constructor
+        public Texture2DAsset() { }
+
         public override void ImportAssetSync()
         {
             using (var scopedImage = new ScopedFreeImage(OriginalFilePath))
@@ -38,6 +41,8 @@ namespace SharpOpenGL.Asset
                 this.Height = scopedImage.Height;
                 this.Bytes = new byte[scopedImage.ByteSize];
                 this.ByteLength = (int) scopedImage.ByteSize;
+                this.ImagePixelInternalFormat = scopedImage.ImagePixelInternalFormat;
+                this.OpenglPixelFormat = scopedImage.OpenglPixelFormat;
                 Marshal.Copy(scopedImage.Bytes, this.Bytes, 0, (int) scopedImage.ByteSize);
             }
         }

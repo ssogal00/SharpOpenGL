@@ -91,12 +91,14 @@ namespace SharpOpenGL
                 // setup
                 if (meshAsset.MaterialMap.ContainsKey(sectionName))
                 {
-                    material.SetTexture("DiffuseTex", textureMap[meshAsset.MaterialMap[sectionName].DiffuseMap]);
+                    var diffuseTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].DiffuseMap);
+                    material.SetTexture("DiffuseTex", diffuseTex);
 
                     if (meshAsset.MaterialMap[sectionName].NormalMap != null)
                     {
                         material.SetUniformVarData("NormalMapExist", 1);
-                        material.SetTexture("NormalTex", textureMap[meshAsset.MaterialMap[sectionName].NormalMap]);
+                        var normalTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].NormalMap);
+                        material.SetTexture("NormalTex", normalTex);
                     }
                     else
                     {
@@ -106,7 +108,8 @@ namespace SharpOpenGL
                     if (meshAsset.MaterialMap[sectionName].MaskMap != null)
                     {
                         material.SetUniformVarData("MaskMapExist", 1);
-                        material.SetTexture("MaskTex", textureMap[meshAsset.MaterialMap[sectionName].MaskMap]);
+                        var maskTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].MaskMap);
+                        material.SetTexture("MaskTex", maskTex);
                     }
                     else
                     {
@@ -116,7 +119,8 @@ namespace SharpOpenGL
                     if (meshAsset.MaterialMap[sectionName].SpecularMap != null)
                     {
                         material.SetUniformVarData("SpecularMapExist", 1);
-                        material.SetTexture("SpecularTex", textureMap[meshAsset.MaterialMap[sectionName].SpecularMap]);
+                        var specTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].SpecularMap);
+                        material.SetTexture("SpecularTex", specTex);
                     }
                     else
                     {
@@ -149,42 +153,22 @@ namespace SharpOpenGL
             {
                 if (Mtl.Value.DiffuseMap.Length > 0)
                 {
-                    if (!textureMap.ContainsKey(Mtl.Value.DiffuseMap))
-                    {
-                        var TextureObj = new Texture2D();
-                        TextureObj.Load(Mtl.Value.DiffuseMap);
-                        textureMap.Add(Mtl.Value.DiffuseMap, TextureObj);
-                    }
+                    TextureManager.Get().CacheTexture2D(Mtl.Value.DiffuseMap);
                 }
 
                 if (Mtl.Value.NormalMap != null)
                 {
-                    if (!textureMap.ContainsKey(Mtl.Value.NormalMap))
-                    {
-                        var textureObj = new Texture2D();
-                        textureObj.Load(Mtl.Value.NormalMap);
-                        textureMap.Add(Mtl.Value.NormalMap, textureObj);
-                    }
+                    TextureManager.Get().CacheTexture2D(Mtl.Value.NormalMap);
                 }
 
                 if (Mtl.Value.SpecularMap != null)
                 {
-                    if (!textureMap.ContainsKey(Mtl.Value.SpecularMap))
-                    {
-                        var textureObj = new Texture2D();
-                        textureObj.Load(Mtl.Value.SpecularMap);
-                        textureMap.Add(Mtl.Value.SpecularMap, textureObj);
-                    }
+                    TextureManager.Get().CacheTexture2D(Mtl.Value.SpecularMap);
                 }
 
                 if (Mtl.Value.MaskMap != null)
                 {
-                    if (!textureMap.ContainsKey(Mtl.Value.MaskMap))
-                    {
-                        var textureObj = new Texture2D();
-                        textureObj.Load(Mtl.Value.MaskMap);
-                        textureMap.Add(Mtl.Value.MaskMap, textureObj);
-                    }
+                    TextureManager.Get().CacheTexture2D(Mtl.Value.MaskMap);
                 }
             }
         }

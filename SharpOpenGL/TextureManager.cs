@@ -1,55 +1,124 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Core.Texture;
+using OpenTK.Graphics.ES20;
 using SharpOpenGL.Asset;
 
 namespace SharpOpenGL
 {
     public class TextureManager : Singleton<TextureManager>
     {
+        private string importedDirName = "./Resources/Imported/Texture";
+
         public void ImportTextures()
         {
-            foreach (var file in Directory.EnumerateFiles("./Resources/SponzaTexture"))
+            if (Directory.Exists(importedDirName) == false)
             {
-                if (file.EndsWith(".dds") || file.EndsWith(".jpg") || file.EndsWith(".tga") || file.EndsWith(".jpeg"))
+                Directory.CreateDirectory(importedDirName);
+            }
+
+            var files = Directory.EnumerateFiles("./Resources/SponzaTexture").Concat(Directory.EnumerateFiles("./Resources/Texture"));
+
+            foreach (var file in files)
+            {
+                if (file.EndsWith(".dds") || file.EndsWith(".jpg") || file.EndsWith(".tga") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
                 {
                     var textureAsset = new Texture2DAsset(file);
-                    //textureAsset.OriginalFilePath = file;
+
+                    var fileName = Path.GetFileNameWithoutExtension(file);
+
+                    var importedFileName = Path.Combine(importedDirName, fileName + ".imported");
                     
                     // check if imported asset exist
-                    string importedPath = "";
-                    if (File.Exists(importedPath))
+                    if (File.Exists(importedFileName))
                     {
-                        Console.WriteLine(string.Format("{0} found...", importedPath));
+                        Console.WriteLine(string.Format("{0} found...", importedFileName));
                     }
                     // if not exist then import
-                    textureAsset.ImportAssetSync();
+                    else
+                    {
+                        Console.WriteLine(string.Format("Importing Texture {0}", importedFileName));
+                        textureAsset.ImportAssetSync();
+                        textureAsset.SaveImportedAsset(importedFileName);
+                    }
                 }
             }
+        }
+
+        private string ConvertToImportedPath(string path)
+        {
+            if (path.EndsWith(".imported") == false)
+            {
+                return Path.Combine(importedDirName, Path.GetFileNameWithoutExtension(path) + ".imported");
+            }
+
+            return path;
         }
 
         public Texture2D LoadTexture2D(string path)
         {
-            if (TextureMap.ContainsKey(path))
+            var importedPath = ConvertToImportedPath(path);
+
+            if (TextureMap.ContainsKey(importedPath))
             {
-                return (Texture2D) TextureMap[path];
+                return (Texture2D) TextureMap[importedPath];
             }
             else
             {
-                if (RenderingThread.Get().IsInRenderingThread())
+                if (File.Exists(importedPath) == false)
                 {
-                    var newTexture = new Texture2D();
+                    importedPath = "./Resources/Imported/Texture/checker.imported";
                 }
+                // deserialize
+                byte[] data = File.ReadAllBytes(importedPath);
+                Texture2DAsset asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<Texture2DAsset>(data);
+                
+                var newTexture = new Texture2D();
+                Console.WriteLine("Loading {0} started", importedPath);
+                if (importedPath.Contains("spnza_bricks"))
+                {
+                    Console.WriteLine("Loading {0} started", importedPath);
+                }
+                newTexture.Load(asset.Bytes, asset.Width, asset.Height, asset.ImagePixelInternalFormat, asset.OpenglPixelFormat);
+                Console.WriteLine("Loading {0} completed", importedPath);
+                TextureMap.Add(importedPath, newTexture);
+                return newTexture;
             }
-            return null;
         }
 
-        protected int approxMemoryTotal = 0;
+        // assume exists
+        public Texture2D GetTexture2D(string path)
+        {
+            var importedPath = ConvertToImportedPath(path);
+
+            if (TextureMap.ContainsKey(importedPath))
+            {
+                return (Texture2D)TextureMap[importedPath];
+            }
+            else
+            {
+                Debug.Assert(false,"Texture not exist");
+                return null;
+            }
+        }
+
+        public void CacheTexture2D(string path)
+        {
+            var importedPath = ConvertToImportedPath(path);
+
+            if (TextureMap.ContainsKey(importedPath) == false)
+            {
+                LoadTexture2D(path);
+            }
+        }
+
         Dictionary<string, TextureBase> TextureMap = new Dictionary<string, TextureBase>();
     }
 }
