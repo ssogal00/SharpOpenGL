@@ -80,7 +80,7 @@ namespace SharpOpenGL
 
             if (meshAsset.MaterialMap.Count == 0)
             {
-                material.SetTexture("DiffuseTex", textureMap["Default"]);
+                material.SetTexture("DiffuseTex", TextureManager.Get().GetTexture2D("./Resources/Texture/Checker.png"));
                 meshdrawable.Draw(0, (uint)(meshAsset.VertexIndices.Count));
                 return;
             }
@@ -141,14 +141,9 @@ namespace SharpOpenGL
 
         // for rendering
         TriangleDrawable<PNTT_VertexAttribute> meshdrawable = null;
-        Dictionary<string, Texture2D> textureMap = new Dictionary<string, Texture2D>();
 
         private void LoadTextures()
         {
-            var DefaultTexObj = new Texture2D();
-            DefaultTexObj.Load("./Resources/Texture/Checker.png");
-            textureMap.Add("Default", DefaultTexObj);
-
             foreach (var Mtl in meshAsset.MaterialMap)
             {
                 if (Mtl.Value.DiffuseMap.Length > 0)

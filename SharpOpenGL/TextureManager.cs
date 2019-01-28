@@ -72,12 +72,17 @@ namespace SharpOpenGL
             }
             else
             {
+                byte[] data = null;
                 if (File.Exists(importedPath) == false)
-                {
-                    importedPath = "./Resources/Imported/Texture/checker.imported";
+                {   
+                    data = File.ReadAllBytes("./Resources/Imported/Texture/checker.imported");
                 }
-                // deserialize
-                byte[] data = File.ReadAllBytes(importedPath);
+                else
+                {
+                    // deserialize
+                    data = File.ReadAllBytes(importedPath);
+                }
+                
                 Texture2DAsset asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<Texture2DAsset>(data);
                 
                 var newTexture = new Texture2D();
@@ -104,7 +109,7 @@ namespace SharpOpenGL
             }
             else
             {
-                Debug.Assert(false,"Texture not exist");
+                Debug.Assert(false, string.Format("{0} not exist", path));
                 return null;
             }
         }
