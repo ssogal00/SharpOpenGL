@@ -33,9 +33,20 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	{
 		SetTexture(@"<#=Sampler#>", TextureObject);
 	}
+
+	public Texture2D <#=Sampler#>2D 
+	{	
+		get { return <#=Sampler.ToLower()#>;}
+		set 
+		{
+			<#=Sampler.ToLower()#> = value;
+			SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>);
+		}
+	}
+
+	private Texture2D <#=Sampler.ToLower()#> = null;
 <#index++;#>
 <#}#>
-
 	public static string GetVSSourceCode()
 	{
 		return @"<#=VSSourceCode#>";

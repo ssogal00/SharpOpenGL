@@ -32,7 +32,6 @@ public class BasicMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -102,7 +101,6 @@ public class SimpleMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -169,6 +167,17 @@ public class ScreenSpaceDraw : MaterialBase
 		SetTexture(@"ColorTex", TextureObject);
 	}
 
+	public Texture2D ColorTex2D 
+	{	
+		get { return colortex;}
+		set 
+		{
+			colortex = value;
+			SetTexture(@"ColorTex", colortex);
+		}
+	}
+
+	private Texture2D colortex = null;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -234,6 +243,18 @@ public class GBufferDraw : MaterialBase
 	{
 		SetTexture(@"DiffuseTex", TextureObject);
 	}
+
+	public Texture2D DiffuseTex2D 
+	{	
+		get { return diffusetex;}
+		set 
+		{
+			diffusetex = value;
+			SetTexture(@"DiffuseTex", diffusetex);
+		}
+	}
+
+	private Texture2D diffusetex = null;
 	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MaskTex", TextureObject);
@@ -243,6 +264,18 @@ public class GBufferDraw : MaterialBase
 	{
 		SetTexture(@"MaskTex", TextureObject);
 	}
+
+	public Texture2D MaskTex2D 
+	{	
+		get { return masktex;}
+		set 
+		{
+			masktex = value;
+			SetTexture(@"MaskTex", masktex);
+		}
+	}
+
+	private Texture2D masktex = null;
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
@@ -252,6 +285,18 @@ public class GBufferDraw : MaterialBase
 	{
 		SetTexture(@"NormalTex", TextureObject);
 	}
+
+	public Texture2D NormalTex2D 
+	{	
+		get { return normaltex;}
+		set 
+		{
+			normaltex = value;
+			SetTexture(@"NormalTex", normaltex);
+		}
+	}
+
+	private Texture2D normaltex = null;
 	public void SetSpecularTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"SpecularTex", TextureObject);
@@ -262,6 +307,17 @@ public class GBufferDraw : MaterialBase
 		SetTexture(@"SpecularTex", TextureObject);
 	}
 
+	public Texture2D SpecularTex2D 
+	{	
+		get { return speculartex;}
+		set 
+		{
+			speculartex = value;
+			SetTexture(@"SpecularTex", speculartex);
+		}
+	}
+
+	private Texture2D speculartex = null;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -412,7 +468,6 @@ public class GBufferWithoutTexture : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -513,7 +568,6 @@ public class GBufferPNC : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -598,7 +652,6 @@ public class Blur : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450
@@ -672,6 +725,17 @@ public class LightMaterial : MaterialBase
 		SetTexture(@"DiffuseTex", TextureObject);
 	}
 
+	public Texture2D DiffuseTex2D 
+	{	
+		get { return diffusetex;}
+		set 
+		{
+			diffusetex = value;
+			SetTexture(@"DiffuseTex", diffusetex);
+		}
+	}
+
+	private Texture2D diffusetex = null;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450
@@ -819,6 +883,17 @@ public class CubemapMaterial : MaterialBase
 		SetTexture(@"texCubemap", TextureObject);
 	}
 
+	public Texture2D texCubemap2D 
+	{	
+		get { return texcubemap;}
+		set 
+		{
+			texcubemap = value;
+			SetTexture(@"texCubemap", texcubemap);
+		}
+	}
+
+	private Texture2D texcubemap = null;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -885,7 +960,6 @@ public class MSGBufferMaterial : MaterialBase
 	{
 		MaterialProgram.UseProgram();
 	}
-
 
 	public static string GetVSSourceCode()
 	{
@@ -1048,6 +1122,17 @@ public class DepthVisualizeMaterial : MaterialBase
 		SetTexture(@"DepthTex", TextureObject);
 	}
 
+	public Texture2D DepthTex2D 
+	{	
+		get { return depthtex;}
+		set 
+		{
+			depthtex = value;
+			SetTexture(@"DepthTex", depthtex);
+		}
+	}
+
+	private Texture2D depthtex = null;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -1123,6 +1208,17 @@ public class FontRenderMaterial : MaterialBase
 		SetTexture(@"FontTexture", TextureObject);
 	}
 
+	public Texture2D FontTexture2D 
+	{	
+		get { return fonttexture;}
+		set 
+		{
+			fonttexture = value;
+			SetTexture(@"FontTexture", fonttexture);
+		}
+	}
+
+	private Texture2D fonttexture = null;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -1183,7 +1279,6 @@ public class FontBoxRenderMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -1242,7 +1337,6 @@ public class GridRenderMaterial : MaterialBase
 	{
 		MaterialProgram.UseProgram();
 	}
-
 
 	public static string GetVSSourceCode()
 	{
@@ -1312,6 +1406,17 @@ public class ThreeDTextRenderMaterial : MaterialBase
 		SetTexture(@"FontTexture", TextureObject);
 	}
 
+	public Texture2D FontTexture2D 
+	{	
+		get { return fonttexture;}
+		set 
+		{
+			fonttexture = value;
+			SetTexture(@"FontTexture", fonttexture);
+		}
+	}
+
+	private Texture2D fonttexture = null;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core

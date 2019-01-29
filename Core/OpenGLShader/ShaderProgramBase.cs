@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 
 using System.Diagnostics;
+using Core.OpenGLType;
 
 namespace Core.OpenGLShader
 {
@@ -301,6 +302,46 @@ namespace Core.OpenGLShader
                 for (var i = 0; i < nBlockSize; ++i)
                 {
                     result.Add(GetUniformBlockName(i));
+                }
+            }
+
+            return result;
+        }
+
+        public List<KeyValuePair<string, string>> GetActiveUniformNameAndTypeList()
+        {
+            List<KeyValuePair<string, string>> result = new List<KeyValuePair<string, string>>();
+
+            if (IsProgramLinked())
+            {
+                var uniformIndicesInBlock = new List<int>();
+
+                var uniformBlockCount = GetActiveUniformBlockCount();
+
+                for (int i = 0; i < uniformBlockCount; ++i)
+                {
+                    uniformIndicesInBlock.AddRange(GetUniformIndicesInBlock(i));
+                }
+
+                int nCount = GetActiveUniformCount();
+
+                for (var i = 0; i < nCount; ++i)
+                {
+                    // skip uniform variables in block
+                    if (uniformIndicesInBlock.Contains(i))
+                    {
+                        continue;
+                    }
+
+                    var uniformType = GetActiveUniformVariableType(i);
+                    if (uniformType == ActiveUniformType.Sampler2D || uniformType == ActiveUniformType.SamplerCube)
+                    {
+                        continue;
+                    }
+
+                    var name = GetActiveUniformVariableName(i);
+                    var typestring = OpenGLType.GLToSharpTranslator.GetUniformTypeString(uniformType);
+                    result.Add(new KeyValuePair<string, string>(name, typestring));
                 }
             }
 

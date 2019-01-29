@@ -10,12 +10,12 @@ namespace Core.OpenGLShader
         public VertexAttribute(int nLocation, ActiveAttribType _AttributeType, string _Name)
         {
             AttributeLocation   = nLocation;
-            ComponentCount      = OpenGLTypeHelper.GetAttributeComponentCount(_AttributeType);
+            ComponentCount      = GLToSharpTranslator.GetAttributeComponentCount(_AttributeType);
             AttributeType       = _AttributeType;
             Name                = _Name;
-            AttributeTypeString = OpenGLTypeHelper.FromVertexAttributeType(AttributeType);
-            Size                = OpenGLTypeHelper.GetAttributeTypeSizeInBytes(AttributeType);
-            ComponentType       = OpenGLTypeHelper.GetComponentTypeFromAttribType(AttributeType);
+            AttributeTypeString = GLToSharpTranslator.GetVertexAttributeTypeString(AttributeType);
+            Size                = GLToSharpTranslator.GetAttributeTypeSizeInBytes(AttributeType);
+            ComponentType       = GLToSharpTranslator.GetComponentTypeFromAttribType(AttributeType);
         }
 
         public int CompareTo(object rhs)

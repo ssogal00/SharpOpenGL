@@ -134,7 +134,7 @@
     <Compile Include="Primitive\LineDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OpenGLShader\ShaderProgram.cs" />
-    <Compile Include="OpenGLType\OpenGLTypeHelper.cs" />
+    <Compile Include="OpenGLType\GLToSharpTranslator.cs" />
     <Compile Include="Texture\Sampler.cs" />
     <Compile Include="Texture\Texture2D.cs" />
     <Compile Include="Tickable\TickableObject.cs" />

@@ -13,6 +13,7 @@ namespace SharpOpenGL
 {
     public class StaticMeshObject : SceneObject
     {
+        private static int staticMeshObjectCount = 0;
         public StaticMeshObject(string assetpath)
         {
             this.assetpath = assetpath;

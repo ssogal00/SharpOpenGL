@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
 
 namespace Core.OpenGLType
 {
-    public static class OpenGLTypeHelper 
+    public static class GLToSharpTranslator 
     {
-        public static string FromVertexAttributeType(ActiveAttribType eType)
+        public static string GetVertexAttributeTypeString(ActiveAttribType eType)
         {
             switch(eType)
             {
@@ -138,12 +139,15 @@ namespace Core.OpenGLType
             return -1;
         }
 
-        public static string FromUniformType(ActiveUniformType eType)
+        public static string GetUniformTypeString(ActiveUniformType eType)
         {
             switch (eType)
             {
                 case ActiveUniformType.Bool:
                     return typeof(bool).ToString();
+
+                case ActiveUniformType.Int:
+                    return typeof(int).ToString();
                     
                 case ActiveUniformType.FloatVec2:
                     return typeof(OpenTK.Vector2).ToString();                    
@@ -162,6 +166,10 @@ namespace Core.OpenGLType
 
                 case ActiveUniformType.Float:
                     return typeof(float).ToString();
+
+                default:
+                    Debug.Assert(false, "Not supported format ");
+                    return "";
             }
 
             return "";
