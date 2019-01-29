@@ -47,6 +47,20 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	private Texture2D <#=Sampler.ToLower()#> = null;
 <#index++;#>
 <#}#>
+
+<#foreach(var pair in FSProgram.GetActiveUniformNameAndTypeList())#>
+<#{#>
+	public <#=pair.Value#> <#=pair.Key#>UniformVar 
+	{
+		get { return <#=pair.Key.ToLower()#>; }
+		set 
+		{
+			<#=pair.Key.ToLower()#> = value;
+			SetUniformVarData(@"<#=pair.Key#>", <#=pair.Key.ToLower()#>);
+		}
+	}
+	private <#=pair.Value#> <#=pair.Key.ToLower()#> ;
+<#}#>
 	public static string GetVSSourceCode()
 	{
 		return @"<#=VSSourceCode#>";

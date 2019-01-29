@@ -334,7 +334,9 @@ namespace Core.OpenGLShader
                     }
 
                     var uniformType = GetActiveUniformVariableType(i);
-                    if (uniformType == ActiveUniformType.Sampler2D || uniformType == ActiveUniformType.SamplerCube)
+                    if (uniformType == ActiveUniformType.Sampler2D || 
+                        uniformType == ActiveUniformType.SamplerCube ||
+                        uniformType == ActiveUniformType.Sampler2DMultisample)
                     {
                         continue;
                     }
@@ -374,7 +376,9 @@ namespace Core.OpenGLShader
                     }
 
                     var uniformType = GetActiveUniformVariableType(i);
-                    if (uniformType == ActiveUniformType.Sampler2D || uniformType == ActiveUniformType.SamplerCube)
+                    if (uniformType == ActiveUniformType.Sampler2D ||
+                        uniformType == ActiveUniformType.SamplerCube ||
+                        uniformType == ActiveUniformType.Sampler2DMultisample)
                     {
                         continue;
                     }

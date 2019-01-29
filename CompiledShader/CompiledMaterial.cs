@@ -32,6 +32,7 @@ public class BasicMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
+
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -100,6 +101,7 @@ public class SimpleMaterial : MaterialBase
 	{
 		MaterialProgram.UseProgram();
 	}
+
 
 	public static string GetVSSourceCode()
 	{
@@ -178,6 +180,7 @@ public class ScreenSpaceDraw : MaterialBase
 	}
 
 	private Texture2D colortex = null;
+
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -318,6 +321,37 @@ public class GBufferDraw : MaterialBase
 	}
 
 	private Texture2D speculartex = null;
+
+	public System.Int32 MaskMapExistUniformVar 
+	{
+		get { return maskmapexist; }
+		set 
+		{
+			maskmapexist = value;
+			SetUniformVarData(@"MaskMapExist", maskmapexist);
+		}
+	}
+	private System.Int32 maskmapexist ;
+	public System.Int32 NormalMapExistUniformVar 
+	{
+		get { return normalmapexist; }
+		set 
+		{
+			normalmapexist = value;
+			SetUniformVarData(@"NormalMapExist", normalmapexist);
+		}
+	}
+	private System.Int32 normalmapexist ;
+	public System.Int32 SpecularMapExistUniformVar 
+	{
+		get { return specularmapexist; }
+		set 
+		{
+			specularmapexist = value;
+			SetUniformVarData(@"SpecularMapExist", specularmapexist);
+		}
+	}
+	private System.Int32 specularmapexist ;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -468,6 +502,7 @@ public class GBufferWithoutTexture : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
+
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -568,6 +603,7 @@ public class GBufferPNC : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
+
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -651,6 +687,7 @@ public class Blur : MaterialBase
 	{
 		MaterialProgram.UseProgram();
 	}
+
 
 	public static string GetVSSourceCode()
 	{
@@ -736,6 +773,7 @@ public class LightMaterial : MaterialBase
 	}
 
 	private Texture2D diffusetex = null;
+
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450
@@ -894,6 +932,7 @@ public class CubemapMaterial : MaterialBase
 	}
 
 	private Texture2D texcubemap = null;
+
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -961,6 +1000,37 @@ public class MSGBufferMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
+
+	public System.Int32 MaskMapExistUniformVar 
+	{
+		get { return maskmapexist; }
+		set 
+		{
+			maskmapexist = value;
+			SetUniformVarData(@"MaskMapExist", maskmapexist);
+		}
+	}
+	private System.Int32 maskmapexist ;
+	public System.Int32 NormalMapExistUniformVar 
+	{
+		get { return normalmapexist; }
+		set 
+		{
+			normalmapexist = value;
+			SetUniformVarData(@"NormalMapExist", normalmapexist);
+		}
+	}
+	private System.Int32 normalmapexist ;
+	public System.Int32 SpecularMapExistUniformVar 
+	{
+		get { return specularmapexist; }
+		set 
+		{
+			specularmapexist = value;
+			SetUniformVarData(@"SpecularMapExist", specularmapexist);
+		}
+	}
+	private System.Int32 specularmapexist ;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -1133,6 +1203,27 @@ public class DepthVisualizeMaterial : MaterialBase
 	}
 
 	private Texture2D depthtex = null;
+
+	public System.Single FarUniformVar 
+	{
+		get { return far; }
+		set 
+		{
+			far = value;
+			SetUniformVarData(@"Far", far);
+		}
+	}
+	private System.Single far ;
+	public System.Single NearUniformVar 
+	{
+		get { return near; }
+		set 
+		{
+			near = value;
+			SetUniformVarData(@"Near", near);
+		}
+	}
+	private System.Single near ;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -1219,6 +1310,7 @@ public class FontRenderMaterial : MaterialBase
 	}
 
 	private Texture2D fonttexture = null;
+
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -1279,6 +1371,27 @@ public class FontBoxRenderMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
+
+	public System.Single BoxAlphaUniformVar 
+	{
+		get { return boxalpha; }
+		set 
+		{
+			boxalpha = value;
+			SetUniformVarData(@"BoxAlpha", boxalpha);
+		}
+	}
+	private System.Single boxalpha ;
+	public OpenTK.Vector3 BoxColorUniformVar 
+	{
+		get { return boxcolor; }
+		set 
+		{
+			boxcolor = value;
+			SetUniformVarData(@"BoxColor", boxcolor);
+		}
+	}
+	private OpenTK.Vector3 boxcolor ;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -1338,6 +1451,17 @@ public class GridRenderMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
+
+	public OpenTK.Vector3 LineColorUniformVar 
+	{
+		get { return linecolor; }
+		set 
+		{
+			linecolor = value;
+			SetUniformVarData(@"LineColor", linecolor);
+		}
+	}
+	private OpenTK.Vector3 linecolor ;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -1417,6 +1541,17 @@ public class ThreeDTextRenderMaterial : MaterialBase
 	}
 
 	private Texture2D fonttexture = null;
+
+	public OpenTK.Vector3 TextColorUniformVar 
+	{
+		get { return textcolor; }
+		set 
+		{
+			textcolor = value;
+			SetUniformVarData(@"TextColor", textcolor);
+		}
+	}
+	private OpenTK.Vector3 textcolor ;
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core

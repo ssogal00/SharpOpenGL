@@ -168,7 +168,7 @@ namespace Core.OpenGLType
                     return typeof(float).ToString();
 
                 default:
-                    Debug.Assert(false, "Not supported format ");
+                    Debug.Assert(false, "Not supported format {0}", eType.ToString());
                     return "";
             }
 
