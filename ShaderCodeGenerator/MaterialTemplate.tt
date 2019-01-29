@@ -3,6 +3,8 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="ShaderCompiler"#>
+
 
 public class <#=ShaderName#> : MaterialBase
 {
@@ -34,29 +36,35 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		SetTexture(@"<#=Sampler#>", TextureObject);
 	}
 
-	public Texture2D <#=Sampler#>2D 
+	public TextureBase <#=Sampler.FirstCharToUpper()#>2D 
 	{	
 		get { return <#=Sampler.ToLower()#>;}
 		set 
 		{
-			<#=Sampler.ToLower()#> = value;
-			SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>);
+			if(<#=Sampler.ToLower()#> != value)
+			{
+				<#=Sampler.ToLower()#> = value;
+				SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>);
+			}
 		}
 	}
 
-	private Texture2D <#=Sampler.ToLower()#> = null;
+	private TextureBase <#=Sampler.ToLower()#> = null;
 <#index++;#>
 <#}#>
 
 <#foreach(var pair in FSProgram.GetActiveUniformNameAndTypeList())#>
 <#{#>
-	public <#=pair.Value#> <#=pair.Key#>UniformVar 
+	public <#=pair.Value#> <#=pair.Key.FirstCharToUpper()#>
 	{
 		get { return <#=pair.Key.ToLower()#>; }
 		set 
 		{
-			<#=pair.Key.ToLower()#> = value;
-			SetUniformVarData(@"<#=pair.Key#>", <#=pair.Key.ToLower()#>);
+			if(<#=pair.Key.ToLower()#> != value)
+			{
+				<#=pair.Key.ToLower()#> = value;
+				SetUniformVarData(@"<#=pair.Key#>", <#=pair.Key.ToLower()#>);
+			}
 		}
 	}
 	private <#=pair.Value#> <#=pair.Key.ToLower()#> ;

@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CodeGenerator.cs" />
+    <Compile Include="Extension.cs" />
     <Compile Include="FragmentShaderCodeGenerator.cs" />
     <Compile Include="FragmentShaderTemplate.cs">
       <AutoGen>True</AutoGen>

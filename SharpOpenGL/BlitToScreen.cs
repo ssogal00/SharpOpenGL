@@ -41,7 +41,7 @@ namespace SharpOpenGL
                 Material.BindAndExecute(VB, IB, () =>
                 {
                     PT_VertexAttribute.VertexAttributeBinding();
-                    Material.SetColorTex2D(texture);
+                    Material.ColorTex2D = texture;
                     GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
                 });
             }
@@ -55,7 +55,7 @@ namespace SharpOpenGL
                 {
                     UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);                    
                     PT_VertexAttribute.VertexAttributeBinding();
-                    Material.SetColorTex2D(texture);
+                    Material.ColorTex2D = texture;
                     GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
                 });
             }

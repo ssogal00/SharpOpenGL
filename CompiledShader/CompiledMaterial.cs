@@ -15,6 +15,7 @@ namespace SharpOpenGL
 namespace BasicMaterial
 {
 
+
 public class BasicMaterial : MaterialBase
 {
 	public BasicMaterial() 
@@ -85,6 +86,7 @@ void main()
 namespace SimpleMaterial
 {
 
+
 public class SimpleMaterial : MaterialBase
 {
 	public SimpleMaterial() 
@@ -142,6 +144,7 @@ void main()
 namespace ScreenSpaceDraw
 {
 
+
 public class ScreenSpaceDraw : MaterialBase
 {
 	public ScreenSpaceDraw() 
@@ -169,17 +172,20 @@ public class ScreenSpaceDraw : MaterialBase
 		SetTexture(@"ColorTex", TextureObject);
 	}
 
-	public Texture2D ColorTex2D 
+	public TextureBase ColorTex2D 
 	{	
 		get { return colortex;}
 		set 
 		{
-			colortex = value;
-			SetTexture(@"ColorTex", colortex);
+			if(colortex != value)
+			{
+				colortex = value;
+				SetTexture(@"ColorTex", colortex);
+			}
 		}
 	}
 
-	private Texture2D colortex = null;
+	private TextureBase colortex = null;
 
 	public static string GetVSSourceCode()
 	{
@@ -220,6 +226,7 @@ void main()
 namespace GBufferDraw
 {
 
+
 public class GBufferDraw : MaterialBase
 {
 	public GBufferDraw() 
@@ -247,17 +254,20 @@ public class GBufferDraw : MaterialBase
 		SetTexture(@"DiffuseTex", TextureObject);
 	}
 
-	public Texture2D DiffuseTex2D 
+	public TextureBase DiffuseTex2D 
 	{	
 		get { return diffusetex;}
 		set 
 		{
-			diffusetex = value;
-			SetTexture(@"DiffuseTex", diffusetex);
+			if(diffusetex != value)
+			{
+				diffusetex = value;
+				SetTexture(@"DiffuseTex", diffusetex);
+			}
 		}
 	}
 
-	private Texture2D diffusetex = null;
+	private TextureBase diffusetex = null;
 	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MaskTex", TextureObject);
@@ -268,17 +278,20 @@ public class GBufferDraw : MaterialBase
 		SetTexture(@"MaskTex", TextureObject);
 	}
 
-	public Texture2D MaskTex2D 
+	public TextureBase MaskTex2D 
 	{	
 		get { return masktex;}
 		set 
 		{
-			masktex = value;
-			SetTexture(@"MaskTex", masktex);
+			if(masktex != value)
+			{
+				masktex = value;
+				SetTexture(@"MaskTex", masktex);
+			}
 		}
 	}
 
-	private Texture2D masktex = null;
+	private TextureBase masktex = null;
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
@@ -289,17 +302,20 @@ public class GBufferDraw : MaterialBase
 		SetTexture(@"NormalTex", TextureObject);
 	}
 
-	public Texture2D NormalTex2D 
+	public TextureBase NormalTex2D 
 	{	
 		get { return normaltex;}
 		set 
 		{
-			normaltex = value;
-			SetTexture(@"NormalTex", normaltex);
+			if(normaltex != value)
+			{
+				normaltex = value;
+				SetTexture(@"NormalTex", normaltex);
+			}
 		}
 	}
 
-	private Texture2D normaltex = null;
+	private TextureBase normaltex = null;
 	public void SetSpecularTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"SpecularTex", TextureObject);
@@ -310,45 +326,57 @@ public class GBufferDraw : MaterialBase
 		SetTexture(@"SpecularTex", TextureObject);
 	}
 
-	public Texture2D SpecularTex2D 
+	public TextureBase SpecularTex2D 
 	{	
 		get { return speculartex;}
 		set 
 		{
-			speculartex = value;
-			SetTexture(@"SpecularTex", speculartex);
+			if(speculartex != value)
+			{
+				speculartex = value;
+				SetTexture(@"SpecularTex", speculartex);
+			}
 		}
 	}
 
-	private Texture2D speculartex = null;
+	private TextureBase speculartex = null;
 
-	public System.Int32 MaskMapExistUniformVar 
+	public System.Int32 MaskMapExist
 	{
 		get { return maskmapexist; }
 		set 
 		{
-			maskmapexist = value;
-			SetUniformVarData(@"MaskMapExist", maskmapexist);
+			if(maskmapexist != value)
+			{
+				maskmapexist = value;
+				SetUniformVarData(@"MaskMapExist", maskmapexist);
+			}
 		}
 	}
 	private System.Int32 maskmapexist ;
-	public System.Int32 NormalMapExistUniformVar 
+	public System.Int32 NormalMapExist
 	{
 		get { return normalmapexist; }
 		set 
 		{
-			normalmapexist = value;
-			SetUniformVarData(@"NormalMapExist", normalmapexist);
+			if(normalmapexist != value)
+			{
+				normalmapexist = value;
+				SetUniformVarData(@"NormalMapExist", normalmapexist);
+			}
 		}
 	}
 	private System.Int32 normalmapexist ;
-	public System.Int32 SpecularMapExistUniformVar 
+	public System.Int32 SpecularMapExist
 	{
 		get { return specularmapexist; }
 		set 
 		{
-			specularmapexist = value;
-			SetUniformVarData(@"SpecularMapExist", specularmapexist);
+			if(specularmapexist != value)
+			{
+				specularmapexist = value;
+				SetUniformVarData(@"SpecularMapExist", specularmapexist);
+			}
 		}
 	}
 	private System.Int32 specularmapexist ;
@@ -485,6 +513,7 @@ void main()
 namespace GBufferWithoutTexture
 {
 
+
 public class GBufferWithoutTexture : MaterialBase
 {
 	public GBufferWithoutTexture() 
@@ -586,6 +615,7 @@ void main()
 namespace GBufferPNC
 {
 
+
 public class GBufferPNC : MaterialBase
 {
 	public GBufferPNC() 
@@ -671,6 +701,7 @@ void main()
 namespace Blur
 {
 
+
 public class Blur : MaterialBase
 {
 	public Blur() 
@@ -735,6 +766,7 @@ void main()
 namespace LightMaterial
 {
 
+
 public class LightMaterial : MaterialBase
 {
 	public LightMaterial() 
@@ -762,17 +794,20 @@ public class LightMaterial : MaterialBase
 		SetTexture(@"DiffuseTex", TextureObject);
 	}
 
-	public Texture2D DiffuseTex2D 
+	public TextureBase DiffuseTex2D 
 	{	
 		get { return diffusetex;}
 		set 
 		{
-			diffusetex = value;
-			SetTexture(@"DiffuseTex", diffusetex);
+			if(diffusetex != value)
+			{
+				diffusetex = value;
+				SetTexture(@"DiffuseTex", diffusetex);
+			}
 		}
 	}
 
-	private Texture2D diffusetex = null;
+	private TextureBase diffusetex = null;
 
 	public static string GetVSSourceCode()
 	{
@@ -894,6 +929,7 @@ void main()
 namespace CubemapMaterial
 {
 
+
 public class CubemapMaterial : MaterialBase
 {
 	public CubemapMaterial() 
@@ -921,17 +957,20 @@ public class CubemapMaterial : MaterialBase
 		SetTexture(@"texCubemap", TextureObject);
 	}
 
-	public Texture2D texCubemap2D 
+	public TextureBase TexCubemap2D 
 	{	
 		get { return texcubemap;}
 		set 
 		{
-			texcubemap = value;
-			SetTexture(@"texCubemap", texcubemap);
+			if(texcubemap != value)
+			{
+				texcubemap = value;
+				SetTexture(@"texCubemap", texcubemap);
+			}
 		}
 	}
 
-	private Texture2D texcubemap = null;
+	private TextureBase texcubemap = null;
 
 	public static string GetVSSourceCode()
 	{
@@ -983,6 +1022,7 @@ void main()
 namespace MSGBufferMaterial
 {
 
+
 public class MSGBufferMaterial : MaterialBase
 {
 	public MSGBufferMaterial() 
@@ -1001,33 +1041,42 @@ public class MSGBufferMaterial : MaterialBase
 	}
 
 
-	public System.Int32 MaskMapExistUniformVar 
+	public System.Int32 MaskMapExist
 	{
 		get { return maskmapexist; }
 		set 
 		{
-			maskmapexist = value;
-			SetUniformVarData(@"MaskMapExist", maskmapexist);
+			if(maskmapexist != value)
+			{
+				maskmapexist = value;
+				SetUniformVarData(@"MaskMapExist", maskmapexist);
+			}
 		}
 	}
 	private System.Int32 maskmapexist ;
-	public System.Int32 NormalMapExistUniformVar 
+	public System.Int32 NormalMapExist
 	{
 		get { return normalmapexist; }
 		set 
 		{
-			normalmapexist = value;
-			SetUniformVarData(@"NormalMapExist", normalmapexist);
+			if(normalmapexist != value)
+			{
+				normalmapexist = value;
+				SetUniformVarData(@"NormalMapExist", normalmapexist);
+			}
 		}
 	}
 	private System.Int32 normalmapexist ;
-	public System.Int32 SpecularMapExistUniformVar 
+	public System.Int32 SpecularMapExist
 	{
 		get { return specularmapexist; }
 		set 
 		{
-			specularmapexist = value;
-			SetUniformVarData(@"SpecularMapExist", specularmapexist);
+			if(specularmapexist != value)
+			{
+				specularmapexist = value;
+				SetUniformVarData(@"SpecularMapExist", specularmapexist);
+			}
 		}
 	}
 	private System.Int32 specularmapexist ;
@@ -1165,6 +1214,7 @@ void main()
 namespace DepthVisualizeMaterial
 {
 
+
 public class DepthVisualizeMaterial : MaterialBase
 {
 	public DepthVisualizeMaterial() 
@@ -1192,35 +1242,44 @@ public class DepthVisualizeMaterial : MaterialBase
 		SetTexture(@"DepthTex", TextureObject);
 	}
 
-	public Texture2D DepthTex2D 
+	public TextureBase DepthTex2D 
 	{	
 		get { return depthtex;}
 		set 
 		{
-			depthtex = value;
-			SetTexture(@"DepthTex", depthtex);
+			if(depthtex != value)
+			{
+				depthtex = value;
+				SetTexture(@"DepthTex", depthtex);
+			}
 		}
 	}
 
-	private Texture2D depthtex = null;
+	private TextureBase depthtex = null;
 
-	public System.Single FarUniformVar 
+	public System.Single Far
 	{
 		get { return far; }
 		set 
 		{
-			far = value;
-			SetUniformVarData(@"Far", far);
+			if(far != value)
+			{
+				far = value;
+				SetUniformVarData(@"Far", far);
+			}
 		}
 	}
 	private System.Single far ;
-	public System.Single NearUniformVar 
+	public System.Single Near
 	{
 		get { return near; }
 		set 
 		{
-			near = value;
-			SetUniformVarData(@"Near", near);
+			if(near != value)
+			{
+				near = value;
+				SetUniformVarData(@"Near", near);
+			}
 		}
 	}
 	private System.Single near ;
@@ -1272,6 +1331,7 @@ void main()
 namespace FontRenderMaterial
 {
 
+
 public class FontRenderMaterial : MaterialBase
 {
 	public FontRenderMaterial() 
@@ -1299,17 +1359,20 @@ public class FontRenderMaterial : MaterialBase
 		SetTexture(@"FontTexture", TextureObject);
 	}
 
-	public Texture2D FontTexture2D 
+	public TextureBase FontTexture2D 
 	{	
 		get { return fonttexture;}
 		set 
 		{
-			fonttexture = value;
-			SetTexture(@"FontTexture", fonttexture);
+			if(fonttexture != value)
+			{
+				fonttexture = value;
+				SetTexture(@"FontTexture", fonttexture);
+			}
 		}
 	}
 
-	private Texture2D fonttexture = null;
+	private TextureBase fonttexture = null;
 
 	public static string GetVSSourceCode()
 	{
@@ -1354,6 +1417,7 @@ void main()
 namespace FontBoxRenderMaterial
 {
 
+
 public class FontBoxRenderMaterial : MaterialBase
 {
 	public FontBoxRenderMaterial() 
@@ -1372,23 +1436,29 @@ public class FontBoxRenderMaterial : MaterialBase
 	}
 
 
-	public System.Single BoxAlphaUniformVar 
+	public System.Single BoxAlpha
 	{
 		get { return boxalpha; }
 		set 
 		{
-			boxalpha = value;
-			SetUniformVarData(@"BoxAlpha", boxalpha);
+			if(boxalpha != value)
+			{
+				boxalpha = value;
+				SetUniformVarData(@"BoxAlpha", boxalpha);
+			}
 		}
 	}
 	private System.Single boxalpha ;
-	public OpenTK.Vector3 BoxColorUniformVar 
+	public OpenTK.Vector3 BoxColor
 	{
 		get { return boxcolor; }
 		set 
 		{
-			boxcolor = value;
-			SetUniformVarData(@"BoxColor", boxcolor);
+			if(boxcolor != value)
+			{
+				boxcolor = value;
+				SetUniformVarData(@"BoxColor", boxcolor);
+			}
 		}
 	}
 	private OpenTK.Vector3 boxcolor ;
@@ -1434,6 +1504,7 @@ void main()
 namespace GridRenderMaterial
 {
 
+
 public class GridRenderMaterial : MaterialBase
 {
 	public GridRenderMaterial() 
@@ -1452,13 +1523,16 @@ public class GridRenderMaterial : MaterialBase
 	}
 
 
-	public OpenTK.Vector3 LineColorUniformVar 
+	public OpenTK.Vector3 LineColor
 	{
 		get { return linecolor; }
 		set 
 		{
-			linecolor = value;
-			SetUniformVarData(@"LineColor", linecolor);
+			if(linecolor != value)
+			{
+				linecolor = value;
+				SetUniformVarData(@"LineColor", linecolor);
+			}
 		}
 	}
 	private OpenTK.Vector3 linecolor ;
@@ -1503,6 +1577,7 @@ void main()
 namespace ThreeDTextRenderMaterial
 {
 
+
 public class ThreeDTextRenderMaterial : MaterialBase
 {
 	public ThreeDTextRenderMaterial() 
@@ -1530,25 +1605,31 @@ public class ThreeDTextRenderMaterial : MaterialBase
 		SetTexture(@"FontTexture", TextureObject);
 	}
 
-	public Texture2D FontTexture2D 
+	public TextureBase FontTexture2D 
 	{	
 		get { return fonttexture;}
 		set 
 		{
-			fonttexture = value;
-			SetTexture(@"FontTexture", fonttexture);
+			if(fonttexture != value)
+			{
+				fonttexture = value;
+				SetTexture(@"FontTexture", fonttexture);
+			}
 		}
 	}
 
-	private Texture2D fonttexture = null;
+	private TextureBase fonttexture = null;
 
-	public OpenTK.Vector3 TextColorUniformVar 
+	public OpenTK.Vector3 TextColor
 	{
 		get { return textcolor; }
 		set 
 		{
-			textcolor = value;
-			SetUniformVarData(@"TextColor", textcolor);
+			if(textcolor != value)
+			{
+				textcolor = value;
+				SetUniformVarData(@"TextColor", textcolor);
+			}
 		}
 	}
 	private OpenTK.Vector3 textcolor ;
