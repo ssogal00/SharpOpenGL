@@ -62,6 +62,17 @@ namespace SharpOpenGL
             return path;
         }
 
+        public void UnloadTexture(string path)
+        {
+            var importedPath = ConvertToImportedPath(path);
+
+            if (TextureMap.ContainsKey(importedPath))
+            {
+                TextureMap[importedPath].Dispose();
+                TextureMap.Remove(importedPath);
+            }
+        }
+
         public Texture2D LoadTexture2D(string path)
         {
             var importedPath = ConvertToImportedPath(path);
@@ -91,6 +102,9 @@ namespace SharpOpenGL
                 {
                     Console.WriteLine("Loading {0} started", importedPath);
                 }
+
+                ApproximateTextureMemory += asset.ByteLength;
+
                 newTexture.Load(asset.Bytes, asset.Width, asset.Height, asset.ImagePixelInternalFormat, asset.OpenglPixelFormat);
                 Console.WriteLine("Loading {0} completed", importedPath);
                 TextureMap.Add(importedPath, newTexture);
@@ -123,6 +137,8 @@ namespace SharpOpenGL
                 LoadTexture2D(path);
             }
         }
+
+        private int ApproximateTextureMemory = 0;
 
         Dictionary<string, TextureBase> TextureMap = new Dictionary<string, TextureBase>();
     }
