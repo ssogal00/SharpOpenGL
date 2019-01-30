@@ -166,9 +166,7 @@ namespace SharpOpenGL
             Transform.View = CameraManager.Get().CurrentCameraView;
             Transform.Proj = CameraManager.Get().CurrentCameraProj;
 
-            skyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
-            skyboxPostProcess.ViewMatrix = CameraManager.Get().CurrentCameraView;
-            skyboxPostProcess.ProjMatrix = CameraManager.Get().CurrentCameraProj;
+          
             skyboxPostProcess.Render();
 
             renderGBuffer.BindAndExecute(

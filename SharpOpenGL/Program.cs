@@ -202,9 +202,6 @@ namespace SharpOpenGL
             Transform.Proj = CameraManager.Get().CurrentCameraProj;
 
             // draw cubemap first
-            SkyboxPostProcess.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
-            SkyboxPostProcess.ViewMatrix = CameraManager.Get().CurrentCameraView;
-            SkyboxPostProcess.ProjMatrix = CameraManager.Get().CurrentCameraProj;
             SkyboxPostProcess.Render();
 
             // 

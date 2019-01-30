@@ -38,9 +38,9 @@ namespace SharpOpenGL.PostProcess
                 Output.BindAndExecute(PostProcessMaterial, () =>
                 {
                     var test = (CubemapMaterial.CubemapMaterial) PostProcessMaterial;
-                    test.ModelMatrix = ModelMatrix;
-                    test.ViewMatrix = ViewMatrix;
-                    test.ProjMatrix = ProjMatrix;
+                    test.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
+                    test.ViewMatrix = CameraManager.Get().CurrentCameraView;
+                    test.ProjMatrix = CameraManager.Get().CurrentCameraProj;
                     test.TexCubemap2D = cubemapTexture;
                     sphereMeshObject.Draw();
                 });
@@ -48,11 +48,6 @@ namespace SharpOpenGL.PostProcess
         }
 
         protected CubemapTexture cubemapTexture = null;
-
-        public OpenTK.Matrix4 ViewMatrix = Matrix4.Identity;
-        public OpenTK.Matrix4 ProjMatrix = Matrix4.Identity;
-        public OpenTK.Matrix4 ModelMatrix = Matrix4.Identity;
-
         protected StaticMeshObject sphereMeshObject = null;
     }
 }
