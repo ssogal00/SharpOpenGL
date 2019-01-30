@@ -50,6 +50,20 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 <#index++;#>
 <#}#>
 
+<#foreach(var pair in VSProgram.GetActiveUniformNameAndTypeList())#>
+<#{#>
+	public <#=pair.Value#> <#=pair.Key.FirstCharToUpper()#>
+	{
+		get { return <#=pair.Key.ToLower()#>; }
+		set 
+		{
+			<#=pair.Key.ToLower()#> = value;
+			SetUniformVarData(@"<#=pair.Key#>", <#=pair.Key.ToLower()#>);			
+		}
+	}
+	private <#=pair.Value#> <#=pair.Key.ToLower()#> ;
+<#}#>
+
 <#foreach(var pair in FSProgram.GetActiveUniformNameAndTypeList())#>
 <#{#>
 	public <#=pair.Value#> <#=pair.Key.FirstCharToUpper()#>
@@ -64,17 +78,20 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	private <#=pair.Value#> <#=pair.Key.ToLower()#> ;
 <#}#>
 
+<#var BlockNameList = new List<string>();#>
+
 <#for(int i = 0; i < VSProgram.GetActiveUniformBlockCount(); ++i)
 {
     var blockname = VSProgram.GetUniformBlockName(i);
+	BlockNameList.Add(blockname);
 #>
-    private <#=blockname#> vs_<#=blockname.ToLower()#> = new <#=blockname#>();
-	public <#=blockname#> VS_<#=blockname#>
+    private <#=blockname#> <#=blockname.ToLower()#> = new <#=blockname#>();
+	public <#=blockname#> <#=blockname#>
 	{
-		get { return vs_<#=blockname.ToLower()#>; }
+		get { return <#=blockname.ToLower()#>; }
 		set 
 		{ 
-			vs_<#=blockname.ToLower()#> = value; 
+			<#=blockname.ToLower()#> = value; 
 			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref value);
 		}
 	}
@@ -82,13 +99,13 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 <# var MetaDataList = VSProgram.GetUniformVariableMetaDataList(i).OrderBy(x => x.VariableOffset).ToList();#>
 <# foreach(var data in MetaDataList) #>
 <# { #>
-	public <#=data.VariableTypeString#> VS_<#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
+	public <#=data.VariableTypeString#> <#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
 	{
-		get { return vs_<#=blockname.ToLower()#>.<#=data.VariableName#> ; }
+		get { return <#=blockname.ToLower()#>.<#=data.VariableName#> ; }
 		set 
 		{ 
-			vs_<#=blockname.ToLower()#>.<#=data.VariableName#> = value;
-			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref vs_<#=blockname.ToLower()#>);
+			<#=blockname.ToLower()#>.<#=data.VariableName#> = value;
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);
 		}
 	}
 <# } #>
@@ -98,28 +115,32 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 <#for(int i = 0; i < FSProgram.GetActiveUniformBlockCount(); ++i)
 {
     var blockname = FSProgram.GetUniformBlockName(i);
-#>
-    private <#=blockname#> fs_<#=blockname.ToLower()#> = new <#=blockname#>();
-	public <#=blockname#> FS_<#=blockname#>
+	if(BlockNameList.Contains(blockname))
 	{
-		get { return fs_<#=blockname.ToLower()#>; }
+		continue;
+	}
+#>
+    private <#=blockname#> <#=blockname.ToLower()#> = new <#=blockname#>();
+	public <#=blockname#> <#=blockname#>
+	{
+		get { return <#=blockname.ToLower()#>; }
 		set 
 		{ 
-			fs_<#=blockname.ToLower()#> = value; 
-			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref fs_<#=blockname.ToLower()#>);
+			<#=blockname.ToLower()#> = value; 
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);
 		}
 	}
 
 <# var MetaDataList = FSProgram.GetUniformVariableMetaDataList(i).OrderBy(x => x.VariableOffset).ToList();#>
 <# foreach(var data in MetaDataList) #>
 <# { #>
-	public <#=data.VariableTypeString#> FS_<#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
+	public <#=data.VariableTypeString#> <#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
 	{
-		get { return fs_<#=blockname.ToLower()#>.<#=data.VariableName#> ; }
+		get { return <#=blockname.ToLower()#>.<#=data.VariableName#> ; }
 		set 
 		{ 
-			fs_<#=blockname.ToLower()#>.<#=data.VariableName#> = value; 
-			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref fs_<#=blockname.ToLower()#>);
+			<#=blockname.ToLower()#>.<#=data.VariableName#> = value; 
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);
 		}
 	}
 <# } #>

@@ -37,6 +37,7 @@ namespace SharpOpenGL.PostProcess
             {
                 Output.BindAndExecute(PostProcessMaterial, () =>
                 {
+                    var test = (CubemapMaterial.CubemapMaterial) PostProcessMaterial;
                     PostProcessMaterial.SetUniformVarData("ModelMatrix", ref ModelMatrix);
                     PostProcessMaterial.SetUniformVarData("ViewMatrix", ref ViewMatrix);
                     PostProcessMaterial.SetUniformVarData("ProjMatrix", ref ProjMatrix);
