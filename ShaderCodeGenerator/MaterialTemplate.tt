@@ -40,12 +40,9 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	{	
 		get { return <#=Sampler.ToLower()#>;}
 		set 
-		{
-			if(<#=Sampler.ToLower()#> != value)
-			{
-				<#=Sampler.ToLower()#> = value;
-				SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>);
-			}
+		{	
+			<#=Sampler.ToLower()#> = value;
+			SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>);			
 		}
 	}
 
@@ -69,6 +66,56 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	}
 	private <#=pair.Value#> <#=pair.Key.ToLower()#> ;
 <#}#>
+
+<#for(int i = 0; i < VSProgram.GetActiveUniformBlockCount(); ++i)
+{
+    var blockname = VSProgram.GetUniformBlockName(i);
+#>
+    private <#=blockname#> vs_<#=blockname.ToLower()#> = new <#=blockname#>();
+	public <#=blockname#> VS_<#=blockname#>
+	{
+		get { return vs_<#=blockname.ToLower()#>; }
+		set 
+		{ 
+			vs_<#=blockname.ToLower()#> = value; 
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref value);
+		}
+	}
+
+<# var MetaDataList = VSProgram.GetUniformVariableMetaDataList(i).OrderBy(x => x.VariableOffset).ToList();#>
+<# foreach(var data in MetaDataList) #>
+<# { #>
+	public <#=data.VariableTypeString#> VS_<#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
+	{
+		get { return vs_<#=blockname.ToLower()#>.<#=data.VariableName#> ; }
+		set { vs_<#=blockname.ToLower()#>.<#=data.VariableName#> = value; }
+	}
+<# } #>
+
+<#}#>
+
+<#for(int i = 0; i < FSProgram.GetActiveUniformBlockCount(); ++i)
+{
+    var blockname = FSProgram.GetUniformBlockName(i);
+#>
+    private <#=blockname#> fs_<#=blockname.ToLower()#> = new <#=blockname#>();
+	public <#=blockname#> FS_<#=blockname#>
+	{
+		get { return fs_<#=blockname.ToLower()#>; }
+		set { fs_<#=blockname.ToLower()#> = value; }
+	}
+
+<# var MetaDataList = FSProgram.GetUniformVariableMetaDataList(i).OrderBy(x => x.VariableOffset).ToList();#>
+<# foreach(var data in MetaDataList) #>
+<# { #>
+	public <#=data.VariableTypeString#> FS_<#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
+	{
+		get { return fs_<#=blockname.ToLower()#>.<#=data.VariableName#> ; }
+		set { fs_<#=blockname.ToLower()#>.<#=data.VariableName#> = value; }
+	}
+<# } #>
+<#}#>
+
 	public static string GetVSSourceCode()
 	{
 		return @"<#=VSSourceCode#>";
