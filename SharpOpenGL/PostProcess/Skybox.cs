@@ -38,10 +38,10 @@ namespace SharpOpenGL.PostProcess
                 Output.BindAndExecute(PostProcessMaterial, () =>
                 {
                     var test = (CubemapMaterial.CubemapMaterial) PostProcessMaterial;
-                    PostProcessMaterial.SetUniformVarData("ModelMatrix", ref ModelMatrix);
-                    PostProcessMaterial.SetUniformVarData("ViewMatrix", ref ViewMatrix);
-                    PostProcessMaterial.SetUniformVarData("ProjMatrix", ref ProjMatrix);
-                    PostProcessMaterial.SetTexture("texCubemap", cubemapTexture);
+                    test.ModelMatrix = ModelMatrix;
+                    test.ViewMatrix = ViewMatrix;
+                    test.ProjMatrix = ProjMatrix;
+                    test.TexCubemap2D = cubemapTexture;
                     sphereMeshObject.Draw();
                 });
             }
