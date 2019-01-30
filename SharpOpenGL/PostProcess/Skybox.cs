@@ -21,8 +21,8 @@ namespace SharpOpenGL.PostProcess
             base.OnGLContextCreated(sender, e);
 
             Output.ClearColor = Color.AntiqueWhite;
-
-            PostProcessMaterial = ShaderManager.Get().GetMaterial("CubemapMaterial");
+            
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<CubemapMaterial.CubemapMaterial>();
 
             cubemapTexture = new CubemapTexture();
           

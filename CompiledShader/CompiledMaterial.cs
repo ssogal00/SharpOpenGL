@@ -49,7 +49,11 @@ public class BasicMaterial : MaterialBase
 	public OpenTK.Vector3 VS_ColorBlock_Value
 	{
 		get { return vs_colorblock.Value ; }
-		set { vs_colorblock.Value = value; }
+		set 
+		{ 
+			vs_colorblock.Value = value;
+			this.SetUniformBufferValue< ColorBlock >(@"ColorBlock", ref vs_colorblock);
+		}
 	}
 
     private Transform vs_transform = new Transform();
@@ -66,17 +70,29 @@ public class BasicMaterial : MaterialBase
 	public OpenTK.Matrix4 VS_Transform_Model
 	{
 		get { return vs_transform.Model ; }
-		set { vs_transform.Model = value; }
+		set 
+		{ 
+			vs_transform.Model = value;
+			this.SetUniformBufferValue< Transform >(@"Transform", ref vs_transform);
+		}
 	}
 	public OpenTK.Matrix4 VS_Transform_View
 	{
 		get { return vs_transform.View ; }
-		set { vs_transform.View = value; }
+		set 
+		{ 
+			vs_transform.View = value;
+			this.SetUniformBufferValue< Transform >(@"Transform", ref vs_transform);
+		}
 	}
 	public OpenTK.Matrix4 VS_Transform_Proj
 	{
 		get { return vs_transform.Proj ; }
-		set { vs_transform.Proj = value; }
+		set 
+		{ 
+			vs_transform.Proj = value;
+			this.SetUniformBufferValue< Transform >(@"Transform", ref vs_transform);
+		}
 	}
 
 
@@ -167,17 +183,29 @@ public class SimpleMaterial : MaterialBase
 	public OpenTK.Matrix4 VS_Transform_Model
 	{
 		get { return vs_transform.Model ; }
-		set { vs_transform.Model = value; }
+		set 
+		{ 
+			vs_transform.Model = value;
+			this.SetUniformBufferValue< Transform >(@"Transform", ref vs_transform);
+		}
 	}
 	public OpenTK.Matrix4 VS_Transform_View
 	{
 		get { return vs_transform.View ; }
-		set { vs_transform.View = value; }
+		set 
+		{ 
+			vs_transform.View = value;
+			this.SetUniformBufferValue< Transform >(@"Transform", ref vs_transform);
+		}
 	}
 	public OpenTK.Matrix4 VS_Transform_Proj
 	{
 		get { return vs_transform.Proj ; }
-		set { vs_transform.Proj = value; }
+		set 
+		{ 
+			vs_transform.Proj = value;
+			this.SetUniformBufferValue< Transform >(@"Transform", ref vs_transform);
+		}
 	}
 
 
@@ -411,11 +439,8 @@ public class GBufferDraw : MaterialBase
 		get { return maskmapexist; }
 		set 
 		{
-			if(maskmapexist != value)
-			{
-				maskmapexist = value;
-				SetUniformVarData(@"MaskMapExist", maskmapexist);
-			}
+			maskmapexist = value;
+			SetUniformVarData(@"MaskMapExist", maskmapexist);			
 		}
 	}
 	private System.Int32 maskmapexist ;
@@ -424,11 +449,8 @@ public class GBufferDraw : MaterialBase
 		get { return normalmapexist; }
 		set 
 		{
-			if(normalmapexist != value)
-			{
-				normalmapexist = value;
-				SetUniformVarData(@"NormalMapExist", normalmapexist);
-			}
+			normalmapexist = value;
+			SetUniformVarData(@"NormalMapExist", normalmapexist);			
 		}
 	}
 	private System.Int32 normalmapexist ;
@@ -437,11 +459,8 @@ public class GBufferDraw : MaterialBase
 		get { return specularmapexist; }
 		set 
 		{
-			if(specularmapexist != value)
-			{
-				specularmapexist = value;
-				SetUniformVarData(@"SpecularMapExist", specularmapexist);
-			}
+			specularmapexist = value;
+			SetUniformVarData(@"SpecularMapExist", specularmapexist);			
 		}
 	}
 	private System.Int32 specularmapexist ;
@@ -460,12 +479,20 @@ public class GBufferDraw : MaterialBase
 	public OpenTK.Matrix4 VS_CameraTransform_View
 	{
 		get { return vs_cameratransform.View ; }
-		set { vs_cameratransform.View = value; }
+		set 
+		{ 
+			vs_cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref vs_cameratransform);
+		}
 	}
 	public OpenTK.Matrix4 VS_CameraTransform_Proj
 	{
 		get { return vs_cameratransform.Proj ; }
-		set { vs_cameratransform.Proj = value; }
+		set 
+		{ 
+			vs_cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref vs_cameratransform);
+		}
 	}
 
     private ModelTransform vs_modeltransform = new ModelTransform();
@@ -482,7 +509,11 @@ public class GBufferDraw : MaterialBase
 	public OpenTK.Matrix4 VS_ModelTransform_Model
 	{
 		get { return vs_modeltransform.Model ; }
-		set { vs_modeltransform.Model = value; }
+		set 
+		{ 
+			vs_modeltransform.Model = value;
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref vs_modeltransform);
+		}
 	}
 
 
@@ -654,12 +685,20 @@ public class GBufferWithoutTexture : MaterialBase
 	public OpenTK.Matrix4 VS_CameraTransform_View
 	{
 		get { return vs_cameratransform.View ; }
-		set { vs_cameratransform.View = value; }
+		set 
+		{ 
+			vs_cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref vs_cameratransform);
+		}
 	}
 	public OpenTK.Matrix4 VS_CameraTransform_Proj
 	{
 		get { return vs_cameratransform.Proj ; }
-		set { vs_cameratransform.Proj = value; }
+		set 
+		{ 
+			vs_cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref vs_cameratransform);
+		}
 	}
 
     private ModelTransform vs_modeltransform = new ModelTransform();
@@ -676,7 +715,11 @@ public class GBufferWithoutTexture : MaterialBase
 	public OpenTK.Matrix4 VS_ModelTransform_Model
 	{
 		get { return vs_modeltransform.Model ; }
-		set { vs_modeltransform.Model = value; }
+		set 
+		{ 
+			vs_modeltransform.Model = value;
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref vs_modeltransform);
+		}
 	}
 
 
@@ -798,12 +841,20 @@ public class GBufferPNC : MaterialBase
 	public OpenTK.Matrix4 VS_CameraTransform_View
 	{
 		get { return vs_cameratransform.View ; }
-		set { vs_cameratransform.View = value; }
+		set 
+		{ 
+			vs_cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref vs_cameratransform);
+		}
 	}
 	public OpenTK.Matrix4 VS_CameraTransform_Proj
 	{
 		get { return vs_cameratransform.Proj ; }
-		set { vs_cameratransform.Proj = value; }
+		set 
+		{ 
+			vs_cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref vs_cameratransform);
+		}
 	}
 
 
@@ -998,27 +1049,47 @@ public class LightMaterial : MaterialBase
 	public OpenTK.Vector3 VS_Light_LightDir
 	{
 		get { return vs_light.LightDir ; }
-		set { vs_light.LightDir = value; }
+		set 
+		{ 
+			vs_light.LightDir = value;
+			this.SetUniformBufferValue< Light >(@"Light", ref vs_light);
+		}
 	}
 	public OpenTK.Vector3 VS_Light_LightAmbient
 	{
 		get { return vs_light.LightAmbient ; }
-		set { vs_light.LightAmbient = value; }
+		set 
+		{ 
+			vs_light.LightAmbient = value;
+			this.SetUniformBufferValue< Light >(@"Light", ref vs_light);
+		}
 	}
 	public OpenTK.Vector3 VS_Light_LightDiffuse
 	{
 		get { return vs_light.LightDiffuse ; }
-		set { vs_light.LightDiffuse = value; }
+		set 
+		{ 
+			vs_light.LightDiffuse = value;
+			this.SetUniformBufferValue< Light >(@"Light", ref vs_light);
+		}
 	}
 	public OpenTK.Vector3 VS_Light_LightSpecular
 	{
 		get { return vs_light.LightSpecular ; }
-		set { vs_light.LightSpecular = value; }
+		set 
+		{ 
+			vs_light.LightSpecular = value;
+			this.SetUniformBufferValue< Light >(@"Light", ref vs_light);
+		}
 	}
 	public System.Single VS_Light_LightSpecularShininess
 	{
 		get { return vs_light.LightSpecularShininess ; }
-		set { vs_light.LightSpecularShininess = value; }
+		set 
+		{ 
+			vs_light.LightSpecularShininess = value;
+			this.SetUniformBufferValue< Light >(@"Light", ref vs_light);
+		}
 	}
 
 
@@ -1026,33 +1097,57 @@ public class LightMaterial : MaterialBase
 	public Light FS_Light
 	{
 		get { return fs_light; }
-		set { fs_light = value; }
+		set 
+		{ 
+			fs_light = value; 
+			this.SetUniformBufferValue< Light >(@"Light", ref fs_light);
+		}
 	}
 
 	public OpenTK.Vector3 FS_Light_LightDir
 	{
 		get { return fs_light.LightDir ; }
-		set { fs_light.LightDir = value; }
+		set 
+		{ 
+			fs_light.LightDir = value; 
+			this.SetUniformBufferValue< Light >(@"Light", ref fs_light);
+		}
 	}
 	public OpenTK.Vector3 FS_Light_LightAmbient
 	{
 		get { return fs_light.LightAmbient ; }
-		set { fs_light.LightAmbient = value; }
+		set 
+		{ 
+			fs_light.LightAmbient = value; 
+			this.SetUniformBufferValue< Light >(@"Light", ref fs_light);
+		}
 	}
 	public OpenTK.Vector3 FS_Light_LightDiffuse
 	{
 		get { return fs_light.LightDiffuse ; }
-		set { fs_light.LightDiffuse = value; }
+		set 
+		{ 
+			fs_light.LightDiffuse = value; 
+			this.SetUniformBufferValue< Light >(@"Light", ref fs_light);
+		}
 	}
 	public OpenTK.Vector3 FS_Light_LightSpecular
 	{
 		get { return fs_light.LightSpecular ; }
-		set { fs_light.LightSpecular = value; }
+		set 
+		{ 
+			fs_light.LightSpecular = value; 
+			this.SetUniformBufferValue< Light >(@"Light", ref fs_light);
+		}
 	}
 	public System.Single FS_Light_LightSpecularShininess
 	{
 		get { return fs_light.LightSpecularShininess ; }
-		set { fs_light.LightSpecularShininess = value; }
+		set 
+		{ 
+			fs_light.LightSpecularShininess = value; 
+			this.SetUniformBufferValue< Light >(@"Light", ref fs_light);
+		}
 	}
 
 	public static string GetVSSourceCode()
@@ -1292,11 +1387,8 @@ public class MSGBufferMaterial : MaterialBase
 		get { return maskmapexist; }
 		set 
 		{
-			if(maskmapexist != value)
-			{
-				maskmapexist = value;
-				SetUniformVarData(@"MaskMapExist", maskmapexist);
-			}
+			maskmapexist = value;
+			SetUniformVarData(@"MaskMapExist", maskmapexist);			
 		}
 	}
 	private System.Int32 maskmapexist ;
@@ -1305,11 +1397,8 @@ public class MSGBufferMaterial : MaterialBase
 		get { return normalmapexist; }
 		set 
 		{
-			if(normalmapexist != value)
-			{
-				normalmapexist = value;
-				SetUniformVarData(@"NormalMapExist", normalmapexist);
-			}
+			normalmapexist = value;
+			SetUniformVarData(@"NormalMapExist", normalmapexist);			
 		}
 	}
 	private System.Int32 normalmapexist ;
@@ -1318,11 +1407,8 @@ public class MSGBufferMaterial : MaterialBase
 		get { return specularmapexist; }
 		set 
 		{
-			if(specularmapexist != value)
-			{
-				specularmapexist = value;
-				SetUniformVarData(@"SpecularMapExist", specularmapexist);
-			}
+			specularmapexist = value;
+			SetUniformVarData(@"SpecularMapExist", specularmapexist);			
 		}
 	}
 	private System.Int32 specularmapexist ;
@@ -1341,12 +1427,20 @@ public class MSGBufferMaterial : MaterialBase
 	public OpenTK.Matrix4 VS_CameraTransform_View
 	{
 		get { return vs_cameratransform.View ; }
-		set { vs_cameratransform.View = value; }
+		set 
+		{ 
+			vs_cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref vs_cameratransform);
+		}
 	}
 	public OpenTK.Matrix4 VS_CameraTransform_Proj
 	{
 		get { return vs_cameratransform.Proj ; }
-		set { vs_cameratransform.Proj = value; }
+		set 
+		{ 
+			vs_cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref vs_cameratransform);
+		}
 	}
 
     private ModelTransform vs_modeltransform = new ModelTransform();
@@ -1363,7 +1457,11 @@ public class MSGBufferMaterial : MaterialBase
 	public OpenTK.Matrix4 VS_ModelTransform_Model
 	{
 		get { return vs_modeltransform.Model ; }
-		set { vs_modeltransform.Model = value; }
+		set 
+		{ 
+			vs_modeltransform.Model = value;
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref vs_modeltransform);
+		}
 	}
 
 
@@ -1547,11 +1645,8 @@ public class DepthVisualizeMaterial : MaterialBase
 		get { return far; }
 		set 
 		{
-			if(far != value)
-			{
-				far = value;
-				SetUniformVarData(@"Far", far);
-			}
+			far = value;
+			SetUniformVarData(@"Far", far);			
 		}
 	}
 	private System.Single far ;
@@ -1560,11 +1655,8 @@ public class DepthVisualizeMaterial : MaterialBase
 		get { return near; }
 		set 
 		{
-			if(near != value)
-			{
-				near = value;
-				SetUniformVarData(@"Near", near);
-			}
+			near = value;
+			SetUniformVarData(@"Near", near);			
 		}
 	}
 	private System.Single near ;
@@ -1729,11 +1821,8 @@ public class FontBoxRenderMaterial : MaterialBase
 		get { return boxalpha; }
 		set 
 		{
-			if(boxalpha != value)
-			{
-				boxalpha = value;
-				SetUniformVarData(@"BoxAlpha", boxalpha);
-			}
+			boxalpha = value;
+			SetUniformVarData(@"BoxAlpha", boxalpha);			
 		}
 	}
 	private System.Single boxalpha ;
@@ -1742,11 +1831,8 @@ public class FontBoxRenderMaterial : MaterialBase
 		get { return boxcolor; }
 		set 
 		{
-			if(boxcolor != value)
-			{
-				boxcolor = value;
-				SetUniformVarData(@"BoxColor", boxcolor);
-			}
+			boxcolor = value;
+			SetUniformVarData(@"BoxColor", boxcolor);			
 		}
 	}
 	private OpenTK.Vector3 boxcolor ;
@@ -1819,11 +1905,8 @@ public class GridRenderMaterial : MaterialBase
 		get { return linecolor; }
 		set 
 		{
-			if(linecolor != value)
-			{
-				linecolor = value;
-				SetUniformVarData(@"LineColor", linecolor);
-			}
+			linecolor = value;
+			SetUniformVarData(@"LineColor", linecolor);			
 		}
 	}
 	private OpenTK.Vector3 linecolor ;
@@ -1842,12 +1925,20 @@ public class GridRenderMaterial : MaterialBase
 	public OpenTK.Matrix4 VS_CameraTransform_View
 	{
 		get { return vs_cameratransform.View ; }
-		set { vs_cameratransform.View = value; }
+		set 
+		{ 
+			vs_cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref vs_cameratransform);
+		}
 	}
 	public OpenTK.Matrix4 VS_CameraTransform_Proj
 	{
 		get { return vs_cameratransform.Proj ; }
-		set { vs_cameratransform.Proj = value; }
+		set 
+		{ 
+			vs_cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref vs_cameratransform);
+		}
 	}
 
     private ModelTransform vs_modeltransform = new ModelTransform();
@@ -1864,7 +1955,11 @@ public class GridRenderMaterial : MaterialBase
 	public OpenTK.Matrix4 VS_ModelTransform_Model
 	{
 		get { return vs_modeltransform.Model ; }
-		set { vs_modeltransform.Model = value; }
+		set 
+		{ 
+			vs_modeltransform.Model = value;
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref vs_modeltransform);
+		}
 	}
 
 
@@ -1955,11 +2050,8 @@ public class ThreeDTextRenderMaterial : MaterialBase
 		get { return textcolor; }
 		set 
 		{
-			if(textcolor != value)
-			{
-				textcolor = value;
-				SetUniformVarData(@"TextColor", textcolor);
-			}
+			textcolor = value;
+			SetUniformVarData(@"TextColor", textcolor);			
 		}
 	}
 	private OpenTK.Vector3 textcolor ;

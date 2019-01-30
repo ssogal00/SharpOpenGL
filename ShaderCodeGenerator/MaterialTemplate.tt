@@ -57,11 +57,8 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		get { return <#=pair.Key.ToLower()#>; }
 		set 
 		{
-			if(<#=pair.Key.ToLower()#> != value)
-			{
-				<#=pair.Key.ToLower()#> = value;
-				SetUniformVarData(@"<#=pair.Key#>", <#=pair.Key.ToLower()#>);
-			}
+			<#=pair.Key.ToLower()#> = value;
+			SetUniformVarData(@"<#=pair.Key#>", <#=pair.Key.ToLower()#>);			
 		}
 	}
 	private <#=pair.Value#> <#=pair.Key.ToLower()#> ;
@@ -88,7 +85,11 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	public <#=data.VariableTypeString#> VS_<#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
 	{
 		get { return vs_<#=blockname.ToLower()#>.<#=data.VariableName#> ; }
-		set { vs_<#=blockname.ToLower()#>.<#=data.VariableName#> = value; }
+		set 
+		{ 
+			vs_<#=blockname.ToLower()#>.<#=data.VariableName#> = value;
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref vs_<#=blockname.ToLower()#>);
+		}
 	}
 <# } #>
 
@@ -102,7 +103,11 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	public <#=blockname#> FS_<#=blockname#>
 	{
 		get { return fs_<#=blockname.ToLower()#>; }
-		set { fs_<#=blockname.ToLower()#> = value; }
+		set 
+		{ 
+			fs_<#=blockname.ToLower()#> = value; 
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref fs_<#=blockname.ToLower()#>);
+		}
 	}
 
 <# var MetaDataList = FSProgram.GetUniformVariableMetaDataList(i).OrderBy(x => x.VariableOffset).ToList();#>
@@ -111,7 +116,11 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	public <#=data.VariableTypeString#> FS_<#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
 	{
 		get { return fs_<#=blockname.ToLower()#>.<#=data.VariableName#> ; }
-		set { fs_<#=blockname.ToLower()#>.<#=data.VariableName#> = value; }
+		set 
+		{ 
+			fs_<#=blockname.ToLower()#>.<#=data.VariableName#> = value; 
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref fs_<#=blockname.ToLower()#>);
+		}
 	}
 <# } #>
 <#}#>

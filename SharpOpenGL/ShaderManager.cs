@@ -47,6 +47,19 @@ namespace SharpOpenGL
             return null;
         }
 
+        public T GetMaterial<T>() where T : MaterialBase
+        {
+            foreach (var item in ShaderMap)
+            {
+                if (item.Value is T)
+                {
+                    return (T) item.Value;
+                }
+            }
+
+            return default(T);
+        }
+
         private Dictionary<string, MaterialBase> ShaderMap = new Dictionary<string, MaterialBase>();
     }
 }
