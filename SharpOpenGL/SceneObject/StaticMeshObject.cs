@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Core;
 using Core.MaterialBase;
@@ -77,11 +78,14 @@ namespace SharpOpenGL
                 return;
             }
 
+            var gbufferMaterial =  material as GBufferDraw.GBufferDraw;
+            Debug.Assert(gbufferMaterial != null);
+
             meshdrawable.BindVertexAndIndexBuffer();
 
             if (meshAsset.MaterialMap.Count == 0)
             {
-                material.SetTexture("DiffuseTex", TextureManager.Get().GetTexture2D("./Resources/Texture/Checker.png"));
+                gbufferMaterial.SetTexture("DiffuseTex", TextureManager.Get().GetTexture2D("./Resources/Texture/Checker.png"));
                 meshdrawable.Draw(0, (uint)(meshAsset.VertexIndices.Count));
                 return;
             }
@@ -93,39 +97,39 @@ namespace SharpOpenGL
                 if (meshAsset.MaterialMap.ContainsKey(sectionName))
                 {
                     var diffuseTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].DiffuseMap);
-                    material.SetTexture("DiffuseTex", diffuseTex);
+                    gbufferMaterial.DiffuseTex2D = diffuseTex;
 
                     if (meshAsset.MaterialMap[sectionName].NormalMap != null)
                     {
-                        material.SetUniformVarData("NormalMapExist", 1);
+                        gbufferMaterial.NormalMapExist = 1;
                         var normalTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].NormalMap);
-                        material.SetTexture("NormalTex", normalTex);
+                        gbufferMaterial.NormalTex2D = normalTex;
                     }
                     else
                     {
-                        material.SetUniformVarData("NormalMapExist", 0);
+                        gbufferMaterial.NormalMapExist = 0;
                     }
 
                     if (meshAsset.MaterialMap[sectionName].MaskMap != null)
                     {
-                        material.SetUniformVarData("MaskMapExist", 1);
+                        gbufferMaterial.MaskMapExist = 1;
                         var maskTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].MaskMap);
-                        material.SetTexture("MaskTex", maskTex);
+                        gbufferMaterial.MaskTex2D = maskTex;
                     }
                     else
                     {
-                        material.SetUniformVarData("MaskMapExist", 0);
+                        gbufferMaterial.MaskMapExist = 0;
                     }
 
                     if (meshAsset.MaterialMap[sectionName].SpecularMap != null)
                     {
-                        material.SetUniformVarData("SpecularMapExist", 1);
+                        gbufferMaterial.SpecularMapExist = 1;
                         var specTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].SpecularMap);
-                        material.SetTexture("SpecularTex", specTex);
+                        gbufferMaterial.SpecularTex2D = specTex;
                     }
                     else
                     {
-                        material.SetUniformVarData("SpecularMapExist", 0);
+                        gbufferMaterial.SpecularMapExist = 0;
                     }
                 }
 

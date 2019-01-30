@@ -212,9 +212,6 @@ namespace SharpOpenGL
             });
 
             SkyboxPostProcess.GetOutputRenderTarget().Copy(MyGBuffer.GetColorAttachement);
-
-            
-
             
             ScreenBlit.Blit(MyGBuffer.GetColorAttachement, 0, 0, 2, 2);
             //LightPostProcess.Render(MyGBuffer.GetPositionAttachment, MyGBuffer.GetColorAttachement, MyGBuffer.GetNormalAttachment);
