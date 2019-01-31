@@ -32,9 +32,6 @@ namespace SharpOpenGL
         protected StaticMeshObject sponzamesh = null;
         protected bool bInitialized = false;
 
-        protected GBufferDraw.ModelTransform ModelMatrix = new GBufferDraw.ModelTransform();
-        protected GBufferDraw.CameraTransform Transform = new GBufferDraw.CameraTransform();
-
         protected MaterialBase GBufferMaterial = null;
         protected MaterialBase GridMaterial = null;
         protected MaterialBase WireframeMaterial = null;
@@ -137,12 +134,7 @@ namespace SharpOpenGL
             float fAspectRatio = Width / (float)Height;
 
             OnWindowResize(this, eventArgs);
-
-            Transform.Proj = CameraManager.Get().CurrentCamera.Proj;
-            Transform.View = CameraManager.Get().CurrentCamera.View;
-
-            ModelMatrix.Model = Matrix4.CreateScale(1.500f);
-
+            
             this.Title = string.Format("MyEngine({0}x{1})", Width, Height);
         }
 
@@ -162,10 +154,6 @@ namespace SharpOpenGL
                 SwapBuffers();
                 return;
             }
-
-            Transform.View = CameraManager.Get().CurrentCameraView;
-            Transform.Proj = CameraManager.Get().CurrentCameraProj;
-
           
             skyboxPostProcess.Render();
 
@@ -178,23 +166,13 @@ namespace SharpOpenGL
             skyboxPostProcess.GetOutputRenderTarget().Copy(renderGBuffer.GetColorAttachement);
 
             renderGBuffer.BindAndExecute
-            (GBufferMaterial, () =>
-            {   
-                sponzamesh.Draw();
-
-                GridDrawer.Get().Draw(GridMaterial);
-
-                /*using (var dummy = new WireFrameMode())
-                {
-                    WireframeMaterial.BindAndExecute
-                    (() =>
-                        {   
-                            WireframeMaterial.SetUniformBufferValue<SharpOpenGL.GBufferDraw.CameraTransform>("CameraTransform", ref Transform);
-                            SceneObjectManager.Get().Draw(WireframeMaterial);
-                        }
-                    );
-                }*/
-            });
+            (
+                () =>
+                {   
+                    sponzamesh.Draw();
+                    GridDrawer.Get().Draw(GridMaterial);
+                }
+            );
 
             ScreenBlit.Blit(renderGBuffer.GetColorAttachement, 0, 0, 2, 2);
 
