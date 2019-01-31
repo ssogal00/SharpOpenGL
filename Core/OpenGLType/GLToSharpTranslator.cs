@@ -171,8 +171,6 @@ namespace Core.OpenGLType
                     Debug.Assert(false, "Not supported format {0}", eType.ToString());
                     return "";
             }
-
-            return "";
         }
     }
 }

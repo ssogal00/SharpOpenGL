@@ -65,28 +65,29 @@ namespace SharpOpenGL
             }
         }
 
-        public void Draw()
-        {
-            meshdrawable.BindVertexAndIndexBuffer();
-            meshdrawable.Draw(0, (uint)meshAsset.VertexIndices.Count);
-        }
-
-        public override void Draw(MaterialBase material)
+        public override void Draw()
         {
             if (bReadyToDraw == false)
             {
                 return;
             }
 
-            var gbufferMaterial =  material as GBufferDraw.GBufferDraw;
+            var gbufferMaterial = ShaderManager.Get().GetMaterial<GBufferDraw.GBufferDraw>();
             Debug.Assert(gbufferMaterial != null);
+
+            gbufferMaterial.Bind();
+            
+            gbufferMaterial.ModelTransform_Model = this.ParentMatrix * this.LocalMatrix;
+            gbufferMaterial.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+            gbufferMaterial.CameraTransform_View = CameraManager.Get().CurrentCameraView;
 
             meshdrawable.BindVertexAndIndexBuffer();
 
             if (meshAsset.MaterialMap.Count == 0)
             {
-                gbufferMaterial.SetTexture("DiffuseTex", TextureManager.Get().GetTexture2D("./Resources/Texture/Checker.png"));
-                meshdrawable.Draw(0, (uint)(meshAsset.VertexIndices.Count));
+                gbufferMaterial.SetTexture("DiffuseTex",
+                    TextureManager.Get().GetTexture2D("./Resources/Texture/Checker.png"));
+                meshdrawable.Draw(0, (uint) (meshAsset.VertexIndices.Count));
                 return;
             }
 
@@ -135,11 +136,11 @@ namespace SharpOpenGL
 
                 foreach (var section in sectionlist)
                 {
-                    meshdrawable.Draw(section.StartIndex, (uint)(section.EndIndex - section.StartIndex));
+                    meshdrawable.Draw(section.StartIndex, (uint) (section.EndIndex - section.StartIndex));
                 }
             }
         }
-
+       
         protected string assetpath = "";
 
         protected StaticMeshAsset meshAsset = null;

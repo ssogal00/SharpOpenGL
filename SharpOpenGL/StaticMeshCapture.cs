@@ -53,7 +53,7 @@ namespace SharpOpenGL
                     
                     gbufferMaterial.SetUniformBufferValue<GBufferDraw.CameraTransform>("CameraTransform", ref cameraTransform);
                     gbufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelTransform);
-                    staticMeshObject.Draw(gbufferMaterial);
+                    staticMeshObject.Draw();
 
                     FontManager.Get().RenderText(10, 100, "Hello");
                     //

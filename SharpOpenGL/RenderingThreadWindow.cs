@@ -179,10 +179,8 @@ namespace SharpOpenGL
 
             renderGBuffer.BindAndExecute
             (GBufferMaterial, () =>
-            {
-                GBufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref ModelMatrix);
-                GBufferMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref Transform);
-                sponzamesh.Draw(GBufferMaterial);
+            {   
+                sponzamesh.Draw();
 
                 GridDrawer.Get().Draw(GridMaterial);
 

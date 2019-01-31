@@ -41,7 +41,7 @@ namespace Core.Primitive
         {
             foreach (var obj in SceneObjectList)
             {
-                obj.Draw(material);
+                obj.Draw();
             }
         }
 

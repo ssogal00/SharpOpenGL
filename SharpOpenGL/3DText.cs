@@ -36,18 +36,18 @@ namespace SharpOpenGL
             base.Initialize();
         }
 
-        public override void Draw(MaterialBase material)
+        public override void Draw()
         {
             using (var blend = new ScopedEnable(EnableCap.Blend))
             using (var blendFunc = new ScopedBlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha))
             {
-                material.BindAndExecute(vertexBuffer, () =>
+                defaultMaterial.BindAndExecute(vertexBuffer, () =>
                 {
                     vertexBuffer.BindVertexAttribute();
-                    material.SetUniformVarData("Model", LocalMatrix);
-                    material.SetUniformVarData("View", CameraManager.Get().CurrentCameraView);
-                    material.SetUniformVarData("Proj", CameraManager.Get().CurrentCameraProj);
-                    material.SetTexture("FontTexture", FontManager.Get().FontAtlas);
+                    defaultMaterial.SetUniformVarData("Model", LocalMatrix);
+                    defaultMaterial.SetUniformVarData("View", CameraManager.Get().CurrentCameraView);
+                    defaultMaterial.SetUniformVarData("Proj", CameraManager.Get().CurrentCameraProj);
+                    defaultMaterial.SetTexture("FontTexture", FontManager.Get().FontAtlas);
                     GL.DrawArrays(PrimitiveType.Quads, 0, vertexCount);
                 });
             }

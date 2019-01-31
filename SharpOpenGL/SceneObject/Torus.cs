@@ -36,16 +36,21 @@ namespace SharpOpenGL
                 var vertexArray = VertexList.ToArray();
                 drawable.SetupVertexData(ref vertexArray);
 
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC.GBufferPNC>();
+
                 VertexList.Clear();
                 bReadyToDraw = true;
             });
         }
 
-        public override void Draw(MaterialBase material)
+        public override void Draw()
         {
             if (bReadyToDraw)
             {
-                drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+                defaultMaterial.BindAndExecute
+                (
+                    () => { drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles); }
+                );
             }
         }
 

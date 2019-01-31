@@ -26,7 +26,8 @@ namespace Core.Primitive
 
         public virtual void Tick(double elapsed) { }
 
-        public abstract void Draw(MaterialBase.MaterialBase material);
+        //Draw with default material
+        public abstract void Draw();
 
         public static EventHandler<EventArgs> OnOpenGLContextCreated;
         
@@ -55,5 +56,7 @@ namespace Core.Primitive
         protected bool bReadyToDraw = false;
 
         protected bool bVisible = true;
+
+        protected MaterialBase.MaterialBase defaultMaterial = null;
     }
 }

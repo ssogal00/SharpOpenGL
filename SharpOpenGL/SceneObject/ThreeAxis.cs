@@ -21,25 +21,21 @@ namespace SharpOpenGL
             }
         }
 
-        public void Draw()
-        {
-        }
-
-        public override void Draw(MaterialBase material)
+        public override void Draw()
         {
             if (xAxis.IsReadyToDraw && yAxis.IsReadyToDraw && zAxis.IsReadyToDraw)
             {
                 // 
                 xAxis.ParentMatrix = LocalMatrix * ParentMatrix;
-                xAxis.Draw(material);
+                xAxis.Draw();
 
                 //
                 yAxis.ParentMatrix = Matrix4.CreateRotationZ(OpenTK.MathHelper.DegreesToRadians(90)) * LocalMatrix * ParentMatrix;
-                yAxis.Draw(material);
+                yAxis.Draw();
                 //
 
                 zAxis.ParentMatrix = Matrix4.CreateRotationY(OpenTK.MathHelper.DegreesToRadians(-90)) * LocalMatrix * ParentMatrix;
-                zAxis.Draw(material);
+                zAxis.Draw();
             }
         }
         // @ ISceneobject interface

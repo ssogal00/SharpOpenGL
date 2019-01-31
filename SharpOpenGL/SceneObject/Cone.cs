@@ -47,17 +47,19 @@ namespace SharpOpenGL
                 VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
                 VertexList.Clear();
 
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC.GBufferPNC>();
+
                 bReadyToDraw = true;
             });
         }
 
-        public override void Draw(MaterialBase material)
+        public override void Draw()
         {
             if(bReadyToDraw)
             {
-                using (var dummy = new ScopedBind(VB))
+                using (var dummy = new ScopedBind(VB, defaultMaterial))
                 {
-                    material.SetUniformVarData("Model", LocalMatrix * ParentMatrix);
+                    defaultMaterial.SetUniformVarData("Model", LocalMatrix * ParentMatrix);
                     PNC_VertexAttribute.VertexAttributeBinding();
                     GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
                 }
@@ -122,8 +124,6 @@ namespace SharpOpenGL
 
             VertexCount = VertexList.Count;
         }
-
-        
 
         protected float Radius = 1.0f;
         protected float Height = 10.0f;

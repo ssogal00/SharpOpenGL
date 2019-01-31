@@ -43,16 +43,21 @@ namespace SharpOpenGL
                 drawable.SetupVertexData(ref vertexArray);
 
                 VertexList.Clear();
+
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC.GBufferPNC>();
                 bReadyToDraw = true;
             });
         }
 
-        public override void Draw(MaterialBase material)
+        public override void Draw()
         {
             if (bReadyToDraw)
             {
-                material.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
-                drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+                using (var dummy = new ScopedBind(defaultMaterial))
+                {
+                    defaultMaterial.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
+                    drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+                }
             }
         }
 
