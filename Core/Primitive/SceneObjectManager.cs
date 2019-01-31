@@ -37,9 +37,9 @@ namespace Core.Primitive
             return result;
         }
 
-        public void Draw(MaterialBase.MaterialBase material)
+        public void Draw()
         {
-            foreach (var obj in SceneObjectList)
+            foreach (var obj in SceneObjectList.Where(x=>x.IsVisible))
             {
                 obj.Draw();
             }

@@ -29,6 +29,7 @@ namespace SharpOpenGL.PostProcess
             cubemapTexture.Load();
 
             sphereMeshObject = new StaticMeshObject("./Resources/Imported/StaticMesh/sphere3.staticmesh");
+            sphereMeshObject.SetVisible(false);
         }
 
         public override void Render()

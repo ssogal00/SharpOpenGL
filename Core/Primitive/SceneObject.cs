@@ -53,6 +53,11 @@ namespace Core.Primitive
 
         public bool IsVisible => bVisible;
 
+        public void SetVisible(bool flag)
+        {
+            bVisible = flag;
+        }
+
         protected bool bReadyToDraw = false;
 
         protected bool bVisible = true;

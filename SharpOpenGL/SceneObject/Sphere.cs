@@ -54,6 +54,7 @@ namespace SharpOpenGL
             if (bReadyToDraw)
             {
                 using (var dummy = new ScopedBind(defaultMaterial))
+                using (var wireFrame = new WireFrameMode())
                 {
                     defaultMaterial.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
                     drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
