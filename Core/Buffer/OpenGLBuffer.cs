@@ -12,6 +12,7 @@ namespace Core.Buffer
             bufferObject = GL.GenBuffer();
         }
 
+
         public OpenGLBuffer(string debugName)
          : this()
         {
@@ -50,6 +51,7 @@ namespace Core.Buffer
         public void BufferData<T>(ref T Data) where T : struct
         {   
             Bind();
+            
             var Size = new IntPtr(Marshal.SizeOf(Data));
             GL.BufferData<T>(bufferTarget, Size, ref Data, hint);            
         }

@@ -16,7 +16,7 @@ namespace Core.Buffer
         public DynamicUniformBuffer()            
         {
             bufferTarget  = BufferTarget.UniformBuffer;
-            hint          = BufferUsageHint.DynamicDraw;            
+            hint          = BufferUsageHint.DynamicDraw;
         }
 
         public DynamicUniformBuffer(ShaderProgram ProgramObject, string UniformBlockName)
