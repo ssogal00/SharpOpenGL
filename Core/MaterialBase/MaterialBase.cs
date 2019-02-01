@@ -1,9 +1,13 @@
-﻿using Core.Buffer;
+﻿using System;
+using Core.Buffer;
 using Core.OpenGLShader;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Runtime.Remoting.Channels;
 using OpenTK.Graphics.OpenGL;
+
 
 namespace Core.MaterialBase
 {
@@ -211,8 +215,15 @@ namespace Core.MaterialBase
         {
             if(HasUniformBuffer(bufferName))
             {   
-                UniformBufferMap[bufferName].Bind();
                 UniformBufferMap[bufferName].BufferData(ref data);
+            }
+        }
+
+        public void SetUniformBufferMemberValue<TMember>(string bufferName, ref TMember data, int offset) where TMember : struct
+        {
+            if (HasUniformBuffer(bufferName))
+            {   
+                UniformBufferMap[bufferName].BufferSubData<TMember>(ref data, offset);
             }
         }
 

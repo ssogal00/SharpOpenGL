@@ -55,6 +55,7 @@ public class BasicMaterial : MaterialBase
 		{ 
 			colorblock.Value = value;
 			this.SetUniformBufferValue< ColorBlock >(@"ColorBlock", ref colorblock);
+			//this.SetUniformBufferMemberValue< OpenTK.Vector3 >(@"ColorBlock", ref value, 0 );
 		}
 	}
 
@@ -76,6 +77,7 @@ public class BasicMaterial : MaterialBase
 		{ 
 			transform.Model = value;
 			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"Transform", ref value, 0 );
 		}
 	}
 	public OpenTK.Matrix4 Transform_View
@@ -85,6 +87,7 @@ public class BasicMaterial : MaterialBase
 		{ 
 			transform.View = value;
 			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"Transform", ref value, 64 );
 		}
 	}
 	public OpenTK.Matrix4 Transform_Proj
@@ -94,6 +97,7 @@ public class BasicMaterial : MaterialBase
 		{ 
 			transform.Proj = value;
 			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"Transform", ref value, 128 );
 		}
 	}
 
@@ -191,6 +195,7 @@ public class SimpleMaterial : MaterialBase
 		{ 
 			transform.Model = value;
 			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"Transform", ref value, 0 );
 		}
 	}
 	public OpenTK.Matrix4 Transform_View
@@ -200,6 +205,7 @@ public class SimpleMaterial : MaterialBase
 		{ 
 			transform.View = value;
 			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"Transform", ref value, 64 );
 		}
 	}
 	public OpenTK.Matrix4 Transform_Proj
@@ -209,6 +215,7 @@ public class SimpleMaterial : MaterialBase
 		{ 
 			transform.Proj = value;
 			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"Transform", ref value, 128 );
 		}
 	}
 
@@ -491,6 +498,7 @@ public class GBufferDraw : MaterialBase
 		{ 
 			cameratransform.View = value;
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 0 );
 		}
 	}
 	public OpenTK.Matrix4 CameraTransform_Proj
@@ -500,6 +508,7 @@ public class GBufferDraw : MaterialBase
 		{ 
 			cameratransform.Proj = value;
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 64 );
 		}
 	}
 
@@ -521,6 +530,7 @@ public class GBufferDraw : MaterialBase
 		{ 
 			modeltransform.Model = value;
 			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"ModelTransform", ref value, 0 );
 		}
 	}
 
@@ -699,6 +709,7 @@ public class GBufferWithoutTexture : MaterialBase
 		{ 
 			cameratransform.View = value;
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 0 );
 		}
 	}
 	public OpenTK.Matrix4 CameraTransform_Proj
@@ -708,6 +719,7 @@ public class GBufferWithoutTexture : MaterialBase
 		{ 
 			cameratransform.Proj = value;
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 64 );
 		}
 	}
 
@@ -729,6 +741,7 @@ public class GBufferWithoutTexture : MaterialBase
 		{ 
 			modeltransform.Model = value;
 			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"ModelTransform", ref value, 0 );
 		}
 	}
 
@@ -867,6 +880,7 @@ public class GBufferPNC : MaterialBase
 		{ 
 			cameratransform.View = value;
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 0 );
 		}
 	}
 	public OpenTK.Matrix4 CameraTransform_Proj
@@ -876,6 +890,7 @@ public class GBufferPNC : MaterialBase
 		{ 
 			cameratransform.Proj = value;
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 64 );
 		}
 	}
 
@@ -1079,6 +1094,7 @@ public class LightMaterial : MaterialBase
 		{ 
 			light.LightDir = value;
 			this.SetUniformBufferValue< Light >(@"Light", ref light);
+			//this.SetUniformBufferMemberValue< OpenTK.Vector3 >(@"Light", ref value, 0 );
 		}
 	}
 	public OpenTK.Vector3 Light_LightAmbient
@@ -1088,6 +1104,7 @@ public class LightMaterial : MaterialBase
 		{ 
 			light.LightAmbient = value;
 			this.SetUniformBufferValue< Light >(@"Light", ref light);
+			//this.SetUniformBufferMemberValue< OpenTK.Vector3 >(@"Light", ref value, 16 );
 		}
 	}
 	public OpenTK.Vector3 Light_LightDiffuse
@@ -1097,6 +1114,7 @@ public class LightMaterial : MaterialBase
 		{ 
 			light.LightDiffuse = value;
 			this.SetUniformBufferValue< Light >(@"Light", ref light);
+			//this.SetUniformBufferMemberValue< OpenTK.Vector3 >(@"Light", ref value, 32 );
 		}
 	}
 	public OpenTK.Vector3 Light_LightSpecular
@@ -1106,6 +1124,7 @@ public class LightMaterial : MaterialBase
 		{ 
 			light.LightSpecular = value;
 			this.SetUniformBufferValue< Light >(@"Light", ref light);
+			//this.SetUniformBufferMemberValue< OpenTK.Vector3 >(@"Light", ref value, 48 );
 		}
 	}
 	public System.Single Light_LightSpecularShininess
@@ -1115,6 +1134,7 @@ public class LightMaterial : MaterialBase
 		{ 
 			light.LightSpecularShininess = value;
 			this.SetUniformBufferValue< Light >(@"Light", ref light);
+			//this.SetUniformBufferMemberValue< System.Single >(@"Light", ref value, 60 );
 		}
 	}
 
@@ -1435,6 +1455,7 @@ public class MSGBufferMaterial : MaterialBase
 		{ 
 			cameratransform.View = value;
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 0 );
 		}
 	}
 	public OpenTK.Matrix4 CameraTransform_Proj
@@ -1444,6 +1465,7 @@ public class MSGBufferMaterial : MaterialBase
 		{ 
 			cameratransform.Proj = value;
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 64 );
 		}
 	}
 
@@ -1465,6 +1487,7 @@ public class MSGBufferMaterial : MaterialBase
 		{ 
 			modeltransform.Model = value;
 			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"ModelTransform", ref value, 0 );
 		}
 	}
 
@@ -1961,6 +1984,7 @@ public class GridRenderMaterial : MaterialBase
 		{ 
 			cameratransform.View = value;
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 0 );
 		}
 	}
 	public OpenTK.Matrix4 CameraTransform_Proj
@@ -1970,6 +1994,7 @@ public class GridRenderMaterial : MaterialBase
 		{ 
 			cameratransform.Proj = value;
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 64 );
 		}
 	}
 
@@ -1991,6 +2016,7 @@ public class GridRenderMaterial : MaterialBase
 		{ 
 			modeltransform.Model = value;
 			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"ModelTransform", ref value, 0 );
 		}
 	}
 

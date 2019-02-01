@@ -459,23 +459,44 @@ for(int i = 0; i < VSProgram.GetActiveUniformBlockCount(); ++i)
             
             #line default
             #line hidden
-            this.Write(");\r\n\t\t}\r\n\t}\r\n");
+            this.Write(");\r\n\t\t\t//this.SetUniformBufferMemberValue< ");
             
-            #line 111 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 109 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableTypeString));
+            
+            #line default
+            #line hidden
+            this.Write(" >(@\"");
+            
+            #line 109 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
+            
+            #line default
+            #line hidden
+            this.Write("\", ref value, ");
+            
+            #line 109 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableOffset));
+            
+            #line default
+            #line hidden
+            this.Write(" );\r\n\t\t}\r\n\t}\r\n");
+            
+            #line 112 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 113 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 114 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 115 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 116 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
 for(int i = 0; i < FSProgram.GetActiveUniformBlockCount(); ++i)
 {
     var blockname = FSProgram.GetUniformBlockName(i);
@@ -489,186 +510,207 @@ for(int i = 0; i < FSProgram.GetActiveUniformBlockCount(); ++i)
             #line hidden
             this.Write("    private ");
             
-            #line 123 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 124 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 123 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 124 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(" = new ");
             
-            #line 123 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 124 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("();\r\n\tpublic ");
             
-            #line 124 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 125 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 124 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 125 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n\t\tget { return ");
             
-            #line 126 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 127 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write("; }\r\n\t\tset \r\n\t\t{ \r\n\t\t\t");
             
-            #line 129 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 130 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(" = value; \r\n\t\t\tthis.SetUniformBufferValue< ");
             
-            #line 130 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 131 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" >(@\"");
             
-            #line 130 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 131 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("\", ref ");
             
-            #line 130 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 131 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(");\r\n\t\t}\r\n\t}\r\n\r\n");
             
-            #line 134 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 135 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
  var MetaDataList = FSProgram.GetUniformVariableMetaDataList(i).OrderBy(x => x.VariableOffset).ToList();
             
             #line default
             #line hidden
             
-            #line 135 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 136 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
  foreach(var data in MetaDataList) 
             
             #line default
             #line hidden
             
-            #line 136 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 137 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
  { 
             
             #line default
             #line hidden
             this.Write("\tpublic ");
             
-            #line 137 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 138 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableTypeString));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 137 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 138 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("_");
             
-            #line 137 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 138 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableName.FirstCharToUpper()));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n\t\tget { return ");
             
-            #line 139 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 140 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 139 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 140 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableName));
             
             #line default
             #line hidden
             this.Write(" ; }\r\n\t\tset \r\n\t\t{ \r\n\t\t\t");
             
-            #line 142 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 143 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 142 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 143 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableName));
             
             #line default
             #line hidden
             this.Write(" = value; \r\n\t\t\tthis.SetUniformBufferValue< ");
             
-            #line 143 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 144 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" >(@\"");
             
-            #line 143 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 144 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("\", ref ");
             
-            #line 143 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 144 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
-            this.Write(");\r\n\t\t}\r\n\t}\r\n");
+            this.Write(");\r\n\t\t\t//this.SetUniformBufferMemberValue< ");
             
-            #line 146 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 145 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableTypeString));
+            
+            #line default
+            #line hidden
+            this.Write(" >(@\"");
+            
+            #line 145 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
+            
+            #line default
+            #line hidden
+            this.Write("\", ref value, ");
+            
+            #line 145 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableOffset));
+            
+            #line default
+            #line hidden
+            this.Write(" );\r\n\t\t}\r\n\t}\r\n");
+            
+            #line 148 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 147 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 149 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n\tpublic static string GetVSSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
-            #line 151 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 153 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VSSourceCode));
             
             #line default
             #line hidden
             this.Write("\";\r\n\t}\r\n\r\n\tpublic static string GetFSSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
-            #line 156 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
+            #line 158 "C:\MyGitHub\SharpOpenGL\ShaderCodeGenerator\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FSSourceCode));
             
             #line default
