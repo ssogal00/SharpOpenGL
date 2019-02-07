@@ -170,8 +170,6 @@ namespace SharpOpenGL
                 () =>
                 {   
                     SceneObjectManager.Get().Draw();
-                    //sponzamesh.Draw();
-                    //GridDrawer.Get().Draw(GridMaterial);
                 }
             );
 
