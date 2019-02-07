@@ -66,6 +66,7 @@
     <Compile Include="Asset\AssetInfo.cs" />
     <Compile Include="BindState.cs" />
     <Compile Include="Buffer\MultisampleGBuffer.cs" />
+    <Compile Include="Buffer\TypedDynamicUniformBuffer.cs" />
     <Compile Include="CustomAttribute\ConsoleCommandAttribute.cs" />
     <Compile Include="CustomAttribute\UIAttribute.cs" />
     <Compile Include="CustomSerialize\MatrixSerialize.cs" />

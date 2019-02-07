@@ -12,7 +12,6 @@ namespace Core.Buffer
             bufferObject = GL.GenBuffer();
         }
 
-
         public OpenGLBuffer(string debugName)
          : this()
         {

@@ -13,7 +13,7 @@ namespace Core.Buffer
 {
     public class DynamicUniformBuffer : OpenGLBuffer
     {
-        public DynamicUniformBuffer()            
+        protected DynamicUniformBuffer()            
         {
             bufferTarget  = BufferTarget.UniformBuffer;
             hint          = BufferUsageHint.DynamicDraw;
