@@ -37,8 +37,6 @@ namespace SharpOpenGL.PostProcess
         {
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
-                //PostProcessMaterial.SetUniformVector2ArrayData("BlurOffsets", ref offset);
-                //PostProcessMaterial.SetUniformVector2ArrayData("BlurWeights", ref weight);
                 var blurMaterial = (Blur.Blur) (PostProcessMaterial);
                 blurMaterial.BlurOffsets = offset.ToArray();
                 blurMaterial.BlurWeights = weight.ToArray();

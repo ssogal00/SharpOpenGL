@@ -62,7 +62,7 @@ namespace Core.Texture
             FrameBufferObject.Bind();
             
             // 
-            GL.FramebufferTexture2D(FramebufferTarget.ReadFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorAttachment0.GetTextureObject, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.ReadFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, colorAttachment0.GetTextureObject, 0);
             GL.ReadBuffer(ReadBufferMode.ColorAttachment0);
 
             //
@@ -82,7 +82,7 @@ namespace Core.Texture
             {
                 // 
                 GL.FramebufferTexture2D(FramebufferTarget.ReadFramebuffer, FramebufferAttachment.ColorAttachment0,
-                    TextureTarget.Texture2D, ColorAttachment0.GetTextureObject, 0);
+                    TextureTarget.Texture2D, colorAttachment0.GetTextureObject, 0);
                 GL.ReadBuffer(ReadBufferMode.ColorAttachment0);
 
                 //
@@ -105,14 +105,14 @@ namespace Core.Texture
                 BufferWidth = newWidth;
                 BufferHeight = newHeight;
 
-                ColorAttachment0.Resize(BufferWidth, BufferHeight);
+                colorAttachment0.Resize(BufferWidth, BufferHeight);
 
                 if (bIncludeDepthAttachment)
                 {
                     DepthAttachment.Resize(BufferWidth, BufferHeight);
                 }
 
-                GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, ColorAttachment0.GetTextureObject, 0);
+                GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, colorAttachment0.GetTextureObject, 0);
 
                 if (bIncludeDepthAttachment)
                 {
@@ -122,15 +122,15 @@ namespace Core.Texture
                 //
                 if (AttachmentCount > 1)
                 {
-                    ColorAttachment1.Resize(BufferWidth, BufferHeight);
-                    GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, ColorAttachment1.GetTextureObject, 0);
+                    colorAttachment1.Resize(BufferWidth, BufferHeight);
+                    GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, colorAttachment1.GetTextureObject, 0);
                 }
 
                 //
                 if (AttachmentCount > 2)
                 {
-                    ColorAttachment2.Resize(BufferWidth, BufferHeight);
-                    GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment2, TextureTarget.Texture2D, ColorAttachment2.GetTextureObject, 0);
+                    colorAttachment2.Resize(BufferWidth, BufferHeight);
+                    GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.ColorAttachment2, TextureTarget.Texture2D, colorAttachment2.GetTextureObject, 0);
                 }
 
                 var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -143,7 +143,7 @@ namespace Core.Texture
         {
             FrameBufferObject = new FrameBuffer();
 
-            ColorAttachment0 = new ColorAttachmentTexture(BufferWidth, BufferHeight, PixelFormat);
+            colorAttachment0 = new ColorAttachmentTexture(BufferWidth, BufferHeight, PixelFormat);
 
             if (bIncludeDepthAttachment)
             {
@@ -152,12 +152,12 @@ namespace Core.Texture
 
             if(AttachmentCount > 1)
             {
-                ColorAttachment1 = new ColorAttachmentTexture(BufferWidth, BufferHeight);
+                colorAttachment1 = new ColorAttachmentTexture(BufferWidth, BufferHeight);
             }
 
             if(AttachmentCount > 2)
             {
-                ColorAttachment2 = new ColorAttachmentTexture(BufferWidth, BufferHeight);
+                colorAttachment2 = new ColorAttachmentTexture(BufferWidth, BufferHeight);
             }
             
             if(AttachmentCount == 1)
@@ -191,33 +191,24 @@ namespace Core.Texture
 
         public int GetColorAttachment0TextureObject()
         {
-            return ColorAttachment0.GetTextureObject;
+            return colorAttachment0.GetTextureObject;
         }
 
-        public ColorAttachmentTexture GetColorAttachment0Texture()
-        {
-            return ColorAttachment0;
-        }
-
+        public ColorAttachmentTexture ColorAttachment0 => colorAttachment0;
+        
         public int GetColorAttachment1TextureObject()
         {
-            return ColorAttachment1.GetTextureObject;
+            return colorAttachment1.GetTextureObject;
         }
 
-        public ColorAttachmentTexture GetColorAttachment1Texture()
-        {
-            return ColorAttachment1;
-        }
+        public ColorAttachmentTexture ColorAttachment1 => colorAttachment1;
 
         public int GetColorAttachment2TextureObject()
         {
-            return ColorAttachment2.GetTextureObject;
+            return colorAttachment2.GetTextureObject;
         }
 
-        public ColorAttachmentTexture GetColorAttachment2Texture()
-        {
-            return ColorAttachment2;
-        }
+        public ColorAttachmentTexture ColorAttachment2 => colorAttachment2;
 
         public DepthTargetTexture GetDepthTargetTexture()
         {
@@ -225,9 +216,9 @@ namespace Core.Texture
         }
 
         // max 3 color attachment
-        protected ColorAttachmentTexture ColorAttachment0 = null;
-        protected ColorAttachmentTexture ColorAttachment1 = null;
-        protected ColorAttachmentTexture ColorAttachment2 = null;
+        protected ColorAttachmentTexture colorAttachment0 = null;
+        protected ColorAttachmentTexture colorAttachment1 = null;
+        protected ColorAttachmentTexture colorAttachment2 = null;
 
         // and 1 depth attachment
         protected DepthTargetTexture DepthAttachment = null;
