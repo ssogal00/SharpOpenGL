@@ -425,6 +425,24 @@ namespace Core.OpenGLShader
             return "";
         }
 
+        public bool IsUniformVariableArray(int nIndex)
+        {
+            if (IsProgramLinked())
+            {
+                var result = GL.GetActiveUniformName(ProgramObject, nIndex);
+
+                var index = result.IndexOf('[');
+                if (index > 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
         public ActiveUniformType GetActiveUniformVariableType(int nIndex)
         {
             if (IsProgramLinked())
