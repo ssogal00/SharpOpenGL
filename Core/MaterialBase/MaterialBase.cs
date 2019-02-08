@@ -285,6 +285,14 @@ namespace Core.MaterialBase
             }
         }
 
+        public void SetUniformVarData(string varname, ref OpenTK.Vector4[] data)
+        {
+            if (UniformVariableNames.Contains(varname))
+            {
+                MaterialProgram.SetUniformVector4ArrayData(varname, ref data);
+            }
+        }
+
         public void SetUniformVarData(string varName, OpenTK.Vector2 data, bool bChecked = false)
         {
             if (bChecked)

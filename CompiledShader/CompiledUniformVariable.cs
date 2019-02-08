@@ -208,5 +208,8 @@ namespace GridRenderMaterial
 namespace ThreeDTextRenderMaterial
 {
 }
+namespace SSAO
+{
+}
 
 }
