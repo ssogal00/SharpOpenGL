@@ -12,10 +12,10 @@ void main()
 {
 	vec4 color = vec4(0,0,0,0);
     
-    //for( int i = 0; i < 9; i++ )
-    //{
-     //   color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;        
-//    }
+    for( int i = 0; i < 9; i++ )
+    {
+       color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;        
+    }
 	        
     FragColor = vec4(TexCoord, 0, 0);
 }

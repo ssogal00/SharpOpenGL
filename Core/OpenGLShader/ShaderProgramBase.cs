@@ -210,9 +210,26 @@ namespace Core.OpenGLShader
             GL.UniformMatrix3x2(Loc, false, ref Data);
         }
 
+        public void SetUniformFloatArrayData(string VarName, ref float[] data)
+        {
+            Debug.Assert(data.Any());
+            int Loc;
+            Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform1(Loc, data.Length, data);
+        }
+
+        public void SetUniformDoubleArrayData(string VarName, ref double[] data)
+        {
+            Debug.Assert(data.Any());
+            int Loc;
+            Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform1(Loc, data.Length, data);
+        }
+
+
         public void SetUniformVector2ArrayData(string VarName, ref float[] Data)
         {
-            Debug.Assert(Data.Count() > 0);
+            Debug.Assert(Data.Any());
             Debug.Assert(Data.Count() % 2 == 0);
 
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
@@ -221,7 +238,7 @@ namespace Core.OpenGLShader
 
         public void SetUniformVector2ArrayData(string VarName, ref double[] Data)
         {
-            Debug.Assert(Data.Count() > 0);
+            Debug.Assert(Data.Any());
             Debug.Assert(Data.Count() % 2 == 0);
 
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
@@ -230,7 +247,7 @@ namespace Core.OpenGLShader
 
         public void SetUniformVector3ArrayData(string VarName, ref float[] Data)
         {
-            Debug.Assert(Data.Count() > 0);
+            Debug.Assert(Data.Any());
             Debug.Assert(Data.Count() % 3 == 0);
 
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
@@ -239,7 +256,7 @@ namespace Core.OpenGLShader
 
         public void SetUniformVector4ArrayData(string VarName, ref float[] Data)
         {
-            Debug.Assert(Data.Count() > 0);
+            Debug.Assert(Data.Any());
             Debug.Assert(Data.Count() % 4 == 0);
 
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);

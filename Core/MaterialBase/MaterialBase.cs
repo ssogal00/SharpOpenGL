@@ -253,6 +253,22 @@ namespace Core.MaterialBase
             }
         }
 
+        public void SetUniformVarData(string varName, float[] data, bool bChecked = false)
+        {
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformFloatArrayData(varName , ref data);
+            }
+        }
+
+        public void SetUniformVarData(string varName, double[] data, bool bChecked = false)
+        {
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformDoubleArrayData(varName, ref data);
+            }
+        }
+
         public void SetUniformVarData(string varName, OpenTK.Vector2 data, bool bChecked = false)
         {
             if (bChecked)
