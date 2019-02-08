@@ -226,6 +226,11 @@ namespace Core.OpenGLShader
             GL.Uniform1(Loc, data.Length, data);
         }
 
+        public void SetUniformVector2ArrayData(string VarName, ref OpenTK.Vector2[] Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform2(Loc, Data.Count(), Data.FlattenVec2Array());
+        }
 
         public void SetUniformVector2ArrayData(string VarName, ref float[] Data)
         {
@@ -322,6 +327,46 @@ namespace Core.OpenGLShader
                 }
             }
 
+            return result;
+        }
+
+        public List<UniformVariableMetaData> GetActiveUniformVariableMetaDataList()
+        {
+            var result = new List<UniformVariableMetaData>();
+
+            if (IsProgramLinked())
+            {
+                var uniformIndicesInBlock = new List<int>();
+
+                var uniformBlockCount = GetActiveUniformBlockCount();
+
+                for (int i = 0; i < uniformBlockCount; ++i)
+                {
+                    uniformIndicesInBlock.AddRange(GetUniformIndicesInBlock(i));
+                }
+
+                int nCount = GetActiveUniformCount();
+
+                for (var i = 0; i < nCount; ++i)
+                {
+                    // skip uniform variables in block
+                    if (uniformIndicesInBlock.Contains(i))
+                    {
+                        continue;
+                    }
+
+                    var uniformType = GetActiveUniformVariableType(i);
+                    if(GLToSharpTranslator.IsUniformVariableTextureType(uniformType))
+                    { 
+                        continue;
+                    }
+
+                    var name = GetActiveUniformVariableName(i);
+                    var isArray = IsUniformVariableArray(i);
+
+                    result.Add(new UniformVariableMetaData(name, uniformType, isArray));
+                }
+            }
             return result;
         }
 
@@ -593,6 +638,32 @@ namespace Core.OpenGLShader
             return result;
         }
 
+        public List<bool> GetUniformVariableArrayness(int nBlockIndex)
+        {
+            var Indices = GetUniformIndicesInBlock(nBlockIndex);
+
+            var result = new List<bool>();
+
+            if (Indices.Count > 0)
+            {
+                foreach (var index in Indices)
+                {
+                    var name = GL.GetActiveUniformName(ProgramObject, index);
+                    var bracket = name.IndexOf('[');
+                    if (bracket > 0)
+                    {
+                        result.Add(true);
+                    }
+                    else
+                    {
+                        result.Add(false);
+                    }
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Get Data Block Size 
         /// </summary>
@@ -765,13 +836,14 @@ namespace Core.OpenGLShader
             return result;
         }
 
-        public List<UniformVariableMetaData> GetUniformVariableMetaDataList(int nBlockIndex)
+        public List<UniformVariableMetaData> GetUniformVariableMetaDataListInBlock(int nBlockIndex)
         {
             var result = new List<UniformVariableMetaData>();
 
             var types = GetUniformVariableTypesInBlock(nBlockIndex);
             var names = GetUniformVariableNamesInBlock(nBlockIndex);
             var offsets = GetUniformVariableOffsetsInBlock(nBlockIndex);
+            var arrayness = GetUniformVariableArrayness(nBlockIndex);
 
             if (types.Count() > 0)
             {
@@ -779,7 +851,7 @@ namespace Core.OpenGLShader
                 {
                     for (int i = 0; i < types.Count; ++i)
                     {
-                        result.Add(new UniformVariableMetaData(names[i], types[i], offsets[i]));
+                        result.Add(new UniformVariableMetaData(names[i], types[i], offsets[i],arrayness[i]));
                     }
                 }
             }

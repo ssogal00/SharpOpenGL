@@ -56,7 +56,7 @@ namespace Core
             return ret;
         }
 
-        public static float[] Flatten(this List<OpenTK.Vector2> vectorList)
+        public static float[] FlattenVec2List(this List<OpenTK.Vector2> vectorList)
         {
             float[] result = new float[vectorList.Count() * 2];
 
@@ -69,7 +69,20 @@ namespace Core
             return result;
         }
 
-        public static float[] Flatten(this List<OpenTK.Vector3> vectorList)
+        public static float[] FlattenVec2Array(this OpenTK.Vector2[] vectorList)
+        {
+            float[] result = new float[vectorList.Count() * 2];
+
+            for (int i = 0; i < vectorList.Count(); i++)
+            {
+                result[2 * i] = vectorList[i].X;
+                result[2 * i + 1] = vectorList[i].Y;
+            }
+
+            return result;
+        }
+
+        public static float[] FlattenVec3List(this List<OpenTK.Vector3> vectorList)
         {
             float[] result = new float[vectorList.Count() * 3];
 
@@ -83,7 +96,7 @@ namespace Core
             return result;
         }
 
-        public static float[] Flatten(this List<OpenTK.Vector4> vectorList)
+        public static float[] FlattenVec4List(this List<OpenTK.Vector4> vectorList)
         {
             float[] result = new float[vectorList.Count() * 4];
             for (int i = 0; i < vectorList.Count(); i++)

@@ -25,6 +25,9 @@ namespace Core.OpenGLType
                 case ActiveAttribType.FloatVec4:
                     return typeof(OpenTK.Vector4).ToString();
 
+                case ActiveAttribType.FloatMat2:
+                    return typeof(OpenTK.Matrix2).ToString();
+
                 case ActiveAttribType.FloatMat3:
                     return typeof(OpenTK.Matrix3).ToString();  
                 
@@ -139,6 +142,23 @@ namespace Core.OpenGLType
             return -1;
         }
 
+        public static bool IsUniformVariableTextureType(ActiveUniformType eType)
+        {
+            switch (eType)
+            {
+                case ActiveUniformType.SamplerCube:
+                case ActiveUniformType.Sampler1D:
+                case ActiveUniformType.Sampler2D:
+                case ActiveUniformType.Sampler3D:
+                case ActiveUniformType.Sampler1DArray:
+                case ActiveUniformType.Sampler2DArray:
+                case ActiveUniformType.Sampler2DMultisample:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public static string GetUniformTypeString(ActiveUniformType eType)
         {
             switch (eType)
@@ -148,7 +168,16 @@ namespace Core.OpenGLType
 
                 case ActiveUniformType.Int:
                     return typeof(int).ToString();
-                    
+
+                case ActiveUniformType.DoubleVec2:
+                    return typeof(OpenTK.Vector2d).ToString();
+
+                case ActiveUniformType.DoubleVec3:
+                    return typeof(OpenTK.Vector3d).ToString();
+
+                case ActiveUniformType.DoubleVec4:
+                    return typeof(OpenTK.Vector4d).ToString();
+
                 case ActiveUniformType.FloatVec2:
                     return typeof(OpenTK.Vector2).ToString();                    
 
@@ -156,7 +185,10 @@ namespace Core.OpenGLType
                     return typeof(OpenTK.Vector3).ToString();                    
 
                 case ActiveUniformType.FloatVec4:
-                    return typeof(OpenTK.Vector4).ToString();                    
+                    return typeof(OpenTK.Vector4).ToString();
+
+                case ActiveUniformType.FloatMat2:
+                    return typeof(OpenTK.Matrix2).ToString();
 
                 case ActiveUniformType.FloatMat3:
                     return typeof(OpenTK.Matrix3).ToString();                    

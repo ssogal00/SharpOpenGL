@@ -448,6 +448,7 @@ public class GBufferDraw : MaterialBase
 	private TextureBase speculartex = null;
 
 
+	
 	public System.Int32 MaskMapExist
 	{
 		get { return maskmapexist; }
@@ -457,7 +458,8 @@ public class GBufferDraw : MaterialBase
 			SetUniformVarData(@"MaskMapExist", maskmapexist);			
 		}
 	}
-	private System.Int32 maskmapexist ;
+	private System.Int32 maskmapexist;
+	
 	public System.Int32 NormalMapExist
 	{
 		get { return normalmapexist; }
@@ -467,7 +469,8 @@ public class GBufferDraw : MaterialBase
 			SetUniformVarData(@"NormalMapExist", normalmapexist);			
 		}
 	}
-	private System.Int32 normalmapexist ;
+	private System.Int32 normalmapexist;
+	
 	public System.Int32 SpecularMapExist
 	{
 		get { return specularmapexist; }
@@ -477,7 +480,7 @@ public class GBufferDraw : MaterialBase
 			SetUniformVarData(@"SpecularMapExist", specularmapexist);			
 		}
 	}
-	private System.Int32 specularmapexist ;
+	private System.Int32 specularmapexist;
 
 
     private CameraTransform cameratransform = new CameraTransform();
@@ -858,7 +861,7 @@ public class GBufferPNC : MaterialBase
 			SetUniformVarData(@"Model", model);			
 		}
 	}
-	private OpenTK.Matrix4 model ;
+	private OpenTK.Matrix4 model;
 
 
 
@@ -1004,26 +1007,28 @@ public class Blur : MaterialBase
 	private TextureBase colortex = null;
 
 
-	public OpenTK.Vector2 BlurOffsets
+	
+	public OpenTK.Vector2[] BlurOffsets
 	{
 		get { return bluroffsets; }
 		set 
 		{
 			bluroffsets = value;
-			SetUniformVarData(@"BlurOffsets", bluroffsets);			
+			SetUniformVarData(@"BlurOffsets", ref bluroffsets);			
 		}
 	}
-	private OpenTK.Vector2 bluroffsets ;
-	public OpenTK.Vector2 BlurWeights
+	private OpenTK.Vector2[] bluroffsets;
+	
+	public OpenTK.Vector2[] BlurWeights
 	{
 		get { return blurweights; }
 		set 
 		{
 			blurweights = value;
-			SetUniformVarData(@"BlurWeights", blurweights);			
+			SetUniformVarData(@"BlurWeights", ref blurweights);			
 		}
 	}
-	private OpenTK.Vector2 blurweights ;
+	private OpenTK.Vector2[] blurweights;
 
 
 
@@ -1350,7 +1355,7 @@ public class CubemapMaterial : MaterialBase
 			SetUniformVarData(@"ModelMatrix", modelmatrix);			
 		}
 	}
-	private OpenTK.Matrix4 modelmatrix ;
+	private OpenTK.Matrix4 modelmatrix;
 	public OpenTK.Matrix4 ProjMatrix
 	{
 		get { return projmatrix; }
@@ -1360,7 +1365,7 @@ public class CubemapMaterial : MaterialBase
 			SetUniformVarData(@"ProjMatrix", projmatrix);			
 		}
 	}
-	private OpenTK.Matrix4 projmatrix ;
+	private OpenTK.Matrix4 projmatrix;
 	public OpenTK.Matrix4 ViewMatrix
 	{
 		get { return viewmatrix; }
@@ -1370,7 +1375,7 @@ public class CubemapMaterial : MaterialBase
 			SetUniformVarData(@"ViewMatrix", viewmatrix);			
 		}
 	}
-	private OpenTK.Matrix4 viewmatrix ;
+	private OpenTK.Matrix4 viewmatrix;
 
 
 
@@ -1446,6 +1451,7 @@ public class MSGBufferMaterial : MaterialBase
 
 
 
+	
 	public System.Int32 MaskMapExist
 	{
 		get { return maskmapexist; }
@@ -1455,7 +1461,8 @@ public class MSGBufferMaterial : MaterialBase
 			SetUniformVarData(@"MaskMapExist", maskmapexist);			
 		}
 	}
-	private System.Int32 maskmapexist ;
+	private System.Int32 maskmapexist;
+	
 	public System.Int32 NormalMapExist
 	{
 		get { return normalmapexist; }
@@ -1465,7 +1472,8 @@ public class MSGBufferMaterial : MaterialBase
 			SetUniformVarData(@"NormalMapExist", normalmapexist);			
 		}
 	}
-	private System.Int32 normalmapexist ;
+	private System.Int32 normalmapexist;
+	
 	public System.Int32 SpecularMapExist
 	{
 		get { return specularmapexist; }
@@ -1475,7 +1483,7 @@ public class MSGBufferMaterial : MaterialBase
 			SetUniformVarData(@"SpecularMapExist", specularmapexist);			
 		}
 	}
-	private System.Int32 specularmapexist ;
+	private System.Int32 specularmapexist;
 
 
     private CameraTransform cameratransform = new CameraTransform();
@@ -1709,6 +1717,7 @@ public class DepthVisualizeMaterial : MaterialBase
 	private TextureBase depthtex = null;
 
 
+	
 	public System.Single Far
 	{
 		get { return far; }
@@ -1718,7 +1727,8 @@ public class DepthVisualizeMaterial : MaterialBase
 			SetUniformVarData(@"Far", far);			
 		}
 	}
-	private System.Single far ;
+	private System.Single far;
+	
 	public System.Single Near
 	{
 		get { return near; }
@@ -1728,7 +1738,7 @@ public class DepthVisualizeMaterial : MaterialBase
 			SetUniformVarData(@"Near", near);			
 		}
 	}
-	private System.Single near ;
+	private System.Single near;
 
 
 
@@ -1830,7 +1840,7 @@ public class FontRenderMaterial : MaterialBase
 			SetUniformVarData(@"ScreenSize", screensize);			
 		}
 	}
-	private OpenTK.Vector2 screensize ;
+	private OpenTK.Vector2 screensize;
 
 
 
@@ -1907,8 +1917,9 @@ public class FontBoxRenderMaterial : MaterialBase
 			SetUniformVarData(@"ScreenSize", screensize);			
 		}
 	}
-	private OpenTK.Vector2 screensize ;
+	private OpenTK.Vector2 screensize;
 
+	
 	public System.Single BoxAlpha
 	{
 		get { return boxalpha; }
@@ -1918,7 +1929,8 @@ public class FontBoxRenderMaterial : MaterialBase
 			SetUniformVarData(@"BoxAlpha", boxalpha);			
 		}
 	}
-	private System.Single boxalpha ;
+	private System.Single boxalpha;
+	
 	public OpenTK.Vector3 BoxColor
 	{
 		get { return boxcolor; }
@@ -1928,7 +1940,7 @@ public class FontBoxRenderMaterial : MaterialBase
 			SetUniformVarData(@"BoxColor", boxcolor);			
 		}
 	}
-	private OpenTK.Vector3 boxcolor ;
+	private OpenTK.Vector3 boxcolor;
 
 
 
@@ -1995,6 +2007,7 @@ public class GridRenderMaterial : MaterialBase
 
 
 
+	
 	public OpenTK.Vector3 LineColor
 	{
 		get { return linecolor; }
@@ -2004,7 +2017,7 @@ public class GridRenderMaterial : MaterialBase
 			SetUniformVarData(@"LineColor", linecolor);			
 		}
 	}
-	private OpenTK.Vector3 linecolor ;
+	private OpenTK.Vector3 linecolor;
 
 
     private CameraTransform cameratransform = new CameraTransform();
@@ -2153,7 +2166,7 @@ public class ThreeDTextRenderMaterial : MaterialBase
 			SetUniformVarData(@"Model", model);			
 		}
 	}
-	private OpenTK.Matrix4 model ;
+	private OpenTK.Matrix4 model;
 	public OpenTK.Matrix4 Proj
 	{
 		get { return proj; }
@@ -2163,7 +2176,7 @@ public class ThreeDTextRenderMaterial : MaterialBase
 			SetUniformVarData(@"Proj", proj);			
 		}
 	}
-	private OpenTK.Matrix4 proj ;
+	private OpenTK.Matrix4 proj;
 	public OpenTK.Matrix4 View
 	{
 		get { return view; }
@@ -2173,8 +2186,9 @@ public class ThreeDTextRenderMaterial : MaterialBase
 			SetUniformVarData(@"View", view);			
 		}
 	}
-	private OpenTK.Matrix4 view ;
+	private OpenTK.Matrix4 view;
 
+	
 	public OpenTK.Vector3 TextColor
 	{
 		get { return textcolor; }
@@ -2184,7 +2198,7 @@ public class ThreeDTextRenderMaterial : MaterialBase
 			SetUniformVarData(@"TextColor", textcolor);			
 		}
 	}
-	private OpenTK.Vector3 textcolor ;
+	private OpenTK.Vector3 textcolor;
 
 
 

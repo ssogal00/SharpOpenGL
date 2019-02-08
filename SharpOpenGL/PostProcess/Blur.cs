@@ -6,7 +6,9 @@ using Core.Texture;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using MathHelper = Core.MathHelper;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -35,16 +37,18 @@ namespace SharpOpenGL.PostProcess
         {
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
-                PostProcessMaterial.SetUniformVector2ArrayData("BlurOffsets", ref offset);
-                PostProcessMaterial.SetUniformVector2ArrayData("BlurWeights", ref weight);
-
-                PostProcessMaterial.SetTexture("ColorTex", input);
+                //PostProcessMaterial.SetUniformVector2ArrayData("BlurOffsets", ref offset);
+                //PostProcessMaterial.SetUniformVector2ArrayData("BlurWeights", ref weight);
+                var blurMaterial = (Blur.Blur) (PostProcessMaterial);
+                blurMaterial.BlurOffsets = offset.ToArray();
+                blurMaterial.BlurWeights = weight.ToArray();
+                blurMaterial.ColorTex2D = input;
                 BlitToScreenSpace();
             });
         }
 
-        protected float[] offset = null;
-        protected float[] weight = null;
+        protected List<OpenTK.Vector2> offset = new List<Vector2>();
+        protected List<OpenTK.Vector2> weight = new List<Vector2>();
 
         protected void UpdateOffsetAndWeight(float Width, float Height)
         {
@@ -73,8 +77,8 @@ namespace SharpOpenGL.PostProcess
                 vWeight.Add(new OpenTK.Vector2((float)fWeight, 0));
             }
 
-            offset = vOffset.Flatten();
-            weight = vWeight.Flatten();
+            offset = vOffset;
+            weight = vWeight;
         }
     }
 }

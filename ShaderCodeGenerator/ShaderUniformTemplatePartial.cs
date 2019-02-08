@@ -15,7 +15,7 @@ namespace ShaderCompiler
     {
         public ShaderUniformTemplate(ShaderProgram program, int nBlockIndex)
         {
-            MetaDataList = program.GetUniformVariableMetaDataList(nBlockIndex).OrderBy(x=>x.VariableOffset).ToList();
+            MetaDataList = program.GetUniformVariableMetaDataListInBlock(nBlockIndex).OrderBy(x=>x.VariableOffset).ToList();
             BlockName = program.GetUniformBlockName(nBlockIndex);
             StructName = program.GetUniformBlockName(nBlockIndex);
             BlockDataSize = program.GetUniformBlockDataSize(nBlockIndex);
@@ -23,7 +23,7 @@ namespace ShaderCompiler
 
         public ShaderUniformTemplate(ShaderProgram program, int nBlockIndex, string StructNamePrefix)
         {
-            MetaDataList = program.GetUniformVariableMetaDataList(nBlockIndex).OrderBy(x=>x.VariableOffset).ToList();
+            MetaDataList = program.GetUniformVariableMetaDataListInBlock(nBlockIndex).OrderBy(x=>x.VariableOffset).ToList();
             BlockName = program.GetUniformBlockName(nBlockIndex);
             StructName = StructNamePrefix + "_" + BlockName;
             BlockDataSize = program.GetUniformBlockDataSize(nBlockIndex);
