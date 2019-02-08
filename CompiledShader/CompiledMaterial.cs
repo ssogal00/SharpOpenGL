@@ -981,8 +981,49 @@ public class Blur : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
+	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"ColorTex", TextureObject);
+	}
+
+	public void SetColorTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"ColorTex", TextureObject);
+	}
+
+	public TextureBase ColorTex2D 
+	{	
+		get { return colortex;}
+		set 
+		{	
+			colortex = value;
+			SetTexture(@"ColorTex", colortex);			
+		}
+	}
+
+	private TextureBase colortex = null;
 
 
+	public OpenTK.Vector2 BlurOffsets
+	{
+		get { return bluroffsets; }
+		set 
+		{
+			bluroffsets = value;
+			SetUniformVarData(@"BlurOffsets", bluroffsets);			
+		}
+	}
+	private OpenTK.Vector2 bluroffsets ;
+	public OpenTK.Vector2 BlurWeights
+	{
+		get { return blurweights; }
+		set 
+		{
+			blurweights = value;
+			SetUniformVarData(@"BlurWeights", blurweights);			
+		}
+	}
+	private OpenTK.Vector2 blurweights ;
 
 
 
@@ -1025,7 +1066,7 @@ void main()
        color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;        
     }
 	        
-    FragColor = vec4(TexCoord, 0, 0);
+    FragColor = color;
 }";
 	}
 }

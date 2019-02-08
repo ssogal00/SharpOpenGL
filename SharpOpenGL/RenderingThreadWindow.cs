@@ -28,6 +28,7 @@ namespace SharpOpenGL
         protected BlitToScreen ScreenBlit = new BlitToScreen();
 
         protected Skybox skyboxPostProcess = new Skybox();
+        protected BlurPostProcess blurPostProcess = new BlurPostProcess();
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
         protected StaticMeshObject sponzamesh = null;
         protected bool bInitialized = false;
@@ -173,7 +174,9 @@ namespace SharpOpenGL
                 }
             );
 
-            ScreenBlit.Blit(renderGBuffer.GetColorAttachement, 0, 0, 2, 2);
+            blurPostProcess.Render(renderGBuffer.GetColorAttachement);
+
+            ScreenBlit.Blit(blurPostProcess.OutputRenderTarget.GetColorAttachment0Texture(), 0, 0, 2, 2);
 
             SwapBuffers();
         }

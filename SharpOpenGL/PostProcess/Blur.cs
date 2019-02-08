@@ -28,24 +28,23 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = new SharpOpenGL.Blur.Blur();
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<Blur.Blur>();
         }
 
         public override void Render(TextureBase input)
         {
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
+                PostProcessMaterial.SetUniformVector2ArrayData("BlurOffsets", ref offset);
+                PostProcessMaterial.SetUniformVector2ArrayData("BlurWeights", ref weight);
+
                 PostProcessMaterial.SetTexture("ColorTex", input);
                 BlitToScreenSpace();
             });
         }
 
-        protected ColorAttachmentTexture Input = null;
-
-        protected float[] m_Offset = null;
-        protected float[] m_Weight = null;
-
-        protected BlitToScreen m_BlitToScreen = null;
+        protected float[] offset = null;
+        protected float[] weight = null;
 
         protected void UpdateOffsetAndWeight(float Width, float Height)
         {
@@ -74,8 +73,8 @@ namespace SharpOpenGL.PostProcess
                 vWeight.Add(new OpenTK.Vector2((float)fWeight, 0));
             }
 
-            m_Offset = vOffset.Flatten();
-            m_Weight = vWeight.Flatten();
+            offset = vOffset.Flatten();
+            weight = vWeight.Flatten();
         }
     }
 }

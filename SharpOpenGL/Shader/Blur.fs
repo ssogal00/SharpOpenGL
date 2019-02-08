@@ -17,5 +17,5 @@ void main()
        color += (texture(ColorTex, (TexCoord + BlurOffsets[i]))) * BlurWeights[i].x;        
     }
 	        
-    FragColor = vec4(TexCoord, 0, 0);
+    FragColor = color;
 }

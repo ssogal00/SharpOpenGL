@@ -378,6 +378,12 @@ namespace Core.MaterialBase
             }
         }
 
+        public void SetUniformVector2ArrayData(string varName, ref float[] data)
+        {
+            Debug.Assert(UniformVariableNames.Contains(varName));
+            MaterialProgram.SetUniformVector2ArrayData(varName, ref data);
+        }
+
         public void SetUniformVector3ArrayData(string varName, ref float[] data)
         {
             Debug.Assert(UniformVariableNames.Contains(varName));
