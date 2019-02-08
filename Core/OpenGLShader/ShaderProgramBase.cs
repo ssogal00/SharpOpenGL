@@ -577,7 +577,16 @@ namespace Core.OpenGLShader
             {
                 foreach (var index in Indices)
                 {
-                    result.Add(GL.GetActiveUniformName(ProgramObject, index));
+                    var name = GL.GetActiveUniformName(ProgramObject, index);
+                    var bracket = name.IndexOf('[');
+                    if (bracket > 0)
+                    {
+                        result.Add(name.Remove(bracket));
+                    }
+                    else
+                    {
+                        result.Add(name);
+                    }
                 }
             }
 
@@ -605,6 +614,7 @@ namespace Core.OpenGLShader
 
             return 0;
         }
+
 
 
         public List<ActiveUniformType> GetUniformVariableTypesInBlock(int nBlockIndex)
