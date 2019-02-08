@@ -237,6 +237,11 @@ namespace Core.OpenGLShader
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform3(Loc, Data.Count(), Data.FlattenVec3Array());
         }
+        public void SetUniformVector4ArrayData(string VarName, ref OpenTK.Vector4[] Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform4(Loc, Data.Count(), Data.FlattenVec4Array());
+        }
 
         public void SetUniformVector2ArrayData(string VarName, ref float[] Data)
         {

@@ -110,6 +110,21 @@ namespace Core
             return result;
         }
 
+        public static float[] FlattenVec4Array(this OpenTK.Vector4[] vectorList)
+        {
+            float[] result = new float[vectorList.Count() * 4];
+
+            for (int i = 0; i < vectorList.Count(); i++)
+            {
+                result[3 * i] = vectorList[i].X;
+                result[3 * i + 1] = vectorList[i].Y;
+                result[3 * i + 2] = vectorList[i].Z;
+                result[3 * i + 3] = vectorList[i].W;
+            }
+
+            return result;
+        }
+
         public static float[] FlattenVec4List(this List<OpenTK.Vector4> vectorList)
         {
             float[] result = new float[vectorList.Count() * 4];
