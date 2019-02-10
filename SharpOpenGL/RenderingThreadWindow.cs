@@ -174,9 +174,9 @@ namespace SharpOpenGL
                 }
             );
 
-            blurPostProcess.Render(renderGBuffer.GetColorAttachement);
+            //blurPostProcess.Render(renderGBuffer.GetColorAttachement);
 
-            ScreenBlit.Blit(blurPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+            ScreenBlit.Blit(renderGBuffer.GetColorAttachement, 0, 0, 2, 2);
 
             SwapBuffers();
         }

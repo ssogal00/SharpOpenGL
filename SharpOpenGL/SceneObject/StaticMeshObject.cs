@@ -65,6 +65,16 @@ namespace SharpOpenGL
             }
         }
 
+        public void DrawWithBindedMaterial()
+        {
+            if (bReadyToDraw == false)
+            {
+                return;
+            }
+            meshdrawable.BindVertexAndIndexBuffer();
+            meshdrawable.Draw(0, (uint)(meshAsset.VertexIndices.Count));
+        }
+
         public override void Draw()
         {
             if (bReadyToDraw == false)

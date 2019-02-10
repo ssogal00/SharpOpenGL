@@ -20,7 +20,7 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            Output.ClearColor = Color.AntiqueWhite;
+            Output.ClearColor = Color.Chocolate;
             
             PostProcessMaterial = ShaderManager.Get().GetMaterial<CubemapMaterial.CubemapMaterial>();
 
@@ -38,12 +38,14 @@ namespace SharpOpenGL.PostProcess
             {
                 Output.BindAndExecute(PostProcessMaterial, () =>
                 {
-                    var test = (CubemapMaterial.CubemapMaterial) PostProcessMaterial;
-                    test.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
-                    test.ViewMatrix = CameraManager.Get().CurrentCameraView;
-                    test.ProjMatrix = CameraManager.Get().CurrentCameraProj;
-                    test.TexCubemap2D = cubemapTexture;
-                    sphereMeshObject.Draw();
+                    Output.Clear();
+
+                    var specificMaterial = (CubemapMaterial.CubemapMaterial) PostProcessMaterial;
+                    specificMaterial.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
+                    specificMaterial.ViewMatrix = CameraManager.Get().CurrentCameraView;
+                    specificMaterial.ProjMatrix = CameraManager.Get().CurrentCameraProj;
+                    specificMaterial.TexCubemap2D = cubemapTexture;
+                    sphereMeshObject.DrawWithBindedMaterial();
                 });
             }
         }
