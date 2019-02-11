@@ -29,7 +29,6 @@ namespace SharpOpenGL.PostProcess
         {
             using (var s = new ScopedBind(VB, IB))
             {
-                PT_VertexAttribute.VertexAttributeBinding();
                 GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
             }
         }

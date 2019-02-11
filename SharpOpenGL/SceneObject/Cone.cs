@@ -60,7 +60,6 @@ namespace SharpOpenGL
                 using (var dummy = new ScopedBind(VB, defaultMaterial))
                 {
                     defaultMaterial.SetUniformVarData("Model", LocalMatrix * ParentMatrix);
-                    PNC_VertexAttribute.VertexAttributeBinding();
                     GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
                 }
             }

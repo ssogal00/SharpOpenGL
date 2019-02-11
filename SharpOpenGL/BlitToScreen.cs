@@ -40,7 +40,6 @@ namespace SharpOpenGL
             {
                 Material.BindAndExecute(VB, IB, () =>
                 {
-                    PT_VertexAttribute.VertexAttributeBinding();
                     Material.ColorTex2D = texture;
                     GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
                 });
@@ -53,8 +52,7 @@ namespace SharpOpenGL
             {
                 Material.BindAndExecute(VB,IB,() =>
                 {
-                    UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);                    
-                    PT_VertexAttribute.VertexAttributeBinding();
+                    UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);
                     Material.ColorTex2D = texture;
                     GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
                 });
@@ -67,9 +65,8 @@ namespace SharpOpenGL
             {
                 Material.BindAndExecute(VB, IB, () =>
                 {
-                      PT_VertexAttribute.VertexAttributeBinding();
-                      Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
-                      GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+                    Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
+                    GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
                 });
             }
         }
@@ -81,7 +78,6 @@ namespace SharpOpenGL
                 Material.BindAndExecute(VB,IB, () =>
                 {
                     UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);
-                    PT_VertexAttribute.VertexAttributeBinding();
                     Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
                     GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
                 });

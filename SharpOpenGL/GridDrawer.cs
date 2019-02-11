@@ -59,8 +59,7 @@ namespace SharpOpenGL
 
             material.BindAndExecute(vertexBuffer,() =>
             {
-                vertexBuffer.BindVertexAttribute();
-
+                
                 cameraTransform.Proj = CameraManager.Get().CurrentCamera.Proj;
                 cameraTransform.View = CameraManager.Get().CurrentCamera.View;
                 modelTransform.Model = Matrix4.Identity;

@@ -43,7 +43,6 @@ namespace SharpOpenGL
             {
                 defaultMaterial.BindAndExecute(vertexBuffer, () =>
                 {
-                    vertexBuffer.BindVertexAttribute();
                     defaultMaterial.SetUniformVarData("Model", LocalMatrix);
                     defaultMaterial.SetUniformVarData("View", CameraManager.Get().CurrentCameraView);
                     defaultMaterial.SetUniformVarData("Proj", CameraManager.Get().CurrentCameraProj);

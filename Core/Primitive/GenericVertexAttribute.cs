@@ -12,6 +12,7 @@ namespace Core.Primitive
     public interface IGenericVertexAttribute
     {
         List<VertexAttribute> GetVertexAttributes();
+        void VertexAttributeBinding();
     }
 
     // Position Only 
@@ -28,7 +29,7 @@ namespace Core.Primitive
             VertexPosition = position;
         }
 
-        public static void VertexAttributeBinding()
+        public void VertexAttributeBinding()
         {
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 12, new IntPtr(0));
@@ -63,7 +64,7 @@ namespace Core.Primitive
             VertexColor = color;
         }
 
-        public static void VertexAttributeBinding()
+        public void VertexAttributeBinding()
         {
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 24, new IntPtr(0));
@@ -85,7 +86,7 @@ namespace Core.Primitive
     // Texture Coordinate
     [ZeroFormattable]
     [StructLayout(LayoutKind.Explicit, Size = 20)]
-    public struct PT_VertexAttribute
+    public struct PT_VertexAttribute : IGenericVertexAttribute
     {
         [Index(0)]
         [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
@@ -101,7 +102,7 @@ namespace Core.Primitive
             TexCoord = texcoord;
         }
 
-        public static void VertexAttributeBinding()
+        public void VertexAttributeBinding()
         {
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 20, new IntPtr(0));
@@ -109,7 +110,7 @@ namespace Core.Primitive
             GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 20, new IntPtr(12));
         }
 
-        public static List<VertexAttribute> GetVertexAttributes()
+        public List<VertexAttribute> GetVertexAttributes()
         {
             return new List<VertexAttribute>
             {
@@ -139,7 +140,7 @@ namespace Core.Primitive
             VertexNormal = normal;
         }
 
-        public static void VertexAttributeBinding()
+        public void VertexAttributeBinding()
         {
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 24, new IntPtr(0));
@@ -184,7 +185,7 @@ namespace Core.Primitive
             TexCoord = texcoord;
         }
 
-        public static void VertexAttributeBinding()
+        public void VertexAttributeBinding()
         {
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 32, new IntPtr(0));
@@ -231,7 +232,7 @@ namespace Core.Primitive
             VertexColor = color;
         }
 
-        public static void VertexAttributeBinding()
+        public void VertexAttributeBinding()
         {
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 36, new IntPtr(0));
@@ -284,7 +285,7 @@ namespace Core.Primitive
             Tangent = tangent;
         }
 
-        public static void VertexAttributeBinding()
+        public void VertexAttributeBinding()
         {
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 48, new IntPtr(0));

@@ -29,7 +29,6 @@ namespace Core
         protected void BindVertexBuffer()
         {
             VB.Bind();
-            VB.BindVertexAttribute();
         }
 
         protected void BindIndexBuffer()

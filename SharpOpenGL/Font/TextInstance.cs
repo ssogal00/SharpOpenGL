@@ -52,7 +52,6 @@ namespace SharpOpenGL.Font
             {
                 fontBoxRenderMaterial.BindAndExecute(boxVB, () =>
                 {
-                    boxVB.BindVertexAttribute();
                     fontBoxRenderMaterial.SetUniformVarData("ScreenSize",
                         new OpenTK.Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
                     fontBoxRenderMaterial.SetUniformVarData("BoxColor", new Vector3(0,0,0));
@@ -71,7 +70,6 @@ namespace SharpOpenGL.Font
             {
                 fontRenderMaterial.BindAndExecute(vb, () =>
                 {   
-                    vb.BindVertexAttribute();
                     fontRenderMaterial.SetTexture("FontTexture", FontManager.Get().FontAtlas);
                     fontRenderMaterial.SetUniformVarData("ScreenSize",
                         new OpenTK.Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
