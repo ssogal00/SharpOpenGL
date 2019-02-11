@@ -1,10 +1,11 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using System;
+using Core.Primitive;
 
 namespace Core
 {
     //@ T : VertexAttribute
-    public class TriangleDrawable<T> : DrawableBase<T> where T : struct
+    public class TriangleDrawable<T> : DrawableBase<T> where T : struct, IGenericVertexAttribute
     {
         public TriangleDrawable()
         {  

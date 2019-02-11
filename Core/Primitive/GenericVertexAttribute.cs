@@ -1,16 +1,23 @@
 ﻿using Core.VertexCustomAttribute;
 using OpenTK.Graphics.OpenGL;
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Core.OpenGLShader;
 using ZeroFormatter;
 using OpenTK;
 
 namespace Core.Primitive
 {
+    public interface IGenericVertexAttribute
+    {
+        List<VertexAttribute> GetVertexAttributes();
+    }
+
     // Position Only 
     [ZeroFormattable]
     [StructLayout(LayoutKind.Explicit, Size = 12)]
-    public struct P_VertexAttribute
+    public struct P_VertexAttribute : IGenericVertexAttribute
     {
         [Index(0)]
         [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
@@ -26,13 +33,21 @@ namespace Core.Primitive
             GL.EnableVertexAttribArray(0);
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 12, new IntPtr(0));
         }
+
+        public List<VertexAttribute> GetVertexAttributes()
+        {
+            return new List<VertexAttribute>
+            {
+                new VertexAttribute(0, ActiveAttribType.FloatVec3, "P")
+            };
+        }
     }
 
     // Position 
     // Color
     [ZeroFormattable]
     [StructLayout(LayoutKind.Explicit, Size = 24)]
-    public struct PC_VertexAttribute
+    public struct PC_VertexAttribute : IGenericVertexAttribute
     {
         [Index(0)]
         [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
@@ -54,6 +69,15 @@ namespace Core.Primitive
             GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 24, new IntPtr(0));
             GL.EnableVertexAttribArray(1);
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 24, new IntPtr(12));
+        }
+
+        public List<VertexAttribute> GetVertexAttributes()
+        {
+            return new List<VertexAttribute>
+            {
+                new VertexAttribute(0, ActiveAttribType.FloatVec3, "P"),
+                new VertexAttribute(1, ActiveAttribType.FloatVec3, "C"),
+            };
         }
     }
 
@@ -84,6 +108,15 @@ namespace Core.Primitive
             GL.EnableVertexAttribArray(1);
             GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 20, new IntPtr(12));
         }
+
+        public static List<VertexAttribute> GetVertexAttributes()
+        {
+            return new List<VertexAttribute>
+            {
+                new VertexAttribute(0, ActiveAttribType.FloatVec3, "P"),
+                new VertexAttribute(1, ActiveAttribType.FloatVec2, "T"),
+            };
+        }
     }
 
     // Position
@@ -113,6 +146,15 @@ namespace Core.Primitive
             GL.EnableVertexAttribArray(1);
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 24, new IntPtr(12));
         }
+
+        public static List<VertexAttribute> GetVertexAttributes()
+        {
+            return new List<VertexAttribute>
+            {
+                new VertexAttribute(0, ActiveAttribType.FloatVec3, "P"),
+                new VertexAttribute(1, ActiveAttribType.FloatVec3, "N"),
+            };
+        }
     }
 
 
@@ -121,7 +163,7 @@ namespace Core.Primitive
     // Texture Coordinate
     [ZeroFormattable]
     [StructLayout(LayoutKind.Explicit, Size = 32)]
-    public struct PNT_VertexAttribute
+    public struct PNT_VertexAttribute : IGenericVertexAttribute
     {
         [Index(0)]
         [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
@@ -151,6 +193,16 @@ namespace Core.Primitive
             GL.EnableVertexAttribArray(2);
             GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 32, new IntPtr(24));
         }
+
+        public List<VertexAttribute> GetVertexAttributes()
+        {
+            return new List<VertexAttribute>
+            {
+                new VertexAttribute(0, ActiveAttribType.FloatVec3, "P"),
+                new VertexAttribute(1, ActiveAttribType.FloatVec3, "N"),
+                new VertexAttribute(2, ActiveAttribType.FloatVec2, "T"),
+            };
+        }
     }
 
     // Position
@@ -158,7 +210,7 @@ namespace Core.Primitive
     // Color
     [ZeroFormattable]
     [StructLayout(LayoutKind.Explicit, Size = 36)]
-    public struct PNC_VertexAttribute
+    public struct PNC_VertexAttribute : IGenericVertexAttribute
     {
         [Index(0)]
         [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
@@ -188,6 +240,16 @@ namespace Core.Primitive
             GL.EnableVertexAttribArray(2);
             GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, 36, new IntPtr(24));
         }
+
+        public List<VertexAttribute> GetVertexAttributes()
+        {
+            return new List<VertexAttribute>
+            {
+                new VertexAttribute(0, ActiveAttribType.FloatVec3, "P"),
+                new VertexAttribute(1, ActiveAttribType.FloatVec3, "N"),
+                new VertexAttribute(2, ActiveAttribType.FloatVec3, "C"),
+            };
+        }
     }
 
     // position
@@ -196,7 +258,7 @@ namespace Core.Primitive
     // tangent
     [ZeroFormattable]
     [StructLayout(LayoutKind.Explicit, Size = 48)]
-    public struct PNTT_VertexAttribute
+    public struct PNTT_VertexAttribute : IGenericVertexAttribute
     {
         [Index(0)]
         [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
@@ -232,6 +294,17 @@ namespace Core.Primitive
             GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 48, new IntPtr(24));
             GL.EnableVertexAttribArray(3);
             GL.VertexAttribPointer(3, 4, VertexAttribPointerType.Float, false, 48, new IntPtr(32));
+        }
+
+        public List<VertexAttribute> GetVertexAttributes()
+        {
+            return new List<VertexAttribute>
+            {
+                new VertexAttribute(0, ActiveAttribType.FloatVec3, "P"),
+                new VertexAttribute(1, ActiveAttribType.FloatVec3, "N"),
+                new VertexAttribute(2, ActiveAttribType.FloatVec2, "T"),
+                new VertexAttribute(3, ActiveAttribType.FloatVec4, "T"),
+            };
         }
     }
 }

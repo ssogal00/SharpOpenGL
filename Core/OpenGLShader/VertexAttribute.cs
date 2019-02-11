@@ -18,11 +18,20 @@ namespace Core.OpenGLShader
             ComponentType       = GLToSharpTranslator.GetComponentTypeFromAttribType(AttributeType);
         }
 
+        public bool IsCompatible(VertexAttribute rhs)
+        {
+            if (AttributeLocation != rhs.AttributeLocation ||
+                ComponentCount != rhs.ComponentCount ||
+                AttributeType != rhs.AttributeType)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public int CompareTo(object rhs)
         {
-            var attribute = (VertexAttribute)rhs;
-
-
             return 0;
         }
 

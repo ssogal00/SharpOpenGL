@@ -1,17 +1,21 @@
-﻿using Core.Buffer;
+﻿using System.Collections.Generic;
+using Core.Buffer;
 using System.Linq;
+using Core.OpenGLShader;
+using Core.Primitive;
 using OpenTK.Graphics.OpenGL;
 
 
 namespace Core
 {
-    public class DrawableBase<T>  where T : struct 
+    public class DrawableBase<T>  where T : struct, IGenericVertexAttribute
     {
         public DrawableBase()
         {
             VB = new StaticVertexBuffer<T>();
             IB = new IndexBuffer();
         }
+
 
         public void SetupVertexData(ref T[] VertexList)
         {
