@@ -41,5 +41,26 @@ namespace Core.Buffer
         {
             vertexAttributeInstance.VertexAttributeBinding();
         }
+
+        public bool IsCompatible(MaterialBase.MaterialBase material)
+        {
+            var vbAttributes = vertexAttributeInstance.GetVertexAttributes();
+            var materialAttributes = material.GetVertexAttributes();
+
+            if (vbAttributes.Count != materialAttributes.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < vbAttributes.Count; ++i)
+            {
+                if (vbAttributes[i].IsCompatible(materialAttributes[i]) == false)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

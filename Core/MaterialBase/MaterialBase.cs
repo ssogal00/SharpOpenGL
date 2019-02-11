@@ -420,7 +420,7 @@ namespace Core.MaterialBase
             MaterialProgram.SetUniformVector4ArrayData(varName, ref data);
         }
 
-        public List<VertexAttribute> GetActiveVertexAttributes()
+        public List<VertexAttribute> GetVertexAttributes()
         {
             if (MaterialProgram.ProgramLinked)
             {
@@ -429,6 +429,7 @@ namespace Core.MaterialBase
 
             return new List<VertexAttribute>();
         }
+        
 
         protected Dictionary<string, DynamicUniformBuffer> UniformBufferMap = null;
         protected Dictionary<string, TextureUnit> SamplerMap = null;
