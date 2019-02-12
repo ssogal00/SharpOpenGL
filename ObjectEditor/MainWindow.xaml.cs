@@ -25,9 +25,23 @@ namespace ObjectEditor
             InitializeComponent();
         }
 
+        public void AddProperty(string name)
+        {
+            var label = new Label();
+            
+            
+        }
+
         public void SetCameraPosition(string value)
         {
             CameraPosition.Text = value;
         }
+
+        private void CreateObjectBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        public delegate void OnSphereCreateClicked(object sender, RoutedEventArgs e);
     }
 }

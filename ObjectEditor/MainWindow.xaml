@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel>
+        <StackPanel Name="ObjectProperty">
             <Label>CameraPosition</Label>
             <TextBlock Name="CameraPosition"></TextBlock>
+            <Button Name="CreateObjectBtn">Create Sphere</Button>
         </StackPanel>
     </Grid>
 </Window>

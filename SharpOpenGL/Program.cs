@@ -307,7 +307,7 @@ namespace SharpOpenGL
             renderThread.Start();
 
             var uiThread = new Thread(UIThread.Get().Run);
-            uiThread.Priority = ThreadPriority.BelowNormal;
+            uiThread.Priority = ThreadPriority.Lowest;
             uiThread.Name = "UIThread";
             uiThread.SetApartmentState(ApartmentState.STA);
             uiThread.Start();
