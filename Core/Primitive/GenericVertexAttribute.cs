@@ -42,6 +42,8 @@ namespace Core.Primitive
                 new VertexAttribute(0, ActiveAttribType.FloatVec3, "P")
             };
         }
+
+
     }
 
     // Position 

@@ -90,6 +90,8 @@
       <HintPath>..\packages\OpenTK.GLControl.3.0.1\lib\net20\OpenTK.GLControl.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="SixLabors.Core, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SixLabors.Core.1.0.0-beta0006\lib\netstandard1.1\SixLabors.Core.dll</HintPath>
     </Reference>
@@ -137,6 +139,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
     <Reference Include="ZeroFormatter, Version=1.6.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ZeroFormatter.1.6.4\lib\net45\ZeroFormatter.dll</HintPath>
       <Private>True</Private>
@@ -195,6 +198,7 @@
     <Compile Include="Shader.cs" />
     <Compile Include="Asset\StaticMeshAsset.cs" />
     <Compile Include="TextureManager.cs" />
+    <Compile Include="UIThread.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -260,6 +264,10 @@
     <ProjectReference Include="..\FreeTypeWrapper\FreeTypeWrapper.vcxproj">
       <Project>{9d0ab4d9-ea47-4ccd-a0dc-5063f072356f}</Project>
       <Name>FreeTypeWrapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ObjectEditor\ObjectEditor.csproj">
+      <Project>{2079b69a-ad1b-46ae-bf5f-5e4ce2546cbf}</Project>
+      <Name>ObjectEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

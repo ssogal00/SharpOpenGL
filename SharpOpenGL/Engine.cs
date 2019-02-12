@@ -12,6 +12,7 @@ using Core.Primitive;
 using Core.Tickable;
 using SharpOpenGL.Asset;
 using SharpOpenGL.Font;
+using ObjectEditor;
 
 namespace SharpOpenGL
 {

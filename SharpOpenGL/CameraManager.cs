@@ -15,14 +15,7 @@ namespace SharpOpenGL
 
         public bool IsOrbitCameraMode()
         {
-            if (currentCamera == orbitCamera)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return currentCamera == orbitCamera ? true : false;
         }
 
         public bool IsFreeCameraMode()
