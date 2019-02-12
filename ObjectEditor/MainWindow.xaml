@@ -10,7 +10,7 @@
         <StackPanel Name="ObjectProperty">
             <Label>CameraPosition</Label>
             <TextBlock Name="CameraPosition"></TextBlock>
-            <Button Name="CreateObjectBtn">Create Sphere</Button>
+            <Button Name="CreateObjectBtn" Click="CreateObjectBtn_OnClick">Create Sphere</Button>
         </StackPanel>
     </Grid>
 </Window>

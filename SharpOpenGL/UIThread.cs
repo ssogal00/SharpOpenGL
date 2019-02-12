@@ -28,7 +28,12 @@ namespace SharpOpenGL
         public void Run()
         {   
             editorWindow = new ObjectEditor.MainWindow();
+
+            editorWindow.ObjectCreateEventHandler += Engine.Get().OnObjectCreate;
+
             editorWindow.Show();
+
+
 
             editorWindow.Closed += (sender, args) =>
             {

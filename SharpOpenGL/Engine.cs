@@ -47,6 +47,11 @@ namespace SharpOpenGL
             bInitialized = true;
         }
 
+        public void OnObjectCreate(object sender, EventArgs args)
+        {
+            Console.WriteLine("Object Create");
+        }
+
         public bool SeperateRenderingThreadEnabled => bIsSperateRenderingThread;
 
         public void Tick()

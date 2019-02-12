@@ -39,9 +39,9 @@ namespace ObjectEditor
 
         private void CreateObjectBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            
+            ObjectCreateEventHandler(sender, e);
         }
 
-        public delegate void OnSphereCreateClicked(object sender, RoutedEventArgs e);
+        public EventHandler<EventArgs> ObjectCreateEventHandler;
     }
 }
