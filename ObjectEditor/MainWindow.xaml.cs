@@ -24,5 +24,10 @@ namespace ObjectEditor
         {
             InitializeComponent();
         }
+
+        public void SetCameraPosition(string value)
+        {
+            CameraPosition.Text = value;
+        }
     }
 }

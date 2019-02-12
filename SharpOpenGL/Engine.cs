@@ -61,6 +61,16 @@ namespace SharpOpenGL
                 TickableObjectManager.Tick(stopwatch.ElapsedMilliseconds * 0.001);
                 SceneObjectManager.Get().Tick(stopwatch.ElapsedMilliseconds * 0.001);
                 stopwatch.Reset();
+
+                UIThread.Get().Enqueue
+                (
+                
+                    ()=>
+                    {
+                        var eye = CameraManager.Get().CurrentCameraEye;
+                        string eyeValue = string.Format("{0},{1},{2}", eye.X, eye.Y, eye.Z);
+                        UIThread.Get().EditorWindow.SetCameraPosition(eyeValue);
+                    });
             }
             
             stopwatch.Start();

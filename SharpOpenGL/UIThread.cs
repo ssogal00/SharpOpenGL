@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -13,30 +14,42 @@ namespace SharpOpenGL
     {
         public UIThread()
         {
+
         }
 
+        public void Enqueue(Action action)
+        {
+            if (editorWindow != null && editorWindow.Dispatcher != null)
+            {
+                editorWindow.Dispatcher.InvokeAsync(action);
+            }
+        }
 
         public void Run()
         {   
-            testWindow = new ObjectEditor.MainWindow();
-            testWindow.Show();
+            editorWindow = new ObjectEditor.MainWindow();
+            editorWindow.Show();
 
-            testWindow.Closed += (sender, args) =>
+            editorWindow.Closed += (sender, args) =>
             {
-                testWindow.Dispatcher.InvokeShutdown();
+                editorWindow.Dispatcher.InvokeShutdown();
             };
 
             System.Windows.Threading.Dispatcher.Run();
+
+            Console.WriteLine("Here");
         }
 
         public void RequestExit()
         {
             bRequestExist = true;
-            testWindow.Dispatcher.Invoke(() => { testWindow.Close();});
+            editorWindow.Dispatcher.Invoke(() => { editorWindow.Close();});
         }
 
         private bool bRequestExist = false;
 
-        private ObjectEditor.MainWindow testWindow = null;
+        public ObjectEditor.MainWindow EditorWindow => editorWindow;
+
+        private ObjectEditor.MainWindow editorWindow = null;
     }
 }
