@@ -49,7 +49,7 @@ namespace SharpOpenGL
 
         public void OnObjectCreate(object sender, EventArgs args)
         {
-            Console.WriteLine("Object Create");
+            var sphere = new Cylinder(20,40,10);
         }
 
         public bool SeperateRenderingThreadEnabled => bIsSperateRenderingThread;

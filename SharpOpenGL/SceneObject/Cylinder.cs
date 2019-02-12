@@ -53,6 +53,7 @@ namespace SharpOpenGL
         {
             if (bReadyToDraw)
             {
+                using (var wireframe = new WireFrameMode())
                 using (var dummy = new ScopedBind(defaultMaterial))
                 {
                     defaultMaterial.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);

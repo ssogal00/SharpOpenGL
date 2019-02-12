@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -58,6 +59,7 @@ namespace Core.Primitive
             SceneObjectList.Add(obj);
         }
 
-        protected List<SceneObject> SceneObjectList = new List<SceneObject>();
+        protected ConcurrentBag<SceneObject> SceneObjectList = new ConcurrentBag<SceneObject>();
+        //protected List<SceneObject> SceneObjectList = new List<SceneObject>();
     }
 }
