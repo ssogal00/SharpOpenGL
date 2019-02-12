@@ -306,6 +306,11 @@ namespace SharpOpenGL
             renderThread.Name = "RenderingThread";
             renderThread.Start();
 
+            var uiThread = new Thread(UIThread.Get().Run);
+            uiThread.Priority = ThreadPriority.BelowNormal;
+            uiThread.Name = "UIThread";
+            uiThread.SetApartmentState(ApartmentState.STA);
+            uiThread.Start();
 
             Engine.Get().Initialize();
 
@@ -314,6 +319,7 @@ namespace SharpOpenGL
                 if (Engine.Get().IsRequestExit)
                 {
                     RenderingThread.Get().RequestExit();
+                    UIThread.Get().RequestExit();
                     break;
                 }
                 Engine.Get().Tick();
@@ -321,6 +327,7 @@ namespace SharpOpenGL
             }
 
             renderThread.Join();
+            uiThread.Join();
         }
     }
 }

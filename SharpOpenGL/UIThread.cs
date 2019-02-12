@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Core;
@@ -16,14 +17,25 @@ namespace SharpOpenGL
 
 
         public void Run()
-        {
-            
-            Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.Normal, new Action(() =>
+        {   
+            testWindow = new ObjectEditor.MainWindow();
+            testWindow.Show();
+
+            testWindow.Closed += (sender, args) =>
             {
-                testWindow = new ObjectEditor.MainWindow();
-                testWindow.Show();
-            }));
+                testWindow.Dispatcher.InvokeShutdown();
+            };
+
+            System.Windows.Threading.Dispatcher.Run();
         }
+
+        public void RequestExit()
+        {
+            bRequestExist = true;
+            testWindow.Dispatcher.Invoke(() => { testWindow.Close();});
+        }
+
+        private bool bRequestExist = false;
 
         private ObjectEditor.MainWindow testWindow = null;
     }
