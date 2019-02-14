@@ -26,8 +26,7 @@ namespace ObjectEditor
             typeof(OpenTK.Vector4),
             typeof(OpenTK.Vector2),
             typeof(float),
-            typeof(int),
-            typeof(double),
+            typeof(int)
         };
 
         private static Dictionary<Type, Type> typeDictionary = new Dictionary<Type, Type>()
@@ -35,6 +34,7 @@ namespace ObjectEditor
             { typeof(OpenTK.Vector3), typeof(Vector3Property) },
             { typeof(OpenTK.Vector2), typeof(Vector2Property) },
             { typeof(float), typeof(FloatProperty) },
+            { typeof(int), typeof(IntProperty) },
         };
 
         public static bool IsSupportedType(Type t)
@@ -64,20 +64,39 @@ namespace ObjectEditor
         public FloatProperty(string name, float value)
         {
             propertyName = name;
-            floatValue = value;
+            FloatValue = value;
         }
 
         public FloatProperty()
         {
         }
 
-        public float FloatValue
+        public override void SetValue(object value)
         {
-            get => floatValue;
-            set => floatValue = value;
+            FloatValue = (float)value;
         }
 
-        private float floatValue = 0;
+        public float FloatValue { get; set; }
+    }
+
+    public class IntProperty : ObjectProperty
+    {
+        public IntProperty(string name, int value)
+        {
+            propertyName = name;
+            IntValue = value;
+        }
+
+        public int IntValue { get; set; }
+
+        public override void SetValue(object value)
+        {
+            IntValue = (int) value;
+        }
+
+        public IntProperty()
+        {
+        }
     }
 
     public class Vector3Property : ObjectProperty

@@ -34,6 +34,10 @@ namespace ObjectEditor
             {
                 return elemnt.FindResource("FloatTemplate") as DataTemplate;
             }
+            else if (item is IntProperty)
+            {
+                return elemnt.FindResource("IntTemplate") as DataTemplate;
+            }
 
             return elemnt.FindResource("Vector3Template") as DataTemplate;
         }
@@ -82,10 +86,10 @@ namespace ObjectEditor
                     if (ObjectProperty.IsSupportedType(propertyType))
                     {
                         var obj = Activator.CreateInstance(propertyType);
-                        //property.GetValue(obj);
+                        var propvalue = property.GetValue(target);
 
                         var prop = ObjectProperty.CreateProperty(name, propertyType);
-                        //prop.SetValue(obj);
+                        prop.SetValue(propvalue);
 
                         ObjPropList.Items.Add(prop);
                     }
@@ -99,5 +103,7 @@ namespace ObjectEditor
         }
 
         public EventHandler<EventArgs> ObjectCreateEventHandler;
+
+       
     }
 }

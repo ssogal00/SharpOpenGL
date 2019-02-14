@@ -15,6 +15,13 @@
             </StackPanel>
         </DataTemplate>
 
+        <DataTemplate x:Key="IntTemplate" DataType="{x:Type local:IntProperty}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <TextBox Text="{Binding IntValue}" VerticalAlignment="Center" Width="20"></TextBox>
+            </StackPanel>
+        </DataTemplate>
+
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Style.Setters>
                 <Setter Property="TextAlignment" Value="Right"/>

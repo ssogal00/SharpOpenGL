@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Core;
+using OpenTK;
 
 namespace SharpOpenGL
 {
@@ -32,6 +33,7 @@ namespace SharpOpenGL
             editorWindow.ObjectCreateEventHandler += Engine.Get().OnObjectCreate;
 
             var testSceneObject = new TestSceneObject();
+            testSceneObject.Translation=new Vector3(10,20,30);
             editorWindow.SetObject(testSceneObject);
 
             editorWindow.Show();
