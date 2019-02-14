@@ -7,24 +7,39 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
+
+        <DataTemplate x:Key="FloatTemplate" DataType="{x:Type local:FloatProperty}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <TextBox Text="{Binding FloatValue}" VerticalAlignment="Center" Width="20"></TextBox>
+            </StackPanel>
+        </DataTemplate>
+
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="TextAlignment" Value="Right"/>
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            </Style.Setters>
+        </Style>
+
         <DataTemplate x:Key="Vector3Template" DataType="{x:Type local:Vector3Property}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Path=PropertyName}"></TextBlock>
+                <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
                 <Label>X</Label>
-                <TextBlock Text="{Binding X}" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="{Binding X}" Style="{StaticResource TextBoxStyle}"></TextBox>
                 <Label>Y</Label>
-                <TextBlock Text="{Binding Y}" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="{Binding Y}" Style="{StaticResource TextBoxStyle}"></TextBox>
                 <Label>Z</Label>
-                <TextBlock Text="{Binding Z}" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="{Binding Z}" Style="{StaticResource TextBoxStyle}"></TextBox>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="Vector2Template" DataType="{x:Type local:Vector2Property}">
             <StackPanel Orientation="Horizontal">
                 <Label>X</Label>
-                <TextBlock Text="{Binding X}" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="{Binding X}" VerticalAlignment="Center"></TextBox>
                 <Label>Y</Label>
-                <TextBlock Text="{Binding Y}" VerticalAlignment="Center"></TextBlock>
+                <TextBox Text="{Binding Y}" VerticalAlignment="Center"></TextBox>
             </StackPanel>
         </DataTemplate>
         <local:ObjectPropertyDataTemplateSelector x:Key="myObjectPropertyDataTemplateSelector"></local:ObjectPropertyDataTemplateSelector>
