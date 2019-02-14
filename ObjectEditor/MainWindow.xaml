@@ -11,7 +11,7 @@
         <DataTemplate x:Key="FloatTemplate" DataType="{x:Type local:FloatProperty}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
-                <TextBox Text="{Binding FloatValue}" VerticalAlignment="Center" Width="20" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+                <TextBox Text="{Binding FloatValue, Mode=TwoWay}" VerticalAlignment="Center" Width="20" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
             </StackPanel>
         </DataTemplate>
 
