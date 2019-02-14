@@ -13,6 +13,7 @@ using Core.Tickable;
 using SharpOpenGL.Asset;
 using SharpOpenGL.Font;
 using ObjectEditor;
+using SharpOpenGL;
 
 namespace SharpOpenGL
 {
@@ -49,7 +50,7 @@ namespace SharpOpenGL
 
         public void OnObjectCreate(object sender, EventArgs args)
         {
-            cylinder = new Cylinder(20,40,10);
+            
         }
 
         public bool SeperateRenderingThreadEnabled => bIsSperateRenderingThread;
@@ -66,20 +67,8 @@ namespace SharpOpenGL
                 TickableObjectManager.Tick(stopwatch.ElapsedMilliseconds * 0.001);
                 SceneObjectManager.Get().Tick(stopwatch.ElapsedMilliseconds * 0.001);
                 stopwatch.Reset();
-
-                UIThread.Get().Enqueue
-                (
-                
-                    ()=>
-                    {
-                        var eye = CameraManager.Get().CurrentCameraEye;
-                        string eyeValue = string.Format("{0},{1},{2}", eye.X, eye.Y, eye.Z);
-                        OpenTK.Vector2 val = new OpenTK.Vector2(1, 2);
-                        UIThread.Get().EditorWindow.SetObject(val);
-                        
-                    });
             }
-            
+
             stopwatch.Start();
         }
 
@@ -94,7 +83,7 @@ namespace SharpOpenGL
 
         protected bool bIsRequestExit = false;
 
-        Cylinder cylinder = null;
-        
+        private TestSceneObject testSceneObject = null;
+
     }
 }

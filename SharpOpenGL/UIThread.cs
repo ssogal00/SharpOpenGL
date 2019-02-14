@@ -31,6 +31,9 @@ namespace SharpOpenGL
 
             editorWindow.ObjectCreateEventHandler += Engine.Get().OnObjectCreate;
 
+            var testSceneObject = new TestSceneObject();
+            editorWindow.SetObject(testSceneObject);
+
             editorWindow.Show();
 
             editorWindow.Closed += (sender, args) =>

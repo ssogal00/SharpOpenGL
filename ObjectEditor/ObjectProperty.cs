@@ -1,22 +1,62 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenTK;
 
 namespace ObjectEditor
 {
     public class ObjectProperty
     {
         protected string propertyName = "";
-        public string PropertyName => propertyName;
 
-        private static Dictionary<string, Type> supportedTypes = new Dictionary<string, Type>()
+        public string PropertyName
         {
-            {typeof(OpenTK.Vector3).ToString(), typeof(OpenTK.Vector3)},
-            {typeof(OpenTK.Vector2).ToString(), typeof(OpenTK.Vector2)},
-            {typeof(float).ToString(), typeof(float)}
+            get => propertyName;
+            set => propertyName = value;
+        }
+
+        public virtual void SetValue(object value) { }
+
+        private static List<Type> supportedTypes =new List< Type>()
+        {
+            typeof(OpenTK.Vector3),
+            typeof(OpenTK.Vector4),
+            typeof(OpenTK.Vector2),
+            typeof(float),
+            typeof(int),
+            typeof(double),
         };
+
+        private static Dictionary<Type, Type> typeDictionary = new Dictionary<Type, Type>()
+        {
+            { typeof(OpenTK.Vector3), typeof(Vector3Property) },
+            { typeof(OpenTK.Vector2), typeof(Vector2Property) },
+            { typeof(float), typeof(FloatProperty) },
+        };
+
+        public static bool IsSupportedType(Type t)
+        {
+            if (supportedTypes.Contains(t))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static ObjectProperty CreateProperty(string name, Type originalType)
+        {
+            if (typeDictionary.ContainsKey(originalType))
+            {
+                var result = (ObjectProperty) Activator.CreateInstance(typeDictionary[originalType]);
+                result.PropertyName = name;
+                return result;
+            }
+            return null;
+        }
     }
 
     public class FloatProperty : ObjectProperty
@@ -25,6 +65,10 @@ namespace ObjectEditor
         {
             propertyName = name;
             floatValue = value;
+        }
+
+        public FloatProperty()
+        {
         }
 
         public float FloatValue
@@ -42,6 +86,12 @@ namespace ObjectEditor
         {
             propertyName = name;
             vec = vectorValue;
+        }
+        public Vector3Property() { }
+
+        public override void SetValue(object value)
+        {
+            vec = (Vector3) value;
         }
 
         private OpenTK.Vector3 vec;
@@ -71,6 +121,13 @@ namespace ObjectEditor
         {
             propertyName = name;
             vec = vectorValue;
+        }
+
+        public Vector2Property() { }
+
+        public override void SetValue(object value)
+        {
+            vec = (Vector2)value;
         }
 
         private OpenTK.Vector2 vec;

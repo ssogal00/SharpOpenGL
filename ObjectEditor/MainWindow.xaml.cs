@@ -30,6 +30,10 @@ namespace ObjectEditor
             {
                 return elemnt.FindResource("Vector2Template") as DataTemplate;
             }
+            else if (item is FloatProperty)
+            {
+                return elemnt.FindResource("FloatTemplate") as DataTemplate;
+            }
 
             return elemnt.FindResource("Vector3Template") as DataTemplate;
         }
@@ -42,8 +46,8 @@ namespace ObjectEditor
         public MainWindow()
         {
             InitializeComponent();
-            ObjPropList.Items.Add(testValue);
-            ObjPropList.Items.Add(testValue2);
+            //ObjPropList.Items.Add(testValue);
+            //ObjPropList.Items.Add(testValue2);
         }
 
         
@@ -65,17 +69,26 @@ namespace ObjectEditor
         public void SetObject(object target)
         {
             var t = target.GetType();
-            var fields = t.GetFields();
-            foreach (var field in fields)
+            var properties = t.GetProperties();
+
+            foreach (var property in properties)
             {
-                if (field.CustomAttributes.Where(x => x.AttributeType.Name == "ExposeUI").Count() > 0)
+                if (property.CustomAttributes.Any(x => x.AttributeType.Name == "ExposeUI"))
                 {
-                    string name = field.Name;
-                    Type fieldType = field.FieldType;
+                    string name = property.Name;
 
-                    var obj = Activator.CreateInstance(fieldType);
+                    Type propertyType = property.PropertyType;
 
-                    field.GetValue(obj) ;
+                    if (ObjectProperty.IsSupportedType(propertyType))
+                    {
+                        var obj = Activator.CreateInstance(propertyType);
+                        //property.GetValue(obj);
+
+                        var prop = ObjectProperty.CreateProperty(name, propertyType);
+                        //prop.SetValue(obj);
+
+                        ObjPropList.Items.Add(prop);
+                    }
                 }
             }
         }

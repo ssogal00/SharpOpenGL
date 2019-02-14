@@ -184,6 +184,7 @@
     <Compile Include="SceneObject\Cube.cs" />
     <Compile Include="SceneObject\Cylinder.cs" />
     <Compile Include="SceneObject\Sphere.cs" />
+    <Compile Include="SceneObject\TestSceneObject.cs" />
     <Compile Include="SceneObject\ThreeAxis.cs" />
     <Compile Include="SceneObject\Torus.cs" />
     <Compile Include="Scene\SceneBase.cs" />
