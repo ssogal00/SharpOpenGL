@@ -33,8 +33,6 @@ namespace SharpOpenGL
 
             editorWindow.Show();
 
-
-
             editorWindow.Closed += (sender, args) =>
             {
                 editorWindow.Dispatcher.InvokeShutdown();

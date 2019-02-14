@@ -6,11 +6,34 @@
         xmlns:local="clr-namespace:ObjectEditor"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <DataTemplate x:Key="Vector3Template" DataType="{x:Type local:Vector3Property}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Path=PropertyName}"></TextBlock>
+                <Label>X</Label>
+                <TextBlock Text="{Binding X}" VerticalAlignment="Center"></TextBlock>
+                <Label>Y</Label>
+                <TextBlock Text="{Binding Y}" VerticalAlignment="Center"></TextBlock>
+                <Label>Z</Label>
+                <TextBlock Text="{Binding Z}" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="Vector2Template" DataType="{x:Type local:Vector2Property}">
+            <StackPanel Orientation="Horizontal">
+                <Label>X</Label>
+                <TextBlock Text="{Binding X}" VerticalAlignment="Center"></TextBlock>
+                <Label>Y</Label>
+                <TextBlock Text="{Binding Y}" VerticalAlignment="Center"></TextBlock>
+            </StackPanel>
+        </DataTemplate>
+        <local:ObjectPropertyDataTemplateSelector x:Key="myObjectPropertyDataTemplateSelector"></local:ObjectPropertyDataTemplateSelector>
+    </Window.Resources>
     <Grid>
-        <StackPanel Name="ObjectProperty">
-            <Label>CameraPosition</Label>
-            <TextBlock Name="CameraPosition"></TextBlock>
-            <Button Name="CreateObjectBtn" Click="CreateObjectBtn_OnClick">Create Sphere</Button>
+        <StackPanel>
+            <ListBox Name="ObjPropList" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}">
+                
+            </ListBox>
         </StackPanel>
     </Grid>
 </Window>
