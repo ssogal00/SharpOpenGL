@@ -70,10 +70,7 @@ namespace ObjectEditor
             
         }
 
-        public void OnChange(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("Value changed");
-        }
+       
 
         public void SetObject(object target)
         {
@@ -109,6 +106,11 @@ namespace ObjectEditor
 
         public EventHandler<EventArgs> ObjectCreateEventHandler;
 
-       
+
+        private void TextBoxBase_OnTextChanged(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Here");
+        }
+
     }
 }
