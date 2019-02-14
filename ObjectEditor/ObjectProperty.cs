@@ -11,10 +11,12 @@ namespace ObjectEditor
         protected string propertyName = "";
         public string PropertyName => propertyName;
 
-        static T CreateObjectProperty<T>() where T : ObjectProperty, new()
+        private static Dictionary<string, Type> supportedTypes = new Dictionary<string, Type>()
         {
-            return new T();
-        }
+            {typeof(OpenTK.Vector3).ToString(), typeof(OpenTK.Vector3)},
+            {typeof(OpenTK.Vector2).ToString(), typeof(OpenTK.Vector2)},
+            {typeof(float).ToString(), typeof(float)}
+        };
     }
 
     public class FloatProperty : ObjectProperty

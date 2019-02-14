@@ -71,7 +71,11 @@ namespace ObjectEditor
                 if (field.CustomAttributes.Where(x => x.AttributeType.Name == "ExposeUI").Count() > 0)
                 {
                     string name = field.Name;
-                    
+                    Type fieldType = field.FieldType;
+
+                    var obj = Activator.CreateInstance(fieldType);
+
+                    field.GetValue(obj) ;
                 }
             }
         }
