@@ -49,7 +49,7 @@ namespace SharpOpenGL
 
         public void OnObjectCreate(object sender, EventArgs args)
         {
-            var sphere = new Cylinder(20,40,10);
+            cylinder = new Cylinder(20,40,10);
         }
 
         public bool SeperateRenderingThreadEnabled => bIsSperateRenderingThread;
@@ -74,7 +74,9 @@ namespace SharpOpenGL
                     {
                         var eye = CameraManager.Get().CurrentCameraEye;
                         string eyeValue = string.Format("{0},{1},{2}", eye.X, eye.Y, eye.Z);
-                        UIThread.Get().EditorWindow.SetCameraPosition(eyeValue);
+                        OpenTK.Vector2 val = new OpenTK.Vector2(1, 2);
+                        UIThread.Get().EditorWindow.SetObject(val);
+                        
                     });
             }
             
@@ -91,6 +93,8 @@ namespace SharpOpenGL
         protected bool bIsSperateRenderingThread = true;
 
         protected bool bIsRequestExit = false;
+
+        Cylinder cylinder = null;
         
     }
 }

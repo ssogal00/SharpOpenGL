@@ -10,6 +10,11 @@ namespace ObjectEditor
     {
         protected string propertyName = "";
         public string PropertyName => propertyName;
+
+        static T CreateObjectProperty<T>() where T : ObjectProperty, new()
+        {
+            return new T();
+        }
     }
 
     public class FloatProperty : ObjectProperty

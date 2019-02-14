@@ -62,6 +62,20 @@ namespace ObjectEditor
             
         }
 
+        public void SetObject(object target)
+        {
+            var t = target.GetType();
+            var fields = t.GetFields();
+            foreach (var field in fields)
+            {
+                if (field.CustomAttributes.Where(x => x.AttributeType.Name == "ExposeUI").Count() > 0)
+                {
+                    string name = field.Name;
+                    
+                }
+            }
+        }
+
         private void CreateObjectBtn_OnClick(object sender, RoutedEventArgs e)
         {
             ObjectCreateEventHandler(sender, e);
