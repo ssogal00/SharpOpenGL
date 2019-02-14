@@ -70,6 +70,11 @@ namespace ObjectEditor
             
         }
 
+        public void OnChange(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine("Value changed");
+        }
+
         public void SetObject(object target)
         {
             var t = target.GetType();
@@ -88,7 +93,7 @@ namespace ObjectEditor
                         var obj = Activator.CreateInstance(propertyType);
                         var propvalue = property.GetValue(target);
 
-                        var prop = ObjectProperty.CreateProperty(name, propertyType);
+                        var prop = ObjectProperty.CreateProperty(name, propertyType, target);
                         prop.SetValue(propvalue);
 
                         ObjPropList.Items.Add(prop);

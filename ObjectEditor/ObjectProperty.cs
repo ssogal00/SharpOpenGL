@@ -12,6 +12,8 @@ namespace ObjectEditor
     {
         protected string propertyName = "";
 
+        protected object targetObject = null;
+
         public string PropertyName
         {
             get => propertyName;
@@ -19,6 +21,15 @@ namespace ObjectEditor
         }
 
         public virtual void SetValue(object value) { }
+
+        public void SetTargetObject(object obj)
+        {
+            targetObject = obj;
+        }
+
+        protected virtual void ApplyValue()
+        {
+        }
 
         private static List<Type> supportedTypes =new List< Type>()
         {
@@ -47,12 +58,13 @@ namespace ObjectEditor
             return false;
         }
 
-        public static ObjectProperty CreateProperty(string name, Type originalType)
+        public static ObjectProperty CreateProperty(string name, Type originalType, object targetObject)
         {
             if (typeDictionary.ContainsKey(originalType))
             {
                 var result = (ObjectProperty) Activator.CreateInstance(typeDictionary[originalType]);
                 result.PropertyName = name;
+                result.SetTargetObject(targetObject);
                 return result;
             }
             return null;
@@ -69,6 +81,12 @@ namespace ObjectEditor
 
         public FloatProperty()
         {
+        }
+
+        protected override void ApplyValue()
+        {
+            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+            prop.SetValue(targetObject, FloatValue);
         }
 
         public override void SetValue(object value)
@@ -97,6 +115,12 @@ namespace ObjectEditor
         public IntProperty()
         {
         }
+
+        protected override void ApplyValue()
+        {
+            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+            prop.SetValue(targetObject, IntValue);
+        }
     }
 
     public class Vector3Property : ObjectProperty
@@ -111,6 +135,12 @@ namespace ObjectEditor
         public override void SetValue(object value)
         {
             vec = (Vector3) value;
+        }
+
+        protected override void ApplyValue()
+        {
+            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+            prop.SetValue(targetObject, vec);
         }
 
         private OpenTK.Vector3 vec;
@@ -147,6 +177,12 @@ namespace ObjectEditor
         public override void SetValue(object value)
         {
             vec = (Vector2)value;
+        }
+
+        protected override void ApplyValue()
+        {
+            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+            prop.SetValue(targetObject, vec);
         }
 
         private OpenTK.Vector2 vec;
