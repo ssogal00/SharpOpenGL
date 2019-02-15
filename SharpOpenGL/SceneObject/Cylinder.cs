@@ -13,7 +13,6 @@ namespace SharpOpenGL
 {
     public class Cylinder : SceneObject
     {
-
         public override OpenTK.Matrix4 LocalMatrix
         {
             get
@@ -29,6 +28,7 @@ namespace SharpOpenGL
             Radius = radius;
             Height = height;
             Count = count;
+            Name = string.Format("Cylinder_{0}", ObjectCount);
             Initialize();
         }
 

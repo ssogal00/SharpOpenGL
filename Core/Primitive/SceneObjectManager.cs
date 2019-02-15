@@ -59,7 +59,12 @@ namespace Core.Primitive
             SceneObjectList.Add(obj);
         }
 
+        public void RemoveSceneObject(SceneObject obj)
+        {
+            
+        }
         protected ConcurrentBag<SceneObject> SceneObjectList = new ConcurrentBag<SceneObject>();
-        //protected List<SceneObject> SceneObjectList = new List<SceneObject>();
+        
+        
     }
 }

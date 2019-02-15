@@ -6,6 +6,9 @@ namespace Core.Primitive
 {
     public abstract class SceneObject
     {
+        [ExposeUI("ObjectName")]
+        public virtual string Name { get; set; }
+
         [ExposeUI("Translation")]
         public virtual Vector3 Translation { get; set; }
 
@@ -35,6 +38,7 @@ namespace Core.Primitive
         public SceneObject()
         {
             SceneObjectManager.Get().AddSceneObject(this);
+            ObjectCount++;
         }
        
         public virtual void OnGLContextCreated(object sender, EventArgs e)
@@ -63,5 +67,7 @@ namespace Core.Primitive
         protected bool bVisible = true;
 
         protected MaterialBase.MaterialBase defaultMaterial = null;
+
+        protected static int ObjectCount = 0;
     }
 }
