@@ -32,8 +32,8 @@ namespace SharpOpenGL
 
             editorWindow.ObjectCreateEventHandler += Engine.Get().OnObjectCreate;
 
-            var testSceneObject = new TestSceneObject();
-            testSceneObject.Translation=new Vector3(10,20,30);
+            var testSceneObject = new Sphere(10,10,10);
+            testSceneObject.Translation=new Vector3(10,0,0);
             editorWindow.SetObject(testSceneObject);
 
             editorWindow.Show();

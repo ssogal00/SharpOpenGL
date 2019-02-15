@@ -30,7 +30,7 @@ namespace ObjectEditor
             targetObject = obj;
         }
 
-        protected virtual void ApplyValue()
+        public virtual void ApplyValue()
         {
         }
 
@@ -86,7 +86,7 @@ namespace ObjectEditor
         {
         }
 
-        protected override void ApplyValue()
+        public override void ApplyValue()
         {
             var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
             prop.SetValue(targetObject, FloatValue);
@@ -119,7 +119,7 @@ namespace ObjectEditor
         {
         }
 
-        protected override void ApplyValue()
+        public override void ApplyValue()
         {
             var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
             prop.SetValue(targetObject, IntValue);
@@ -140,7 +140,7 @@ namespace ObjectEditor
             vec = (Vector3) value;
         }
 
-        protected override void ApplyValue()
+        public override void ApplyValue()
         {
             var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
             prop.SetValue(targetObject, vec);
@@ -182,7 +182,7 @@ namespace ObjectEditor
             vec = (Vector2)value;
         }
 
-        protected override void ApplyValue()
+        public override void ApplyValue()
         {
             var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
             prop.SetValue(targetObject, vec);

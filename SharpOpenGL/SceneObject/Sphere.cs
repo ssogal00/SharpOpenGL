@@ -64,7 +64,7 @@ namespace SharpOpenGL
 
         public override void Tick(double delta)
         {
-            Yaw += (float)OpenTK.MathHelper.DegreesToRadians(delta) * 50;
+            //Yaw += (float)OpenTK.MathHelper.DegreesToRadians(delta) * 50;
         }
 
         protected void GenerateVertices()

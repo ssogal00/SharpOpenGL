@@ -100,5 +100,11 @@ namespace ObjectEditor
         public EventHandler<EventArgs> ObjectCreateEventHandler;
 
 
+        private void TextBoxBase_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            var property = textBox.DataContext as ObjectProperty;
+            property.ApplyValue();
+        }
     }
 }

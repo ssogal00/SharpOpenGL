@@ -11,7 +11,7 @@
         <DataTemplate x:Key="FloatTemplate" DataType="{x:Type local:FloatProperty}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
-                <TextBox Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="20" ></TextBox>
+                <TextBox Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="20" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
             </StackPanel>
         </DataTemplate>
 
@@ -33,11 +33,11 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
                 <Label>X</Label>
-                <TextBox Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"></TextBox>
+                <TextBox Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
                 <Label>Y</Label>
-                <TextBox Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"></TextBox>
+                <TextBox Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
                 <Label>Z</Label>
-                <TextBox Text="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}"></TextBox>
+                <TextBox Text="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
             </StackPanel>
         </DataTemplate>
 

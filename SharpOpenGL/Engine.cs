@@ -29,10 +29,6 @@ namespace SharpOpenGL
 
         public bool IsInitialized => bInitialized;
 
-        //protected Cone testCone = new Cone(10, 20, 12);
-        // protected ThreeAxis testAxis = new ThreeAxis();
-        protected  Sphere testSphere = new Sphere(10,10,10);
-
         public void Initialize()
         {
             Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
