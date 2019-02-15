@@ -51,7 +51,11 @@ namespace SharpOpenGL
         public void RequestExit()
         {
             bRequestExist = true;
-            editorWindow.Dispatcher.Invoke(() => { editorWindow.Close();});
+            editorWindow.Dispatcher.Invoke(
+                () =>
+                {
+                    editorWindow.Close();
+                });
         }
 
         private bool bRequestExist = false;

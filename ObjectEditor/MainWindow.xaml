@@ -9,7 +9,7 @@
     <Window.Resources>
 
         <DataTemplate x:Key="FloatTemplate" DataType="{x:Type local:FloatProperty}">
-            <Grid Margin="3">
+            <Grid Margin="3" ShowGridLines="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
@@ -18,7 +18,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="20" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
             </Grid>
         </DataTemplate>
 
@@ -60,10 +60,8 @@
         <local:ObjectPropertyDataTemplateSelector x:Key="myObjectPropertyDataTemplateSelector"></local:ObjectPropertyDataTemplateSelector>
     </Window.Resources>
     <Grid>
-        <StackPanel>
-            <ListBox Name="ObjPropList" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}">
-                
-            </ListBox>
-        </StackPanel>
+        <ListBox Name="ObjPropList" Width="Auto" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}" HorizontalContentAlignment="Stretch">
+            
+        </ListBox>
     </Grid>
 </Window>
