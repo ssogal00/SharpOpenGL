@@ -5,18 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ObjectEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="300">
     <Window.Resources>
 
         <DataTemplate x:Key="FloatTemplate" DataType="{x:Type local:FloatProperty}">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
-                <TextBox Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="20" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
-            </StackPanel>
+            <Grid Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="20" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="IntTemplate" DataType="{x:Type local:IntProperty}">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Margin="3">
                 <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
                 <TextBox Text="{Binding IntValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="20"></TextBox>
             </StackPanel>
@@ -26,26 +33,27 @@
             <Style.Setters>
                 <Setter Property="TextAlignment" Value="Right"/>
                 <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
             </Style.Setters>
         </Style>
 
         <DataTemplate x:Key="Vector3Template" DataType="{x:Type local:Vector3Property}">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Margin="3">
                 <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
-                <Label>X</Label>
+                <TextBlock Text="X"></TextBlock>
                 <TextBox Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
-                <Label>Y</Label>
+                <TextBlock Text="Y"></TextBlock>
                 <TextBox Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
-                <Label>Z</Label>
+                <TextBlock Text="Z"></TextBlock>
                 <TextBox Text="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="Vector2Template" DataType="{x:Type local:Vector2Property}">
-            <StackPanel Orientation="Horizontal">
-                <Label>X</Label>
+            <StackPanel Orientation="Horizontal" Margin="3">
+                <TextBlock Text="X"></TextBlock>
                 <TextBox Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"></TextBox>
-                <Label>Y</Label>
+                <TextBlock Text="Y"></TextBlock>
                 <TextBox Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"></TextBox>
             </StackPanel>
         </DataTemplate>
