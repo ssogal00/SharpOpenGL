@@ -50,14 +50,7 @@ namespace ObjectEditor
         public MainWindow()
         {
             InitializeComponent();
-            //ObjPropList.Items.Add(testValue);
-            //ObjPropList.Items.Add(testValue2);
         }
-
-        
-
-        private Vector3Property testValue = new Vector3Property("Position" ,new Vector3(10,0,0));
-        private Vector2Property testValue2 = new Vector2Property("Scale", new Vector2(11, 0));
 
         public void AddProperty(string name)
         {
@@ -106,11 +99,6 @@ namespace ObjectEditor
 
         public EventHandler<EventArgs> ObjectCreateEventHandler;
 
-
-        private void TextBoxBase_OnTextChanged(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine("Here");
-        }
 
     }
 }
