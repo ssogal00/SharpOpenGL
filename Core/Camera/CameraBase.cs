@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Windows;
-
+using Core.CustomAttribute;
 using Core.Tickable;
 using Core.CustomEvent;
 
@@ -77,9 +77,13 @@ namespace Core.Camera
             ProjMatrix = Matrix4.CreatePerspectiveFieldOfView(FOV, AspectRatio, Near, Far);
         }
 
+        [ExposeUI]
         public float FOV { get; set; }
+        [ExposeUI]
         public float Near { get; set; }
+        [ExposeUI]
         public float Far { get; set; }
+        
         public float AspectRatio { get; set; }
 
         public Vector3 EyeLocation = new Vector3();
@@ -108,9 +112,8 @@ namespace Core.Camera
         }
 
         protected Vector3 UpDir = new Vector3(0,1,0);
-        protected Vector3 LookAtDir = new Vector3(1, 0, 0);        
-
-        protected float FieldOfView;
+        protected Vector3 LookAtDir = new Vector3(1, 0, 0); 
+        
         
         protected Matrix4 ProjMatrix = new Matrix4();
         protected Matrix4 ViewMatrix = new Matrix4();
