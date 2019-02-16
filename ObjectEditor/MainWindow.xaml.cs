@@ -73,12 +73,10 @@ namespace ObjectEditor
         {
             var proxy = new ObjectProxy(target);
 
-            ObjPropList.Items.Clear();
+            ObjectProxyList.Items.Clear();
 
-            foreach (var item in proxy.PropertyList)
-            {
-                ObjPropList.Items.Add(item);
-            }
+            var index = ObjectProxyList.Items.Add(proxy);
+
             
         }
 

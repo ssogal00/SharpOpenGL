@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="EditorWindow" Height="300" Width="300">
     <Window.Resources>
-
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Style.Setters>
                 <Setter Property="TextAlignment" Value="Right"/>
@@ -15,6 +14,13 @@
                 <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
             </Style.Setters>
         </Style>
+        <local:ObjectPropertyDataTemplateSelector x:Key="myObjectPropertyDataTemplateSelector"></local:ObjectPropertyDataTemplateSelector>
+        <DataTemplate x:Key="ObjectProxyTemplate" DataType="{x:Type local:ObjectProxy}">
+            <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="3">
+                <ListBox ItemsSource="{Binding Path=PropertyList}" Name="ObjPropList" Width="Auto" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}" HorizontalContentAlignment="Stretch">
+                </ListBox>
+            </Border>
+        </DataTemplate>
 
         <!-- Color DataTemplate -->
         <DataTemplate x:Key="ColorTemplate" DataType="{x:Type local:ColorProperty}">
@@ -24,6 +30,7 @@
         <DataTemplate x:Key="FloatTemplate" DataType="{x:Type local:FloatProperty}">
             <Grid Margin="3" ShowGridLines="True">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -123,11 +130,11 @@
                 <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
             </Grid>
         </DataTemplate>
-        <local:ObjectPropertyDataTemplateSelector x:Key="myObjectPropertyDataTemplateSelector"></local:ObjectPropertyDataTemplateSelector>
+        
     </Window.Resources>
     <Grid>
         <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="3">
-            <ListBox Name="ObjPropList" Width="Auto" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}" HorizontalContentAlignment="Stretch">
+            <ListBox Name="ObjectProxyList" Width="Auto" ItemTemplate="{StaticResource ObjectProxyTemplate}" HorizontalContentAlignment="Stretch">
             </ListBox>
         </Border>
     </Grid>
