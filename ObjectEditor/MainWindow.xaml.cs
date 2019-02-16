@@ -22,7 +22,11 @@ namespace ObjectEditor
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             FrameworkElement elemnt = container as FrameworkElement;
-            if (item is Vector3Property)
+            if (item is Vector4Property)
+            {
+                return elemnt.FindResource("Vector4Template") as DataTemplate;
+            }
+            else if (item is Vector3Property)
             {
                 return elemnt.FindResource("Vector3Template") as DataTemplate;
             }
@@ -67,29 +71,15 @@ namespace ObjectEditor
 
         public void SetObject(object target)
         {
-            var t = target.GetType();
-            var properties = t.GetProperties();
+            var proxy = new ObjectProxy(target);
 
-            foreach (var property in properties)
+            ObjPropList.Items.Clear();
+
+            foreach (var item in proxy.PropertyList)
             {
-                if (property.CustomAttributes.Any(x => x.AttributeType.Name == "ExposeUI"))
-                {
-                    string name = property.Name;
-
-                    Type propertyType = property.PropertyType;
-
-                    if (ObjectProperty.IsSupportedType(propertyType))
-                    {
-                        var obj = Activator.CreateInstance(propertyType);
-                        var propvalue = property.GetValue(target);
-
-                        var prop = ObjectProperty.CreateProperty(name, propertyType, target);
-                        prop.SetValue(propvalue);
-
-                        ObjPropList.Items.Add(prop);
-                    }
-                }
+                ObjPropList.Items.Add(item);
             }
+            
         }
 
         private void CreateObjectBtn_OnClick(object sender, RoutedEventArgs e)

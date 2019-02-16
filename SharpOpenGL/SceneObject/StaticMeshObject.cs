@@ -17,14 +17,11 @@ namespace SharpOpenGL
         public StaticMeshObject(string assetpath)
         {
             this.assetpath = assetpath;
-            Name = string.Format("StaticMesh_{0}", ObjectCount);
             Initialize();
         }
 
         public StaticMeshObject(StaticMeshAsset asset)
         {
-            Name = string.Format("StaticMesh_{0}", ObjectCount);
-
             RenderingThread.Get().ExecuteImmediatelyIfRenderingThread
             (
                 () =>
@@ -63,7 +60,7 @@ namespace SharpOpenGL
         {
             get
             {
-                return Matrix4.CreateScale(Scale) * Matrix4.CreateTranslation(Translation);
+                return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
             }
         }
 

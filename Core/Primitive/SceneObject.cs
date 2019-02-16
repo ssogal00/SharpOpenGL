@@ -37,6 +37,7 @@ namespace Core.Primitive
 
         public SceneObject()
         {
+            Name = string.Format("SceneObject_{0}", ObjectCount);
             SceneObjectManager.Get().AddSceneObject(this);
             ObjectCount++;
         }

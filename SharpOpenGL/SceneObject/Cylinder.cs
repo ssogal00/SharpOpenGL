@@ -28,7 +28,6 @@ namespace SharpOpenGL
             Radius = radius;
             Height = height;
             Count = count;
-            Name = string.Format("Cylinder_{0}", ObjectCount);
             Initialize();
         }
 

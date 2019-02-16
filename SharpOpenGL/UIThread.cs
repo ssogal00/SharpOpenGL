@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 using Core;
+using Core.Primitive;
 using OpenTK;
 
 namespace SharpOpenGL
@@ -23,7 +24,10 @@ namespace SharpOpenGL
         {
             if (editorWindow != null && editorWindow.Dispatcher != null)
             {
-                editorWindow.Dispatcher.InvokeAsync(action);
+                if (editorWindow.Dispatcher.HasShutdownFinished == false)
+                {
+                    editorWindow.Dispatcher.InvokeAsync(action);
+                }
             }
         }
 
@@ -33,9 +37,7 @@ namespace SharpOpenGL
 
             editorWindow.ObjectCreateEventHandler += Engine.Get().OnObjectCreate;
 
-            var testSceneObject = new Sphere(10,10,10);
-            testSceneObject.Translation=new Vector3(10,0,0);
-            editorWindow.SetObject(testSceneObject);
+       
 
             editorWindow.Show();
 
@@ -65,8 +67,8 @@ namespace SharpOpenGL
 
         private bool bRequestExist = false;
 
-        public ObjectEditor.MainWindow EditorWindow => editorWindow;
+        public static ObjectEditor.MainWindow EditorWindow => editorWindow;
 
-        private ObjectEditor.MainWindow editorWindow = null;
+        private static ObjectEditor.MainWindow editorWindow = null;
     }
 }

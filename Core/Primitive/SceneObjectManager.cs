@@ -20,27 +20,27 @@ namespace Core.Primitive
         public T CreateSceneObject<T, TParam1>(TParam1 param1) where T : SceneObject, new()
         {
             T result = Activator.CreateInstance(typeof(T), new object[] {param1}) as T;
-            SceneObjectList.Add(result);
+            //SceneObjectList.Add(result);
             return result;
         }
 
         public T CreateSceneObject<T, TParam1, TParam2>(TParam1 param1, TParam2 param2) where T : SceneObject, new()
         {
             T result = Activator.CreateInstance(typeof(T), new object[] { param1, param2 }) as T;
-            SceneObjectList.Add(result);
+            //SceneObjectList.Add(result);
             return result;
         }
 
         public T CreateSceneObject<T, TParam1, TParam2, TParam3>(TParam1 param1, TParam2 param2, TParam3 param3) where T : SceneObject, new()
         {
             T result = Activator.CreateInstance(typeof(T), new object[] { param1, param2, param3 }) as T;
-            SceneObjectList.Add(result);
+            //SceneObjectList.Add(result);
             return result;
         }
 
         public void Draw()
         {
-            foreach (var obj in SceneObjectList.Where(x=>x.IsVisible))
+            foreach (var obj in SceneObjectMap.Values.Where(x => x.IsVisible))
             {
                 obj.Draw();
             }
@@ -48,7 +48,7 @@ namespace Core.Primitive
 
         public void Tick(double delta)
         {
-            foreach (var obj in SceneObjectList)
+            foreach (var obj in SceneObjectMap.Values)
             {
                 obj.Tick(delta);
             }
@@ -56,15 +56,38 @@ namespace Core.Primitive
 
         public void AddSceneObject(SceneObject obj)
         {
-            SceneObjectList.Add(obj);
+            SceneObjectMap.TryAdd(obj.Name, obj);
         }
 
         public void RemoveSceneObject(SceneObject obj)
         {
             
         }
-        protected ConcurrentBag<SceneObject> SceneObjectList = new ConcurrentBag<SceneObject>();
-        
+
+        public SceneObject GetSceneObject(string name)
+        {
+            if (SceneObjectMap.ContainsKey(name))
+            {
+                return SceneObjectMap[name];
+            }
+
+            return null;
+        }
+
+        public SceneObject GetAnySceneObjectOf<T>()
+        {
+            foreach (var obj in SceneObjectMap.Values)
+            {
+                if (obj is T)
+                {
+                    return obj;
+                }
+            }
+
+            return null;
+        }
+
+        protected ConcurrentDictionary<string, SceneObject> SceneObjectMap = new ConcurrentDictionary<string, SceneObject>();
         
     }
 }

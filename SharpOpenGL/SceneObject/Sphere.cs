@@ -30,8 +30,6 @@ namespace SharpOpenGL
             StackCount = stackcount;
             SectorCount = sectorcount;
 
-            Name = string.Format("Sphere_{0}", ObjectCount);
-
             Initialize();
         }
         public override void Initialize()

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ObjectEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="300">
+        Title="EditorWindow" Height="300" Width="300">
     <Window.Resources>
 
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
@@ -16,6 +16,10 @@
             </Style.Setters>
         </Style>
 
+        <!-- Color DataTemplate -->
+        <DataTemplate x:Key="ColorTemplate" DataType="{x:Type local:ColorProperty}">
+            
+        </DataTemplate>
         <!-- Float DataTemplate -->
         <DataTemplate x:Key="FloatTemplate" DataType="{x:Type local:FloatProperty}">
             <Grid Margin="3" ShowGridLines="True">
@@ -122,7 +126,9 @@
         <local:ObjectPropertyDataTemplateSelector x:Key="myObjectPropertyDataTemplateSelector"></local:ObjectPropertyDataTemplateSelector>
     </Window.Resources>
     <Grid>
-        <ListBox Name="ObjPropList" Width="Auto" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}" HorizontalContentAlignment="Stretch">
-        </ListBox>
+        <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="3">
+            <ListBox Name="ObjPropList" Width="Auto" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}" HorizontalContentAlignment="Stretch">
+            </ListBox>
+        </Border>
     </Grid>
 </Window>

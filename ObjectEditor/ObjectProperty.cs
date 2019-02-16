@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using OpenTK;
+using System.Drawing;
+using System.Windows.Media;
 
 namespace ObjectEditor
 {
@@ -76,7 +78,42 @@ namespace ObjectEditor
 
     public class ColorProperty : ObjectProperty
     {
-        
+        public ColorProperty(string name, OpenTK.Vector3 color)
+        {
+
+        }
+
+        public override void SetValue(object value)
+        {
+            vec = (Vector3)value;
+        }
+
+        public override void ApplyValue()
+        {
+            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+            prop.SetValue(targetObject, vec);
+        }
+
+        private OpenTK.Vector3 vec;
+
+        public float R
+        {
+            get => vec.X;
+            set => vec.X = value;
+        }
+
+        public float G
+        {
+            get => vec.Y;
+            set => vec.Y = value;
+        }
+
+        public float B
+        {
+            get => vec.Z;
+            set => vec.Z = value;
+        }
+
     }
 
     public class FloatProperty : ObjectProperty

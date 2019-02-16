@@ -113,6 +113,20 @@ namespace SharpOpenGL
             {
                 CameraManager.Get().CurrentCamera.FOV -= OpenTK.MathHelper.DegreesToRadians(1.0f);
             }
+            else if (e.Key == Key.Tilde)
+            {
+                var testSceneObject = SceneObjectManager.Get().GetAnySceneObjectOf<StaticMeshObject>();
+                if (testSceneObject != null)
+                {
+                    UIThread.Get().Enqueue
+                    (
+                        () =>
+                        {
+                            UIThread.EditorWindow.SetObject(testSceneObject);
+                        }
+                    );
+                }
+            }
         }
 
         protected override void OnUnload(EventArgs e)
