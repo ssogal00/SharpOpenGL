@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -51,11 +52,15 @@ namespace SharpOpenGL
         public void RequestExit()
         {
             bRequestExist = true;
-            editorWindow.Dispatcher.Invoke(
+
+            if (!editorWindow.Dispatcher.HasShutdownFinished && !editorWindow.Dispatcher.HasShutdownStarted)
+            {
+                editorWindow.Dispatcher.Invoke(
                 () =>
                 {
                     editorWindow.Close();
                 });
+            }
         }
 
         private bool bRequestExist = false;

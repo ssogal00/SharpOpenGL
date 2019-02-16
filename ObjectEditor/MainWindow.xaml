@@ -8,27 +8,6 @@
         Title="MainWindow" Height="450" Width="300">
     <Window.Resources>
 
-        <DataTemplate x:Key="FloatTemplate" DataType="{x:Type local:FloatProperty}">
-            <Grid Margin="3" ShowGridLines="True">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="40" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
-            </Grid>
-        </DataTemplate>
-
-        <DataTemplate x:Key="IntTemplate" DataType="{x:Type local:IntProperty}">
-            <StackPanel Orientation="Horizontal" Margin="3">
-                <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
-                <TextBox Text="{Binding IntValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="20"></TextBox>
-            </StackPanel>
-        </DataTemplate>
-
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Style.Setters>
                 <Setter Property="TextAlignment" Value="Right"/>
@@ -37,31 +16,113 @@
             </Style.Setters>
         </Style>
 
-        <DataTemplate x:Key="Vector3Template" DataType="{x:Type local:Vector3Property}">
-            <StackPanel Orientation="Horizontal" Margin="3">
-                <TextBlock VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
-                <TextBlock Text="X"></TextBlock>
-                <TextBox Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
-                <TextBlock Text="Y"></TextBlock>
-                <TextBox Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
-                <TextBlock Text="Z"></TextBlock>
-                <TextBox Text="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
-            </StackPanel>
+        <!-- Float DataTemplate -->
+        <DataTemplate x:Key="FloatTemplate" DataType="{x:Type local:FloatProperty}">
+            <Grid Margin="3" ShowGridLines="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="2" Style="{StaticResource TextBoxStyle}" Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
+            </Grid>
+        </DataTemplate>
+           
+        <!-- Int DataTemplate -->
+        <DataTemplate x:Key="IntTemplate" DataType="{x:Type local:IntProperty}">
+            <Grid Margin="3" ShowGridLines="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <TextBox Grid.Row="0" Grid.Column="2" Style="{StaticResource TextBoxStyle}" Text="{Binding IntValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
+            </Grid>
         </DataTemplate>
 
+        <!-- Vector4 DataTemplate-->
+        <DataTemplate x:Key="Vector4Template" DataType="{x:Type local:Vector4Property}">
+            <Grid Margin="3" ShowGridLines="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="X" HorizontalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="Y" HorizontalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="Z" HorizontalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="Z" HorizontalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding W, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+            </Grid>
+        </DataTemplate>
+
+        <!-- Vector3 DataTemplate-->
+        <DataTemplate x:Key="Vector3Template" DataType="{x:Type local:Vector3Property}">
+            <Grid Margin="3" ShowGridLines="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="X" HorizontalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="Y" HorizontalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="Z" HorizontalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Z, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+            </Grid>
+        </DataTemplate>
+
+        <!-- Vector2 DataTemplate-->
         <DataTemplate x:Key="Vector2Template" DataType="{x:Type local:Vector2Property}">
-            <StackPanel Orientation="Horizontal" Margin="3">
-                <TextBlock Text="X"></TextBlock>
-                <TextBox Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"></TextBox>
-                <TextBlock Text="Y"></TextBlock>
-                <TextBox Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"></TextBox>
-            </StackPanel>
+            <Grid Margin="3" ShowGridLines="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="X" HorizontalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding X, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="Y" HorizontalAlignment="Center"></TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Y, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Style="{StaticResource TextBoxStyle}" TextChanged="TextBoxBase_OnTextChanged"></TextBox>
+            </Grid>
         </DataTemplate>
         <local:ObjectPropertyDataTemplateSelector x:Key="myObjectPropertyDataTemplateSelector"></local:ObjectPropertyDataTemplateSelector>
     </Window.Resources>
     <Grid>
         <ListBox Name="ObjPropList" Width="Auto" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}" HorizontalContentAlignment="Stretch">
-            
         </ListBox>
     </Grid>
 </Window>

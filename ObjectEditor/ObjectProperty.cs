@@ -74,6 +74,11 @@ namespace ObjectEditor
         }
     }
 
+    public class ColorProperty : ObjectProperty
+    {
+        
+    }
+
     public class FloatProperty : ObjectProperty
     {
         public FloatProperty(string name, float value)
@@ -123,6 +128,53 @@ namespace ObjectEditor
         {
             var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
             prop.SetValue(targetObject, IntValue);
+        }
+    }
+
+    public class Vector4Property : ObjectProperty
+    {
+        public Vector4Property(string name, OpenTK.Vector4 vectorValue)
+        {
+            propertyName = name;
+            vec = vectorValue;
+        }
+        public Vector4Property() { }
+
+        public override void SetValue(object value)
+        {
+            vec = (Vector4)value;
+        }
+
+        public override void ApplyValue()
+        {
+            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+            prop.SetValue(targetObject, vec);
+        }
+
+        private OpenTK.Vector4 vec;
+
+        public float X
+        {
+            get => vec.X;
+            set => vec.X = value;
+        }
+
+        public float Y
+        {
+            get => vec.Y;
+            set => vec.Y = value;
+        }
+
+        public float Z
+        {
+            get => vec.Z;
+            set => vec.Z = value;
+        }
+
+        public float W
+        {
+            get => vec.W;
+            set => vec.W = value;
         }
     }
 
