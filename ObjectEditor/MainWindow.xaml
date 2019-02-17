@@ -22,13 +22,18 @@
             </Border>
         </DataTemplate>
 
+        <DataTemplate x:Key="ObjectProxyNameTemplate" DataType="{x:Type local:ObjectProxy}">
+            <TextBlock Text="{Binding ObjectName}"></TextBlock>
+        </DataTemplate>
+        
+
         <!-- Color DataTemplate -->
         <DataTemplate x:Key="ColorTemplate" DataType="{x:Type local:ColorProperty}">
             
         </DataTemplate>
         <!-- Float DataTemplate -->
         <DataTemplate x:Key="FloatTemplate" DataType="{x:Type local:FloatProperty}">
-            <Grid Margin="3" ShowGridLines="True">
+            <Grid Margin="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -88,7 +93,7 @@
 
         <!-- Vector3 DataTemplate-->
         <DataTemplate x:Key="Vector3Template" DataType="{x:Type local:Vector3Property}">
-            <Grid Margin="3" ShowGridLines="True">
+            <Grid Margin="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -112,7 +117,7 @@
 
         <!-- Vector2 DataTemplate-->
         <DataTemplate x:Key="Vector2Template" DataType="{x:Type local:Vector2Property}">
-            <Grid Margin="3" ShowGridLines="True">
+            <Grid Margin="3" Background="Khaki">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
@@ -132,10 +137,14 @@
         </DataTemplate>
         
     </Window.Resources>
-    <Grid>
-        <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="3">
+    <StackPanel Orientation="Vertical">
+        <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="2">
+            <ListBox Name="ObjectList" Width="Auto" HorizontalContentAlignment="Stretch" SelectionChanged="ObjectList_OnSelectionChanged">
+            </ListBox>
+        </Border>
+        <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="2">
             <ListBox Name="ObjectProxyList" Width="Auto" ItemTemplate="{StaticResource ObjectProxyTemplate}" HorizontalContentAlignment="Stretch">
             </ListBox>
         </Border>
-    </Grid>
+    </StackPanel>
 </Window>

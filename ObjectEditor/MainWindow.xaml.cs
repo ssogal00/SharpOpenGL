@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,12 +63,18 @@ namespace ObjectEditor
             
         }
 
-        public void SetCameraPosition(string value)
+        public void SetSceneObjectList(IEnumerable<object> objectList)
         {
-            
-        }
+            ObjectList.Items.Clear();
+            ObjectProxyList.Items.Clear();
 
-       
+            foreach (var obj in objectList)
+            {
+                var proxy = new ObjectProxy(obj);
+
+                ObjectList.Items.Add(proxy);
+            }
+        }
 
         public void SetObject(object target)
         {
@@ -76,8 +83,13 @@ namespace ObjectEditor
             ObjectProxyList.Items.Clear();
 
             var index = ObjectProxyList.Items.Add(proxy);
+        }
 
-            
+        private void SetProxyObject(ObjectProxy obj)
+        {
+            ObjectProxyList.Items.Clear();
+
+            var index = ObjectProxyList.Items.Add(obj);
         }
 
         private void CreateObjectBtn_OnClick(object sender, RoutedEventArgs e)
@@ -93,6 +105,15 @@ namespace ObjectEditor
             var textBox = sender as TextBox;
             var property = textBox.DataContext as ObjectProperty;
             property.ApplyValue();
+        }
+
+        public IEnumerable<ObjectProperty> SceneObjectList => sceneObjectList;
+
+        private IEnumerable<ObjectProperty> sceneObjectList = null;
+
+        private void ObjectList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetProxyObject((ObjectProxy)ObjectList.SelectedItem);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -87,7 +88,11 @@ namespace Core.Primitive
             return null;
         }
 
+        public IEnumerable<object> GetSceneObjectList()
+        {
+            return SceneObjectMap.Values.Select(x => { return (object) x; });
+        }
+
         protected ConcurrentDictionary<string, SceneObject> SceneObjectMap = new ConcurrentDictionary<string, SceneObject>();
-        
     }
 }

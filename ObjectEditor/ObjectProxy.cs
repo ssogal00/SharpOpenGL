@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
+using OpenTK.Graphics.ES11;
 
 namespace ObjectEditor
 {
@@ -13,10 +14,17 @@ namespace ObjectEditor
         public ObjectProxy(object originalObject)
         {
             var t = originalObject.GetType();
+
             var properties = t.GetProperties();
 
             foreach (var property in properties)
             {
+                if (property.Name == "Name")
+                {   
+                    var propertyValue = property.GetValue(originalObject);
+                    objectName = (string) propertyValue;
+                }
+
                 if (property.CustomAttributes.Any(x => x.AttributeType.Name == "ExposeUI"))
                 {
                     string name = property.Name;
@@ -40,6 +48,15 @@ namespace ObjectEditor
         private ObservableCollection<ObjectProperty> propertyList = new ObservableCollection<ObjectProperty>();
         public ObservableCollection<ObjectProperty> PropertyList => propertyList;
 
+        public string ObjectName
+        {
+            get { return objectName; }
+        }
+        private string objectName = "";
 
+        public override string ToString()
+        {
+            return objectName;
+        }
     }
 }
