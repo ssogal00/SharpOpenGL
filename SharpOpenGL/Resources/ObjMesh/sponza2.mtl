@@ -81,7 +81,7 @@ newmtl 16___Default
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/SponzaTexture/Sponza_Fabric_metallic.dds
+	map_Ka ./Resources/SponzaTexture/Sponza_Fabric_metallic.tga
 	map_Kd ./Resources/SponzaTexture/Sponza_Fabric_Blue_diffuse.dds
 	map_bump ./Resources/SponzaTexture/Sponza_Fabric_Blue_normal.dds
 	bump ./Resources/SponzaTexture/Sponza_Fabric_Blue_normal.dds
@@ -266,7 +266,7 @@ newmtl fabric_e
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/SponzaTexture/Sponza_Fabric_metallic.dds
+	map_Ka ./Resources/SponzaTexture/Sponza_Fabric_metallic.tga
 	map_Kd ./Resources/SponzaTexture/Sponza_Fabric_Green_diffuse.dds
 	map_bump ./Resources/SponzaTexture/Sponza_Fabric_Green_normal.dds
 	bump ./Resources/SponzaTexture/Sponza_Fabric_Green_normal.dds
@@ -283,7 +283,7 @@ newmtl fabric_d
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/SponzaTexture/Sponza_Fabric_metallic.dds
+	map_Ka ./Resources/SponzaTexture/Sponza_Fabric_metallic.tga
 	map_Kd ./Resources/SponzaTexture/Sponza_Fabric_Blue_diffuse.dds
 	map_bump ./Resources/SponzaTexture/Sponza_Fabric_Blue_normal.dds
 	bump ./Resources/SponzaTexture/Sponza_Fabric_Blue_normal.dds
@@ -300,7 +300,7 @@ newmtl fabric_a
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/SponzaTexture/Sponza_Fabric_metallic.dds
+	map_Ka ./Resources/SponzaTexture/Sponza_Fabric_metallic.tga
 	map_Kd ./Resources/SponzaTexture/Sponza_Fabric_Red_diffuse.dds
 	map_bump ./Resources/SponzaTexture/Sponza_Fabric_Red_normal.dds
 	bump ./Resources/SponzaTexture/Sponza_Fabric_Red_normal.dds
@@ -317,7 +317,7 @@ newmtl fabric_g
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/SponzaTexture/Sponza_Curtain_metallic.dds
+	map_Ka ./Resources/SponzaTexture/Sponza_Curtain_metallic.tga
 	map_Kd ./Resources/SponzaTexture/Sponza_Curtain_Blue_diffuse.dds
 	map_bump ./Resources/SponzaTexture/Sponza_Curtain_Blue_normal.dds
 	bump ./Resources/SponzaTexture/Sponza_Curtain_Blue_normal.dds
@@ -334,7 +334,7 @@ newmtl fabric_c
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/SponzaTexture/Sponza_Curtain_metallic.dds
+	map_Ka ./Resources/SponzaTexture/Sponza_Curtain_metallic.tga
 	map_Kd ./Resources/SponzaTexture/Sponza_Curtain_Red_diffuse.dds
 	map_bump ./Resources/SponzaTexture/Sponza_Curtain_Red_normal.dds
 	bump ./Resources/SponzaTexture/Sponza_Curtain_Red_normal.dds
@@ -351,7 +351,7 @@ newmtl fabric_f
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka ./Resources/SponzaTexture/Sponza_Curtain_metallic.dds
+	map_Ka ./Resources/SponzaTexture/Sponza_Curtain_metallic.tga
 	map_Kd ./Resources/SponzaTexture/Sponza_Curtain_Green_diffuse.dds
 	map_bump ./Resources/SponzaTexture/Sponza_Curtain_Green_normal.dds
 	bump ./Resources/SponzaTexture/Sponza_Curtain_Green_normal.dds

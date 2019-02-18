@@ -657,7 +657,7 @@ void main()
 
     if(SpecularMapExist > 0)
     {
-        NormalColor.a = normalize(texture(SpecularTex, InTexCoord)).x;
+        NormalColor.a = texture(SpecularTex, InTexCoord).x;
     }
     else
     {
@@ -1368,6 +1368,17 @@ public class LightMaterial : MaterialBase
 	private TextureBase positiontex = null;
 
 
+	
+	public System.Single Roughness
+	{
+		get { return roughness; }
+		set 
+		{
+			roughness = value;
+			SetUniformVarData(@"Roughness", roughness);			
+		}
+	}
+	private System.Single roughness;
 
 
     private Light light = new Light();
@@ -1729,8 +1740,8 @@ void main()
 	vec3 Half = normalize(LightDir + ViewDir);
 
 	vec4 FinalColor;
-    //FinalColor.xyz = StandardShading(Color, vec3(Normal.a), vec3(Roughness), LightDir, ViewDir, Normal.xyz);
-    FinalColor.xyzw = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, Color);
+    FinalColor.xyz = StandardShading(Color, vec3(Normal.a), vec3(Roughness), LightDir, ViewDir, Normal.xyz);
+    //FinalColor.xyzw = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, Color);
     FragColor = FinalColor;
 }
 ";
