@@ -1162,17 +1162,6 @@ public class LightMaterial : MaterialBase
 	private TextureBase positiontex = null;
 
 
-	
-	public System.Single Roughness
-	{
-		get { return roughness; }
-		set 
-		{
-			roughness = value;
-			SetUniformVarData(@"Roughness", roughness);			
-		}
-	}
-	private System.Single roughness;
 
 
     private Light light = new Light();
@@ -1524,7 +1513,7 @@ void main()
         	
     // Fetch Geometry info from G-buffer
 	vec3 Color = texture(DiffuseTex, TexCoord).xyz;
-	vec4 Normal = texture(NormalTex, TexCoord);
+	vec4 Normal = normalize(texture(NormalTex, TexCoord));
     vec3 Position = texture(PositionTex, TexCoord).xyz;
     
 	float dotValue = max(dot(LightDir, Normal.xyz), 0.0);
@@ -1534,8 +1523,8 @@ void main()
 	vec3 Half = normalize(LightDir + ViewDir);
 
 	vec4 FinalColor;
-    FinalColor.xyz = StandardShading(Color, vec3(Normal.a), vec3(Roughness), LightDir, ViewDir, Normal.xyz);
-    
+    //FinalColor.xyz = StandardShading(Color, vec3(Normal.a), vec3(Roughness), LightDir, ViewDir, Normal.xyz);
+    FinalColor.xyzw = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, DiffuseColor);
     FragColor = FinalColor;
 }
 ";
