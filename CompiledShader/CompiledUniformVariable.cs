@@ -107,6 +107,26 @@ public struct ModelTransform
 namespace GBufferWithoutTexture
 {
 }
+namespace GBufferDump
+{
+}
+namespace GBufferDump
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=16)]
+public struct Dump
+{
+	[FieldOffset(0)]
+	public System.Int32 PositionDump;
+	[FieldOffset(4)]
+	public System.Int32 NormalDump;
+	[FieldOffset(8)]
+	public System.Int32 SpecularDump;
+	[FieldOffset(12)]
+	public System.Int32 DiffuseDump;
+}
+}
 namespace GBufferPNC
 {
 

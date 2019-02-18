@@ -19,7 +19,7 @@ namespace SharpOpenGL.PostProcess
             base.OnGLContextCreated(sender, e);
 
             PostProcessMaterial = new SharpOpenGL.LightMaterial.LightMaterial();
-            m_LightInfo.LightAmbient = new OpenTK.Vector3(0.1f, 0.1f, 0.1f);
+            m_LightInfo.LightAmbient = new OpenTK.Vector3(0.3f, 0.3f, 0.3f);
             m_LightInfo.LightDiffuse = new OpenTK.Vector3(0.7f, 0.7f, 0.7f);
             m_LightInfo.LightDir = new OpenTK.Vector3(1,1,0);
         }

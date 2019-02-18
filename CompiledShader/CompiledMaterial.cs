@@ -830,6 +830,212 @@ void main()
 	}
 }
 }
+namespace GBufferDump
+{
+
+
+public class GBufferDump : MaterialBase
+{
+	public GBufferDump() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"DiffuseTex", TextureObject);
+	}
+
+	public void SetDiffuseTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"DiffuseTex", TextureObject);
+	}
+
+	public TextureBase DiffuseTex2D 
+	{	
+		get { return diffusetex;}
+		set 
+		{	
+			diffusetex = value;
+			SetTexture(@"DiffuseTex", diffusetex);			
+		}
+	}
+
+	private TextureBase diffusetex = null;
+	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"NormalTex", TextureObject);
+	}
+
+	public void SetNormalTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"NormalTex", TextureObject);
+	}
+
+	public TextureBase NormalTex2D 
+	{	
+		get { return normaltex;}
+		set 
+		{	
+			normaltex = value;
+			SetTexture(@"NormalTex", normaltex);			
+		}
+	}
+
+	private TextureBase normaltex = null;
+	public void SetPositionTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"PositionTex", TextureObject);
+	}
+
+	public void SetPositionTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"PositionTex", TextureObject);
+	}
+
+	public TextureBase PositionTex2D 
+	{	
+		get { return positiontex;}
+		set 
+		{	
+			positiontex = value;
+			SetTexture(@"PositionTex", positiontex);			
+		}
+	}
+
+	private TextureBase positiontex = null;
+
+
+
+
+
+    private Dump dump = new Dump();
+	public Dump Dump
+	{
+		get { return dump; }
+		set 
+		{ 
+			dump = value; 
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
+		}
+	}
+
+	public System.Int32 Dump_PositionDump
+	{
+		get { return dump.PositionDump ; }
+		set 
+		{ 
+			dump.PositionDump = value; 
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
+			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 0 );
+		}
+	}
+	public System.Int32 Dump_NormalDump
+	{
+		get { return dump.NormalDump ; }
+		set 
+		{ 
+			dump.NormalDump = value; 
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
+			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 4 );
+		}
+	}
+	public System.Int32 Dump_SpecularDump
+	{
+		get { return dump.SpecularDump ; }
+		set 
+		{ 
+			dump.SpecularDump = value; 
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
+			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 8 );
+		}
+	}
+	public System.Int32 Dump_DiffuseDump
+	{
+		get { return dump.DiffuseDump ; }
+		set 
+		{ 
+			dump.DiffuseDump = value; 
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
+			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 12 );
+		}
+	}
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450 core
+
+
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec2 TexCoord;
+
+layout(location=0) out vec2 OutTexCoord;
+  
+void main()
+{	
+	OutTexCoord = TexCoord;	    
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"#version 450
+
+layout (location = 0 , binding = 0) uniform sampler2D PositionTex;
+layout (location = 1 , binding = 1) uniform sampler2D DiffuseTex;
+layout (location = 2 , binding = 2) uniform sampler2D NormalTex;
+
+
+layout (location = 0 ) in vec2 InTexCoord;
+
+layout( location = 0 ) out vec4 FragColor;
+
+uniform Dump
+{
+    int PositionDump;
+    int NormalDump;
+    int SpecularDump;
+    int DiffuseDump;
+};
+
+void main() 
+{
+    if(PositionDump > 0) 
+    {   
+        FragColor = texture(PositionTex, InTexCoord);
+    }
+    else if(NormalDump > 0)
+    {
+        FragColor = texture(NormalTex, InTexCoord);
+    }
+    else if(DiffuseDump > 0)
+    {
+        FragColor = texture(DiffuseTex, InTexCoord);
+    }
+    else if(SpecularDump > 0)
+    {
+        FragColor = texture(NormalTex,InTexCoord).aaaa;
+    }
+    else
+    {
+        FragColor = texture(NormalTex,InTexCoord).aaaa;
+    }
+}
+";
+	}
+}
+}
 namespace GBufferPNC
 {
 
@@ -1524,7 +1730,7 @@ void main()
 
 	vec4 FinalColor;
     //FinalColor.xyz = StandardShading(Color, vec3(Normal.a), vec3(Roughness), LightDir, ViewDir, Normal.xyz);
-    FinalColor.xyzw = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, DiffuseColor);
+    FinalColor.xyzw = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, Color);
     FragColor = FinalColor;
 }
 ";

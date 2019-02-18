@@ -170,6 +170,7 @@
     <Compile Include="Light\SpotLight.cs" />
     <Compile Include="MainThreadQueue.cs" />
     <Compile Include="Material\MaterialParameter.cs" />
+    <Compile Include="PostProcess\GBufferVisualize.cs" />
     <Compile Include="PostProcess\DeferredLight.cs" />
     <Compile Include="PostProcess\DepthVisualize.cs" />
     <Compile Include="PostProcess\PostProcessChain.cs" />

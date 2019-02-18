@@ -262,6 +262,6 @@ void main()
 
 	vec4 FinalColor;
     //FinalColor.xyz = StandardShading(Color, vec3(Normal.a), vec3(Roughness), LightDir, ViewDir, Normal.xyz);
-    FinalColor.xyzw = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, DiffuseColor);
+    FinalColor.xyzw = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, Color);
     FragColor = FinalColor;
 }
