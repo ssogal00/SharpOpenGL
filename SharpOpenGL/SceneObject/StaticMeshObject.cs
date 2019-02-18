@@ -14,13 +14,16 @@ namespace SharpOpenGL
 {
     public class StaticMeshObject : SceneObject
     {
+        private static int StaticMeshCount = 0;
         public StaticMeshObject(string assetpath)
+        : base("StaticMesh", StaticMeshCount++)
         {
             this.assetpath = assetpath;
             Initialize();
         }
 
         public StaticMeshObject(StaticMeshAsset asset)
+        : base("StaticMesh", StaticMeshCount++)
         {
             RenderingThread.Get().ExecuteImmediatelyIfRenderingThread
             (

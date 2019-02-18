@@ -41,6 +41,12 @@ namespace Core.Primitive
             SceneObjectManager.Get().AddSceneObject(this);
             ObjectCount++;
         }
+
+        protected SceneObject(string name, int objectCount)
+        {
+            Name = string.Format("{0}_{1}", name, objectCount);
+            SceneObjectManager.Get().AddSceneObject(this);
+        }
        
         public virtual void OnGLContextCreated(object sender, EventArgs e)
         {

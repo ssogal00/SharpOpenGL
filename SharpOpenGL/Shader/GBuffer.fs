@@ -64,7 +64,7 @@ void main()
 
     if(SpecularMapExist > 0)
     {
-        NormalColor.a = texture(SpecularTex, InTexCoord).x;
+        NormalColor.a = normalize(texture(SpecularTex, InTexCoord)).x;
     }
     else
     {

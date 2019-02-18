@@ -117,7 +117,7 @@
 
         <!-- Vector2 DataTemplate-->
         <DataTemplate x:Key="Vector2Template" DataType="{x:Type local:Vector2Property}">
-            <Grid Margin="3" Background="Khaki">
+            <Grid Margin="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>

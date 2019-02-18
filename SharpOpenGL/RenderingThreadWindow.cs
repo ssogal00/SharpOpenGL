@@ -29,6 +29,7 @@ namespace SharpOpenGL
 
         protected Skybox skyboxPostProcess = new Skybox();
         protected BlurPostProcess blurPostProcess = new BlurPostProcess();
+        protected DeferredLight lightPostProcess = new DeferredLight();
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
         protected StaticMeshObject sponzamesh = null;
         protected bool bInitialized = false;
@@ -123,7 +124,6 @@ namespace SharpOpenGL
                         () =>
                         {
                             UIThread.EditorWindow.SetSceneObjectList(SceneObjectManager.Get().GetSceneObjectList());
-                            UIThread.EditorWindow.SetObject(testSceneObject);
                         }
                     );
                 }
@@ -189,9 +189,11 @@ namespace SharpOpenGL
                 }
             );
 
+            lightPostProcess.Render(renderGBuffer.GetPositionAttachment, renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment);
+
             //blurPostProcess.Render(renderGBuffer.GetColorAttachement);
 
-            ScreenBlit.Blit(renderGBuffer.GetColorAttachement, 0, 0, 2, 2);
+            ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
 
             SwapBuffers();
         }

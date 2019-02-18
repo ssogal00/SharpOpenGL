@@ -92,6 +92,11 @@ namespace ObjectEditor
             var index = ObjectProxyList.Items.Add(obj);
         }
 
+        public void AddObjectToWatch(object target)
+        {
+            
+        }
+
         private void CreateObjectBtn_OnClick(object sender, RoutedEventArgs e)
         {
             ObjectCreateEventHandler(sender, e);
