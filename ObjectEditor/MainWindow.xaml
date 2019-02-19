@@ -16,9 +16,13 @@
         </Style>
         <local:ObjectPropertyDataTemplateSelector x:Key="myObjectPropertyDataTemplateSelector"></local:ObjectPropertyDataTemplateSelector>
         <HierarchicalDataTemplate DataType="{x:Type local:ObjectProxy}" ItemsSource="{Binding Path=PropertyList}">
-            <TextBlock Text="{Binding Path=Name}"></TextBlock>
+            <TextBlock Text="{Binding Path=ObjectName}"></TextBlock>
         </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate DataType="{x:Type local:ObjectProperty}" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}">
+        <HierarchicalDataTemplate DataType="{x:Type local:ObjectProperty}">
+            <StackPanel>
+                <ListBox ItemsSource="{Binding Path=PropertyList}" Name="ObjPropList" Width="Auto" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}" HorizontalContentAlignment="Stretch">
+                </ListBox>
+            </StackPanel>
         </HierarchicalDataTemplate>
         <DataTemplate x:Key="ObjectProxyTemplate" DataType="{x:Type local:ObjectProxy}">
             <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="3">
