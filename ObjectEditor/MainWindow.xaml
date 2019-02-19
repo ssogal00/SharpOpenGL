@@ -47,8 +47,24 @@
                 <TextBox Grid.Row="0" Grid.Column="2" Style="{StaticResource TextBoxStyle}" Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
             </Grid>
         </DataTemplate>
-           
-        <!-- Int DataTemplate -->
+
+        <DataTemplate x:Key="BoolTemplate" DataType="{x:Type local:BoolProperty}">
+            <Grid Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <CheckBox Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding BoolValue}" Checked="ToggleButton_OnChecked"></CheckBox>
+            </Grid>
+        </DataTemplate>
+
+            <!-- Int DataTemplate -->
         <DataTemplate x:Key="IntTemplate" DataType="{x:Type local:IntProperty}">
             <Grid Margin="3" ShowGridLines="True">
                 <Grid.RowDefinitions>

@@ -122,5 +122,10 @@ namespace ObjectEditor
         {
             SetProxyObject((ObjectProxy)ObjectList.SelectedItem);
         }
+
+        private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

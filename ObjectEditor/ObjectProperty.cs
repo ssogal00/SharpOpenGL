@@ -41,6 +41,7 @@ namespace ObjectEditor
             typeof(OpenTK.Vector3),
             typeof(OpenTK.Vector4),
             typeof(OpenTK.Vector2),
+            typeof(bool),
             typeof(float),
             typeof(int)
         };
@@ -52,6 +53,7 @@ namespace ObjectEditor
             { typeof(OpenTK.Vector4), typeof(Vector4Property) },
             { typeof(float), typeof(FloatProperty) },
             { typeof(int), typeof(IntProperty) },
+            { typeof(bool), typeof(BoolProperty) },
         };
 
         public static bool IsSupportedType(Type t)
@@ -227,6 +229,29 @@ namespace ObjectEditor
             set => vec.W = value;
         }
     }
+
+    public class BoolProperty : ObjectProperty
+    {
+        public BoolProperty(string name, bool value)
+        {
+            propertyName = name;
+            BoolValue = value;
+        }
+
+        public override void SetValue(object value)
+        {
+            value = (bool)value;
+        }
+
+        public override void ApplyValue()
+        {
+            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+            prop.SetValue(targetObject, BoolValue);
+        }
+        
+        public bool BoolValue { get; set; }
+    }
+
     #region EnumProperty Definition
     public class EnumProperty : ObjectProperty
     {
