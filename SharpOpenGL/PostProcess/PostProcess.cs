@@ -8,6 +8,7 @@ using Core.Primitive;
 using OpenTK.Graphics.OpenGL;
 using Core.CustomEvent;
 using Core;
+using Core.CustomAttribute;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -16,6 +17,9 @@ namespace SharpOpenGL.PostProcess
         public PostProcessBase()
         {
         }
+
+        [ExposeUI]
+        public string Name { get; set; }
 
         public override void Initialize()
         {

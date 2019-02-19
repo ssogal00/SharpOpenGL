@@ -113,6 +113,10 @@ namespace ObjectEditor
             get => vec.Z;
             set => vec.Z = value;
         }
+    }
+
+    public class StructProperty : ObjectProperty
+    {
 
     }
 

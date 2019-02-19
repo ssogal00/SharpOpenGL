@@ -10,6 +10,7 @@ layout (location = 1 ) in vec2 InTexCoord;
 layout( location = 0 ) out vec4 FragColor;
 
 uniform float Roughness;
+uniform vec3 LobeEnergy;
 
 uniform Light
 {
@@ -183,8 +184,7 @@ vec3 F_Fresnel( vec3 SpecularColor, float VoH )
 	return 0.5 * Square( (g - VoH) / (g + VoH) ) * ( 1 + Square( ((g+VoH)*VoH - 1) / ((g-VoH)*VoH + 1) ) );
 }
 
-//float3 StandardShading( float3 DiffuseColor, float3 SpecularColor, float3 LobeRoughness, float3 LobeEnergy, float3 L, float3 V, float3 N )
-vec3 StandardShading( vec3 DiffuseColor, vec3 SpecularColor, vec3 LobeRoughness, vec3 L, vec3 V, vec3 N )
+vec3 StandardShading( vec3 DiffuseColor, vec3 SpecularColor, vec3 LobeRoughness, vec3 LobeEnergy, vec3 L, vec3 V, vec3 N )
 {
 	float NoL = dot(N, L);
 	float NoV = dot(N, V);
@@ -201,15 +201,13 @@ vec3 StandardShading( vec3 DiffuseColor, vec3 SpecularColor, vec3 LobeRoughness,
     NoV = clamp(abs(NoV) + 1e-5,0.0,1.0);
 
 	// Generalized microfacet specular
-	//float D = D_GGX( LobeRoughness[1], NoH ) * LobeEnergy[1];
-    float D = D_GGX( LobeRoughness[1], NoH ) ;
+	float D = D_GGX( LobeRoughness[1], NoH ) * LobeEnergy[1];
 	float Vis = Vis_SmithJointApprox( LobeRoughness[1], NoV, NoL );
 	vec3 F = F_Schlick( SpecularColor, VoH );
 
 	vec3 Diffuse = Diffuse_Lambert( DiffuseColor );
 
-	//return Diffuse * LobeEnergy[2] + (D * Vis) * F;
-    return Diffuse  + (D * Vis) * F;
+	return Diffuse * LobeEnergy[2] + (D * Vis) * F;    
 }
 
 
@@ -261,7 +259,6 @@ void main()
 	vec3 Half = normalize(LightDir + ViewDir);
 
 	vec4 FinalColor;
-    FinalColor.xyz = StandardShading(Color, vec3(Normal.a), vec3(Roughness), LightDir, ViewDir, Normal.xyz);
-    //FinalColor.xyzw = GetCookTorrance(Normal.xyz, LightDir, ViewDir, Half, LightAmbient, Color);
+    FinalColor.xyz = StandardShading(Color, vec3(Normal.a), vec3(Roughness), LobeEnergy, LightDir, ViewDir, Normal.xyz);    
     FragColor = FinalColor;
 }

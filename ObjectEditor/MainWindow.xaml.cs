@@ -82,19 +82,21 @@ namespace ObjectEditor
 
             ObjectProxyList.Items.Clear();
 
-            var index = ObjectProxyList.Items.Add(proxy);
+            ObjectProxyList.Items.Add(proxy);
         }
 
         private void SetProxyObject(ObjectProxy obj)
         {
             ObjectProxyList.Items.Clear();
 
-            var index = ObjectProxyList.Items.Add(obj);
+            ObjectProxyList.Items.Add(obj);
         }
 
         public void AddObjectToWatch(object target)
         {
-            
+            var proxy = new ObjectProxy(target);
+
+            ObjectProxyList.Items.Add(proxy);
         }
 
         private void CreateObjectBtn_OnClick(object sender, RoutedEventArgs e)

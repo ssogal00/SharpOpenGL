@@ -12,6 +12,7 @@ namespace SharpOpenGL.PostProcess
         public DeferredLight()
             : base()
         {
+            this.Name = "deferredLight";
         }
 
         public override void OnGLContextCreated(object sender, EventArgs e)
@@ -19,17 +20,13 @@ namespace SharpOpenGL.PostProcess
             base.OnGLContextCreated(sender, e);
 
             PostProcessMaterial = new SharpOpenGL.LightMaterial.LightMaterial();
-            m_LightInfo.LightAmbient = new OpenTK.Vector3(0.3f, 0.3f, 0.3f);
-            m_LightInfo.LightDiffuse = new OpenTK.Vector3(0.7f, 0.7f, 0.7f);
-            m_LightInfo.LightDir = new OpenTK.Vector3(1,1,1);
+            lightInfo.LightAmbient = new OpenTK.Vector3(0.3f, 0.3f, 0.3f);
+            lightInfo.LightDiffuse = new OpenTK.Vector3(0.7f, 0.7f, 0.7f);
+            lightInfo.LightDir = new OpenTK.Vector3(1,1,1);
         }
 
         public override void Render(TextureBase positionInput, TextureBase colorInput, TextureBase normalInput)
         {
-            //m_LightInfo.LightDir.X = -(float) Math.Sin(TickableObjectManager.CurrentTime);
-            //m_LightInfo.LightDir.Y = -(float)Math.Sin(TickableObjectManager.CurrentTime);
-
-
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
                 
@@ -37,8 +34,11 @@ namespace SharpOpenGL.PostProcess
                 PostProcessMaterial.SetTexture("DiffuseTex", colorInput);
                 PostProcessMaterial.SetTexture("NormalTex", normalInput);
                 PostProcessMaterial.SetUniformVarData("Roughness", Roughness);
-                
-                PostProcessMaterial.SetUniformBufferValue<SharpOpenGL.LightMaterial.Light>("Light", ref m_LightInfo);
+                PostProcessMaterial.SetUniformVarData("LobeEnergy", LobeEnergy);
+
+                lightInfo.LightDir = LightDir;
+
+                PostProcessMaterial.SetUniformBufferValue<SharpOpenGL.LightMaterial.Light>("Light", ref lightInfo);
 
                 BlitToScreenSpace();
             });
@@ -46,8 +46,12 @@ namespace SharpOpenGL.PostProcess
 
         //
 
-        [ExposeUI] public float Roughness { get; set; } = 0.11f;
+        [ExposeUI] public float Roughness { get; set; } = 0.05f;
 
-        protected SharpOpenGL.LightMaterial.Light m_LightInfo = new LightMaterial.Light();
+        [ExposeUI] public OpenTK.Vector3 LightDir { get; set; } = new OpenTK.Vector3(1, 1, 1);
+
+        [ExposeUI] public OpenTK.Vector3 LobeEnergy { get; set; } = new OpenTK.Vector3(1,2,2);
+
+        protected SharpOpenGL.LightMaterial.Light lightInfo = new LightMaterial.Light();
     }
 }

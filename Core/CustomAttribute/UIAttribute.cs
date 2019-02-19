@@ -21,6 +21,14 @@ namespace Core.CustomAttribute
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true)]
+    public class ReadOnly : System.Attribute
+    {
+        public ReadOnly()
+        {
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true)]
     public class UIGroup : System.Attribute
     {
         private string groupName = "";
