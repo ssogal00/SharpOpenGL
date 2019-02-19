@@ -15,6 +15,11 @@
             </Style.Setters>
         </Style>
         <local:ObjectPropertyDataTemplateSelector x:Key="myObjectPropertyDataTemplateSelector"></local:ObjectPropertyDataTemplateSelector>
+        <HierarchicalDataTemplate DataType="{x:Type local:ObjectProxy}" ItemsSource="{Binding Path=PropertyList}">
+            <TextBlock Text="{Binding Path=Name}"></TextBlock>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type local:ObjectProperty}" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}">
+        </HierarchicalDataTemplate>
         <DataTemplate x:Key="ObjectProxyTemplate" DataType="{x:Type local:ObjectProxy}">
             <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="3">
                 <ListBox ItemsSource="{Binding Path=PropertyList}" Name="ObjPropList" Width="Auto" ItemTemplateSelector="{StaticResource myObjectPropertyDataTemplateSelector}" HorizontalContentAlignment="Stretch">
@@ -172,12 +177,15 @@
     </Window.Resources>
     <StackPanel Orientation="Vertical">
         <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="2">
-            <ListBox Name="ObjectList" Width="Auto" HorizontalContentAlignment="Stretch" SelectionChanged="ObjectList_OnSelectionChanged">
+            <ListBox Name="ObjectList" Width="Auto" ItemTemplate="{StaticResource ObjectProxyNameTemplate}" HorizontalContentAlignment="Stretch" SelectionChanged="ObjectList_OnSelectionChanged">
             </ListBox>
         </Border>
         <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="2">
             <ListBox Name="ObjectProxyList" Width="Auto" ItemTemplate="{StaticResource ObjectProxyTemplate}" HorizontalContentAlignment="Stretch">
             </ListBox>
+        </Border>
+        <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="2">
+            <TreeView Name="ObjectTreeView"></TreeView>
         </Border>
     </StackPanel>
 </Window>

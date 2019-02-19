@@ -130,6 +130,7 @@ namespace ObjectEditor
         private void ObjectList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SetProxyObject((ObjectProxy)ObjectList.SelectedItem);
+            ObjectTreeView.Items.Add((ObjectProxy)ObjectList.SelectedItem);
         }
 
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
