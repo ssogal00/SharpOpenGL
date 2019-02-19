@@ -44,6 +44,13 @@ namespace SharpOpenGL.PostProcess
             });
         }
 
+        public enum TestEnumValue
+        {
+            EThis,
+            EIs,
+            ESample,
+        };
+
         //
 
         [ExposeUI] public float Roughness { get; set; } = 0.05f;
@@ -51,6 +58,10 @@ namespace SharpOpenGL.PostProcess
         [ExposeUI] public OpenTK.Vector3 LightDir { get; set; } = new OpenTK.Vector3(1, 1, 1);
 
         [ExposeUI] public OpenTK.Vector3 LobeEnergy { get; set; } = new OpenTK.Vector3(1,2,2);
+
+        [ExposeUI] public bool TestBool { get; set; } = false;
+
+        [ExposeUI] public TestEnumValue EnumTest { get; set; } = TestEnumValue.EIs;
 
         protected SharpOpenGL.LightMaterial.Light lightInfo = new LightMaterial.Light();
     }

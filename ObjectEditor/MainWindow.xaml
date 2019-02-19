@@ -64,6 +64,23 @@
             </Grid>
         </DataTemplate>
 
+        <DataTemplate x:Key="EnumTemplate" DataType="{x:Type local:EnumProperty}">
+            <Grid Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <ComboBox ItemsSource="{Binding EnumNames}" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" SelectedItem="{Binding CurrentEnum}">
+                </ComboBox>
+            </Grid>
+        </DataTemplate>
+
             <!-- Int DataTemplate -->
         <DataTemplate x:Key="IntTemplate" DataType="{x:Type local:IntProperty}">
             <Grid Margin="3" ShowGridLines="True">

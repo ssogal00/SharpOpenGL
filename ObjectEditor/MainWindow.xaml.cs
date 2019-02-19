@@ -43,6 +43,15 @@ namespace ObjectEditor
             {
                 return elemnt.FindResource("IntTemplate") as DataTemplate;
             }
+            else if (item is BoolProperty)
+            {
+                return elemnt.FindResource("BoolTemplate") as DataTemplate;
+            }
+
+            else if (item is EnumProperty)
+            {
+                return elemnt.FindResource("EnumTemplate") as DataTemplate;
+            }
 
             return elemnt.FindResource("Vector3Template") as DataTemplate;
         }
@@ -125,7 +134,9 @@ namespace ObjectEditor
 
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var checkBox = sender as CheckBox;
+            var property = checkBox.DataContext as ObjectProperty;
+            property.ApplyValue();
         }
     }
 }

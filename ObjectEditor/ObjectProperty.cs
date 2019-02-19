@@ -48,9 +48,9 @@ namespace ObjectEditor
 
         private static Dictionary<Type, Type> typeDictionary = new Dictionary<Type, Type>()
         {
+            { typeof(OpenTK.Vector4), typeof(Vector4Property) },
             { typeof(OpenTK.Vector3), typeof(Vector3Property) },
             { typeof(OpenTK.Vector2), typeof(Vector2Property) },
-            { typeof(OpenTK.Vector4), typeof(Vector4Property) },
             { typeof(float), typeof(FloatProperty) },
             { typeof(int), typeof(IntProperty) },
             { typeof(bool), typeof(BoolProperty) },
@@ -59,6 +59,10 @@ namespace ObjectEditor
         public static bool IsSupportedType(Type t)
         {
             if (supportedTypes.Contains(t))
+            {
+                return true;
+            }
+            else if (t.IsEnum)
             {
                 return true;
             }
@@ -236,6 +240,11 @@ namespace ObjectEditor
         {
             propertyName = name;
             BoolValue = value;
+        }
+
+        public BoolProperty()
+        {
+
         }
 
         public override void SetValue(object value)
