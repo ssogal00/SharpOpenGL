@@ -49,6 +49,7 @@ namespace ObjectEditor
         {
             { typeof(OpenTK.Vector3), typeof(Vector3Property) },
             { typeof(OpenTK.Vector2), typeof(Vector2Property) },
+            { typeof(OpenTK.Vector4), typeof(Vector4Property) },
             { typeof(float), typeof(FloatProperty) },
             { typeof(int), typeof(IntProperty) },
         };
@@ -65,6 +66,7 @@ namespace ObjectEditor
 
         public static ObjectProperty CreateProperty(string name, Type originalType, object targetObject)
         {
+            // supported types
             if (typeDictionary.ContainsKey(originalType))
             {
                 var result = (ObjectProperty) Activator.CreateInstance(typeDictionary[originalType]);
@@ -72,6 +74,13 @@ namespace ObjectEditor
                 result.SetTargetObject(targetObject);
                 return result;
             }
+            // for enum type
+            else if (originalType.IsEnum)
+            {
+                var result = new EnumProperty(name, originalType);
+                return result;
+            }
+
             return null;
         }
     }
@@ -218,7 +227,28 @@ namespace ObjectEditor
             set => vec.W = value;
         }
     }
+    #region EnumProperty Definition
+    public class EnumProperty : ObjectProperty
+    {
+        public EnumProperty(string name, Type enumType)
+        {
+            propertyName = name;
+            this.enumType = enumType;
+            EnumNames = Enum.GetNames(enumType).ToList();
+        }
 
+        public override void ApplyValue()
+        {
+            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+            prop.SetValue(targetObject, Enum.Parse(enumType, CurrentEnum));
+        }
+
+        public List<string> EnumNames { get; set; } = new List<string>();
+        public string CurrentEnum { get; set; }
+
+        private Type enumType;
+    }
+    #endregion
     public class Vector3Property : ObjectProperty
     {
         public Vector3Property(string name, OpenTK.Vector3 vectorValue)
