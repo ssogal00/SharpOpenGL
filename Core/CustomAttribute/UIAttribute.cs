@@ -21,6 +21,24 @@ namespace Core.CustomAttribute
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true)]
+    public class UISlider : System.Attribute
+    {
+        public UISlider(float min, float max)
+        {
+            this.Min = min;
+            this.Max = max;
+        }
+
+        public UISlider()
+        {
+        }
+
+        public float Min { get; set; } = float.MinValue;
+        public float Max { get; set; } = float.MaxValue;
+    }
+
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true)]
     public class ReadOnly : System.Attribute
     {
         public ReadOnly()
