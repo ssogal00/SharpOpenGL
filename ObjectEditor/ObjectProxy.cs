@@ -50,8 +50,10 @@ namespace ObjectEditor
                     {   
                         // get property value
                         var propertyValue = property.GetValue(originalObject);
-                        var prop = ObjectProperty.CreateProperty(name, propertyType, originalObject, this);
+                        var prop = ObjectProperty.CreateNestedObjectProperty(name, propertyType, originalObject, this);
                         prop.SetValue(propertyValue);
+
+                        prop.NestedObject = new ObjectProxy(propertyValue, prop);
 
                         propertyList.Add(prop);
                     }
