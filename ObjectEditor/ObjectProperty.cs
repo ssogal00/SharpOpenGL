@@ -41,8 +41,8 @@ namespace ObjectEditor
 
         private static List<Type> supportedTypes =new List< Type>()
         {
-            typeof(OpenTK.Vector3),
             typeof(OpenTK.Vector4),
+            typeof(OpenTK.Vector3),
             typeof(OpenTK.Vector2),
             typeof(bool),
             typeof(float),
@@ -106,8 +106,10 @@ namespace ObjectEditor
 
     public class NestedObjectProperty : ObjectProperty
     {
-        public NestedObjectProperty(string name, object originalObject)
+        public NestedObjectProperty(string name, object originalValue)
         {
+            propertyName = name;
+            value = originalValue;
         }
 
         public NestedObjectProperty()
@@ -121,7 +123,16 @@ namespace ObjectEditor
 
         public override void ApplyValue()
         {
-
+            if (IsField)
+            {
+                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
+                field.SetValue(targetObject, value);
+            }
+            else
+            {
+                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+                prop.SetValue(targetObject, value);
+            }
         }
 
         public ObjectProxy NestedObject { get; set; } = null;
