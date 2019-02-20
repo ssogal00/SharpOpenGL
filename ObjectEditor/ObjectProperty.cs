@@ -20,6 +20,8 @@ namespace ObjectEditor
 
         protected object targetObject = null;
 
+        protected ObjectProperty parentProperty = null;
+
         public string PropertyName
         {
             get => propertyName;
@@ -33,6 +35,21 @@ namespace ObjectEditor
         public void SetTargetObject(object obj)
         {
             targetObject = obj;
+        }
+        
+        public void SetParentProperty(ObjectProperty value)
+        {
+            parentProperty = value;
+        }
+
+        public void PropagateParentProperty()
+        {
+            //
+            if (parentProperty != null)
+            {
+                parentProperty.ApplyValue();
+                parentProperty.PropagateParentProperty();
+            }
         }
 
         public virtual void ApplyValue()
@@ -73,7 +90,7 @@ namespace ObjectEditor
             return false;
         }
 
-        public static ObjectProperty CreateProperty(string name, Type originalType, object targetObject, bool bFromField = false)
+        public static ObjectProperty CreateProperty(string name, Type originalType, object targetObject, ObjectProxy objectProxy, bool bFromField = false)
         {
             // supported types
             if (typeDictionary.ContainsKey(originalType))
@@ -81,6 +98,7 @@ namespace ObjectEditor
                 var result = (ObjectProperty) Activator.CreateInstance(typeDictionary[originalType]);
                 result.PropertyName = name;
                 result.SetTargetObject(targetObject);
+                result.SetParentProperty(objectProxy.ParentProperty);
                 result.IsField = bFromField;
                 return result;
             }
@@ -88,6 +106,7 @@ namespace ObjectEditor
             else if (originalType.IsEnum)
             {
                 var result = new EnumProperty(name, originalType);
+                result.SetParentProperty(objectProxy.ParentProperty);
                 result.IsField = bFromField;
                 return result;
             }
@@ -96,6 +115,7 @@ namespace ObjectEditor
                 var result = (ObjectProperty) Activator.CreateInstance(typeof(NestedObjectProperty));
                 result.PropertyName = name;
                 result.SetTargetObject(targetObject);
+                result.SetParentProperty(objectProxy.ParentProperty);
                 result.IsField = bFromField;
                 return result;
             }
@@ -133,6 +153,7 @@ namespace ObjectEditor
                 var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
                 prop.SetValue(targetObject, value);
             }
+            PropagateParentProperty();
         }
 
         public ObjectProxy NestedObject { get; set; } = null;
@@ -179,6 +200,7 @@ namespace ObjectEditor
                 var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
                 prop.SetValue(targetObject, vec);
             }
+            PropagateParentProperty();
         }
 
         private OpenTK.Vector3 vec;
@@ -231,6 +253,7 @@ namespace ObjectEditor
                 var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
                 prop.SetValue(targetObject, FloatValue);
             }
+            PropagateParentProperty();
         }
 
         public override void SetValue(object value)
@@ -272,6 +295,7 @@ namespace ObjectEditor
                 var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
                 prop.SetValue(targetObject, IntValue);
             }
+            PropagateParentProperty();
         }
     }
 
@@ -301,6 +325,7 @@ namespace ObjectEditor
                 var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
                 prop.SetValue(targetObject, vec);
             }
+            PropagateParentProperty();
         }
 
         private OpenTK.Vector4 vec;
@@ -360,6 +385,7 @@ namespace ObjectEditor
                 var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
                 prop.SetValue(targetObject, BoolValue);
             }
+            PropagateParentProperty();
         }
         
         public bool BoolValue { get; set; }
@@ -413,6 +439,8 @@ namespace ObjectEditor
                 var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
                 prop.SetValue(targetObject, vec);
             }
+
+            PropagateParentProperty();
         }
 
         private OpenTK.Vector3 vec;
@@ -463,6 +491,8 @@ namespace ObjectEditor
                 var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
                 prop.SetValue(targetObject, vec);
             }
+            
+            PropagateParentProperty();
         }
 
         private OpenTK.Vector2 vec;

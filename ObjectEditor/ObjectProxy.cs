@@ -12,8 +12,10 @@ namespace ObjectEditor
 {
     public class ObjectProxy
     {
-        public ObjectProxy(object originalObject)
+        public ObjectProxy(object originalObject, ObjectProperty parentProperty = null)
         {
+            this.ParentProperty = parentProperty;
+
             var t = originalObject.GetType();
 
             var properties = t.GetProperties();
@@ -40,7 +42,7 @@ namespace ObjectEditor
                         var obj = Activator.CreateInstance(propertyType);
                         var propertyValue = property.GetValue(originalObject);
 
-                        var prop = ObjectProperty.CreateProperty(name, propertyType, originalObject);
+                        var prop = ObjectProperty.CreateProperty(name, propertyType, originalObject, this);
                         prop.SetValue(propertyValue);
 
                         propertyList.Add(prop);
@@ -50,7 +52,7 @@ namespace ObjectEditor
                         var obj = Activator.CreateInstance(propertyType);
                         var propertyValue = property.GetValue(originalObject);
 
-                        var prop = ObjectProperty.CreateProperty(name, propertyType, originalObject);
+                        var prop = ObjectProperty.CreateProperty(name, propertyType, originalObject, this);
                         prop.SetValue(propertyValue);
 
                         propertyList.Add(prop);
@@ -71,7 +73,7 @@ namespace ObjectEditor
                         var obj = Activator.CreateInstance(fieldType);
                         var propertyValue = field.GetValue(originalObject);
 
-                        var prop = ObjectProperty.CreateProperty(name, fieldType, originalObject, true);
+                        var prop = ObjectProperty.CreateProperty(name, fieldType, originalObject, this, true);
                         prop.SetValue(propertyValue);
 
                         propertyList.Add(prop);
@@ -81,10 +83,10 @@ namespace ObjectEditor
                         var obj = Activator.CreateInstance(fieldType);
                         var propertyValue = field.GetValue(originalObject);
 
-                        var prop = (NestedObjectProperty) ObjectProperty.CreateProperty(name, fieldType, originalObject, true);
+                        var prop = (NestedObjectProperty) ObjectProperty.CreateProperty(name, fieldType, originalObject, this, true);
                         prop.SetValue(propertyValue);
 
-                        var objProxy = new ObjectProxy(propertyValue);
+                        var objProxy = new ObjectProxy(propertyValue, prop);
                         prop.NestedObject = objProxy;
                         propertyList.Add(prop);
                     }
@@ -105,5 +107,7 @@ namespace ObjectEditor
         {
             return objectName;
         }
+
+        public ObjectProperty ParentProperty = null;
     }
 }
