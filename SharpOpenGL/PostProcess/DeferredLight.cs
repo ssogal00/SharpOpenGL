@@ -50,7 +50,9 @@ namespace SharpOpenGL.PostProcess
 
         //
 
-        [ExposeUI] public float Roughness { get; set; } = 0.05f;
+        [ExposeUI]
+        [UseSlider(0,1)]
+        public float Roughness { get; set; } = 0.05f;
 
         [ExposeUI] public OpenTK.Vector3 LobeEnergy { get; set; } = new OpenTK.Vector3(1,2,2);
 

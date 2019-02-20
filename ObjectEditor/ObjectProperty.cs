@@ -233,11 +233,6 @@ namespace ObjectEditor
         }
     }
 
-    public class SliderFloatProperty : FloatProperty
-    {
-        public SliderFloatProperty() { }
-    }
-
     public class FloatProperty : ObjectProperty
     {
         public FloatProperty(string name, float value)

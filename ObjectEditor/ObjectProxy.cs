@@ -39,19 +39,17 @@ namespace ObjectEditor
 
                     if (ObjectProperty.IsSupportedType(propertyType))
                     {
-                        var obj = Activator.CreateInstance(propertyType);
+                        // get property value
                         var propertyValue = property.GetValue(originalObject);
-
                         var prop = ObjectProperty.CreateProperty(name, propertyType, originalObject, this);
                         prop.SetValue(propertyValue);
 
                         propertyList.Add(prop);
                     }
                     else if (propertyType.IsClass || propertyType.IsValueType)
-                    {
-                        var obj = Activator.CreateInstance(propertyType);
+                    {   
+                        // get property value
                         var propertyValue = property.GetValue(originalObject);
-
                         var prop = ObjectProperty.CreateProperty(name, propertyType, originalObject, this);
                         prop.SetValue(propertyValue);
 
@@ -70,9 +68,7 @@ namespace ObjectEditor
 
                     if (ObjectProperty.IsSupportedType(fieldType))
                     {
-                        var obj = Activator.CreateInstance(fieldType);
                         var propertyValue = field.GetValue(originalObject);
-
                         var prop = ObjectProperty.CreateProperty(name, fieldType, originalObject, this, true);
                         prop.SetValue(propertyValue);
 
@@ -80,14 +76,12 @@ namespace ObjectEditor
                     }
                     else if (fieldType.IsClass || fieldType.IsValueType)
                     {
-                        var obj = Activator.CreateInstance(fieldType);
                         var propertyValue = field.GetValue(originalObject);
-
                         var prop = ObjectProperty.CreateNestedObjectProperty(name, fieldType, originalObject, this, true);
                         prop.SetValue(propertyValue);
 
-                        var objProxy = new ObjectProxy(propertyValue, prop);
-                        prop.NestedObject = objProxy;
+                        prop.NestedObject = new ObjectProxy(propertyValue, prop);
+
                         propertyList.Add(prop);
                     }
                 }
