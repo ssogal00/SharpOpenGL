@@ -114,6 +114,16 @@ namespace ObjectEditor
         {
         }
 
+        public override void SetValue(object newValue)
+        {
+            value = newValue;
+        }
+
+        public override void ApplyValue()
+        {
+
+        }
+
         public ObjectProxy NestedObject { get; set; } = null;
 
         public ObservableCollection<ObjectProperty> PropertyList
@@ -130,6 +140,8 @@ namespace ObjectEditor
                 }
             }
         }
+
+        private object value = null;
     }
 
     public class ColorProperty : ObjectProperty
