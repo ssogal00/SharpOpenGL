@@ -12,9 +12,9 @@ namespace ObjectEditor
 {
     public class ObjectProxy
     {
-        public ObjectProxy(object originalObject, ObjectProperty parentProperty = null)
+        public ObjectProxy(object originalObject, ObjectProperty enclosingProperty = null)
         {
-            this.ParentProperty = parentProperty;
+            this.EnclosingProperty = enclosingProperty;
 
             var t = originalObject.GetType();
 
@@ -83,7 +83,7 @@ namespace ObjectEditor
                         var obj = Activator.CreateInstance(fieldType);
                         var propertyValue = field.GetValue(originalObject);
 
-                        var prop = (NestedObjectProperty) ObjectProperty.CreateProperty(name, fieldType, originalObject, this, true);
+                        var prop = ObjectProperty.CreateNestedObjectProperty(name, fieldType, originalObject, this, true);
                         prop.SetValue(propertyValue);
 
                         var objProxy = new ObjectProxy(propertyValue, prop);
@@ -108,6 +108,6 @@ namespace ObjectEditor
             return objectName;
         }
 
-        public ObjectProperty ParentProperty = null;
+        public ObjectProperty EnclosingProperty = null;
     }
 }

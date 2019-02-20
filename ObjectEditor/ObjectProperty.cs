@@ -20,7 +20,7 @@ namespace ObjectEditor
 
         protected object targetObject = null;
 
-        protected ObjectProperty parentProperty = null;
+        protected ObjectProperty enclosingProperty = null;
 
         public string PropertyName
         {
@@ -32,28 +32,47 @@ namespace ObjectEditor
 
         public virtual void SetValue(object value) { }
 
+        public virtual object GetValue()
+        {
+            return null;
+
+        }
+
         public void SetTargetObject(object obj)
         {
             targetObject = obj;
         }
         
-        public void SetParentProperty(ObjectProperty value)
+        public void SetEnclosingProperty(ObjectProperty value)
         {
-            parentProperty = value;
+            enclosingProperty = value;
         }
 
-        public void PropagateParentProperty()
+        public void PropagateChange()
         {
             //
-            if (parentProperty != null)
+            if (enclosingProperty != null)
             {
-                parentProperty.ApplyValue();
-                parentProperty.PropagateParentProperty();
+                enclosingProperty.ApplyValue();
+                enclosingProperty.PropagateChange();
             }
         }
 
         public virtual void ApplyValue()
         {
+            var objValue = GetValue();
+
+            if (IsField)
+            {
+                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
+                field.SetValue(targetObject, objValue);
+            }
+            else
+            {
+                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+                prop.SetValue(targetObject, objValue);
+            }
+            PropagateChange();
         }
 
         private static List<Type> supportedTypes =new List< Type>()
@@ -90,6 +109,22 @@ namespace ObjectEditor
             return false;
         }
 
+        public static NestedObjectProperty CreateNestedObjectProperty(string name, Type originalType,
+            object targetObject, ObjectProxy objectProxy, bool bFromField = false)
+        {
+            if (originalType.IsClass || originalType.IsValueType)
+            {
+                var result = (NestedObjectProperty)Activator.CreateInstance(typeof(NestedObjectProperty));
+                result.PropertyName = name;
+                result.SetTargetObject(targetObject);
+                result.SetEnclosingProperty(objectProxy.EnclosingProperty);
+                result.IsField = bFromField;
+                return result;
+            }
+
+            return null;
+        }
+
         public static ObjectProperty CreateProperty(string name, Type originalType, object targetObject, ObjectProxy objectProxy, bool bFromField = false)
         {
             // supported types
@@ -98,7 +133,7 @@ namespace ObjectEditor
                 var result = (ObjectProperty) Activator.CreateInstance(typeDictionary[originalType]);
                 result.PropertyName = name;
                 result.SetTargetObject(targetObject);
-                result.SetParentProperty(objectProxy.ParentProperty);
+                result.SetEnclosingProperty(objectProxy.EnclosingProperty);
                 result.IsField = bFromField;
                 return result;
             }
@@ -106,19 +141,11 @@ namespace ObjectEditor
             else if (originalType.IsEnum)
             {
                 var result = new EnumProperty(name, originalType);
-                result.SetParentProperty(objectProxy.ParentProperty);
+                result.SetEnclosingProperty(objectProxy.EnclosingProperty);
                 result.IsField = bFromField;
                 return result;
             }
-            else if (originalType.IsClass || originalType.IsValueType)
-            {
-                var result = (ObjectProperty) Activator.CreateInstance(typeof(NestedObjectProperty));
-                result.PropertyName = name;
-                result.SetTargetObject(targetObject);
-                result.SetParentProperty(objectProxy.ParentProperty);
-                result.IsField = bFromField;
-                return result;
-            }
+            
 
             return null;
         }
@@ -141,19 +168,10 @@ namespace ObjectEditor
             value = newValue;
         }
 
-        public override void ApplyValue()
+        public override object GetValue()
         {
-            if (IsField)
-            {
-                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
-                field.SetValue(targetObject, value);
-            }
-            else
-            {
-                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-                prop.SetValue(targetObject, value);
-            }
-            PropagateParentProperty();
+            return value;
+
         }
 
         public ObjectProxy NestedObject { get; set; } = null;
@@ -188,20 +206,11 @@ namespace ObjectEditor
             vec = (Vector3)value;
         }
 
-        public override void ApplyValue()
+        public override object GetValue()
         {
-            if (IsField)
-            {
-                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
-                field.SetValue(targetObject, vec);
-            }
-            else
-            {
-                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-                prop.SetValue(targetObject, vec);
-            }
-            PropagateParentProperty();
+            return vec;
         }
+
 
         private OpenTK.Vector3 vec;
 
@@ -224,10 +233,6 @@ namespace ObjectEditor
         }
     }
 
-    public class StructProperty : ObjectProperty
-    {
-
-    }
 
     public class FloatProperty : ObjectProperty
     {
@@ -241,24 +246,14 @@ namespace ObjectEditor
         {
         }
 
-        public override void ApplyValue()
-        {
-            if (IsField)
-            {
-                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
-                field.SetValue(targetObject, FloatValue);
-            }
-            else
-            {
-                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-                prop.SetValue(targetObject, FloatValue);
-            }
-            PropagateParentProperty();
-        }
-
         public override void SetValue(object value)
         {
             FloatValue = (float)value;
+        }
+
+        public override object GetValue()
+        {
+            return FloatValue;
         }
 
         public float FloatValue { get; set; }
@@ -279,23 +274,13 @@ namespace ObjectEditor
             IntValue = (int) value;
         }
 
-        public IntProperty()
+        public override object GetValue()
         {
+            return IntValue;
         }
 
-        public override void ApplyValue()
+        public IntProperty()
         {
-            if (IsField)
-            {
-                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
-                field.SetValue(targetObject, IntValue);
-            }
-            else
-            {
-                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-                prop.SetValue(targetObject, IntValue);
-            }
-            PropagateParentProperty();
         }
     }
 
@@ -313,19 +298,9 @@ namespace ObjectEditor
             vec = (Vector4)value;
         }
 
-        public override void ApplyValue()
+        public override object GetValue()
         {
-            if (IsField)
-            {
-                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
-                field.SetValue(targetObject, vec);
-            }
-            else
-            {
-                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-                prop.SetValue(targetObject, vec);
-            }
-            PropagateParentProperty();
+            return vec;
         }
 
         private OpenTK.Vector4 vec;
@@ -370,22 +345,12 @@ namespace ObjectEditor
 
         public override void SetValue(object value)
         {
-            value = (bool)value;
+            BoolValue = (bool)value;
         }
 
-        public override void ApplyValue()
+        public override object GetValue()
         {
-            if (IsField)
-            {
-                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
-                field.SetValue(targetObject, BoolValue);
-            }
-            else
-            {
-                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-                prop.SetValue(targetObject, BoolValue);
-            }
-            PropagateParentProperty();
+            return BoolValue;
         }
         
         public bool BoolValue { get; set; }
@@ -403,8 +368,17 @@ namespace ObjectEditor
 
         public override void ApplyValue()
         {
-            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-            prop.SetValue(targetObject, Enum.Parse(enumType, CurrentEnum));
+            if (IsField)
+            {
+                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
+                field.SetValue(targetObject, Enum.Parse(enumType, CurrentEnum));
+            }
+            else
+            {
+                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+                prop.SetValue(targetObject, Enum.Parse(enumType, CurrentEnum));
+            }
+            PropagateChange();
         }
 
         public List<string> EnumNames { get; set; } = new List<string>();
@@ -427,20 +401,9 @@ namespace ObjectEditor
             vec = (Vector3) value;
         }
 
-        public override void ApplyValue()
+        public override object GetValue()
         {
-            if (IsField)
-            {
-                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
-                field.SetValue(targetObject, vec);
-            }
-            else
-            {
-                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-                prop.SetValue(targetObject, vec);
-            }
-
-            PropagateParentProperty();
+            return vec;
         }
 
         private OpenTK.Vector3 vec;
@@ -479,20 +442,9 @@ namespace ObjectEditor
             vec = (Vector2)value;
         }
 
-        public override void ApplyValue()
+        public override object GetValue()
         {
-            if (IsField)
-            {
-                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
-                field.SetValue(targetObject, vec);
-            }
-            else
-            {
-                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-                prop.SetValue(targetObject, vec);
-            }
-            
-            PropagateParentProperty();
+            return vec;
         }
 
         private OpenTK.Vector2 vec;
