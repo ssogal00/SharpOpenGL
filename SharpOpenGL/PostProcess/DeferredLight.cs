@@ -29,7 +29,6 @@ namespace SharpOpenGL.PostProcess
         {
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
-                
                 PostProcessMaterial.SetTexture("PositionTex", positionInput);
                 PostProcessMaterial.SetTexture("DiffuseTex", colorInput);
                 PostProcessMaterial.SetTexture("NormalTex", normalInput);
@@ -63,6 +62,7 @@ namespace SharpOpenGL.PostProcess
 
         [ExposeUI] public TestEnumValue EnumTest { get; set; } = TestEnumValue.EIs;
 
-        protected SharpOpenGL.LightMaterial.Light lightInfo = new LightMaterial.Light();
+        [ExposeUI]
+        public SharpOpenGL.LightMaterial.Light lightInfo  = new LightMaterial.Light();
     }
 }

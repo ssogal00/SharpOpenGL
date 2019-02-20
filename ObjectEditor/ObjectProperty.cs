@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -86,8 +87,43 @@ namespace ObjectEditor
                 var result = new EnumProperty(name, originalType);
                 return result;
             }
+            else if (originalType.IsClass || originalType.IsValueType)
+            {
+                var result = (ObjectProperty) Activator.CreateInstance(typeof(NestedObjectProperty));
+                result.PropertyName = name;
+                result.SetTargetObject(targetObject);
+                return result;
+            }
 
             return null;
+        }
+    }
+
+    public class NestedObjectProperty : ObjectProperty
+    {
+        public NestedObjectProperty(string name, object originalObject)
+        {
+        }
+
+        public NestedObjectProperty()
+        {
+        }
+
+        public ObjectProxy NestedObject { get; set; } = null;
+
+        public ObservableCollection<ObjectProperty> PropertyList
+        {
+            get
+            {
+                if (NestedObject != null)
+                {
+                    return NestedObject.PropertyList;
+                }
+                else
+                {
+                    return new ObservableCollection<ObjectProperty>();
+                }
+            }
         }
     }
 

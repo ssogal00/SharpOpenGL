@@ -10,6 +10,7 @@ using Core.VertexCustomAttribute;
 using Core.MaterialBase;
 using ZeroFormatter;
 using ZeroFormatter.Formatters;
+using Core.CustomAttribute;
 namespace SharpOpenGL
 {
 namespace BasicMaterial

@@ -21,7 +21,8 @@ namespace ShaderCompiler
             "Core.VertexCustomAttribute",
             "Core.MaterialBase",
             "ZeroFormatter",
-            "ZeroFormatter.Formatters"
+            "ZeroFormatter.Formatters",
+            "Core.CustomAttribute",
         };
 
         public string NameSpace = "";

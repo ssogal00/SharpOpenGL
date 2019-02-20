@@ -47,10 +47,13 @@ namespace ObjectEditor
             {
                 return elemnt.FindResource("BoolTemplate") as DataTemplate;
             }
-
             else if (item is EnumProperty)
             {
                 return elemnt.FindResource("EnumTemplate") as DataTemplate;
+            }
+            else if (item is NestedObjectProperty)
+            {
+                return elemnt.FindResource("NestedObjectTemplate") as DataTemplate;
             }
 
             return elemnt.FindResource("Vector3Template") as DataTemplate;
@@ -130,7 +133,7 @@ namespace ObjectEditor
         private void ObjectList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             SetProxyObject((ObjectProxy)ObjectList.SelectedItem);
-            ObjectTreeView.Items.Add((ObjectProxy)ObjectList.SelectedItem);
+            
         }
 
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)

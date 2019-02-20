@@ -10,6 +10,7 @@ using Core.VertexCustomAttribute;
 using Core.MaterialBase;
 using ZeroFormatter;
 using ZeroFormatter.Formatters;
+using Core.CustomAttribute;
 namespace SharpOpenGL
 {
 namespace BasicMaterial
@@ -19,7 +20,7 @@ namespace BasicMaterial
 [StructLayout(LayoutKind.Explicit,Size=16)]
 public struct ColorBlock
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Vector3 Value;
 }
 
@@ -27,11 +28,11 @@ public struct ColorBlock
 [StructLayout(LayoutKind.Explicit,Size=192)]
 public struct Transform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 Model;
-	[FieldOffset(64)]
+	[FieldOffset(64), ExposeUI]
 	public OpenTK.Matrix4 View;
-	[FieldOffset(128)]
+	[FieldOffset(128), ExposeUI]
 	public OpenTK.Matrix4 Proj;
 }
 }
@@ -45,11 +46,11 @@ namespace SimpleMaterial
 [StructLayout(LayoutKind.Explicit,Size=192)]
 public struct Transform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 Model;
-	[FieldOffset(64)]
+	[FieldOffset(64), ExposeUI]
 	public OpenTK.Matrix4 View;
-	[FieldOffset(128)]
+	[FieldOffset(128), ExposeUI]
 	public OpenTK.Matrix4 Proj;
 }
 }
@@ -66,9 +67,9 @@ namespace GBufferDraw
 [StructLayout(LayoutKind.Explicit,Size=128)]
 public struct CameraTransform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 View;
-	[FieldOffset(64)]
+	[FieldOffset(64), ExposeUI]
 	public OpenTK.Matrix4 Proj;
 }
 
@@ -76,7 +77,7 @@ public struct CameraTransform
 [StructLayout(LayoutKind.Explicit,Size=64)]
 public struct ModelTransform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 Model;
 }
 }
@@ -90,9 +91,9 @@ namespace GBufferWithoutTexture
 [StructLayout(LayoutKind.Explicit,Size=128)]
 public struct CameraTransform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 View;
-	[FieldOffset(64)]
+	[FieldOffset(64), ExposeUI]
 	public OpenTK.Matrix4 Proj;
 }
 
@@ -100,7 +101,7 @@ public struct CameraTransform
 [StructLayout(LayoutKind.Explicit,Size=64)]
 public struct ModelTransform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 Model;
 }
 }
@@ -117,13 +118,13 @@ namespace GBufferDump
 [StructLayout(LayoutKind.Explicit,Size=16)]
 public struct Dump
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public System.Int32 PositionDump;
-	[FieldOffset(4)]
+	[FieldOffset(4), ExposeUI]
 	public System.Int32 NormalDump;
-	[FieldOffset(8)]
+	[FieldOffset(8), ExposeUI]
 	public System.Int32 SpecularDump;
-	[FieldOffset(12)]
+	[FieldOffset(12), ExposeUI]
 	public System.Int32 DiffuseDump;
 }
 }
@@ -134,9 +135,9 @@ namespace GBufferPNC
 [StructLayout(LayoutKind.Explicit,Size=128)]
 public struct CameraTransform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 View;
-	[FieldOffset(64)]
+	[FieldOffset(64), ExposeUI]
 	public OpenTK.Matrix4 Proj;
 }
 }
@@ -153,15 +154,15 @@ namespace LightMaterial
 [StructLayout(LayoutKind.Explicit,Size=64)]
 public struct Light
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Vector3 LightDir;
-	[FieldOffset(16)]
+	[FieldOffset(16), ExposeUI]
 	public OpenTK.Vector3 LightAmbient;
-	[FieldOffset(32)]
+	[FieldOffset(32), ExposeUI]
 	public OpenTK.Vector3 LightDiffuse;
-	[FieldOffset(48)]
+	[FieldOffset(48), ExposeUI]
 	public OpenTK.Vector3 LightSpecular;
-	[FieldOffset(60)]
+	[FieldOffset(60), ExposeUI]
 	public System.Single LightSpecularShininess;
 }
 }
@@ -175,9 +176,9 @@ namespace MSGBufferMaterial
 [StructLayout(LayoutKind.Explicit,Size=128)]
 public struct CameraTransform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 View;
-	[FieldOffset(64)]
+	[FieldOffset(64), ExposeUI]
 	public OpenTK.Matrix4 Proj;
 }
 
@@ -185,7 +186,7 @@ public struct CameraTransform
 [StructLayout(LayoutKind.Explicit,Size=64)]
 public struct ModelTransform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 Model;
 }
 }
@@ -208,9 +209,9 @@ namespace GridRenderMaterial
 [StructLayout(LayoutKind.Explicit,Size=128)]
 public struct CameraTransform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 View;
-	[FieldOffset(64)]
+	[FieldOffset(64), ExposeUI]
 	public OpenTK.Matrix4 Proj;
 }
 
@@ -218,7 +219,7 @@ public struct CameraTransform
 [StructLayout(LayoutKind.Explicit,Size=64)]
 public struct ModelTransform
 {
-	[FieldOffset(0)]
+	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 Model;
 }
 }
