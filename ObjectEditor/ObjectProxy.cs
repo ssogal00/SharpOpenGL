@@ -71,7 +71,7 @@ namespace ObjectEditor
                         var obj = Activator.CreateInstance(fieldType);
                         var propertyValue = field.GetValue(originalObject);
 
-                        var prop = ObjectProperty.CreateProperty(name, fieldType, originalObject);
+                        var prop = ObjectProperty.CreateProperty(name, fieldType, originalObject, true);
                         prop.SetValue(propertyValue);
 
                         propertyList.Add(prop);
@@ -81,7 +81,7 @@ namespace ObjectEditor
                         var obj = Activator.CreateInstance(fieldType);
                         var propertyValue = field.GetValue(originalObject);
 
-                        var prop = (NestedObjectProperty) ObjectProperty.CreateProperty(name, fieldType, originalObject);
+                        var prop = (NestedObjectProperty) ObjectProperty.CreateProperty(name, fieldType, originalObject, true);
                         prop.SetValue(propertyValue);
 
                         var objProxy = new ObjectProxy(propertyValue);

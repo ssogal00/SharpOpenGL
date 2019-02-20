@@ -35,8 +35,6 @@ namespace SharpOpenGL.PostProcess
                 PostProcessMaterial.SetUniformVarData("Roughness", Roughness);
                 PostProcessMaterial.SetUniformVarData("LobeEnergy", LobeEnergy);
 
-                lightInfo.LightDir = LightDir;
-
                 PostProcessMaterial.SetUniformBufferValue<SharpOpenGL.LightMaterial.Light>("Light", ref lightInfo);
 
                 BlitToScreenSpace();
@@ -53,8 +51,6 @@ namespace SharpOpenGL.PostProcess
         //
 
         [ExposeUI] public float Roughness { get; set; } = 0.05f;
-
-        [ExposeUI] public OpenTK.Vector3 LightDir { get; set; } = new OpenTK.Vector3(1, 1, 1);
 
         [ExposeUI] public OpenTK.Vector3 LobeEnergy { get; set; } = new OpenTK.Vector3(1,2,2);
 

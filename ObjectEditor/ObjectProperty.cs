@@ -26,6 +26,8 @@ namespace ObjectEditor
             set => propertyName = value;
         }
 
+        public bool IsField { get; set; } = false;
+
         public virtual void SetValue(object value) { }
 
         public void SetTargetObject(object obj)
@@ -71,7 +73,7 @@ namespace ObjectEditor
             return false;
         }
 
-        public static ObjectProperty CreateProperty(string name, Type originalType, object targetObject)
+        public static ObjectProperty CreateProperty(string name, Type originalType, object targetObject, bool bFromField = false)
         {
             // supported types
             if (typeDictionary.ContainsKey(originalType))
@@ -79,12 +81,14 @@ namespace ObjectEditor
                 var result = (ObjectProperty) Activator.CreateInstance(typeDictionary[originalType]);
                 result.PropertyName = name;
                 result.SetTargetObject(targetObject);
+                result.IsField = bFromField;
                 return result;
             }
             // for enum type
             else if (originalType.IsEnum)
             {
                 var result = new EnumProperty(name, originalType);
+                result.IsField = bFromField;
                 return result;
             }
             else if (originalType.IsClass || originalType.IsValueType)
@@ -92,6 +96,7 @@ namespace ObjectEditor
                 var result = (ObjectProperty) Activator.CreateInstance(typeof(NestedObjectProperty));
                 result.PropertyName = name;
                 result.SetTargetObject(targetObject);
+                result.IsField = bFromField;
                 return result;
             }
 
@@ -141,8 +146,16 @@ namespace ObjectEditor
 
         public override void ApplyValue()
         {
-            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-            prop.SetValue(targetObject, vec);
+            if (IsField)
+            {
+                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
+                field.SetValue(targetObject, vec);
+            }
+            else
+            {
+                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+                prop.SetValue(targetObject, vec);
+            }
         }
 
         private OpenTK.Vector3 vec;
@@ -185,8 +198,16 @@ namespace ObjectEditor
 
         public override void ApplyValue()
         {
-            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-            prop.SetValue(targetObject, FloatValue);
+            if (IsField)
+            {
+                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
+                field.SetValue(targetObject, FloatValue);
+            }
+            else
+            {
+                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+                prop.SetValue(targetObject, FloatValue);
+            }
         }
 
         public override void SetValue(object value)
@@ -218,8 +239,16 @@ namespace ObjectEditor
 
         public override void ApplyValue()
         {
-            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-            prop.SetValue(targetObject, IntValue);
+            if (IsField)
+            {
+                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
+                field.SetValue(targetObject, IntValue);
+            }
+            else
+            {
+                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+                prop.SetValue(targetObject, IntValue);
+            }
         }
     }
 
@@ -239,8 +268,16 @@ namespace ObjectEditor
 
         public override void ApplyValue()
         {
-            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-            prop.SetValue(targetObject, vec);
+            if (IsField)
+            {
+                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
+                field.SetValue(targetObject, vec);
+            }
+            else
+            {
+                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+                prop.SetValue(targetObject, vec);
+            }
         }
 
         private OpenTK.Vector4 vec;
@@ -290,8 +327,16 @@ namespace ObjectEditor
 
         public override void ApplyValue()
         {
-            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-            prop.SetValue(targetObject, BoolValue);
+            if (IsField)
+            {
+                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
+                field.SetValue(targetObject, BoolValue);
+            }
+            else
+            {
+                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+                prop.SetValue(targetObject, BoolValue);
+            }
         }
         
         public bool BoolValue { get; set; }
@@ -335,8 +380,16 @@ namespace ObjectEditor
 
         public override void ApplyValue()
         {
-            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-            prop.SetValue(targetObject, vec);
+            if (IsField)
+            {
+                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
+                field.SetValue(targetObject, vec);
+            }
+            else
+            {
+                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+                prop.SetValue(targetObject, vec);
+            }
         }
 
         private OpenTK.Vector3 vec;
@@ -377,8 +430,16 @@ namespace ObjectEditor
 
         public override void ApplyValue()
         {
-            var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
-            prop.SetValue(targetObject, vec);
+            if (IsField)
+            {
+                var field = targetObject.GetType().GetFields().First(x => x.Name == PropertyName);
+                field.SetValue(targetObject, vec);
+            }
+            else
+            {
+                var prop = targetObject.GetType().GetProperties().First(x => x.Name == PropertyName);
+                prop.SetValue(targetObject, vec);
+            }
         }
 
         private OpenTK.Vector2 vec;
