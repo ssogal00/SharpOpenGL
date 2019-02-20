@@ -261,6 +261,11 @@ namespace ObjectEditor
         }
 
         public float FloatValue { get; set; }
+
+        public bool UseSlider { get; set; } = false;
+
+        public float Min { get; set; } = float.MinValue;
+        public float Max { get; set; } = float.MaxValue;
     }
 
     public class IntProperty : ObjectProperty
@@ -429,6 +434,8 @@ namespace ObjectEditor
             get => vec.Z;
             set => vec.Z = value;
         }
+
+        public bool UseSlider { get; set; } = false;
     }
 
     public class Vector2Property : ObjectProperty

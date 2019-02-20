@@ -47,7 +47,6 @@
             <Grid Margin="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
@@ -56,6 +55,21 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
                 <TextBox Grid.Row="0" Grid.Column="2" Style="{StaticResource TextBoxStyle}" Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="SliderFloatTemplate" DataType="{x:Type local:FloatProperty}">
+            <Grid Margin="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
+                <Slider Grid.Row="0" Grid.Column="2" Minimum="{Binding Min}" Maximum="{Binding Max}" Value="{Binding FloatValue}" HorizontalAlignment="Stretch" VerticalAlignment="Center" ValueChanged="RangeBase_OnValueChanged"></Slider>
             </Grid>
         </DataTemplate>
 

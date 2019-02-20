@@ -21,15 +21,15 @@ namespace Core.CustomAttribute
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true)]
-    public class UISlider : System.Attribute
+    public class UseSlider : System.Attribute
     {
-        public UISlider(float min, float max)
+        public UseSlider(float min, float max)
         {
             this.Min = min;
             this.Max = max;
         }
 
-        public UISlider()
+        public UseSlider()
         {
         }
 

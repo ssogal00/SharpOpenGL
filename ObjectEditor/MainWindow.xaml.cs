@@ -37,7 +37,14 @@ namespace ObjectEditor
             }
             else if (item is FloatProperty)
             {
-                return elemnt.FindResource("FloatTemplate") as DataTemplate;
+                if ((item as FloatProperty).UseSlider)
+                {
+                    return elemnt.FindResource("SliderFloatTemplate") as DataTemplate;
+                }
+                else
+                {
+                    return elemnt.FindResource("FloatTemplate") as DataTemplate;
+                }
             }
             else if (item is IntProperty)
             {
@@ -140,6 +147,13 @@ namespace ObjectEditor
         {
             var checkBox = sender as CheckBox;
             var property = checkBox.DataContext as ObjectProperty;
+            property.ApplyValue();
+        }
+
+        private void RangeBase_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            var slider = sender as Slider;
+            var property = slider.DataContext as ObjectProperty;
             property.ApplyValue();
         }
     }
