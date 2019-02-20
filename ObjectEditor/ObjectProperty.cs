@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using OpenTK;
 using System.Drawing;
+using System.Reflection;
 using System.Windows.Media;
 
 namespace ObjectEditor
 {
     public class ObjectProperty 
     {
-
         protected string propertyName = "";
 
         protected object targetObject = null;
@@ -47,6 +47,8 @@ namespace ObjectEditor
         {
             enclosingProperty = value;
         }
+
+        public virtual void Initialize(MemberInfo memberInfo) { }
 
         public void PropagateChange()
         {
@@ -233,35 +235,7 @@ namespace ObjectEditor
         }
     }
 
-    public class FloatProperty : ObjectProperty
-    {
-        public FloatProperty(string name, float value)
-        {
-            propertyName = name;
-            FloatValue = value;
-        }
-
-        public FloatProperty()
-        {
-        }
-
-        public override void SetValue(object value)
-        {
-            FloatValue = (float)value;
-        }
-
-        public override object GetValue()
-        {
-            return FloatValue;
-        }
-
-        public float FloatValue { get; set; }
-
-        public bool UseSlider { get; set; } = false;
-
-        public float Min { get; set; } = float.MinValue;
-        public float Max { get; set; } = float.MaxValue;
-    }
+    
 
     public class IntProperty : ObjectProperty
     {
