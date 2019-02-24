@@ -22,6 +22,7 @@ namespace SharpOpenGL.PostProcess
             PostProcessMaterial = new SharpOpenGL.LightMaterial.LightMaterial();
             lightInfo.LightAmbient = new OpenTK.Vector3(0.3f, 0.3f, 0.3f);
             lightInfo.LightDiffuse = new OpenTK.Vector3(0.7f, 0.7f, 0.7f);
+            lightInfo.LightSpecular = new OpenTK.Vector3(0.01f,0.01f,0.01f);
             lightInfo.LightDir = new OpenTK.Vector3(1,1,1);
         }
 
