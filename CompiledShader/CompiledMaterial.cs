@@ -659,6 +659,7 @@ void main()
     if(SpecularMapExist > 0)
     {
         NormalColor.a = texture(SpecularTex, InTexCoord).x;
+        //NormalColor.a = clamp(1 - texture(SpecularTex, InTexCoord).x,0.0f,1.0f);
     }
     else
     {
@@ -666,7 +667,8 @@ void main()
     }
 
     PositionColor = InPosition;
-}";
+}
+";
 	}
 }
 }
@@ -1540,17 +1542,6 @@ public class LightMaterial : MaterialBase
 		}
 	}
 	private OpenTK.Vector3 lobeenergy;
-	
-	public System.Single Roughness
-	{
-		get { return roughness; }
-		set 
-		{
-			roughness = value;
-			SetUniformVarData(@"Roughness", roughness);			
-		}
-	}
-	private System.Single roughness;
 
 
     private Light light = new Light();
@@ -1649,7 +1640,9 @@ void main()
 
 	public static string GetFSSourceCode()
 	{
-		return @"#version 450
+		return @"
+
+#version 450
 
 layout (location = 0 , binding = 0) uniform sampler2D PositionTex;
 layout (location = 1 , binding = 1) uniform sampler2D DiffuseTex;
@@ -1910,7 +1903,8 @@ void main()
 	vec3 Half = normalize(LightDir + ViewDir);
 
 	vec4 FinalColor;
-    FinalColor.xyz = StandardShading(Color, vec3(Normal.a), vec3(Roughness), LobeEnergy, LightDir, ViewDir, Normal.xyz);    
+    FinalColor.xyz = StandardShading(Color, LightSpecular, vec3(clamp(Normal.a, 0.01, 1.0)), LobeEnergy, LightDir, ViewDir, Normal.xyz);    
+    
     FragColor = FinalColor;
 }
 ";

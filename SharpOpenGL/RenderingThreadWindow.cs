@@ -126,6 +126,8 @@ namespace SharpOpenGL
                         {
                             UIThread.EditorWindow.SetSceneObjectList(SceneObjectManager.Get().GetSceneObjectList());
                             UIThread.EditorWindow.AddObjectToWatch(lightPostProcess);
+                            
+
                         }
                     );
                 }
@@ -205,8 +207,8 @@ namespace SharpOpenGL
 
             //blurPostProcess.Render(renderGBuffer.GetColorAttachement);
 
-            //ScreenBlit.Blit(gbufferVisualize.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
-            ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+            ScreenBlit.Blit(gbufferVisualize.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+            //ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
 
             SwapBuffers();
         }

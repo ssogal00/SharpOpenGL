@@ -1,3 +1,5 @@
+
+
 #version 450
 
 layout (location = 0 , binding = 0) uniform sampler2D PositionTex;
@@ -259,6 +261,7 @@ void main()
 	vec3 Half = normalize(LightDir + ViewDir);
 
 	vec4 FinalColor;
-    FinalColor.xyz = StandardShading(Color, vec3(Normal.a), vec3(Roughness), LobeEnergy, LightDir, ViewDir, Normal.xyz);    
+    FinalColor.xyz = StandardShading(Color, LightSpecular, vec3(clamp(Normal.a, 0.01, 1.0)), LobeEnergy, LightDir, ViewDir, Normal.xyz);    
+    
     FragColor = FinalColor;
 }

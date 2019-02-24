@@ -45,13 +45,14 @@ namespace SharpOpenGL
 
             RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
             {
-                drawable = new DrawableBase<PNCT_VertexAttribute>();
+                drawable = new DrawableBase<PNTT_VertexAttribute>();
                 var vertexArray = VertexList.ToArray();
                 drawable.SetupVertexData(ref vertexArray);
 
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNCT.GBufferPNCT>();
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw.GBufferDraw>();
+
                 bReadyToDraw = true;
             });
         }
@@ -62,7 +63,12 @@ namespace SharpOpenGL
             {
                 using (var dummy = new ScopedBind(defaultMaterial))
                 {
-                    defaultMaterial.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
+                    var gbufferDraw = (GBufferDraw.GBufferDraw) defaultMaterial;
+
+                    gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
+                    gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+                    gbufferDraw.ModelTransform_Model = this.LocalMatrix;
+                    gbufferDraw.NormalMapExist = 0;
                     drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
                 }
             }
@@ -143,30 +149,177 @@ namespace SharpOpenGL
                     //  /
                     // V3-----V4
 
-                    // face1
-                    VertexList.Add(new PNCT_VertexAttribute(V1, norm1, Color, T1));
-                    VertexList.Add(new PNCT_VertexAttribute(V2, norm1, Color, T2));
-                    VertexList.Add(new PNCT_VertexAttribute(V3, norm1, Color, T3));
+                    TempVertexList.Add(V1);
+                    TempVertexList.Add(V2);
+                    TempVertexList.Add(V3);
 
-                    // face2
-                    VertexList.Add(new PNCT_VertexAttribute(V3, norm2, Color, T3));
-                    VertexList.Add(new PNCT_VertexAttribute(V2, norm2, Color, T2));
-                    VertexList.Add(new PNCT_VertexAttribute(V4, norm2, Color, T4));
+                    TempVertexList.Add(V3);
+                    TempVertexList.Add(V2);
+                    TempVertexList.Add(V4);
+
+                    TempNormalList.Add(norm1);
+                    TempNormalList.Add(norm1);
+                    TempNormalList.Add(norm1);
+
+                    TempNormalList.Add(norm2);
+                    TempNormalList.Add(norm2);
+                    TempNormalList.Add(norm2);
+
+                    TempTexCoordList.Add(T1);
+                    TempTexCoordList.Add(T2);
+                    TempTexCoordList.Add(T3);
+
+                    TempTexCoordList.Add(T3);
+                    TempTexCoordList.Add(T2);
+                    TempTexCoordList.Add(T4);
                 }
             }
 
+            GenerateTangents();
+
+            for (int i = 0; i < TempVertexList.Count; i += 3)
+            {
+                var V1 = TempVertexList[i];
+                var V2 = TempVertexList[i + 1];
+                var V3 = TempVertexList[i + 2];
+
+                var norm1 = TempNormalList[i];
+
+                var tan1 = TempTangentList[i];
+                var tan2 = TempTangentList[i+1];
+                var tan3 = TempTangentList[i+2];
+
+                var T1 = TempTexCoordList[i];
+                var T2 = TempTexCoordList[i+1];
+                var T3 = TempTexCoordList[i+2];
+
+                // face1
+                VertexList.Add(new PNTT_VertexAttribute(V1, norm1,  T1, tan1));
+                VertexList.Add(new PNTT_VertexAttribute(V2, norm1, T2, tan2));
+                VertexList.Add(new PNTT_VertexAttribute(V3, norm1,  T3, tan3));
+            }
+            
+
             VertexCount = VertexList.Count;
+
+            TempVertexList.Clear();
+            TempNormalList.Clear();
+            TempTangentList.Clear();
         }
 
-        List<PNCT_VertexAttribute> VertexList = new List<PNCT_VertexAttribute>();
+        protected void GenerateTangents()
+        {
+            List<Vector3> tan1Accum = new List<Vector3>();
+            List<Vector3> tan2Accum = new List<Vector3>();
 
-        [ExposeUI] private float Specular = 0.1f;
+            for (uint i = 0; i < TempVertexList.Count; ++i)
+            {
+                tan1Accum.Add(new Vector3(0, 0, 0));
+                tan2Accum.Add(new Vector3(0, 0, 0));
+            }
+
+            for (uint i = 0; i < TempVertexList.Count; i++)
+            {
+                TempTangentList.Add(new Vector4(0, 0, 0, 0));
+            }
+
+            // Compute the tangent vector
+            for (uint i = 0; i < TempVertexList.Count; i += 3)
+            {
+                var p1 = TempVertexList[(int)i];
+                var p2 = TempVertexList[(int)i + 1];
+                var p3 = TempVertexList[(int)i + 2];
+
+                var tc1 = TempTexCoordList[(int) i];
+                var tc2 = TempTexCoordList[(int)i + 1];
+                var tc3 = TempTexCoordList[(int)i + 2];
+
+                Vector3 q1 = p2 - p1;
+                Vector3 q2 = p3 - p1;
+                float s1 = tc2.X - tc1.X, s2 = tc3.X - tc1.X;
+                float t1 = tc2.Y - tc1.Y, t2 = tc3.Y - tc1.Y;
+
+                // prevent degeneration
+                float r = 1.0f / (s1 * t2 - s2 * t1);
+                if (Single.IsInfinity(r))
+                {
+                    r = 1 / 0.1f;
+                }
+
+                var tan1 = new Vector3((t2 * q1.X - t1 * q2.X) * r,
+                   (t2 * q1.Y - t1 * q2.Y) * r,
+                   (t2 * q1.Z - t1 * q2.Z) * r);
+
+                var tan2 = new Vector3((s1 * q2.X - s2 * q1.X) * r,
+                   (s1 * q2.Y - s2 * q1.Y) * r,
+                   (s1 * q2.Z - s2 * q1.Z) * r);
+
+
+                tan1Accum[(int)i] += tan1;
+                tan1Accum[(int)i + 1] += tan1;
+                tan1Accum[(int)i + 2] += tan1;
+
+                tan2Accum[(int)i] += tan2;
+                tan2Accum[(int)i + 1] += tan2;
+                tan2Accum[(int)i + 2] += tan2;
+            }
+
+            Vector4 lastValidTangent = new Vector4();
+
+            for (uint i = 0; i < VertexList.Count; ++i)
+            {
+                var n = TempNormalList[(int)i];
+                var t1 = tan1Accum[(int)i];
+                var t2 = tan2Accum[(int)i];
+
+                // Gram-Schmidt orthogonalize                
+                var temp = OpenTK.Vector3.Normalize(t1 - (OpenTK.Vector3.Dot(n, t1) * n));
+                // Store handedness in w                
+                var W = (OpenTK.Vector3.Dot(OpenTK.Vector3.Cross(n, t1), t2) < 0.0f) ? -1.0f : 1.0f;
+
+                bool bValid = true;
+                if (Single.IsNaN(temp.X) || Single.IsNaN(temp.Y) || Single.IsNaN(temp.Z))
+                {
+                    bValid = false;
+                }
+
+                if (Single.IsInfinity(temp.X) || Single.IsInfinity(temp.Y) || Single.IsInfinity(temp.Z))
+                {
+                    bValid = false;
+                }
+
+                if (bValid == true)
+                {
+                    lastValidTangent = new Vector4(temp.X, temp.Y, temp.Z, W);
+                }
+
+                if (bValid == false)
+                {
+                    temp = lastValidTangent.Xyz;
+                }
+
+                TempTangentList[(int)i] = new Vector4(temp.X, temp.Y, temp.Z, W);
+            }
+
+            tan1Accum.Clear();
+            tan2Accum.Clear();
+        }
+
+        List<PNTT_VertexAttribute> VertexList = new List<PNTT_VertexAttribute>();
+
+        [ExposeUI]
+        public float Specular = 0.1f;
 
         int VertexCount = 0;
         protected float Radius = 10.0f;
         protected int StackCount = 10;
         protected int SectorCount = 10;
         protected Vector3 Color = new Vector3(1, 0, 0);
-        protected DrawableBase<PNCT_VertexAttribute> drawable = null;
+        protected DrawableBase<PNTT_VertexAttribute> drawable = null;
+
+        protected List<Vector4> TempTangentList = new List<Vector4>();
+        protected List<Vector2> TempTexCoordList = new List<Vector2>();
+        protected List<Vector3> TempVertexList = new List<Vector3>();
+        protected List<Vector3> TempNormalList = new List<Vector3>();
     }
 }
