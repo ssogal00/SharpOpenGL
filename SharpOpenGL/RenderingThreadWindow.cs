@@ -147,6 +147,11 @@ namespace SharpOpenGL
 
             GL.Viewport(0, 0, Width, Height);
 
+            if (this.Width == 0 || this.Height == 0)
+            {
+                return;
+            }
+
             ScreenResizeEventArgs eventArgs = new ScreenResizeEventArgs
             {
                 Width = Width,
