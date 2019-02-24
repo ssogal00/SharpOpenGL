@@ -23,8 +23,8 @@ namespace SharpOpenGL
         public Sphere()
         {
             Radius = 10;
-            StackCount = 10;
-            SectorCount = 10;
+            StackCount = 20;
+            SectorCount = 20;
             Initialize();
         }
 
@@ -117,8 +117,8 @@ namespace SharpOpenGL
                     var d3 = (V2 - V4).Normalized();
                     var d4 = (V3 - V4).Normalized();
 
-                    var norm1 = Vector3.Cross(d2, d1).Normalized();
-                    var norm2 = Vector3.Cross(d3, d4).Normalized();
+                    var norm1 = Vector3.Cross(d1, d2).Normalized();
+                    var norm2 = Vector3.Cross(d4, d3).Normalized();
 
                     // V1-----V2
                     //       /
