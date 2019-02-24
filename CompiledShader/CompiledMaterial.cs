@@ -1129,6 +1129,7 @@ layout(location=1) in vec3 VertexNormal;
 layout(location=2) in vec3 VertexColor;
 
 
+
 layout(location=0) out vec4 OutPosition;
 layout(location=1) out vec3 OutColor;
 layout(location=2) out vec3 OutNormal;
@@ -1150,7 +1151,6 @@ void main()
 		return @"
 #version 450 core
 
-
 layout(location=0) in vec4 InPosition;
 layout(location=1) in vec3 InVertexColor;
 layout(location=2) in vec3 InNormal;
@@ -1161,10 +1161,170 @@ layout (location = 0) out vec4 PositionColor;
 layout (location = 1) out vec4 DiffuseColor;
 layout (location = 2) out vec4 NormalColor;
 
+
+void main()
+{   	
+	DiffuseColor = vec4(InVertexColor, 1.0);    	
+    NormalColor = vec4(InNormal.xyz,0);    
+    PositionColor = InPosition;
+}";
+	}
+}
+}
+namespace GBufferPNCT
+{
+
+
+public class GBufferPNCT : MaterialBase
+{
+	public GBufferPNCT() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetSpecularTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"SpecularTex", TextureObject);
+	}
+
+	public void SetSpecularTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"SpecularTex", TextureObject);
+	}
+
+	public TextureBase SpecularTex2D 
+	{	
+		get { return speculartex;}
+		set 
+		{	
+			speculartex = value;
+			SetTexture(@"SpecularTex", speculartex);			
+		}
+	}
+
+	private TextureBase speculartex = null;
+
+	public OpenTK.Matrix4 Model
+	{
+		get { return model; }
+		set 
+		{
+			model = value;
+			SetUniformVarData(@"Model", model);			
+		}
+	}
+	private OpenTK.Matrix4 model;
+
+
+
+    private CameraTransform cameratransform = new CameraTransform();
+	public CameraTransform CameraTransform
+	{
+		get { return cameratransform; }
+		set 
+		{ 
+			cameratransform = value; 
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+		}
+	}
+
+	public OpenTK.Matrix4 CameraTransform_View
+	{
+		get { return cameratransform.View ; }
+		set 
+		{ 
+			cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 0 );
+		}
+	}
+	public OpenTK.Matrix4 CameraTransform_Proj
+	{
+		get { return cameratransform.Proj ; }
+		set 
+		{ 
+			cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 64 );
+		}
+	}
+
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450 core
+
+
+
+uniform	mat4x4 Model;
+
+
+uniform CameraTransform
+{
+	mat4x4 View;
+	mat4x4 Proj;
+};
+
+uniform mat4 NormalMatrix;
+
+
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec3 VertexNormal;
+layout(location=2) in vec3 VertexColor;
+layout(location=3) in vec2 TexCoord;
+
+layout(location=0) out vec4 OutPosition;
+layout(location=1) out vec3 OutColor;
+layout(location=2) out vec3 OutNormal;
+layout(location=3) out vec2 OutTexCoord;
+
+
+  
+void main()
+{	
+	mat4 ModelView = View * Model;
+	OutColor = VertexColor;
+	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
+	OutPosition =   (ModelView * vec4(VertexPosition, 1));	
+	OutNormal =  normalize(mat3(ModelView) * VertexNormal);
+	OutTexCoord = TexCoord;
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"
+#version 450 core
+
+
+layout(location=0) in vec4 InPosition;
+layout(location=1) in vec3 InVertexColor;
+layout(location=2) in vec3 InNormal;
+layout(location=3) in vec2 InTexCoord;
+
+
+layout (location = 0) out vec4 PositionColor;
+layout (location = 1) out vec4 DiffuseColor;
+layout (location = 2) out vec4 NormalColor;
+
+layout (location = 0, binding=0) uniform sampler2D SpecularTex;
+
 void main()
 {   	
 	DiffuseColor = vec4(InVertexColor, 1.0);    	
     NormalColor = vec4(InNormal.xyz,0);
+    NormalColor.a = texture(SpecularTex, InTexCoord).x;
     PositionColor = InPosition;
 }";
 	}

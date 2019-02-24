@@ -7,6 +7,7 @@
 	<Material name="GBufferWithoutTexture" vertexShader="GBuffer.vs" fragmentShader="GBufferWithoutTexture.fs"/>
 	<Material name="GBufferDump" vertexShader="GBufferDump.vs" fragmentShader="GBufferDump.fs"/>
 	<Material name="GBufferPNC" vertexShader="GBufferPNC.vs" fragmentShader="GBufferPNC.fs"/>
+	<Material name="GBufferPNCT" vertexShader="GBufferPNCT.vs" fragmentShader="GBufferPNCT.fs"/>
 	<Material name="Blur" vertexShader="Blur.vs" fragmentShader="Blur.fs"/>
 	<Material name="LightMaterial" vertexShader="DeferredLight.vs" fragmentShader="DeferredLight.fs"/>
 	<Material name="CubemapMaterial" vertexShader="Cubemap.vs" fragmentShader="Cubemap.fs"/>

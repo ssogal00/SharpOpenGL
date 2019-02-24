@@ -91,7 +91,7 @@ namespace Core.Primitive
 
         public IEnumerable<object> GetSceneObjectList()
         {
-            return SceneObjectMap.Values.Select(x => { return (object) x; });
+            return SceneObjectMap.Values.Select(x => { return x; });
         }
 
         protected ConcurrentDictionary<string, SceneObject> SceneObjectMap = new ConcurrentDictionary<string, SceneObject>();
