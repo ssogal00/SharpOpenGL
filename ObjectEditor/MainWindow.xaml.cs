@@ -118,10 +118,6 @@ namespace ObjectEditor
             ObjectProxyList.Items.Add(proxy);
         }
 
-        private void CreateObjectBtn_OnClick(object sender, RoutedEventArgs e)
-        {
-            ObjectCreateEventHandler(sender, e);
-        }
 
         public EventHandler<EventArgs> ObjectCreateEventHandler;
 
@@ -155,6 +151,11 @@ namespace ObjectEditor
             var slider = sender as Slider;
             var property = slider.DataContext as ObjectProperty;
             property.ApplyValue();
+        }
+
+        private void CreateSphere_OnClick(object sender, RoutedEventArgs e)
+        {
+            ObjectCreateEventHandler(sender, e);
         }
     }
 }

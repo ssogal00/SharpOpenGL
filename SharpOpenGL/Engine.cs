@@ -46,7 +46,7 @@ namespace SharpOpenGL
 
         public void OnObjectCreate(object sender, EventArgs args)
         {
-            
+            SceneObjectManager.Get().CreateSceneObject<Sphere>();
         }
 
         public bool SeperateRenderingThreadEnabled => bIsSperateRenderingThread;

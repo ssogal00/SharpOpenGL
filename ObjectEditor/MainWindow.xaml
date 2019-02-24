@@ -217,18 +217,7 @@
         </Border>
         <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="2">
             <ListBox HorizontalContentAlignment="Stretch">
-                <ListBoxItem>
-                    <Expander>
-                        <ListBox HorizontalContentAlignment="Stretch">
-                            <ListBoxItem>
-                                <TextBlock Text="Hello"></TextBlock>
-                            </ListBoxItem>
-                            <ListBoxItem>
-                                <TextBlock Text="Hello"></TextBlock>
-                            </ListBoxItem>
-                        </ListBox>
-                    </Expander>
-                </ListBoxItem>
+                <Button Click="CreateSphere_OnClick">Create Sphere</Button>
             </ListBox>
         </Border>
     </StackPanel>

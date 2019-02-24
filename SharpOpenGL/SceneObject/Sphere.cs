@@ -12,14 +12,20 @@ namespace SharpOpenGL
 {
     public class Sphere : SceneObject
     {
-        
-
         public override OpenTK.Matrix4 LocalMatrix
         {
             get
             {
                 return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
             }
+        }
+
+        public Sphere()
+        {
+            Radius = 10;
+            StackCount = 10;
+            SectorCount = 10;
+            Initialize();
         }
 
 
@@ -54,7 +60,6 @@ namespace SharpOpenGL
             if (bReadyToDraw)
             {
                 using (var dummy = new ScopedBind(defaultMaterial))
-                using (var wireFrame = new WireFrameMode())
                 {
                     defaultMaterial.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
                     drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);

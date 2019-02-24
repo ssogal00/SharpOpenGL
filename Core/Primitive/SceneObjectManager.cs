@@ -15,6 +15,7 @@ namespace Core.Primitive
         public T CreateSceneObject<T>() where T : SceneObject, new()
         {
             var result = new T();
+            SceneObjectMap.TryAdd(result.Name, result);
             return result;
         }
 
@@ -35,7 +36,7 @@ namespace Core.Primitive
         public T CreateSceneObject<T, TParam1, TParam2, TParam3>(TParam1 param1, TParam2 param2, TParam3 param3) where T : SceneObject, new()
         {
             T result = Activator.CreateInstance(typeof(T), new object[] { param1, param2, param3 }) as T;
-            //SceneObjectList.Add(result);
+            SceneObjectMap.TryAdd(result.Name, result);
             return result;
         }
 
