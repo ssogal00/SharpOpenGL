@@ -1558,6 +1558,101 @@ void main()
 	}
 }
 }
+namespace Bloom
+{
+
+
+public class Bloom : MaterialBase
+{
+	public Bloom() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"ColorTex", TextureObject);
+	}
+
+	public void SetColorTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"ColorTex", TextureObject);
+	}
+
+	public TextureBase ColorTex2D 
+	{	
+		get { return colortex;}
+		set 
+		{	
+			colortex = value;
+			SetTexture(@"ColorTex", colortex);			
+		}
+	}
+
+	private TextureBase colortex = null;
+
+
+
+
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450
+
+layout (location = 0) in vec3 VertexPosition;
+layout (location = 1) in vec2 VertexTexCoord;
+
+
+layout (location = 0 ) out vec3 OutPosition;
+layout (location = 1 ) out vec2 OutTexCoord;
+
+void main()
+{    
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);
+
+	OutPosition = vec3(VertexPosition.xy, 0.0);
+	OutTexCoord = VertexTexCoord;
+}
+";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"#version 450
+
+
+layout (location = 0 , binding = 0) uniform sampler2D ColorTex;
+
+layout (location = 0 ) in vec3 InPosition;
+layout (location = 1 ) in vec2 InTexCoord;
+
+layout( location = 0 ) out vec4 FragColor;
+
+
+void main() 
+{
+    vec4 color = texture(ColorTex, InTexCoord);
+    float brightness = dot(color.xyz, vec3(0.2126, 0.7152, 0.0722));
+
+    if(brightness > 1.0)
+        FragColor = vec4(color.xyz, 1.0f);
+    else
+        FragColor = vec4(0,0,0,1);
+}";
+	}
+}
+}
 namespace LightMaterial
 {
 
@@ -2019,8 +2114,8 @@ void main()
         vec3 L = normalize(lightPosInViewSpace.xyz - Position);        
         vec3 H = normalize(V + L);
         float distance    = length(lightPosInViewSpace.xyz - Position);
-        //float attenuation = 1.0 / (distance * distance);
-        float attenuation = 1.0 / (distance );
+        float attenuation = 16.0 / (distance * distance);
+        //float attenuation = 1.0 / (distance );
         vec3 radiance     = lightColors[i] * attenuation;
         // cook-torrance brdf
         float NDF = DistributionGGX(N, H, roughness);        

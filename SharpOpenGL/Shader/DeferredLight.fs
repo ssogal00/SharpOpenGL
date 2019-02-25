@@ -282,8 +282,8 @@ void main()
         vec3 L = normalize(lightPosInViewSpace.xyz - Position);        
         vec3 H = normalize(V + L);
         float distance    = length(lightPosInViewSpace.xyz - Position);
-        //float attenuation = 1.0 / (distance * distance);
-        float attenuation = 1.0 / (distance );
+        float attenuation = 16.0 / (distance * distance);
+        //float attenuation = 1.0 / (distance );
         vec3 radiance     = lightColors[i] * attenuation;
         // cook-torrance brdf
         float NDF = DistributionGGX(N, H, roughness);        

@@ -165,6 +165,9 @@ namespace GBufferPNCT
 namespace Blur
 {
 }
+namespace Bloom
+{
+}
 namespace LightMaterial
 {
 }
