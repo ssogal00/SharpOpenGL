@@ -1558,13 +1558,13 @@ void main()
 	}
 }
 }
-namespace Bloom
+namespace BloomMaterial
 {
 
 
-public class Bloom : MaterialBase
+public class BloomMaterial : MaterialBase
 {
-	public Bloom() 
+	public BloomMaterial() 
 	 : base (GetVSSourceCode(), GetFSSourceCode())
 	{	
 	}

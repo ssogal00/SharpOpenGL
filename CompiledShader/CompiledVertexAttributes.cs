@@ -283,7 +283,7 @@ public struct VertexAttribute
 	}
 }
 }
-namespace Bloom
+namespace BloomMaterial
 {
 
 
