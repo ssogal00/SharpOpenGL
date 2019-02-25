@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core;
 using Core.CustomAttribute;
 using Core.Texture;
 using Core.Tickable;
 using OpenTK;
+using SharpOpenGL.Light;
 
 
 namespace SharpOpenGL.PostProcess
@@ -22,10 +24,27 @@ namespace SharpOpenGL.PostProcess
             base.OnGLContextCreated(sender, e);
 
             PostProcessMaterial = new SharpOpenGL.LightMaterial.LightMaterial();
-            lightInfo.LightAmbient = new OpenTK.Vector3(0.3f, 0.3f, 0.3f);
-            lightInfo.LightDiffuse = new OpenTK.Vector3(0.7f, 0.7f, 0.7f);
-            lightInfo.LightSpecular = new OpenTK.Vector3(0.01f,0.01f,0.01f);
-            lightInfo.LightDir = new OpenTK.Vector3(1,1,1);
+
+        }
+
+        private void UpdateLightInfo()
+        {
+            IEnumerable<LightBase> lightList = LightManager.Get().GetLightList();
+
+            var lightCount = lightList.Count();
+
+            if (lightCount != LightPositions.Count)
+            {
+                LightPositions.Clear();
+                LightColors.Clear();
+
+                int index = 0;
+                foreach (var light in lightList)
+                {
+                    LightPositions.Add(light.Translation);
+                    LightColors.Add(light.Color);
+                }
+            }
         }
 
         public override void Render(TextureBase colorInput,  TextureBase normalInput, TextureBase positionInput)
@@ -37,14 +56,15 @@ namespace SharpOpenGL.PostProcess
                 deferredLight.NormalTex2D = normalInput;
                 deferredLight.DiffuseTex2D = colorInput;
 
+                
                 deferredLight.CameraTransform_View = CameraManager.Get().CurrentCameraView;
                 deferredLight.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+                //
 
+                UpdateLightInfo();
+                deferredLight.LightCount = this.LightPositions.Count;
                 deferredLight.LightPositions = this.LightPositions.ToArray();
-                //deferredLight.LightColors = this.LightColors.ToArray();
-                
-
-                PostProcessMaterial.SetUniformBufferValue<SharpOpenGL.LightMaterial.Light>("Light", ref lightInfo);
+                deferredLight.LightColors = this.LightColors.ToArray();
 
                 BlitToScreenSpace();
             });
@@ -72,20 +92,9 @@ namespace SharpOpenGL.PostProcess
         [ExposeUI]
         public SharpOpenGL.LightMaterial.Light lightInfo  = new LightMaterial.Light();
 
-        private List<OpenTK.Vector3> LightPositions = new List<OpenTK.Vector3>
-        {
-            new Vector3(10,20,10),
-            new Vector3(-10,20,10),
-            new Vector3(30,20,-10),
-            new Vector3(50,20,-10),
-        };
+        private List<OpenTK.Vector3> LightPositions = new List<OpenTK.Vector3>(64);
 
-        private List<OpenTK.Vector3> LightColors = new List<Vector3>()
-        {
-            new Vector3(300.0f,300.0f,300.0f),
-            new Vector3(300.0f,300.0f,300.0f),
-            new Vector3(300.0f,300.0f,300.0f),
-            new Vector3(300.0f,300.0f,300.0f),
-        };
+        private List<OpenTK.Vector3> LightColors = new List<Vector3>(64);
+        
     }
 }

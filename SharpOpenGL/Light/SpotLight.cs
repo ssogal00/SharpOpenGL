@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace SharpOpenGL.Light
 {
-    public class SpotLight : LightBase
-    {
-    }
+   
 }

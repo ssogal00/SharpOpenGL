@@ -1590,6 +1590,28 @@ public class LightMaterial : MaterialBase
 
 
 	
+	public OpenTK.Vector3[] LightColors
+	{
+		get { return lightcolors; }
+		set 
+		{
+			lightcolors = value;
+			SetUniformVarData(@"lightColors", ref lightcolors);			
+		}
+	}
+	private OpenTK.Vector3[] lightcolors;
+	
+	public System.Int32 LightCount
+	{
+		get { return lightcount; }
+		set 
+		{
+			lightcount = value;
+			SetUniformVarData(@"lightCount", lightcount);			
+		}
+	}
+	private System.Int32 lightcount;
+	
 	public OpenTK.Vector3[] LightPositions
 	{
 		get { return lightpositions; }
@@ -1973,8 +1995,10 @@ vec3 StandardShading( vec3 DiffuseColor, vec3 SpecularColor, vec3 LobeRoughness,
 
 
 
-uniform vec3 lightPositions[4];
-uniform vec3 lightColors[4];
+
+uniform int lightCount;
+uniform vec3 lightPositions[64];
+uniform vec3 lightColors[64];
 
 uniform CameraTransform
 {
@@ -2006,7 +2030,7 @@ void main()
 	           
     // reflectance equation
     vec3 Lo = vec3(0.0);
-    for(int i = 0; i < 4; ++i) 
+    for(int i = 0; i < lightCount; ++i) 
     {
         // calculate per-light radiance
         //vec4 lightPosInViewSpace = View *  vec4(lightPositions[i], 1);
@@ -2016,7 +2040,7 @@ void main()
         float distance    = length(lightPosInViewSpace.xyz - Position);
         //float attenuation = 1.0 / (distance * distance);
         float attenuation = 1.0 / (distance );
-        vec3 radiance     = vec3(300.f) * attenuation;
+        vec3 radiance     = lightColors[i] * attenuation;
         // cook-torrance brdf
         float NDF = DistributionGGX(N, H, roughness);        
         float G   = GeometrySmith(N, V, L, roughness);      

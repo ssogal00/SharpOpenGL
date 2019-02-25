@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace SharpOpenGL.Light
 {
-    class PointLight
+    public class PointLight : LightBase
     {
+        private static int PointLightCount = 0;
+        public PointLight()
+        : base("PointLight", PointLightCount++)
+        {
+        }
+
+        public override void Draw()
+        {
+
+        }
+
+        
     }
 }

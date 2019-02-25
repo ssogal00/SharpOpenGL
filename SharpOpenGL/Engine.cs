@@ -14,6 +14,7 @@ using SharpOpenGL.Asset;
 using SharpOpenGL.Font;
 using ObjectEditor;
 using SharpOpenGL;
+using SharpOpenGL.Light;
 
 namespace SharpOpenGL
 {
@@ -40,6 +41,8 @@ namespace SharpOpenGL
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
             FontManager.Get().Initialize();
+
+            LightManager.Get().Initialize();
 
             bInitialized = true;
         }
