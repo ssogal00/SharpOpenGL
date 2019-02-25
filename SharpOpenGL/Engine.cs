@@ -58,9 +58,10 @@ namespace SharpOpenGL
                 float X = -75 + metallic * 150;
                 float Y = 10;
                 float Z = 0;
+
                 for (float roughness = 0; roughness <= 1.0f; roughness += 0.2f)
                 {
-                    Z = roughness * 150;
+                    Y = 10 + roughness * 150;
 
                     var sphere = SceneObjectManager.Get().CreateSceneObject<Sphere>();
                     sphere.Metallic = metallic;
