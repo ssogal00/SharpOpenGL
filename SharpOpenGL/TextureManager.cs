@@ -24,7 +24,8 @@ namespace SharpOpenGL
                 Directory.CreateDirectory(importedDirName);
             }
 
-            var files = Directory.EnumerateFiles("./Resources/SponzaTexture").Concat(Directory.EnumerateFiles("./Resources/Texture"));
+            var files = Directory.EnumerateFiles("./Resources/SponzaTexture","*.*", SearchOption.AllDirectories)
+                .Concat(Directory.EnumerateFiles("./Resources/Texture", "*.*", SearchOption.AllDirectories));
 
             foreach (var file in files)
             {

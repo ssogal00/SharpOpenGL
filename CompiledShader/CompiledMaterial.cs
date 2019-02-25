@@ -405,6 +405,27 @@ public class GBufferDraw : MaterialBase
 	}
 
 	private TextureBase masktex = null;
+	public void SetMetalicTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"MetalicTex", TextureObject);
+	}
+
+	public void SetMetalicTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"MetalicTex", TextureObject);
+	}
+
+	public TextureBase MetalicTex2D 
+	{	
+		get { return metalictex;}
+		set 
+		{	
+			metalictex = value;
+			SetTexture(@"MetalicTex", metalictex);			
+		}
+	}
+
+	private TextureBase metalictex = null;
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
@@ -426,27 +447,27 @@ public class GBufferDraw : MaterialBase
 	}
 
 	private TextureBase normaltex = null;
-	public void SetSpecularTex2D(Core.Texture.TextureBase TextureObject)
+	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
-		SetTexture(@"SpecularTex", TextureObject);
+		SetTexture(@"RoughnessTex", TextureObject);
 	}
 
-	public void SetSpecularTex2D(int TextureObject, Sampler sampler)
+	public void SetRoughnessTex2D(int TextureObject, Sampler sampler)
 	{
-		SetTexture(@"SpecularTex", TextureObject);
+		SetTexture(@"RoughnessTex", TextureObject);
 	}
 
-	public TextureBase SpecularTex2D 
+	public TextureBase RoughnessTex2D 
 	{	
-		get { return speculartex;}
+		get { return roughnesstex;}
 		set 
 		{	
-			speculartex = value;
-			SetTexture(@"SpecularTex", speculartex);			
+			roughnesstex = value;
+			SetTexture(@"RoughnessTex", roughnesstex);			
 		}
 	}
 
-	private TextureBase speculartex = null;
+	private TextureBase roughnesstex = null;
 
 
 	
@@ -461,6 +482,17 @@ public class GBufferDraw : MaterialBase
 	}
 	private System.Int32 maskmapexist;
 	
+	public System.Int32 MetalicExist
+	{
+		get { return metalicexist; }
+		set 
+		{
+			metalicexist = value;
+			SetUniformVarData(@"MetalicExist", metalicexist);			
+		}
+	}
+	private System.Int32 metalicexist;
+	
 	public System.Int32 NormalMapExist
 	{
 		get { return normalmapexist; }
@@ -472,16 +504,16 @@ public class GBufferDraw : MaterialBase
 	}
 	private System.Int32 normalmapexist;
 	
-	public System.Int32 SpecularMapExist
+	public System.Int32 RoughnessExist
 	{
-		get { return specularmapexist; }
+		get { return roughnessexist; }
 		set 
 		{
-			specularmapexist = value;
-			SetUniformVarData(@"SpecularMapExist", specularmapexist);			
+			roughnessexist = value;
+			SetUniformVarData(@"RoughnessExist", roughnessexist);			
 		}
 	}
-	private System.Int32 specularmapexist;
+	private System.Int32 roughnessexist;
 
 
     private CameraTransform cameratransform = new CameraTransform();
@@ -610,11 +642,13 @@ layout (location = 2) out vec4 NormalColor;
 layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
 layout (location = 1, binding=1) uniform sampler2D NormalTex;
 layout (location = 2, binding=2) uniform sampler2D MaskTex;
-layout (location = 3, binding=3) uniform sampler2D SpecularTex;
+layout (location = 3, binding=3) uniform sampler2D MetalicTex;
+layout (location = 4, binding=4) uniform sampler2D RoughnessTex;
 
-uniform int SpecularMapExist;
+uniform int MetalicExist;
 uniform int MaskMapExist;
 uniform int NormalMapExist;
+uniform int RoughnessExist;
 
 void main()
 {   
@@ -633,6 +667,15 @@ void main()
     else
     {
     	DiffuseColor = texture(DiffuseTex, InTexCoord);
+    }
+
+    if(RoughnessExist > 0)
+    {
+        DiffuseColor.a = texture(RoughnessTex, InTexCoord).x;
+    }
+    else
+    {
+        DiffuseColor.a = 0;
     }
 
     if(InPosition.w == 0)
@@ -656,9 +699,9 @@ void main()
         NormalColor.xyz = InNormal.xyz;
     }
 
-    if(SpecularMapExist > 0)
+    if(MetalicExist > 0)
     {
-        NormalColor.a = texture(SpecularTex, InTexCoord).x;
+        NormalColor.a = texture(MetalicTex, InTexCoord).x;
         //NormalColor.a = clamp(1 - texture(SpecularTex, InTexCoord).x,0.0f,1.0f);
     }
     else
@@ -953,12 +996,12 @@ public class GBufferDump : MaterialBase
 			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 4 );
 		}
 	}
-	public System.Int32 Dump_SpecularDump
+	public System.Int32 Dump_MetalicDump
 	{
-		get { return dump.SpecularDump ; }
+		get { return dump.MetalicDump ; }
 		set 
 		{ 
-			dump.SpecularDump = value; 
+			dump.MetalicDump = value; 
 			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
 			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 8 );
 		}
@@ -971,6 +1014,16 @@ public class GBufferDump : MaterialBase
 			dump.DiffuseDump = value; 
 			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
 			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 12 );
+		}
+	}
+	public System.Int32 Dump_RoughnessDump
+	{
+		get { return dump.RoughnessDump ; }
+		set 
+		{ 
+			dump.RoughnessDump = value; 
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
+			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 16 );
 		}
 	}
 
@@ -1008,8 +1061,9 @@ uniform Dump
 {
     int PositionDump;
     int NormalDump;
-    int SpecularDump;
+    int MetalicDump;
     int DiffuseDump;
+    int RoughnessDump;
 };
 
 void main() 
@@ -1026,9 +1080,13 @@ void main()
     {
         FragColor = texture(DiffuseTex, InTexCoord);
     }
-    else if(SpecularDump > 0)
+    else if(MetalicDump > 0)
     {
         FragColor = texture(NormalTex,InTexCoord).aaaa;
+    }
+    else if(RoughnessDump > 0)
+    {
+   		FragColor = texture(DiffuseTex, InTexCoord).aaaa;
     }
     else
     {
@@ -1774,6 +1832,40 @@ vec4 Pow5( vec4 x )
 {
 	vec4 xx = x*x;
 	return xx * xx * x;
+}
+
+float DistributionGGX(vec3 N, vec3 H, float roughness)
+{
+    float a      = roughness*roughness;
+    float a2     = a*a;
+    float NdotH  = max(dot(N, H), 0.0);
+    float NdotH2 = NdotH*NdotH;
+	
+    float num   = a2;
+    float denom = (NdotH2 * (a2 - 1.0) + 1.0);
+    denom = PI * denom * denom;
+	
+    return num / denom;
+}
+
+float GeometrySchlickGGX(float NdotV, float roughness)
+{
+    float r = (roughness + 1.0);
+    float k = (r*r) / 8.0;
+
+    float num   = NdotV;
+    float denom = NdotV * (1.0 - k) + k;
+	
+    return num / denom;
+}
+float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
+{
+    float NdotV = max(dot(N, V), 0.0);
+    float NdotL = max(dot(N, L), 0.0);
+    float ggx2  = GeometrySchlickGGX(NdotV, roughness);
+    float ggx1  = GeometrySchlickGGX(NdotL, roughness);
+	
+    return ggx1 * ggx2;
 }
 
 vec3 Diffuse_Lambert( vec3 DiffuseColor )

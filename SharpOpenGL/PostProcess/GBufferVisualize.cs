@@ -23,7 +23,8 @@ namespace SharpOpenGL.PostProcess
             EColor,
             ENormal,
             EPosition,
-            ESpecular,
+            EMetalic,
+            ERoughness,
             EVisualizeModeMax,
         }
 
@@ -38,9 +39,12 @@ namespace SharpOpenGL.PostProcess
                     eVisualizeMode = EVisualizeMode.EPosition;
                     break;
                 case EVisualizeMode.EPosition:
-                    eVisualizeMode = EVisualizeMode.ESpecular;
+                    eVisualizeMode = EVisualizeMode.EMetalic;
                     break;
-                case EVisualizeMode.ESpecular:
+                case EVisualizeMode.EMetalic:
+                    eVisualizeMode = EVisualizeMode.ERoughness;
+                    break;
+                case EVisualizeMode.ERoughness:
                     eVisualizeMode = EVisualizeMode.EColor;
                     break;
             }
@@ -67,7 +71,8 @@ namespace SharpOpenGL.PostProcess
                 gbufferVisualize.Dump_DiffuseDump = eVisualizeMode == EVisualizeMode.EColor ? 1 : 0;
                 gbufferVisualize.Dump_NormalDump = eVisualizeMode == EVisualizeMode.ENormal ? 1 : 0;
                 gbufferVisualize.Dump_PositionDump = eVisualizeMode == EVisualizeMode.EPosition ? 1 : 0;
-                gbufferVisualize.Dump_SpecularDump = eVisualizeMode == EVisualizeMode.ESpecular ? 1 : 0;
+                gbufferVisualize.Dump_MetalicDump = eVisualizeMode == EVisualizeMode.EMetalic ? 1 : 0;
+                gbufferVisualize.Dump_RoughnessDump = eVisualizeMode == EVisualizeMode.ERoughness ? 1 : 0;
 
                 BlitToScreenSpace();
             });

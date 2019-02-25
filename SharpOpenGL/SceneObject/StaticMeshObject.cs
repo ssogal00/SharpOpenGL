@@ -136,14 +136,16 @@ namespace SharpOpenGL
 
                     if (meshAsset.MaterialMap[sectionName].SpecularMap != null)
                     {
-                        gbufferMaterial.SpecularMapExist = 1;
+                        gbufferMaterial.MetalicExist = 1;
                         var specTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].SpecularMap);
-                        gbufferMaterial.SpecularTex2D = specTex;
+                        gbufferMaterial.MetalicTex2D = specTex;
                     }
                     else
                     {
-                        gbufferMaterial.SpecularMapExist = 0;
+                        gbufferMaterial.MetalicExist = 0;
                     }
+
+                    gbufferMaterial.RoughnessExist = 0;
                 }
 
                 foreach (var section in sectionlist)

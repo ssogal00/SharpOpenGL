@@ -13,8 +13,9 @@ uniform Dump
 {
     int PositionDump;
     int NormalDump;
-    int SpecularDump;
+    int MetalicDump;
     int DiffuseDump;
+    int RoughnessDump;
 };
 
 void main() 
@@ -31,9 +32,13 @@ void main()
     {
         FragColor = texture(DiffuseTex, InTexCoord);
     }
-    else if(SpecularDump > 0)
+    else if(MetalicDump > 0)
     {
         FragColor = texture(NormalTex,InTexCoord).aaaa;
+    }
+    else if(RoughnessDump > 0)
+    {
+   		FragColor = texture(DiffuseTex, InTexCoord).aaaa;
     }
     else
     {

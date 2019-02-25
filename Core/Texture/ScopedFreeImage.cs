@@ -45,6 +45,12 @@ namespace Core.Texture
                 ImagePixelInternalFormat = PixelInternalFormat.Luminance;
                 OpenglPixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Luminance;
             }
+            else if (ImagePixelFormat == System.Drawing.Imaging.PixelFormat.DontCare)
+            {
+                //bitmap = FreeImage.ConvertTo32Bits(bitmap);
+                ImagePixelInternalFormat = PixelInternalFormat.Rgba;
+                OpenglPixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
+            }
             else
             {
                 Debug.Assert(false, "Unkown Pixel Format");

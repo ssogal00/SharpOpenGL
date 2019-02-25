@@ -115,7 +115,7 @@ namespace GBufferDump
 {
 
 
-[StructLayout(LayoutKind.Explicit,Size=16)]
+[StructLayout(LayoutKind.Explicit,Size=32)]
 public struct Dump
 {
 	[FieldOffset(0), ExposeUI]
@@ -123,9 +123,11 @@ public struct Dump
 	[FieldOffset(4), ExposeUI]
 	public System.Int32 NormalDump;
 	[FieldOffset(8), ExposeUI]
-	public System.Int32 SpecularDump;
+	public System.Int32 MetalicDump;
 	[FieldOffset(12), ExposeUI]
 	public System.Int32 DiffuseDump;
+	[FieldOffset(16), ExposeUI]
+	public System.Int32 RoughnessDump;
 }
 }
 namespace GBufferPNC

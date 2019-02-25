@@ -85,7 +85,6 @@ namespace SharpOpenGL
         public int MainThreadId { get { return mainThreadId; } }
 
         RenderingThread renderingThread = new RenderingThread();
-        Thread renderThread = null;
 
         protected override void OnUnload(EventArgs e)
         {

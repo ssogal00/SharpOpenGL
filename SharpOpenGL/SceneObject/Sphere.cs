@@ -8,6 +8,7 @@ using Core;
 using Core.CustomAttribute;
 using Core.MaterialBase;
 using Core.Primitive;
+using Core.Texture;
 
 namespace SharpOpenGL
 {
@@ -53,6 +54,12 @@ namespace SharpOpenGL
 
                 defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw.GBufferDraw>();
 
+                normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/copper-rock1-normal.imported");
+                diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/copper-rock1-alb.imported");
+                roughTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/copper-rock1-rough.imported");
+                metalicTex = TextureManager.Get()
+                    .LoadTexture2D("./Resources/Imported/Texture/copper-rock1-metal.imported");
+
                 bReadyToDraw = true;
             });
         }
@@ -68,7 +75,17 @@ namespace SharpOpenGL
                     gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
-                    gbufferDraw.NormalMapExist = 0;
+
+                    gbufferDraw.NormalMapExist = 1;
+                    gbufferDraw.MaskMapExist = 0;
+                    gbufferDraw.MetalicExist = 1;
+                    gbufferDraw.RoughnessExist = 1;
+
+                    gbufferDraw.DiffuseTex2D = diffuseTex;
+                    gbufferDraw.NormalTex2D = normalTex;
+                    gbufferDraw.MetalicTex2D = metalicTex;
+                    gbufferDraw.RoughnessTex2D = roughTex;
+
                     drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
                 }
             }
@@ -205,6 +222,7 @@ namespace SharpOpenGL
             TempVertexList.Clear();
             TempNormalList.Clear();
             TempTangentList.Clear();
+            TempTexCoordList.Clear();
         }
 
         protected void GenerateTangents()
@@ -266,7 +284,7 @@ namespace SharpOpenGL
 
             Vector4 lastValidTangent = new Vector4();
 
-            for (uint i = 0; i < VertexList.Count; ++i)
+            for (uint i = 0; i < TempVertexList.Count; ++i)
             {
                 var n = TempNormalList[(int)i];
                 var t1 = tan1Accum[(int)i];
@@ -321,5 +339,10 @@ namespace SharpOpenGL
         protected List<Vector2> TempTexCoordList = new List<Vector2>();
         protected List<Vector3> TempVertexList = new List<Vector3>();
         protected List<Vector3> TempNormalList = new List<Vector3>();
+
+        protected TextureBase normalTex = null;
+        protected TextureBase diffuseTex = null;
+        protected TextureBase roughTex = null;
+        protected TextureBase metalicTex = null;
     }
 }

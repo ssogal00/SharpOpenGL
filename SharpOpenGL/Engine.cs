@@ -79,7 +79,7 @@ namespace SharpOpenGL
 
         protected bool bIsRequestExit = false;
 
-        private TestSceneObject testSceneObject = null;
+        
 
     }
 }
