@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core;
 using Core.CustomAttribute;
 using Core.Texture;
 using Core.Tickable;
+using OpenTK;
 
 
 namespace SharpOpenGL.PostProcess
@@ -26,15 +28,21 @@ namespace SharpOpenGL.PostProcess
             lightInfo.LightDir = new OpenTK.Vector3(1,1,1);
         }
 
-        public override void Render(TextureBase positionInput, TextureBase colorInput, TextureBase normalInput)
+        public override void Render(TextureBase colorInput,  TextureBase normalInput, TextureBase positionInput)
         {
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
-                PostProcessMaterial.SetTexture("PositionTex", positionInput);
-                PostProcessMaterial.SetTexture("DiffuseTex", colorInput);
-                PostProcessMaterial.SetTexture("NormalTex", normalInput);
-                PostProcessMaterial.SetUniformVarData("Roughness", Roughness);
-                PostProcessMaterial.SetUniformVarData("LobeEnergy", LobeEnergy);
+                var deferredLight = (LightMaterial.LightMaterial) PostProcessMaterial;
+                deferredLight.PositionTex2D = positionInput;
+                deferredLight.NormalTex2D = normalInput;
+                deferredLight.DiffuseTex2D = colorInput;
+
+                deferredLight.CameraTransform_View = CameraManager.Get().CurrentCameraView;
+                deferredLight.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+
+                deferredLight.LightPositions = this.LightPositions.ToArray();
+                //deferredLight.LightColors = this.LightColors.ToArray();
+                
 
                 PostProcessMaterial.SetUniformBufferValue<SharpOpenGL.LightMaterial.Light>("Light", ref lightInfo);
 
@@ -63,5 +71,21 @@ namespace SharpOpenGL.PostProcess
 
         [ExposeUI]
         public SharpOpenGL.LightMaterial.Light lightInfo  = new LightMaterial.Light();
+
+        private List<OpenTK.Vector3> LightPositions = new List<OpenTK.Vector3>
+        {
+            new Vector3(10,20,10),
+            new Vector3(-10,20,10),
+            new Vector3(30,20,-10),
+            new Vector3(50,20,-10),
+        };
+
+        private List<OpenTK.Vector3> LightColors = new List<Vector3>()
+        {
+            new Vector3(300.0f,300.0f,300.0f),
+            new Vector3(300.0f,300.0f,300.0f),
+            new Vector3(300.0f,300.0f,300.0f),
+            new Vector3(300.0f,300.0f,300.0f),
+        };
     }
 }
