@@ -57,7 +57,7 @@ namespace SharpOpenGL
             {
                 float X = -75 + metallic * 150;
                 float Y = 10;
-                float Z = 0;
+                float Z = 10;
 
                 for (float roughness = 0; roughness <= 1.0f; roughness += 0.2f)
                 {
