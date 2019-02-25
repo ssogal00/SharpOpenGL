@@ -110,6 +110,7 @@ namespace SharpOpenGL
                 if (meshAsset.MaterialMap.ContainsKey(sectionName))
                 {
                     var diffuseTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].DiffuseMap);
+                    gbufferMaterial.DiffuseMapExist = 1;
                     gbufferMaterial.DiffuseTex2D = diffuseTex;
 
                     if (meshAsset.MaterialMap[sectionName].NormalMap != null)

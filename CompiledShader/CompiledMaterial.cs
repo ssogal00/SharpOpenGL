@@ -471,6 +471,28 @@ public class GBufferDraw : MaterialBase
 
 
 	
+	public System.Int32 DiffuseMapExist
+	{
+		get { return diffusemapexist; }
+		set 
+		{
+			diffusemapexist = value;
+			SetUniformVarData(@"DiffuseMapExist", diffusemapexist);			
+		}
+	}
+	private System.Int32 diffusemapexist;
+	
+	public OpenTK.Vector3 DiffuseOverride
+	{
+		get { return diffuseoverride; }
+		set 
+		{
+			diffuseoverride = value;
+			SetUniformVarData(@"DiffuseOverride", diffuseoverride);			
+		}
+	}
+	private OpenTK.Vector3 diffuseoverride;
+	
 	public System.Int32 MaskMapExist
 	{
 		get { return maskmapexist; }
@@ -481,6 +503,17 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private System.Int32 maskmapexist;
+	
+	public System.Single Metalic
+	{
+		get { return metalic; }
+		set 
+		{
+			metalic = value;
+			SetUniformVarData(@"Metalic", metalic);			
+		}
+	}
+	private System.Single metalic;
 	
 	public System.Int32 MetalicExist
 	{
@@ -503,6 +536,17 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private System.Int32 normalmapexist;
+	
+	public System.Single Roughness
+	{
+		get { return roughness; }
+		set 
+		{
+			roughness = value;
+			SetUniformVarData(@"Roughness", roughness);			
+		}
+	}
+	private System.Single roughness;
 	
 	public System.Int32 RoughnessExist
 	{
@@ -649,6 +693,11 @@ uniform int MetalicExist;
 uniform int MaskMapExist;
 uniform int NormalMapExist;
 uniform int RoughnessExist;
+uniform int DiffuseMapExist;
+
+uniform float Metalic = 0;
+uniform float Roughness = 0;
+uniform vec3 DiffuseOverride;
 
 void main()
 {   
@@ -666,7 +715,14 @@ void main()
     }
     else
     {
-    	DiffuseColor = texture(DiffuseTex, InTexCoord);
+        if(DiffuseMapExist > 0)
+    	{
+            DiffuseColor = texture(DiffuseTex, InTexCoord);
+        }
+        else
+        {
+            DiffuseColor = vec4(DiffuseOverride,0);
+        }
     }
 
     if(RoughnessExist > 0)
@@ -675,7 +731,7 @@ void main()
     }
     else
     {
-        DiffuseColor.a = 0;
+        DiffuseColor.a = Roughness;
     }
 
     if(InPosition.w == 0)
@@ -701,12 +757,11 @@ void main()
 
     if(MetalicExist > 0)
     {
-        NormalColor.a = texture(MetalicTex, InTexCoord).x;
-        //NormalColor.a = clamp(1 - texture(SpecularTex, InTexCoord).x,0.0f,1.0f);
+        NormalColor.a = texture(MetalicTex, InTexCoord).x;        
     }
     else
     {
-        NormalColor.a = 0;
+        NormalColor.a = Metalic;
     }
 
     PositionColor = InPosition;
@@ -2043,8 +2098,8 @@ void main()
         vec3 radiance     = lightColors[i] * attenuation;
         // cook-torrance brdf
         float NDF = DistributionGGX(N, H, roughness);        
-        float G   = GeometrySmith(N, V, L, roughness);      
-        vec3 F    = fresnelSchlick(clamp(dot(H, V), 0.0, 1.0), F0);      
+        float G   = GeometrySmith(N, V, L, roughness);        
+        vec3 F    = fresnelSchlick(clamp(dot(H, V), 0.0, 1.0), F0);              
         
         vec3 nominator    = NDF * G * F; 
         float denominator = 4 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0);

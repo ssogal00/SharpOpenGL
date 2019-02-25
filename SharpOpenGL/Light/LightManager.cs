@@ -24,13 +24,13 @@ namespace SharpOpenGL.Light
         {
             var random = new Random();
 
-            for (int i = 0; i < 10; ++i)
+            for (int i = 0; i < 20; ++i)
             {
                 var light1 = new PointLight();
 
-                var X = (float) random.Next(-100, 100);
+                var X = (float) random.Next(-200, 200);
                 var Y = (float)random.Next(0, 100);
-                var Z = (float)random.Next(-100, 100);
+                var Z = (float)random.Next(-200, 200);
 
                 var R = (float)random.Next(300, 600);
                 var G = (float)random.Next(300, 600);

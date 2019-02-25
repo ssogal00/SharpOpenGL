@@ -76,15 +76,18 @@ namespace SharpOpenGL
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 
-                    gbufferDraw.NormalMapExist = 1;
+                    gbufferDraw.NormalMapExist = 0;
                     gbufferDraw.MaskMapExist = 0;
-                    gbufferDraw.MetalicExist = 1;
-                    gbufferDraw.RoughnessExist = 1;
+                    gbufferDraw.MetalicExist = 0;
+                    gbufferDraw.RoughnessExist = 0;
+                    gbufferDraw.DiffuseMapExist = 0;
 
+                    gbufferDraw.Roughness = this.Roughness;
+                    gbufferDraw.Metalic = this.Metallic;
+                    gbufferDraw.DiffuseOverride = OpenTK.Vector3.UnitX;
+                    
                     gbufferDraw.DiffuseTex2D = diffuseTex;
-                    gbufferDraw.NormalTex2D = normalTex;
-                    gbufferDraw.MetalicTex2D = metalicTex;
-                    gbufferDraw.RoughnessTex2D = roughTex;
+                    //gbufferDraw.NormalTex2D = normalTex;
 
                     drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
                 }
@@ -344,5 +347,8 @@ namespace SharpOpenGL
         protected TextureBase diffuseTex = null;
         protected TextureBase roughTex = null;
         protected TextureBase metalicTex = null;
+
+        public float Roughness { get; set; } = 0.0f;
+        public float Metallic { get; set; } = 0.0f;
     }
 }

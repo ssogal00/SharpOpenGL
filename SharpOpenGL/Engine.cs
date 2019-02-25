@@ -13,6 +13,7 @@ using Core.Tickable;
 using SharpOpenGL.Asset;
 using SharpOpenGL.Font;
 using ObjectEditor;
+using OpenTK;
 using SharpOpenGL;
 using SharpOpenGL.Light;
 
@@ -43,6 +44,23 @@ namespace SharpOpenGL
             FontManager.Get().Initialize();
 
             LightManager.Get().Initialize();
+
+            //
+            for (float metallic = 0; metallic <= 1.0f; metallic += 0.2f)
+            {
+                float X = metallic * 150;
+                float Y = 10;
+                float Z = 0;
+                for (float roughness = 0; roughness <= 1.0f; roughness += 0.2f)
+                {
+                    Z = roughness * 150;
+
+                    var sphere = SceneObjectManager.Get().CreateSceneObject<Sphere>();
+                    sphere.Metallic = metallic;
+                    sphere.Roughness = roughness;
+                    sphere.Translation = new Vector3(X,Y,Z);
+                }
+            }
 
             bInitialized = true;
         }
