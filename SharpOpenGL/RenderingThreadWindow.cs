@@ -202,8 +202,9 @@ namespace SharpOpenGL
                 }
             );
 
-            //lightPostProcess.Render(renderGBuffer.GetPositionAttachment, renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment);
+            
             lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment);
+            //gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment);
 
             //blurPostProcess.Render(renderGBuffer.GetColorAttachement);
 

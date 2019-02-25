@@ -45,10 +45,17 @@ namespace SharpOpenGL
 
             LightManager.Get().Initialize();
 
-            //
+            // for PBR demonstration
+            PreCreatePBRSpheres();
+
+            bInitialized = true;
+        }
+
+        private void PreCreatePBRSpheres()
+        {
             for (float metallic = 0; metallic <= 1.0f; metallic += 0.2f)
             {
-                float X = metallic * 150;
+                float X = -75 + metallic * 150;
                 float Y = 10;
                 float Z = 0;
                 for (float roughness = 0; roughness <= 1.0f; roughness += 0.2f)
@@ -58,11 +65,9 @@ namespace SharpOpenGL
                     var sphere = SceneObjectManager.Get().CreateSceneObject<Sphere>();
                     sphere.Metallic = metallic;
                     sphere.Roughness = roughness;
-                    sphere.Translation = new Vector3(X,Y,Z);
+                    sphere.Translation = new Vector3(X, Y, Z);
                 }
             }
-
-            bInitialized = true;
         }
 
         public void OnObjectCreate(object sender, EventArgs args)

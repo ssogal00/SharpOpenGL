@@ -54,9 +54,9 @@ namespace SharpOpenGL
 
                 defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw.GBufferDraw>();
 
-                normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/copper-rock1-normal.imported");
-                diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/copper-rock1-alb.imported");
-                roughTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/copper-rock1-rough.imported");
+                normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_normal-dx.imported");
+                diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_basecolor.imported");
+                roughTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_roughness.imported");
                 metalicTex = TextureManager.Get()
                     .LoadTexture2D("./Resources/Imported/Texture/copper-rock1-metal.imported");
 
@@ -76,7 +76,7 @@ namespace SharpOpenGL
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 
-                    gbufferDraw.NormalMapExist = 0;
+                    gbufferDraw.NormalMapExist = 1;
                     gbufferDraw.MaskMapExist = 0;
                     gbufferDraw.MetalicExist = 0;
                     gbufferDraw.RoughnessExist = 0;
@@ -87,7 +87,7 @@ namespace SharpOpenGL
                     gbufferDraw.DiffuseOverride = OpenTK.Vector3.UnitX;
                     
                     gbufferDraw.DiffuseTex2D = diffuseTex;
-                    //gbufferDraw.NormalTex2D = normalTex;
+                    gbufferDraw.NormalTex2D = normalTex;
 
                     drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
                 }
