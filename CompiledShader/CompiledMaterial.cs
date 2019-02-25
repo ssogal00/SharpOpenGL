@@ -1711,67 +1711,6 @@ public class LightMaterial : MaterialBase
 			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 64 );
 		}
 	}
-    private Light light = new Light();
-	public Light Light
-	{
-		get { return light; }
-		set 
-		{ 
-			light = value; 
-			this.SetUniformBufferValue< Light >(@"Light", ref light);
-		}
-	}
-
-	public OpenTK.Vector3 Light_LightDir
-	{
-		get { return light.LightDir ; }
-		set 
-		{ 
-			light.LightDir = value; 
-			this.SetUniformBufferValue< Light >(@"Light", ref light);
-			//this.SetUniformBufferMemberValue< OpenTK.Vector3 >(@"Light", ref value, 0 );
-		}
-	}
-	public OpenTK.Vector3 Light_LightAmbient
-	{
-		get { return light.LightAmbient ; }
-		set 
-		{ 
-			light.LightAmbient = value; 
-			this.SetUniformBufferValue< Light >(@"Light", ref light);
-			//this.SetUniformBufferMemberValue< OpenTK.Vector3 >(@"Light", ref value, 16 );
-		}
-	}
-	public OpenTK.Vector3 Light_LightDiffuse
-	{
-		get { return light.LightDiffuse ; }
-		set 
-		{ 
-			light.LightDiffuse = value; 
-			this.SetUniformBufferValue< Light >(@"Light", ref light);
-			//this.SetUniformBufferMemberValue< OpenTK.Vector3 >(@"Light", ref value, 32 );
-		}
-	}
-	public OpenTK.Vector3 Light_LightSpecular
-	{
-		get { return light.LightSpecular ; }
-		set 
-		{ 
-			light.LightSpecular = value; 
-			this.SetUniformBufferValue< Light >(@"Light", ref light);
-			//this.SetUniformBufferMemberValue< OpenTK.Vector3 >(@"Light", ref value, 48 );
-		}
-	}
-	public System.Single Light_LightSpecularShininess
-	{
-		get { return light.LightSpecularShininess ; }
-		set 
-		{ 
-			light.LightSpecularShininess = value; 
-			this.SetUniformBufferValue< Light >(@"Light", ref light);
-			//this.SetUniformBufferMemberValue< System.Single >(@"Light", ref value, 60 );
-		}
-	}
 
 	public static string GetVSSourceCode()
 	{
@@ -1809,15 +1748,6 @@ layout (location = 1 ) in vec2 InTexCoord;
 
 layout( location = 0 ) out vec4 FragColor;
 
-
-uniform Light
-{
-  vec3 LightDir;
-  vec3 LightAmbient;
-  vec3 LightDiffuse;
-  vec3 LightSpecular;
-  float LightSpecularShininess;  
-};
 
 const float PI = 3.1415926535;
 
@@ -2049,8 +1979,6 @@ vec3 StandardShading( vec3 DiffuseColor, vec3 SpecularColor, vec3 LobeRoughness,
 }
 
 
-
-
 uniform int lightCount;
 uniform vec3 lightPositions[64];
 uniform vec3 lightColors[64];
@@ -2070,9 +1998,7 @@ void main()
     // Fetch Geometry info from G-buffer
 	vec3 Color = texture(DiffuseTex, TexCoord).xyz;
 	vec4 Normal = normalize(texture(NormalTex, TexCoord));
-    vec3 Position = texture(PositionTex, TexCoord).xyz;
-	vec3 ViewDir = -normalize(Position);
-	vec3 Half = normalize(LightDir + ViewDir);
+    vec3 Position = texture(PositionTex, TexCoord).xyz;	
 
     vec3 albedo     = pow(texture(DiffuseTex, TexCoord).rgb, vec3(2.2));    
     float metallic  = clamp(texture(NormalTex, TexCoord).a , 0.0f, 1.0f);

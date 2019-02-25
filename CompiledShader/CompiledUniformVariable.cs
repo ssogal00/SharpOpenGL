@@ -180,22 +180,6 @@ public struct CameraTransform
 	[FieldOffset(64), ExposeUI]
 	public OpenTK.Matrix4 Proj;
 }
-
-
-[StructLayout(LayoutKind.Explicit,Size=64)]
-public struct Light
-{
-	[FieldOffset(0), ExposeUI]
-	public OpenTK.Vector3 LightDir;
-	[FieldOffset(16), ExposeUI]
-	public OpenTK.Vector3 LightAmbient;
-	[FieldOffset(32), ExposeUI]
-	public OpenTK.Vector3 LightDiffuse;
-	[FieldOffset(48), ExposeUI]
-	public OpenTK.Vector3 LightSpecular;
-	[FieldOffset(60), ExposeUI]
-	public System.Single LightSpecularShininess;
-}
 }
 namespace CubemapMaterial
 {

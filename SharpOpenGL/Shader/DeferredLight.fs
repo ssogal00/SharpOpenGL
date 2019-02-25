@@ -12,15 +12,6 @@ layout (location = 1 ) in vec2 InTexCoord;
 layout( location = 0 ) out vec4 FragColor;
 
 
-uniform Light
-{
-  vec3 LightDir;
-  vec3 LightAmbient;
-  vec3 LightDiffuse;
-  vec3 LightSpecular;
-  float LightSpecularShininess;  
-};
-
 const float PI = 3.1415926535;
 
 
@@ -251,8 +242,6 @@ vec3 StandardShading( vec3 DiffuseColor, vec3 SpecularColor, vec3 LobeRoughness,
 }
 
 
-
-
 uniform int lightCount;
 uniform vec3 lightPositions[64];
 uniform vec3 lightColors[64];
@@ -272,9 +261,7 @@ void main()
     // Fetch Geometry info from G-buffer
 	vec3 Color = texture(DiffuseTex, TexCoord).xyz;
 	vec4 Normal = normalize(texture(NormalTex, TexCoord));
-    vec3 Position = texture(PositionTex, TexCoord).xyz;
-	vec3 ViewDir = -normalize(Position);
-	vec3 Half = normalize(LightDir + ViewDir);
+    vec3 Position = texture(PositionTex, TexCoord).xyz;	
 
     vec3 albedo     = pow(texture(DiffuseTex, TexCoord).rgb, vec3(2.2));    
     float metallic  = clamp(texture(NormalTex, TexCoord).a , 0.0f, 1.0f);

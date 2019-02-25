@@ -89,8 +89,6 @@ namespace SharpOpenGL.PostProcess
 
         [ExposeUI] public TestEnumValue EnumTest { get; set; } = TestEnumValue.EIs;
 
-        [ExposeUI]
-        public SharpOpenGL.LightMaterial.Light lightInfo  = new LightMaterial.Light();
 
         private List<OpenTK.Vector3> LightPositions = new List<OpenTK.Vector3>(64);
 
