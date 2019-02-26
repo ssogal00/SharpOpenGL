@@ -29,7 +29,7 @@ namespace SharpOpenGL.PostProcess
 
         private void UpdateLightInfo()
         {
-            IEnumerable<LightBase> lightList = LightManager.Get().GetLightList();
+            IEnumerable<PointLight> lightList = LightManager.Get().GetLightListOfType<PointLight>();
 
             var lightCount = lightList.Count();
 
@@ -37,12 +37,14 @@ namespace SharpOpenGL.PostProcess
             {
                 LightPositions.Clear();
                 LightColors.Clear();
+                LightMinMaxs.Clear();
 
                 int index = 0;
                 foreach (var light in lightList)
                 {
                     LightPositions.Add(light.Translation);
                     LightColors.Add(light.Color);
+                    LightMinMaxs.Add(light.MinMaxRadius);
                 }
             }
         }
@@ -65,6 +67,7 @@ namespace SharpOpenGL.PostProcess
                 deferredLight.LightCount = this.LightPositions.Count;
                 deferredLight.LightPositions = this.LightPositions.ToArray();
                 deferredLight.LightColors = this.LightColors.ToArray();
+                deferredLight.LightMinMaxs = this.LightMinMaxs.ToArray();
 
                 BlitToScreenSpace();
             });
@@ -93,6 +96,8 @@ namespace SharpOpenGL.PostProcess
         private List<OpenTK.Vector3> LightPositions = new List<OpenTK.Vector3>(64);
 
         private List<OpenTK.Vector3> LightColors = new List<Vector3>(64);
+
+        private List<OpenTK.Vector2> LightMinMaxs = new List<Vector2>(64);
         
     }
 }

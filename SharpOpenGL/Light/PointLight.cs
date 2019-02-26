@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core.MaterialBase;
+using OpenTK;
 
 namespace SharpOpenGL.Light
 {
@@ -26,5 +27,7 @@ namespace SharpOpenGL.Light
         }
 
         private WireFrameSphere wireframesphere = null;
+
+        public Vector2 MinMaxRadius { get; set; } = new Vector2(1, 200);
     }
 }

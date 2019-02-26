@@ -1765,6 +1765,17 @@ public class LightMaterial : MaterialBase
 	}
 	private System.Int32 lightcount;
 	
+	public OpenTK.Vector2[] LightMinMaxs
+	{
+		get { return lightminmaxs; }
+		set 
+		{
+			lightminmaxs = value;
+			SetUniformVarData(@"lightMinMaxs", ref lightminmaxs);			
+		}
+	}
+	private OpenTK.Vector2[] lightminmaxs;
+	
 	public OpenTK.Vector3[] LightPositions
 	{
 		get { return lightpositions; }
@@ -1834,6 +1845,7 @@ void main()
 	public static string GetFSSourceCode()
 	{
 		return @"
+
 
 #version 450
 
@@ -2080,6 +2092,7 @@ vec3 StandardShading( vec3 DiffuseColor, vec3 SpecularColor, vec3 LobeRoughness,
 uniform int lightCount;
 uniform vec3 lightPositions[64];
 uniform vec3 lightColors[64];
+uniform vec2 lightMinMaxs[64];
 
 uniform CameraTransform
 {
@@ -2112,14 +2125,20 @@ void main()
     vec3 Lo = vec3(0.0);
     for(int i = 0; i < lightCount; ++i) 
     {
-        // calculate per-light radiance
-        //vec4 lightPosInViewSpace = View *  vec4(lightPositions[i], 1);
+        // calculate per-light radiance        
         vec4 lightPosInViewSpace = View *  vec4(lightPositions[i], 1);
         vec3 L = normalize(lightPosInViewSpace.xyz - Position);        
         vec3 H = normalize(V + L);
-        float distance    = length(lightPosInViewSpace.xyz - Position);
-        //float attenuation = 1.0 / (distance * distance);
-        float attenuation = 1.0 / (distance );
+        
+        float distance = clamp(length(lightPosInViewSpace.xyz - Position), lightMinMaxs[i].x, lightMinMaxs[i].y);
+        float distanceFactor = ((50-1) / (lightMinMaxs[i].y - lightMinMaxs[i].x)) * (distance - lightMinMaxs[i].x) + 1;
+        float attenuation = 1.0 / (distanceFactor * distanceFactor);        
+        /*if(distance >= lightMinMaxs[i].y)
+        {
+            attenuation = 0;
+            continue;
+        } */       
+        
         vec3 radiance     = lightColors[i] * attenuation;
         // cook-torrance brdf
         float NDF = DistributionGGX(N, H, roughness);        
