@@ -198,6 +198,7 @@ namespace SharpOpenGL
                 () =>
                 {   
                     SceneObjectManager.Get().Draw();
+                    DebugDrawer.Get().DebugDraw();
                 }
             );
 

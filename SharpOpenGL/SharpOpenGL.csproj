@@ -160,6 +160,7 @@
     <Compile Include="BlitToScreen.cs" />
     <Compile Include="CameraManager.cs" />
     <Compile Include="ConsoleCommandManager.cs" />
+    <Compile Include="DebugDrawer.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Font\FontManager.cs" />
     <Compile Include="Font\TextInstance.cs" />
@@ -190,6 +191,7 @@
     <Compile Include="SceneObject\TestSceneObject.cs" />
     <Compile Include="SceneObject\ThreeAxis.cs" />
     <Compile Include="SceneObject\Torus.cs" />
+    <Compile Include="SceneObject\WireFrameSphere.cs" />
     <Compile Include="Scene\SceneBase.cs" />
     <Compile Include="SceneObject\StaticMeshObject.cs" />
     <Compile Include="Scene\TesselationScene.cs" />
