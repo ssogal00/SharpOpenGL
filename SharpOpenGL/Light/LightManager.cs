@@ -20,6 +20,17 @@ namespace SharpOpenGL.Light
             return lightDictionary.Values;
         }
 
+        public IEnumerable<T> GetLightListOfType<T>() where T : LightBase
+        {
+            foreach (var light in lightDictionary.Values)
+            {
+                if (light is T)
+                {
+                    yield return (T) light;
+                }
+            }
+        }
+
         public void Initialize()
         {
             var random = new Random();

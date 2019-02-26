@@ -89,6 +89,17 @@ namespace Core.Primitive
             return null;
         }
 
+        public IEnumerable<T> GetSceneObjectListOfType<T>() where  T : SceneObject
+        {
+            foreach (var obj in SceneObjectMap.Values)
+            {
+                if (obj is T)
+                {
+                    yield return (T) obj;
+                }
+            }
+        }
+
         public IEnumerable<object> GetSceneObjectList()
         {
             return SceneObjectMap.Values.Select(x => { return x; });

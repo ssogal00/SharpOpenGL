@@ -127,8 +127,6 @@ namespace SharpOpenGL
                         {
                             UIThread.EditorWindow.SetSceneObjectList(SceneObjectManager.Get().GetSceneObjectList());
                             UIThread.EditorWindow.AddObjectToWatch(lightPostProcess);
-                            
-
                         }
                     );
                 }
