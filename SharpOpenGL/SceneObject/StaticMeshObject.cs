@@ -146,7 +146,16 @@ namespace SharpOpenGL
                         gbufferMaterial.MetalicExist = 0;
                     }
 
-                    gbufferMaterial.RoughnessExist = 0;
+                    if (meshAsset.MaterialMap[sectionName].RoughnessMap != null)
+                    {
+                        gbufferMaterial.RoughnessExist = 1;
+                        var roughnessTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].RoughnessMap);
+                        gbufferMaterial.RoughnessTex2D = roughnessTex;
+                    }
+                    else
+                    {
+                        gbufferMaterial.RoughnessExist = 0;
+                    }
                 }
 
                 foreach (var section in sectionlist)
@@ -185,6 +194,11 @@ namespace SharpOpenGL
                 if (Mtl.Value.MaskMap != null)
                 {
                     TextureManager.Get().CacheTexture2D(Mtl.Value.MaskMap);
+                }
+
+                if (Mtl.Value.RoughnessMap != null)
+                {
+                    TextureManager.Get().CacheTexture2D(Mtl.Value.RoughnessMap);
                 }
             }
         }
