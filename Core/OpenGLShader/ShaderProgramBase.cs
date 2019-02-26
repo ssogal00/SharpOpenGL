@@ -210,6 +210,20 @@ namespace Core.OpenGLShader
             GL.UniformMatrix3x2(Loc, false, ref Data);
         }
 
+        public void SetUniformIntArrayData(string VarName, ref int[] data)
+        {
+            Debug.Assert(data.Any());
+            int Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform1(Loc, data.Length, data);
+        }
+
+        public void SetUniformIntListData(string VarName, ref List<int> data)
+        {
+            Debug.Assert(data.Any());
+            int Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform1(Loc, data.Count, data.ToArray());
+        }
+
         public void SetUniformFloatArrayData(string VarName, ref float[] data)
         {
             Debug.Assert(data.Any());
