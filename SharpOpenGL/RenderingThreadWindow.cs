@@ -71,6 +71,8 @@ namespace SharpOpenGL
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.TextureCubeMap);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
+            // srgb
+            //GL.Enable(EnableCap.FramebufferSrgb);
 
             ShaderManager.Get().CompileShaders();
             AssetManager.Get().ImportStaticMeshes();
@@ -204,6 +206,7 @@ namespace SharpOpenGL
 
             
             lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment);
+            
             
             ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
 

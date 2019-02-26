@@ -263,7 +263,8 @@ void main()
 	vec4 Normal = normalize(texture(NormalTex, TexCoord));
     vec3 Position = texture(PositionTex, TexCoord).xyz;	
 
-    vec3 albedo     = pow(texture(DiffuseTex, TexCoord).rgb, vec3(2.2));    
+    vec3 albedo     = pow(texture(DiffuseTex, TexCoord).rgb, vec3(2.2));
+    //vec3 albedo     = texture(DiffuseTex, TexCoord).rgb;
     float metallic  = clamp(texture(NormalTex, TexCoord).a , 0.0f, 1.0f);
     float roughness = clamp(texture(DiffuseTex, TexCoord).a, 0.0f, 1.0f);
     vec3 N = normalize(texture(NormalTex, TexCoord).xyz);
@@ -282,8 +283,8 @@ void main()
         vec3 L = normalize(lightPosInViewSpace.xyz - Position);        
         vec3 H = normalize(V + L);
         float distance    = length(lightPosInViewSpace.xyz - Position);
-        float attenuation = 16.0 / (distance * distance);
-        //float attenuation = 1.0 / (distance );
+        //float attenuation = 1.0 / (distance * distance);
+        float attenuation = 1.0 / (distance );
         vec3 radiance     = lightColors[i] * attenuation;
         // cook-torrance brdf
         float NDF = DistributionGGX(N, H, roughness);        
@@ -314,7 +315,8 @@ void main()
 
     
     //vec3 ambient = vec3(0.03) * albedo * ao;
-    vec3 ambient = vec3(0.03) * albedo;
+    //vec3 ambient = vec3(0.03) * albedo;
+    vec3 ambient = vec3(0);
     //vec3 ambient = albedo ;
     vec3 color = ambient + Lo;
 	

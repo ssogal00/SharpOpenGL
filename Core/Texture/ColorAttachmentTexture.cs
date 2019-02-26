@@ -7,7 +7,7 @@ namespace Core.Texture
     public class ColorAttachmentTexture : TextureBase
     {
         public ColorAttachmentTexture(int widthParam, int heightParam, PixelInternalFormat format = PixelInternalFormat.Rgba16f)
-        {
+        {   
             m_Width = widthParam;
             m_Height = heightParam;
             textureFormat = format;

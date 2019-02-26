@@ -35,7 +35,7 @@ namespace SharpOpenGL.Light
         {
             var random = new Random();
 
-            for (int i = 0; i < 50; ++i)
+            for (int i = 0; i < 10; ++i)
             {
                 var light1 = new PointLight();
 

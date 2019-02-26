@@ -36,7 +36,8 @@ void main()
     	vec4 MaskValue= texture(MaskTex, InTexCoord);
     	if(MaskValue.x > 0)
     	{
-    		DiffuseColor = texture(DiffuseTex, InTexCoord);            
+    		DiffuseColor = texture(DiffuseTex, InTexCoord);           
+            //DiffuseColor.xyz = pow(DiffuseColor.xyz, vec3(1.0/2.2));  
     	}
     	else
     	{
@@ -48,10 +49,12 @@ void main()
         if(DiffuseMapExist > 0)
     	{
             DiffuseColor = texture(DiffuseTex, InTexCoord);
+            //DiffuseColor.xyz = pow(DiffuseColor.xyz, vec3(1.0/2.2));  
         }
         else
         {
             DiffuseColor = vec4(DiffuseOverride,0);
+           // DiffuseColor.xyz = pow(DiffuseColor.xyz, vec3(1.0/2.2));  
         }
     }
 
