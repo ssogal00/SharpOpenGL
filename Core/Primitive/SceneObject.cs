@@ -27,6 +27,8 @@ namespace Core.Primitive
             get;
         }
 
+        public virtual bool IsEditable { get; set; } = true;
+
         public virtual void Tick(double elapsed) { }
 
         //Draw with default material

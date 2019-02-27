@@ -39,8 +39,8 @@ namespace SharpOpenGL.Light
             {
                 var light1 = new PointLight();
 
-                var X = i * 30 - 200;
-                var Y =  10;
+                var X = i * 50 - 200;
+                var Y =  30;
                 var Z = 0;
 
                 var R = (float)random.Next(300, 600);

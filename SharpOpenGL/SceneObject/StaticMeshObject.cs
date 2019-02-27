@@ -135,7 +135,8 @@ namespace SharpOpenGL
                         gbufferMaterial.MaskMapExist = 0;
                     }
 
-                    if (meshAsset.MaterialMap[sectionName].SpecularMap != null)
+                    //if (meshAsset.MaterialMap[sectionName].SpecularMap != null)
+                    if (false)
                     {
                         gbufferMaterial.MetalicExist = 1;
                         var specTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].SpecularMap);
@@ -144,9 +145,11 @@ namespace SharpOpenGL
                     else
                     {
                         gbufferMaterial.MetalicExist = 0;
+                        gbufferMaterial.Metalic = 0.9f;
                     }
 
-                    if (meshAsset.MaterialMap[sectionName].RoughnessMap != null)
+                    //if (meshAsset.MaterialMap[sectionName].RoughnessMap != null)
+                    if(false)
                     {
                         gbufferMaterial.RoughnessExist = 1;
                         var roughnessTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].RoughnessMap);
@@ -155,6 +158,7 @@ namespace SharpOpenGL
                     else
                     {
                         gbufferMaterial.RoughnessExist = 0;
+                        gbufferMaterial.Roughness = 0.2f;
                     }
                 }
 

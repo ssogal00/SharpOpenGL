@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
+using Core.CustomAttribute;
 using SharpOpenGL.Light;
 
 namespace SharpOpenGL
@@ -19,6 +20,10 @@ namespace SharpOpenGL
             }
         }
 
+
+        [ExposeUI]
         public bool IsGBufferDump { get; set; } = false;
+
+        
     }
 }

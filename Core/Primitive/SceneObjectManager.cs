@@ -105,6 +105,11 @@ namespace Core.Primitive
             return SceneObjectMap.Values.Select(x => { return x; });
         }
 
+        public IEnumerable<object> GetEditableSceneObjectList()
+        {
+            return SceneObjectMap.Values.Where(x => x.IsEditable);
+        }
+
         protected ConcurrentDictionary<string, SceneObject> SceneObjectMap = new ConcurrentDictionary<string, SceneObject>();
     }
 }

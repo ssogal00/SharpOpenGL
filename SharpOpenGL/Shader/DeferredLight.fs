@@ -285,7 +285,7 @@ void main()
         vec3 H = normalize(V + L);
         
         float distance = clamp(length(lightPosInViewSpace.xyz - Position), lightMinMaxs[i].x, lightMinMaxs[i].y);        
-        float distanceFactor = ((100-1) / (lightMinMaxs[i].y - lightMinMaxs[i].x)) * (distance - lightMinMaxs[i].x) + 1;
+        float distanceFactor = ((50-1) / (lightMinMaxs[i].y - lightMinMaxs[i].x)) * (distance - lightMinMaxs[i].x) + 1;
         float attenuation = 1.0 / (distanceFactor * distanceFactor);                
         
         vec3 radiance     = lightColors[i] * attenuation;

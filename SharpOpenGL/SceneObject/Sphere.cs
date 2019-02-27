@@ -14,6 +14,7 @@ namespace SharpOpenGL
 {
     public class Sphere : SceneObject
     {
+        private static int SphereCount = 0;
         public override OpenTK.Matrix4 LocalMatrix
         {
             get
@@ -23,6 +24,7 @@ namespace SharpOpenGL
         }
 
         public Sphere()
+        : base("Sphere",SphereCount++)
         {
             Radius = 10;
             StackCount = 50;
@@ -30,8 +32,11 @@ namespace SharpOpenGL
             Initialize();
         }
 
+        public override bool IsEditable { get; set; } = false;
+
 
         public Sphere(float radius, int stackcount, int sectorcount)
+            : base("Sphere", SphereCount++)
         {
             Debug.Assert(radius > 0 && StackCount > 0 && SectorCount > 0);
             Radius = radius;

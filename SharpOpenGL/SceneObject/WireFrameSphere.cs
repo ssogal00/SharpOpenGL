@@ -29,6 +29,8 @@ namespace SharpOpenGL
             Initialize();
         }
 
+        public override bool IsEditable { get; set; } = false;
+
         public WireFrameSphere(float r, int stack, int sector)
         {
             Radius = r;
