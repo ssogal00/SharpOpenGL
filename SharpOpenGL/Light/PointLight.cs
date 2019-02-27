@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.CustomAttribute;
 using Core.MaterialBase;
 using OpenTK;
 
@@ -28,6 +29,10 @@ namespace SharpOpenGL.Light
 
         private WireFrameSphere wireframesphere = null;
 
+
+        public override bool IsEditable { get; set; } = false;
+
+        [ExposeUI]
         public Vector2 MinMaxRadius { get; set; } = new Vector2(1, 200);
     }
 }

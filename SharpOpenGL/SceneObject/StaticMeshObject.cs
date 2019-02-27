@@ -145,7 +145,7 @@ namespace SharpOpenGL
                     else
                     {
                         gbufferMaterial.MetalicExist = 0;
-                        gbufferMaterial.Metalic = 0.9f;
+                        gbufferMaterial.Metalic = DebugDrawer.Get().SceneMetallic;
                     }
 
                     //if (meshAsset.MaterialMap[sectionName].RoughnessMap != null)
@@ -158,7 +158,7 @@ namespace SharpOpenGL
                     else
                     {
                         gbufferMaterial.RoughnessExist = 0;
-                        gbufferMaterial.Roughness = 0.2f;
+                        gbufferMaterial.Roughness = DebugDrawer.Get().SceneRoughness;
                     }
                 }
 
