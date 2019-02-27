@@ -43,9 +43,9 @@ namespace SharpOpenGL.Light
                 var Y =  60 + 60* (i % 2) ;
                 var Z = 0;
 
-                var R = (float)random.Next(500, 600);
-                var G = (float)random.Next(500, 600);
-                var B = (float)random.Next(500, 600);
+                var R = (float)random.Next(500, 700);
+                var G = (float)random.Next(500, 700);
+                var B = (float)random.Next(500, 700);
 
                 light1.Translation = new OpenTK.Vector3(X,Y,Z);
                 light1.Color = new OpenTK.Vector3(R, G, B);

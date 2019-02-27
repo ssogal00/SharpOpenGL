@@ -1647,8 +1647,9 @@ void main()
 {
     vec4 color = texture(ColorTex, InTexCoord);
     float brightness = dot(color.xyz, vec3(0.2126, 0.7152, 0.0722));
+    //float brightness = length(color.xyz);
 
-    if(brightness > 1.0)
+    if(brightness >= 0.98)
         FragColor = vec4(color.xyz, 1.0f);
     else
         FragColor = vec4(0,0,0,1);
@@ -2169,7 +2170,7 @@ void main()
     //vec3 ambient = albedo ;
     vec3 color = ambient + Lo;
 	
-    color = color / (color + vec3(1.0));
+    //color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2));  
    
     FragColor = vec4(color, 1.0);	

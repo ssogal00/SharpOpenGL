@@ -221,7 +221,10 @@ namespace SharpOpenGL
             else
             {
                 lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment);
-                ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+
+                bloom.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0);
+
+                ScreenBlit.Blit(bloom.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
             }
 
             SwapBuffers();
