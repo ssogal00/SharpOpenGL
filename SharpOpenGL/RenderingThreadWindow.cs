@@ -82,6 +82,10 @@ namespace SharpOpenGL
             ScreenBlit.SetGridSize(2, 2);
 
             sponzamesh = new StaticMeshObject("sponza2.staticmesh");
+            sponzamesh.IsMetallicOverride = sponzamesh.IsRoughnessOverride = true;
+            sponzamesh.Metallic = 0.6f;
+            sponzamesh.Roughness = 0.3f;
+
             GBufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
             GridMaterial = ShaderManager.Get().GetMaterial("GridRenderMaterial");
             WireframeMaterial = ShaderManager.Get().GetMaterial("GBufferPNC");

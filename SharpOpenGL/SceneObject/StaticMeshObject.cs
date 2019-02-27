@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Core;
+using Core.CustomAttribute;
 using Core.MaterialBase;
 using Core.Primitive;
 using Core.Texture;
@@ -21,6 +22,16 @@ namespace SharpOpenGL
             this.assetpath = assetpath;
             Initialize();
         }
+
+        [ExposeUI]
+        public float Roughness { get; set; } = 0.5f;
+
+        [ExposeUI] public bool IsRoughnessOverride { get; set; } = false;
+
+        [ExposeUI]
+        public float Metallic { get; set; } = 0.5f;
+
+        [ExposeUI] public bool IsMetallicOverride { get; set; } = false;
 
         public StaticMeshObject(StaticMeshAsset asset)
         : base("StaticMesh", StaticMeshCount++)
@@ -135,8 +146,12 @@ namespace SharpOpenGL
                         gbufferMaterial.MaskMapExist = 0;
                     }
 
-                    //if (meshAsset.MaterialMap[sectionName].SpecularMap != null)
-                    if (false)
+                    if (IsMetallicOverride)
+                    {
+                        gbufferMaterial.MetalicExist = 0;
+                        gbufferMaterial.Metalic = this.Metallic;
+                    }
+                    else if(meshAsset.MaterialMap[sectionName].SpecularMap != null)
                     {
                         gbufferMaterial.MetalicExist = 1;
                         var specTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].SpecularMap);
@@ -148,8 +163,12 @@ namespace SharpOpenGL
                         gbufferMaterial.Metalic = DebugDrawer.Get().SceneMetallic;
                     }
 
-                    //if (meshAsset.MaterialMap[sectionName].RoughnessMap != null)
-                    if(false)
+                    if(IsRoughnessOverride)
+                    {
+                        gbufferMaterial.RoughnessExist = 0;
+                        gbufferMaterial.Roughness = this.Roughness;
+                    }
+                    else if(meshAsset.MaterialMap[sectionName].RoughnessMap != null)
                     {
                         gbufferMaterial.RoughnessExist = 1;
                         var roughnessTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].RoughnessMap);
