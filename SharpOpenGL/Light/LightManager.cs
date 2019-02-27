@@ -39,7 +39,7 @@ namespace SharpOpenGL.Light
             {
                 var light1 = new PointLight();
 
-                var X = i * 50 - 200;
+                var X = i * 50 - 400;
                 var Y =  30;
                 var Z = 0;
 
