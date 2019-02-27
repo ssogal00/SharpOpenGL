@@ -35,17 +35,17 @@ namespace SharpOpenGL.Light
         {
             var random = new Random();
 
-            for (int i = 0; i < 30; ++i)
+            for (int i = 0; i < 20; ++i)
             {
                 var light1 = new PointLight();
 
-                var X = i * 50 - 400;
-                var Y =  30;
+                var X = i * 100 - 1000;
+                var Y =  60 + 60* (i % 2) ;
                 var Z = 0;
 
-                var R = (float)random.Next(300, 600);
-                var G = (float)random.Next(300, 600);
-                var B = (float)random.Next(300, 600);
+                var R = (float)random.Next(500, 600);
+                var G = (float)random.Next(500, 600);
+                var B = (float)random.Next(500, 600);
 
                 light1.Translation = new OpenTK.Vector3(X,Y,Z);
                 light1.Color = new OpenTK.Vector3(R, G, B);
