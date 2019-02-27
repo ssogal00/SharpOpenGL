@@ -136,6 +136,16 @@ namespace Core.Camera
             Yaw += m_fRotateAmount;
         }
 
+        public override void RotatePitchUpward()
+        {
+            Pitch += m_fRotateAmount;
+        }
+
+        public override void RotatePitchDownward()
+        {
+            Pitch -= m_fRotateAmount;
+        }
+
         private void UpdateMoveSpeed()
         {
             TimeSpan span = DateTime.Now - LastKeyStrokeTime;
@@ -200,6 +210,14 @@ namespace Core.Camera
             {
                 RotateLeft();
             }
+            else if (e.Key == OpenTK.Input.Key.C)
+            {
+                RotatePitchDownward();
+            }
+            else if (e.Key == OpenTK.Input.Key.V)
+            {
+                RotatePitchUpward();
+            }
         }
 
         public override void Tick(double fDeltaSeconds)
@@ -227,7 +245,7 @@ namespace Core.Camera
 
         public override void UpdateViewMatrix()
         {
-            m_RotationMatrix = Matrix3.CreateRotationY(Yaw);
+            m_RotationMatrix = Matrix3.CreateRotationX(Pitch) * Matrix3.CreateRotationY(Yaw);
             ViewMatrix = Matrix4.LookAt(EyeLocation, EyeLocation + Vector3.Multiply(m_RotationMatrix.Row2, 1.0f), Vector3.UnitY);
         }
 

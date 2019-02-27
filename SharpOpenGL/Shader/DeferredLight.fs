@@ -221,15 +221,15 @@ vec3 StandardShading( vec3 DiffuseColor, vec3 SpecularColor, vec3 LobeRoughness,
 	float NoL = dot(N, L);
 	float NoV = dot(N, V);
 	float LoV = dot(L, V);
-	//float InvLenH = rsqrt( 2 + 2 * LoV );
+	
     float InvLenH = 1 / sqrt( 2 + 2 * LoV );
-	//float NoH = saturate( ( NoL + NoV ) * InvLenH );
+	
     float NoH = clamp(( NoL + NoV ) * InvLenH, 0.0, 1.0);
-	//float VoH = saturate( InvLenH + InvLenH * LoV );
+	
     float VoH = clamp( InvLenH + InvLenH * LoV , 0.0, 1.0);
-	//NoL = saturate(NoL);
+	
     NoL = clamp(NoL,0.0,1.0);
-	//NoV = saturate(abs(NoV) + 1e-5);
+	
     NoV = clamp(abs(NoV) + 1e-5,0.0,1.0);
 
 	// Generalized microfacet specular
@@ -284,14 +284,9 @@ void main()
         vec3 L = normalize(lightPosInViewSpace.xyz - Position);        
         vec3 H = normalize(V + L);
         
-        float distance = clamp(length(lightPosInViewSpace.xyz - Position), lightMinMaxs[i].x, lightMinMaxs[i].y);
-        float distanceFactor = ((50-1) / (lightMinMaxs[i].y - lightMinMaxs[i].x)) * (distance - lightMinMaxs[i].x) + 1;
-        float attenuation = 1.0 / (distanceFactor * distanceFactor);        
-        /*if(distance >= lightMinMaxs[i].y)
-        {
-            attenuation = 0;
-            continue;
-        } */       
+        float distance = clamp(length(lightPosInViewSpace.xyz - Position), lightMinMaxs[i].x, lightMinMaxs[i].y);        
+        float distanceFactor = ((100-1) / (lightMinMaxs[i].y - lightMinMaxs[i].x)) * (distance - lightMinMaxs[i].x) + 1;
+        float attenuation = 1.0 / (distanceFactor * distanceFactor);                
         
         vec3 radiance     = lightColors[i] * attenuation;
         // cook-torrance brdf

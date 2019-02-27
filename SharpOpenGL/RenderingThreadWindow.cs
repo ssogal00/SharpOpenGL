@@ -133,6 +133,10 @@ namespace SharpOpenGL
                     );
                 }
             }
+            else if (e.Key == Key.F4)
+            {
+                DebugDrawer.Get().IsGBufferDump = !DebugDrawer.Get().IsGBufferDump;
+            }
             else if (e.Key == Key.F5)
             {
                 gbufferVisualize.ChangeVisualizeMode();
@@ -204,12 +208,17 @@ namespace SharpOpenGL
                 }
             );
 
-            
-            lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment);
-            //gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment);
-            
-            //ScreenBlit.Blit(gbufferVisualize.OutputRenderTarget.ColorAttachment0, 0,0,2,2);
-            ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+
+            if (DebugDrawer.Get().IsGBufferDump)
+            {
+                gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment);
+                ScreenBlit.Blit(gbufferVisualize.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+            }
+            else
+            {
+                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment);
+                ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+            }
 
             SwapBuffers();
         }

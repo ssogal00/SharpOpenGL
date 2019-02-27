@@ -18,5 +18,7 @@ namespace SharpOpenGL
                 point.Draw();
             }
         }
+
+        public bool IsGBufferDump { get; set; } = false;
     }
 }
