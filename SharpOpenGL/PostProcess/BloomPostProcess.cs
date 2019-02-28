@@ -9,9 +9,9 @@ using Core.Texture;
 
 namespace SharpOpenGL.PostProcess
 {
-    public class Bloom : PostProcessBase
+    public class BloomPostProcess : PostProcessBase
     {
-        public Bloom()
+        public BloomPostProcess()
             : base()
         {
             this.Name = "Bloom";
