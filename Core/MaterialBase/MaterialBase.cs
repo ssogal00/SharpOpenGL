@@ -245,6 +245,19 @@ namespace Core.MaterialBase
             }
         }
 
+        public void SetUniformVarData(string varName, bool data, bool bChecked = false)
+        {
+            if (bChecked)
+            {
+                CheckUniformVariableExist(varName);
+            }
+
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformVarData(varName, data);
+            }
+        }
+
         public void SetUniformVarData(string varName, int data, bool bChecked=false)
         {
             if (bChecked)
@@ -263,6 +276,14 @@ namespace Core.MaterialBase
             if (UniformVariableNames.Contains(varName))
             {
                 MaterialProgram.SetUniformFloatArrayData(varName , ref data);
+            }
+        }
+
+        public void SetUniformVarData(string varName, ref float[] data, bool bChecked = false)
+        {
+            if (UniformVariableNames.Contains(varName))
+            {
+                MaterialProgram.SetUniformFloatArrayData(varName, ref data);
             }
         }
 

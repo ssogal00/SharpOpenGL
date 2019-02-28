@@ -224,7 +224,9 @@ namespace SharpOpenGL
 
                 bloom.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0);
 
-                ScreenBlit.Blit(bloom.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+                blurPostProcess.Render(bloom.OutputRenderTarget.ColorAttachment0);
+
+                ScreenBlit.Blit(blurPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
             }
 
             SwapBuffers();

@@ -107,6 +107,12 @@ namespace Core.OpenGLShader
             return false;
         }
 
+        public void SetUniformVarData(string VarName, bool bValue)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.Uniform1(Loc, bValue ? (int)1 : (int)0);
+        }
+
         public void SetUniformVarData(string VarName, float fValue)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);

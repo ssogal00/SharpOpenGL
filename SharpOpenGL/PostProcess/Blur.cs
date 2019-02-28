@@ -38,8 +38,12 @@ namespace SharpOpenGL.PostProcess
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
                 var blurMaterial = (Blur.Blur) (PostProcessMaterial);
-                blurMaterial.BlurOffsets = offset.ToArray();
-                blurMaterial.BlurWeights = weight.ToArray();
+
+                blurMaterial.Horizontal = false;
+                blurMaterial.ColorTex2D = input;
+                BlitToScreenSpace();
+
+                blurMaterial.Horizontal = true;
                 blurMaterial.ColorTex2D = input;
                 BlitToScreenSpace();
             });
