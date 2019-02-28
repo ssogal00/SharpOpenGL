@@ -12,16 +12,10 @@ using MathHelper = Core.MathHelper;
 
 namespace SharpOpenGL.PostProcess
 {
-    public class BlurPostProcess : SharpOpenGL.PostProcess.PostProcessBase, IResizable
+    public class BlurPostProcess : SharpOpenGL.PostProcess.PostProcessBase
     {
         public BlurPostProcess()
             : base()
-        {
-            ResizableManager.Get().AddResizable(this);
-
-        }
-
-        public void OnResize(object sender, ScreenResizeEventArgs e)
         {
         }
 
