@@ -16,6 +16,13 @@ namespace ObjectEditor
             FloatValue = value;
         }
 
+        public FloatProperty(string name, float value, float minValue, float maxValue)
+        : this(name, value)
+        {
+            Min = minValue;
+            Max = maxValue;
+        }
+
         public FloatProperty()
         {
         }

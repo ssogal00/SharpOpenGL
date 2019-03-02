@@ -21,6 +21,20 @@ namespace Core.CustomAttribute
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true)]
+    public class Range : System.Attribute
+    {
+        public Range(float minVal, float maxVal)
+        {
+            this.minValue = minVal;
+        }
+
+        public float Min => minValue;
+
+        private float minValue;
+        
+    }
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true)]
     public class UseSlider : System.Attribute
     {
         public UseSlider(float min, float max)

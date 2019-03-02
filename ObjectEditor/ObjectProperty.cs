@@ -147,7 +147,6 @@ namespace ObjectEditor
                 result.IsField = bFromField;
                 return result;
             }
-            
 
             return null;
         }
