@@ -154,6 +154,13 @@ namespace ObjectEditor
             property.ApplyValue();
         }
 
+        private void FloatSliderChanged(object sender, RoutedEventArgs e)
+        {
+            var slider = sender as Slider;
+            var property = slider.DataContext as ObjectProperty;
+            property.ApplyValue();
+        }
+
         private void RangeBase_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             var slider = sender as Slider;

@@ -26,12 +26,15 @@ namespace Core.CustomAttribute
         public Range(float minVal, float maxVal)
         {
             this.minValue = minVal;
+            this.maxValue = maxVal;
         }
 
         public float Min => minValue;
+        public float Max => maxValue;
 
         private float minValue;
-        
+        private float maxValue;
+
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true)]

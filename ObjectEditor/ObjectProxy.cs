@@ -43,7 +43,7 @@ namespace ObjectEditor
                         var propertyValue = property.GetValue(originalObject);
                         var prop = ObjectProperty.CreateProperty(name, propertyType, originalObject, this);
                         prop.SetValue(propertyValue);
-
+                        prop.InitializeCustomAttributes(property.CustomAttributes);
                         propertyList.Add(prop);
                     }
                     else if (propertyType.IsClass || propertyType.IsValueType)
@@ -52,9 +52,8 @@ namespace ObjectEditor
                         var propertyValue = property.GetValue(originalObject);
                         var prop = ObjectProperty.CreateNestedObjectProperty(name, propertyType, originalObject, this);
                         prop.SetValue(propertyValue);
-
+                        prop.InitializeCustomAttributes(property.CustomAttributes);
                         prop.NestedObject = new ObjectProxy(propertyValue, prop);
-
                         propertyList.Add(prop);
                     }
                 }
@@ -73,7 +72,7 @@ namespace ObjectEditor
                         var propertyValue = field.GetValue(originalObject);
                         var prop = ObjectProperty.CreateProperty(name, fieldType, originalObject, this, true);
                         prop.SetValue(propertyValue);
-
+                        prop.InitializeCustomAttributes(fieldType.CustomAttributes);
                         propertyList.Add(prop);
                     }
                     else if (fieldType.IsClass || fieldType.IsValueType)
@@ -81,7 +80,7 @@ namespace ObjectEditor
                         var propertyValue = field.GetValue(originalObject);
                         var prop = ObjectProperty.CreateNestedObjectProperty(name, fieldType, originalObject, this, true);
                         prop.SetValue(propertyValue);
-
+                        prop.InitializeCustomAttributes(fieldType.CustomAttributes);
                         prop.NestedObject = new ObjectProxy(propertyValue, prop);
 
                         propertyList.Add(prop);

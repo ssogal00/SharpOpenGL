@@ -55,7 +55,14 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
-                <Slider Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Value="{Binding Path=FloatValue, Mode=TwoWay}" HorizontalAlignment="Stretch"></Slider>
+                <Slider Grid.Row="0" Grid.Column="2" 
+                        VerticalAlignment="Center" 
+                        Value="{Binding Path=FloatValue, Mode=TwoWay}" 
+                        Minimum="{Binding Path=Min}" 
+                        Maximum="{Binding Path=Max}" 
+                        HorizontalAlignment="Stretch"
+                        Visibility="{Binding SliderVisibility}"
+                        ValueChanged="FloatSliderChanged"></Slider>
                 <TextBox Grid.Row="0" Grid.Column="3" Style="{StaticResource TextBoxStyle}" Text="{Binding FloatValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="TextBoxBase_OnTextChanged" ></TextBox>
             </Grid>
         </DataTemplate>

@@ -23,12 +23,12 @@ namespace SharpOpenGL
             Initialize();
         }
 
-        [ExposeUI]
+        [ExposeUI, Range(0.0f,1.0f)]
         public float Roughness { get; set; } = 0.5f;
 
         [ExposeUI] public bool IsRoughnessOverride { get; set; } = false;
 
-        [ExposeUI]
+        [ExposeUI, Range(0.0f, 1.0f)]
         public float Metallic { get; set; } = 0.5f;
 
         [ExposeUI] public bool IsMetallicOverride { get; set; } = false;

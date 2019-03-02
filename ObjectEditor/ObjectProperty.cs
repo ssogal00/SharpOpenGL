@@ -48,7 +48,9 @@ namespace ObjectEditor
             enclosingProperty = value;
         }
 
-        public virtual void Initialize(MemberInfo memberInfo) { }
+        public virtual void InitializeCustomAttributes(IEnumerable<CustomAttributeData> attributeDatas)
+        {
+        }
 
         public void PropagateChange()
         {

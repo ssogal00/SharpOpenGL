@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace ObjectEditor
 {
@@ -37,14 +38,14 @@ namespace ObjectEditor
             return FloatValue;
         }
 
-        public override void Initialize(MemberInfo memberInfo)
+        public override void InitializeCustomAttributes(IEnumerable<CustomAttributeData>  customAttributes)
         {
-            if (memberInfo.CustomAttributes.Any(x => x.AttributeType.Name == "UseSlider"))
+            if (customAttributes.Any(x => x.AttributeType.Name == "Range"))
             {
-                var attr = memberInfo.CustomAttributes.First(x => x.AttributeType.Name == "UseSlider");
-                UseSlider = true;
-                Min = Convert.ToSingle(attr.ConstructorArguments[0]);
-                Max = Convert.ToSingle(attr.ConstructorArguments[1]);
+                var attr = customAttributes.First(x => x.AttributeType.Name == "Range");
+                Min = Convert.ToSingle(attr.ConstructorArguments[0].Value);
+                Max = Convert.ToSingle(attr.ConstructorArguments[1].Value);
+                bIsRangeExist = true;
             }
         }
 
@@ -54,5 +55,22 @@ namespace ObjectEditor
 
         public float Min { get; set; } = float.MinValue;
         public float Max { get; set; } = float.MaxValue;
+
+        public Visibility SliderVisibility
+        {
+            get
+            {
+                if (bIsRangeExist)
+                {
+                    return Visibility.Visible;
+                }
+                else
+                {
+                    return Visibility.Hidden;
+                }
+            }
+        }
+
+        private bool bIsRangeExist = false;
     }
 }
