@@ -115,7 +115,7 @@ namespace ObjectEditor
         {
             var proxy = new ObjectProxy(target);
 
-            ObjectProxyList.Items.Add(proxy);
+            ObjectList.Items.Add(proxy);
         }
 
 
