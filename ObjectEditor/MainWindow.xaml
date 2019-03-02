@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ObjectEditor"
         mc:Ignorable="d"
-        Title="EditorWindow" Height="300" Width="300">
+        Title="EditorWindow" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Style.Setters>
@@ -215,7 +215,7 @@
         </DataTemplate>
         
     </Window.Resources>
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical" Height="Auto" >
         <Border BorderBrush="CadetBlue" Padding="3" BorderThickness="2">
             <ListBox Name="ObjectList" Width="Auto" ItemTemplate="{StaticResource ObjectProxyNameTemplate}" HorizontalContentAlignment="Stretch" SelectionChanged="ObjectList_OnSelectionChanged">
             </ListBox>

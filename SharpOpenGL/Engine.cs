@@ -47,7 +47,7 @@ namespace SharpOpenGL
 
             // for PBR demonstration
             PreCreatePBRSpheres();
-
+            
             bInitialized = true;
         }
 

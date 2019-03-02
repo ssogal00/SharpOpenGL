@@ -90,6 +90,17 @@ namespace SharpOpenGL
             GBufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
             GridMaterial = ShaderManager.Get().GetMaterial("GridRenderMaterial");
             WireframeMaterial = ShaderManager.Get().GetMaterial("GBufferPNC");
+            
+            // add ui editable objects
+            UIThread.Get().Enqueue
+            (
+                () =>
+                {
+                    UIThread.EditorWindow.SetSceneObjectList(SceneObjectManager.Get().GetEditableSceneObjectList());
+                    UIThread.EditorWindow.AddObjectToWatch(DebugDrawer.Get());
+                }
+            );
+
             bInitialized = true;
         }
 
@@ -124,19 +135,15 @@ namespace SharpOpenGL
                 CameraManager.Get().CurrentCamera.FOV -= OpenTK.MathHelper.DegreesToRadians(1.0f);
             }
             else if (e.Key == Key.Tilde)
-            {
-                var testSceneObject = SceneObjectManager.Get().GetAnySceneObjectOf<StaticMeshObject>();
-                if (testSceneObject != null)
-                {
-                    UIThread.Get().Enqueue
-                    (
-                        () =>
-                        {
-                            UIThread.EditorWindow.SetSceneObjectList(SceneObjectManager.Get().GetEditableSceneObjectList());
-                            UIThread.EditorWindow.AddObjectToWatch(DebugDrawer.Get());
-                        }
-                    );
-                }
+            {   
+                UIThread.Get().Enqueue
+                (
+                    () =>
+                    {
+                        UIThread.EditorWindow.SetSceneObjectList(SceneObjectManager.Get().GetEditableSceneObjectList());
+                        UIThread.EditorWindow.AddObjectToWatch(DebugDrawer.Get());
+                    }
+                );
             }
             else if (e.Key == Key.F4)
             {
