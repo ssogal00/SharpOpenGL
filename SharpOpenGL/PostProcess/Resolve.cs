@@ -7,6 +7,7 @@ using Core;
 using Core.CustomEvent;
 using Core.Texture;
 
+
 namespace SharpOpenGL.PostProcess
 {
     public class ResolvePostProcess : PostProcessBase
@@ -21,16 +22,19 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<Blur.Blur>();
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<ResolveMaterial.ResolveMaterial>();
         }
 
-        public override void Render(TextureBase input0, TextureBase input1)
+        public override void Render(TextureBase colorTex, TextureBase blurTex)
         {
             Output.BindAndExecute(PostProcessMaterial,
                 () =>
                 {
+                    var resolveMaterial = (ResolveMaterial.ResolveMaterial) PostProcessMaterial;
+                    resolveMaterial.ColorTex2D = colorTex;
+                    resolveMaterial.BlurTex2D = blurTex;
 
-
+                    BlitToScreenSpace();
                 }
             );
         }

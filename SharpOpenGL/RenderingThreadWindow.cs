@@ -32,6 +32,7 @@ namespace SharpOpenGL
         protected DeferredLight lightPostProcess = new DeferredLight();
         protected GBufferVisualize gbufferVisualize = new GBufferVisualize();
         protected BloomPostProcess bloomPostProcess = new BloomPostProcess();
+        protected ResolvePostProcess resolvePostProcess = new ResolvePostProcess();
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
         protected StaticMeshObject sponzamesh = null;
         protected bool bInitialized = false;
@@ -226,7 +227,9 @@ namespace SharpOpenGL
 
                 blurPostProcess.Render(bloomPostProcess.OutputRenderTarget.ColorAttachment0);
 
-                ScreenBlit.Blit(blurPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+                resolvePostProcess.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0, blurPostProcess.OutputRenderTarget.ColorAttachment0);
+
+                ScreenBlit.Blit(resolvePostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
             }
 
             SwapBuffers();

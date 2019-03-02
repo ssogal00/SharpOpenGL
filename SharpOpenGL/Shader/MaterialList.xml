@@ -18,5 +18,6 @@
 	<Material name="FontBoxRenderMaterial" vertexShader="FontBoxRender.vs" fragmentShader="FontBoxRender.fs"/>
 	<Material name="GridRenderMaterial" vertexShader="GridRender.vs" fragmentShader="GridRender.fs"/>
 	<Material name="ThreeDTextRenderMaterial" vertexShader="ThreeDTextRender.vs" fragmentShader="ThreeDTextRender.fs"/>
+	<Material name="ResolveMaterial" vertexShader="Resolve.vs" fragmentShader="Resolve.fs"/>
 	<Material name="SSAO" vertexShader="SSAO.vs" fragmentShader="SSAO.fs"/>
 </MaterialList>

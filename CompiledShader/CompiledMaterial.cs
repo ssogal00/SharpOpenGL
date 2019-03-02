@@ -3130,6 +3130,110 @@ void main()
 	}
 }
 }
+namespace ResolveMaterial
+{
+
+
+public class ResolveMaterial : MaterialBase
+{
+	public ResolveMaterial() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetBlurTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"BlurTex", TextureObject);
+	}
+
+	public void SetBlurTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"BlurTex", TextureObject);
+	}
+
+	public TextureBase BlurTex2D 
+	{	
+		get { return blurtex;}
+		set 
+		{	
+			blurtex = value;
+			SetTexture(@"BlurTex", blurtex);			
+		}
+	}
+
+	private TextureBase blurtex = null;
+	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"ColorTex", TextureObject);
+	}
+
+	public void SetColorTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"ColorTex", TextureObject);
+	}
+
+	public TextureBase ColorTex2D 
+	{	
+		get { return colortex;}
+		set 
+		{	
+			colortex = value;
+			SetTexture(@"ColorTex", colortex);			
+		}
+	}
+
+	private TextureBase colortex = null;
+
+
+
+
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450
+
+layout (location = 0) in vec3 VertexPosition;
+layout (location = 1) in vec2 VertexTexCoord;
+
+layout (location = 0) out vec2 TexCoord;
+
+void main()
+{
+    TexCoord = VertexTexCoord;  
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);
+}
+";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"#version 450
+
+out vec4 FragColor;
+  
+layout (location = 0) in vec2 TexCoords;
+
+uniform sampler2D ColorTex;
+uniform sampler2D BlurTex; 
+
+void main()
+{
+	FragColor = texture(ColorTex, TexCoords) + texture(BlurTex, TexCoords);
+}";
+	}
+}
+}
 namespace SSAO
 {
 

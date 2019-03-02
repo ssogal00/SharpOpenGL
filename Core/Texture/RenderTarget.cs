@@ -11,14 +11,25 @@ namespace Core.Texture
 {
     public class RenderTarget : RenderResource, IBindable, IResizable
     {
-        public RenderTarget(int width, int height, int attachmentCount)
+        /*public RenderTarget(int width, int height, int attachmentCount)
         {
             ResizableManager.Get().AddResizable(this);
             BufferWidth = width;
             BufferHeight = height;
             AttachmentCount = attachmentCount;
-        }
+        }*/
 
+        public RenderTarget(int width, int height, int attachementCount, float customScale = 1.0f)
+        {
+            ResizableManager.Get().AddResizable(this);
+
+            Debug.Assert(customScale > 0 && customScale <= 1.0f);
+            BufferWidth = (int) (width * customScale);
+            BufferHeight = (int) (height * customScale);
+
+            AttachmentCount = attachementCount;
+        }
+        
         public RenderTarget(int width, int height, int attachmentCount, PixelInternalFormat internalFormat, bool includeDepthAttachment )
         : this(width, height, attachmentCount)
         {
@@ -102,8 +113,8 @@ namespace Core.Texture
 
             using (var dummy = new ScopedFrameBufferBound(FrameBufferObject))
             {
-                BufferWidth = newWidth;
-                BufferHeight = newHeight;
+                BufferWidth = (int) (Scale * newWidth);
+                BufferHeight = (int) (Scale * newHeight);
 
                 colorAttachment0.Resize(BufferWidth, BufferHeight);
 
@@ -240,5 +251,8 @@ namespace Core.Texture
         protected int AttachmentCount = 1;
 
         public System.Drawing.Color ClearColor = Color.White;
+
+        public float Scale { get; set; } = 1.0f;
+
     }
 }

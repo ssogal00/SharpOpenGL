@@ -28,21 +28,28 @@ namespace SharpOpenGL.PostProcess
 
         public override void Render(TextureBase input)
         {
-            Output.BindAndExecute(PostProcessMaterial, () =>
+            TempOutput.BindAndExecute(PostProcessMaterial, () =>
             {
                 var blurMaterial = (Blur.Blur) (PostProcessMaterial);
-
                 blurMaterial.Horizontal = false;
                 blurMaterial.ColorTex2D = input;
                 BlitToScreenSpace();
+            });
 
+            Output.BindAndExecute(PostProcessMaterial, () =>
+            {
+                var blurMaterial = (Blur.Blur) (PostProcessMaterial);
                 blurMaterial.Horizontal = true;
-                blurMaterial.ColorTex2D = input;
+                blurMaterial.ColorTex2D = TempOutput.ColorAttachment0;
                 BlitToScreenSpace();
             });
         }
 
         protected List<OpenTK.Vector2> offset = new List<Vector2>();
         protected List<OpenTK.Vector2> weight = new List<Vector2>();
+        
+
+        protected RenderTarget TempOutput = new RenderTarget(1024, 768, 1);
+
     }
 }
