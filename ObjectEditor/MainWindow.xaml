@@ -87,7 +87,7 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="{Binding Path=PropertyName}"></TextBlock>
-                <CheckBox Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding BoolValue}" Checked="ToggleButton_OnChecked"></CheckBox>
+                <CheckBox Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding BoolValue}" Checked="ToggleButton_OnChecked" Unchecked="ToggleButton_OnUnchecked"></CheckBox>
             </Grid>
         </DataTemplate>
 

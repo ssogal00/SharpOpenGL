@@ -139,7 +139,15 @@ namespace ObjectEditor
             
         }
 
+        // @property check box
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+            var property = checkBox.DataContext as ObjectProperty;
+            property.ApplyValue();
+        }
+        // @property check box
+        private void ToggleButton_OnUnchecked(object sender, RoutedEventArgs e)
         {
             var checkBox = sender as CheckBox;
             var property = checkBox.DataContext as ObjectProperty;
@@ -157,5 +165,6 @@ namespace ObjectEditor
         {
             ObjectCreateEventHandler(sender, e);
         }
+
     }
 }
