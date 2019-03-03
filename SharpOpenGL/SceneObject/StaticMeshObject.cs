@@ -121,62 +121,62 @@ namespace SharpOpenGL
                 if (meshAsset.MaterialMap.ContainsKey(sectionName))
                 {
                     var diffuseTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].DiffuseMap);
-                    gbufferMaterial.DiffuseMapExist = 1;
+                    gbufferMaterial.DiffuseMapExist = true;
                     gbufferMaterial.DiffuseTex2D = diffuseTex;
 
                     if (meshAsset.MaterialMap[sectionName].NormalMap != null)
                     {
-                        gbufferMaterial.NormalMapExist = 1;
+                        gbufferMaterial.NormalMapExist = true;
                         var normalTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].NormalMap);
                         gbufferMaterial.NormalTex2D = normalTex;
                     }
                     else
                     {
-                        gbufferMaterial.NormalMapExist = 0;
+                        gbufferMaterial.NormalMapExist = false;
                     }
 
                     if (meshAsset.MaterialMap[sectionName].MaskMap != null)
                     {
-                        gbufferMaterial.MaskMapExist = 1;
+                        gbufferMaterial.MaskMapExist = true;
                         var maskTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].MaskMap);
                         gbufferMaterial.MaskTex2D = maskTex;
                     }
                     else
                     {
-                        gbufferMaterial.MaskMapExist = 0;
+                        gbufferMaterial.MaskMapExist = false;
                     }
 
                     if (IsMetallicOverride)
                     {
-                        gbufferMaterial.MetalicExist = 0;
+                        gbufferMaterial.MetalicExist = false;
                         gbufferMaterial.Metalic = this.Metallic;
                     }
                     else if(meshAsset.MaterialMap[sectionName].SpecularMap != null)
                     {
-                        gbufferMaterial.MetalicExist = 1;
+                        gbufferMaterial.MetalicExist = true;
                         var specTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].SpecularMap);
                         gbufferMaterial.MetalicTex2D = specTex;
                     }
                     else
                     {
-                        gbufferMaterial.MetalicExist = 0;
+                        gbufferMaterial.MetalicExist = false;
                         gbufferMaterial.Metalic = DebugDrawer.Get().SceneMetallic;
                     }
 
                     if(IsRoughnessOverride)
                     {
-                        gbufferMaterial.RoughnessExist = 0;
+                        gbufferMaterial.RoughnessExist = false;
                         gbufferMaterial.Roughness = this.Roughness;
                     }
                     else if(meshAsset.MaterialMap[sectionName].RoughnessMap != null)
                     {
-                        gbufferMaterial.RoughnessExist = 1;
+                        gbufferMaterial.RoughnessExist = true;
                         var roughnessTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].RoughnessMap);
                         gbufferMaterial.RoughnessTex2D = roughnessTex;
                     }
                     else
                     {
-                        gbufferMaterial.RoughnessExist = 0;
+                        gbufferMaterial.RoughnessExist = false;
                         gbufferMaterial.Roughness = DebugDrawer.Get().SceneRoughness;
                     }
                 }

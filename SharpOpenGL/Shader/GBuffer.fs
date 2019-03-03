@@ -19,11 +19,11 @@ layout (location = 2, binding=2) uniform sampler2D MaskTex;
 layout (location = 3, binding=3) uniform sampler2D MetalicTex;
 layout (location = 4, binding=4) uniform sampler2D RoughnessTex;
 
-uniform int MetalicExist;
-uniform int MaskMapExist;
-uniform int NormalMapExist;
-uniform int RoughnessExist;
-uniform int DiffuseMapExist;
+uniform bool MetalicExist;
+uniform bool MaskMapExist;
+uniform bool NormalMapExist;
+uniform bool RoughnessExist;
+uniform bool DiffuseMapExist;
 
 uniform float Metalic = 0;
 uniform float Roughness = 0;
@@ -31,13 +31,12 @@ uniform vec3 DiffuseOverride;
 
 void main()
 {   
-    if(MaskMapExist > 0)
+    if(MaskMapExist)
     {
     	vec4 MaskValue= texture(MaskTex, InTexCoord);
     	if(MaskValue.x > 0)
     	{
-    		DiffuseColor = texture(DiffuseTex, InTexCoord);           
-            //DiffuseColor.xyz = pow(DiffuseColor.xyz, vec3(1.0/2.2));  
+    		DiffuseColor = texture(DiffuseTex, InTexCoord);                       
     	}
     	else
     	{
@@ -46,19 +45,17 @@ void main()
     }
     else
     {
-        if(DiffuseMapExist > 0)
+        if(DiffuseMapExist)
     	{
-            DiffuseColor = texture(DiffuseTex, InTexCoord);
-            //DiffuseColor.xyz = pow(DiffuseColor.xyz, vec3(1.0/2.2));  
+            DiffuseColor = texture(DiffuseTex, InTexCoord);            
         }
         else
         {
-            DiffuseColor = vec4(DiffuseOverride,0);
-           // DiffuseColor.xyz = pow(DiffuseColor.xyz, vec3(1.0/2.2));  
+            DiffuseColor = vec4(DiffuseOverride,0);           
         }
     }
 
-    if(RoughnessExist > 0)
+    if(RoughnessExist)
     {
         DiffuseColor.a = texture(RoughnessTex, InTexCoord).x;
     }
@@ -76,7 +73,7 @@ void main()
 								    InBinormal.x, InBinormal.y, InBinormal.z, 
 								    InNormal.x, InNormal.y, InNormal.z);
 
-    if(NormalMapExist > 0)
+    if(NormalMapExist)
     {
         vec3 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord ).xyz) - vec3(1.0f));
 	    vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
@@ -88,7 +85,7 @@ void main()
         NormalColor.xyz = InNormal.xyz;
     }
 
-    if(MetalicExist > 0)
+    if(MetalicExist)
     {
         NormalColor.a = texture(MetalicTex, InTexCoord).x;        
     }

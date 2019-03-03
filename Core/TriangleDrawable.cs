@@ -24,7 +24,7 @@ namespace Core
         {
             if(bReadyToDraw)
             {
-                var ByteOffset = new IntPtr(Offset * sizeof(uint));
+                var ByteOffset = new IntPtr(Offset * sizeof(uint));                
 
                 GL.DrawElements(PrimitiveType.Triangles, (int)Count, DrawElementsType.UnsignedInt, ByteOffset);
             }

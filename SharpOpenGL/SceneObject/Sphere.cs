@@ -81,11 +81,11 @@ namespace SharpOpenGL
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 
-                    gbufferDraw.NormalMapExist = 1;
-                    gbufferDraw.MaskMapExist = 0;
-                    gbufferDraw.MetalicExist = 0;
-                    gbufferDraw.RoughnessExist = 0;
-                    gbufferDraw.DiffuseMapExist = 0;
+                    gbufferDraw.NormalMapExist = true;
+                    gbufferDraw.MaskMapExist = false;
+                    gbufferDraw.MetalicExist = false;
+                    gbufferDraw.RoughnessExist = false;
+                    gbufferDraw.DiffuseMapExist = false;
 
                     gbufferDraw.Roughness = this.Roughness;
                     gbufferDraw.Metalic = this.Metallic;

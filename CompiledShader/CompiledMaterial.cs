@@ -471,7 +471,7 @@ public class GBufferDraw : MaterialBase
 
 
 	
-	public System.Int32 DiffuseMapExist
+	public System.Boolean DiffuseMapExist
 	{
 		get { return diffusemapexist; }
 		set 
@@ -480,7 +480,7 @@ public class GBufferDraw : MaterialBase
 			SetUniformVarData(@"DiffuseMapExist", diffusemapexist);			
 		}
 	}
-	private System.Int32 diffusemapexist;
+	private System.Boolean diffusemapexist;
 	
 	public OpenTK.Vector3 DiffuseOverride
 	{
@@ -493,7 +493,7 @@ public class GBufferDraw : MaterialBase
 	}
 	private OpenTK.Vector3 diffuseoverride;
 	
-	public System.Int32 MaskMapExist
+	public System.Boolean MaskMapExist
 	{
 		get { return maskmapexist; }
 		set 
@@ -502,7 +502,7 @@ public class GBufferDraw : MaterialBase
 			SetUniformVarData(@"MaskMapExist", maskmapexist);			
 		}
 	}
-	private System.Int32 maskmapexist;
+	private System.Boolean maskmapexist;
 	
 	public System.Single Metalic
 	{
@@ -515,7 +515,7 @@ public class GBufferDraw : MaterialBase
 	}
 	private System.Single metalic;
 	
-	public System.Int32 MetalicExist
+	public System.Boolean MetalicExist
 	{
 		get { return metalicexist; }
 		set 
@@ -524,9 +524,9 @@ public class GBufferDraw : MaterialBase
 			SetUniformVarData(@"MetalicExist", metalicexist);			
 		}
 	}
-	private System.Int32 metalicexist;
+	private System.Boolean metalicexist;
 	
-	public System.Int32 NormalMapExist
+	public System.Boolean NormalMapExist
 	{
 		get { return normalmapexist; }
 		set 
@@ -535,7 +535,7 @@ public class GBufferDraw : MaterialBase
 			SetUniformVarData(@"NormalMapExist", normalmapexist);			
 		}
 	}
-	private System.Int32 normalmapexist;
+	private System.Boolean normalmapexist;
 	
 	public System.Single Roughness
 	{
@@ -548,7 +548,7 @@ public class GBufferDraw : MaterialBase
 	}
 	private System.Single roughness;
 	
-	public System.Int32 RoughnessExist
+	public System.Boolean RoughnessExist
 	{
 		get { return roughnessexist; }
 		set 
@@ -557,7 +557,7 @@ public class GBufferDraw : MaterialBase
 			SetUniformVarData(@"RoughnessExist", roughnessexist);			
 		}
 	}
-	private System.Int32 roughnessexist;
+	private System.Boolean roughnessexist;
 
 
     private CameraTransform cameratransform = new CameraTransform();
@@ -689,11 +689,11 @@ layout (location = 2, binding=2) uniform sampler2D MaskTex;
 layout (location = 3, binding=3) uniform sampler2D MetalicTex;
 layout (location = 4, binding=4) uniform sampler2D RoughnessTex;
 
-uniform int MetalicExist;
-uniform int MaskMapExist;
-uniform int NormalMapExist;
-uniform int RoughnessExist;
-uniform int DiffuseMapExist;
+uniform bool MetalicExist;
+uniform bool MaskMapExist;
+uniform bool NormalMapExist;
+uniform bool RoughnessExist;
+uniform bool DiffuseMapExist;
 
 uniform float Metalic = 0;
 uniform float Roughness = 0;
@@ -701,13 +701,12 @@ uniform vec3 DiffuseOverride;
 
 void main()
 {   
-    if(MaskMapExist > 0)
+    if(MaskMapExist)
     {
     	vec4 MaskValue= texture(MaskTex, InTexCoord);
     	if(MaskValue.x > 0)
     	{
-    		DiffuseColor = texture(DiffuseTex, InTexCoord);           
-            //DiffuseColor.xyz = pow(DiffuseColor.xyz, vec3(1.0/2.2));  
+    		DiffuseColor = texture(DiffuseTex, InTexCoord);                       
     	}
     	else
     	{
@@ -716,19 +715,17 @@ void main()
     }
     else
     {
-        if(DiffuseMapExist > 0)
+        if(DiffuseMapExist)
     	{
-            DiffuseColor = texture(DiffuseTex, InTexCoord);
-            //DiffuseColor.xyz = pow(DiffuseColor.xyz, vec3(1.0/2.2));  
+            DiffuseColor = texture(DiffuseTex, InTexCoord);            
         }
         else
         {
-            DiffuseColor = vec4(DiffuseOverride,0);
-           // DiffuseColor.xyz = pow(DiffuseColor.xyz, vec3(1.0/2.2));  
+            DiffuseColor = vec4(DiffuseOverride,0);           
         }
     }
 
-    if(RoughnessExist > 0)
+    if(RoughnessExist)
     {
         DiffuseColor.a = texture(RoughnessTex, InTexCoord).x;
     }
@@ -746,7 +743,7 @@ void main()
 								    InBinormal.x, InBinormal.y, InBinormal.z, 
 								    InNormal.x, InNormal.y, InNormal.z);
 
-    if(NormalMapExist > 0)
+    if(NormalMapExist)
     {
         vec3 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord ).xyz) - vec3(1.0f));
 	    vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
@@ -758,7 +755,7 @@ void main()
         NormalColor.xyz = InNormal.xyz;
     }
 
-    if(MetalicExist > 0)
+    if(MetalicExist)
     {
         NormalColor.a = texture(MetalicTex, InTexCoord).x;        
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core.Buffer;
 using System.Linq;
+using System.Linq.Expressions;
 using Core.OpenGLShader;
 using Core.Primitive;
 using OpenTK.Graphics.OpenGL;
@@ -71,6 +72,15 @@ namespace Core
             {
                 BindVertexBuffer();
                 GL.DrawArrays(type, 0, VertexCount);
+            }
+        }
+
+        public virtual void DrawPrimitiveInstanced(PrimitiveType type, int instancecount)
+        {
+            if (bReadyToDraw)
+            {
+                BindVertexBuffer();
+                GL.DrawArraysInstanced(type, 0, VertexCount, instancecount);
             }
         }
 
