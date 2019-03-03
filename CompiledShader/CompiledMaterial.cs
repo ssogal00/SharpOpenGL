@@ -770,6 +770,464 @@ void main()
 	}
 }
 }
+namespace GBufferInstanced
+{
+
+
+public class GBufferInstanced : MaterialBase
+{
+	public GBufferInstanced() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"DiffuseTex", TextureObject);
+	}
+
+	public void SetDiffuseTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"DiffuseTex", TextureObject);
+	}
+
+	public TextureBase DiffuseTex2D 
+	{	
+		get { return diffusetex;}
+		set 
+		{	
+			diffusetex = value;
+			SetTexture(@"DiffuseTex", diffusetex);			
+		}
+	}
+
+	private TextureBase diffusetex = null;
+	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"MaskTex", TextureObject);
+	}
+
+	public void SetMaskTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"MaskTex", TextureObject);
+	}
+
+	public TextureBase MaskTex2D 
+	{	
+		get { return masktex;}
+		set 
+		{	
+			masktex = value;
+			SetTexture(@"MaskTex", masktex);			
+		}
+	}
+
+	private TextureBase masktex = null;
+	public void SetMetalicTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"MetalicTex", TextureObject);
+	}
+
+	public void SetMetalicTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"MetalicTex", TextureObject);
+	}
+
+	public TextureBase MetalicTex2D 
+	{	
+		get { return metalictex;}
+		set 
+		{	
+			metalictex = value;
+			SetTexture(@"MetalicTex", metalictex);			
+		}
+	}
+
+	private TextureBase metalictex = null;
+	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"NormalTex", TextureObject);
+	}
+
+	public void SetNormalTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"NormalTex", TextureObject);
+	}
+
+	public TextureBase NormalTex2D 
+	{	
+		get { return normaltex;}
+		set 
+		{	
+			normaltex = value;
+			SetTexture(@"NormalTex", normaltex);			
+		}
+	}
+
+	private TextureBase normaltex = null;
+	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"RoughnessTex", TextureObject);
+	}
+
+	public void SetRoughnessTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"RoughnessTex", TextureObject);
+	}
+
+	public TextureBase RoughnessTex2D 
+	{	
+		get { return roughnesstex;}
+		set 
+		{	
+			roughnesstex = value;
+			SetTexture(@"RoughnessTex", roughnesstex);			
+		}
+	}
+
+	private TextureBase roughnesstex = null;
+
+	public System.Int32 MetallicCount
+	{
+		get { return metalliccount; }
+		set 
+		{
+			metalliccount = value;
+			SetUniformVarData(@"MetallicCount", metalliccount);			
+		}
+	}
+	private System.Int32 metalliccount;
+	public System.Int32 RoughnessCount
+	{
+		get { return roughnesscount; }
+		set 
+		{
+			roughnesscount = value;
+			SetUniformVarData(@"RoughnessCount", roughnesscount);			
+		}
+	}
+	private System.Int32 roughnesscount;
+
+	
+	public System.Boolean DiffuseMapExist
+	{
+		get { return diffusemapexist; }
+		set 
+		{
+			diffusemapexist = value;
+			SetUniformVarData(@"DiffuseMapExist", diffusemapexist);			
+		}
+	}
+	private System.Boolean diffusemapexist;
+	
+	public OpenTK.Vector3 DiffuseOverride
+	{
+		get { return diffuseoverride; }
+		set 
+		{
+			diffuseoverride = value;
+			SetUniformVarData(@"DiffuseOverride", diffuseoverride);			
+		}
+	}
+	private OpenTK.Vector3 diffuseoverride;
+	
+	public System.Boolean MaskMapExist
+	{
+		get { return maskmapexist; }
+		set 
+		{
+			maskmapexist = value;
+			SetUniformVarData(@"MaskMapExist", maskmapexist);			
+		}
+	}
+	private System.Boolean maskmapexist;
+	
+	public System.Single Metalic
+	{
+		get { return metalic; }
+		set 
+		{
+			metalic = value;
+			SetUniformVarData(@"Metalic", metalic);			
+		}
+	}
+	private System.Single metalic;
+	
+	public System.Boolean MetalicExist
+	{
+		get { return metalicexist; }
+		set 
+		{
+			metalicexist = value;
+			SetUniformVarData(@"MetalicExist", metalicexist);			
+		}
+	}
+	private System.Boolean metalicexist;
+	
+	public System.Boolean NormalMapExist
+	{
+		get { return normalmapexist; }
+		set 
+		{
+			normalmapexist = value;
+			SetUniformVarData(@"NormalMapExist", normalmapexist);			
+		}
+	}
+	private System.Boolean normalmapexist;
+	
+	public System.Single Roughness
+	{
+		get { return roughness; }
+		set 
+		{
+			roughness = value;
+			SetUniformVarData(@"Roughness", roughness);			
+		}
+	}
+	private System.Single roughness;
+	
+	public System.Boolean RoughnessExist
+	{
+		get { return roughnessexist; }
+		set 
+		{
+			roughnessexist = value;
+			SetUniformVarData(@"RoughnessExist", roughnessexist);			
+		}
+	}
+	private System.Boolean roughnessexist;
+
+
+    private CameraTransform cameratransform = new CameraTransform();
+	public CameraTransform CameraTransform
+	{
+		get { return cameratransform; }
+		set 
+		{ 
+			cameratransform = value; 
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+		}
+	}
+
+	public OpenTK.Matrix4 CameraTransform_View
+	{
+		get { return cameratransform.View ; }
+		set 
+		{ 
+			cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 0 );
+		}
+	}
+	public OpenTK.Matrix4 CameraTransform_Proj
+	{
+		get { return cameratransform.Proj ; }
+		set 
+		{ 
+			cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 64 );
+		}
+	}
+
+    private ModelTransform modeltransform = new ModelTransform();
+	public ModelTransform ModelTransform
+	{
+		get { return modeltransform; }
+		set 
+		{ 
+			modeltransform = value; 
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+		}
+	}
+
+	public OpenTK.Matrix4 ModelTransform_Model
+	{
+		get { return modeltransform.Model ; }
+		set 
+		{ 
+			modeltransform.Model = value;
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"ModelTransform", ref value, 0 );
+		}
+	}
+
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450 core
+
+uniform ModelTransform
+{
+	mat4x4 Model;
+};
+
+uniform CameraTransform
+{
+	mat4x4 View;
+	mat4x4 Proj;
+};
+
+uniform mat4 NormalMatrix;
+
+
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec3 VertexNormal;
+layout(location=2) in vec2 TexCoord;
+layout(location=3) in vec4 Tangent;
+
+
+
+layout(location=0) out vec4 OutPosition;
+layout(location=1) out vec2 OutTexCoord;
+layout(location=2) out vec3 OutNormal;
+layout(location=3) out vec3 OutTangent;
+layout(location=4) out vec3 OutBinormal;
+layout(location=5) out vec2 OutMetallicRoughness;
+
+uniform int RoughnessCount;
+uniform int MetallicCount;
+  
+void main()
+{	
+	mat4 ModelView = View * Model;
+
+	OutTexCoord = TexCoord;
+	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
+	OutPosition =   (ModelView * vec4(VertexPosition, 1));
+	
+	OutNormal =  normalize(mat3(ModelView) * VertexNormal);	
+
+	OutTangent = normalize(mat3(ModelView) * vec3(Tangent));
+
+	vec3 binormal = (cross( VertexNormal, Tangent.xyz )) * Tangent.w;
+	OutBinormal = normalize(mat3(ModelView) * binormal);	
+
+	int metallicIndex = gl_InstanceID % MetallicCount;
+	int roughnessIndex = gl_InstanceID % RoughnessCount;	
+
+	float metallicValue = float(metallicIndex)  / float(MetallicCount);
+	float roughnessValue = float(roughnessIndex) / float(RoughnessCount);
+
+	OutMetallicRoughness = vec2(metallicValue,  roughnessValue);
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"
+#version 450 core
+
+
+layout(location=0) in vec4 InPosition;
+layout(location=1) in vec2 InTexCoord;
+layout(location=2) in vec3 InNormal;
+layout(location=3) in vec3 InTangent;
+layout(location=4) in vec3 InBinormal;
+
+
+layout (location = 0) out vec4 PositionColor;
+layout (location = 1) out vec4 DiffuseColor;
+layout (location = 2) out vec4 NormalColor;
+
+layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
+layout (location = 1, binding=1) uniform sampler2D NormalTex;
+layout (location = 2, binding=2) uniform sampler2D MaskTex;
+layout (location = 3, binding=3) uniform sampler2D MetalicTex;
+layout (location = 4, binding=4) uniform sampler2D RoughnessTex;
+
+uniform bool MetalicExist;
+uniform bool MaskMapExist;
+uniform bool NormalMapExist;
+uniform bool RoughnessExist;
+uniform bool DiffuseMapExist;
+
+uniform float Metalic = 0;
+uniform float Roughness = 0;
+uniform vec3 DiffuseOverride;
+
+void main()
+{   
+    if(MaskMapExist)
+    {
+    	vec4 MaskValue= texture(MaskTex, InTexCoord);
+    	if(MaskValue.x > 0)
+    	{
+    		DiffuseColor = texture(DiffuseTex, InTexCoord);                       
+    	}
+    	else
+    	{
+    		discard;
+    	}
+    }
+    else
+    {
+        if(DiffuseMapExist)
+    	{
+            DiffuseColor = texture(DiffuseTex, InTexCoord);            
+        }
+        else
+        {
+            DiffuseColor = vec4(DiffuseOverride,0);           
+        }
+    }
+
+    if(RoughnessExist)
+    {
+        DiffuseColor.a = texture(RoughnessTex, InTexCoord).x;
+    }
+    else
+    {
+        DiffuseColor.a = Roughness;
+    }
+
+    if(InPosition.w == 0)
+    {
+        DiffuseColor = vec4(1,0,0,0);
+    }
+
+    mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
+								    InBinormal.x, InBinormal.y, InBinormal.z, 
+								    InNormal.x, InNormal.y, InNormal.z);
+
+    if(NormalMapExist)
+    {
+        vec3 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord ).xyz) - vec3(1.0f));
+	    vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
+	
+        NormalColor.xyz = BumpNormal.xyz;
+    }
+    else
+    {
+        NormalColor.xyz = InNormal.xyz;
+    }
+
+    if(MetalicExist)
+    {
+        NormalColor.a = texture(MetalicTex, InTexCoord).x;        
+    }
+    else
+    {
+        NormalColor.a = Metalic;
+    }
+
+    PositionColor = InPosition;
+}
+";
+	}
+}
+}
 namespace GBufferWithoutTexture
 {
 
