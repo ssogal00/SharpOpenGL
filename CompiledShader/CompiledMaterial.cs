@@ -812,27 +812,6 @@ public class GBufferInstanced : MaterialBase
 	}
 
 	private TextureBase diffusetex = null;
-	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"MaskTex", TextureObject);
-	}
-
-	public void SetMaskTex2D(int TextureObject, Sampler sampler)
-	{
-		SetTexture(@"MaskTex", TextureObject);
-	}
-
-	public TextureBase MaskTex2D 
-	{	
-		get { return masktex;}
-		set 
-		{	
-			masktex = value;
-			SetTexture(@"MaskTex", masktex);			
-		}
-	}
-
-	private TextureBase masktex = null;
 	public void SetMetalicTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MetalicTex", TextureObject);
@@ -941,28 +920,6 @@ public class GBufferInstanced : MaterialBase
 	}
 	private OpenTK.Vector3 diffuseoverride;
 	
-	public System.Boolean MaskMapExist
-	{
-		get { return maskmapexist; }
-		set 
-		{
-			maskmapexist = value;
-			SetUniformVarData(@"MaskMapExist", maskmapexist);			
-		}
-	}
-	private System.Boolean maskmapexist;
-	
-	public System.Single Metalic
-	{
-		get { return metalic; }
-		set 
-		{
-			metalic = value;
-			SetUniformVarData(@"Metalic", metalic);			
-		}
-	}
-	private System.Single metalic;
-	
 	public System.Boolean MetalicExist
 	{
 		get { return metalicexist; }
@@ -984,17 +941,6 @@ public class GBufferInstanced : MaterialBase
 		}
 	}
 	private System.Boolean normalmapexist;
-	
-	public System.Single Roughness
-	{
-		get { return roughness; }
-		set 
-		{
-			roughness = value;
-			SetUniformVarData(@"Roughness", roughness);			
-		}
-	}
-	private System.Single roughness;
 	
 	public System.Boolean RoughnessExist
 	{
@@ -1100,12 +1046,22 @@ uniform int RoughnessCount;
 uniform int MetallicCount;
   
 void main()
-{	
+{
+	int metallicIndex = gl_InstanceID % MetallicCount;
+	int roughnessIndex = gl_InstanceID / RoughnessCount;	
+
+	float metallicValue = float(metallicIndex)  / float(MetallicCount);
+	float roughnessValue = float(roughnessIndex) / float(RoughnessCount);
+
+	vec4 translation = vec4( metallicValue * 150, roughnessValue * 150 + 10, 10, 1);
+
+	OutMetallicRoughness = vec2(metallicValue,  roughnessValue);
+
 	mat4 ModelView = View * Model;
 
 	OutTexCoord = TexCoord;
-	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
-	OutPosition =   (ModelView * vec4(VertexPosition, 1));
+	gl_Position = Proj * ModelView *  (vec4(VertexPosition, 1) + translation);
+	OutPosition =   (ModelView *  (vec4(VertexPosition, 1) + translation) );
 	
 	OutNormal =  normalize(mat3(ModelView) * VertexNormal);	
 
@@ -1113,14 +1069,7 @@ void main()
 
 	vec3 binormal = (cross( VertexNormal, Tangent.xyz )) * Tangent.w;
 	OutBinormal = normalize(mat3(ModelView) * binormal);	
-
-	int metallicIndex = gl_InstanceID % MetallicCount;
-	int roughnessIndex = gl_InstanceID % RoughnessCount;	
-
-	float metallicValue = float(metallicIndex)  / float(MetallicCount);
-	float roughnessValue = float(roughnessIndex) / float(RoughnessCount);
-
-	OutMetallicRoughness = vec2(metallicValue,  roughnessValue);
+	
 }";
 	}
 
@@ -1135,6 +1084,7 @@ layout(location=1) in vec2 InTexCoord;
 layout(location=2) in vec3 InNormal;
 layout(location=3) in vec3 InTangent;
 layout(location=4) in vec3 InBinormal;
+layout(location=5) in vec2 MetallicRoughness;
 
 
 layout (location = 0) out vec4 PositionColor;
@@ -1153,35 +1103,18 @@ uniform bool NormalMapExist;
 uniform bool RoughnessExist;
 uniform bool DiffuseMapExist;
 
-uniform float Metalic = 0;
-uniform float Roughness = 0;
 uniform vec3 DiffuseOverride;
 
 void main()
 {   
-    if(MaskMapExist)
-    {
-    	vec4 MaskValue= texture(MaskTex, InTexCoord);
-    	if(MaskValue.x > 0)
-    	{
-    		DiffuseColor = texture(DiffuseTex, InTexCoord);                       
-    	}
-    	else
-    	{
-    		discard;
-    	}
+    if(DiffuseMapExist)
+	{
+        DiffuseColor = texture(DiffuseTex, InTexCoord);            
     }
     else
     {
-        if(DiffuseMapExist)
-    	{
-            DiffuseColor = texture(DiffuseTex, InTexCoord);            
-        }
-        else
-        {
-            DiffuseColor = vec4(DiffuseOverride,0);           
-        }
-    }
+        DiffuseColor = vec4(DiffuseOverride,0);           
+    }    
 
     if(RoughnessExist)
     {
@@ -1189,7 +1122,7 @@ void main()
     }
     else
     {
-        DiffuseColor.a = Roughness;
+        DiffuseColor.a = MetallicRoughness.y;
     }
 
     if(InPosition.w == 0)
@@ -1219,7 +1152,7 @@ void main()
     }
     else
     {
-        NormalColor.a = Metalic;
+        NormalColor.a = MetallicRoughness.x;
     }
 
     PositionColor = InPosition;

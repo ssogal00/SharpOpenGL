@@ -46,7 +46,9 @@ namespace SharpOpenGL
             LightManager.Get().Initialize();
 
             // for PBR demonstration
-            PreCreatePBRSpheres();
+            // PreCreatePBRSpheres();
+
+            var sphere = SceneObjectManager.Get().CreateSceneObject<InstancedSphere>();
             
             bInitialized = true;
         }

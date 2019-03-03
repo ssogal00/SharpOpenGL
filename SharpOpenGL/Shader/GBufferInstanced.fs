@@ -7,6 +7,7 @@ layout(location=1) in vec2 InTexCoord;
 layout(location=2) in vec3 InNormal;
 layout(location=3) in vec3 InTangent;
 layout(location=4) in vec3 InBinormal;
+layout(location=5) in vec2 MetallicRoughness;
 
 
 layout (location = 0) out vec4 PositionColor;
@@ -25,35 +26,18 @@ uniform bool NormalMapExist;
 uniform bool RoughnessExist;
 uniform bool DiffuseMapExist;
 
-uniform float Metalic = 0;
-uniform float Roughness = 0;
 uniform vec3 DiffuseOverride;
 
 void main()
 {   
-    if(MaskMapExist)
-    {
-    	vec4 MaskValue= texture(MaskTex, InTexCoord);
-    	if(MaskValue.x > 0)
-    	{
-    		DiffuseColor = texture(DiffuseTex, InTexCoord);                       
-    	}
-    	else
-    	{
-    		discard;
-    	}
+    if(DiffuseMapExist)
+	{
+        DiffuseColor = texture(DiffuseTex, InTexCoord);            
     }
     else
     {
-        if(DiffuseMapExist)
-    	{
-            DiffuseColor = texture(DiffuseTex, InTexCoord);            
-        }
-        else
-        {
-            DiffuseColor = vec4(DiffuseOverride,0);           
-        }
-    }
+        DiffuseColor = vec4(DiffuseOverride,0);           
+    }    
 
     if(RoughnessExist)
     {
@@ -61,7 +45,7 @@ void main()
     }
     else
     {
-        DiffuseColor.a = Roughness;
+        DiffuseColor.a = MetallicRoughness.y;
     }
 
     if(InPosition.w == 0)
@@ -91,7 +75,7 @@ void main()
     }
     else
     {
-        NormalColor.a = Metalic;
+        NormalColor.a = MetallicRoughness.x;
     }
 
     PositionColor = InPosition;

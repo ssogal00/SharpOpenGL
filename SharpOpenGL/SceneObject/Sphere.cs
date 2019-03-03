@@ -14,7 +14,7 @@ namespace SharpOpenGL
 {
     public class Sphere : SceneObject
     {
-        private static int SphereCount = 0;
+        protected static int SphereCount = 0;
         public override OpenTK.Matrix4 LocalMatrix
         {
             get
@@ -328,7 +328,7 @@ namespace SharpOpenGL
             tan2Accum.Clear();
         }
 
-        List<PNTT_VertexAttribute> VertexList = new List<PNTT_VertexAttribute>();
+        protected List<PNTT_VertexAttribute> VertexList = new List<PNTT_VertexAttribute>();
 
         [ExposeUI]
         public float Specular = 0.1f;

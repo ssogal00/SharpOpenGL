@@ -34,20 +34,20 @@ uniform int MetallicCount;
 void main()
 {
 	int metallicIndex = gl_InstanceID % MetallicCount;
-	int roughnessIndex = gl_InstanceID % RoughnessCount;	
+	int roughnessIndex = gl_InstanceID / RoughnessCount;	
 
 	float metallicValue = float(metallicIndex)  / float(MetallicCount);
 	float roughnessValue = float(roughnessIndex) / float(RoughnessCount);
 
-	vec4 translation = vec4( metallicValue * 150, roughnessValue * 150, 0, 1);
+	vec4 translation = vec4( metallicValue * 150, roughnessValue * 150 + 10, 10, 1);
 
 	OutMetallicRoughness = vec2(metallicValue,  roughnessValue);
 
 	mat4 ModelView = View * Model;
 
 	OutTexCoord = TexCoord;
-	gl_Position = Proj * View * Model * translation * vec4(VertexPosition, 1);
-	OutPosition =   (ModelView * vec4(VertexPosition, 1));
+	gl_Position = Proj * ModelView *  (vec4(VertexPosition, 1) + translation);
+	OutPosition =   (ModelView *  (vec4(VertexPosition, 1) + translation) );
 	
 	OutNormal =  normalize(mat3(ModelView) * VertexNormal);	
 
