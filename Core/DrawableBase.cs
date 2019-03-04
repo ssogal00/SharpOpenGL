@@ -93,16 +93,8 @@ namespace Core
             }
         }
 
-        public virtual void DrawElementsInstanced(PrimitiveType type, int instanceCount)
-        {
-            if (bReadyToDraw)
-            {
-                BindVertexAndIndexBuffer();
-                
-            }
-        }
         
-        public virtual void DrawLinesPrimitive()
+        public virtual void DrawLinesElements()
         {
             if(bReadyToDraw)
             {
@@ -111,7 +103,7 @@ namespace Core
             }
         }
 
-        public virtual void DrawTrianglesPrimitive()
+        public virtual void DrawTrianglesElements()
         {
             if(bReadyToDraw)
             {
@@ -120,7 +112,7 @@ namespace Core
             }
         }
 
-        public virtual void DrawLineStripPrimitive()
+        public virtual void DrawLineStripElements()
         {
             if(bReadyToDraw)
             {
