@@ -16,6 +16,7 @@ using ObjectEditor;
 using OpenTK;
 using SharpOpenGL;
 using SharpOpenGL.Light;
+using ImageLibWrapper;
 
 namespace SharpOpenGL
 {
@@ -45,10 +46,12 @@ namespace SharpOpenGL
 
             LightManager.Get().Initialize();
 
-            // for PBR demonstration
-            // PreCreatePBRSpheres();
-
             var sphere = SceneObjectManager.Get().CreateSceneObject<InstancedSphere>();
+
+            var lib = new ImageLibrary();
+            var info = new ImageInfo();
+            int width, height, channels;
+            var data = lib.Load("./Resources/SponzaTexture/Background_Albedo.tga", info);
             
             bInitialized = true;
         }
