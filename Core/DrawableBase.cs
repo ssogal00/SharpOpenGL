@@ -66,7 +66,7 @@ namespace Core
             
         }
 
-        public virtual void DrawPrimitiveWithoutIndex(PrimitiveType type)
+        public virtual void DrawArrays(PrimitiveType type)
         {
             if (bReadyToDraw)
             {
@@ -75,7 +75,7 @@ namespace Core
             }
         }
 
-        public virtual void DrawPrimitiveInstanced(PrimitiveType type, int instancecount)
+        public virtual void DrawArraysInstanced(PrimitiveType type, int instancecount)
         {
             if (bReadyToDraw)
             {
@@ -84,12 +84,21 @@ namespace Core
             }
         }
 
-        public virtual void DrawPrimitive(PrimitiveType type)
+        public virtual void DrawElements(PrimitiveType type)
         {
             if(bReadyToDraw)
             {
                 BindVertexAndIndexBuffer();
                 GL.DrawElements(type, IndexCount, DrawElementsType.UnsignedInt, 0);
+            }
+        }
+
+        public virtual void DrawElementsInstanced(PrimitiveType type, int instanceCount)
+        {
+            if (bReadyToDraw)
+            {
+                BindVertexAndIndexBuffer();
+                
             }
         }
         

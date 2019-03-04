@@ -56,7 +56,7 @@ namespace SharpOpenGL
                 using (var dummy = new ScopedBind(defaultMaterial))
                 {
                     defaultMaterial.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
-                    drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+                    drawable.DrawArrays(PrimitiveType.Triangles);
                 }
             }
         }

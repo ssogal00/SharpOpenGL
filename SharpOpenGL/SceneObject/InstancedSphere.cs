@@ -75,7 +75,7 @@ namespace SharpOpenGL
                     gbufferDraw.MetallicCount = 5;
                     gbufferDraw.RoughnessCount = 5;
 
-                    drawable.DrawPrimitiveInstanced(PrimitiveType.Triangles, 5*5);
+                    drawable.DrawArraysInstanced(PrimitiveType.Triangles, 5*5);
                 }
             }
         }

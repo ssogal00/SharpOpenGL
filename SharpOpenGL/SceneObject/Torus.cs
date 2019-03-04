@@ -49,7 +49,7 @@ namespace SharpOpenGL
             {
                 defaultMaterial.BindAndExecute
                 (
-                    () => { drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles); }
+                    () => { drawable.DrawArrays(PrimitiveType.Triangles); }
                 );
             }
         }

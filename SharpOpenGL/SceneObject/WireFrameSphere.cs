@@ -141,7 +141,7 @@ namespace SharpOpenGL
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                     gbufferDraw.Model = this.LocalMatrix;
 
-                    drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+                    drawable.DrawArrays(PrimitiveType.Triangles);
                 }
             }
         }

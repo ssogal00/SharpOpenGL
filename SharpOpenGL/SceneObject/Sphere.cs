@@ -94,7 +94,7 @@ namespace SharpOpenGL
                     gbufferDraw.DiffuseTex2D = diffuseTex;
                     gbufferDraw.NormalTex2D = normalTex;
 
-                    drawable.DrawPrimitiveWithoutIndex(PrimitiveType.Triangles);
+                    drawable.DrawArrays(PrimitiveType.Triangles);
                 }
             }
         }
