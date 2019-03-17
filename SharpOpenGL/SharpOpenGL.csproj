@@ -162,6 +162,7 @@
     <Compile Include="ConsoleCommandManager.cs" />
     <Compile Include="DebugDrawer.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="EquirectangleToCubemap.cs" />
     <Compile Include="Font\FontManager.cs" />
     <Compile Include="Font\TextInstance.cs" />
     <Compile Include="GridDrawer.cs" />

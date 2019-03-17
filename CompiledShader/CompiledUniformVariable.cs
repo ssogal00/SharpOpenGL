@@ -84,6 +84,9 @@ public struct ModelTransform
 namespace GBufferDraw
 {
 }
+namespace EquirectangleToCube
+{
+}
 namespace GBufferInstanced
 {
 

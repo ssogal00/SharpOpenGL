@@ -4,6 +4,7 @@
 	<Material name="SimpleMaterial" vertexShader="TestShader2.vs" fragmentShader="TestShader2.fs"/>
 	<Material name="ScreenSpaceDraw" vertexShader="Screen.vs" fragmentShader="Screen.fs"/>
 	<Material name="GBufferDraw" vertexShader="GBuffer.vs" fragmentShader="GBuffer.fs"/>
+	<Material name="EquirectangleToCube" vertexShader="EquirectangleToCubemap.vs" fragmentShader="EquirectangleToCubemap.fs" />
 	<Material name="GBufferInstanced" vertexShader="GBufferInstanced.vs" fragmentShader="GBufferInstanced.fs"/>
 	<Material name="GBufferWithoutTexture" vertexShader="GBuffer.vs" fragmentShader="GBufferWithoutTexture.fs"/>
 	<Material name="GBufferDump" vertexShader="GBufferDump.vs" fragmentShader="GBufferDump.fs"/>

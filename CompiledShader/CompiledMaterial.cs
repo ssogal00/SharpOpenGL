@@ -770,6 +770,121 @@ void main()
 	}
 }
 }
+namespace EquirectangleToCube
+{
+
+
+public class EquirectangleToCube : MaterialBase
+{
+	public EquirectangleToCube() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetEquirectangularMap2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"EquirectangularMap", TextureObject);
+	}
+
+	public void SetEquirectangularMap2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"EquirectangularMap", TextureObject);
+	}
+
+	public TextureBase EquirectangularMap2D 
+	{	
+		get { return equirectangularmap;}
+		set 
+		{	
+			equirectangularmap = value;
+			SetTexture(@"EquirectangularMap", equirectangularmap);			
+		}
+	}
+
+	private TextureBase equirectangularmap = null;
+
+	public OpenTK.Matrix4 Projection
+	{
+		get { return projection; }
+		set 
+		{
+			projection = value;
+			SetUniformVarData(@"Projection", projection);			
+		}
+	}
+	private OpenTK.Matrix4 projection;
+	public OpenTK.Matrix4 View
+	{
+		get { return view; }
+		set 
+		{
+			view = value;
+			SetUniformVarData(@"View", view);			
+		}
+	}
+	private OpenTK.Matrix4 view;
+
+
+
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450
+
+layout (location = 0) in vec3 Position;
+
+layout (location = 0) out vec3 WorldPos;
+
+uniform mat4 Projection;
+uniform mat4 View;
+
+void main()
+{
+    WorldPos = Position;
+    gl_Position =  Projection * View * vec4(WorldPos, 1.0);
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"#version 450
+
+layout (location = 0) out vec4 FragColor;
+
+layout (location=0) in vec3 WorldPos;
+
+layout (location = 0, binding=0) uniform sampler2D EquirectangularMap;
+
+const vec2 invAtan = vec2(0.1591, -0.3183);
+
+vec2 SampleSphericalMap(vec3 v)
+{
+    vec2 uv = vec2(atan(v.z, v.x), asin(v.y));
+    uv *= invAtan;
+    uv += 0.5;
+    return uv;
+}
+
+void main()
+{       
+    vec2 uv = SampleSphericalMap(normalize(WorldPos));
+    vec3 color = texture(EquirectangularMap, uv).rgb;    
+    FragColor = vec4(color, 1.0);
+}";
+	}
+}
+}
 namespace GBufferInstanced
 {
 
