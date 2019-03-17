@@ -9,6 +9,7 @@ using Core.CustomSerialize;
 using ZeroFormatter.Formatters;
 using System.Threading;
 using Core.Primitive;
+using Core.Texture;
 using Core.Tickable;
 using SharpOpenGL.Asset;
 using SharpOpenGL.Font;
@@ -48,32 +49,9 @@ namespace SharpOpenGL
 
             var sphere = SceneObjectManager.Get().CreateSceneObject<InstancedSphere>();
 
-            var lib = new ImageLibrary();
-            var info = new ImageInfo();
-            int width, height, channels;
-            var data = lib.Load("./Resources/SponzaTexture/Background_Albedo.tga", info);
-            
+            var cube = SceneObjectManager.Get().CreateSceneObject<Cube>();
+
             bInitialized = true;
-        }
-
-        private void PreCreatePBRSpheres()
-        {
-            for (float metallic = 0; metallic <= 1.0f; metallic += 0.2f)
-            {
-                float X = -75 + metallic * 150;
-                float Y = 10;
-                float Z = 10;
-
-                for (float roughness = 0; roughness <= 1.0f; roughness += 0.2f)
-                {
-                    Y = 10 + roughness * 150;
-
-                    var sphere = SceneObjectManager.Get().CreateSceneObject<Sphere>();
-                    sphere.Metallic = metallic;
-                    sphere.Roughness = roughness;
-                    sphere.Translation = new Vector3(X, Y, Z);
-                }
-            }
         }
 
         public void OnObjectCreate(object sender, EventArgs args)

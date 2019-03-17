@@ -111,6 +111,8 @@
     <Compile Include="ResizableManager.cs" />
     <Compile Include="SamplerParameter.cs" />
     <Compile Include="ScopedStopWatch.cs" />
+    <Compile Include="Texture\HDRTexture.cs" />
+    <Compile Include="Texture\ScopedSTBImage.cs" />
     <Compile Include="UniformBufferParameter.cs" />
     <Compile Include="UniformParameter.cs" />
     <Compile Include="Singleton.cs" />
@@ -145,6 +147,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="StaticMesh\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ImageWrapper\ImageWrapper.vcxproj">
+      <Project>{39e0b5dd-0884-494f-8b6a-f17ef1201f39}</Project>
+      <Name>ImageWrapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

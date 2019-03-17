@@ -19,7 +19,7 @@ array<float>^ ImageLibWrapper::ImageLibrary::Load(System::String^ path, ImageInf
 
 	int width=0, height=0, channels=0;
 
-	float* data = stbi_loadf(FileName.c_str(), &width, &height, &channels, 0);
+	float* data = stbi_loadf(FileName.c_str(), &width, &height, &channels, 0);	
 
 	array<float>^ returnValue = gcnew array<float>(width * height * channels);
 

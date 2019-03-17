@@ -27,6 +27,11 @@ namespace SharpOpenGL
             var files = Directory.EnumerateFiles("./Resources/SponzaTexture","*.*", SearchOption.AllDirectories)
                 .Concat(Directory.EnumerateFiles("./Resources/Texture", "*.*", SearchOption.AllDirectories));
 
+            var supportedFormats = new string[]
+            {
+                ".dds",".jpg",".tga",".jpeg",".hdr",".exr"
+            };
+
             foreach (var file in files)
             {
                 if (file.EndsWith(".dds") || file.EndsWith(".jpg") || file.EndsWith(".tga") || file.EndsWith(".jpeg") || file.EndsWith(".png"))

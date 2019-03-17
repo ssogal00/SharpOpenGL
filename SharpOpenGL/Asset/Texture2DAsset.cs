@@ -30,6 +30,12 @@ namespace SharpOpenGL.Asset
         [Index(6)]
         public virtual OpenTK.Graphics.OpenGL.PixelFormat OpenglPixelFormat { get; protected set; } = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
 
+        [Index(7)]
+        public virtual OpenTK.Graphics.OpenGL.PixelType OpenglPixelType { get; protected set; } =
+            OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
+
+        [Index(8)] public virtual float[] Floats { get; protected set; } = null;
+
         // zeromatter requires parameterless constructor
         public Texture2DAsset() { }
 
@@ -39,11 +45,21 @@ namespace SharpOpenGL.Asset
             {
                 this.Width = scopedImage.Width;
                 this.Height = scopedImage.Height;
-                this.Bytes = new byte[scopedImage.ByteSize];
                 this.ByteLength = (int) scopedImage.ByteSize;
                 this.ImagePixelInternalFormat = scopedImage.ImagePixelInternalFormat;
                 this.OpenglPixelFormat = scopedImage.OpenglPixelFormat;
-                Marshal.Copy(scopedImage.Bytes, this.Bytes, 0, (int) scopedImage.ByteSize);
+                this.OpenglPixelType = scopedImage.OpenglPixelType;
+
+                if (OpenglPixelType == PixelType.Float)
+                {
+                    this.Floats = new float[scopedImage.ByteSize];
+                    Marshal.Copy(scopedImage.Bytes, this.Floats, 0, (int)scopedImage.ByteSize);
+                }
+                else
+                {
+                    this.Bytes = new byte[scopedImage.ByteSize];
+                    Marshal.Copy(scopedImage.Bytes, this.Bytes, 0, (int)scopedImage.ByteSize);
+                }
             }
         }
 

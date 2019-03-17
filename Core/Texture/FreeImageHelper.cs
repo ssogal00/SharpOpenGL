@@ -25,12 +25,14 @@ namespace Core.Texture
             }
         }
 
-        public static FIBITMAP Load(string FilePath, out int Width, out int Height, out PixelFormat OutPixelFormat)
+        public static FIBITMAP Load(string FilePath, out int Width, out int Height, out PixelFormat OutPixelFormat, out bool IsTransparent, out uint BPP)
         {
             FIBITMAP DIB = new FIBITMAP();
 
             Width = Height = 0;
             OutPixelFormat = PixelFormat.Max;
+            IsTransparent = false;
+            BPP = 24;
 
             if (!File.Exists(FilePath))
             {
@@ -62,9 +64,12 @@ namespace Core.Texture
             }
                         
             // get bit
-            
             OutPixelFormat = FreeImage.GetPixelFormat(DIB);
 
+            IsTransparent = FreeImage.IsTransparent(DIB);
+
+            BPP = FreeImage.GetBPP(DIB);
+            
             // get width height
             Width = (int) FreeImage.GetWidth(DIB);
             Height = (int) FreeImage.GetHeight(DIB);

@@ -1677,6 +1677,187 @@ void main()
 	}
 }
 }
+namespace GBufferCubeTest
+{
+
+
+public class GBufferCubeTest : MaterialBase
+{
+	public GBufferCubeTest() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetEquirectangularMap2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"EquirectangularMap", TextureObject);
+	}
+
+	public void SetEquirectangularMap2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"EquirectangularMap", TextureObject);
+	}
+
+	public TextureBase EquirectangularMap2D 
+	{	
+		get { return equirectangularmap;}
+		set 
+		{	
+			equirectangularmap = value;
+			SetTexture(@"EquirectangularMap", equirectangularmap);			
+		}
+	}
+
+	private TextureBase equirectangularmap = null;
+
+
+
+
+    private CameraTransform cameratransform = new CameraTransform();
+	public CameraTransform CameraTransform
+	{
+		get { return cameratransform; }
+		set 
+		{ 
+			cameratransform = value; 
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+		}
+	}
+
+	public OpenTK.Matrix4 CameraTransform_View
+	{
+		get { return cameratransform.View ; }
+		set 
+		{ 
+			cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 0 );
+		}
+	}
+	public OpenTK.Matrix4 CameraTransform_Proj
+	{
+		get { return cameratransform.Proj ; }
+		set 
+		{ 
+			cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 64 );
+		}
+	}
+
+    private ModelTransform modeltransform = new ModelTransform();
+	public ModelTransform ModelTransform
+	{
+		get { return modeltransform; }
+		set 
+		{ 
+			modeltransform = value; 
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+		}
+	}
+
+	public OpenTK.Matrix4 ModelTransform_Model
+	{
+		get { return modeltransform.Model ; }
+		set 
+		{ 
+			modeltransform.Model = value;
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"ModelTransform", ref value, 0 );
+		}
+	}
+
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450 core
+
+uniform ModelTransform
+{
+	mat4x4 Model;
+};
+
+uniform CameraTransform
+{
+	mat4x4 View;
+	mat4x4 Proj;
+};
+
+
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec3 VertexNormal;
+layout(location=2) in vec2 TexCoord;
+
+layout(location=0) out vec4 OutPosition;
+layout(location=1) out vec2 OutTexCoord;
+layout(location=2) out vec3 OutNormal;
+layout(location=3) out vec3 LocalPosition;
+  
+void main()
+{	
+	mat4 ModelView = View * Model;
+
+	LocalPosition = VertexPosition;
+
+	OutTexCoord = TexCoord;
+	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
+	OutPosition =   (ModelView * vec4(VertexPosition, 1));
+	
+	OutNormal =  normalize(mat3(ModelView) * VertexNormal);		
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"
+#version 450 core
+
+
+layout(location=0) in vec4 InPosition;
+layout(location=1) in vec2 InTexCoord;
+layout(location=2) in vec3 InNormal;
+layout(location=3) in vec3 InLocalPosition;
+
+
+layout (location = 0) out vec4 PositionColor;
+layout (location = 1) out vec4 DiffuseColor;
+layout (location = 2) out vec4 NormalColor;
+
+layout (location=0, binding=0) uniform sampler2D EquirectangularMap;
+
+const vec2 invAtan = vec2(0.1591, 0.3183);
+vec2 SampleSphericalMap(vec3 v)
+{
+    vec2 uv = vec2(atan(v.z, v.x), asin(v.y));
+    uv *= invAtan;
+    uv += 0.5;
+    return uv;
+}
+
+void main()
+{  
+    vec2 uv = SampleSphericalMap(normalize(InLocalPosition));
+    vec3 color = texture(EquirectangularMap, uv).rgb;   
+    
+    DiffuseColor = vec4(color, 1.0);
+    NormalColor = vec4(InNormal, 1);
+    PositionColor = InPosition;
+}
+";
+	}
+}
+}
 namespace GBufferPNCT
 {
 

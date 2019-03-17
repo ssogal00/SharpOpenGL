@@ -29,7 +29,7 @@ namespace Core.Texture
                 this.BindAtUnit(TextureUnit.Texture0);
                 m_Width = bitmap.Width;
                 m_Height = bitmap.Height;
-                GL.TexImage2D(TextureTarget.Texture2D, 0, bitmap.ImagePixelInternalFormat, bitmap.Width, bitmap.Height, 0, bitmap.OpenglPixelFormat, PixelType.UnsignedByte, bitmap.Bytes);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, bitmap.ImagePixelInternalFormat, bitmap.Width, bitmap.Height, 0, bitmap.OpenglPixelFormat, bitmap.OpenglPixelType, bitmap.Bytes);
             }
         }
 

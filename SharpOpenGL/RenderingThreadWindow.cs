@@ -90,7 +90,10 @@ namespace SharpOpenGL
             GBufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
             GridMaterial = ShaderManager.Get().GetMaterial("GridRenderMaterial");
             WireframeMaterial = ShaderManager.Get().GetMaterial("GBufferPNC");
-            
+
+            var hdr = new HDRTexture();
+            hdr.Load("./Resources/Texture/HDR/Alexs_Apt_2k.hdr");
+
             // add ui editable objects
             UIThread.Get().Enqueue
             (

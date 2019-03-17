@@ -27,5 +27,8 @@ namespace SharpOpenGL
         [ExposeUI] public bool IsBloomEnabled { get; set; } = true;
         [ExposeUI] public float SceneRoughness { get; set; } = 0.3f;
         [ExposeUI] public float SceneMetallic { get; set; } = 0.6f;
+
+        [ExposeUI, Range(300,1000)]
+        public float LightIntensity { get; set; } = 300.0f;
     }
 }

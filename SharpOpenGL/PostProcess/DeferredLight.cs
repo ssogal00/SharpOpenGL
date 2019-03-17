@@ -66,7 +66,7 @@ namespace SharpOpenGL.PostProcess
                 UpdateLightInfo();
                 deferredLight.LightCount = this.LightPositions.Count;
                 deferredLight.LightPositions = this.LightPositions.ToArray();
-                deferredLight.LightColors = this.LightColors.ToArray();
+                deferredLight.LightColors = this.LightColors.Select(x => x * DebugDrawer.Get().LightIntensity).ToArray();
                 deferredLight.LightMinMaxs = this.LightMinMaxs.ToArray();
 
                 BlitToScreenSpace();
