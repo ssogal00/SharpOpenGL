@@ -262,7 +262,7 @@ namespace GBufferCubeTest
 
 
 [ZeroFormattable]
-[StructLayout(LayoutKind.Explicit,Size=32)]
+[StructLayout(LayoutKind.Explicit,Size=24)]
 public struct VertexAttribute
 {
 	
@@ -273,19 +273,13 @@ public struct VertexAttribute
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Vector3 VertexNormal;
-		
-	[Index(2)]
-	[FieldOffset(24), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public OpenTK.Vector2 TexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
 		GL.EnableVertexAttribArray(0);
-		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 32, new IntPtr(0));
+		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 24, new IntPtr(0));
 		GL.EnableVertexAttribArray(1);
-		GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 32, new IntPtr(12));
-		GL.EnableVertexAttribArray(2);
-		GL.VertexAttribPointer(2, 2, VertexAttribPointerType.Float, false, 32, new IntPtr(24));
+		GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 24, new IntPtr(12));
 	}
 }
 }

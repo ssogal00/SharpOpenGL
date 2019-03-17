@@ -1797,12 +1797,10 @@ uniform CameraTransform
 
 layout(location=0) in vec3 VertexPosition;
 layout(location=1) in vec3 VertexNormal;
-layout(location=2) in vec2 TexCoord;
 
 layout(location=0) out vec4 OutPosition;
-layout(location=1) out vec2 OutTexCoord;
-layout(location=2) out vec3 OutNormal;
-layout(location=3) out vec3 LocalPosition;
+layout(location=1) out vec3 OutNormal;
+layout(location=2) out vec3 LocalPosition;
   
 void main()
 {	
@@ -1810,7 +1808,6 @@ void main()
 
 	LocalPosition = VertexPosition;
 
-	OutTexCoord = TexCoord;
 	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
 	OutPosition =   (ModelView * vec4(VertexPosition, 1));
 	
@@ -1825,9 +1822,8 @@ void main()
 
 
 layout(location=0) in vec4 InPosition;
-layout(location=1) in vec2 InTexCoord;
-layout(location=2) in vec3 InNormal;
-layout(location=3) in vec3 InLocalPosition;
+layout(location=1) in vec3 InNormal;
+layout(location=2) in vec3 InLocalPosition;
 
 
 layout (location = 0) out vec4 PositionColor;
@@ -1836,7 +1832,7 @@ layout (location = 2) out vec4 NormalColor;
 
 layout (location=0, binding=0) uniform sampler2D EquirectangularMap;
 
-const vec2 invAtan = vec2(0.1591, 0.3183);
+const vec2 invAtan = vec2(0.1591, -0.3183);
 vec2 SampleSphericalMap(vec3 v)
 {
     vec2 uv = vec2(atan(v.z, v.x), asin(v.y));

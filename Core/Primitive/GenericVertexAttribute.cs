@@ -126,7 +126,7 @@ namespace Core.Primitive
     // Normal
     [ZeroFormattable]
     [StructLayout(LayoutKind.Explicit, Size = 24)]
-    public struct PN_VertexAttribute
+    public struct PN_VertexAttribute : IGenericVertexAttribute
     {
         [Index(0)]
         [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
@@ -150,7 +150,7 @@ namespace Core.Primitive
             GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 24, new IntPtr(12));
         }
 
-        public static List<VertexAttribute> GetVertexAttributes()
+        public List<VertexAttribute> GetVertexAttributes()
         {
             return new List<VertexAttribute>
             {

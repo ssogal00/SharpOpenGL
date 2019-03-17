@@ -8,6 +8,7 @@ using Core.Primitive;
 using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using MathHelper = Core.MathHelper;
 
 namespace SharpOpenGL
 {
@@ -31,51 +32,87 @@ namespace SharpOpenGL
             Initialize();
         }
 
+        public override void Tick(double Elapsed)
+        {
+            this.Yaw += (float) OpenTK.MathHelper.DegreesToRadians(Elapsed * 10.0f);
+        }
+
         public override bool IsEditable { get; set; } = true;
 
         private void GenerateVertices()
         {
-            VertexList = new List<PNT_VertexAttribute>();
+            VertexList = new List<PN_VertexAttribute>();
 
             // front face
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(-1.0f, -1.0f, -1.0f), -Vector3.UnitZ, new Vector2(0, 0)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, -1.0f), -Vector3.UnitZ, new Vector2(0, 1)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, -1.0f), -Vector3.UnitZ, new Vector2(1, 0)));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, -1.0f, -1.0f), -Vector3.UnitZ));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, -1.0f), -Vector3.UnitZ));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, -1.0f), -Vector3.UnitZ));
 
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, -1.0f), -Vector3.UnitZ, new Vector2(0, 1)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, -1.0f), -Vector3.UnitZ, new Vector2(1, 1)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, -1.0f), -Vector3.UnitZ, new Vector2(0, 0)));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, -1.0f), -Vector3.UnitZ));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, -1.0f), -Vector3.UnitZ));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, -1.0f), -Vector3.UnitZ));
 
             // back face
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, 1.0f), Vector3.UnitZ, new Vector2(1, 0)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, 1.0f), Vector3.UnitZ, new Vector2(0, 1)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(-1.0f, -1.0f, 1.0f), Vector3.UnitZ, new Vector2(0, 0)));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, 1.0f), Vector3.UnitZ));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, 1.0f), Vector3.UnitZ));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, -1.0f, 1.0f), Vector3.UnitZ));
 
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, 1.0f), Vector3.UnitZ, new Vector2(0, 0)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitZ, new Vector2(1, 1)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, 1.0f), Vector3.UnitZ, new Vector2(0, 1)));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, 1.0f), Vector3.UnitZ));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitZ));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, 1.0f), Vector3.UnitZ));
+
+            // right face
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, -1.0f), Vector3.UnitX));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, -1.0f), Vector3.UnitX));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitX));
+
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, -1.0f), Vector3.UnitX));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitX));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, 1.0f), Vector3.UnitX));
+
+            // left face
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, 1.0f), -Vector3.UnitX));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, -1.0f), -Vector3.UnitX));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, -1.0f, -1.0f), -Vector3.UnitX));
+
+
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, -1.0f, 1.0f), -Vector3.UnitX));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, 1.0f), -Vector3.UnitX));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, -1.0f, -1.0f), -Vector3.UnitX));
+            
 
             // up face
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, -1.0f), Vector3.UnitZ, new Vector2(1, 0)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, 1.0f), Vector3.UnitZ, new Vector2(0, 1)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, -1.0f), Vector3.UnitZ, new Vector2(0, 0)));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, -1.0f), Vector3.UnitY));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, 1.0f), Vector3.UnitY));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, -1.0f), Vector3.UnitY));
 
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, 1.0f), Vector3.UnitZ, new Vector2(1, 0)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitZ, new Vector2(0, 1)));
-            VertexList.Add(new PNT_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, -1.0f), Vector3.UnitZ, new Vector2(0, 0)));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, 1.0f, 1.0f), Vector3.UnitY));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, 1.0f), Vector3.UnitY));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, 1.0f, -1.0f), Vector3.UnitY));
 
             // down face
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, -1.0f), Vector3.UnitY));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, -1.0f, 1.0f), Vector3.UnitY));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, -1.0f, -1.0f), Vector3.UnitY));
+
+
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, -1.0f), Vector3.UnitY));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(1.0f, -1.0f, 1.0f), Vector3.UnitY));
+            VertexList.Add(new PN_VertexAttribute(new OpenTK.Vector3(-1.0f, -1.0f, 1.0f), Vector3.UnitY));
+            
+
         }
 
         public override void Initialize()
         {
             this.Scale = 50.0f;
+            Translation = new Vector3(0,50,0);
 
             GenerateVertices();
             
             RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
             {
-                drawable = new DrawableBase<PNT_VertexAttribute>();
+                drawable = new DrawableBase<PN_VertexAttribute>();
                 var vertexArray = VertexList.ToArray();
                 drawable.SetupVertexData(ref vertexArray);
 
@@ -109,9 +146,9 @@ namespace SharpOpenGL
             }
         }
 
-        private List<PNT_VertexAttribute> VertexList = new List<PNT_VertexAttribute>();
+        private List<PN_VertexAttribute> VertexList = new List<PN_VertexAttribute>();
 
-        protected DrawableBase<PNT_VertexAttribute> drawable = null;
+        protected DrawableBase<PN_VertexAttribute> drawable = null;
 
         protected TextureBase cubemapTex = null;
     }
