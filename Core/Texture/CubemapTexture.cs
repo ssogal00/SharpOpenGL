@@ -37,7 +37,7 @@ namespace Core.Texture
 
             string [] textureList = new string[]
             {
-                PositiveX, NegativeX,  NegativeY,PositiveY, PositiveZ, NegativeZ
+                PositiveXImagePath, NegativeXImagePath,  NegativeYImagePath,PositiveYImagePath, PositiveZImagePath, NegativeZImagePath
             };
 
             for (int i = 0; i < textureList.Length; ++i)
@@ -50,11 +50,38 @@ namespace Core.Texture
             }
         }
 
-        protected string NegativeX = "./Resources/Cubemap/SKYBOX_xneg.png";
-        protected string PositiveX = "./Resources/Cubemap/SKYBOX_xpos.png";
-        protected string NegativeY = "./Resources/Cubemap/SKYBOX_yneg.png";
-        protected string PositiveY = "./Resources/Cubemap/SKYBOX_ypos.png";
-        protected string NegativeZ = "./Resources/Cubemap/SKYBOX_zneg.png";
-        protected string PositiveZ = "./Resources/Cubemap/SKYBOX_zpos.png";
+        public void LoadFromTexture(
+            TextureBase positiveX, TextureBase negativeX,
+            TextureBase positiveY, TextureBase negativeY,
+            TextureBase positiveZ, TextureBase negativeZ)
+        {
+            Bind();
+
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
+            
+            
+            
+        }
+
+        protected TextureBase NegativeXTex = null;
+        protected TextureBase PositiveXTex = null;
+
+        protected TextureBase NegativeYTex = null;
+        protected TextureBase PositiveYTex = null;
+
+        protected TextureBase NegativeZTex = null;
+        protected TextureBase PositiveZTex = null;
+
+
+        protected string NegativeXImagePath = "./Resources/Cubemap/SKYBOX_xneg.png";
+        protected string PositiveXImagePath = "./Resources/Cubemap/SKYBOX_xpos.png";
+        protected string NegativeYImagePath = "./Resources/Cubemap/SKYBOX_yneg.png";
+        protected string PositiveYImagePath = "./Resources/Cubemap/SKYBOX_ypos.png";
+        protected string NegativeZImagePath = "./Resources/Cubemap/SKYBOX_zneg.png";
+        protected string PositiveZImagePath = "./Resources/Cubemap/SKYBOX_zpos.png";
     }
 }

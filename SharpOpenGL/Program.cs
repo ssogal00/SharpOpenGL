@@ -160,12 +160,12 @@ namespace SharpOpenGL
 
         protected void ScreenCaptureGBuffer()
         {
-            var colorData = MyGBuffer.GetColorAttachement.GetTexImage();
+            var colorData = MyGBuffer.GetColorAttachement.GetTexImageAsByte();
             var width = MyGBuffer.GetColorAttachement.Width;
             var height = MyGBuffer.GetColorAttachement.Height;
             FreeImageHelper.SaveAsBmp(ref colorData, width, height, "ColorBuffer.bmp");
 
-            var normalData = MyGBuffer.GetNormalAttachment.GetTexImage();
+            var normalData = MyGBuffer.GetNormalAttachment.GetTexImageAsByte();
             FreeImageHelper.SaveAsBmp(ref normalData, width, height, "NormalBuffer.bmp");
         }
 

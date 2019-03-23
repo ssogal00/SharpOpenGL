@@ -60,7 +60,7 @@ namespace SharpOpenGL
                     
                 });
 
-                var colorData = gbuffer.GetColorAttachement.GetTexImage();
+                var colorData = gbuffer.GetColorAttachement.GetTexImageAsByte();
                 FreeImageHelper.SaveAsBmp(ref colorData, width, height, "staticmesh.bmp");
             }
         }

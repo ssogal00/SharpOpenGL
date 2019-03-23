@@ -24,7 +24,7 @@ namespace Core.Texture
 
         public void SaveAsBmp(string filename)
         {
-            var colorData = GetTexImage();
+            var colorData = GetTexImageAsByte();
             FreeImageHelper.SaveAsBmp(ref colorData, this.Width, this.Height, filename);
         }
 
@@ -49,11 +49,20 @@ namespace Core.Texture
             GL.TexImage2D(TextureTarget.Texture2D, 0, textureFormat, m_Width, m_Height, 0, PixelFormat.Rgba, PixelType.Float, new IntPtr(0));
         }
 
-        public override byte[] GetTexImage()
+        public override byte[] GetTexImageAsByte()
         {
             Bind();
             var data = new byte[m_Width * m_Height * 4];
             GL.GetTexImage<byte>(TextureTarget.Texture2D, 0, PixelFormat.Bgra, PixelType.UnsignedByte, data);
+            Unbind();
+            return data;
+        }
+
+        public override float[] GetTexImageAsFloat()
+        {
+            Bind();
+            var data = new float[m_Width * m_Height * 4];
+            GL.GetTexImage<float>(TextureTarget.Texture2D, 0, PixelFormat.Rgba, PixelType.Float, data);
             Unbind();
             return data;
         }

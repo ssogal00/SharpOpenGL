@@ -44,25 +44,25 @@ namespace SharpOpenGL
             {
                 if (PositiveX != null && PositiveY != null && PositiveZ != null)
                 {
-                    var colorDataX = PositiveX.ColorAttachment0.GetTexImage();
+                    var colorDataX = PositiveX.ColorAttachment0.GetTexImageAsByte();
                     FreeImageHelper.SaveAsBmp(ref colorDataX, SizeX, SizeY, "PositiveX.bmp");
 
-                    var colorDataY = PositiveY.ColorAttachment0.GetTexImage();
+                    var colorDataY = PositiveY.ColorAttachment0.GetTexImageAsByte();
                     FreeImageHelper.SaveAsBmp(ref colorDataY, SizeX, SizeY, "PositiveY.bmp");
 
-                    var colorDataZ = PositiveZ.ColorAttachment0.GetTexImage();
+                    var colorDataZ = PositiveZ.ColorAttachment0.GetTexImageAsByte();
                     FreeImageHelper.SaveAsBmp(ref colorDataZ, SizeX, SizeY, "PositiveZ.bmp");
                 }
 
                 if (NegativeX != null && NegativeY != null && NegativeZ != null)
                 {
-                    var colorDataX = NegativeX.ColorAttachment0.GetTexImage();
+                    var colorDataX = NegativeX.ColorAttachment0.GetTexImageAsByte();
                     FreeImageHelper.SaveAsBmp(ref colorDataX, SizeX, SizeY, "NegativeX.bmp");
 
-                    var colorDataY = NegativeY.ColorAttachment0.GetTexImage();
+                    var colorDataY = NegativeY.ColorAttachment0.GetTexImageAsByte();
                     FreeImageHelper.SaveAsBmp(ref colorDataY, SizeX, SizeY, "NegativeY.bmp");
 
-                    var colorDataZ = NegativeZ.ColorAttachment0.GetTexImage();
+                    var colorDataZ = NegativeZ.ColorAttachment0.GetTexImageAsByte();
                     FreeImageHelper.SaveAsBmp(ref colorDataZ, SizeX, SizeY, "NegativeZ.bmp");
                 }
 

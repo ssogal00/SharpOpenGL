@@ -162,7 +162,8 @@
     <Compile Include="ConsoleCommandManager.cs" />
     <Compile Include="DebugDrawer.cs" />
     <Compile Include="Engine.cs" />
-    <Compile Include="EquirectangleToCubemap.cs" />
+    <Compile Include="Transform\CubemapConvolutionTransform.cs" />
+    <Compile Include="Transform\EquirectangleToCubemap.cs" />
     <Compile Include="Font\FontManager.cs" />
     <Compile Include="Font\TextInstance.cs" />
     <Compile Include="GridDrawer.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="Shader.cs" />
     <Compile Include="Asset\StaticMeshAsset.cs" />
     <Compile Include="TextureManager.cs" />
+    <Compile Include="Transform\TransformBase.cs" />
     <Compile Include="UIThread.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

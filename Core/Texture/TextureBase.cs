@@ -32,7 +32,12 @@ namespace Core.Texture
         public virtual void Load(byte[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         { }
 
-        public virtual byte[] GetTexImage()
+        public virtual byte[] GetTexImageAsByte()
+        {
+            return null;
+        }
+
+        public virtual float[] GetTexImageAsFloat()
         {
             return null;
         }
