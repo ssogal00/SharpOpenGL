@@ -102,6 +102,7 @@ namespace SharpOpenGL
 
                 convolution.SetSourceCubemap(equirectToCube.ResultCubemap);
                 convolution.Transform();
+                convolution.Save();
             }
 
             // add ui editable objects
@@ -243,7 +244,7 @@ namespace SharpOpenGL
             }
             else
             {
-                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment);
+                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment,convolution.ResultCubemap);
 
                 if (DebugDrawer.Get().IsBloomEnabled)
                 {

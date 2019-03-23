@@ -68,8 +68,7 @@ namespace SharpOpenGL
                     gbufferDraw.RoughnessExist = false;
                     gbufferDraw.DiffuseMapExist = false;
                     
-                    gbufferDraw.DiffuseOverride = OpenTK.Vector3.UnitX;
-                    gbufferDraw.DiffuseTex2D = diffuseTex;
+                    gbufferDraw.DiffuseOverride = Color;
                     gbufferDraw.NormalTex2D = normalTex;
 
                     gbufferDraw.MetallicCount = 5;
@@ -81,5 +80,7 @@ namespace SharpOpenGL
         }
 
         protected int instanceCount = 1;
+
+        protected Vector3 Color = new Vector3(1,1,1);
     }
 }

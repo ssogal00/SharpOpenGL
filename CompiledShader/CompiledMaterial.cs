@@ -2533,6 +2533,27 @@ public class LightMaterial : MaterialBase
 	}
 
 	private TextureBase diffusetex = null;
+	public void SetIrradianceMap2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"IrradianceMap", TextureObject);
+	}
+
+	public void SetIrradianceMap2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"IrradianceMap", TextureObject);
+	}
+
+	public TextureBase IrradianceMap2D 
+	{	
+		get { return irradiancemap;}
+		set 
+		{	
+			irradiancemap = value;
+			SetTexture(@"IrradianceMap", irradiancemap);			
+		}
+	}
+
+	private TextureBase irradiancemap = null;
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
@@ -2680,17 +2701,15 @@ void main()
 	public static string GetFSSourceCode()
 	{
 		return @"
-
-
 #version 450
 
 layout (location = 0 , binding = 0) uniform sampler2D PositionTex;
 layout (location = 1 , binding = 1) uniform sampler2D DiffuseTex;
 layout (location = 2 , binding = 2) uniform sampler2D NormalTex;
+layout (location = 3 , binding = 3) uniform samplerCube IrradianceMap;
 
 layout (location = 0 ) in vec3 InPosition;
 layout (location = 1 ) in vec2 InTexCoord;
-
 layout( location = 0 ) out vec4 FragColor;
 
 
@@ -2998,11 +3017,16 @@ void main()
     }   
 
     
-    //vec3 ambient = vec3(0.03) * albedo * ao;
-    //vec3 ambient = vec3(0.03) * albedo;
-    vec3 ambient = vec3(0);
-    //vec3 ambient = albedo ;
+    // ambient lighting (we now use IBL as the ambient term)
+    vec3 kS = fresnelSchlick(max(dot(N, V), 0.0), F0);
+    vec3 kD = 1.0 - kS;
+    kD *= 1.0 - metallic;	  
+    vec3 irradiance = texture(IrradianceMap, N).rgb;
+    vec3 diffuse = irradiance * albedo;
+    vec3 ambient = (kD * diffuse);    
+    
     vec3 color = ambient + Lo;
+
 	
     //color = color / (color + vec3(1.0));
     color = pow(color, vec3(1.0/2.2));  
