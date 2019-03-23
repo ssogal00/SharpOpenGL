@@ -139,8 +139,8 @@ namespace SharpOpenGL.Transform
         private RenderTarget PositiveZ = new RenderTarget(SizeX, SizeY, 1, true);
         private RenderTarget NegativeZ = new RenderTarget(SizeX, SizeY, 1, true);
 
-        private static readonly int SizeX = 64;
-        private static readonly int SizeY = 64;
+        private static readonly int SizeX = 256;
+        private static readonly int SizeY = 256;
 
 
         private bool bSaved = false;

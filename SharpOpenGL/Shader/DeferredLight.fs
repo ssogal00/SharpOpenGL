@@ -159,85 +159,17 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 
 vec3 fresnelSchlick(float cosTheta, vec3 F0)
 {
-    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
+    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);    
 }  
+
+vec3 fresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness)
+{
+    return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
+}
 
 vec3 Diffuse_Lambert( vec3 DiffuseColor )
 {
 	return DiffuseColor * ( 1 / PI);
-}
-
-// GGX / Trowbridge-Reitz
-float D_GGX( float a2, float NoH )
-{
-	float d = ( NoH * a2 - NoH ) * NoH + 1;	// 2 mad
-	return a2 / ( PI*d*d );					// 4 mul, 1 rcp
-}
-
-// Tuned to match behavior of Vis_Smith
-float Vis_Schlick( float a2, float NoV, float NoL )
-{
-	float k = sqrt(a2) * 0.5;
-	float Vis_SchlickV = NoV * (1 - k) + k;
-	float Vis_SchlickL = NoL * (1 - k) + k;
-	return 0.25 / ( Vis_SchlickV * Vis_SchlickL );
-}
-
-// Appoximation of joint Smith term for GGX
-float Vis_SmithJointApprox( float a2, float NoV, float NoL )
-{
-	float a = sqrt(a2);
-	float Vis_SmithV = NoL * ( NoV * ( 1 - a ) + a );
-	float Vis_SmithL = NoV * ( NoL * ( 1 - a ) + a );
-	//return 0.5 * rcp( Vis_SmithV + Vis_SmithL );
-    return 0.5 / ( Vis_SmithV + Vis_SmithL );
-}
-
-
-// [Schlick 1994]
-vec3 F_Schlick( vec3 SpecularColor, float VoH )
-{
-	float Fc = Pow5( 1 - VoH );					// 1 sub, 3 mul
-	//return Fc + (1 - Fc) * SpecularColor;		// 1 add, 3 mad
-	
-	// Anything less than 2% is physically impossible and is instead considered to be shadowing
-	// return saturate( 50.0 * SpecularColor.g ) * Fc + (1 - Fc) * SpecularColor;
-    return clamp( 50.0 * SpecularColor.g ,0.0,1.0) * Fc + (1 - Fc) * SpecularColor;
-	
-}
-
-vec3 F_Fresnel( vec3 SpecularColor, float VoH )
-{
-	vec3 SpecularColorSqrt = sqrt( clamp( vec3(0, 0, 0), vec3(0.99, 0.99, 0.99), SpecularColor ) );
-	vec3 n = ( 1 + SpecularColorSqrt ) / ( 1 - SpecularColorSqrt );
-	vec3 g = sqrt( n*n + VoH*VoH - 1 );
-	return 0.5 * Square( (g - VoH) / (g + VoH) ) * ( 1 + Square( ((g+VoH)*VoH - 1) / ((g-VoH)*VoH + 1) ) );
-}
-
-vec3 StandardShading( vec3 DiffuseColor, vec3 SpecularColor, vec3 LobeRoughness, vec3 LobeEnergy, vec3 L, vec3 V, vec3 N )
-{
-	float NoL = dot(N, L);
-	float NoV = dot(N, V);
-	float LoV = dot(L, V);
-	
-    float InvLenH = 1 / sqrt( 2 + 2 * LoV );
-	
-    float NoH = clamp(( NoL + NoV ) * InvLenH, 0.0, 1.0);
-	
-    float VoH = clamp( InvLenH + InvLenH * LoV , 0.0, 1.0);
-	
-    NoL = clamp(NoL,0.0,1.0);
-	
-    NoV = clamp(abs(NoV) + 1e-5,0.0,1.0);
-
-	// Generalized microfacet specular
-	float D = D_GGX( LobeRoughness[1], NoH ) * LobeEnergy[1];
-	float Vis = Vis_SmithJointApprox( LobeRoughness[1], NoV, NoL );
-	vec3 F = F_Schlick( SpecularColor, VoH );
-
-	vec3 Diffuse = Diffuse_Lambert( DiffuseColor );
-
-	return Diffuse * LobeEnergy[2] + (D * Vis) * F;    
 }
 
 
