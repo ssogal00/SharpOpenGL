@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,7 @@ namespace SharpOpenGL
 
             // create hdr texture
             var hdr = new HDRTexture();
-            hdr.Load("./Resources/Texture/HDR/Alexs_Apt_2k.hdr");
+            hdr.Load("./Resources/Texture/HDR/Circus_Backstage_3k.hdr");
             equirectangularTex = hdr;
 
             //
@@ -136,15 +137,16 @@ namespace SharpOpenGL
         }
 
 
-        private RenderTarget PositiveX = new RenderTarget(512, 512, 1 ,true);
-        private RenderTarget NegativeX = new RenderTarget(512, 512, 1, true);
-        private RenderTarget PositiveY = new RenderTarget(512, 512, 1, true);
-        private RenderTarget NegativeY = new RenderTarget(512, 512, 1, true);
-        private RenderTarget PositiveZ = new RenderTarget(512, 512, 1, true);
-        private RenderTarget NegativeZ = new RenderTarget(512, 512, 1, true);
 
-        private readonly int SizeX = 512;
-        private readonly int SizeY = 512;
+        private RenderTarget PositiveX = new RenderTarget(SizeX, SizeY, 1 ,true);
+        private RenderTarget NegativeX = new RenderTarget(SizeX, SizeY, 1, true);
+        private RenderTarget PositiveY = new RenderTarget(SizeX, SizeY, 1, true);
+        private RenderTarget NegativeY = new RenderTarget(SizeX, SizeY, 1, true);
+        private RenderTarget PositiveZ = new RenderTarget(SizeX, SizeY, 1, true);
+        private RenderTarget NegativeZ = new RenderTarget(SizeX, SizeY, 1, true);
+
+        private static readonly int SizeX = 1024;
+        private static readonly int SizeY = 1024;
 
 
         public CubemapTexture ResultCubemap => resultCubemap;
