@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
+
+using Core.MaterialBase;
 using Core.Primitive;
 using Core.Texture;
 using OpenTK;
@@ -23,8 +25,6 @@ namespace SharpOpenGL
                 return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
             }
         }
-
-        
 
         public Cube()
             : base("Cube", CubeCount++)
@@ -119,9 +119,6 @@ namespace SharpOpenGL
                 VertexList.Clear();
 
                 defaultMaterial = ShaderManager.Get().GetMaterial<GBufferCubeTest.GBufferCubeTest>();
-                var hdr = new HDRTexture();
-                hdr.Load("./Resources/Texture/HDR/Alexs_Apt_2k.hdr");
-                cubemapTex = hdr;
 
                 bReadyToDraw = true;
             });
@@ -146,7 +143,18 @@ namespace SharpOpenGL
             }
         }
 
+        public override void JustDraw()
+        {
+            if (bReadyToDraw)
+            {
+                drawable.DrawArrays(PrimitiveType.Triangles);
+            }
+        }
+
+
         private List<PN_VertexAttribute> VertexList = new List<PN_VertexAttribute>();
+
+        public DrawableBase<PN_VertexAttribute> Drawable => drawable;
 
         protected DrawableBase<PN_VertexAttribute> drawable = null;
 

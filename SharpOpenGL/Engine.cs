@@ -49,8 +49,6 @@ namespace SharpOpenGL
 
             var sphere = SceneObjectManager.Get().CreateSceneObject<InstancedSphere>();
 
-            var cube = SceneObjectManager.Get().CreateSceneObject<Cube>();
-
             bInitialized = true;
         }
 

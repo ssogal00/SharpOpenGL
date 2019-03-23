@@ -34,6 +34,9 @@ namespace Core.Primitive
         //Draw with default material
         public abstract void Draw();
 
+        //
+        public virtual void JustDraw() { }
+
         public static EventHandler<EventArgs> OnOpenGLContextCreated;
         
 

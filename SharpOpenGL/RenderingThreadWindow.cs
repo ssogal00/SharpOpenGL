@@ -33,6 +33,7 @@ namespace SharpOpenGL
         protected GBufferVisualize gbufferVisualize = new GBufferVisualize();
         protected BloomPostProcess bloomPostProcess = new BloomPostProcess();
         protected ResolvePostProcess resolvePostProcess = new ResolvePostProcess();
+        protected EquirectangleToCubemap equirectToCube = new EquirectangleToCubemap();
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
         protected StaticMeshObject sponzamesh = null;
         protected bool bInitialized = false;
@@ -202,6 +203,12 @@ namespace SharpOpenGL
             {
                 SwapBuffers();
                 return;
+            }
+
+            if (equirectToCube.IsSaveCompleted == false)
+            {
+                equirectToCube.Render();
+                equirectToCube.Save();
             }
           
             skyboxPostProcess.Render();
