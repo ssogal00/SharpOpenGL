@@ -209,6 +209,7 @@ namespace SharpOpenGL
             {
                 equirectToCube.Render();
                 equirectToCube.Save();
+                skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
             }
           
             skyboxPostProcess.Render();

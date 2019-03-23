@@ -255,7 +255,7 @@ namespace Core.Camera
 
         protected float fMoveAmount = 6;
 
-        protected float m_fRotateAmount = OpenTK.MathHelper.DegreesToRadians(3);
+        protected float m_fRotateAmount = OpenTK.MathHelper.DegreesToRadians(7);
 
         protected Matrix3 m_RotationMatrix = new Matrix3();
 

@@ -6,7 +6,7 @@ layout (location=0) in vec3 WorldPos;
 
 layout (location = 0, binding=0) uniform sampler2D EquirectangularMap;
 
-const vec2 invAtan = vec2(0.1591, -0.3183);
+const vec2 invAtan = vec2(0.1591, 0.3183);
 
 vec2 SampleSphericalMap(vec3 v)
 {

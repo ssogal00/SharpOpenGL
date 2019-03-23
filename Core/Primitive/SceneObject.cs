@@ -67,7 +67,12 @@ namespace Core.Primitive
 
         public bool IsReadyToDraw => bReadyToDraw;
 
-        public bool IsVisible => bVisible;
+        [ExposeUI]
+        public virtual bool IsVisible
+        {
+            get { return bVisible; }
+            set { bVisible = value; }
+        }
 
         public void SetVisible(bool flag)
         {

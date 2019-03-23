@@ -128,9 +128,9 @@ namespace SharpOpenGL
 
                 resultCubemap = new CubemapTexture();
                 resultCubemap.LoadFromTexture(
-                    positiveX:PositiveX.ColorAttachment0, negativeX:NegativeX.ColorAttachment0,
-                    positiveY:PositiveY.ColorAttachment0, negativeY:NegativeY.ColorAttachment0,
-                    positiveZ: PositiveY.ColorAttachment0, negativeZ: NegativeY.ColorAttachment0
+                    PositiveX.ColorAttachment0, NegativeX.ColorAttachment0,
+                    PositiveY.ColorAttachment0, NegativeY.ColorAttachment0,
+                    PositiveZ.ColorAttachment0, NegativeZ.ColorAttachment0
                     );
             }
         }

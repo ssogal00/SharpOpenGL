@@ -20,13 +20,9 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            Output.ClearColor = Color.Chocolate;
+            Output.ClearColor = Color.Red;
             
             PostProcessMaterial = ShaderManager.Get().GetMaterial<CubemapMaterial.CubemapMaterial>();
-
-            cubemapTexture = new CubemapTexture();
-          
-            cubemapTexture.Load();
 
             sphereMeshObject = new StaticMeshObject("./Resources/Imported/StaticMesh/sphere3.staticmesh");
             sphereMeshObject.SetVisible(false);
@@ -34,6 +30,10 @@ namespace SharpOpenGL.PostProcess
 
         public override void Render()
         {
+            if (cubemapTexture == null)
+            {
+                return;
+            }
             using (var dummy = new ScopedDepthFunc(DepthFunction.Lequal))
             {
                 Output.BindAndExecute(PostProcessMaterial, () =>
@@ -48,6 +48,16 @@ namespace SharpOpenGL.PostProcess
                     sphereMeshObject.DrawWithBindedMaterial();
                 });
             }
+        }
+
+        public void SetCubemapTexture(CubemapTexture cubemapTextureOverride)
+        {
+            if (cubemapTexture != null)
+            {
+                cubemapTexture.Dispose();
+            }
+
+            cubemapTexture = cubemapTextureOverride;
         }
 
         protected CubemapTexture cubemapTexture = null;
