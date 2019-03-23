@@ -87,6 +87,9 @@ namespace GBufferDraw
 namespace EquirectangleToCube
 {
 }
+namespace CubemapConvolution
+{
+}
 namespace GBufferInstanced
 {
 
