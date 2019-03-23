@@ -18,6 +18,7 @@ using SharpOpenGL.Asset;
 using SharpOpenGL.GBufferDraw;
 using SharpOpenGL.PostProcess;
 using SharpOpenGL.StaticMesh;
+using SharpOpenGL.Transform;
 
 namespace SharpOpenGL
 {
@@ -34,6 +35,8 @@ namespace SharpOpenGL
         protected BloomPostProcess bloomPostProcess = new BloomPostProcess();
         protected ResolvePostProcess resolvePostProcess = new ResolvePostProcess();
         protected EquirectangleToCubemap equirectToCube = new EquirectangleToCubemap();
+        protected CubemapConvolutionTransform convolution = new CubemapConvolutionTransform();
+
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
         protected StaticMeshObject sponzamesh = null;
         protected bool bInitialized = false;
@@ -92,8 +95,14 @@ namespace SharpOpenGL
             GridMaterial = ShaderManager.Get().GetMaterial("GridRenderMaterial");
             WireframeMaterial = ShaderManager.Get().GetMaterial("GBufferPNC");
 
-            var hdr = new HDRTexture();
-            hdr.Load("./Resources/Texture/HDR/Alexs_Apt_2k.hdr");
+            if (equirectToCube.IsTransformCompleted == false)
+            {
+                equirectToCube.Transform();
+                skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
+
+                convolution.SetSourceCubemap(equirectToCube.ResultCubemap);
+                convolution.Transform();
+            }
 
             // add ui editable objects
             UIThread.Get().Enqueue
@@ -205,12 +214,7 @@ namespace SharpOpenGL
                 return;
             }
 
-            if (equirectToCube.IsSaveCompleted == false)
-            {
-                equirectToCube.Render();
-                equirectToCube.Save();
-                skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
-            }
+            
           
             skyboxPostProcess.Render();
 

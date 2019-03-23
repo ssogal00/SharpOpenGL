@@ -6,28 +6,24 @@ using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Core.CustomAttribute;
+using Core.MaterialBase;
 using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL.PostProcess;
+using SharpOpenGL.Transform;
 using MathHelper = OpenTK.MathHelper;
 
 namespace SharpOpenGL
 {
-    public class EquirectangleToCubemap : PostProcessBase
+    public class EquirectangleToCubemap : TransformBase
     {
-        
-        public override void Initialize()
-        {
-            base.Initialize();
-
-        }
 
         public override void OnGLContextCreated(object sender, EventArgs e)
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<EquirectangleToCube.EquirectangleToCube>();
+            material = ShaderManager.Get().GetMaterial<EquirectangleToCube.EquirectangleToCube>();
 
             // create hdr texture
             var hdr = new HDRTexture();
@@ -75,7 +71,7 @@ namespace SharpOpenGL
 
         private bool bSaved = false;
 
-        public override void Render()
+        public override void Transform()
         {
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int) TextureWrapMode.ClampToEdge);
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
@@ -83,7 +79,7 @@ namespace SharpOpenGL
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
-            var equirectangleToCube = (EquirectangleToCube.EquirectangleToCube) PostProcessMaterial;
+            var equirectangleToCube = (EquirectangleToCube.EquirectangleToCube) material;
 
             using (var mtl =  new ScopedBind(equirectangleToCube))
             {
@@ -133,11 +129,11 @@ namespace SharpOpenGL
                     PositiveY.ColorAttachment0, NegativeY.ColorAttachment0,
                     PositiveZ.ColorAttachment0, NegativeZ.ColorAttachment0
                     );
+
+                IsTransformCompleted = true;
             }
         }
-
-
-
+        
         private RenderTarget PositiveX = new RenderTarget(SizeX, SizeY, 1 ,true);
         private RenderTarget NegativeX = new RenderTarget(SizeX, SizeY, 1, true);
         private RenderTarget PositiveY = new RenderTarget(SizeX, SizeY, 1, true);
@@ -166,6 +162,8 @@ namespace SharpOpenGL
         };
 
         protected TextureBase equirectangularTex = null;
+
+        protected MaterialBase material = null;
 
         protected Cube cubeMesh = null;
     }

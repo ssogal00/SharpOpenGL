@@ -12,6 +12,12 @@ namespace SharpOpenGL.Transform
         public override void OnGLContextCreated(object sender, EventArgs e)
         {
             base.OnGLContextCreated(sender,e);
+
         }
+
+        public virtual void Transform()
+        { }
+
+        public bool IsTransformCompleted { get; set; }
     }
 }
