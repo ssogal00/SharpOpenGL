@@ -31,7 +31,7 @@ namespace SharpOpenGL
             // create hdr texture
             var hdr = new HDRTexture();
             hdr.Load("./Resources/Texture/HDR/Alexs_Apt_2k.hdr");
-            cubemapTex = hdr;
+            equirectangularTex = hdr;
 
             //
             cubeMesh = new Cube();
@@ -87,7 +87,7 @@ namespace SharpOpenGL
             using (var mtl =  new ScopedBind(equirectangleToCube))
             {
                 //
-                equirectangleToCube.EquirectangularMap2D = cubemapTex;
+                equirectangleToCube.EquirectangularMap2D = equirectangularTex;
                 equirectangleToCube.Projection = CaptureProjection;
 
                 using (var dummy = new ScopedBind(PositiveX))
@@ -126,7 +126,12 @@ namespace SharpOpenGL
                     cubeMesh.JustDraw();
                 }
 
-                
+                resultCubemap = new CubemapTexture();
+                resultCubemap.LoadFromTexture(
+                    positiveX:PositiveX.ColorAttachment0, negativeX:NegativeX.ColorAttachment0,
+                    positiveY:PositiveY.ColorAttachment0, negativeY:NegativeY.ColorAttachment0,
+                    positiveZ: PositiveY.ColorAttachment0, negativeZ: NegativeY.ColorAttachment0
+                    );
             }
         }
 
@@ -141,6 +146,10 @@ namespace SharpOpenGL
         private readonly int SizeX = 512;
         private readonly int SizeY = 512;
 
+
+        public CubemapTexture ResultCubemap => resultCubemap;
+        private CubemapTexture resultCubemap = null;
+
         
         private OpenTK.Matrix4 CaptureProjection = Matrix4.CreatePerspectiveFieldOfView( MathHelper.DegreesToRadians(90), 1.0f, 0.1f, 10.0f);
 
@@ -154,7 +163,7 @@ namespace SharpOpenGL
             Matrix4.LookAt(new Vector3(0,0,0), -Vector3.UnitZ, -Vector3.UnitY),// negative Z
         };
 
-        protected TextureBase cubemapTex = null;
+        protected TextureBase equirectangularTex = null;
 
         protected Cube cubeMesh = null;
     }

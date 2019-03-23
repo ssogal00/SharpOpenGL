@@ -16,8 +16,13 @@ namespace Core
             OnOpenGLContextCreated += this.OnGLContextCreated;
         }
 
+        public virtual void ReleaseResource()
+        {
+        }
+
         public virtual void Dispose()
         {
+            ReleaseResource();
             OnOpenGLContextCreated -= this.OnGLContextCreated;
         }
 
