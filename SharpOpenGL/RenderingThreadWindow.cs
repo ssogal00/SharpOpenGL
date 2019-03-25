@@ -37,6 +37,8 @@ namespace SharpOpenGL
         protected EquirectangleToCubemap equirectToCube = new EquirectangleToCubemap();
         protected CubemapConvolutionTransform convolution = new CubemapConvolutionTransform();
         protected LookUpTable2D lut = new LookUpTable2D();
+        protected Prefilter prefilter = new Prefilter();
+
 
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
         protected StaticMeshObject sponzamesh = null;
@@ -108,6 +110,10 @@ namespace SharpOpenGL
 
             lut.Render();
             lut.Save();
+
+            prefilter.SetEnvMap(equirectToCube.ResultCubemap);
+            prefilter.Transform();
+            prefilter.Save();
 
             // add ui editable objects
             UIThread.Get().Enqueue
@@ -219,8 +225,6 @@ namespace SharpOpenGL
                 SwapBuffers();
                 return;
             }
-
-            
           
             skyboxPostProcess.Render();
 

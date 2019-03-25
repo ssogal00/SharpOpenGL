@@ -28,6 +28,11 @@ namespace Core.Buffer
 #endif
         }
 
+        public int GetBufferHandle()
+        {
+            return frameBufferObject;
+        }
+
         public void Dispose()
         {
             DeleteFrameBuffer();

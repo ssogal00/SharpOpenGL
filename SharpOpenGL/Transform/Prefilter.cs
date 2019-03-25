@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
+using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using MathHelper = OpenTK.MathHelper;
@@ -18,63 +19,57 @@ namespace SharpOpenGL.Transform
             base.OnGLContextCreated(sender, e);
 
             prefilterMaterial = ShaderManager.Get().GetMaterial<PrefilterMaterial.PrefilterMaterial>();
+
+            cubemesh = new Cube();
+            cubemesh.SetVisible(false);
         }
 
         public override void Transform()
         {
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+
             using (var dummy = new ScopedBind(prefilterMaterial))
             {
+                // 
+                prefilterMaterial.Roughness = 0;
+                prefilterMaterial.Projection = CaptureProjection;
+                prefilterMaterial.View = CaptureViews[0];
+                prefilterMaterial.EnvironmentMap2D = environmentMap;
 
+                using (var d = new ScopedBind(PositiveX))
+                {
+                    prefilterMaterial.Roughness = 0.4f;
+                    prefilterMaterial.View = CaptureViews[0];
+                    cubemesh.JustDraw();
+                }
+
+                using (var d = new ScopedBind(NegativeX))
+                {
+                    prefilterMaterial.Roughness = 0.2f;
+                    prefilterMaterial.View = CaptureViews[1];
+                    cubemesh.JustDraw();
+                }
             }
         }
 
-        // pbr: create a pre-filter cubemap, and re-scale capture FBO to pre-filter scale.
-        // --------------------------------------------------------------------------------
-        /*unsigned int prefilterMap;
-        glGenTextures(1, &prefilterMap);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, prefilterMap);
-        for (unsigned int i = 0; i< 6; ++i)
+        public void SetEnvMap(TextureBase envmap)
         {
-            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB16F, 128, 128, 0, GL_RGB, GL_FLOAT, nullptr);
+            this.environmentMap = envmap;
         }
-        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // be sure to set minifcation filter to mip_linear 
-        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        // generate mipmaps for the cubemap so OpenGL automatically allocates the required memory.
-        glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 
-        // pbr: run a quasi monte-carlo simulation on the environment lighting to create a prefilter (cube)map.
-        // ----------------------------------------------------------------------------------------------------
-        prefilterShader.use();
-        prefilterShader.setInt("environmentMap", 0);
-        prefilterShader.setMat4("projection", captureProjection);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_CUBE_MAP, envCubemap);
-
-        glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-        unsigned int maxMipLevels = 5;
-        for (unsigned int mip = 0; mip<maxMipLevels; ++mip)
+        public void Save()
         {
-            // reisze framebuffer according to mip-level size.
-            unsigned int mipWidth = 128 * std::pow(0.5, mip);
-        unsigned int mipHeight = 128 * std::pow(0.5, mip);
-        glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, mipWidth, mipHeight);
-        glViewport(0, 0, mipWidth, mipHeight);
+            var colorDataX = PositiveX.ColorAttachment0.GetTexImageAsByte();
+            FreeImageHelper.SaveAsBmp(ref colorDataX, 512, 512, "PrefilterPosX.bmp");
 
-        float roughness = (float)mip / (float)(maxMipLevels - 1);
-        prefilterShader.setFloat("roughness", roughness);
-            for (unsigned int i = 0; i< 6; ++i)
-            {
-                prefilterShader.setMat4("view", captureViews[i]);
-                glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, prefilterMap, mip);
-
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        renderCube();
-        }*/
-
+            var colorData = NegativeX.ColorAttachment0.GetTexImageAsByte();
+            FreeImageHelper.SaveAsBmp(ref colorData, 512, 512, "PrefilterNegX.bmp");
+        }
+       
         private OpenTK.Matrix4 CaptureProjection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1.0f, 0.1f, 10.0f);
 
         private OpenTK.Matrix4[] CaptureViews = new Matrix4[]
@@ -87,7 +82,24 @@ namespace SharpOpenGL.Transform
             Matrix4.LookAt(new Vector3(0,0,0), -Vector3.UnitZ, -Vector3.UnitY),// negative Z
         };
 
+        private RenderTarget PositiveX = new RenderTarget(SizeX, SizeY, 1, true);
+        private RenderTarget NegativeX = new RenderTarget(SizeX, SizeY, 1, true);
+        private RenderTarget PositiveY = new RenderTarget(SizeX, SizeY, 1, true);
+        private RenderTarget NegativeY = new RenderTarget(SizeX, SizeY, 1, true);
+        private RenderTarget PositiveZ = new RenderTarget(SizeX, SizeY, 1, true);
+        private RenderTarget NegativeZ = new RenderTarget(SizeX, SizeY, 1, true);
+
+        private static readonly int SizeX = 512;
+        private static readonly int SizeY = 512;
+
+
         private PrefilterMaterial.PrefilterMaterial prefilterMaterial = null;
+
+        private Cube cubemesh = null;
+
+        private CubemapRenderTarget cubemapRenderTarget = null;
+
+        private TextureBase environmentMap = null;
     }
 
 }

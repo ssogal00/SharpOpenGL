@@ -66,6 +66,7 @@
     <Compile Include="Asset\AssetInfo.cs" />
     <Compile Include="BindState.cs" />
     <Compile Include="Buffer\MultisampleGBuffer.cs" />
+    <Compile Include="Buffer\RenderBuffer.cs" />
     <Compile Include="Buffer\TypedDynamicUniformBuffer.cs" />
     <Compile Include="CustomAttribute\ConsoleCommandAttribute.cs" />
     <Compile Include="CustomAttribute\UIAttribute.cs" />
@@ -111,7 +112,9 @@
     <Compile Include="ResizableManager.cs" />
     <Compile Include="SamplerParameter.cs" />
     <Compile Include="ScopedStopWatch.cs" />
+    <Compile Include="Texture\CubemapRenderTarget.cs" />
     <Compile Include="Texture\HDRTexture.cs" />
+    <Compile Include="Texture\RenderBufferTarget.cs" />
     <Compile Include="Texture\ScopedSTBImage.cs" />
     <Compile Include="UniformBufferParameter.cs" />
     <Compile Include="UniformParameter.cs" />

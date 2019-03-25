@@ -57,6 +57,9 @@ namespace Core.Texture
         {
             Bind();
 
+            m_Width = positiveX.Width;
+            m_Height = positiveY.Height;
+
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear); 
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);

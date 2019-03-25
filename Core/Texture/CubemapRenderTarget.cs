@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
+using System.Windows.Forms;
+using Core.Buffer;
 
 namespace Core.Texture
 {
@@ -14,9 +16,12 @@ namespace Core.Texture
     {
         public CubemapRenderTarget(int width, int height, bool bGenerateMips)
         {
-            this.Width = width;
-            this.Height = height;
+            Debug.Assert(width > 0 && height > 0);
+            m_Width = width;
+            m_Height = height;
             this.bGenerateMips = bGenerateMips;
+
+            Initialize();
         }
 
         public override void Bind()
@@ -27,23 +32,104 @@ namespace Core.Texture
             }
         }
 
+        public void BindFaceForRendering(TextureTarget targetFace, int mip = 0)
+        {
+            if (IsValidTextureTarget(targetFace))
+            {
+                Bind();
+                frameBuffer.Bind();
+                renderBuffer.Bind();
+                
+                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, targetFace, textureObject, mip);
+                GL.Viewport(0, 0, Width, Height);
+                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            }
+        }
+
+        private bool IsValidTextureTarget(TextureTarget targetFace)
+        {
+            if (targetFace == TextureTarget.TextureCubeMapPositiveX ||
+                targetFace == TextureTarget.TextureCubeMapNegativeX ||
+                targetFace == TextureTarget.TextureCubeMapPositiveY ||
+                targetFace == TextureTarget.TextureCubeMapNegativeY ||
+                targetFace == TextureTarget.TextureCubeMapPositiveZ ||
+                targetFace == TextureTarget.TextureCubeMapNegativeZ)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public override void Unbind()
         {   
             GL.BindTexture(TextureTarget.TextureCubeMap, 0);
+        }
+
+        public float[] GetCubemapTexImageAsFloat(TextureTarget targetFace, int mip)
+        {
+            Bind();
+
+            float[] data = null;
+
+            if (CubemapPixelFormat == PixelFormat.Rgb)
+            {
+                data = new float[Width * Height * 3];
+            }
+            else if (CubemapPixelFormat == PixelFormat.Rgba)
+            {
+                data = new float[Width * Height * 4];
+            }
+
+            GL.GetTexImage<float>(targetFace, mip, CubemapPixelFormat, CubemapPixelType, data);
+
+            Unbind();
+
+            return data;
+        }
+
+        public byte[] GetCubemapTexImageAsByte(TextureTarget targetFace, int mip)
+        {
+            Bind();
+
+            byte[] data = null;
+
+            if (CubemapPixelFormat == PixelFormat.Rgb)
+            {
+                data = new byte[Width * Height * 3];
+            }
+            else if (CubemapPixelFormat == PixelFormat.Rgba)
+            {
+                data = new byte[Width * Height * 4];
+            }
+
+            GL.GetTexImage<byte>(targetFace, mip, CubemapPixelFormat, CubemapPixelType, data);
+
+            Unbind();
+
+            return data;
         }
 
         public void Initialize()
         {
             Bind();
 
-            GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr());
-            GL.TexImage2D(TextureTarget.TextureCubeMapNegativeX, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr());
+            frameBuffer = new FrameBuffer();
+            renderBuffer = new RenderBuffer();
+            
+            frameBuffer.Bind();
+            renderBuffer.Bind();
+            renderBuffer.AllocStorage(RenderbufferStorage.DepthComponent24, Width, Height);
+            GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, frameBuffer.GetBufferHandle());
 
-            GL.TexImage2D(TextureTarget.TextureCubeMapPositiveY, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr());
-            GL.TexImage2D(TextureTarget.TextureCubeMapNegativeY, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr());
+            GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr(0));
+            GL.TexImage2D(TextureTarget.TextureCubeMapNegativeX, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr(0));
 
-            GL.TexImage2D(TextureTarget.TextureCubeMapPositiveZ, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr());
-            GL.TexImage2D(TextureTarget.TextureCubeMapNegativeZ, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr());
+            GL.TexImage2D(TextureTarget.TextureCubeMapPositiveY, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr(0));
+            GL.TexImage2D(TextureTarget.TextureCubeMapNegativeY, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr(0));
+
+            GL.TexImage2D(TextureTarget.TextureCubeMapPositiveZ, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr(0));
+            GL.TexImage2D(TextureTarget.TextureCubeMapNegativeZ, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr(0));
             
             if (bGenerateMips)
             {
@@ -53,12 +139,12 @@ namespace Core.Texture
             Unbind();
         }
 
-        protected int Width = 0;
-        protected int Height = 0;
-
         protected bool bGenerateMips = false;
         private PixelType CubemapPixelType = PixelType.Float;
-        private PixelFormat CubemapPixelFormat = PixelFormat.Rgb;
-        private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgb;
+        private PixelFormat CubemapPixelFormat = PixelFormat.Rgba;
+        private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgba16f;
+
+        private FrameBuffer frameBuffer = null;
+        private RenderBuffer renderBuffer = null;
     }
 }
