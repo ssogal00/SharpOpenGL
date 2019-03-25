@@ -36,7 +36,7 @@ void main()
 	int metallicIndex = gl_InstanceID % MetallicCount;
 	int roughnessIndex = gl_InstanceID / RoughnessCount;	
 
-	float metallicValue = float(metallicIndex)  / float(MetallicCount);
+	float metallicValue = float(metallicIndex)  / float(MetallicCount);	
 	float roughnessValue = float(roughnessIndex) / float(RoughnessCount);
 
 	vec4 translation = vec4( metallicValue * 150, roughnessValue * 150 + 10, 10, 1);

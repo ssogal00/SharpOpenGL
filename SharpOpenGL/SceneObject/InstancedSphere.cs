@@ -17,7 +17,7 @@ namespace SharpOpenGL
         public InstancedSphere()
             : base()
         {
-            this.instanceCount = 25;
+            this.instanceCount = 36;
             this.Translation = new Vector3(-100,0,0);
             this.Scale = 2.0f;
         }
@@ -63,7 +63,8 @@ namespace SharpOpenGL
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 
-                    gbufferDraw.NormalMapExist = true;
+                    //gbufferDraw.NormalMapExist = true;
+                    gbufferDraw.NormalMapExist = false;
                     gbufferDraw.MetalicExist = false;
                     gbufferDraw.RoughnessExist = false;
                     gbufferDraw.DiffuseMapExist = false;
@@ -71,10 +72,10 @@ namespace SharpOpenGL
                     gbufferDraw.DiffuseOverride = Color;
                     gbufferDraw.NormalTex2D = normalTex;
 
-                    gbufferDraw.MetallicCount = 5;
-                    gbufferDraw.RoughnessCount = 5;
+                    gbufferDraw.MetallicCount = 6;
+                    gbufferDraw.RoughnessCount = 6;
 
-                    drawable.DrawArraysInstanced(PrimitiveType.Triangles, 5*5);
+                    drawable.DrawArraysInstanced(PrimitiveType.Triangles, 6*6);
                 }
             }
         }

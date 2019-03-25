@@ -112,7 +112,7 @@ namespace SharpOpenGL
             prefilter.Transform();
 
             lut.Render();
-            //lut.Save();
+            lut.Save();
 
             skyboxPostProcess.SetCubemapTexture(prefilter.ResultCubemap);
 
@@ -254,7 +254,8 @@ namespace SharpOpenGL
             }
             else
             {
-                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment,convolution.ResultCubemap);
+                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment
+                    ,convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
 
                 if (DebugDrawer.Get().IsBloomEnabled)
                 {

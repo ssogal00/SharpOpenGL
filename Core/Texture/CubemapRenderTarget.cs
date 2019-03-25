@@ -45,6 +45,12 @@ namespace Core.Texture
             }
         }
 
+        public void Resize(int newWidth, int newHeight)
+        {
+            m_Width = newWidth;
+            m_Height = newHeight;
+        }
+
         public void BindFaceForRendering(TextureTarget targetFace, int mip = 0)
         {
             if (IsValidTextureTarget(targetFace))
@@ -54,6 +60,7 @@ namespace Core.Texture
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, targetFace, textureObject, mip);
                 
                 var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+                Debug.Assert(status == FramebufferErrorCode.FramebufferComplete);
 
                 GL.Viewport(0, 0, Width, Height);
                 GL.ClearColor(Color.BlueViolet);

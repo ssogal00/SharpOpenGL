@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Core;
 using Core.CustomAttribute;
@@ -49,7 +50,7 @@ namespace SharpOpenGL.PostProcess
             }
         }
 
-        public override void Render(TextureBase colorInput,  TextureBase normalInput, TextureBase positionInput, TextureBase ambientIrradiancemap)
+        public override void Render(TextureBase colorInput,  TextureBase normalInput, TextureBase positionInput, TextureBase ambientIrradiancemap, TextureBase lutMap, TextureBase prefilterMap)
         {
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
@@ -58,6 +59,8 @@ namespace SharpOpenGL.PostProcess
                 deferredLight.NormalTex2D = normalInput;
                 deferredLight.DiffuseTex2D = colorInput;
                 deferredLight.IrradianceMap2D = ambientIrradiancemap;
+                deferredLight.BrdfLUT2D = lutMap;
+                deferredLight.PrefilterMap2D = prefilterMap;
 
                 
                 deferredLight.CameraTransform_View = CameraManager.Get().CurrentCameraView;

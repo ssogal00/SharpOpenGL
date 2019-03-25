@@ -1307,7 +1307,7 @@ void main()
 	int metallicIndex = gl_InstanceID % MetallicCount;
 	int roughnessIndex = gl_InstanceID / RoughnessCount;	
 
-	float metallicValue = float(metallicIndex)  / float(MetallicCount);
+	float metallicValue = float(metallicIndex)  / float(MetallicCount);	
 	float roughnessValue = float(roughnessIndex) / float(RoughnessCount);
 
 	vec4 translation = vec4( metallicValue * 150, roughnessValue * 150 + 10, 10, 1);
@@ -2512,6 +2512,27 @@ public class LightMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
+	public void SetBrdfLUT2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"BrdfLUT", TextureObject);
+	}
+
+	public void SetBrdfLUT2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"BrdfLUT", TextureObject);
+	}
+
+	public TextureBase BrdfLUT2D 
+	{	
+		get { return brdflut;}
+		set 
+		{	
+			brdflut = value;
+			SetTexture(@"BrdfLUT", brdflut);			
+		}
+	}
+
+	private TextureBase brdflut = null;
 	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"DiffuseTex", TextureObject);
@@ -2596,6 +2617,27 @@ public class LightMaterial : MaterialBase
 	}
 
 	private TextureBase positiontex = null;
+	public void SetPrefilterMap2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"PrefilterMap", TextureObject);
+	}
+
+	public void SetPrefilterMap2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"PrefilterMap", TextureObject);
+	}
+
+	public TextureBase PrefilterMap2D 
+	{	
+		get { return prefiltermap;}
+		set 
+		{	
+			prefiltermap = value;
+			SetTexture(@"PrefilterMap", prefiltermap);			
+		}
+	}
+
+	private TextureBase prefiltermap = null;
 
 
 	
@@ -2706,7 +2748,9 @@ void main()
 layout (location = 0 , binding = 0) uniform sampler2D PositionTex;
 layout (location = 1 , binding = 1) uniform sampler2D DiffuseTex;
 layout (location = 2 , binding = 2) uniform sampler2D NormalTex;
-layout (location = 3 , binding = 3) uniform samplerCube IrradianceMap;
+layout (location = 3 , binding = 3) uniform sampler2D BrdfLUT;
+layout (location = 4 , binding = 4) uniform samplerCube IrradianceMap;
+layout (location = 5 , binding = 5) uniform samplerCube PrefilterMap;
 
 layout (location = 0 ) in vec3 InPosition;
 layout (location = 1 ) in vec2 InTexCoord;
@@ -2715,115 +2759,7 @@ layout( location = 0 ) out vec4 FragColor;
 
 const float PI = 3.1415926535;
 
-
-float Square( float x )
-{
-	return x*x;
-}
-
-vec2 Square( vec2 x )
-{
-	return x*x;
-}
-
-vec3 Square( vec3 x )
-{
-	return x*x;
-}
-
-vec4 Square( vec4 x )
-{
-	return x*x;
-}
-
-float Pow2( float x )
-{
-	return x*x;
-}
-
-vec2 Pow2( vec2 x )
-{
-	return x*x;
-}
-
-vec3 Pow2( vec3 x )
-{
-	return x*x;
-}
-
-vec4 Pow2( vec4 x )
-{
-	return x*x;
-}
-
-float Pow3( float x )
-{
-	return x*x*x;
-}
-
-vec2 Pow3( vec2 x )
-{
-	return x*x*x;
-}
-
-vec3 Pow3( vec3 x )
-{
-	return x*x*x;
-}
-
-vec4 Pow3( vec4 x )
-{
-	return x*x*x;
-}
-
-float Pow4( float x )
-{
-	float xx = x*x;
-	return xx * xx;
-}
-
-vec2 Pow4( vec2 x )
-{
-	vec2 xx = x*x;
-	return xx * xx;
-}
-
-vec3 Pow4( vec3 x )
-{
-	vec3 xx = x*x;
-	return xx * xx;
-}
-
-vec4 Pow4( vec4 x )
-{
-	vec4 xx = x*x;
-	return xx * xx;
-}
-
-float Pow5( float x )
-{
-	float xx = x*x;
-	return xx * xx * x;
-}
-
-vec2 Pow5( vec2 x )
-{
-	vec2 xx = x*x;
-	return xx * xx * x;
-}
-
-vec3 Pow5( vec3 x )
-{
-	vec3 xx = x*x;
-	return xx * xx * x;
-}
-
-vec4 Pow5( vec4 x )
-{
-	vec4 xx = x*x;
-	return xx * xx * x;
-}
-
+// ----------------------------------------------------------------------------
 float DistributionGGX(vec3 N, vec3 H, float roughness)
 {
     float a = roughness*roughness;
@@ -2835,9 +2771,9 @@ float DistributionGGX(vec3 N, vec3 H, float roughness)
     float denom = (NdotH2 * (a2 - 1.0) + 1.0);
     denom = PI * denom * denom;
 
-    return nom / max(denom, 0.001); // prevent divide by zero for roughness=0.0 and NdotH=1.0
+    return nom / denom;
 }
-
+// ----------------------------------------------------------------------------
 float GeometrySchlickGGX(float NdotV, float roughness)
 {
     float r = (roughness + 1.0);
@@ -2848,32 +2784,27 @@ float GeometrySchlickGGX(float NdotV, float roughness)
 
     return nom / denom;
 }
-
+// ----------------------------------------------------------------------------
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 {
     float NdotV = max(dot(N, V), 0.0);
     float NdotL = max(dot(N, L), 0.0);
-    float ggx2  = GeometrySchlickGGX(NdotV, roughness);
-    float ggx1  = GeometrySchlickGGX(NdotL, roughness);
-	
+    float ggx2 = GeometrySchlickGGX(NdotV, roughness);
+    float ggx1 = GeometrySchlickGGX(NdotL, roughness);
+
     return ggx1 * ggx2;
 }
-
+// ----------------------------------------------------------------------------
 vec3 fresnelSchlick(float cosTheta, vec3 F0)
 {
-    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);    
-}  
-
+    return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
+}
+// ----------------------------------------------------------------------------
 vec3 fresnelSchlickRoughness(float cosTheta, vec3 F0, float roughness)
 {
     return F0 + (max(vec3(1.0 - roughness), F0) - F0) * pow(1.0 - cosTheta, 5.0);
-}
-
-vec3 Diffuse_Lambert( vec3 DiffuseColor )
-{
-	return DiffuseColor * ( 1 / PI);
-}
-
+}   
+// ----------------------------------------------------------------------------
 
 uniform int lightCount;
 uniform vec3 lightPositions[64];
@@ -2903,6 +2834,7 @@ void main()
     float roughness = clamp(texture(DiffuseTex, TexCoord).a, 0.0f, 1.0f);
     vec3 N = normalize(texture(NormalTex, TexCoord).xyz);
     vec3 V = -normalize(Position);
+    vec3 R = reflect(V, N); 
 
     vec3 F0 = vec3(0.04); 
     F0 = mix(F0, albedo, metallic);
@@ -2950,20 +2882,33 @@ void main()
 
     
     // ambient lighting (we now use IBL as the ambient term)
-    vec3 kS = fresnelSchlick(max(dot(N, V), 0.0), F0);
+    vec3 F = fresnelSchlickRoughness(max(dot(N, V), 0.0), F0, roughness);
+    
+    vec3 kS = F;
     vec3 kD = 1.0 - kS;
-    kD *= 1.0 - metallic;	  
+    kD *= 1.0 - metallic;     
+    
     vec3 irradiance = texture(IrradianceMap, N).rgb;
-    vec3 diffuse = irradiance * albedo;
-    vec3 ambient = (kD * diffuse);    
+    vec3 diffuse      = irradiance * albedo;
+    
+    // sample both the pre-filter map and the BRDF lut and combine them together as per the Split-Sum approximation to get the IBL specular part.
+    const float MAX_REFLECTION_LOD = 4.0;
+    vec3 prefilteredColor = textureLod(PrefilterMap, R,  roughness * MAX_REFLECTION_LOD).rgb;    
+    vec2 brdf  = texture(BrdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
+    vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);
+
+    //vec3 ambient = (kD * diffuse + specular) * ao;
+
+    vec3 ambient = (kD * diffuse + specular);
     
     vec3 color = ambient + Lo;
 
-	
-    //color = color / (color + vec3(1.0));
-    color = pow(color, vec3(1.0/2.2));  
-   
-    FragColor = vec4(color, 1.0);	
+    // HDR tonemapping
+    color = color / (color + vec3(1.0));
+    // gamma correct
+    color = pow(color, vec3(1.0/2.2)); 
+
+    FragColor = vec4(color , 1.0);
 }
 ";
 	}
@@ -3088,7 +3033,7 @@ layout (location=0) out vec4 FragColor;
 
 void main()
 {
-    vec4 Color = texture(texCubemap, -CubemapTexCoord);
+    vec4 Color = texture(texCubemap, -CubemapTexCoord);    
     FragColor = Color;
 }";
 	}

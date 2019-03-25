@@ -10,6 +10,6 @@ layout (location=0) out vec4 FragColor;
 
 void main()
 {
-    vec4 Color = texture(texCubemap, -CubemapTexCoord);
+    vec4 Color = texture(texCubemap, -CubemapTexCoord);    
     FragColor = Color;
 }

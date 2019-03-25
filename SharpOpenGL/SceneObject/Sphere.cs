@@ -159,8 +159,12 @@ namespace SharpOpenGL
                     var d3 = (V2 - V4).Normalized();
                     var d4 = (V3 - V4).Normalized();
 
-                    var norm1 = Vector3.Cross(d1, d2).Normalized();
-                    var norm2 = Vector3.Cross(d4, d3).Normalized();
+                    //var norm1 = Vector3.Cross(d1, d2).Normalized();
+                    //var norm2 = Vector3.Cross(d4, d3).Normalized();
+                    var norm1 = V1.Normalized();
+                    var norm2 = V2.Normalized();
+                    var norm3 = V3.Normalized();
+                    var norm4 = V4.Normalized();
 
                     // V1-----V2
                     //       /
@@ -180,12 +184,12 @@ namespace SharpOpenGL
                     TempVertexList.Add(V4);
 
                     TempNormalList.Add(norm1);
-                    TempNormalList.Add(norm1);
-                    TempNormalList.Add(norm1);
+                    TempNormalList.Add(norm2);
+                    TempNormalList.Add(norm3);
 
+                    TempNormalList.Add(norm3);
                     TempNormalList.Add(norm2);
-                    TempNormalList.Add(norm2);
-                    TempNormalList.Add(norm2);
+                    TempNormalList.Add(norm4);
 
                     TempTexCoordList.Add(T1);
                     TempTexCoordList.Add(T2);
@@ -206,6 +210,8 @@ namespace SharpOpenGL
                 var V3 = TempVertexList[i + 2];
 
                 var norm1 = TempNormalList[i];
+                var norm2 = TempNormalList[i+1];
+                var norm3 = TempNormalList[i+2];
 
                 var tan1 = TempTangentList[i];
                 var tan2 = TempTangentList[i+1];

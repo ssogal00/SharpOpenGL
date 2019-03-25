@@ -69,6 +69,14 @@ namespace SharpOpenGL.PostProcess
         {
         }
 
+        public virtual void Render(TextureBase Input0, TextureBase Input1, TextureBase Input3, TextureBase Input4, TextureBase Input5)
+        {
+        }
+
+        public virtual void Render(TextureBase Input0, TextureBase Input1, TextureBase Input3, TextureBase Input4, TextureBase Input5, TextureBase Input6)
+        {
+        }
+
         public RenderTarget GetOutputRenderTarget()
         {
             return Output;

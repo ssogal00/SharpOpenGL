@@ -24,7 +24,6 @@ namespace SharpOpenGL.Transform
             cubemesh.SetVisible(false);
 
             cubemapRenderTarget = new CubemapRenderTarget(SizeX, SizeY, true);
-
         }
 
         public override void Transform()
@@ -38,35 +37,45 @@ namespace SharpOpenGL.Transform
             using (var dummy = new ScopedBind(prefilterMaterial))
             {
                 cubemapRenderTarget.BindForRendering();
-                // 
-                prefilterMaterial.Roughness = 0;
-                prefilterMaterial.Projection = CaptureProjection;
-                prefilterMaterial.EnvironmentMap2D = environmentMap;
-                
-                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveX);
-                prefilterMaterial.View = CaptureViews[0];
-                cubemesh.JustDraw();
 
-                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapNegativeX);
-                prefilterMaterial.View = CaptureViews[1];
-                cubemesh.JustDraw();
+                int maxMipLevels = 5;
 
-                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveY);
-                prefilterMaterial.View = CaptureViews[2];
-                cubemesh.JustDraw();
+                for (int miplevel = 0; miplevel < maxMipLevels; miplevel++)
+                {
+                    int mipWidth = (int) (SizeX * Math.Pow(0.5, (double)miplevel));
+                    int mipHeight = (int) (SizeY * Math.Pow(0.5, (double)miplevel));                    
 
-                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapNegativeY);
-                prefilterMaterial.View = CaptureViews[3];
-                cubemesh.JustDraw();
+                    cubemapRenderTarget.Resize(mipWidth, mipHeight);
 
-                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveZ);
-                prefilterMaterial.View = CaptureViews[4];
-                cubemesh.JustDraw();
+                    prefilterMaterial.Roughness = (float)miplevel / (float)(maxMipLevels - 1);
 
-                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapNegativeZ);
-                prefilterMaterial.View = CaptureViews[5];
-                cubemesh.JustDraw();
+                    prefilterMaterial.Projection = CaptureProjection;
+                    prefilterMaterial.EnvironmentMap2D = environmentMap;
 
+                    cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveX, miplevel);
+                    prefilterMaterial.View = CaptureViews[0];
+                    cubemesh.JustDraw();
+
+                    cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapNegativeX, miplevel);
+                    prefilterMaterial.View = CaptureViews[1];
+                    cubemesh.JustDraw();
+
+                    cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveY, miplevel);
+                    prefilterMaterial.View = CaptureViews[2];
+                    cubemesh.JustDraw();
+
+                    cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapNegativeY, miplevel);
+                    prefilterMaterial.View = CaptureViews[3];
+                    cubemesh.JustDraw();
+
+                    cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveZ, miplevel);
+                    prefilterMaterial.View = CaptureViews[4];
+                    cubemesh.JustDraw();
+
+                    cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapNegativeZ, miplevel);
+                    prefilterMaterial.View = CaptureViews[5];
+                    cubemesh.JustDraw();
+                }
                 cubemapRenderTarget.UnbindForRendering();
             }
         }
