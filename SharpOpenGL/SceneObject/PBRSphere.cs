@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Core;
 using Core.Primitive;
 using Core.Texture;
@@ -21,10 +22,14 @@ namespace SharpOpenGL
             this.Scale = 2.0f;
             this.IsEditable = true;
         }
-        public PBRSphere(float radius, int stackcount, int sectorcount, int instanceCount)
-            : base(radius, stackcount, sectorcount)
+
+        public PBRSphere(string diffuseTex, string normalTex, string roghnessTex, string metallicTex)
+        : this()
         {
-            this.instanceCount = instanceCount;
+            this.diffuseTexPath = diffuseTex;
+            this.normalTexPath = normalTex;
+            this.roughnessTexPath = roghnessTex;
+            this.metallicTexPath = metallicTex;
         }
 
         public override void Initialize()
@@ -41,48 +46,66 @@ namespace SharpOpenGL
 
                 defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw.GBufferDraw>();
 
-                if (normalTex == null)
+                if (normalTex == null && normalTexPath?.Length > 0)
                 {
-                    normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/rustediron2_normal.imported");
+                    normalTex = TextureManager.Get().LoadTexture2D(normalTexPath);
+                    if (normalTex != null)
+                    {
+                        bNormalExist = true;
+                    }
                 }
 
-                if (diffuseTex == null)
+                if (diffuseTex == null && diffuseTexPath?.Length > 0)
                 {
-                    diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/rustediron2_basecolor.imported");
+                    diffuseTex = TextureManager.Get().LoadTexture2D(diffuseTexPath);
+                    if (diffuseTex != null)
+                    {
+                        bDiffuseExist = true;
+                    }
                 }
 
-                if (roughTex == null)
+                if (roughTex == null && roughnessTexPath?.Length > 0)
                 {
-                    roughTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/rustediron2_roughness.imported");
+                    roughTex = TextureManager.Get().LoadTexture2D(roughnessTexPath);
+
+                    if (roughTex != null)
+                    {
+                        bRoughnessExist = true;
+                    }
                 }
 
-                if (metalicTex == null)
+                if (metalicTex == null && metallicTexPath?.Length > 0)
                 {
-                    metalicTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/rustediron2_metallic.imported");
+                    metalicTex = TextureManager.Get().LoadTexture2D(metallicTexPath);
+                    if (metalicTex != null)
+                    {
+                        bMetallicExist = true;
+                    }
                 }
 
                 bReadyToDraw = true;
             });
         }
 
-        public void SetNormalTex(TextureBase normalTex)
+        public void SetNormalTex(string normalTex)
         {
-            this.normalTex = normalTex;
+            this.normalTexPath = normalTex;
         }
 
-        public void SetDiffuseTex(TextureBase diffuseTex)
+        public void SetDiffuseTex(string diffuseTex)
         {
-            this.diffuseTex = diffuseTex;
-        }
-        
-        public void SetRoughnessTex(TextureBase roughnessTex)
-        {
-            this.roughTex = roughnessTex;
+            this.diffuseTexPath = diffuseTex;
         }
 
-        public void SetMetallicTex(TextureBase metallicTex)
+        public void SetRoughnessTex(string roughnessTex)
         {
-            this.metalicTex = metallicTex;
+            this.roughnessTexPath = roughnessTex;
+        }
+
+
+        public void SetMetallicTex(string metallicTex)
+        {
+            this.metallicTexPath = metallicTex;
         }
 
         public override void Draw()
@@ -97,15 +120,37 @@ namespace SharpOpenGL
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 
-                    gbufferDraw.NormalMapExist = true;
-                    gbufferDraw.MetalicExist = true;
-                    gbufferDraw.RoughnessExist = true;
-                    gbufferDraw.DiffuseMapExist = true;
+                    if (bMetallicExist)
+                    {
+                        gbufferDraw.MetalicExist = true;
+                        gbufferDraw.MetalicTex2D = metalicTex;
+                    }
+                    else
+                    {
+                        gbufferDraw.MetalicExist = false;
+                    }
 
-                    gbufferDraw.NormalTex2D = normalTex;
-                    gbufferDraw.DiffuseTex2D = diffuseTex;
-                    gbufferDraw.RoughnessTex2D = roughTex;
-                    gbufferDraw.MetalicTex2D = metalicTex;
+                    if (bNormalExist)
+                    {
+                        gbufferDraw.NormalMapExist = true;
+                        gbufferDraw.NormalTex2D = normalTex;
+                    }
+                    else
+                    {
+                        gbufferDraw.NormalMapExist = false;
+                    }
+
+                    if (bRoughnessExist)
+                    {
+                        gbufferDraw.RoughnessExist = true;
+                        gbufferDraw.RoughnessTex2D = roughTex;
+                    }
+
+                    if (bDiffuseExist)
+                    {
+                        gbufferDraw.DiffuseMapExist = true;
+                        gbufferDraw.DiffuseTex2D = diffuseTex;
+                    }
 
                     drawable.DrawArrays(PrimitiveType.Triangles);
                 }
@@ -115,5 +160,15 @@ namespace SharpOpenGL
         protected int instanceCount = 1;
 
         protected Vector3 Color = new Vector3(1, 1, 1);
+
+        private bool bRoughnessExist = false;
+        private bool bMetallicExist = false;
+        private bool bNormalExist = false;
+        private bool bDiffuseExist = false;
+
+        private string normalTexPath = null;
+        private string roughnessTexPath = null;
+        private string metallicTexPath = null;
+        private string diffuseTexPath = null;
     }
 }

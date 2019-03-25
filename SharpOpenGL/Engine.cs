@@ -49,9 +49,28 @@ namespace SharpOpenGL
 
             var sphere = SceneObjectManager.Get().CreateSceneObject<InstancedSphere>();
 
-            var alumi = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
+            var rusted = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
+            rusted.Scale = 1.5f;
+            rusted.Translation = new Vector3(-190, 20, 0);
+            rusted.SetNormalTex("./Resources/Imported/Texture/rustediron2_normal.imported");
+            rusted.SetDiffuseTex("./Resources/Imported/Texture/rustediron2_basecolor.imported");
+            rusted.SetMetallicTex("./Resources/Imported/Texture/rustediron2_metallic.imported");
+            rusted.SetRoughnessTex("./Resources/Imported/Texture/rustediron2_roughness.imported");
 
-            
+            var gold = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
+            gold.Scale = 1.5f;
+            gold.Translation = new Vector3(-150,20,0);
+            gold.SetNormalTex("./Resources/Imported/Texture/gold-scuffed_normal.imported");
+            gold.SetDiffuseTex("./Resources/Imported/Texture/gold-scuffed_basecolor.imported");
+            gold.SetMetallicTex("./Resources/Imported/Texture/gold-scuffed_metallic.imported");
+            gold.SetRoughnessTex("./Resources/Imported/Texture/gold-scuffed_roughness.imported");
+
+            var wood = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
+            wood.Scale = 1.5f;
+            wood.Translation = new Vector3(-230, 20, 0);
+            wood.SetNormalTex("./Resources/Imported/Texture/mahogfloor_normal.imported");
+            wood.SetDiffuseTex("./Resources/Imported/Texture/mahogfloor_basecolor.imported");
+            wood.SetRoughnessTex("./Resources/Imported/Texture/mahogfloor_roughness.imported");
 
             bInitialized = true;
         }
