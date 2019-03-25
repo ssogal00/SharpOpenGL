@@ -27,7 +27,7 @@ namespace SharpOpenGL
 
             // create hdr texture
             var hdr = new HDRTexture();
-            hdr.Load("./Resources/Texture/HDR/GCanyon_C_YumaPoint_3k.hdr");
+            hdr.Load("./Resources/Texture/HDR/Circus_Backstage_3k.hdr");
             equirectangularTex = hdr;
 
             //

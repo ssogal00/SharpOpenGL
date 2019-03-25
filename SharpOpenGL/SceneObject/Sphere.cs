@@ -27,8 +27,8 @@ namespace SharpOpenGL
         : base("Sphere",SphereCount++)
         {
             Radius = 10;
-            StackCount = 50;
-            SectorCount = 50;
+            StackCount = 25;
+            SectorCount = 25;
             Initialize();
         }
 

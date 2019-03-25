@@ -44,8 +44,7 @@ namespace SharpOpenGL
                 normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_normal-dx.imported");
                 diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_basecolor.imported");
                 roughTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_roughness.imported");
-                metalicTex = TextureManager.Get()
-                    .LoadTexture2D("./Resources/Imported/Texture/copper-rock1-metal.imported");
+                metalicTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_metallic.imported");
 
                 bReadyToDraw = true;
             });
@@ -63,14 +62,17 @@ namespace SharpOpenGL
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 
-                    //gbufferDraw.NormalMapExist = true;
-                    gbufferDraw.NormalMapExist = false;
-                    gbufferDraw.MetalicExist = false;
-                    gbufferDraw.RoughnessExist = false;
-                    gbufferDraw.DiffuseMapExist = false;
+                    gbufferDraw.NormalMapExist = true;
+                    gbufferDraw.MetalicExist = true;
+                    gbufferDraw.RoughnessExist = true;
+                    gbufferDraw.DiffuseMapExist = true;
                     
                     gbufferDraw.DiffuseOverride = Color;
+
                     gbufferDraw.NormalTex2D = normalTex;
+                    gbufferDraw.DiffuseTex2D = diffuseTex;
+                    gbufferDraw.RoughnessTex2D = roughTex;
+                    gbufferDraw.MetalicTex2D = metalicTex;
 
                     gbufferDraw.MetallicCount = 6;
                     gbufferDraw.RoughnessCount = 6;

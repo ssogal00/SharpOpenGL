@@ -162,6 +162,7 @@
     <Compile Include="ConsoleCommandManager.cs" />
     <Compile Include="DebugDrawer.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="SceneObject\PBRSphere.cs" />
     <Compile Include="Transform\2DLUT.cs" />
     <Compile Include="Transform\CubemapConvolutionTransform.cs" />
     <Compile Include="Transform\EquirectangleToCubemap.cs" />

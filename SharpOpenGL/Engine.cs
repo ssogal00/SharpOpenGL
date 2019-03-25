@@ -49,6 +49,10 @@ namespace SharpOpenGL
 
             var sphere = SceneObjectManager.Get().CreateSceneObject<InstancedSphere>();
 
+            var alumi = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
+
+            
+
             bInitialized = true;
         }
 
