@@ -50,7 +50,7 @@ namespace Core.Texture
             }
         }
 
-        public void Unbind()
+        public virtual void Unbind()
         {
             GL.BindTexture(TextureTarget.Texture2D, 0);
         }
