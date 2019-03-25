@@ -62,7 +62,7 @@ namespace SharpOpenGL
             OnGLContextCreated += RenderResource.OnOpenGLContextCreated;
 
             OnWindowResize += CameraManager.Get().OnWindowResized;
-            OnWindowResize += ResizableManager.Get().ResizeEventHandler;
+            //OnWindowResize += ResizableManager.Get().ResizeEventHandler;
 
             OnKeyDownEvent += CameraManager.Get().OnKeyDown;
             OnKeyUpEvent += CameraManager.Get().OnKeyUp;
@@ -194,6 +194,7 @@ namespace SharpOpenGL
             float fAspectRatio = Width / (float)Height;
 
             OnWindowResize(this, eventArgs);
+            ResizableManager.Get().ResizeEventHandler(this, eventArgs);
             
             this.Title = string.Format("MyEngine({0}x{1})", Width, Height);
         }

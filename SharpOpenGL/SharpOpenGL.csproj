@@ -162,6 +162,7 @@
     <Compile Include="ConsoleCommandManager.cs" />
     <Compile Include="DebugDrawer.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="Transform\2DLUT.cs" />
     <Compile Include="Transform\CubemapConvolutionTransform.cs" />
     <Compile Include="Transform\EquirectangleToCubemap.cs" />
     <Compile Include="Font\FontManager.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Shader.cs" />
     <Compile Include="Asset\StaticMeshAsset.cs" />
     <Compile Include="TextureManager.cs" />
+    <Compile Include="Transform\Prefilter.cs" />
     <Compile Include="Transform\TransformBase.cs" />
     <Compile Include="UIThread.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

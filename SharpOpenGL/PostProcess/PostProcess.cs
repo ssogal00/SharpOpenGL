@@ -20,13 +20,17 @@ namespace SharpOpenGL.PostProcess
 
         [ExposeUI]
         public string Name { get; set; }
-
+        
         public override void Initialize()
         {
+            // create vertex, index buffer for screen space drawing
             VB = new StaticVertexBuffer<PT_VertexAttribute>();
             IB = new IndexBuffer();
             UpdateVertexBuffer();
             UpdateIndexBuffer();
+
+            // create render target
+            CreateDefaultRenderTarget();
         }
 
         protected void BlitToScreenSpace()
@@ -35,6 +39,12 @@ namespace SharpOpenGL.PostProcess
             {
                 GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
             }
+        }
+
+        protected virtual void CreateDefaultRenderTarget()
+        {
+            Output = new RenderTarget(1024,768,1, false);
+            Output.Initialize();
         }
 
         public virtual void Render()
@@ -66,7 +76,8 @@ namespace SharpOpenGL.PostProcess
 
         public RenderTarget OutputRenderTarget => Output;
 
-        protected RenderTarget Output = new RenderTarget(1024, 768, 1);
+        //protected RenderTarget Output = new RenderTarget(1024, 768, 1);
+        protected RenderTarget Output;
 
         protected Core.MaterialBase.MaterialBase PostProcessMaterial = null;
                 

@@ -14,7 +14,10 @@ namespace Core.Texture
 
         public RenderTarget(int width, int height, int attachementCount, bool bFixedSize = false)
         {
-            ResizableManager.Get().AddResizable(this);
+            if (bFixedSize == false)
+            {
+                ResizableManager.Get().AddResizable(this);
+            }
 
             BufferWidth = (int) (width);
             BufferHeight = (int) (height);
@@ -29,6 +32,7 @@ namespace Core.Texture
         {
             PixelFormat = internalFormat;
             bIncludeDepthAttachment = includeDepthAttachment;
+            bFixedSize = false;
         }
 
         public void Bind()
@@ -255,5 +259,6 @@ namespace Core.Texture
 
         protected bool bFixedSize = false;
 
+        public string RenderTargetName { get; set; } = "";
     }
 }

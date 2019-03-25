@@ -307,5 +307,11 @@ namespace ResolveMaterial
 namespace SSAO
 {
 }
+namespace LUTGenerateMaterial
+{
+}
+namespace PrefilterMaterial
+{
+}
 
 }
