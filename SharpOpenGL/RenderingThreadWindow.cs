@@ -36,6 +36,7 @@ namespace SharpOpenGL
         protected ResolvePostProcess resolvePostProcess = new ResolvePostProcess();
         protected EquirectangleToCubemap equirectToCube = new EquirectangleToCubemap();
         protected CubemapConvolutionTransform convolution = new CubemapConvolutionTransform();
+        protected LookUpTable2D lut = new LookUpTable2D();
 
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
         protected StaticMeshObject sponzamesh = null;
@@ -104,6 +105,9 @@ namespace SharpOpenGL
                 convolution.Transform();
                 convolution.Save();
             }
+
+            lut.Render();
+            lut.Save();
 
             // add ui editable objects
             UIThread.Get().Enqueue

@@ -6,39 +6,14 @@ using System.Threading.Tasks;
 using Core;
 using Core.MaterialBase;
 using Core.Texture;
+using OpenTK.Graphics.OpenGL;
 using SharpOpenGL.PostProcess;
 
 namespace SharpOpenGL.Transform
 {
     public class LookUpTable2D : PostProcessBase
     {
-        // pbr: generate a 2D LUT from the BRDF equations used.
-        // ----------------------------------------------------
-        /*unsigned int brdfLUTTexture;
-        glGenTextures(1, &brdfLUTTexture);
-
-        // pre-allocate enough memory for the LUT texture.
-        glBindTexture(GL_TEXTURE_2D, brdfLUTTexture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RG16F, 512, 512, 0, GL_RG, GL_FLOAT, 0);
-        // be sure to set wrapping mode to GL_CLAMP_TO_EDGE
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-        // then re-configure capture framebuffer object and render screen-space quad with BRDF shader.
-        glBindFramebuffer(GL_FRAMEBUFFER, captureFBO);
-        glBindRenderbuffer(GL_RENDERBUFFER, captureRBO);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, 512, 512);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, brdfLUTTexture, 0);
-
-        glViewport(0, 0, 512, 512);
-        brdfShader.use();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        renderQuad();
-
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);*/
-
+       
         public override void OnGLContextCreated(object sender, EventArgs e)
         {
             base.OnGLContextCreated(sender, e);
@@ -46,12 +21,38 @@ namespace SharpOpenGL.Transform
             material = ShaderManager.Get().GetMaterial<LUTGenerateMaterial.LUTGenerateMaterial>();
         }
 
+        protected override void CreateDefaultRenderTarget()
+        {
+            // we need fixed render target
+            Output = new RenderTarget(512, 512, 1, true);
+            Output.Initialize();
+        }
+
+        public bool IsCompleted { get; set; } = false;
+
+        public void Save()
+        {
+            if (Output != null)
+            {
+                var colorDataX = Output.ColorAttachment0.GetTexImageAsByte();
+                FreeImageHelper.SaveAsBmp(ref colorDataX, 512, 512, "LUT.bmp");
+            }
+        }
+
         public override void Render()
         {
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int) TextureWrapMode.ClampToEdge);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMinFilter.Linear);
+
             Output.BindAndExecute(material, 
                 () =>
                 {
                     BlitToScreenSpace();
+                    // once draw we completed
+                    IsCompleted = true;
                 }
             );
         }
