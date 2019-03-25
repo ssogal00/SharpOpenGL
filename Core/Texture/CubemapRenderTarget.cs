@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using Core.Buffer;
 
@@ -24,6 +25,18 @@ namespace Core.Texture
             Initialize();
         }
 
+        public void BindForRendering()
+        {
+            frameBuffer.Bind();
+            renderBuffer.Bind();
+        }
+
+        public void UnbindForRendering()
+        {
+            frameBuffer.Unbind();
+            renderBuffer.Unbind();
+        }
+
         public override void Bind()
         {
             if (IsValid)
@@ -36,12 +49,14 @@ namespace Core.Texture
         {
             if (IsValidTextureTarget(targetFace))
             {
-                Bind();
-                frameBuffer.Bind();
-                renderBuffer.Bind();
-                
+                renderBuffer.AllocStorage(RenderbufferStorage.Depth24Stencil8, Width, Height);
+                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, frameBuffer.GetBufferHandle());
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, targetFace, textureObject, mip);
+                
+                var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
+
                 GL.Viewport(0, 0, Width, Height);
+                GL.ClearColor(Color.BlueViolet);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             }
         }
@@ -119,7 +134,7 @@ namespace Core.Texture
             
             frameBuffer.Bind();
             renderBuffer.Bind();
-            renderBuffer.AllocStorage(RenderbufferStorage.DepthComponent24, Width, Height);
+            renderBuffer.AllocStorage(RenderbufferStorage.Depth24Stencil8, Width, Height);
             GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, frameBuffer.GetBufferHandle());
 
             GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr(0));
@@ -135,6 +150,9 @@ namespace Core.Texture
             {
                 GL.GenerateMipmap(GenerateMipmapTarget.TextureCubeMap);
             }
+
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.TextureCubeMapPositiveX, textureObject, 0);
+            var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
 
             Unbind();
         }

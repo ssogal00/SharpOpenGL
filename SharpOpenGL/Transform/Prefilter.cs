@@ -22,6 +22,9 @@ namespace SharpOpenGL.Transform
 
             cubemesh = new Cube();
             cubemesh.SetVisible(false);
+
+            cubemapRenderTarget = new CubemapRenderTarget(SizeX, SizeY, true);
+
         }
 
         public override void Transform()
@@ -34,25 +37,37 @@ namespace SharpOpenGL.Transform
 
             using (var dummy = new ScopedBind(prefilterMaterial))
             {
+                cubemapRenderTarget.BindForRendering();
                 // 
                 prefilterMaterial.Roughness = 0;
                 prefilterMaterial.Projection = CaptureProjection;
-                prefilterMaterial.View = CaptureViews[0];
                 prefilterMaterial.EnvironmentMap2D = environmentMap;
+                
+                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveX);
+                prefilterMaterial.View = CaptureViews[0];
+                cubemesh.JustDraw();
 
-                using (var d = new ScopedBind(PositiveX))
-                {
-                    prefilterMaterial.Roughness = 0.4f;
-                    prefilterMaterial.View = CaptureViews[0];
-                    cubemesh.JustDraw();
-                }
+                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapNegativeX);
+                prefilterMaterial.View = CaptureViews[1];
+                cubemesh.JustDraw();
 
-                using (var d = new ScopedBind(NegativeX))
-                {
-                    prefilterMaterial.Roughness = 0.2f;
-                    prefilterMaterial.View = CaptureViews[1];
-                    cubemesh.JustDraw();
-                }
+                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveY);
+                prefilterMaterial.View = CaptureViews[2];
+                cubemesh.JustDraw();
+
+                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapNegativeY);
+                prefilterMaterial.View = CaptureViews[3];
+                cubemesh.JustDraw();
+
+                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveZ);
+                prefilterMaterial.View = CaptureViews[4];
+                cubemesh.JustDraw();
+
+                cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapNegativeZ);
+                prefilterMaterial.View = CaptureViews[5];
+                cubemesh.JustDraw();
+
+                cubemapRenderTarget.UnbindForRendering();
             }
         }
 
@@ -63,11 +78,11 @@ namespace SharpOpenGL.Transform
 
         public void Save()
         {
-            var colorDataX = PositiveX.ColorAttachment0.GetTexImageAsByte();
+            /*var colorDataX = PositiveX.ColorAttachment0.GetTexImageAsByte();
             FreeImageHelper.SaveAsBmp(ref colorDataX, 512, 512, "PrefilterPosX.bmp");
 
             var colorData = NegativeX.ColorAttachment0.GetTexImageAsByte();
-            FreeImageHelper.SaveAsBmp(ref colorData, 512, 512, "PrefilterNegX.bmp");
+            FreeImageHelper.SaveAsBmp(ref colorData, 512, 512, "PrefilterNegX.bmp");*/
         }
        
         private OpenTK.Matrix4 CaptureProjection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1.0f, 0.1f, 10.0f);
@@ -79,23 +94,17 @@ namespace SharpOpenGL.Transform
             Matrix4.LookAt(new Vector3(0,0,0), Vector3.UnitY, Vector3.UnitZ), // positive Y
             Matrix4.LookAt(new Vector3(0,0,0), -Vector3.UnitY, -Vector3.UnitZ ),// negative Y
             Matrix4.LookAt(new Vector3(0,0,0), Vector3.UnitZ, -Vector3.UnitY ),// positive Z
-            Matrix4.LookAt(new Vector3(0,0,0), -Vector3.UnitZ, -Vector3.UnitY),// negative Z
+            Matrix4.LookAt(new Vector3(0,0,0), -Vector3.UnitZ, -Vector3.UnitY) // negative Z
         };
 
-        private RenderTarget PositiveX = new RenderTarget(SizeX, SizeY, 1, true);
-        private RenderTarget NegativeX = new RenderTarget(SizeX, SizeY, 1, true);
-        private RenderTarget PositiveY = new RenderTarget(SizeX, SizeY, 1, true);
-        private RenderTarget NegativeY = new RenderTarget(SizeX, SizeY, 1, true);
-        private RenderTarget PositiveZ = new RenderTarget(SizeX, SizeY, 1, true);
-        private RenderTarget NegativeZ = new RenderTarget(SizeX, SizeY, 1, true);
-
-        private static readonly int SizeX = 512;
-        private static readonly int SizeY = 512;
-
+        private static readonly int SizeX = 1024;
+        private static readonly int SizeY = 1024;
 
         private PrefilterMaterial.PrefilterMaterial prefilterMaterial = null;
 
         private Cube cubemesh = null;
+
+        public CubemapRenderTarget ResultCubemap => cubemapRenderTarget;
 
         private CubemapRenderTarget cubemapRenderTarget = null;
 

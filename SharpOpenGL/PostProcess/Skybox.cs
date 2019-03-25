@@ -50,7 +50,7 @@ namespace SharpOpenGL.PostProcess
             }
         }
 
-        public void SetCubemapTexture(CubemapTexture cubemapTextureOverride)
+        public void SetCubemapTexture(TextureBase cubemapTextureOverride)
         {
             if (cubemapTexture != null)
             {
@@ -60,7 +60,7 @@ namespace SharpOpenGL.PostProcess
             cubemapTexture = cubemapTextureOverride;
         }
 
-        protected CubemapTexture cubemapTexture = null;
+        protected TextureBase cubemapTexture = null;
         protected StaticMeshObject sphereMeshObject = null;
     }
 }

@@ -101,19 +101,20 @@ namespace SharpOpenGL
             if (equirectToCube.IsTransformCompleted == false)
             {
                 equirectToCube.Transform();
-                skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
+                equirectToCube.Save();  
 
                 convolution.SetSourceCubemap(equirectToCube.ResultCubemap);
                 convolution.Transform();
-                convolution.Save();
+                //convolution.Save();
             }
-
-            lut.Render();
-            lut.Save();
 
             prefilter.SetEnvMap(equirectToCube.ResultCubemap);
             prefilter.Transform();
-            prefilter.Save();
+
+            lut.Render();
+            //lut.Save();
+
+            skyboxPostProcess.SetCubemapTexture(prefilter.ResultCubemap);
 
             // add ui editable objects
             UIThread.Get().Enqueue
@@ -217,7 +218,7 @@ namespace SharpOpenGL
         
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            GL.ClearColor(Color.Brown);
+            GL.ClearColor(Color.Aqua);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
             if (bInitialized == false || Engine.Get().IsInitialized == false)
