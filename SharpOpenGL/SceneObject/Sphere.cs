@@ -223,8 +223,8 @@ namespace SharpOpenGL
 
                 // face1
                 VertexList.Add(new PNTT_VertexAttribute(V1, norm1,  T1, tan1));
-                VertexList.Add(new PNTT_VertexAttribute(V2, norm1, T2, tan2));
-                VertexList.Add(new PNTT_VertexAttribute(V3, norm1,  T3, tan3));
+                VertexList.Add(new PNTT_VertexAttribute(V2, norm2, T2, tan2));
+                VertexList.Add(new PNTT_VertexAttribute(V3, norm3,  T3, tan3));
             }
             
 

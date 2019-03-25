@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Core.Buffer;
 using System.Linq;
 using System.Linq.Expressions;
@@ -81,6 +82,15 @@ namespace Core
             {
                 BindVertexBuffer();
                 GL.DrawArraysInstanced(type, 0, VertexCount, instancecount);
+            }
+        }
+
+        public virtual void DrawElementsInstanced(ref uint[] IndexList, PrimitiveType type, int instanceCount)
+        {
+            if (bReadyToDraw)
+            {
+                //BindVertexAndIndexBuffer();
+                //GL.DrawElementsInstancedBaseInstance(type, IndexCount, DrawElementsType.UnsignedInt,new IntPtr(ref IndexList), instanceCount,0);
             }
         }
 
