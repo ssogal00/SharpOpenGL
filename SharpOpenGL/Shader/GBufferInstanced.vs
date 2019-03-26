@@ -39,7 +39,7 @@ void main()
 	float metallicValue = float(metallicIndex)  / float(MetallicCount);	
 	float roughnessValue = float(roughnessIndex) / float(RoughnessCount);
 
-	vec4 translation = vec4( metallicValue * 150, roughnessValue * 150 + 10, 10, 1);
+	vec4 translation = vec4( 10, roughnessValue * 150 + 10, metallicValue * 150 - 75, 1);
 
 	OutMetallicRoughness = vec2(metallicValue,  roughnessValue);
 

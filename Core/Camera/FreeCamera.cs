@@ -12,7 +12,8 @@ namespace Core.Camera
             : base(OpenTK.MathHelper.PiOver6, 1.0f, 1.0f, 10000.0f)
         {
             LookAtDir = new Vector3(1, 0, 0);
-            EyeLocation = new Vector3(5, 5, 5);
+            EyeLocation = new Vector3(20, 20, 20);
+            
             Destination = EyeLocation;
         }
 
@@ -20,7 +21,7 @@ namespace Core.Camera
             : base(fFOV, fAspectRatio, fNear, fFar)
         {
             LookAtDir = new Vector3(1, 0, 0);
-            EyeLocation = new Vector3(5, 5, 5);
+            EyeLocation = new Vector3(20, 20, 20);
             Destination = EyeLocation;
         }
 

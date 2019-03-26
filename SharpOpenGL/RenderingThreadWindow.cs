@@ -65,7 +65,6 @@ namespace SharpOpenGL
             OnGLContextCreated += RenderResource.OnOpenGLContextCreated;
 
             OnWindowResize += CameraManager.Get().OnWindowResized;
-            //OnWindowResize += ResizableManager.Get().ResizeEventHandler;
 
             OnKeyDownEvent += CameraManager.Get().OnKeyDown;
             OnKeyUpEvent += CameraManager.Get().OnKeyUp;
@@ -101,18 +100,14 @@ namespace SharpOpenGL
             if (equirectToCube.IsTransformCompleted == false)
             {
                 equirectToCube.Transform();
-                equirectToCube.Save();  
-
                 convolution.SetSourceCubemap(equirectToCube.ResultCubemap);
                 convolution.Transform();
-                //convolution.Save();
             }
 
             prefilter.SetEnvMap(equirectToCube.ResultCubemap);
             prefilter.Transform();
 
             lut.Render();
-            lut.Save();
 
             skyboxPostProcess.SetCubemapTexture(prefilter.ResultCubemap);
 

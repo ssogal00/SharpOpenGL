@@ -51,7 +51,7 @@ namespace SharpOpenGL
 
             var rusted = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
             rusted.Scale = 1.5f;
-            rusted.Translation = new Vector3(-190, 20, 0);
+            rusted.Translation = new Vector3(-190, 30, -80);
             rusted.SetNormalTex("./Resources/Imported/Texture/rustediron2_normal.imported");
             rusted.SetDiffuseTex("./Resources/Imported/Texture/rustediron2_basecolor.imported");
             rusted.SetMetallicTex("./Resources/Imported/Texture/rustediron2_metallic.imported");
@@ -59,7 +59,7 @@ namespace SharpOpenGL
 
             var gold = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
             gold.Scale = 1.5f;
-            gold.Translation = new Vector3(-150,20,0);
+            gold.Translation = new Vector3(-190,30,-40);
             gold.SetNormalTex("./Resources/Imported/Texture/gold-scuffed_normal.imported");
             gold.SetDiffuseTex("./Resources/Imported/Texture/gold-scuffed_basecolor.imported");
             gold.SetMetallicTex("./Resources/Imported/Texture/gold-scuffed_metallic.imported");
@@ -67,10 +67,26 @@ namespace SharpOpenGL
 
             var wood = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
             wood.Scale = 1.5f;
-            wood.Translation = new Vector3(-230, 20, 0);
+            wood.Translation = new Vector3(-190, 30, 0);
             wood.SetNormalTex("./Resources/Imported/Texture/mahogfloor_normal.imported");
             wood.SetDiffuseTex("./Resources/Imported/Texture/mahogfloor_basecolor.imported");
             wood.SetRoughnessTex("./Resources/Imported/Texture/mahogfloor_roughness.imported");
+
+            var bamboo = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
+            bamboo.Scale = 1.5f;
+            bamboo.Translation = new Vector3(-190, 30, 40);
+            bamboo.SetNormalTex("./Resources/Imported/Texture/bamboo-wood-semigloss-normal.imported");
+            bamboo.SetDiffuseTex("./Resources/Imported/Texture/bamboo-wood-semigloss-albedo.imported");
+            bamboo.SetRoughnessTex("./Resources/Imported/Texture/bamboo-wood-semigloss-roughness.imported");
+            bamboo.SetMetallicTex("./Resources/Imported/Texture/bamboo-wood-semigloss-metal.imported");
+
+            var metal = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
+            metal.Scale = 1.5f;
+            metal.Translation = new Vector3(-190, 30, 80);
+            metal.SetNormalTex("./Resources/Imported/Texture/metal-splotchy-normal-dx.imported");
+            metal.SetDiffuseTex("./Resources/Imported/Texture/metal-splotchy-albedo.imported");
+            metal.SetRoughnessTex("./Resources/Imported/Texture/metal-splotchy-rough.imported");
+            metal.SetMetallicTex("./Resources/Imported/Texture/metal-splotchy-metal.imported");
 
             bInitialized = true;
         }
