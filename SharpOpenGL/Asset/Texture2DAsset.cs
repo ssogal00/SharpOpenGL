@@ -41,6 +41,27 @@ namespace SharpOpenGL.Asset
 
         public override void ImportAssetSync()
         {
+            bool bHDR = OriginalFilePath.EndsWith(".hdr") || OriginalFilePath.EndsWith(".HDR");
+            
+            /*using (var scopedImage = new ScopedSTBImage(OriginalFilePath, true))
+            {
+                this.Width = scopedImage.Width;
+                this.Height = scopedImage.Height;
+                this.ImagePixelInternalFormat = scopedImage.ImagePixelInternalFormat;
+                this.OpenglPixelFormat = scopedImage.OpenglPixelFormat;
+                this.OpenglPixelType = scopedImage.OpenglPixelType;
+                this.ByteLength = scopedImage.DataLength;
+
+                if (OpenglPixelType == PixelType.Float)
+                {
+                    this.Floats = scopedImage.FloatData;
+                }
+                else
+                {
+                    this.Bytes = scopedImage.ByteData;
+                }
+            }*/
+            
             using (var scopedImage = new ScopedFreeImage(OriginalFilePath))
             {
                 this.Width = scopedImage.Width;

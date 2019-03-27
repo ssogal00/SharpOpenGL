@@ -88,6 +88,13 @@ namespace SharpOpenGL
             metal.SetRoughnessTex("./Resources/Imported/Texture/metal-splotchy-rough.imported");
             metal.SetMetallicTex("./Resources/Imported/Texture/metal-splotchy-metal.imported");
 
+            var tile = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
+            tile.Scale = 1.5f;
+            tile.Translation = new Vector3(-190, 30, 120);
+            tile.SetNormalTex("./Resources/Imported/Texture/Tiles32_nrm.imported");
+            tile.SetDiffuseTex("./Resources/Imported/Texture/Tiles32_col.imported");
+            tile.SetRoughnessTex("./Resources/Imported/Texture/Tiles32_rgh.imported");
+
             bInitialized = true;
         }
 

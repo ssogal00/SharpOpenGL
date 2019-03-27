@@ -24,12 +24,12 @@ namespace Core.Texture
 
         public override void Load(string FilePath)
         {
-            using (var bitmap = new ScopedSTBImage(FilePath))
+            using (var bitmap = new ScopedSTBImage(FilePath, true))
             {
                 this.BindAtUnit(TextureUnit.Texture0);
                 m_Width = bitmap.Width;
                 m_Height = bitmap.Height;
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb16f, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgb, PixelType.Float, bitmap.Data);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb16f, bitmap.Width, bitmap.Height, 0, PixelFormat.Rgb, PixelType.Float, bitmap.FloatData);
             }
         }
     }

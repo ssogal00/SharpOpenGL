@@ -10,6 +10,7 @@ using Core;
 using Core.Texture;
 using OpenTK.Graphics.ES20;
 using SharpOpenGL.Asset;
+using PixelType = OpenTK.Graphics.OpenGL.PixelType;
 
 namespace SharpOpenGL
 {
@@ -111,7 +112,14 @@ namespace SharpOpenGL
 
                 ApproximateTextureMemory += asset.ByteLength;
 
-                newTexture.Load(asset.Bytes, asset.Width, asset.Height, asset.ImagePixelInternalFormat, asset.OpenglPixelFormat);
+                if (asset.OpenglPixelType == PixelType.Float)
+                {
+                    newTexture.Load(asset.Floats, asset.Width, asset.Height, asset.ImagePixelInternalFormat, asset.OpenglPixelFormat);
+                }
+                else
+                {
+                    newTexture.Load(asset.Bytes, asset.Width, asset.Height, asset.ImagePixelInternalFormat, asset.OpenglPixelFormat);
+                }
                 Console.WriteLine("Loading {0} completed", importedPath);
                 TextureMap.Add(importedPath, newTexture);
                 return newTexture;

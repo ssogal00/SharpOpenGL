@@ -51,8 +51,16 @@ namespace Core.Texture
             m_Height = height;
             GL.TexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, pixelFormat, PixelType.UnsignedByte, data);
         }
-        
-        
+
+        public override void Load(float[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
+        {
+            this.BindAtUnit(TextureUnit.Texture0);
+            m_Width = width;
+            m_Height = height;
+            GL.TexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, pixelFormat, PixelType.Float, data);
+        }
+
+
 
         TextureUnit m_TextureUnitBinded;
     }

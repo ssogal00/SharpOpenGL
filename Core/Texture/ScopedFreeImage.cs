@@ -10,7 +10,7 @@ namespace Core.Texture
 {
     public class ScopedFreeImage : IDisposable
     {
-        public ScopedFreeImage(string imagePath)
+        public ScopedFreeImage(string imagePath, bool bFloatingPoint = false)
         {
             if (File.Exists(imagePath) == false)
             {
@@ -51,10 +51,9 @@ namespace Core.Texture
             }
             else if (ImagePixelFormat == System.Drawing.Imaging.PixelFormat.DontCare)
             {
-                //bitmap = FreeImage.ConvertToRGBF(bitmap);
-                ImagePixelInternalFormat = PixelInternalFormat.Rgb;
+                ImagePixelInternalFormat = PixelInternalFormat.Rgb16;
                 OpenglPixelType = PixelType.UnsignedByte;
-                OpenglPixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
+                OpenglPixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
             }
             else
             {
@@ -62,7 +61,16 @@ namespace Core.Texture
             }
             
             header = FreeImage.GetInfoHeaderEx(bitmap);
-            Bytes = FreeImage.GetBits(bitmap);
+
+            if(bFloatingPoint)
+            {
+                FloatData = FreeImage.GetBits(bitmap);
+            }
+            else
+            {
+                Bytes = FreeImage.GetBits(bitmap);
+            }
+            
             ByteSize = FreeImage.GetDIBSize(bitmap) - header.biSize;
         }
         public void Dispose()
@@ -71,6 +79,7 @@ namespace Core.Texture
         }
         
         public IntPtr Bytes;
+        public IntPtr FloatData;
         public uint ByteSize = 0;
         public FIBITMAP bitmap;
         private BITMAPINFOHEADER header;

@@ -1214,6 +1214,61 @@ static FILE *stbi__fopen(char const *filename, char const *mode)
    return f;
 }
 
+// I ADDED THIS FUNCTION 
+
+static unsigned char *my_stbi__load_and_postprocess_8bit(stbi__context *s, int *x, int *y, int *comp, int req_comp, int *channels_order)
+{
+	stbi__result_info ri;
+	void *result = stbi__load_main(s, x, y, comp, req_comp, &ri, 8);
+
+	// my code
+	*channels_order = ri.channel_order;
+	// my code
+
+	if (result == NULL)
+		return NULL;
+
+	if (ri.bits_per_channel != 8) {
+		STBI_ASSERT(ri.bits_per_channel == 16);
+		result = stbi__convert_16_to_8((stbi__uint16 *)result, *x, *y, req_comp == 0 ? *comp : req_comp);
+		ri.bits_per_channel = 8;
+	}
+
+	// @TODO: move stbi__convert_format to here
+
+	if (stbi__vertically_flip_on_load) {
+		int channels = req_comp ? req_comp : *comp;
+		stbi__vertical_flip(result, *x, *y, channels * sizeof(stbi_uc));
+	}
+
+	return (unsigned char *)result;
+}
+
+
+STBIDEF stbi_uc *my_stbi_load_from_file(FILE *f, int *x, int *y, int *comp, int req_comp, int *channels_order)
+{
+	unsigned char *result;
+	stbi__context s;
+	stbi__start_file(&s, f);
+	result = my_stbi__load_and_postprocess_8bit(&s, x, y, comp, req_comp, channels_order);
+	if (result) {
+		// need to 'unget' all the characters in the IO buffer
+		fseek(f, -(int)(s.img_buffer_end - s.img_buffer), SEEK_CUR);
+	}
+	return result;
+}
+
+STBIDEF stbi_uc *my_stbi_load(char const *filename, int *x, int *y, int *comp, int req_comp, int *channels_order)
+{
+	FILE *f = stbi__fopen(filename, "rb");
+	unsigned char *result;
+	if (!f) return stbi__errpuc("can't fopen", "Unable to open file");
+	result = stbi_load_from_file(f, x, y, comp, req_comp);
+	fclose(f);
+	return result;
+}
+
+// I ADDED THIS FUNCTION 
 
 STBIDEF stbi_uc *stbi_load(char const *filename, int *x, int *y, int *comp, int req_comp)
 {
