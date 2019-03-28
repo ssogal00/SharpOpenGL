@@ -98,9 +98,7 @@ namespace MaterialEditor
             Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
             Formatter<DefaultResolver, OpenTK.Vector2>.Register(new Vector2Formatter<DefaultResolver>());
             Formatter<DefaultResolver, OpenTK.Vector4>.Register(new Vector4Formatter<DefaultResolver>());
-
-            AssetManager.Get().ImportStaticMeshes();
-            AssetManager.Get().CompileShaders();
+            
 
             DeferredMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
             LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
@@ -118,34 +116,7 @@ namespace MaterialEditor
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            MyGbuffer.Bind();
-            MyGbuffer.Clear(System.Drawing.Color.Gray);
-            MyGbuffer.PrepareToDraw();
-
-            if(liveMaterial != null && liveMaterial.IsValid())
-            {
-                liveMaterial.Setup();
-                liveMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelTransform);
-                liveMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref cameraTransform);
-
-                var elapsedsec = (float) watch.ElapsedMilliseconds / 1000;
-                liveMaterial.SetUniformVarData("time", elapsedsec);
-
-                mesh.Draw(liveMaterial);
-            }
-            else
-            {
-                DeferredMaterial.Setup();
-                liveMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelTransform);
-                liveMaterial.SetUniformBufferValue<CameraTransform>("CameraTransform", ref cameraTransform);
-                mesh.Draw(DeferredMaterial);
-            }
-            
-            MyGbuffer.Unbind();
-
-            LightPostProcess.Render(MyGbuffer.GetPositionAttachment, MyGbuffer.GetColorAttachement, MyGbuffer.GetNormalAttachment);
-            
-            ScreenBlit.Blit(LightPostProcess.GetOutputRenderTarget().GetColorAttachment0TextureObject(), 0, 0, 1, 1);
+           
             
             mGlControl.SwapBuffers();
         }

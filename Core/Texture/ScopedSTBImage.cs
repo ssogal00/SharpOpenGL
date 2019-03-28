@@ -47,12 +47,12 @@ namespace Core.Texture
                 else if (Channels == 3)
                 {
                     ImagePixelInternalFormat = PixelInternalFormat.Rgb;
-                    OpenglPixelFormat = PixelFormat.Bgr;
+                    OpenglPixelFormat = PixelFormat.Rgb;
                 }
                 else if (Channels == 4)
                 {
                     ImagePixelInternalFormat = PixelInternalFormat.Rgba;
-                    OpenglPixelFormat = PixelFormat.Bgra;
+                    OpenglPixelFormat = PixelFormat.Rgba;
                 }
             }
             else
