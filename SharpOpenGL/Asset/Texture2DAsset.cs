@@ -43,7 +43,7 @@ namespace SharpOpenGL.Asset
         {
             bool bHDR = OriginalFilePath.EndsWith(".hdr") || OriginalFilePath.EndsWith(".HDR");
             
-            using (var scopedImage = new ScopedSTBImage(OriginalFilePath, bHDR))
+            /*using (var scopedImage = new ScopedSTBImage(OriginalFilePath, bHDR))
             {
                 this.Width = scopedImage.Width;
                 this.Height = scopedImage.Height;
@@ -60,9 +60,9 @@ namespace SharpOpenGL.Asset
                 {
                     this.Bytes = scopedImage.ByteData;
                 }
-            }
+            }*/
             
-            /*using (var scopedImage = new ScopedFreeImage(OriginalFilePath))
+            using (var scopedImage = new ScopedFreeImage(OriginalFilePath))
             {
                 this.Width = scopedImage.Width;
                 this.Height = scopedImage.Height;
@@ -81,7 +81,7 @@ namespace SharpOpenGL.Asset
                     this.Bytes = new byte[scopedImage.ByteSize];
                     Marshal.Copy(scopedImage.Bytes, this.Bytes, 0, (int)scopedImage.ByteSize);
                 }
-            }*/
+            }
         }
 
         public override void SaveImportedAsset(string path)

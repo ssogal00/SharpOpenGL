@@ -16,7 +16,7 @@ namespace SharpOpenGL
 {
     public class TextureManager : Singleton<TextureManager>
     {
-        private string importedDirName = "./Resources/Imported/Texture";
+        private string importedDirName = "./Imported";
 
         public void ImportTextures()
         {
@@ -35,13 +35,19 @@ namespace SharpOpenGL
 
             foreach (var file in files)
             {
-                if (file.EndsWith(".dds") || file.EndsWith(".jpg") || file.EndsWith(".tga") || file.EndsWith(".jpeg") || file.EndsWith(".png"))
+                if (file.EndsWith(".jpeg") || file.EndsWith(".jpg") || file.EndsWith(".tga") || file.EndsWith(".jpeg") || file.EndsWith(".png") || file.EndsWith(".dds"))
                 {
                     var textureAsset = new Texture2DAsset(file);
 
+                    var dirname = Path.Combine(importedDirName, Path.GetDirectoryName(file));
                     var fileName = Path.GetFileNameWithoutExtension(file);
+
+                    if (Directory.Exists(dirname) == false)
+                    {
+                        Directory.CreateDirectory(dirname);
+                    }
                     
-                    var importedFileName = Path.Combine(importedDirName, file + ".imported");
+                    var importedFileName = Path.Combine(dirname, fileName + ".imported");
                     
                     // check if imported asset exist
                     if (File.Exists(importedFileName))
@@ -63,7 +69,9 @@ namespace SharpOpenGL
         {
             if (path.EndsWith(".imported") == false)
             {
-                return Path.Combine(importedDirName, path + ".imported");
+                var dirname = Path.Combine(importedDirName, Path.GetDirectoryName(path));
+                var filename = Path.GetFileNameWithoutExtension(path);
+                return Path.Combine(dirname, filename + ".imported");
             }
 
             return path;
@@ -93,7 +101,7 @@ namespace SharpOpenGL
                 byte[] data = null;
                 if (File.Exists(importedPath) == false)
                 {   
-                    data = File.ReadAllBytes("./Resources/Imported/Texture/Resources/Texture/Checker.png.imported");
+                    data = File.ReadAllBytes("./Imported/Resources/Texture/Checker.imported");
                 }
                 else
                 {
