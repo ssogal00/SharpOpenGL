@@ -87,6 +87,14 @@ namespace SharpOpenGL.Asset
         public override void SaveImportedAsset(string path)
         {
             var bytesarray = ZeroFormatter.ZeroFormatterSerializer.Serialize<Texture2DAsset>(this);
+
+            var dirname = Path.GetDirectoryName(path);
+
+            if (Directory.Exists(dirname) == false)
+            {
+                Directory.CreateDirectory(dirname);
+            }
+
             using (var fs = new FileStream(path, FileMode.Create, FileAccess.Write))
             {
                 fs.Write(bytesarray, 0, bytesarray.Count());

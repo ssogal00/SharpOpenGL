@@ -41,11 +41,6 @@ namespace SharpOpenGL
 
                 defaultMaterial = ShaderManager.Get().GetMaterial<GBufferInstanced.GBufferInstanced>();
 
-                normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_normal-dx.imported");
-                diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_basecolor.imported");
-                roughTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_roughness.imported");
-                metalicTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_metallic.imported");
-
                 bReadyToDraw = true;
             });
         }
@@ -68,11 +63,6 @@ namespace SharpOpenGL
                     gbufferDraw.DiffuseMapExist = false;
                     
                     gbufferDraw.DiffuseOverride = Color;
-
-                    gbufferDraw.NormalTex2D = normalTex;
-                    gbufferDraw.DiffuseTex2D = diffuseTex;
-                    gbufferDraw.RoughnessTex2D = roughTex;
-                    gbufferDraw.MetalicTex2D = metalicTex;
 
                     gbufferDraw.MetallicCount = 6;
                     gbufferDraw.RoughnessCount = 6;

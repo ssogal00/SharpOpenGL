@@ -40,8 +40,8 @@ namespace SharpOpenGL
                     var textureAsset = new Texture2DAsset(file);
 
                     var fileName = Path.GetFileNameWithoutExtension(file);
-
-                    var importedFileName = Path.Combine(importedDirName, fileName + ".imported");
+                    
+                    var importedFileName = Path.Combine(importedDirName, file + ".imported");
                     
                     // check if imported asset exist
                     if (File.Exists(importedFileName))
@@ -63,7 +63,7 @@ namespace SharpOpenGL
         {
             if (path.EndsWith(".imported") == false)
             {
-                return Path.Combine(importedDirName, Path.GetFileNameWithoutExtension(path) + ".imported");
+                return Path.Combine(importedDirName, path + ".imported");
             }
 
             return path;
@@ -93,7 +93,7 @@ namespace SharpOpenGL
                 byte[] data = null;
                 if (File.Exists(importedPath) == false)
                 {   
-                    data = File.ReadAllBytes("./Resources/Imported/Texture/checker.imported");
+                    data = File.ReadAllBytes("./Resources/Imported/Texture/Resources/Texture/Checker.png.imported");
                 }
                 else
                 {
@@ -121,6 +121,7 @@ namespace SharpOpenGL
                     newTexture.Load(asset.Bytes, asset.Width, asset.Height, asset.ImagePixelInternalFormat, asset.OpenglPixelFormat);
                 }
                 Console.WriteLine("Loading {0} completed", importedPath);
+                Console.WriteLine("Texture Mem : {0}",ApproximateTextureMemory);
                 TextureMap.Add(importedPath, newTexture);
                 return newTexture;
             }

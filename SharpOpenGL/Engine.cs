@@ -49,7 +49,7 @@ namespace SharpOpenGL
 
             var sphere = SceneObjectManager.Get().CreateSceneObject<InstancedSphere>();
 
-            var rusted = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
+            /*var rusted = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
             rusted.Scale = 1.5f;
             rusted.Translation = new Vector3(-190, 30, -80);
             rusted.SetNormalTex("./Resources/Imported/Texture/rustediron2_normal.imported");
@@ -93,7 +93,7 @@ namespace SharpOpenGL
             tile.Translation = new Vector3(-190, 30, 120);
             tile.SetNormalTex("./Resources/Imported/Texture/Tiles32_nrm.imported");
             tile.SetDiffuseTex("./Resources/Imported/Texture/Tiles32_col.imported");
-            tile.SetRoughnessTex("./Resources/Imported/Texture/Tiles32_rgh.imported");
+            tile.SetRoughnessTex("./Resources/Imported/Texture/Tiles32_rgh.imported");*/
 
             bInitialized = true;
         }

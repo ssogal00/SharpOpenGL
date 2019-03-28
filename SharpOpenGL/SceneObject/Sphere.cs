@@ -62,8 +62,7 @@ namespace SharpOpenGL
                 normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_normal-dx.imported");
                 diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_basecolor.imported");
                 roughTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_roughness.imported");
-                metalicTex = TextureManager.Get()
-                    .LoadTexture2D("./Resources/Imported/Texture/copper-rock1-metal.imported");
+                metalicTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/copper-rock1-metal.imported");
 
                 bReadyToDraw = true;
             });
