@@ -23,28 +23,24 @@ namespace Core.Texture
             
             if (ImagePixelFormat == System.Drawing.Imaging.PixelFormat.Format24bppRgb)
             { 
-                bitmap = FreeImage.ConvertTo24Bits(bitmap);
                 ImagePixelInternalFormat = PixelInternalFormat.Rgb;
                 OpenglPixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
                 OpenglPixelType = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
             }
             else if (ImagePixelFormat == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
             {
-                bitmap = FreeImage.ConvertTo32Bits(bitmap);
                 ImagePixelInternalFormat = PixelInternalFormat.Rgba;
                 OpenglPixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgra;
                 OpenglPixelType = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
             }
             else if (ImagePixelFormat == System.Drawing.Imaging.PixelFormat.Format32bppRgb)
             {
-                bitmap = FreeImage.ConvertTo32Bits(bitmap);
                 ImagePixelInternalFormat = PixelInternalFormat.Rgb;
                 OpenglPixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Bgr;
                 OpenglPixelType = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
             }
             else if (ImagePixelFormat == System.Drawing.Imaging.PixelFormat.Format8bppIndexed)
             {
-                bitmap = FreeImage.ConvertTo8Bits(bitmap);
                 ImagePixelInternalFormat = PixelInternalFormat.Luminance;
                 OpenglPixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Luminance;
                 OpenglPixelType = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
