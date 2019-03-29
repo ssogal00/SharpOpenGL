@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows.Forms;
 using OpenTK;
 using OpenTK.Input;
 using Core;
@@ -226,7 +228,14 @@ namespace Core.Camera
             if(bMoving)
             {
                 Elapsed += (float)fDeltaSeconds;
+
                 var vDir = (Destination - MoveStarted);
+
+                if (Single.IsNaN(vDir.X) || Single.IsNaN(vDir.Y) || Single.IsNaN(vDir.Z))
+                {
+                    Debug.Assert(false);
+                }
+
                 vDir.Normalize();
                 EyeLocation += vDir * (float)fDeltaSeconds * SpeedList[SpeedIndex];
             }
