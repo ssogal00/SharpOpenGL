@@ -100,7 +100,7 @@ newmtl bricks
 	Ke 0.0000 0.0000 0.0000
 	map_Ka ./Resources/SponzaTexture/spnza_bricks_a_spec.tga
 	map_Kd ./Resources/SponzaTexture/Sponza_Bricks_a_Albedo.dds
-	map_bump ./Resources/SponzaTexture/Sponza_Bricks_a_Normal_NRM.tga
+	map_bump ./Resources/SponzaTexture/Sponza_Bricks_a_Normal.tga
 	map_Ns ./Resources/SponzaTexture/Sponza_Bricks_a_Roughness.dds
 	bump ./Resources/SponzaTexture/Sponza_Bricks_a_Normal.dds
 
@@ -168,7 +168,7 @@ newmtl floor
 	Ke 0.0000 0.0000 0.0000
 	map_Ka ./Resources/SponzaTexture/sponza_floor_a_spec.tga
 	map_Kd ./Resources/SponzaTexture/Sponza_Floor_diffuse.dds
-	map_bump ./Resources/SponzaTexture/Sponza_Floor_normal_NRM.tga
+	map_bump ./Resources/SponzaTexture/Sponza_Floor_normal.tga
 	bump ./Resources/SponzaTexture/Sponza_Floor_normal.dds
 	map_Ns ./Resources/SponzaTexture/Sponza_Floor_roughness.dds
 
