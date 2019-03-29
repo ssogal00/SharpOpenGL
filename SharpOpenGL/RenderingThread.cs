@@ -45,13 +45,6 @@ namespace SharpOpenGL
             return false;
         }
 
-        public void RequestExit()
-        {
-            bRequestExist = true;
-        }
-
-        private bool bRequestExist = false;
-
         public void ExecuteImmediatelyIfRenderingThread(Action action)
         {
             if (IsInRenderingThread())

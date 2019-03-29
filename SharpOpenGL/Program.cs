@@ -316,8 +316,7 @@ namespace SharpOpenGL
             while (true)
             {
                 if (Engine.Get().IsRequestExit)
-                {
-                    RenderingThread.Get().RequestExit();
+                {   
                     UIThread.Get().RequestExit();
                     break;
                 }

@@ -19,6 +19,7 @@ namespace SharpOpenGL
         {
             this.instanceCount = 36;
             this.Translation = new Vector3(-100, 0, 0);
+            this.Color = new Vector3(1,1,1);
             this.Scale = 2.0f;
             this.IsEditable = true;
         }
@@ -26,6 +27,7 @@ namespace SharpOpenGL
         public PBRSphere(string diffuseTex, string normalTex, string roghnessTex, string metallicTex)
         : this()
         {
+            
             this.diffuseTexPath = diffuseTex;
             this.normalTexPath = normalTex;
             this.roughnessTexPath = roghnessTex;
@@ -159,7 +161,6 @@ namespace SharpOpenGL
 
         protected int instanceCount = 1;
 
-        protected Vector3 Color = new Vector3(1, 1, 1);
 
         private bool bRoughnessExist = false;
         private bool bMetallicExist = false;

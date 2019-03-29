@@ -40,7 +40,7 @@ namespace SharpOpenGL.PostProcess
                 LightColors.Clear();
                 LightMinMaxs.Clear();
 
-                int index = 0;
+                
                 foreach (var light in lightList)
                 {
                     LightPositions.Add(light.Translation);

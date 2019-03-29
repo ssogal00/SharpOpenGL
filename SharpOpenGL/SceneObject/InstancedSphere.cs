@@ -19,6 +19,7 @@ namespace SharpOpenGL
         {
             this.instanceCount = 36;
             this.Translation = new Vector3(-100,0,0);
+            this.Color = new Vector3(1,1,1);
             this.Scale = 2.0f;
         }
         public InstancedSphere(float radius, int stackcount, int sectorcount, int instanceCount)
@@ -73,7 +74,5 @@ namespace SharpOpenGL
         }
 
         protected int instanceCount = 1;
-
-        protected Vector3 Color = new Vector3(1,1,1);
     }
 }

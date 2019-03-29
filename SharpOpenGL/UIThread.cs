@@ -53,8 +53,6 @@ namespace SharpOpenGL
 
         public void RequestExit()
         {
-            bRequestExist = true;
-
             if (!editorWindow.Dispatcher.HasShutdownFinished && !editorWindow.Dispatcher.HasShutdownStarted)
             {
                 editorWindow.Dispatcher.Invoke(
@@ -64,8 +62,6 @@ namespace SharpOpenGL
                 });
             }
         }
-
-        private bool bRequestExist = false;
 
         public static ObjectEditor.MainWindow EditorWindow => editorWindow;
 
