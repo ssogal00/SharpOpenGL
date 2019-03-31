@@ -364,5 +364,14 @@ namespace Core.Primitive
                 new VertexAttribute(3, ActiveAttribType.FloatVec4, "T"),
             };
         }
+
+        public override int GetHashCode()
+        {
+            int x = (int) (this.VertexPosition.X * 100);
+            int y = (int)(this.VertexPosition.Y * 100);
+            int z = (int)(this.VertexPosition.Z * 100);
+
+            return (3 * x + 5 * y + 7 * z) % (1 << 16);
+        }
     }
 }

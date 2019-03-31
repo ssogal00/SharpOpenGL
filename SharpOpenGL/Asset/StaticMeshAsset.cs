@@ -8,6 +8,7 @@ using OpenTK;
 using Core.Primitive;
 using ZeroFormatter;
 using Core.Texture;
+using System.Diagnostics;
 
 
 namespace SharpOpenGL.StaticMesh
@@ -52,7 +53,7 @@ namespace SharpOpenGL.StaticMesh
 
         [Index(11)]
         public virtual Vector3 CenterVertex { get; set; }
-
+        
         [IgnoreFormat]
         public float XExtent => Math.Abs(MaxVertex.X - MinVertex.X);
 
@@ -87,6 +88,8 @@ namespace SharpOpenGL.StaticMesh
         List<uint> VertexIndexList = new List<uint>();
         List<uint> TexCoordIndexList = new List<uint>();
         List<uint> NormalIndexList = new List<uint>();
+
+        
 
         // import sync
         public override void ImportAssetSync()
@@ -330,11 +333,31 @@ namespace SharpOpenGL.StaticMesh
             }
         }
 
+        private Dictionary<PNTT_VertexAttribute, uint> VertexCacheMap = new Dictionary<PNTT_VertexAttribute, uint>();
+
+        bool GetSimilarVertexIndex(ref PNTT_VertexAttribute vertex, out uint index)
+        {
+            if (VertexCacheMap.ContainsKey(vertex))
+            {
+                index = VertexCacheMap[vertex];
+                return true;
+            }
+            else
+            {
+                index = 0;
+                return false;
+            }
+        }
+
         protected void GenerateVertices()
         {
+            var Count = VertexIndices.Count;
+            VertexIndices.Clear();
+
             for (int i = 0; i < VertexIndexList.Count(); ++i)
             {
                 var V1 = new PNTT_VertexAttribute();
+
                 V1.VertexPosition = TempVertexList[(int)VertexIndexList[i]];
 
                 if (HasTexCoordinate)
@@ -347,8 +370,22 @@ namespace SharpOpenGL.StaticMesh
                 {
                     V1.VertexNormal = TempNormalList[(int)NormalIndexList[i]];
                 }
-                Vertices.Add(V1);
+
+                uint index = 0;
+                if (GetSimilarVertexIndex(ref V1, out index))
+                {
+                    VertexIndices.Add(index);
+                }
+                else
+                {
+                    Vertices.Add(V1);
+                    uint newIndex = (uint)Vertices.Count - 1;
+                    VertexCacheMap.Add(V1, newIndex);
+                    VertexIndices.Add(newIndex);
+                }
             }
+
+            Debug.Assert(Count == VertexIndices.Count);
         }
 
         protected void GenerateTangents()
