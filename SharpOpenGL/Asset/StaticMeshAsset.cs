@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using Core;
@@ -354,36 +355,55 @@ namespace SharpOpenGL.StaticMesh
             var Count = VertexIndices.Count;
             VertexIndices.Clear();
 
-            for (int i = 0; i < VertexIndexList.Count(); ++i)
+            List<ObjMeshSection> SortedMeshSectionList = new List<ObjMeshSection>();
+
+            foreach (var sectionlist in MeshSectionList.GroupBy(x => x.SectionName))
             {
-                var V1 = new PNTT_VertexAttribute();
+                var sectionName = sectionlist.First().SectionName;
+                var sectionCount = sectionlist.Count();
 
-                V1.VertexPosition = TempVertexList[(int)VertexIndexList[i]];
+                UInt32 StartIndex = (UInt32) VertexIndices.Count;
 
-                if (HasTexCoordinate)
+                foreach (var section in sectionlist)
                 {
-                    V1.TexCoord = TempTexCoordList[(int)TexCoordIndexList[i]];
-                    V1.Tangent = TempTangentList[(int)VertexIndexList[i]];
+                    for (int i = (int) section.StartIndex; i < section.EndIndex; ++i)
+                    {
+                        var V1 = new PNTT_VertexAttribute();
+
+                        V1.VertexPosition = TempVertexList[(int)VertexIndexList[i]];
+
+                        if (HasTexCoordinate)
+                        {
+                            V1.TexCoord = TempTexCoordList[(int)TexCoordIndexList[i]];
+                            V1.Tangent = TempTangentList[(int)VertexIndexList[i]];
+                        }
+
+                        if (HasNormal)
+                        {
+                            V1.VertexNormal = TempNormalList[(int)NormalIndexList[i]];
+                        }
+
+                        uint index = 0;
+                        if (GetSimilarVertexIndex(ref V1, out index))
+                        {
+                            VertexIndices.Add(index);
+                        }
+                        else
+                        {
+                            Vertices.Add(V1);
+                            uint newIndex = (uint)Vertices.Count - 1;
+                            VertexCacheMap.Add(V1, newIndex);
+                            VertexIndices.Add(newIndex);
+                        }
+                    }
                 }
 
-                if (HasNormal)
-                {
-                    V1.VertexNormal = TempNormalList[(int)NormalIndexList[i]];
-                }
+                UInt32 EndIndex = (UInt32) VertexIndices.Count;
 
-                uint index = 0;
-                if (GetSimilarVertexIndex(ref V1, out index))
-                {
-                    VertexIndices.Add(index);
-                }
-                else
-                {
-                    Vertices.Add(V1);
-                    uint newIndex = (uint)Vertices.Count - 1;
-                    VertexCacheMap.Add(V1, newIndex);
-                    VertexIndices.Add(newIndex);
-                }
+                SortedMeshSectionList.Add(new ObjMeshSection(sectionName, StartIndex, EndIndex));
             }
+
+            MeshSectionList = SortedMeshSectionList;
 
             Debug.Assert(Count == VertexIndices.Count);
         }

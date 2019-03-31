@@ -12,6 +12,13 @@ namespace SharpOpenGL.StaticMesh
         {
         }
 
+        public ObjMeshSection(string sectionName, uint start, uint end)
+        {
+            this.SectionName = sectionName;
+            this.StartIndex = start;
+            this.EndIndex = end;
+        }
+
         [Index(0)]
         public virtual UInt32 StartIndex { get; set; }
                 

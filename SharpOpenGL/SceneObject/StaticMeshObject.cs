@@ -116,9 +116,9 @@ namespace SharpOpenGL
                 return;
             }
 
-            foreach (var sectionlist in meshAsset.MeshSectionList.GroupBy(x => x.SectionName))
+            foreach (var section in meshAsset.MeshSectionList)
             {
-                var sectionName = sectionlist.First().SectionName;
+                var sectionName = section.SectionName;
                 // setup
                 if (meshAsset.MaterialMap.ContainsKey(sectionName))
                 {
@@ -183,10 +183,8 @@ namespace SharpOpenGL
                     }
                 }
 
-                foreach (var section in sectionlist)
-                {
-                    meshdrawable.Draw(section.StartIndex, (uint) (section.EndIndex - section.StartIndex));
-                }
+                meshdrawable.Draw(section.StartIndex, (uint) (section.EndIndex - section.StartIndex));
+
             }
         }
        
