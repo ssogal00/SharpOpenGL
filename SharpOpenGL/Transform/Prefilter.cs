@@ -36,21 +36,20 @@ namespace SharpOpenGL.Transform
 
             using (var dummy = new ScopedBind(prefilterMaterial))
             {
-                cubemapRenderTarget.BindForRendering();
+                prefilterMaterial.EnvironmentMap2D = environmentMap;
+                prefilterMaterial.Projection = CaptureProjection;
 
                 int maxMipLevels = 5;
 
+                cubemapRenderTarget.BindForRendering();
+
                 for (int miplevel = 0; miplevel < maxMipLevels; miplevel++)
-                {
+                {   
                     int mipWidth = (int) (SizeX * Math.Pow(0.5, (double)miplevel));
                     int mipHeight = (int) (SizeY * Math.Pow(0.5, (double)miplevel));
 
                     prefilterMaterial.Roughness = (float)miplevel / (float)(maxMipLevels - 1);
-
                     cubemapRenderTarget.Resize(mipWidth, mipHeight);
-
-                    prefilterMaterial.Projection = CaptureProjection;
-                    prefilterMaterial.EnvironmentMap2D = environmentMap;
 
                     cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveX, miplevel);
                     prefilterMaterial.View = CaptureViews[0];
@@ -76,6 +75,7 @@ namespace SharpOpenGL.Transform
                     prefilterMaterial.View = CaptureViews[5];
                     cubemesh.JustDraw();
                 }
+
                 cubemapRenderTarget.UnbindForRendering();
             }
         }

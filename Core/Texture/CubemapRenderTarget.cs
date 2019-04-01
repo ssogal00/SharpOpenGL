@@ -62,8 +62,9 @@ namespace Core.Texture
             if (IsValidTextureTarget(targetFace))
             {
                 renderBuffer.AllocStorage(RenderbufferStorage.DepthComponent24, Width, Height);
-                
-                //GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, frameBuffer.GetBufferHandle());
+
+                frameBuffer.Bind();
+                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, frameBuffer.GetBufferHandle());
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, targetFace, textureObject, mip);
                 
                 var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -177,7 +178,13 @@ namespace Core.Texture
             
             if (bGenerateMips)
             {
-                GL.GenerateMipmap(GenerateMipmapTarget.TextureCubeMap);
+                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
+                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
+                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+
+                //GL.GenerateMipmap(GenerateMipmapTarget.TextureCubeMap);
                 GL.GenerateTextureMipmap(textureObject);
             }
 
