@@ -33,8 +33,8 @@ uniform int MetallicCount;
   
 void main()
 {
-	int metallicIndex = gl_InstanceID % MetallicCount;
-	int roughnessIndex = gl_InstanceID / RoughnessCount;	
+	int metallicIndex = gl_InstanceID / MetallicCount;
+	int roughnessIndex = gl_InstanceID % RoughnessCount;	
 
 	float metallicValue = float(metallicIndex)  / float(MetallicCount);	
 	float roughnessValue = float(roughnessIndex) / float(RoughnessCount);

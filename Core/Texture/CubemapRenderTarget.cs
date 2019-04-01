@@ -51,19 +51,26 @@ namespace Core.Texture
             m_Height = newHeight;
         }
 
-        public void BindFaceForRendering(TextureTarget targetFace, int mip = 0)
+        public void BindFaceForRendering(TextureTarget targetFace, int mip)
         {
+            System.Drawing.Color[] Colors =
+            {
+                Color.Red, Color.Blue, Color.Green,
+                Color.Yellow, Color.Brown, Color.Black
+            };
+
             if (IsValidTextureTarget(targetFace))
             {
-                renderBuffer.AllocStorage(RenderbufferStorage.Depth24Stencil8, Width, Height);
-                GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, frameBuffer.GetBufferHandle());
+                renderBuffer.AllocStorage(RenderbufferStorage.DepthComponent24, Width, Height);
+                
+                //GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, frameBuffer.GetBufferHandle());
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, targetFace, textureObject, mip);
                 
                 var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
                 Debug.Assert(status == FramebufferErrorCode.FramebufferComplete);
 
                 GL.Viewport(0, 0, Width, Height);
-                GL.ClearColor(Color.BlueViolet);
+                GL.ClearColor(Colors[mip]);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             }
         }
@@ -88,7 +95,7 @@ namespace Core.Texture
             GL.BindTexture(TextureTarget.TextureCubeMap, 0);
         }
 
-        public float[] GetCubemapTexImageAsFloat(TextureTarget targetFace, int mip)
+        public float[] GetCubemapTexImageAsFloat(TextureTarget targetFace, int mip, int width, int height)
         {
             Bind();
 
@@ -96,11 +103,11 @@ namespace Core.Texture
 
             if (CubemapPixelFormat == PixelFormat.Rgb)
             {
-                data = new float[Width * Height * 3];
+                data = new float[width * width * 3];
             }
             else if (CubemapPixelFormat == PixelFormat.Rgba)
             {
-                data = new float[Width * Height * 4];
+                data = new float[width * width * 4];
             }
 
             GL.GetTexImage<float>(targetFace, mip, CubemapPixelFormat, CubemapPixelType, data);
@@ -110,7 +117,19 @@ namespace Core.Texture
             return data;
         }
 
-        public byte[] GetCubemapTexImageAsByte(TextureTarget targetFace, int mip)
+        public void Save(int mip)
+        {
+            {
+
+                {
+                    var colorDataX = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveX, mip, 512,512);
+                    FreeImageHelper.SaveAsBmp(ref colorDataX, 512, 512, "PrefilterDebug_X.bmp");
+
+                }
+            }
+        }
+
+        public byte[] GetCubemapTexImageAsByte(TextureTarget targetFace, int mip, int width, int height)
         {
             Bind();
 
@@ -118,11 +137,11 @@ namespace Core.Texture
 
             if (CubemapPixelFormat == PixelFormat.Rgb)
             {
-                data = new byte[Width * Height * 3];
+                data = new byte[width * height * 3];
             }
             else if (CubemapPixelFormat == PixelFormat.Rgba)
             {
-                data = new byte[Width * Height * 4];
+                data = new byte[width * height * 4];
             }
 
             GL.GetTexImage<byte>(targetFace, mip, CubemapPixelFormat, CubemapPixelType, data);
@@ -141,8 +160,11 @@ namespace Core.Texture
             
             frameBuffer.Bind();
             renderBuffer.Bind();
-            renderBuffer.AllocStorage(RenderbufferStorage.Depth24Stencil8, Width, Height);
+            renderBuffer.AllocStorage(RenderbufferStorage.DepthComponent24, Width, Height);
             GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, frameBuffer.GetBufferHandle());
+
+            frameBuffer.Unbind();
+            renderBuffer.Unbind();
 
             GL.TexImage2D(TextureTarget.TextureCubeMapPositiveX, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr(0));
             GL.TexImage2D(TextureTarget.TextureCubeMapNegativeX, 0, CubemapPixelInternalFormat, Width, Height, 0, CubemapPixelFormat, CubemapPixelType, new IntPtr(0));
@@ -156,18 +178,16 @@ namespace Core.Texture
             if (bGenerateMips)
             {
                 GL.GenerateMipmap(GenerateMipmapTarget.TextureCubeMap);
+                GL.GenerateTextureMipmap(textureObject);
             }
-
-            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.TextureCubeMapPositiveX, textureObject, 0);
-            var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
 
             Unbind();
         }
 
         protected bool bGenerateMips = false;
         private PixelType CubemapPixelType = PixelType.Float;
-        private PixelFormat CubemapPixelFormat = PixelFormat.Rgba;
-        private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgba16f;
+        private PixelFormat CubemapPixelFormat = PixelFormat.Rgb;
+        private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgb16f;
 
         private FrameBuffer frameBuffer = null;
         private RenderBuffer renderBuffer = null;
