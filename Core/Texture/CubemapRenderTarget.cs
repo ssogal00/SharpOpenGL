@@ -60,8 +60,6 @@ namespace Core.Texture
 
                 renderBuffer.AllocStorage(RenderbufferStorage.DepthComponent24, mipWidth, mipHeight);
 
-                frameBuffer.Bind();
-
                 GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, renderBuffer.GetBufferHandle());
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, targetFace, textureObject, mip);
                 
@@ -121,32 +119,32 @@ namespace Core.Texture
             int mipWidth = (int)(Width * Math.Pow(0.5, (double)mip));
             int mipHeight = (int)(Height * Math.Pow(0.5, (double)mip));
 
-            var colorDataX = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveX, mip, mipWidth, mipHeight);
+            var colorDataX = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveX, mip);
             FreeImageHelper.SaveAsBmp(ref colorDataX, mipWidth, mipHeight, "PrefilterDebug_X.bmp");
 
-            var colorDataY = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveY, mip, mipWidth, mipHeight);
+            var colorDataY = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveY, mip);
             FreeImageHelper.SaveAsBmp(ref colorDataY, mipWidth, mipHeight, "PrefilterDebug_Y.bmp");
         }
 
-        public byte[] GetCubemapTexImageAsByte(TextureTarget targetFace, int mip, int width, int height)
+        public byte[] GetCubemapTexImageAsByte(TextureTarget targetFace, int mip)
         {
             Bind();
 
-            int mipWidth = (int)(512 * Math.Pow(0.5, (double)mip));
-            int mipHeight = (int)(512 * Math.Pow(0.5, (double)mip));
+            int mipWidth = (int)(Width * Math.Pow(0.5, (double)mip));
+            int mipHeight = (int)(Height * Math.Pow(0.5, (double)mip));
 
             byte[] data = null;
 
             if (CubemapPixelFormat == PixelFormat.Rgb)
             {
                 data = new byte[mipWidth * mipHeight * 3];
+                GL.GetTexImage<byte>(targetFace, mip, PixelFormat.Bgr, PixelType.UnsignedByte, data);
             }
             else if (CubemapPixelFormat == PixelFormat.Rgba)
             {
                 data = new byte[mipWidth * mipHeight * 4];
+                GL.GetTexImage<byte>(targetFace, mip, PixelFormat.Bgra, PixelType.UnsignedByte, data);
             }
-
-            GL.GetTexImage<byte>(targetFace, mip, PixelFormat.Bgra, PixelType.UnsignedByte, data);
 
             Unbind();
 
@@ -192,8 +190,8 @@ namespace Core.Texture
 
         protected bool bGenerateMips = true;
         private PixelType CubemapPixelType = PixelType.Float;
-        private PixelFormat CubemapPixelFormat = PixelFormat.Rgb;
-        private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgb16f;
+        private PixelFormat CubemapPixelFormat = PixelFormat.Rgba;
+        private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgba16f;
 
         private int SizeX = 512;
         private int SizeY = 512;

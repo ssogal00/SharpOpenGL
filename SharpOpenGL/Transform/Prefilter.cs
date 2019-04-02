@@ -86,11 +86,11 @@ namespace SharpOpenGL.Transform
 
         public void Save()
         {
-            /*var colorDataX = PositiveX.ColorAttachment0.GetTexImageAsByte();
-            FreeImageHelper.SaveAsBmp(ref colorDataX, 512, 512, "PrefilterPosX.bmp");
+            var colorDataX = cubemapRenderTarget.GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveX, 0);
+            FreeImageHelper.SaveAsBmp(ref colorDataX, cubemapRenderTarget.Width, cubemapRenderTarget.Height, "PrefilterPosX.bmp");
 
-            var colorData = NegativeX.ColorAttachment0.GetTexImageAsByte();
-            FreeImageHelper.SaveAsBmp(ref colorData, 512, 512, "PrefilterNegX.bmp");*/
+            var colorData = cubemapRenderTarget.GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveZ, 0);
+            FreeImageHelper.SaveAsBmp(ref colorData, cubemapRenderTarget.Width, cubemapRenderTarget.Height, "PrefilterPosZ.bmp");
         }
        
         private OpenTK.Matrix4 CaptureProjection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1.0f, 0.1f, 10.0f);
