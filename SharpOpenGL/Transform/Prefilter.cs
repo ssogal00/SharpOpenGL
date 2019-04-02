@@ -78,7 +78,7 @@ namespace SharpOpenGL.Transform
 
                 cubemapRenderTarget.UnbindForRendering();
 
-                //cubemapRenderTarget.Save(0);
+                cubemapRenderTarget.Save(2);
             }
         }
 

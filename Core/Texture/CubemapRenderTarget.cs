@@ -121,7 +121,12 @@ namespace Core.Texture
         public void Save(int mip)
         {
             var colorDataX = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveX, mip, 512,512);
-            FreeImageHelper.SaveAsBmp(ref colorDataX, 512, 512, "PrefilterDebug_X.bmp");
+            int mipWidth = (int)(512 * Math.Pow(0.5, (double)mip));
+            int mipHeight = (int)(512 * Math.Pow(0.5, (double)mip));
+            FreeImageHelper.SaveAsBmp(ref colorDataX, mipWidth, mipHeight, "PrefilterDebug_X.bmp");
+
+            var colorDataY = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveY, mip, 512, 512);            
+            FreeImageHelper.SaveAsBmp(ref colorDataY, mipWidth, mipHeight, "PrefilterDebug_Y.bmp");
         }
 
         public byte[] GetCubemapTexImageAsByte(TextureTarget targetFace, int mip, int width, int height)
@@ -142,7 +147,7 @@ namespace Core.Texture
                 data = new byte[mipWidth * mipHeight * 4];
             }
 
-            GL.GetTexImage<byte>(targetFace, mip, CubemapPixelFormat, PixelType.Byte, data);
+            GL.GetTexImage<byte>(targetFace, mip, PixelFormat.Bgra, PixelType.UnsignedByte, data);
 
             Unbind();
 
@@ -175,12 +180,16 @@ namespace Core.Texture
             
             if (bGenerateMips)
             {
-                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
-                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
-                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
-                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
-                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+                int WrapMode = (int)TextureWrapMode.ClampToEdge;
+                int MinFilter = (int)TextureMinFilter.LinearMipmapLinear;
+                int MagFilter = (int)TextureMagFilter.Linear;
 
+                GL.TexParameterI(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, ref WrapMode);
+                GL.TexParameterI(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, ref WrapMode);
+                GL.TexParameterI(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, ref WrapMode);
+                GL.TexParameterI(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, ref MinFilter);
+                GL.TexParameterI(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, ref MagFilter);
+                //GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.GenerateMipmap, (int) 1);
                 GL.GenerateMipmap(GenerateMipmapTarget.TextureCubeMap);
                 //GL.GenerateTextureMipmap(textureObject);
             }
@@ -188,10 +197,10 @@ namespace Core.Texture
             Unbind();
         }
 
-        protected bool bGenerateMips = false;
-        private PixelType CubemapPixelType = PixelType.Float;
-        private PixelFormat CubemapPixelFormat = PixelFormat.Rgb;
-        private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgb16f;
+        protected bool bGenerateMips = true;
+        private PixelType CubemapPixelType = PixelType.UnsignedByte;
+        private PixelFormat CubemapPixelFormat = PixelFormat.Rgba;
+        private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgba;
 
         private FrameBuffer frameBuffer = null;
         private RenderBuffer renderBuffer = null;
