@@ -200,9 +200,9 @@ namespace Core.Texture
         }
 
         protected bool bGenerateMips = true;
-        private PixelType CubemapPixelType = PixelType.UnsignedByte;
-        private PixelFormat CubemapPixelFormat = PixelFormat.Rgba;
-        private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgba;
+        private PixelType CubemapPixelType = PixelType.Float;
+        private PixelFormat CubemapPixelFormat = PixelFormat.Rgb;
+        private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgb16f;
 
         private FrameBuffer frameBuffer = null;
         private RenderBuffer renderBuffer = null;
