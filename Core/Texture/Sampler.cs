@@ -110,6 +110,7 @@ namespace Core.Texture
 
         public static Sampler DefaultLinearSampler = null;
         public static Sampler DefaultPointSampler = null;
+
         public static Sampler DefaultCubemapSampler = null;
 
         protected int m_SamplerObject = -1;

@@ -45,12 +45,6 @@ namespace Core.Texture
             }
         }
 
-        public void Resize(int newWidth, int newHeight)
-        {
-            m_Width = newWidth;
-            m_Height = newHeight;
-        }
-
         public override void BindShader(TextureUnit Unit, int SamplerLoc)
         {
             Sampler.DefaultCubemapSampler.BindSampler(Unit);
@@ -59,25 +53,23 @@ namespace Core.Texture
 
         public void BindFaceForRendering(TextureTarget targetFace, int mip)
         {
-            System.Drawing.Color[] Colors =
-            {
-                Color.Red, Color.Blue, Color.Green,
-                Color.Yellow, Color.Brown, Color.Black
-            };
-
             if (IsValidTextureTarget(targetFace))
             {
-                renderBuffer.AllocStorage(RenderbufferStorage.DepthComponent24, Width, Height);
+                int mipWidth = (int)(Width * Math.Pow(0.5, (double)mip));
+                int mipHeight = (int)(Height * Math.Pow(0.5, (double)mip));
+
+                renderBuffer.AllocStorage(RenderbufferStorage.DepthComponent24, mipWidth, mipHeight);
 
                 frameBuffer.Bind();
+
                 GL.FramebufferRenderbuffer(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthAttachment, RenderbufferTarget.Renderbuffer, renderBuffer.GetBufferHandle());
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, targetFace, textureObject, mip);
                 
                 var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
                 Debug.Assert(status == FramebufferErrorCode.FramebufferComplete);
 
-                GL.Viewport(0, 0, Width, Height);
-                GL.ClearColor(Colors[mip]);
+                GL.Viewport(0, 0, mipWidth, mipHeight);
+                GL.ClearColor(Color.Red);
                 GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             }
         }
@@ -126,12 +118,13 @@ namespace Core.Texture
 
         public void Save(int mip)
         {
-            var colorDataX = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveX, mip, 512,512);
-            int mipWidth = (int)(512 * Math.Pow(0.5, (double)mip));
-            int mipHeight = (int)(512 * Math.Pow(0.5, (double)mip));
+            int mipWidth = (int)(Width * Math.Pow(0.5, (double)mip));
+            int mipHeight = (int)(Height * Math.Pow(0.5, (double)mip));
+
+            var colorDataX = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveX, mip, mipWidth, mipHeight);
             FreeImageHelper.SaveAsBmp(ref colorDataX, mipWidth, mipHeight, "PrefilterDebug_X.bmp");
 
-            var colorDataY = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveY, mip, 512, 512);            
+            var colorDataY = GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveY, mip, mipWidth, mipHeight);
             FreeImageHelper.SaveAsBmp(ref colorDataY, mipWidth, mipHeight, "PrefilterDebug_Y.bmp");
         }
 
@@ -191,9 +184,7 @@ namespace Core.Texture
                 GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
                 GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
                 GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
-                //GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.GenerateMipmap, (int) 1);
                 GL.GenerateMipmap(GenerateMipmapTarget.TextureCubeMap);
-                //GL.GenerateTextureMipmap(textureObject);
             }
 
             Unbind();
@@ -203,6 +194,9 @@ namespace Core.Texture
         private PixelType CubemapPixelType = PixelType.Float;
         private PixelFormat CubemapPixelFormat = PixelFormat.Rgb;
         private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgb16f;
+
+        private int SizeX = 512;
+        private int SizeY = 512;
 
         private FrameBuffer frameBuffer = null;
         private RenderBuffer renderBuffer = null;

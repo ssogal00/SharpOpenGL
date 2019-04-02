@@ -102,6 +102,7 @@ namespace SharpOpenGL
                 equirectToCube.Transform();
                 convolution.SetSourceCubemap(equirectToCube.ResultCubemap);
                 convolution.Transform();
+                
             }
 
             prefilter.SetEnvMap(equirectToCube.ResultCubemap);
