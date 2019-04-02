@@ -62,11 +62,11 @@ namespace Core.Texture
         {
             if (IsValid)
             {
-                // Sampler.DefaultLinearSampler.BindSampler(Unit);
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+                Sampler.DefaultLinearSampler.BindSampler(Unit);
+                /*GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter ,(int) TextureMinFilter.Linear);
-                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);*/
 
                 GL.Uniform1(SamplerLoc, (int)(Unit - TextureUnit.Texture0));
             }

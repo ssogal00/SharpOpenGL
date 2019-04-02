@@ -65,6 +65,14 @@ namespace Core.Texture
             }
         }
 
+        public void SetWrapR(TextureWrapMode WrapMode)
+        {
+            if (IsValid)
+            {
+                GL.SamplerParameter(m_SamplerObject, SamplerParameterName.TextureWrapR, (int)WrapMode);
+            }
+        }
+
         public void BindSampler(TextureUnit UnitToBind)
         {
             if(IsValid)
@@ -82,10 +90,19 @@ namespace Core.Texture
             DefaultPointSampler = new Sampler();
             DefaultPointSampler.SetMagFilter(TextureMagFilter.Nearest);
             DefaultPointSampler.SetMinFilter(TextureMinFilter.Nearest);
+
+            DefaultCubemapSampler = new Sampler();
+            DefaultCubemapSampler.SetMinFilter(TextureMinFilter.LinearMipmapLinear);
+            DefaultCubemapSampler.SetMagFilter(TextureMagFilter.Linear);
+            DefaultCubemapSampler.SetWrapS(TextureWrapMode.ClampToEdge);
+            DefaultCubemapSampler.SetWrapT(TextureWrapMode.ClampToEdge);
+            DefaultCubemapSampler.SetWrapR(TextureWrapMode.ClampToEdge);
+
         }
 
         public static Sampler DefaultLinearSampler = null;
         public static Sampler DefaultPointSampler = null;
+        public static Sampler DefaultCubemapSampler = null;
 
         protected int m_SamplerObject = -1;
     }
