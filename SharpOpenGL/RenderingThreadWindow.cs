@@ -42,6 +42,7 @@ namespace SharpOpenGL
 
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
         protected StaticMeshObject sponzamesh = null;
+        protected StaticMeshObject pistol = null;
         protected bool bInitialized = false;
 
         protected MaterialBase GBufferMaterial = null;
@@ -89,6 +90,11 @@ namespace SharpOpenGL
             ScreenBlit.SetGridSize(2, 2);
 
             sponzamesh = new StaticMeshObject("sponza2.staticmesh");
+            sponzamesh.IsMetallicOverride = sponzamesh.IsRoughnessOverride = true;
+            sponzamesh.Metallic = 0.6f;
+            sponzamesh.Roughness = 0.3f;
+
+            pistol = new StaticMeshObject("pistol.staticmesh");
             sponzamesh.IsMetallicOverride = sponzamesh.IsRoughnessOverride = true;
             sponzamesh.Metallic = 0.6f;
             sponzamesh.Roughness = 0.3f;

@@ -66,6 +66,7 @@ namespace SharpOpenGL
         
         protected StaticMeshAsset Mesh = null;
         protected StaticMeshAsset Sphere = null;
+        protected StaticMeshAsset Pistol = null;
         protected Task<StaticMeshAsset> MeshLoadTask = null;
         protected Task<StaticMeshAsset> MeshLoadTask2 = null;
         protected GBuffer MyGBuffer = new GBuffer(1024,768);
@@ -143,6 +144,8 @@ namespace SharpOpenGL
 
             Mesh = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sponza2.staticmesh");
             Sphere = AssetManager.LoadAssetSync<StaticMeshAsset>("./Resources/Imported/StaticMesh/sphere3.staticmesh");
+            
+
             GBufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
             DefaultMaterial = ShaderManager.Get().GetMaterial("GBufferWithoutTexture");
             GBufferPNCMaterial = ShaderManager.Get().GetMaterial("GBufferPNC");

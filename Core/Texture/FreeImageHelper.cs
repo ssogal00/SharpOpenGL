@@ -18,7 +18,7 @@ namespace Core.Texture
 
             using (var bitmap = new Bitmap(width, height))
             {
-                var bitmapData = bitmap.LockBits(new Rectangle(0, 0, width, height), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+                var bitmapData = bitmap.LockBits(new Rectangle(0, 0, width, height), System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
                 Marshal.Copy(Data, 0, bitmapData.Scan0, Data.Length);
                 bitmap.UnlockBits(bitmapData);
                 bool bSaved = FreeImage.SaveBitmap(bitmap, FileName);
