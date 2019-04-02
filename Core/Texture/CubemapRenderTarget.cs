@@ -51,6 +51,12 @@ namespace Core.Texture
             m_Height = newHeight;
         }
 
+        public override void BindShader(TextureUnit Unit, int SamplerLoc)
+        {
+            Sampler.DefaultCubemapSampler.BindSampler(Unit);
+            GL.Uniform1(SamplerLoc, (int)(Unit - TextureUnit.Texture0));
+        }
+
         public void BindFaceForRendering(TextureTarget targetFace, int mip)
         {
             System.Drawing.Color[] Colors =
