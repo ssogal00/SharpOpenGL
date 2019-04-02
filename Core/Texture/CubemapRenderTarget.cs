@@ -180,15 +180,11 @@ namespace Core.Texture
             
             if (bGenerateMips)
             {
-                int WrapMode = (int)TextureWrapMode.ClampToEdge;
-                int MinFilter = (int)TextureMinFilter.LinearMipmapLinear;
-                int MagFilter = (int)TextureMagFilter.Linear;
-
-                GL.TexParameterI(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, ref WrapMode);
-                GL.TexParameterI(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, ref WrapMode);
-                GL.TexParameterI(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, ref WrapMode);
-                GL.TexParameterI(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, ref MinFilter);
-                GL.TexParameterI(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, ref MagFilter);
+                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapS, (int)TextureWrapMode.ClampToEdge);
+                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapT, (int)TextureWrapMode.ClampToEdge);
+                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureWrapR, (int)TextureWrapMode.ClampToEdge);
+                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
+                GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
                 //GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.GenerateMipmap, (int) 1);
                 GL.GenerateMipmap(GenerateMipmapTarget.TextureCubeMap);
                 //GL.GenerateTextureMipmap(textureObject);
