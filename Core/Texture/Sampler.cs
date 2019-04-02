@@ -81,6 +81,14 @@ namespace Core.Texture
             }
         }
 
+        public void UnbindSampler(TextureUnit UnitToUnbind)
+        {
+            if (IsValid)
+            {
+                GL.BindSampler(((int)UnitToUnbind - (int)TextureUnit.Texture0), 0);
+            }
+        }
+
         public static void OnResourceCreate(object sender, EventArgs e)
         {
             DefaultLinearSampler = new Sampler();
