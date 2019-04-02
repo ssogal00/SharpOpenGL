@@ -23,7 +23,15 @@ namespace Core.Texture
                 GL.BindTexture(TextureTarget.TextureCubeMap,textureObject);
             }
         }
-        
+
+        public override void BindShader(TextureUnit Unit, int SamplerLoc)
+        {
+            if (IsValid)
+            {
+                GL.Uniform1(SamplerLoc, (int)(Unit - TextureUnit.Texture0));
+            }
+        }
+
         public void Load()
         {
             Bind();

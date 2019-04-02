@@ -8,7 +8,7 @@ using Core.Texture;
 using Core.Tickable;
 using OpenTK;
 using SharpOpenGL.Light;
-
+using OpenTK.Graphics.OpenGL;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -52,6 +52,10 @@ namespace SharpOpenGL.PostProcess
 
         public override void Render(TextureBase colorInput,  TextureBase normalInput, TextureBase positionInput, TextureBase ambientIrradiancemap, TextureBase lutMap, TextureBase prefilterMap)
         {
+            int MinFilter = (int)TextureMinFilter.LinearMipmapLinear;
+
+            GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
+
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
                 var deferredLight = (LightMaterial.LightMaterial) PostProcessMaterial;

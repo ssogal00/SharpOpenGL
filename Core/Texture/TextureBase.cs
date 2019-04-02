@@ -58,7 +58,7 @@ namespace Core.Texture
         }
 
 
-        public void BindShader(TextureUnit Unit, int SamplerLoc)
+        public virtual void BindShader(TextureUnit Unit, int SamplerLoc)
         {
             if (IsValid)
             {
