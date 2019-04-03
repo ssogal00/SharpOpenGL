@@ -2,6 +2,7 @@
 using OpenTK;
 
 
+
 namespace Core
 {
     public static class MathHelper
@@ -28,6 +29,35 @@ namespace Core
             return (1.0f / Math.Sqrt(2.0f * OpenTK.MathHelper.Pi * std_deviation * std_deviation))
                 * Math.Exp((-((x - mean) * (x - mean))) / (2.0f * std_deviation * std_deviation));
         }
+
+
+        public static OpenTK.Vector3 UniformHemisphere()
+        {
+            OpenTK.Vector3 result = new Vector3(0);
+
+            float x1 = (float) random.NextDouble();
+            float x2 = (float) random.NextDouble();
+
+            float s = (float) Math.Sqrt(1.0f - x1 * x1);
+            result.X = (float) Math.Cos(OpenTK.MathHelper.TwoPi * x2) * s;
+            result.Y = (float) Math.Sin(OpenTK.MathHelper.TwoPi * x2) * s;
+            result.Z = x1;
+
+            return result;
+        }
+
+        public static OpenTK.Vector2 UniformCircle()
+        {
+            var result = new Vector2(0);
+
+            float x = (float) random.NextDouble();
+            result.X = (float) Math.Cos(OpenTK.MathHelper.TwoPi * x);
+            result.Y = (float) Math.Sin(OpenTK.MathHelper.TwoPi * x);
+
+            return result;
+        }
+
+        public static Random random = new Random();
 
         public static Vector3 Forward => new Vector3(0, 0, 1);
         public static Vector3 ForwardRight => (new Vector3(1, 0, 1)).Normalized();

@@ -94,12 +94,6 @@ namespace SharpOpenGL
             sponzamesh.Metallic = 0.6f;
             sponzamesh.Roughness = 0.3f;
 
-            pistol = new StaticMeshObject("pistol.staticmesh");
-            pistol.IsMetallicOverride = sponzamesh.IsRoughnessOverride = true;
-            pistol.Translation = new Vector3(0,70,0);
-            pistol.Metallic = 0.8f;
-            pistol.Roughness = 0.1f;
-
             GBufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
             GridMaterial = ShaderManager.Get().GetMaterial("GridRenderMaterial");
             WireframeMaterial = ShaderManager.Get().GetMaterial("GBufferPNC");
