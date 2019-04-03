@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 using OpenTK;
-using System.Random;
+using MathHelper = Core.MathHelper;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -25,6 +26,18 @@ namespace SharpOpenGL.PostProcess
         private void BuildRandomRotationTexture()
         {
 
+            int size = 4;
+
+            List<float> randomDirections = new List<float>(3 * size * size);
+
+            for (int i = 0; i < size * size; ++i)
+            {
+                var v = MathHelper.UniformHemisphere();
+                randomDirections[i * 3] = v.X;
+                randomDirections[i * 3 + 1] = v.Y;
+                randomDirections[i * 3 + 2] = v.Z;
+                
+            }
         }
 
         private void BuildKernel()
