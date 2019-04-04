@@ -304,7 +304,7 @@ namespace ThreeDTextRenderMaterial
 namespace ResolveMaterial
 {
 }
-namespace SSAO
+namespace SSAOMaterial
 {
 }
 namespace LUTGenerateMaterial

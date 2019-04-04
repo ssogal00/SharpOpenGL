@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Configuration;
 using System.Runtime.Remoting;
 using System.Windows.Forms;
+using OpenTK;
 
 namespace Core.Texture
 {
@@ -272,6 +273,8 @@ namespace Core.Texture
 
         public int RenderTargetWidth => BufferWidth;
         public int RenderTargetHeight => BufferHeight;
+
+        public OpenTK.Vector2 RenderTargetSize => new Vector2(RenderTargetWidth, RenderTargetHeight);
 
         private bool bIncludeDepthAttachment = true;
 

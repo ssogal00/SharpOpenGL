@@ -36,6 +36,8 @@ namespace SharpOpenGL
         protected ResolvePostProcess resolvePostProcess = new ResolvePostProcess();
         protected EquirectangleToCubemap equirectToCube = new EquirectangleToCubemap();
         protected CubemapConvolutionTransform convolution = new CubemapConvolutionTransform();
+        protected SSAO ssaoPostProcess = new SSAO();
+
         protected LookUpTable2D lut = new LookUpTable2D();
         protected Prefilter prefilter = new Prefilter();
 
@@ -253,6 +255,10 @@ namespace SharpOpenGL
             {
                 lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment
                     ,convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
+
+                //ssaoPostProcess.Render(renderGBuffer.GetPositionAttachment, renderGBuffer.GetNormalAttachment);
+
+                ScreenBlit.Blit(ssaoPostProcess.OutputRenderTarget.ColorAttachment0, 0,0,2,2);
 
                 if (DebugDrawer.Get().IsBloomEnabled)
                 {

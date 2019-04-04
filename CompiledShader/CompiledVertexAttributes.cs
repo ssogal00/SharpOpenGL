@@ -653,12 +653,12 @@ public struct VertexAttribute
 	}
 }
 }
-namespace SSAO
+namespace SSAOMaterial
 {
 
 
 [ZeroFormattable]
-[StructLayout(LayoutKind.Explicit,Size=32)]
+[StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {
 	
@@ -669,19 +669,13 @@ public struct VertexAttribute
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Vector2 VertexTexCoord;
-		
-	[Index(2)]
-	[FieldOffset(20), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public OpenTK.Vector3 FrustumVector;
 	
 	public static void VertexAttributeBinding()
 	{
 		GL.EnableVertexAttribArray(0);
-		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 32, new IntPtr(0));
+		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 20, new IntPtr(0));
 		GL.EnableVertexAttribArray(1);
-		GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 32, new IntPtr(12));
-		GL.EnableVertexAttribArray(2);
-		GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, 32, new IntPtr(20));
+		GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 20, new IntPtr(12));
 	}
 }
 }

@@ -1,17 +1,15 @@
-#version 330
+#version 450
 
 layout (location = 0) in vec3 VertexPosition;
 layout (location = 1) in vec2 VertexTexCoord;
-layout (location = 2) in vec3 FrustumVector;
 
-out vec3 vFrustumRay;
-out vec2 TexCoord;
+
+layout (location = 0 ) out vec3 OutPosition;
+layout (location = 1 ) out vec2 OutTexCoord;
 
 void main()
-{
-    TexCoord = VertexTexCoord;
-    
+{    
 	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);
-
-	vFrustumRay = FrustumVector;
+	OutPosition = vec3(VertexPosition.xy, 0.0);
+	OutTexCoord = VertexTexCoord;
 }

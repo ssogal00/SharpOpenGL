@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
+using Core;
 using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
@@ -22,8 +23,28 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<SSAOMaterial.SSAOMaterial>();
+
             BuildKernel();
             BuildRandomRotationTexture();
+        }
+
+        public override void Render(TextureBase positionTex, TextureBase normalTex)
+        {
+            var ssaoMaterial = (SSAOMaterial.SSAOMaterial) PostProcessMaterial;
+
+            Output.BindAndExecute(ssaoMaterial, () =>
+            {
+                ssaoMaterial.NormalTex2D = normalTex;
+                ssaoMaterial.PositionTex2D = positionTex;
+                ssaoMaterial.ProjectionMatrix = CameraManager.Get().CurrentCameraProj;
+                ssaoMaterial.RandTex2D = this.RandTexture;
+                ssaoMaterial.SampleKernel = KernelArray;
+                ssaoMaterial.Radius = 50;
+                ssaoMaterial.ScreenSize = OutputRenderTarget.RenderTargetSize;
+
+                BlitToScreenSpace();
+            });
         }
 
         private void BuildRandomRotationTexture()
@@ -36,9 +57,9 @@ namespace SharpOpenGL.PostProcess
             for (int i = 0; i < size * size; ++i)
             {
                 var v = MathHelper.UniformHemisphere();
-                randomDirections[i * 3] = v.X;
-                randomDirections[i * 3 + 1] = v.Y;
-                randomDirections[i * 3 + 2] = v.Z;
+                randomDirections.Add(v.X);
+                randomDirections.Add(v.Y);
+                randomDirections.Add(v.Z);
             }
 
             RandTexture = new Texture2D();
@@ -47,7 +68,6 @@ namespace SharpOpenGL.PostProcess
 
         private void BuildKernel()
         {
-            KernelList.Clear();
             
             int KernelSize = 64;
 
@@ -57,12 +77,12 @@ namespace SharpOpenGL.PostProcess
 
                 float scale = (float) (i * i) / (float) (KernelSize * KernelSize);
                 randDir *= scale;
-                KernelList.Add(randDir);
+                KernelArray[i] = randDir;
             }
         }
 
 
-        private List<Vector3> KernelList = new List<Vector3>();
+        private Vector3[] KernelArray = new Vector3[64];
 
         private  Texture2D RandTexture = null;
     }

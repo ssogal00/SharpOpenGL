@@ -23,7 +23,7 @@
 	<Material name="GridRenderMaterial" vertexShader="GridRender.vs" fragmentShader="GridRender.fs"/>
 	<Material name="ThreeDTextRenderMaterial" vertexShader="ThreeDTextRender.vs" fragmentShader="ThreeDTextRender.fs"/>
 	<Material name="ResolveMaterial" vertexShader="Resolve.vs" fragmentShader="Resolve.fs"/>
-	<Material name="SSAO" vertexShader="SSAO.vs" fragmentShader="SSAO.fs"/>
+	<Material name="SSAOMaterial" vertexShader="SSAO.vs" fragmentShader="SSAO.fs"/>
 	<Material name="LUTGenerateMaterial" vertexShader="2DLUT.vs" fragmentShader="2DLUT.fs"/>
 	<Material name="PrefilterMaterial" vertexShader="Prefilter.vs" fragmentShader="Prefilter.fs"/>
 </MaterialList>
