@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
+using Core.Texture;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using MathHelper = Core.MathHelper;
 
 namespace SharpOpenGL.PostProcess
@@ -21,6 +23,7 @@ namespace SharpOpenGL.PostProcess
             base.OnGLContextCreated(sender, e);
 
             BuildKernel();
+            BuildRandomRotationTexture();
         }
 
         private void BuildRandomRotationTexture()
@@ -36,8 +39,10 @@ namespace SharpOpenGL.PostProcess
                 randomDirections[i * 3] = v.X;
                 randomDirections[i * 3 + 1] = v.Y;
                 randomDirections[i * 3 + 2] = v.Z;
-                
             }
+
+            RandTexture = new Texture2D();
+            RandTexture.Load(randomDirections.ToArray(), size, size, PixelInternalFormat.Rgb16f, PixelFormat.Rgb);
         }
 
         private void BuildKernel()
@@ -58,5 +63,7 @@ namespace SharpOpenGL.PostProcess
 
 
         private List<Vector3> KernelList = new List<Vector3>();
+
+        private  Texture2D RandTexture = null;
     }
 }

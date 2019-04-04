@@ -6,11 +6,19 @@ namespace Core.Texture
 {
     public class ColorAttachmentTexture : TextureBase
     {
-        public ColorAttachmentTexture(int widthParam, int heightParam, PixelInternalFormat format = PixelInternalFormat.Rgba16f)
+        /*public ColorAttachmentTexture(int widthParam, int heightParam, PixelInternalFormat format = PixelInternalFormat.Rgba16f)
         {   
             m_Width = widthParam;
             m_Height = heightParam;
             textureFormat = format;
+        }*/
+
+        public ColorAttachmentTexture(int widthParam, int heightParam, PixelInternalFormat format, PixelFormat pixelFormat, PixelType pixelType)
+        {
+            m_Width = widthParam;
+            m_Height = heightParam;
+            textureFormat = format;
+            this.pixelType = pixelType;
         }
 
         protected virtual void RecreateTexture()
@@ -67,8 +75,15 @@ namespace Core.Texture
             return data;
         }
 
+
         protected PixelInternalFormat textureFormat;
         public PixelInternalFormat TextureFormat => textureFormat;
+
+        protected PixelType pixelType = PixelType.Float;
+        public PixelType TexturePixelType => pixelType;
+
+        protected PixelFormat pixelFormat = PixelFormat.Rgba;
+        public PixelFormat TexturePixelFormat => pixelFormat;
 
         public int GetTextureObject => textureObject;        
     }

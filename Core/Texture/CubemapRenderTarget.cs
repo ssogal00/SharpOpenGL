@@ -193,8 +193,6 @@ namespace Core.Texture
         private PixelFormat CubemapPixelFormat = PixelFormat.Rgb;
         private PixelInternalFormat CubemapPixelInternalFormat = PixelInternalFormat.Rgb16f;
 
-        private int SizeX = 512;
-        private int SizeY = 512;
 
         private FrameBuffer frameBuffer = null;
         private RenderBuffer renderBuffer = null;

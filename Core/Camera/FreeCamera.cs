@@ -81,6 +81,12 @@ namespace Core.Camera
         protected void Move()
         {
             var vMoveDir = GetMoveDirection();
+
+            if (Single.IsNaN(vMoveDir.X) || Single.IsNaN(vMoveDir.Y) || Single.IsNaN(vMoveDir.Z))
+            {
+                Debug.Assert(false);
+            }
+
             var vMove = Vector3.Multiply(vMoveDir, GetMoveAmount());
             Destination = EyeLocation + vMove;
         }
@@ -89,6 +95,7 @@ namespace Core.Camera
         {
             var vMoveDir = m_RotationMatrix.Row2;
             var vMove = Vector3.Multiply(vMoveDir, GetMoveAmount());
+
             Destination = EyeLocation + vMove;
         }
 

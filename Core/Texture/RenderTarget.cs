@@ -26,14 +26,39 @@ namespace Core.Texture
 
             AttachmentCount = attachementCount;
         }
-        
-        public RenderTarget(int width, int height, int attachmentCount, PixelInternalFormat internalFormat, bool includeDepthAttachment )
-        : this(width, height, attachmentCount)
+
+        public RenderTarget(int width, int height, int attachmentCount, PixelInternalFormat internalInternalFormat, bool bFixedSize = false, bool includeDepthAttachment = true)
+        : this(width, height, attachmentCount, bFixedSize)
         {
-            PixelFormat = internalFormat;
+            RenderTargetPixelInternalFormat = internalInternalFormat;
             bIncludeDepthAttachment = includeDepthAttachment;
             bFixedSize = false;
         }
+
+        public override void ReleaseResource()
+        {
+            if (ColorAttachment0 != null)
+            {
+                ColorAttachment0.Dispose();
+            }
+
+            if (ColorAttachment1 != null)
+            {
+                ColorAttachment1.Dispose();
+            }
+
+            if (ColorAttachment2 != null)
+            {
+                ColorAttachment2.Dispose();
+            }
+
+            if (DepthAttachment != null)
+            {
+                DepthAttachment.Dispose();
+            }
+        }
+        
+        
 
         public void Bind()
         {
@@ -157,7 +182,7 @@ namespace Core.Texture
         {
             FrameBufferObject = new FrameBuffer();
 
-            colorAttachment0 = new ColorAttachmentTexture(BufferWidth, BufferHeight, PixelFormat);
+            colorAttachment0 = new ColorAttachmentTexture(BufferWidth, BufferHeight, RenderTargetPixelInternalFormat, RenderTargetPixelFormat, RenderTargetPixelDataType);
 
             if (bIncludeDepthAttachment)
             {
@@ -166,12 +191,12 @@ namespace Core.Texture
 
             if(AttachmentCount > 1)
             {
-                colorAttachment1 = new ColorAttachmentTexture(BufferWidth, BufferHeight);
+                colorAttachment1 = new ColorAttachmentTexture(BufferWidth, BufferHeight, RenderTargetPixelInternalFormat, RenderTargetPixelFormat, RenderTargetPixelDataType);
             }
 
             if(AttachmentCount > 2)
             {
-                colorAttachment2 = new ColorAttachmentTexture(BufferWidth, BufferHeight);
+                colorAttachment2 = new ColorAttachmentTexture(BufferWidth, BufferHeight, RenderTargetPixelInternalFormat, RenderTargetPixelFormat, RenderTargetPixelDataType);
             }
             
             if(AttachmentCount == 1)
@@ -237,7 +262,9 @@ namespace Core.Texture
         // and 1 depth attachment
         protected DepthTargetTexture DepthAttachment = null;
 
-        private PixelInternalFormat PixelFormat = PixelInternalFormat.Rgba16f;
+        private PixelInternalFormat RenderTargetPixelInternalFormat = PixelInternalFormat.Rgba16f;
+        private PixelFormat RenderTargetPixelFormat = PixelFormat.Rgba;
+        private PixelType RenderTargetPixelDataType = PixelType.Float;
 
         protected Core.Buffer.FrameBuffer FrameBufferObject = null;
 

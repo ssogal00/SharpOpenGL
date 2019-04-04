@@ -28,13 +28,13 @@ namespace Core.Buffer
             FrameBufferObject = new FrameBuffer("GBuffer Framebuffer");
             FrameBufferObject.Bind();
 
-            PositionAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight);
+            PositionAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight, PixelInternalFormat.Rgba16f, PixelFormat.Rgba, PixelType.Float);
             PositionAttachment.Resize(BufferWidth, BufferHeight);
 
-            ColorAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight);
+            ColorAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight, PixelInternalFormat.Rgba16f, PixelFormat.Rgba, PixelType.Float);
             ColorAttachment.Resize(BufferWidth, BufferHeight);
 
-            NormalAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight);            
+            NormalAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight, PixelInternalFormat.Rgba16f, PixelFormat.Rgba, PixelType.Float);
             NormalAttachment.Resize(BufferWidth, BufferHeight);
 
             DepthAttachment = new DepthTargetTexture(BufferWidth, BufferHeight);

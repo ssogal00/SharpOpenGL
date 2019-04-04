@@ -9,7 +9,11 @@ namespace Core
 {    
     public class RenderResource : IDisposable
     {
+        // 
         public static EventHandler<EventArgs> OnOpenGLContextCreated;
+
+        //
+        public static EventHandler<EventArgs> OnRenderingThreadTick;
 
         public RenderResource()
         {
@@ -35,12 +39,7 @@ namespace Core
         {
             bInit = true;
         }
-
-        public virtual void Load(string assetPath)
-        {
-        }
         
-
         protected bool bInit = false;
     }
 }

@@ -10,8 +10,9 @@ namespace Core.Texture
 {
     public class MultisampleColorAttachmentTexture : ColorAttachmentTexture
     {
-        public MultisampleColorAttachmentTexture(int widthParam, int heightParam, PixelInternalFormat format = PixelInternalFormat.Rgba16f)
-        : base(widthParam, heightParam, format)
+        public MultisampleColorAttachmentTexture(int widthParam, int heightParam, 
+            PixelInternalFormat pixelInternalFormat = PixelInternalFormat.Rgba16f, PixelFormat pixelformat = PixelFormat.Rgba, PixelType pixelType = PixelType.Float)
+        : base(widthParam, heightParam, pixelInternalFormat, pixelformat, pixelType)
         {
         }
 
