@@ -13,23 +13,24 @@ namespace Core.Texture
     public class RenderTarget : RenderResource, IBindable, IResizable
     {
 
-        public RenderTarget(int width, int height, int attachementCount, bool bFixedSize = false)
+        public RenderTarget(int width, int height, int attachementCount,  bool bFixedSize = false, float customScale = 1.0f)
         {
             if (bFixedSize == false)
             {
                 ResizableManager.Get().AddResizable(this);
             }
 
-            BufferWidth = (int) (width);
-            BufferHeight = (int) (height);
+            CustomScale = customScale;
+            BufferWidth = (int) ((width) * customScale);
+            BufferHeight = (int) ((height) * customScale);
 
             this.bFixedSize = bFixedSize;
 
             AttachmentCount = attachementCount;
         }
 
-        public RenderTarget(int width, int height, int attachmentCount, PixelInternalFormat internalInternalFormat, bool bFixedSize = false, bool includeDepthAttachment = true)
-        : this(width, height, attachmentCount, bFixedSize)
+        public RenderTarget(int width, int height, int attachmentCount, PixelInternalFormat internalInternalFormat, bool bFixedSize = false, float customScale = 1.0f, bool includeDepthAttachment = true)
+        : this(width, height, attachmentCount, bFixedSize, customScale )
         {
             RenderTargetPixelInternalFormat = internalInternalFormat;
             bIncludeDepthAttachment = includeDepthAttachment;
@@ -139,8 +140,8 @@ namespace Core.Texture
             {
                 if (bFixedSize == false)
                 {
-                    BufferWidth = (int)(newWidth);
-                    BufferHeight = (int)(newHeight);
+                    BufferWidth = (int)((newWidth) * CustomScale);
+                    BufferHeight = (int)((newHeight) * CustomScale);
                 }
                 
                 Debug.Assert(BufferHeight > 0 && BufferWidth > 0);
@@ -280,6 +281,7 @@ namespace Core.Texture
 
         protected int BufferWidth = 640;
         protected int BufferHeight = 480;
+        protected float CustomScale = 1.0f;
         
         protected int AttachmentCount = 1;
 

@@ -17,6 +17,13 @@ namespace SharpOpenGL.PostProcess
         public SSAO()
         : base()
         {
+            this.bCreateCustomRenderTarget = true;
+        }
+
+        protected override void CreateCustomRenderTarget()
+        {
+            Output = new RenderTarget(1280,720,1,  false, 0.5f);
+            Output.Initialize();
         }
 
         public override void OnGLContextCreated(object sender, EventArgs e)

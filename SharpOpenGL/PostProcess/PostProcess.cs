@@ -30,7 +30,14 @@ namespace SharpOpenGL.PostProcess
             UpdateIndexBuffer();
 
             // create render target
-            CreateDefaultRenderTarget();
+            if (bCreateCustomRenderTarget)
+            {
+                CreateCustomRenderTarget();
+            }
+            else
+            {
+                CreateDefaultRenderTarget();
+            }
         }
 
         protected void BlitToScreenSpace()
@@ -45,6 +52,10 @@ namespace SharpOpenGL.PostProcess
         {
             Output = new RenderTarget(1024,768,1, false);
             Output.Initialize();
+        }
+
+        protected virtual void CreateCustomRenderTarget()
+        {
         }
 
         public virtual void Render()
@@ -94,6 +105,8 @@ namespace SharpOpenGL.PostProcess
         protected StaticVertexBuffer<PT_VertexAttribute> VB = null;
         protected IndexBuffer IB = null;
         List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
+
+        protected bool bCreateCustomRenderTarget = false;
 
         protected void UpdateIndexBuffer()
         {
