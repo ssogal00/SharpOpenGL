@@ -99,5 +99,5 @@ void main()
 
     PositionColor = InPosition;
 
-    VelocityColor = vec4((InNDCPos - InPrevNDCPos), 1.0f);
+    VelocityColor = vec4((InNDCPos - InPrevNDCPos) , 1.0f);
 }

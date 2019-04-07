@@ -12,6 +12,12 @@ namespace Core.Primitive
         [ExposeUI("Translation")]
         public virtual Vector3 Translation { get; set; }
 
+        public virtual float TranslationY
+        {
+            get { return Translation.Y; }
+            set { Translation = new Vector3(Translation.X, value, Translation.Z);}
+        }
+
         [ExposeUI] public virtual float Scale { get; set; } = 1.0f;
 
         [ExposeUI, UIGroup("Rotation")] public virtual float Yaw { get; set; } = 0;

@@ -34,6 +34,17 @@ namespace SharpOpenGL
             this.metallicTexPath = metallicTex;
         }
 
+        private Matrix4 PrevModel = Matrix4.Identity;
+
+        public override void Tick(double elapsed)
+        {
+            
+            Elapsed += elapsed;
+            this.TranslationY += (float) Math.Sin(Elapsed);
+        }
+
+        private double Elapsed = 0;
+
         public override void Initialize()
         {
             GenerateVertices();
@@ -120,6 +131,9 @@ namespace SharpOpenGL
 
                     gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+                    gbufferDraw.PrevTransform_PrevProj = CameraManager.Get().PrevCameraProj;
+                    gbufferDraw.PrevTransform_PrevView = CameraManager.Get().PrevCameraView;
+                    gbufferDraw.PrevTransform_PrevModel = this.PrevModel;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 
                     if (bMetallicExist)
@@ -155,6 +169,8 @@ namespace SharpOpenGL
                     }
 
                     drawable.DrawArrays(PrimitiveType.Triangles);
+
+                    this.PrevModel = LocalMatrix;
                 }
             }
         }

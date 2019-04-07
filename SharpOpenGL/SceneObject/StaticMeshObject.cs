@@ -101,8 +101,9 @@ namespace SharpOpenGL
             Debug.Assert(gbufferMaterial != null);
 
             gbufferMaterial.Bind();
-            
-            
+
+
+            gbufferMaterial.PrevTransform_PrevModel = this.ParentMatrix * this.LocalMatrix;
             gbufferMaterial.ModelTransform_Model = this.ParentMatrix * this.LocalMatrix;
 
             gbufferMaterial.PrevTransform_PrevProj = CameraManager.Get().PrevCameraProj;

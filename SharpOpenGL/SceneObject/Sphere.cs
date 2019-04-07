@@ -15,6 +15,7 @@ namespace SharpOpenGL
     public class Sphere : SceneObject
     {
         protected static int SphereCount = 0;
+
         public override OpenTK.Matrix4 LocalMatrix
         {
             get

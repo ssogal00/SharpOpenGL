@@ -53,7 +53,7 @@ namespace SharpOpenGL
                 using (var dummy = new ScopedBind(defaultMaterial))
                 {
                     var gbufferDraw = (GBufferInstanced.GBufferInstanced) defaultMaterial;
-
+                    
                     gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
