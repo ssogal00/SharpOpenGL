@@ -28,6 +28,7 @@ namespace SharpOpenGL
         protected event EventHandler<ScreenResizeEventArgs> OnWindowResize;
         protected BlitToScreen ScreenBlit = new BlitToScreen();
 
+        // @ postprocess start
         protected Skybox skyboxPostProcess = new Skybox();
         protected BlurPostProcess blurPostProcess = new BlurPostProcess();
         protected DeferredLight lightPostProcess = new DeferredLight();
@@ -37,6 +38,8 @@ namespace SharpOpenGL
         protected EquirectangleToCubemap equirectToCube = new EquirectangleToCubemap();
         protected CubemapConvolutionTransform convolution = new CubemapConvolutionTransform();
         protected SSAO ssaoPostProcess = new SSAO();
+        protected HDAO hdaoPostProcess = new HDAO();
+        // @postprocess end
 
         protected LookUpTable2D lut = new LookUpTable2D();
         protected Prefilter prefilter = new Prefilter();
@@ -253,14 +256,19 @@ namespace SharpOpenGL
             }
             else
             {
-                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment
-                    ,convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
+                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment ,convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
+
+                hdaoPostProcess.Render(renderGBuffer.GetPositionAttachment, renderGBuffer.GetNormalAttachment);
 
                 //ssaoPostProcess.Render(renderGBuffer.GetPositionAttachment, renderGBuffer.GetNormalAttachment);
 
-                ScreenBlit.Blit(ssaoPostProcess.OutputRenderTarget.ColorAttachment0, 0,0,2,2);
+                GL.Viewport(0,0, Width, Height);
 
-                if (DebugDrawer.Get().IsBloomEnabled)
+                ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+                ScreenBlit.Blit(hdaoPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 1, 1);
+                
+
+                /*if (DebugDrawer.Get().IsBloomEnabled)
                 {
                     bloomPostProcess.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0);
                     blurPostProcess.Render(bloomPostProcess.OutputRenderTarget.ColorAttachment0);
@@ -270,7 +278,7 @@ namespace SharpOpenGL
                 else
                 {
                     ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
-                }
+                }*/
             }
 
             SwapBuffers();

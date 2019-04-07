@@ -33,6 +33,6 @@ namespace SharpOpenGL.Light
         public override bool IsEditable { get; set; } = false;
 
         [ExposeUI]
-        public Vector2 MinMaxRadius { get; set; } = new Vector2(1, 200);
+        public Vector2 MinMaxRadius { get; set; } = new Vector2(1, 500);
     }
 }

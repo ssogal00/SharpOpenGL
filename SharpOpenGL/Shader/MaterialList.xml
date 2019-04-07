@@ -26,4 +26,5 @@
 	<Material name="SSAOMaterial" vertexShader="SSAO.vs" fragmentShader="SSAO.fs"/>
 	<Material name="LUTGenerateMaterial" vertexShader="2DLUT.vs" fragmentShader="2DLUT.fs"/>
 	<Material name="PrefilterMaterial" vertexShader="Prefilter.vs" fragmentShader="Prefilter.fs"/>
+	<Material name="HDAOMaterial" vertexShader="HDAO.vs" fragmentShader="HDAO.fs"/>
 </MaterialList>

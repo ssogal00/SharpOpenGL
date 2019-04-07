@@ -3,7 +3,7 @@
 
 in vec2 OutTexCoord;
 
-uniform sampler2D ColorTex;
+layout (binding = 0) uniform sampler2D ColorTex;
 
 out vec4 FragColor;
 

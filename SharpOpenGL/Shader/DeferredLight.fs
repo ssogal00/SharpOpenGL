@@ -103,8 +103,12 @@ void main()
         vec4 lightPosInViewSpace = View *  vec4(lightPositions[i], 1);
         vec3 L = normalize(lightPosInViewSpace.xyz - Position);        
         vec3 H = normalize(V + L);
-        
-        float distance = clamp(length(lightPosInViewSpace.xyz - Position), lightMinMaxs[i].x, lightMinMaxs[i].y);        
+
+        float distance = clamp(length(lightPosInViewSpace.xyz - Position), lightMinMaxs[i].x, lightMinMaxs[i].y);
+        float lightRadius = lightMinMaxs[i].y;
+
+        //float attenuation = pow( clamp(1 - pow(distance/lightRadius, 4), 0, 1) , 2) / (distance * distance + 1);
+
         float distanceFactor = ((50-1) / (lightMinMaxs[i].y - lightMinMaxs[i].x)) * (distance - lightMinMaxs[i].x) + 1;
         float attenuation = 1.0 / (distanceFactor * distanceFactor);                
         

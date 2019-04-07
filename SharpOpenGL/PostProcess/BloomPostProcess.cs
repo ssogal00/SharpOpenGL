@@ -15,6 +15,13 @@ namespace SharpOpenGL.PostProcess
             : base()
         {
             this.Name = "Bloom";
+            this.bCreateCustomRenderTarget = true;
+        }
+
+        protected override void CreateCustomRenderTarget()
+        {
+            Output = new RenderTarget(1024, 768, 1, false, 0.5f);
+            Output.Initialize();
         }
 
         public override void OnGLContextCreated(object sender, EventArgs e)

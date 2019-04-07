@@ -5,7 +5,7 @@
 layout (location = 0 ) in vec3 InPosition;
 layout (location = 1 ) in vec2 InTexCoord;
 
-layout (location = 0) out vec4 FragColor;
+layout (location = 0) out float FragColor;
 
 uniform mat4 ProjectionMatrix;
 
@@ -62,6 +62,7 @@ void main()
     float occ = occlusionSum / kernelSize;
     float AoData = 1.0 - occ;
 
-    FragColor = vec4(AoData, AoData, AoData, 1.0f);
+    FragColor = AoData;
+    //FragColor = vec4(AoData, AoData, AoData, 1.0f);
     
 }

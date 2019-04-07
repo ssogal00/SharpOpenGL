@@ -29,13 +29,17 @@ namespace Core.Texture
             AttachmentCount = attachementCount;
         }
 
-        public RenderTarget(int width, int height, int attachmentCount, PixelInternalFormat internalInternalFormat, bool bFixedSize = false, float customScale = 1.0f, bool includeDepthAttachment = true)
+        public RenderTarget(int width, int height, int attachmentCount, PixelInternalFormat internalFormat, PixelFormat renderTargetPixelFormat, bool bFixedSize = false, float customScale = 1.0f, bool includeDepthAttachment = true)
         : this(width, height, attachmentCount, bFixedSize, customScale )
         {
-            RenderTargetPixelInternalFormat = internalInternalFormat;
+            RenderTargetPixelInternalFormat = internalFormat;
+            RenderTargetPixelFormat = renderTargetPixelFormat;
             bIncludeDepthAttachment = includeDepthAttachment;
             bFixedSize = false;
         }
+
+        private int PrevViewportWidth = 0;
+        private int PrevViewportHeight = 0;
 
         public override void ReleaseResource()
         {

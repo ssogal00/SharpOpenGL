@@ -17,6 +17,20 @@ namespace SharpOpenGL
             //            
         }
 
+        protected int width = 1024;
+        protected int height = 768;
+
+
+        public void SetWidth(int newWidth)
+        {
+            width = newWidth;
+        }
+
+        public void SetHeight(int newHeight)
+        {
+            height = newHeight;
+        }
+
         public void Create()
         {
             Material = new ScreenSpaceDraw.ScreenSpaceDraw();
