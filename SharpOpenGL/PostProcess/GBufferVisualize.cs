@@ -25,6 +25,7 @@ namespace SharpOpenGL.PostProcess
             EPosition,
             EMetalic,
             ERoughness,
+            EMotionBlur,
             EVisualizeModeMax,
         }
 
@@ -45,6 +46,9 @@ namespace SharpOpenGL.PostProcess
                     eVisualizeMode = EVisualizeMode.ERoughness;
                     break;
                 case EVisualizeMode.ERoughness:
+                    eVisualizeMode = EVisualizeMode.EMotionBlur;
+                    break;
+                case EVisualizeMode.EMotionBlur:
                     eVisualizeMode = EVisualizeMode.EColor;
                     break;
             }
@@ -56,7 +60,7 @@ namespace SharpOpenGL.PostProcess
             PostProcessMaterial = ShaderManager.Get().GetMaterial<GBufferDump.GBufferDump>();
         }
 
-        public override void Render(TextureBase ColorInput, TextureBase NormalInput, TextureBase PositionInput)
+        public override void Render(TextureBase ColorInput, TextureBase NormalInput, TextureBase PositionInput, TextureBase MotionInput)
         {
             Output.ClearColor = Color.Violet;
 
@@ -67,12 +71,14 @@ namespace SharpOpenGL.PostProcess
                 gbufferVisualize.DiffuseTex2D = ColorInput;
                 gbufferVisualize.NormalTex2D = NormalInput;
                 gbufferVisualize.PositionTex2D = PositionInput;
+                gbufferVisualize.MotionBlurTex2D = MotionInput;
 
-                gbufferVisualize.Dump_DiffuseDump = eVisualizeMode == EVisualizeMode.EColor ? 1 : 0;
-                gbufferVisualize.Dump_NormalDump = eVisualizeMode == EVisualizeMode.ENormal ? 1 : 0;
-                gbufferVisualize.Dump_PositionDump = eVisualizeMode == EVisualizeMode.EPosition ? 1 : 0;
-                gbufferVisualize.Dump_MetalicDump = eVisualizeMode == EVisualizeMode.EMetalic ? 1 : 0;
-                gbufferVisualize.Dump_RoughnessDump = eVisualizeMode == EVisualizeMode.ERoughness ? 1 : 0;
+                gbufferVisualize.Dump_DiffuseDump = eVisualizeMode == EVisualizeMode.EColor;
+                gbufferVisualize.Dump_NormalDump = eVisualizeMode == EVisualizeMode.ENormal;
+                gbufferVisualize.Dump_PositionDump = eVisualizeMode == EVisualizeMode.EPosition;
+                gbufferVisualize.Dump_MetalicDump = eVisualizeMode == EVisualizeMode.EMetalic;
+                gbufferVisualize.Dump_RoughnessDump = eVisualizeMode == EVisualizeMode.ERoughness;
+                gbufferVisualize.Dump_MotionBlurDump = eVisualizeMode == EVisualizeMode.EMotionBlur;
 
                 BlitToScreenSpace();
             });

@@ -173,15 +173,17 @@ namespace GBufferDump
 public struct Dump
 {
 	[FieldOffset(0), ExposeUI]
-	public System.Int32 PositionDump;
+	public System.Boolean PositionDump;
 	[FieldOffset(4), ExposeUI]
-	public System.Int32 NormalDump;
+	public System.Boolean NormalDump;
 	[FieldOffset(8), ExposeUI]
-	public System.Int32 MetalicDump;
+	public System.Boolean MetalicDump;
 	[FieldOffset(12), ExposeUI]
-	public System.Int32 DiffuseDump;
+	public System.Boolean DiffuseDump;
 	[FieldOffset(16), ExposeUI]
-	public System.Int32 RoughnessDump;
+	public System.Boolean RoughnessDump;
+	[FieldOffset(20), ExposeUI]
+	public System.Boolean MotionBlurDump;
 }
 }
 namespace GBufferPNC

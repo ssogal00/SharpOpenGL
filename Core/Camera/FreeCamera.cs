@@ -262,6 +262,7 @@ namespace Core.Camera
 
         public override void UpdateViewMatrix()
         {
+            PrevViewMatrix = ViewMatrix;
             m_RotationMatrix = Matrix3.CreateRotationX(Pitch) * Matrix3.CreateRotationY(Yaw);
             ViewMatrix = Matrix4.LookAt(EyeLocation, EyeLocation + Vector3.Multiply(m_RotationMatrix.Row2, 1.0f), Vector3.UnitY);
         }

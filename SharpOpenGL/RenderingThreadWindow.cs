@@ -251,7 +251,7 @@ namespace SharpOpenGL
 
             if (DebugDrawer.Get().IsGBufferDump)
             {
-                gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment);
+                gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
                 ScreenBlit.Blit(gbufferVisualize.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
             }
             else

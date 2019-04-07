@@ -37,12 +37,16 @@ namespace Core.Buffer
             NormalAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight, PixelInternalFormat.Rgba16f, PixelFormat.Rgba, PixelType.Float);
             NormalAttachment.Resize(BufferWidth, BufferHeight);
 
+            MotionAttachment = new ColorAttachmentTexture(BufferWidth, BufferHeight, PixelInternalFormat.Rgba16f, PixelFormat.Rgba, PixelType.Float);
+            MotionAttachment.Resize(BufferWidth, BufferHeight);
+
             DepthAttachment = new DepthTargetTexture(BufferWidth, BufferHeight);
             DepthAttachment.Resize(BufferWidth, BufferHeight);
 
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, PositionAttachment.GetTextureObject, 0);
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, ColorAttachment.GetTextureObject, 0);
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment2, TextureTarget.Texture2D, NormalAttachment.GetTextureObject, 0);
+            GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment3, TextureTarget.Texture2D, MotionAttachment.GetTextureObject, 0);
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
 
             var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -95,6 +99,7 @@ namespace Core.Buffer
         public int PositionBufferObject => PositionAttachment.GetTextureObject;
         public int NormalBufferObject => NormalAttachment.GetTextureObject;
         public int DepthBufferObject => DepthAttachment.GetTextureObject;
+        public int MotionBufferObject => MotionAttachment.GetTextureObject;
 
         public void PrepareToDraw()
         {
@@ -105,9 +110,10 @@ namespace Core.Buffer
                 DrawBuffersEnum.ColorAttachment0,
                 DrawBuffersEnum.ColorAttachment1,
                 DrawBuffersEnum.ColorAttachment2,
+                DrawBuffersEnum.ColorAttachment3,
             };
             
-            GL.DrawBuffers(3, attachments);
+            GL.DrawBuffers(4, attachments);
         }
 
         public void SaveColorAttachmentAsBmp(string filename)
@@ -132,11 +138,13 @@ namespace Core.Buffer
                 PositionAttachment.Resize(BufferWidth, BufferHeight);
                 ColorAttachment.Resize(BufferWidth, BufferHeight);
                 NormalAttachment.Resize(BufferWidth, BufferHeight);
+                MotionAttachment.Resize(BufferWidth, BufferHeight);
                 DepthAttachment.Resize(BufferWidth, BufferHeight);
 
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment0, TextureTarget.Texture2D, PositionAttachment.GetTextureObject, 0);
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment1, TextureTarget.Texture2D, ColorAttachment.GetTextureObject, 0);
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment2, TextureTarget.Texture2D, NormalAttachment.GetTextureObject, 0);
+                GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.ColorAttachment3, TextureTarget.Texture2D, MotionAttachment.GetTextureObject, 0);
                 GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
 
                 var status = GL.CheckFramebufferStatus(FramebufferTarget.Framebuffer);
@@ -160,6 +168,11 @@ namespace Core.Buffer
             get { return NormalAttachment; }
         }
 
+        public ColorAttachmentTexture GetMotionAttachment
+        {
+            get { return MotionAttachment; }
+        }
+
         public DepthTargetTexture GetDepthAttachment
         {
             get { return DepthAttachment; }
@@ -168,6 +181,7 @@ namespace Core.Buffer
         protected ColorAttachmentTexture PositionAttachment = null;
         protected ColorAttachmentTexture ColorAttachment = null;
         protected ColorAttachmentTexture NormalAttachment = null;
+        protected ColorAttachmentTexture MotionAttachment = null;
         protected DepthTargetTexture DepthAttachment = null;
 
         protected Core.Buffer.FrameBuffer FrameBufferObject = null;

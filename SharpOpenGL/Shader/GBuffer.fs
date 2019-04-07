@@ -14,6 +14,7 @@ layout(location=6) in vec3 InPrevNDCPos;
 layout (location = 0) out vec4 PositionColor;
 layout (location = 1) out vec4 DiffuseColor;
 layout (location = 2) out vec4 NormalColor;
+layout (location = 3) out vec4 VelocityColor;
 
 layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
 layout (location = 1, binding=1) uniform sampler2D NormalTex;
@@ -97,4 +98,6 @@ void main()
     }
 
     PositionColor = InPosition;
+
+    VelocityColor = vec4((InNDCPos - InPrevNDCPos), 1.0f);
 }

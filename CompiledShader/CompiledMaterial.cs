@@ -739,6 +739,7 @@ layout(location=6) in vec3 InPrevNDCPos;
 layout (location = 0) out vec4 PositionColor;
 layout (location = 1) out vec4 DiffuseColor;
 layout (location = 2) out vec4 NormalColor;
+layout (location = 3) out vec4 VelocityColor;
 
 layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
 layout (location = 1, binding=1) uniform sampler2D NormalTex;
@@ -822,6 +823,8 @@ void main()
     }
 
     PositionColor = InPosition;
+
+    VelocityColor = vec4((InNDCPos - InPrevNDCPos), 1.0f);
 }
 ";
 	}
@@ -1733,6 +1736,27 @@ public class GBufferDump : MaterialBase
 	}
 
 	private TextureBase diffusetex = null;
+	public void SetMotionBlurTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"MotionBlurTex", TextureObject);
+	}
+
+	public void SetMotionBlurTex2D(int TextureObject, Sampler sampler)
+	{
+		SetTexture(@"MotionBlurTex", TextureObject);
+	}
+
+	public TextureBase MotionBlurTex2D 
+	{	
+		get { return motionblurtex;}
+		set 
+		{	
+			motionblurtex = value;
+			SetTexture(@"MotionBlurTex", motionblurtex);			
+		}
+	}
+
+	private TextureBase motionblurtex = null;
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
@@ -1791,54 +1815,64 @@ public class GBufferDump : MaterialBase
 		}
 	}
 
-	public System.Int32 Dump_PositionDump
+	public System.Boolean Dump_PositionDump
 	{
 		get { return dump.PositionDump ; }
 		set 
 		{ 
 			dump.PositionDump = value; 
 			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 0 );
+			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 0 );
 		}
 	}
-	public System.Int32 Dump_NormalDump
+	public System.Boolean Dump_NormalDump
 	{
 		get { return dump.NormalDump ; }
 		set 
 		{ 
 			dump.NormalDump = value; 
 			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 4 );
+			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 4 );
 		}
 	}
-	public System.Int32 Dump_MetalicDump
+	public System.Boolean Dump_MetalicDump
 	{
 		get { return dump.MetalicDump ; }
 		set 
 		{ 
 			dump.MetalicDump = value; 
 			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 8 );
+			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 8 );
 		}
 	}
-	public System.Int32 Dump_DiffuseDump
+	public System.Boolean Dump_DiffuseDump
 	{
 		get { return dump.DiffuseDump ; }
 		set 
 		{ 
 			dump.DiffuseDump = value; 
 			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 12 );
+			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 12 );
 		}
 	}
-	public System.Int32 Dump_RoughnessDump
+	public System.Boolean Dump_RoughnessDump
 	{
 		get { return dump.RoughnessDump ; }
 		set 
 		{ 
 			dump.RoughnessDump = value; 
 			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Int32 >(@"Dump", ref value, 16 );
+			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 16 );
+		}
+	}
+	public System.Boolean Dump_MotionBlurDump
+	{
+		get { return dump.MotionBlurDump ; }
+		set 
+		{ 
+			dump.MotionBlurDump = value; 
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
+			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 20 );
 		}
 	}
 
@@ -1866,6 +1900,7 @@ void main()
 layout (location = 0 , binding = 0) uniform sampler2D PositionTex;
 layout (location = 1 , binding = 1) uniform sampler2D DiffuseTex;
 layout (location = 2 , binding = 2) uniform sampler2D NormalTex;
+layout (location = 3 , binding = 3) uniform sampler2D MotionBlurTex;
 
 
 layout (location = 0 ) in vec2 InTexCoord;
@@ -1874,34 +1909,39 @@ layout( location = 0 ) out vec4 FragColor;
 
 uniform Dump
 {
-    int PositionDump;
-    int NormalDump;
-    int MetalicDump;
-    int DiffuseDump;
-    int RoughnessDump;
+    bool PositionDump;
+    bool NormalDump;
+    bool MetalicDump;
+    bool DiffuseDump;
+    bool RoughnessDump;
+    bool MotionBlurDump; 
 };
 
 void main() 
 {
-    if(PositionDump > 0) 
+    if(PositionDump) 
     {   
         FragColor = texture(PositionTex, InTexCoord);
     }
-    else if(NormalDump > 0)
+    else if(NormalDump)
     {
         FragColor = texture(NormalTex, InTexCoord);
     }
-    else if(DiffuseDump > 0)
+    else if(DiffuseDump)
     {
         FragColor = texture(DiffuseTex, InTexCoord);
     }
-    else if(MetalicDump > 0)
+    else if(MetalicDump)
     {
         FragColor = texture(NormalTex,InTexCoord).aaaa;
     }
-    else if(RoughnessDump > 0)
+    else if(RoughnessDump)
     {
    		FragColor = texture(DiffuseTex, InTexCoord).aaaa;
+    }
+    else if(MotionBlurDump)
+    {
+        FragColor = texture(MotionBlurTex, InTexCoord);
     }
     else
     {

@@ -50,6 +50,16 @@ namespace Core.Camera
             get { return ProjMatrix; }
         }
 
+        public Matrix4 PrevView
+        {
+            get { return PrevViewMatrix; }
+        }
+
+        public Matrix4 PrevProj
+        {
+            get { return PrevProjMatrix; }
+        }
+
         public virtual void MoveForward() {}
 
         public virtual void MoveBackward() {}
@@ -74,6 +84,7 @@ namespace Core.Camera
 
         public virtual void UpdateProjMatrix()
         {
+            PrevProjMatrix = ProjMatrix;
             ProjMatrix = Matrix4.CreatePerspectiveFieldOfView(FOV, AspectRatio, Near, Far);
         }
 
@@ -117,5 +128,8 @@ namespace Core.Camera
         
         protected Matrix4 ProjMatrix = new Matrix4();
         protected Matrix4 ViewMatrix = new Matrix4();
+
+        protected Matrix4 PrevProjMatrix = new Matrix4();
+        protected Matrix4 PrevViewMatrix = new Matrix4();
     }
 }

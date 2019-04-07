@@ -102,7 +102,12 @@ namespace SharpOpenGL
 
             gbufferMaterial.Bind();
             
+            
             gbufferMaterial.ModelTransform_Model = this.ParentMatrix * this.LocalMatrix;
+
+            gbufferMaterial.PrevTransform_PrevProj = CameraManager.Get().PrevCameraProj;
+            gbufferMaterial.PrevTransform_PrevView = CameraManager.Get().PrevCameraView;
+
             gbufferMaterial.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
             gbufferMaterial.CameraTransform_View = CameraManager.Get().CurrentCameraView;
 
