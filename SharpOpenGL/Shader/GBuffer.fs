@@ -7,6 +7,8 @@ layout(location=1) in vec2 InTexCoord;
 layout(location=2) in vec3 InNormal;
 layout(location=3) in vec3 InTangent;
 layout(location=4) in vec3 InBinormal;
+layout(location=5) in vec3 InNDCPos;
+layout(location=6) in vec3 InPrevNDCPos;
 
 
 layout (location = 0) out vec4 PositionColor;

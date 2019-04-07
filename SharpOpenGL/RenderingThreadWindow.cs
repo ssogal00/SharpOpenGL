@@ -258,14 +258,15 @@ namespace SharpOpenGL
             {
                 lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment ,convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
 
-                hdaoPostProcess.Render(renderGBuffer.GetPositionAttachment, renderGBuffer.GetNormalAttachment);
+                //bloomPostProcess.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0);
+                //blurPostProcess.Render(bloomPostProcess.OutputRenderTarget.ColorAttachment0);
 
                 //ssaoPostProcess.Render(renderGBuffer.GetPositionAttachment, renderGBuffer.GetNormalAttachment);
 
                 GL.Viewport(0,0, Width, Height);
 
                 ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
-                ScreenBlit.Blit(hdaoPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 1, 1);
+                //ScreenBlit.Blit(blurPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 1, 1);
                 
 
                 /*if (DebugDrawer.Get().IsBloomEnabled)

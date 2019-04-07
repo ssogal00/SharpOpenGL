@@ -17,6 +17,13 @@ namespace SharpOpenGL.PostProcess
         public BlurPostProcess()
             : base()
         {
+            this.bCreateCustomRenderTarget = true;
+        }
+
+        protected override void CreateCustomRenderTarget()
+        {
+            Output = new RenderTarget(1024, 768, 1, false, 0.5f, false);
+            Output.Initialize();
         }
 
         public override void OnGLContextCreated(object sender, EventArgs e)

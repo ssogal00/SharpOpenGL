@@ -80,6 +80,18 @@ public struct ModelTransform
 	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 Model;
 }
+
+
+[StructLayout(LayoutKind.Explicit,Size=192)]
+public struct PrevTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Matrix4 PrevProj;
+	[FieldOffset(64), ExposeUI]
+	public OpenTK.Matrix4 PrevModel;
+	[FieldOffset(128), ExposeUI]
+	public OpenTK.Matrix4 PrevView;
+}
 }
 namespace GBufferDraw
 {
@@ -133,6 +145,18 @@ public struct ModelTransform
 {
 	[FieldOffset(0), ExposeUI]
 	public OpenTK.Matrix4 Model;
+}
+
+
+[StructLayout(LayoutKind.Explicit,Size=192)]
+public struct PrevTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Matrix4 PrevProj;
+	[FieldOffset(64), ExposeUI]
+	public OpenTK.Matrix4 PrevModel;
+	[FieldOffset(128), ExposeUI]
+	public OpenTK.Matrix4 PrevView;
 }
 }
 namespace GBufferWithoutTexture

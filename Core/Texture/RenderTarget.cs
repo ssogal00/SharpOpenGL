@@ -13,13 +13,14 @@ namespace Core.Texture
     public class RenderTarget : RenderResource, IBindable, IResizable
     {
 
-        public RenderTarget(int width, int height, int attachementCount,  bool bFixedSize = false, float customScale = 1.0f)
+        public RenderTarget(int width, int height, int attachementCount,  bool bFixedSize = false, float customScale = 1.0f, bool bIncludeDepthAttachment = true)
         {
             if (bFixedSize == false)
             {
                 ResizableManager.Get().AddResizable(this);
             }
 
+            this.bIncludeDepthAttachment = bIncludeDepthAttachment;
             CustomScale = customScale;
             BufferWidth = (int) ((width) * customScale);
             BufferHeight = (int) ((height) * customScale);

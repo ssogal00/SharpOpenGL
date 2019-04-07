@@ -20,7 +20,7 @@ namespace SharpOpenGL.PostProcess
 
         protected override void CreateCustomRenderTarget()
         {
-            Output = new RenderTarget(1024, 768, 1, false, 0.5f);
+            Output = new RenderTarget(1024, 768, 1, false, 0.5f, false);
             Output.Initialize();
         }
 

@@ -11,6 +11,13 @@ uniform CameraTransform
 	mat4x4 Proj;
 };
 
+uniform PrevTransform
+{
+	mat4 PrevProj;
+	mat4 PrevModel;
+	mat4 PrevView;	
+};
+
 uniform mat4 NormalMatrix;
 
 uniform vec3 Value;
@@ -27,6 +34,8 @@ layout(location=1) out vec2 OutTexCoord;
 layout(location=2) out vec3 OutNormal;
 layout(location=3) out vec3 OutTangent;
 layout(location=4) out vec3 OutBinormal;
+layout(location=5) out vec3 NDCPos;
+layout(location=6) out vec3 PrevNDCPos;
 
   
 void main()
@@ -43,4 +52,8 @@ void main()
 
 	vec3 binormal = (cross( VertexNormal, Tangent.xyz )) * Tangent.w;
 	OutBinormal = normalize(mat3(ModelView) * binormal);	
+
+	NDCPos = gl_Position.xyz / gl_Position.w;
+	vec4 PrevPos = PrevProj * PrevView * PrevModel * vec4(VertexPosition,1.0);
+	PrevNDCPos = PrevPos.xyz / PrevPos.w;
 }

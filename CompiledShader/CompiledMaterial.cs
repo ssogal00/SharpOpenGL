@@ -614,6 +614,48 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 
+    private PrevTransform prevtransform = new PrevTransform();
+	public PrevTransform PrevTransform
+	{
+		get { return prevtransform; }
+		set 
+		{ 
+			prevtransform = value; 
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref value);
+		}
+	}
+
+	public OpenTK.Matrix4 PrevTransform_PrevProj
+	{
+		get { return prevtransform.PrevProj ; }
+		set 
+		{ 
+			prevtransform.PrevProj = value;
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"PrevTransform", ref value, 0 );
+		}
+	}
+	public OpenTK.Matrix4 PrevTransform_PrevModel
+	{
+		get { return prevtransform.PrevModel ; }
+		set 
+		{ 
+			prevtransform.PrevModel = value;
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"PrevTransform", ref value, 64 );
+		}
+	}
+	public OpenTK.Matrix4 PrevTransform_PrevView
+	{
+		get { return prevtransform.PrevView ; }
+		set 
+		{ 
+			prevtransform.PrevView = value;
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"PrevTransform", ref value, 128 );
+		}
+	}
+
 
 
 	public static string GetVSSourceCode()
@@ -629,6 +671,13 @@ uniform CameraTransform
 {
 	mat4x4 View;
 	mat4x4 Proj;
+};
+
+uniform PrevTransform
+{
+	mat4 PrevProj;
+	mat4 PrevModel;
+	mat4 PrevView;	
 };
 
 uniform mat4 NormalMatrix;
@@ -647,6 +696,8 @@ layout(location=1) out vec2 OutTexCoord;
 layout(location=2) out vec3 OutNormal;
 layout(location=3) out vec3 OutTangent;
 layout(location=4) out vec3 OutBinormal;
+layout(location=5) out vec3 NDCPos;
+layout(location=6) out vec3 PrevNDCPos;
 
   
 void main()
@@ -663,6 +714,10 @@ void main()
 
 	vec3 binormal = (cross( VertexNormal, Tangent.xyz )) * Tangent.w;
 	OutBinormal = normalize(mat3(ModelView) * binormal);	
+
+	NDCPos = gl_Position.xyz / gl_Position.w;
+	vec4 PrevPos = PrevProj * PrevView * PrevModel * vec4(VertexPosition,1.0);
+	PrevNDCPos = PrevPos.xyz / PrevPos.w;
 }";
 	}
 
@@ -677,6 +732,8 @@ layout(location=1) in vec2 InTexCoord;
 layout(location=2) in vec3 InNormal;
 layout(location=3) in vec3 InTangent;
 layout(location=4) in vec3 InBinormal;
+layout(location=5) in vec3 InNDCPos;
+layout(location=6) in vec3 InPrevNDCPos;
 
 
 layout (location = 0) out vec4 PositionColor;
@@ -1497,6 +1554,48 @@ public class GBufferWithoutTexture : MaterialBase
 		}
 	}
 
+    private PrevTransform prevtransform = new PrevTransform();
+	public PrevTransform PrevTransform
+	{
+		get { return prevtransform; }
+		set 
+		{ 
+			prevtransform = value; 
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref value);
+		}
+	}
+
+	public OpenTK.Matrix4 PrevTransform_PrevProj
+	{
+		get { return prevtransform.PrevProj ; }
+		set 
+		{ 
+			prevtransform.PrevProj = value;
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"PrevTransform", ref value, 0 );
+		}
+	}
+	public OpenTK.Matrix4 PrevTransform_PrevModel
+	{
+		get { return prevtransform.PrevModel ; }
+		set 
+		{ 
+			prevtransform.PrevModel = value;
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"PrevTransform", ref value, 64 );
+		}
+	}
+	public OpenTK.Matrix4 PrevTransform_PrevView
+	{
+		get { return prevtransform.PrevView ; }
+		set 
+		{ 
+			prevtransform.PrevView = value;
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"PrevTransform", ref value, 128 );
+		}
+	}
+
 
 
 	public static string GetVSSourceCode()
@@ -1512,6 +1611,13 @@ uniform CameraTransform
 {
 	mat4x4 View;
 	mat4x4 Proj;
+};
+
+uniform PrevTransform
+{
+	mat4 PrevProj;
+	mat4 PrevModel;
+	mat4 PrevView;	
 };
 
 uniform mat4 NormalMatrix;
@@ -1530,6 +1636,8 @@ layout(location=1) out vec2 OutTexCoord;
 layout(location=2) out vec3 OutNormal;
 layout(location=3) out vec3 OutTangent;
 layout(location=4) out vec3 OutBinormal;
+layout(location=5) out vec3 NDCPos;
+layout(location=6) out vec3 PrevNDCPos;
 
   
 void main()
@@ -1546,6 +1654,10 @@ void main()
 
 	vec3 binormal = (cross( VertexNormal, Tangent.xyz )) * Tangent.w;
 	OutBinormal = normalize(mat3(ModelView) * binormal);	
+
+	NDCPos = gl_Position.xyz / gl_Position.w;
+	vec4 PrevPos = PrevProj * PrevView * PrevModel * vec4(VertexPosition,1.0);
+	PrevNDCPos = PrevPos.xyz / PrevPos.w;
 }";
 	}
 
