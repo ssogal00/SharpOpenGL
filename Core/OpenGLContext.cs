@@ -11,10 +11,13 @@ namespace Core
     {
         public void SetRenderingWindow(OpenTK.GameWindow window)
         {
-            this.window = window;            
-        }
+            this.window = window;
 
+            OpenGLContextCreated += this.ThisGLContextCreated;
+        }
         
+        
+
         public bool IsValid { get { return this.window != null; } }
 
         public OpenTK.GameWindow RenderingWindow => window;
@@ -55,7 +58,14 @@ namespace Core
             Debug.Assert(RenderingThreadId == Thread.CurrentThread.ManagedThreadId);
         }
 
-        
+        public bool IsGLContextCreated() => this.GLContextCreatedCalled;
+
+        private void ThisGLContextCreated(object sender, EventArgs args)
+        {
+            this.GLContextCreatedCalled = true;
+        }
+
+        private bool GLContextCreatedCalled = false;
 
         public int GetActiveTexture()
         {

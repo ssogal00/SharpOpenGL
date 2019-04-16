@@ -17,11 +17,14 @@ namespace Core
 
         public RenderResource()
         {
+            
             OnOpenGLContextCreated += this.OnGLContextCreated;
+            
         }
 
         public virtual void ReleaseResource()
         {
+            bReleased = true;
         }
 
         public virtual void Dispose()
@@ -39,7 +42,19 @@ namespace Core
         {
             bInit = true;
         }
+
+        public virtual bool IsInitialized()
+        {
+            return bInit;
+        }
+
+        public virtual bool IsReleased()
+        {
+            return bReleased;
+        }
         
         protected bool bInit = false;
+
+        protected bool bReleased = false;
     }
 }
