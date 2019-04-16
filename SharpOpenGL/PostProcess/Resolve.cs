@@ -33,7 +33,6 @@ namespace SharpOpenGL.PostProcess
                     var resolveMaterial = (ResolveMaterial.ResolveMaterial) PostProcessMaterial;
                     resolveMaterial.ColorTex2D = colorTex;
                     resolveMaterial.BlurTex2D = blurTex;
-                    resolveMaterial.MotionTex2D = motionTex;
 
                     BlitToScreenSpace();
                 }
