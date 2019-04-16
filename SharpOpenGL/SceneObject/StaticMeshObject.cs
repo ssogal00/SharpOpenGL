@@ -10,6 +10,7 @@ using Core.Texture;
 using OpenTK;
 using SharpOpenGL.Asset;
 using SharpOpenGL.StaticMesh;
+using System.IO;
 
 namespace SharpOpenGL
 {
@@ -17,7 +18,7 @@ namespace SharpOpenGL
     {
         private static int StaticMeshCount = 0;
         public StaticMeshObject(string assetpath)
-        : base("StaticMesh", StaticMeshCount++)
+        : base(Path.GetFileNameWithoutExtension(assetpath), StaticMeshCount++)
         {
             this.assetpath = assetpath;
             Initialize();

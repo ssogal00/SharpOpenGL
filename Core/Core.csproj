@@ -73,6 +73,7 @@
     <Compile Include="CustomSerialize\MatrixSerialize.cs" />
     <Compile Include="CustomSerialize\VectorSerialize.cs" />
     <Compile Include="IImportable.cs" />
+    <Compile Include="OpenGLStateTracker.cs" />
     <Compile Include="Primitive\Line.cs" />
     <Compile Include="Primitive\SceneObject.cs" />
     <Compile Include="Primitive\SceneObjectManager.cs" />

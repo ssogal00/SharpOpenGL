@@ -39,9 +39,6 @@ namespace Core.Texture
             bFixedSize = false;
         }
 
-        private int PrevViewportWidth = 0;
-        private int PrevViewportHeight = 0;
-
         public override void ReleaseResource()
         {
             if (ColorAttachment0 != null)

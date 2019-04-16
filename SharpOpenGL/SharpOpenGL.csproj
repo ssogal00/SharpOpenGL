@@ -239,6 +239,12 @@
     </Compile>
     <None Include="Shader\Blur.fs.glsl" />
     <None Include="Shader\Blur.vs.glsl" />
+    <None Include="Shader\DeferredLight.fs.glsl" />
+    <None Include="Shader\DeferredLight.vs.glsl" />
+    <None Include="Shader\DepthVisualize.fs.glsl" />
+    <None Include="Shader\DepthVisualize.vs.glsl" />
+    <None Include="Shader\SSAO.fs.glsl" />
+    <None Include="Shader\SSAO.vs.glsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

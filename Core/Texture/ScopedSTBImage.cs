@@ -73,8 +73,7 @@ namespace Core.Texture
         public byte[] ByteData = null;
 
         public int DataLength => Width * Height * Channels;
-
-        private System.Drawing.Imaging.PixelFormat ImagePixelFormat = System.Drawing.Imaging.PixelFormat.Max;
+        
         public PixelInternalFormat ImagePixelInternalFormat = PixelInternalFormat.Rgb;
         public OpenTK.Graphics.OpenGL.PixelFormat OpenglPixelFormat = OpenTK.Graphics.OpenGL.PixelFormat.Rgb;
         public OpenTK.Graphics.OpenGL.PixelType OpenglPixelType = OpenTK.Graphics.OpenGL.PixelType.UnsignedByte;
