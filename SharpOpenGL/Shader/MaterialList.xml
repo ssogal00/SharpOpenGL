@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <MaterialList>
-	<Material name="BasicMaterial" vertexShader="TestShader.vs" fragmentShader="TestShader.fs"/>
-	<Material name="SimpleMaterial" vertexShader="TestShader2.vs" fragmentShader="TestShader2.fs"/>
-	<Material name="ScreenSpaceDraw" vertexShader="Screen.vs" fragmentShader="Screen.fs"/>
-	<Material name="GBufferDraw" vertexShader="GBuffer.vs" fragmentShader="GBuffer.fs"/>
-	<Material name="EquirectangleToCube" vertexShader="EquirectangleToCubemap.vs" fragmentShader="EquirectangleToCubemap.fs" />
-	<Material name="CubemapConvolution" vertexShader="CubemapConvolution.vs" fragmentShader="CubemapConvolution.fs" />
-	<Material name="GBufferInstanced" vertexShader="GBufferInstanced.vs" fragmentShader="GBufferInstanced.fs"/>
-	<Material name="GBufferWithoutTexture" vertexShader="GBuffer.vs" fragmentShader="GBufferWithoutTexture.fs"/>
-	<Material name="GBufferDump" vertexShader="GBufferDump.vs" fragmentShader="GBufferDump.fs"/>
-	<Material name="GBufferPNC" vertexShader="GBufferPNC.vs" fragmentShader="GBufferPNC.fs"/>
-	<Material name="GBufferCubeTest" vertexShader="GBufferCubeTest.vs" fragmentShader="GBufferCubeTest.fs"/>
-	<Material name="GBufferPNCT" vertexShader="GBufferPNCT.vs" fragmentShader="GBufferPNCT.fs"/>
-	<Material name="Blur" vertexShader="Blur.vs" fragmentShader="Blur.fs"/>
-	<Material name="BloomMaterial" vertexShader="Bloom.vs" fragmentShader="Bloom.fs"/>
-	<Material name="LightMaterial" vertexShader="DeferredLight.vs" fragmentShader="DeferredLight.fs"/>
-	<Material name="CubemapMaterial" vertexShader="Cubemap.vs" fragmentShader="Cubemap.fs"/>
-	<Material name="MSGBufferMaterial" vertexShader="MultisampleGBuffer.vs" fragmentShader="MultisampleGBuffer.fs"/>
-	<Material name="DepthVisualizeMaterial" vertexShader="DepthVisualize.vs" fragmentShader="DepthVisualize.fs"/>
-	<Material name="FontRenderMaterial" vertexShader="FontRender.vs" fragmentShader="FontRender.fs"/>
-	<Material name="FontBoxRenderMaterial" vertexShader="FontBoxRender.vs" fragmentShader="FontBoxRender.fs"/>
-	<Material name="GridRenderMaterial" vertexShader="GridRender.vs" fragmentShader="GridRender.fs"/>
-	<Material name="ThreeDTextRenderMaterial" vertexShader="ThreeDTextRender.vs" fragmentShader="ThreeDTextRender.fs"/>
-	<Material name="ResolveMaterial" vertexShader="Resolve.vs" fragmentShader="Resolve.fs"/>
-	<Material name="SSAOMaterial" vertexShader="SSAO.vs" fragmentShader="SSAO.fs"/>
-	<Material name="LUTGenerateMaterial" vertexShader="2DLUT.vs" fragmentShader="2DLUT.fs"/>
-	<Material name="PrefilterMaterial" vertexShader="Prefilter.vs" fragmentShader="Prefilter.fs"/>
-	<Material name="HDAOMaterial" vertexShader="HDAO.vs" fragmentShader="HDAO.fs"/>
+	<Material name="BasicMaterial" vertexShader="TestShader.vs.glsl" fragmentShader="TestShader.fs.glsl"/>
+	<Material name="SimpleMaterial" vertexShader="TestShader2.vs.glsl" fragmentShader="TestShader2.fs.glsl"/>
+	<Material name="ScreenSpaceDraw" vertexShader="Screen.vs.glsl" fragmentShader="Screen.fs.glsl"/>
+	<Material name="GBufferDraw" vertexShader="GBuffer.vs.glsl" fragmentShader="GBuffer.fs.glsl"/>
+	<Material name="EquirectangleToCube" vertexShader="EquirectangleToCubemap.vs.glsl" fragmentShader="EquirectangleToCubemap.fs.glsl" />
+	<Material name="CubemapConvolution" vertexShader="CubemapConvolution.vs.glsl" fragmentShader="CubemapConvolution.fs.glsl" />
+	<Material name="GBufferInstanced" vertexShader="GBufferInstanced.vs.glsl" fragmentShader="GBufferInstanced.fs.glsl"/>
+	<Material name="GBufferWithoutTexture" vertexShader="GBuffer.vs.glsl" fragmentShader="GBufferWithoutTexture.fs.glsl"/>
+	<Material name="GBufferDump" vertexShader="GBufferDump.vs.glsl" fragmentShader="GBufferDump.fs.glsl"/>
+	<Material name="GBufferPNC" vertexShader="GBufferPNC.vs.glsl" fragmentShader="GBufferPNC.fs.glsl"/>
+	<Material name="GBufferCubeTest" vertexShader="GBufferCubeTest.vs.glsl" fragmentShader="GBufferCubeTest.fs.glsl"/>
+	<Material name="GBufferPNCT" vertexShader="GBufferPNCT.vs.glsl" fragmentShader="GBufferPNCT.fs.glsl"/>
+	<Material name="Blur" vertexShader="Blur.vs.glsl" fragmentShader="Blur.fs.glsl"/>
+	<Material name="BloomMaterial" vertexShader="Bloom.vs.glsl" fragmentShader="Bloom.fs.glsl"/>
+	<Material name="LightMaterial" vertexShader="DeferredLight.vs.glsl" fragmentShader="DeferredLight.fs.glsl"/>
+	<Material name="CubemapMaterial" vertexShader="Cubemap.vs.glsl" fragmentShader="Cubemap.fs.glsl"/>
+	<Material name="MSGBufferMaterial" vertexShader="MultisampleGBuffer.vs.glsl" fragmentShader="MultisampleGBuffer.fs.glsl"/>
+	<Material name="DepthVisualizeMaterial" vertexShader="DepthVisualize.vs.glsl" fragmentShader="DepthVisualize.fs.glsl"/>
+	<Material name="FontRenderMaterial" vertexShader="FontRender.vs.glsl" fragmentShader="FontRender.fs.glsl"/>
+	<Material name="FontBoxRenderMaterial" vertexShader="FontBoxRender.vs.glsl" fragmentShader="FontBoxRender.fs.glsl"/>
+	<Material name="GridRenderMaterial" vertexShader="GridRender.vs.glsl" fragmentShader="GridRender.fs.glsl"/>
+	<Material name="ThreeDTextRenderMaterial" vertexShader="ThreeDTextRender.vs.glsl" fragmentShader="ThreeDTextRender.fs.glsl"/>
+	<Material name="ResolveMaterial" vertexShader="Resolve.vs.glsl" fragmentShader="Resolve.fs.glsl"/>
+	<Material name="SSAOMaterial" vertexShader="SSAO.vs.glsl" fragmentShader="SSAO.fs.glsl"/>
+	<Material name="LUTGenerateMaterial" vertexShader="2DLUT.vs.glsl" fragmentShader="2DLUT.fs.glsl"/>
+	<Material name="PrefilterMaterial" vertexShader="Prefilter.vs.glsl" fragmentShader="Prefilter.fs.glsl"/>
+	<Material name="HDAOMaterial" vertexShader="HDAO.vs.glsl" fragmentShader="HDAO.fs.glsl"/>
 </MaterialList>

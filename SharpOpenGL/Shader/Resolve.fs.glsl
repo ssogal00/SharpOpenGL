@@ -13,7 +13,7 @@ void main()
 {
 	vec4 vVelocity = texture(MotionTex, TexCoords) * 0.1f ;
 
-    vec4 c = texture( ColorTex, TexCoords ) ;  
+    /*vec4 c = texture( ColorTex, TexCoords ) ;  
 
 	if(length (vVelocity.xy) > 0)
     {        
@@ -23,8 +23,7 @@ void main()
         vPrevTickColor += texture(ColorTex, TexCoords + vVelocity.xy * 4) * 0.1;
 
         c = (c + vPrevTickColor) / 2.0f;
-    }
+    }*/
 
-	//FragColor = texture(ColorTex, TexCoords) + texture(BlurTex, TexCoords);
-	FragColor = c + texture(BlurTex, TexCoords);
+	FragColor = texture(ColorTex, TexCoords) + texture(BlurTex, TexCoords);	
 }

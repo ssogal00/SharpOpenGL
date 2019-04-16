@@ -4073,27 +4073,6 @@ public class ResolveMaterial : MaterialBase
 	}
 
 	private TextureBase colortex = null;
-	public void SetMotionTex2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"MotionTex", TextureObject);
-	}
-
-	public void SetMotionTex2D(int TextureObject, Sampler sampler)
-	{
-		SetTexture(@"MotionTex", TextureObject);
-	}
-
-	public TextureBase MotionTex2D 
-	{	
-		get { return motiontex;}
-		set 
-		{	
-			motiontex = value;
-			SetTexture(@"MotionTex", motiontex);			
-		}
-	}
-
-	private TextureBase motiontex = null;
 
 
 
@@ -4134,7 +4113,7 @@ void main()
 {
 	vec4 vVelocity = texture(MotionTex, TexCoords) * 0.1f ;
 
-    vec4 c = texture( ColorTex, TexCoords ) ;  
+    /*vec4 c = texture( ColorTex, TexCoords ) ;  
 
 	if(length (vVelocity.xy) > 0)
     {        
@@ -4144,10 +4123,9 @@ void main()
         vPrevTickColor += texture(ColorTex, TexCoords + vVelocity.xy * 4) * 0.1;
 
         c = (c + vPrevTickColor) / 2.0f;
-    }
+    }*/
 
-	//FragColor = texture(ColorTex, TexCoords) + texture(BlurTex, TexCoords);
-	FragColor = c + texture(BlurTex, TexCoords);
+	FragColor = texture(ColorTex, TexCoords) + texture(BlurTex, TexCoords);	
 }";
 	}
 }

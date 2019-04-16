@@ -237,21 +237,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Shader\Blur.fs" />
-    <None Include="Shader\Blur.vs" />
-    <None Include="Shader\Cubemap.fs" />
-    <None Include="Shader\Cubemap.vs" />
-    <None Include="Shader\DeferredLight.fs" />
-    <None Include="Shader\DeferredLight.vs" />
-    <None Include="Shader\DepthVisualize.vs" />
-    <None Include="Shader\FontRender.vs" />
-    <None Include="Shader\GBuffer.fs" />
-    <None Include="Shader\GBuffer.vs" />
-    <None Include="Shader\MultisampleGBuffer.fs" />
-    <None Include="Shader\MultisampleGBuffer.vs" />
-    <None Include="Shader\Screen.fs" />
-    <None Include="Shader\Screen.vs" />
-    <None Include="Shader\TestShader.vs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -260,12 +245,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Shader\DepthVisualize.fs" />
-    <Content Include="Shader\FontRender.fs" />
-    <Content Include="Shader\TestShader.fs" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Camera\" />
+    <Folder Include="Shader\" />
     <Folder Include="VertexCustomAttribute\" />
   </ItemGroup>
   <ItemGroup>
