@@ -264,8 +264,6 @@ namespace SharpOpenGL
                 //bloomPostProcess.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0);
                 //blurPostProcess.Render(bloomPostProcess.OutputRenderTarget.ColorAttachment0);
 
-                //ssaoPostProcess.Render(renderGBuffer.GetPositionAttachment, renderGBuffer.GetNormalAttachment);
-
                 GL.Viewport(0,0, Width, Height);
 
                 ScreenBlit.Blit(resolvePostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);

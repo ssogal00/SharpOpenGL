@@ -243,6 +243,8 @@
     <None Include="Shader\DeferredLight.vs.glsl" />
     <None Include="Shader\DepthVisualize.fs.glsl" />
     <None Include="Shader\DepthVisualize.vs.glsl" />
+    <None Include="Shader\GBuffer.fs.glsl" />
+    <None Include="Shader\GBuffer.vs.glsl" />
     <None Include="Shader\SSAO.fs.glsl" />
     <None Include="Shader\SSAO.vs.glsl" />
   </ItemGroup>

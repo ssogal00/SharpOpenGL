@@ -162,22 +162,6 @@ namespace Core.MaterialBase
             texture.BindShader(TextureUnit.Texture0 + Loc, Loc);
         }
 
-        public void SetTexture(string name, int TextureObject)
-        {
-            if(SamplerMap.ContainsKey(name) == false)
-            {
-                return;
-            }
-            
-            var textureUnitToBind = SamplerMap[name];
-
-            GL.ActiveTexture(textureUnitToBind);
-            GL.BindTexture(TextureTarget.Texture2D, TextureObject);
-            Core.Texture.Sampler.DefaultLinearSampler.BindSampler(textureUnitToBind);
-            var SamplerLoc = MaterialProgram.GetSampler2DUniformLocation(name);
-            GL.ProgramUniform1(MaterialProgram.ProgramObject, SamplerLoc, 0);
-        }
-
         public void Bind()
         {
             Setup();

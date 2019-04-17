@@ -2987,7 +2987,8 @@ void main()
     vec3 N = normalize(texture(NormalTex, TexCoord).xyz);
     vec3 V = -normalize(Position);
     vec3 R = reflect(V, N); 
-
+	R = (inverse(View) * vec4(R, 0.0f)).xyz;
+	
     vec3 F0 = vec3(0.04); 
     F0 = mix(F0, albedo, metallic);
 	           
@@ -3003,10 +3004,10 @@ void main()
         float distance = clamp(length(lightPosInViewSpace.xyz - Position), lightMinMaxs[i].x, lightMinMaxs[i].y);
         float lightRadius = lightMinMaxs[i].y;
 
-        //float attenuation = pow( clamp(1 - pow(distance/lightRadius, 4), 0, 1) , 2) / (distance * distance + 1);
+        float attenuation = pow( clamp(1 - pow(distance / lightRadius, 4), 0, 1) , 2) / (distance * distance * 0.1 + 1);
 
-        float distanceFactor = ((50-1) / (lightMinMaxs[i].y - lightMinMaxs[i].x)) * (distance - lightMinMaxs[i].x) + 1;
-        float attenuation = 1.0 / (distanceFactor * distanceFactor);                
+        //float distanceFactor = ((50-1) / (lightMinMaxs[i].y - lightMinMaxs[i].x)) * (distance - lightMinMaxs[i].x) + 1;
+        //float attenuation = 1.0 / (distanceFactor * distanceFactor);                
         
         vec3 radiance     = lightColors[i] * attenuation;
         // cook-torrance brdf
@@ -3050,11 +3051,8 @@ void main()
     // sample both the pre-filter map and the BRDF lut and combine them together as per the Split-Sum approximation to get the IBL specular part.
     const float MAX_REFLECTION_LOD = 4.0;
     vec3 prefilteredColor = textureLod(PrefilterMap, R,  roughness * MAX_REFLECTION_LOD).rgb;    
-    //vec3 prefilteredColor = texelFetch(PrefilterMap, R,  roughness * MAX_REFLECTION_LOD).rgb;    
     vec2 brdf  = texture(BrdfLUT, vec2(max(dot(N, V), 0.0), roughness)).rg;
-    vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);
-
-    //vec3 ambient = (kD * diffuse + specular) * ao;
+    vec3 specular = prefilteredColor * (F * brdf.x + brdf.y);    
 
     vec3 ambient = (kD * diffuse + specular);
     
