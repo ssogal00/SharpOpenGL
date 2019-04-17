@@ -84,8 +84,7 @@ namespace SharpOpenGL
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.TextureCubeMap);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
-            // srgb
-            //GL.Enable(EnableCap.FramebufferSrgb);
+            
 
             ShaderManager.Get().CompileShaders();
             AssetManager.Get().ImportStaticMeshes();

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting.Channels;
+using Core.Texture;
 using OpenTK.Graphics.OpenGL;
 
 
@@ -146,6 +147,11 @@ namespace Core.MaterialBase
 
         public void SetTexture(string name, Core.Texture.TextureBase texture)
         {
+            SetTexture(name, texture, Sampler.DefaultLinearSampler);
+        }
+
+        public void SetTexture(string name, Core.Texture.TextureBase texture, Sampler sampler)
+        {
             if (SamplerMap == null)
             {
                 return;
@@ -155,10 +161,11 @@ namespace Core.MaterialBase
             {
                 return;
             }
-            
+
             var Loc = MaterialProgram.GetSampler2DUniformLocation(name);
             GL.ActiveTexture(TextureUnit.Texture0 + Loc);
             texture.Bind();
+            sampler.BindSampler(TextureUnit.Texture0 + Loc);
             texture.BindShader(TextureUnit.Texture0 + Loc, Loc);
         }
 

@@ -62,7 +62,6 @@ namespace Core.Texture
         {
             if (IsValid)
             {
-                Sampler.DefaultLinearSampler.BindSampler(Unit);
                 GL.Uniform1(SamplerLoc, (int)(Unit - TextureUnit.Texture0));
             }
         }

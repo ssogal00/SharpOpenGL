@@ -91,7 +91,7 @@ namespace SharpOpenGL.Scene
                 }
             }
 
-            screenBlit.Blit(gbuffer.ColorBufferObject, 0, 0, 1, 1);
+            screenBlit.Blit(gbuffer.GetColorAttachement, 0, 0, 1, 1);
         }
     }
 }

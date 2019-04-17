@@ -73,30 +73,6 @@ namespace SharpOpenGL
             }
         }
 
-        public void Blit(int textureObject)
-        {
-            using (var depthDisable = new ScopedDisable(EnableCap.DepthTest))
-            {
-                Material.BindAndExecute(VB, IB, () =>
-                {
-                    Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
-                    GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
-                });
-            }
-        }
-
-        public void Blit(int textureObject, int rowIndex, int colIndex, int gridRowSpan, int gridColSpan)
-        {
-            using (var depthDisable = new ScopedDisable(EnableCap.DepthTest))
-            {
-                Material.BindAndExecute(VB,IB, () =>
-                {
-                    UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);
-                    Material.SetColorTex2D(textureObject, Sampler.DefaultLinearSampler);
-                    GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
-                });
-            }
-        }
 
         public void SetGridSize(int newGridRow, int newGridCol)
         {
