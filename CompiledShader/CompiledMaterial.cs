@@ -595,6 +595,17 @@ public class GBufferDraw : MaterialBase
 	}
 	private OpenTK.Vector3 diffuseoverride;
 	
+	public System.Int32 LightChannel
+	{
+		get { return lightchannel; }
+		set 
+		{
+			lightchannel = value;
+			SetUniformVarData(@"LightChannel", lightchannel);			
+		}
+	}
+	private System.Int32 lightchannel;
+	
 	public System.Boolean MaskMapExist
 	{
 		get { return maskmapexist; }
@@ -854,6 +865,7 @@ uniform bool MaskMapExist;
 uniform bool NormalMapExist;
 uniform bool RoughnessExist;
 uniform bool DiffuseMapExist;
+uniform int LightChannel = 0;
 
 uniform float Metalic = 0;
 uniform float Roughness = 0;
@@ -925,6 +937,7 @@ void main()
     }
 
     PositionColor = InPosition;
+	PositionColor.a = LightChannel;
 
     VelocityColor = vec4((InNDCPos - InPrevNDCPos) , 1.0f);
 }
@@ -1441,6 +1454,17 @@ public class GBufferInstanced : MaterialBase
 	}
 	private OpenTK.Vector3 diffuseoverride;
 	
+	public System.Int32 LightChannel
+	{
+		get { return lightchannel; }
+		set 
+		{
+			lightchannel = value;
+			SetUniformVarData(@"LightChannel", lightchannel);			
+		}
+	}
+	private System.Int32 lightchannel;
+	
 	public System.Boolean MetalicExist
 	{
 		get { return metalicexist; }
@@ -1623,7 +1647,7 @@ uniform bool MaskMapExist;
 uniform bool NormalMapExist;
 uniform bool RoughnessExist;
 uniform bool DiffuseMapExist;
-
+uniform int LightChannel = 0;
 uniform vec3 DiffuseOverride;
 
 void main()
@@ -1677,6 +1701,7 @@ void main()
     }
 
     PositionColor = InPosition;
+	PositionColor.a = LightChannel;
 }
 ";
 	}
@@ -3419,8 +3444,8 @@ void main()
         	
     // Fetch Geometry info from G-buffer
 	vec3 Color = texture(DiffuseTex, TexCoord).xyz;
-	vec4 Normal = normalize(texture(NormalTex, TexCoord));
-    vec3 Position = texture(PositionTex, TexCoord).xyz;	
+	vec4 Normal = normalize(texture(NormalTex, TexCoord));		
+    vec3 Position = texture(PositionTex, TexCoord).xyz;		
 
     vec3 albedo     = pow(texture(DiffuseTex, TexCoord).rgb, vec3(2.2));
     //vec3 albedo     = texture(DiffuseTex, TexCoord).rgb;

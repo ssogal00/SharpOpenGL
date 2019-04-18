@@ -10,6 +10,11 @@ using OpenTK.Graphics;
 
 namespace SharpOpenGL.Light
 {
+    enum LightChannel
+    {
+        SkyBoxChannel = 0,
+        StaticMeshChannel = 1,
+    }
     public abstract class LightBase : SceneObject
     {
         protected LightBase(string name, int count)

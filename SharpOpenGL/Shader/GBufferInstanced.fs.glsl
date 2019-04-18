@@ -25,7 +25,7 @@ uniform bool MaskMapExist;
 uniform bool NormalMapExist;
 uniform bool RoughnessExist;
 uniform bool DiffuseMapExist;
-
+uniform int LightChannel = 0;
 uniform vec3 DiffuseOverride;
 
 void main()
@@ -79,4 +79,5 @@ void main()
     }
 
     PositionColor = InPosition;
+	PositionColor.a = LightChannel;
 }

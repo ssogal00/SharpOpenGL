@@ -27,6 +27,7 @@ uniform bool MaskMapExist;
 uniform bool NormalMapExist;
 uniform bool RoughnessExist;
 uniform bool DiffuseMapExist;
+uniform int LightChannel = 0;
 
 uniform float Metalic = 0;
 uniform float Roughness = 0;
@@ -98,6 +99,7 @@ void main()
     }
 
     PositionColor = InPosition;
+	PositionColor.a = LightChannel;
 
     VelocityColor = vec4((InNDCPos - InPrevNDCPos) , 1.0f);
 }

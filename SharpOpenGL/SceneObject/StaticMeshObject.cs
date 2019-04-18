@@ -99,10 +99,12 @@ namespace SharpOpenGL
             }
 
             var gbufferMaterial = ShaderManager.Get().GetMaterial<GBufferDraw.GBufferDraw>();
+
             Debug.Assert(gbufferMaterial != null);
 
             gbufferMaterial.Bind();
 
+            gbufferMaterial.LightChannel = (int) Light.LightChannel.StaticMeshChannel;
 
             gbufferMaterial.PrevTransform_PrevModel = this.ParentMatrix * this.LocalMatrix;
             gbufferMaterial.ModelTransform_Model = this.ParentMatrix * this.LocalMatrix;
@@ -193,6 +195,8 @@ namespace SharpOpenGL
                 meshdrawable.Draw(section.StartIndex, (uint) (section.EndIndex - section.StartIndex));
 
             }
+
+            gbufferMaterial.LightChannel = (int)Light.LightChannel.SkyBoxChannel;
         }
        
         protected string assetpath = "";

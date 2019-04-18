@@ -129,6 +129,7 @@ namespace SharpOpenGL
                 {
                     var gbufferDraw = (GBufferDraw.GBufferDraw)defaultMaterial;
 
+                    gbufferDraw.LightChannel = (int) Light.LightChannel.StaticMeshChannel;
                     gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                     gbufferDraw.PrevTransform_PrevProj = CameraManager.Get().PrevCameraProj;
