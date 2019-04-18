@@ -162,6 +162,7 @@
     <Compile Include="ConsoleCommandManager.cs" />
     <Compile Include="DebugDrawer.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="PostProcess\FXAAPostProcess.cs" />
     <Compile Include="PostProcess\HDAO.cs" />
     <Compile Include="PostProcess\SSAO.cs" />
     <Compile Include="SceneObject\PBRSphere.cs" />
@@ -245,6 +246,8 @@
     <None Include="Shader\DeferredLight.vs.glsl" />
     <None Include="Shader\DepthVisualize.fs.glsl" />
     <None Include="Shader\DepthVisualize.vs.glsl" />
+    <None Include="Shader\FXAA.fs.glsl" />
+    <None Include="Shader\FXAA.vs.glsl" />
     <None Include="Shader\GBuffer.fs.glsl" />
     <None Include="Shader\GBuffer.vs.glsl" />
     <None Include="Shader\GBufferInstanced.fs.glsl" />

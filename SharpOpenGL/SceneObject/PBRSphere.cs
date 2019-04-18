@@ -39,8 +39,6 @@ namespace SharpOpenGL
         public override void Tick(double elapsed)
         {
             
-            Elapsed += elapsed;
-            this.TranslationY += (float) Math.Sin(Elapsed);
         }
 
         private double Elapsed = 0;
