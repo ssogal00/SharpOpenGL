@@ -25,14 +25,14 @@ namespace SharpOpenGL.PostProcess
             PostProcessMaterial = ShaderManager.Get().GetMaterial<ResolveMaterial.ResolveMaterial>();
         }
 
-        public override void Render(TextureBase colorTex, TextureBase blurTex, TextureBase motionTex)
+        public override void Render(TextureBase colorTex, TextureBase motionTex)
         {
             Output.BindAndExecute(PostProcessMaterial,
                 () =>
                 {
                     var resolveMaterial = (ResolveMaterial.ResolveMaterial) PostProcessMaterial;
                     resolveMaterial.ColorTex2D = colorTex;
-                    resolveMaterial.BlurTex2D = blurTex;
+                    resolveMaterial.MotionTex2D = motionTex;
 
                     BlitToScreenSpace();
                 }

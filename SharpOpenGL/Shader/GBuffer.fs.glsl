@@ -101,5 +101,5 @@ void main()
     PositionColor = InPosition;
 	PositionColor.a = LightChannel;
 
-    VelocityColor = vec4((InNDCPos - InPrevNDCPos) , 1.0f);
+    VelocityColor = vec4((InNDCPos - InPrevNDCPos) , 1.0f) / 2.0f;
 }

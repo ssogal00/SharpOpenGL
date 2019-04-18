@@ -939,7 +939,7 @@ void main()
     PositionColor = InPosition;
 	PositionColor.a = LightChannel;
 
-    VelocityColor = vec4((InNDCPos - InPrevNDCPos) , 1.0f);
+    VelocityColor = vec4((InNDCPos - InPrevNDCPos) , 1.0f) / 2.0f;
 }
 ";
 	}
@@ -4589,44 +4589,6 @@ public class ResolveMaterial : MaterialBase
 		MaterialProgram.UseProgram();
 	}
 
-	public void SetBlurTex2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"BlurTex", TextureObject);
-	}
-
-	public void SetBlurTex2D(Core.Texture.TextureBase TextureObject, Sampler SamplerObject)
-	{
-		SetTexture(@"BlurTex", TextureObject, SamplerObject);
-	}
-
-	public TextureBase BlurTex2D 
-	{	
-		set 
-		{	
-			blurtex = value;
-			SetTexture(@"BlurTex", blurtex);
-		}
-	}
-
-	public TextureBase BlurTex2D_PointSample
-	{	
-		set 
-		{	
-			blurtex = value;
-			SetTexture(@"BlurTex", blurtex, Sampler.DefaultPointSampler);
-		}
-	}
-
-	public TextureBase BlurTex2D_LinearSample
-	{	
-		set 
-		{	
-			blurtex = value;
-			SetTexture(@"BlurTex", blurtex, Sampler.DefaultLinearSampler);
-		}
-	}
-
-	private TextureBase blurtex = null;
 	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"ColorTex", TextureObject);
@@ -4665,6 +4627,44 @@ public class ResolveMaterial : MaterialBase
 	}
 
 	private TextureBase colortex = null;
+	public void SetMotionTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"MotionTex", TextureObject);
+	}
+
+	public void SetMotionTex2D(Core.Texture.TextureBase TextureObject, Sampler SamplerObject)
+	{
+		SetTexture(@"MotionTex", TextureObject, SamplerObject);
+	}
+
+	public TextureBase MotionTex2D 
+	{	
+		set 
+		{	
+			motiontex = value;
+			SetTexture(@"MotionTex", motiontex);
+		}
+	}
+
+	public TextureBase MotionTex2D_PointSample
+	{	
+		set 
+		{	
+			motiontex = value;
+			SetTexture(@"MotionTex", motiontex, Sampler.DefaultPointSampler);
+		}
+	}
+
+	public TextureBase MotionTex2D_LinearSample
+	{	
+		set 
+		{	
+			motiontex = value;
+			SetTexture(@"MotionTex", motiontex, Sampler.DefaultLinearSampler);
+		}
+	}
+
+	private TextureBase motiontex = null;
 
 
 
@@ -4703,9 +4703,9 @@ layout (binding = 2) uniform sampler2D MotionTex;
 
 void main()
 {
-	vec4 vVelocity = texture(MotionTex, TexCoords) * 0.1f ;
+	vec4 vVelocity = texture(MotionTex, TexCoords);
 
-    /*vec4 c = texture( ColorTex, TexCoords ) ;  
+    vec4 c = texture( ColorTex, TexCoords );
 
 	if(length (vVelocity.xy) > 0)
     {        
@@ -4715,9 +4715,9 @@ void main()
         vPrevTickColor += texture(ColorTex, TexCoords + vVelocity.xy * 4) * 0.1;
 
         c = (c + vPrevTickColor) / 2.0f;
-    }*/
+    }
 
-	FragColor = texture(ColorTex, TexCoords) + texture(BlurTex, TexCoords);	
+	FragColor = c;	
 }";
 	}
 }
