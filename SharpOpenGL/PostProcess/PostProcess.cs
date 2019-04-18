@@ -99,6 +99,10 @@ namespace SharpOpenGL.PostProcess
 
         public RenderTarget OutputRenderTarget => Output;
 
+        public TextureBase OutputColorTex0 => Output.ColorAttachment0;
+        public TextureBase OutputColorTex1 => Output.ColorAttachment1;
+        public TextureBase OutputColorTex2 => Output.ColorAttachment2;
+
         // this could be null
         protected RenderTarget Output;
 

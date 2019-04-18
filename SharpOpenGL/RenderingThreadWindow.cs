@@ -270,12 +270,12 @@ namespace SharpOpenGL
             if (DebugDrawer.Get().IsGBufferDump)
             {
                 gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
-                ScreenBlit.Blit(gbufferVisualize.OutputRenderTarget.ColorAttachment0, 0,0,2,2);
+                ScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0,0,2,2);
             }
             else if (DebugDrawer.Get().IsDepthDump)
             {
                 depthVisualize.Render(renderGBuffer.GetDepthAttachment);
-                ScreenBlit.Blit(depthVisualize.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+                ScreenBlit.Blit(depthVisualize.OutputColorTex0, 0, 0, 2, 2);
             }
             else
             {
@@ -285,12 +285,12 @@ namespace SharpOpenGL
 
                 if (DebugDrawer.Get().IsFXAAEnabled)
                 {
-                    fxaa.Render(lightPostProcess.GetOutputRenderTarget().ColorAttachment0);
-                    ScreenBlit.Blit(fxaa.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+                    fxaa.Render(lightPostProcess.OutputColorTex0);
+                    ScreenBlit.Blit(fxaa.OutputColorTex0, 0, 0, 2, 2);
                 }
                 else
                 {
-                    ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+                    ScreenBlit.Blit(lightPostProcess.OutputColorTex0, 0, 0, 2, 2);
                 }
             }
 

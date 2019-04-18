@@ -4945,6 +4945,7 @@ layout(binding=0) uniform sampler2D PositionTex;
 layout(binding=1) uniform sampler2D NormalTex;
 layout(binding=2) uniform sampler2D ColorTex;
 layout(binding=4) uniform sampler2D RandTex;
+layout(binding=5) uniform sampler2D DepthTex;
 
 void main() 
 {
