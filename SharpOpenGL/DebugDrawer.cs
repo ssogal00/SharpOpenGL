@@ -25,6 +25,7 @@ namespace SharpOpenGL
         [ExposeUI]
         public bool IsGBufferDump { get; set; } = false;
         [ExposeUI] public bool IsBloomEnabled { get; set; } = true;
+        [ExposeUI] public bool IsFXAAEnabled { get; set; } = true;
         [ExposeUI] public float SceneRoughness { get; set; } = 0.3f;
         [ExposeUI] public float SceneMetallic { get; set; } = 0.6f;
 

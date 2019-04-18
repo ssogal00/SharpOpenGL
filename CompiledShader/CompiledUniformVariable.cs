@@ -342,5 +342,8 @@ namespace PrefilterMaterial
 namespace HDAOMaterial
 {
 }
+namespace FXAAMaterial
+{
+}
 
 }

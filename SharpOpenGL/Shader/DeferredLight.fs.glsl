@@ -111,10 +111,11 @@ void main()
         vec3 L = normalize(lightPosInViewSpace.xyz - Position);        
         vec3 H = normalize(V + L);
 
-        float distance = clamp(length(lightPosInViewSpace.xyz - Position), lightMinMaxs[i].x, lightMinMaxs[i].y);
-        float lightRadius = lightMinMaxs[i].y;
+		float scaleFactor = 0.1f;
+        float distance = clamp(length(lightPosInViewSpace.xyz - Position), lightMinMaxs[i].x, lightMinMaxs[i].y) * scaleFactor;
+        float lightRadius = lightMinMaxs[i].y * scaleFactor;
 
-        float attenuation = pow( clamp(1 - pow(distance / lightRadius, 4), 0, 1) , 2) / (distance * distance * 0.1 + 1);
+        float attenuation = pow( clamp(1 - pow(distance / lightRadius, 4), 0, 1) , 2) / (distance * distance + 1);
 
         //float distanceFactor = ((50-1) / (lightMinMaxs[i].y - lightMinMaxs[i].x)) * (distance - lightMinMaxs[i].x) + 1;
         //float attenuation = 1.0 / (distanceFactor * distanceFactor);                

@@ -19,6 +19,46 @@ float Rgb2Luma(vec3 rgb)
 	return sqrt(dot(rgb, vec3(0.299,0.587,0.114)));
 }
 
+float QUALITY(int i)
+{
+	//#define FXAA_QUALITY__PS 12
+    //#define FXAA_QUALITY__P0 1.0
+    //#define FXAA_QUALITY__P1 1.0
+    //#define FXAA_QUALITY__P2 1.0
+    //#define FXAA_QUALITY__P3 1.0
+    //#define FXAA_QUALITY__P4 1.0
+    //#define FXAA_QUALITY__P5 1.5
+    //#define FXAA_QUALITY__P6 2.0
+    //#define FXAA_QUALITY__P7 2.0
+    //#define FXAA_QUALITY__P8 2.0
+    //#define FXAA_QUALITY__P9 2.0
+    //#define FXAA_QUALITY__P10 4.0
+    //#define FXAA_QUALITY__P11 8.0
+
+	if ( i == 0 || i == 1 || i == 2 || i == 3 || i == 4 )
+	{
+		return 1.0;
+	}
+	else if(i == 5)
+	{
+		return 1.5;
+	}
+	else if(i == 6 || i == 7 || i == 8 || i == 9)
+	{
+		return 2;
+	}
+	else if (i == 10)
+	{
+		return 4;
+	}
+	else
+	{
+		return 8;
+	}
+
+	return 0;
+}
+
 float EDGE_THRESHOLD_MIN = 0.0312;
 float EDGE_THRESHOLD_MAX = 0.125;
 
@@ -149,7 +189,7 @@ void main()
 	// If both sides have not been reached, continue to explore.
 	if(!reachedBoth)
 	{
-
+		int ITERATIONS = 12;
 		for(int i = 2; i < ITERATIONS; i++)
 		{
 			// If needed, read luma in 1st direction, compute delta.
@@ -184,6 +224,56 @@ void main()
 		}
 	}
 
+	// Compute the distances to each extremity of the edge.
+	float distance1 = isHorizontal ? (InTexCoord.x - uv1.x) : (InTexCoord.y - uv1.y);
+	float distance2 = isHorizontal ? (uv2.x - InTexCoord.x) : (uv2.y - InTexCoord.y);
 
-    FragColor = texture(ScreenTex, InTexCoord);	
+	// In which direction is the extremity of the edge closer ?
+	bool isDirection1 = distance1 < distance2;
+	float distanceFinal = min(distance1, distance2);
+
+	// Length of the edge.
+	float edgeThickness = (distance1 + distance2);
+
+	// UV offset: read in the direction of the closest side of the edge.
+	float pixelOffset = - distanceFinal / edgeThickness + 0.5;
+
+	// Is the luma at center smaller than the local average ?
+	bool isLumaCenterSmaller = lumaCenter < lumaLocalAverage;
+
+	// If the luma at center is smaller than at its neighbour, the delta luma at each end should be positive (same variation).
+	// (in the direction of the closer side of the edge.)
+	bool correctVariation = ((isDirection1 ? lumaEnd1 : lumaEnd2) < 0.0) != isLumaCenterSmaller;
+
+	// If the luma variation is incorrect, do not offset.
+	float finalOffset = correctVariation ? pixelOffset : 0.0;
+
+	// Sub-pixel shifting
+	// Full weighted average of the luma over the 3x3 neighborhood.
+	float lumaAverage = (1.0/12.0) * (2.0 * (lumaDownUp + lumaLeftRight) + lumaLeftCorners + lumaRightCorners);
+	// Ratio of the delta between the global average and the center luma, over the luma range in the 3x3 neighborhood.
+	float subPixelOffset1 = clamp(abs(lumaAverage - lumaCenter)/lumaRange,0.0,1.0);
+	float subPixelOffset2 = (-2.0 * subPixelOffset1 + 3.0) * subPixelOffset1 * subPixelOffset1;
+	// Compute a sub-pixel offset based on this delta.
+	float SUBPIXEL_QUALITY = 0.75;
+	float subPixelOffsetFinal = subPixelOffset2 * subPixelOffset2 * SUBPIXEL_QUALITY;
+
+
+	// Pick the biggest of the two offsets.
+	finalOffset = max(finalOffset,subPixelOffsetFinal);
+
+	// Compute the final UV coordinates.
+	vec2 finalUv = InTexCoord;
+	if(isHorizontal)
+	{
+		finalUv.y += finalOffset * stepLength;
+	} 
+	else 
+	{
+		finalUv.x += finalOffset * stepLength;
+	}
+	
+    // Read the color at the new UV coordinates, and use it.
+	vec4 finalColor = texture(ScreenTex, finalUv);
+	FragColor = finalColor;
 }

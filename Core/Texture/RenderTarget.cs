@@ -278,6 +278,7 @@ namespace Core.Texture
         public int RenderTargetHeight => BufferHeight;
 
         public OpenTK.Vector2 RenderTargetSize => new Vector2(RenderTargetWidth, RenderTargetHeight);
+        public OpenTK.Vector2 InverseRenderTargetSize => new Vector2(1.0f / (float) RenderTargetWidth, 1.0f / (float)RenderTargetHeight);
 
         private bool bIncludeDepthAttachment = true;
 

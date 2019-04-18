@@ -39,6 +39,7 @@ namespace SharpOpenGL
         protected CubemapConvolutionTransform convolution = new CubemapConvolutionTransform();
         protected SSAO ssaoPostProcess = new SSAO();
         protected HDAO hdaoPostProcess = new HDAO();
+        protected FXAAPostProcess fxaa = new FXAAPostProcess();
         // @postprocess end
 
         protected LookUpTable2D lut = new LookUpTable2D();
@@ -272,12 +273,17 @@ namespace SharpOpenGL
             {
                 lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment ,convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
 
-                resolvePostProcess.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0, 
-                    blurPostProcess.OutputRenderTarget.ColorAttachment0, renderGBuffer.GetMotionAttachment);
-
                 GL.Viewport(0,0, Width, Height);
 
-                ScreenBlit.Blit(resolvePostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+                if (DebugDrawer.Get().IsFXAAEnabled)
+                {
+                    fxaa.Render(lightPostProcess.GetOutputRenderTarget().ColorAttachment0);
+                    ScreenBlit.Blit(fxaa.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+                }
+                else
+                {
+                    ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+                }
             }
 
             SwapBuffers();
