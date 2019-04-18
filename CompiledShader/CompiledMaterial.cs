@@ -3444,8 +3444,15 @@ void main()
         	
     // Fetch Geometry info from G-buffer
 	vec3 Color = texture(DiffuseTex, TexCoord).xyz;
-	vec4 Normal = normalize(texture(NormalTex, TexCoord));		
-    vec3 Position = texture(PositionTex, TexCoord).xyz;		
+	vec4 Normal = normalize(texture(NormalTex, TexCoord));	
+	vec4 Vec4Position = texture(PositionTex, TexCoord);
+    vec3 Position = texture(PositionTex, TexCoord).xyz;	
+
+	if(Vec4Position.a == 0)
+	{
+		FragColor = vec4(Color , 1.0);
+		return;
+	}
 
     vec3 albedo     = pow(texture(DiffuseTex, TexCoord).rgb, vec3(2.2));
     //vec3 albedo     = texture(DiffuseTex, TexCoord).rgb;
@@ -3667,12 +3674,17 @@ layout (location=1) in vec2 InTexCoord;
 
 layout (location=0, binding=0) uniform samplerCube texCubemap;
 
-layout (location=0) out vec4 FragColor;
+
+layout (location = 0) out vec4 PositionColor;
+layout (location = 1) out vec4 DiffuseColor;
+layout (location = 2) out vec4 NormalColor;
+layout (location = 3) out vec4 VelocityColor;
 
 void main()
 {
     vec4 Color = texture(texCubemap, -CubemapTexCoord);    
-    FragColor = Color;
+    DiffuseColor = Color;
+	PositionColor.a = 0;
 }";
 	}
 }

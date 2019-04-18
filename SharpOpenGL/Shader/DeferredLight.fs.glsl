@@ -81,8 +81,15 @@ void main()
         	
     // Fetch Geometry info from G-buffer
 	vec3 Color = texture(DiffuseTex, TexCoord).xyz;
-	vec4 Normal = normalize(texture(NormalTex, TexCoord));		
-    vec3 Position = texture(PositionTex, TexCoord).xyz;		
+	vec4 Normal = normalize(texture(NormalTex, TexCoord));	
+	vec4 Vec4Position = texture(PositionTex, TexCoord);
+    vec3 Position = texture(PositionTex, TexCoord).xyz;	
+
+	if(Vec4Position.a == 0)
+	{
+		FragColor = vec4(Color , 1.0);
+		return;
+	}
 
     vec3 albedo     = pow(texture(DiffuseTex, TexCoord).rgb, vec3(2.2));
     //vec3 albedo     = texture(DiffuseTex, TexCoord).rgb;
