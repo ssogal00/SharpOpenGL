@@ -22,8 +22,8 @@ namespace SharpOpenGL
 
         public string Name { get; } = "DebugDrawer";
 
-        [ExposeUI]
-        public bool IsGBufferDump { get; set; } = false;
+        [ExposeUI] public bool IsGBufferDump { get; set; } = false;
+        [ExposeUI] public bool IsDepthDump { get; set; } = false;
         [ExposeUI] public bool IsBloomEnabled { get; set; } = true;
         [ExposeUI] public bool IsFXAAEnabled { get; set; } = true;
 
