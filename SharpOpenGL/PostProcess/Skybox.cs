@@ -13,14 +13,15 @@ namespace SharpOpenGL.PostProcess
     public class Skybox : PostProcessBase
     {
         public Skybox()
-        :base()
-        { }
+            : base()
+        {
+            // just draw on current binded render target
+            bOwnItsRenderTarget = false;
+        }
 
         public override void OnGLContextCreated(object sender, EventArgs e)
         {
             base.OnGLContextCreated(sender, e);
-
-            Output.ClearColor = Color.Red;
             
             PostProcessMaterial = ShaderManager.Get().GetMaterial<CubemapMaterial.CubemapMaterial>();
 
@@ -34,12 +35,12 @@ namespace SharpOpenGL.PostProcess
             {
                 return;
             }
+            // caution
+            // draw current binded render taret
             using (var dummy = new ScopedDepthFunc(DepthFunction.Lequal))
             {
-                Output.BindAndExecute(PostProcessMaterial, () =>
+                PostProcessMaterial.BindAndExecute(() =>
                 {
-                    Output.Clear();
-
                     var specificMaterial = (CubemapMaterial.CubemapMaterial) PostProcessMaterial;
                     specificMaterial.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
                     specificMaterial.ViewMatrix = CameraManager.Get().CurrentCameraView;

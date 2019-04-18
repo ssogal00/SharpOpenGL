@@ -245,6 +245,8 @@
     <None Include="Shader\DepthVisualize.vs.glsl" />
     <None Include="Shader\GBuffer.fs.glsl" />
     <None Include="Shader\GBuffer.vs.glsl" />
+    <None Include="Shader\MultisampleGBuffer.fs.glsl" />
+    <None Include="Shader\MultisampleGBuffer.vs.glsl" />
     <None Include="Shader\SSAO.fs.glsl" />
     <None Include="Shader\SSAO.vs.glsl" />
   </ItemGroup>

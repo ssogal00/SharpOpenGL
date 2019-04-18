@@ -1,5 +1,0 @@
-language: csharp
-solution: SharpOpenGL.sln
-mono:
-  - latest
-  - 3.12.0

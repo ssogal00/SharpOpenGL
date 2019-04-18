@@ -115,7 +115,7 @@ namespace SharpOpenGL
 
             lut.Render();
 
-            skyboxPostProcess.SetCubemapTexture(prefilter.ResultCubemap);
+            skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
 
             // add ui editable objects
             UIThread.Get().Enqueue
@@ -216,6 +216,25 @@ namespace SharpOpenGL
             base.OnUpdateFrame(e);
             RenderingThread.Get().ExecuteTimeSlice();
         }
+
+        private void RenderSkybox()
+        {
+            skyboxPostProcess.Render();
+        }
+
+        private void ClearGBuffer()
+        {
+            renderGBuffer.BindAndExecute(
+                () =>
+                {
+                    renderGBuffer.Clear();
+                });
+        }
+
+        private void DrawSceneObjects()
+        {
+
+        }
         
         protected override void OnRenderFrame(FrameEventArgs e)
         {
@@ -227,8 +246,6 @@ namespace SharpOpenGL
                 SwapBuffers();
                 return;
             }
-          
-            skyboxPostProcess.Render();
 
             renderGBuffer.BindAndExecute(
                 () =>
@@ -236,17 +253,15 @@ namespace SharpOpenGL
                     renderGBuffer.Clear();
                 });
 
-            skyboxPostProcess.GetOutputRenderTarget().Copy(renderGBuffer.GetColorAttachement);
-
             renderGBuffer.BindAndExecute
             (
                 () =>
-                {   
+                {
+                    skyboxPostProcess.Render();
                     SceneObjectManager.Get().Draw();
                     DebugDrawer.Get().DebugDraw();
                 }
             );
-
 
             if (DebugDrawer.Get().IsGBufferDump)
             {
@@ -260,26 +275,9 @@ namespace SharpOpenGL
                 resolvePostProcess.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0, 
                     blurPostProcess.OutputRenderTarget.ColorAttachment0, renderGBuffer.GetMotionAttachment);
 
-                //bloomPostProcess.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0);
-                //blurPostProcess.Render(bloomPostProcess.OutputRenderTarget.ColorAttachment0);
-
                 GL.Viewport(0,0, Width, Height);
 
                 ScreenBlit.Blit(resolvePostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
-                //ScreenBlit.Blit(blurPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 1, 1);
-                
-
-                /*if (DebugDrawer.Get().IsBloomEnabled)
-                {
-                    bloomPostProcess.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0);
-                    blurPostProcess.Render(bloomPostProcess.OutputRenderTarget.ColorAttachment0);
-                    resolvePostProcess.Render(lightPostProcess.OutputRenderTarget.ColorAttachment0, blurPostProcess.OutputRenderTarget.ColorAttachment0);
-                    ScreenBlit.Blit(resolvePostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
-                }
-                else
-                {
-                    ScreenBlit.Blit(lightPostProcess.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
-                }*/
             }
 
             SwapBuffers();

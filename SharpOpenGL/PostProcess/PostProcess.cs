@@ -29,14 +29,18 @@ namespace SharpOpenGL.PostProcess
             UpdateVertexBuffer();
             UpdateIndexBuffer();
 
-            // create render target
-            if (bCreateCustomRenderTarget)
+            // 
+            if (bOwnItsRenderTarget)
             {
-                CreateCustomRenderTarget();
-            }
-            else
-            {
-                CreateDefaultRenderTarget();
+                // create render target
+                if (bCreateCustomRenderTarget)
+                {
+                    CreateCustomRenderTarget();
+                }
+                else
+                {
+                    CreateDefaultRenderTarget();
+                }
             }
         }
 
@@ -95,7 +99,7 @@ namespace SharpOpenGL.PostProcess
 
         public RenderTarget OutputRenderTarget => Output;
 
-        //protected RenderTarget Output = new RenderTarget(1024, 768, 1);
+        // this could be null
         protected RenderTarget Output;
 
         protected Core.MaterialBase.MaterialBase PostProcessMaterial = null;
@@ -107,6 +111,8 @@ namespace SharpOpenGL.PostProcess
         List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
 
         protected bool bCreateCustomRenderTarget = false;
+
+        protected bool bOwnItsRenderTarget = true;
 
         protected void UpdateIndexBuffer()
         {
