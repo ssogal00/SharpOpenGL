@@ -46,6 +46,7 @@ namespace SharpOpenGL.PostProcess
                     specificMaterial.ViewMatrix = CameraManager.Get().CurrentCameraView;
                     specificMaterial.ProjMatrix = CameraManager.Get().CurrentCameraProj;
                     specificMaterial.TexCubemap2D = cubemapTexture;
+                    specificMaterial.LightChannel = (int) Light.LightChannel.SkyBoxChannel;
                     sphereMeshObject.DrawWithBindedMaterial();
                 });
             }

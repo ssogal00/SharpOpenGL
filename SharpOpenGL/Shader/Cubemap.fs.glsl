@@ -12,9 +12,11 @@ layout (location = 1) out vec4 DiffuseColor;
 layout (location = 2) out vec4 NormalColor;
 layout (location = 3) out vec4 VelocityColor;
 
+uniform int LightChannel = 0;
+
 void main()
 {
     vec4 Color = texture(texCubemap, -CubemapTexCoord);    
     DiffuseColor = Color;
-	PositionColor.a = 0;
+	PositionColor.a = LightChannel;
 }
