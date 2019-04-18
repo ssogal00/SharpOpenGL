@@ -17,21 +17,23 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = new DepthVisualizeMaterial.DepthVisualizeMaterial();
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<DepthVisualizeMaterial.DepthVisualizeMaterial>();
 
             Debug.Assert(PostProcessMaterial != null);
         }
 
         public override void Render(TextureBase Input0)
         {
-            Output.ClearColor = Color.Violet;
+            var concretemtl = (DepthVisualizeMaterial.DepthVisualizeMaterial) (PostProcessMaterial);
 
-            Output.BindAndExecute(PostProcessMaterial, ()=>
+            Output.BindAndExecute(concretemtl, ()=>
             {
-                PostProcessMaterial.SetTexture("DepthTex", Input0);
+                concretemtl.DepthTex2D = Input0;
+                concretemtl.Near = CameraManager.Get().CurrentCamera.Near;
+                concretemtl.Far = CameraManager.Get().CurrentCamera.Far;
+
                 BlitToScreenSpace();
             });
         }
-
     }
 }

@@ -4009,6 +4009,28 @@ public class DepthVisualizeMaterial : MaterialBase
 	private TextureBase depthtex = null;
 
 
+	
+	public System.Single Far
+	{
+		get { return far; }
+		set 
+		{
+			far = value;
+			SetUniformVarData(@"Far", far);			
+		}
+	}
+	private System.Single far;
+	
+	public System.Single Near
+	{
+		get { return near; }
+		set 
+		{
+			near = value;
+			SetUniformVarData(@"Near", near);			
+		}
+	}
+	private System.Single near;
 
 
 
@@ -4022,6 +4044,7 @@ layout(location=0) in vec3 VertexPosition;
 layout(location=1) in vec2 TexCoord;
 
 layout(location=0) out vec2 OutTexCoord;
+
 
 void main()
 {	
@@ -4040,10 +4063,14 @@ layout (location=0) out vec4 FragColor;
 
 layout (location=0, binding=0) uniform sampler2D DepthTex;
 
+uniform float Near; 
+uniform float Far;
 
 void main() 
 {   
-    FragColor = texture(DepthTex, InTexCoord);
+	float depth = texture(DepthTex, InTexCoord).x;
+	float linearizedDepth = (2.0 * Near) / (Far + Near - depth * (Far - Near));
+    FragColor = vec4(linearizedDepth, linearizedDepth, linearizedDepth, 1.0f);
 }";
 	}
 }
