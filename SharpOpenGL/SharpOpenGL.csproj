@@ -252,6 +252,8 @@
     <None Include="Shader\GBuffer.vs.glsl" />
     <None Include="Shader\GBufferInstanced.fs.glsl" />
     <None Include="Shader\GBufferInstanced.vs.glsl" />
+    <None Include="Shader\HDAO.fs.glsl" />
+    <None Include="Shader\HDAO.vs.glsl" />
     <None Include="Shader\MultisampleGBuffer.fs.glsl" />
     <None Include="Shader\MultisampleGBuffer.vs.glsl" />
     <None Include="Shader\Resolve.fs.glsl" />

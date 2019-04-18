@@ -30,10 +30,13 @@ namespace SharpOpenGL
 
         // @ postprocess start
         protected Skybox skyboxPostProcess = new Skybox();
-        protected BlurPostProcess blurPostProcess = new BlurPostProcess();
+
+        //protected BlurPostProcess blurPostProcess = new BlurPostProcess();
+        //protected BloomPostProcess bloomPostProcess = new BloomPostProcess();
+
         protected DeferredLight lightPostProcess = new DeferredLight();
         protected GBufferVisualize gbufferVisualize = new GBufferVisualize();
-        protected BloomPostProcess bloomPostProcess = new BloomPostProcess();
+        protected DepthVisualize depthVisualize = new DepthVisualize();
         protected ResolvePostProcess resolvePostProcess = new ResolvePostProcess();
         protected EquirectangleToCubemap equirectToCube = new EquirectangleToCubemap();
         protected CubemapConvolutionTransform convolution = new CubemapConvolutionTransform();
@@ -266,8 +269,9 @@ namespace SharpOpenGL
 
             if (DebugDrawer.Get().IsGBufferDump)
             {
-                gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
-                ScreenBlit.Blit(gbufferVisualize.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
+                depthVisualize.Render(renderGBuffer.GetDepthAttachment);
+                //gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
+                ScreenBlit.Blit(depthVisualize.OutputRenderTarget.ColorAttachment0, 0, 0, 2, 2);
             }
             else
             {

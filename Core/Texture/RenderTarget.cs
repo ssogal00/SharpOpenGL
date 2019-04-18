@@ -159,7 +159,7 @@ namespace Core.Texture
 
                 if (bIncludeDepthAttachment)
                 {
-                    GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.DepthStencilAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
+                    GL.FramebufferTexture2D(FramebufferTarget.DrawFramebuffer, FramebufferAttachment.DepthAttachment, TextureTarget.Texture2D, DepthAttachment.GetTextureObject, 0);
                 }
 
                 //
