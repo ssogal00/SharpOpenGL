@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-using System.Windows;
-using System.Windows.Threading;
+﻿using Core.Camera;
 using FBXWrapper;
-
-using SharpOpenGL;
-using Core.Buffer;
-using Core.Camera;
-using Core.Primitive;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using SharpOpenGL.BasicMaterial;
-using SharpOpenGL.SimpleMaterial;
-using SharpOpenGL.StaticMesh;
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace FBXImporter
 {

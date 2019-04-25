@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Core;
+using Core.StaticMesh;
+using System;
 using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Linq;
+using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using SharpOpenGL.StaticMesh;
-using System.Xml.Linq;
-using Core.OpenGLShader;
+using System.Linq;
 using System.Threading.Tasks;
-using Core;
-using Core.MaterialBase;
 
 namespace SharpOpenGL.Asset
 {

@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core;
+﻿using Core;
 using Core.Buffer;
 using Core.Camera;
 using Core.MaterialBase;
+using Core.StaticMesh;
 using Core.Texture;
 using OpenTK;
 using SharpOpenGL.Asset;
-using SharpOpenGL.BasicMaterial;
 using SharpOpenGL.Font;
 using SharpOpenGL.GBufferDraw;
-using SharpOpenGL.StaticMesh;
-using OpenTK.Platform.Windows;
+using System.Drawing;
 
 
 namespace SharpOpenGL

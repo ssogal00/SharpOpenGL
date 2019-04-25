@@ -1,15 +1,10 @@
-﻿
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Core;
+﻿using Core;
 using Core.CustomAttribute;
-using Core.MaterialBase;
 using Core.Primitive;
-using Core.Texture;
+using Core.StaticMesh;
 using OpenTK;
 using SharpOpenGL.Asset;
-using SharpOpenGL.StaticMesh;
+using System.Diagnostics;
 using System.IO;
 
 namespace SharpOpenGL

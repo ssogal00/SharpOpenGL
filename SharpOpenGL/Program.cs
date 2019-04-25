@@ -1,27 +1,25 @@
-﻿using Core.Buffer;
+﻿using Core;
+using Core.Buffer;
+using Core.CustomEvent;
+using Core.CustomSerialize;
+using Core.StaticMesh;
+using Core.Texture;
 using Core.Tickable;
 using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-using SharpOpenGL.StaticMesh;
-using System;
-using System.Windows.Forms;
-using Core.CustomEvent;
-using Core.Texture;
-using Core;
-using ZeroFormatter.Formatters;
-using Core.CustomSerialize;
-using SharpOpenGL.Asset;
+using Core.Asset;
+
+
+using SharpOpenGL.Font;
 using SharpOpenGL.PostProcess;
+using System;
+using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.MaterialBase;
-using SharpOpenGL.GBufferDraw;
-using System.Drawing;
-using Core.Primitive;
-using OpenTK.Graphics;
-using SharpOpenGL.Font;
-using NativeWindow = OpenTK.NativeWindow;
+using SharpOpenGL.Asset;
+using ZeroFormatter.Formatters;
 
 namespace SharpOpenGL
 {

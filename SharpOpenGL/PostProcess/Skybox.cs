@@ -3,7 +3,7 @@ using System.Drawing;
 using Core;
 using OpenTK;
 using Core.Texture;
-using SharpOpenGL.StaticMesh;
+using Core.StaticMesh;
 using SharpOpenGL.Asset;
 using OpenTK.Graphics.OpenGL;
 using Core.MaterialBase;

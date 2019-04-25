@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using ZeroFormatter;
 
 
-namespace SharpOpenGL.StaticMesh
+namespace Core.StaticMesh
 {
     [ZeroFormattable]
     public class StaticMeshAsset : Core.AssetBase
