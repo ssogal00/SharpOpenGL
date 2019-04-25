@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Core;
+using Core.Primitive;
 using FBXWrapper;
 using OpenTK;
 
@@ -16,7 +17,7 @@ namespace FBXImporter
         {
             ParsedAnim = _ParsedAnimation;
 
-            BoneDrawable = new LineDrawable<SharpOpenGL.SimpleMaterial.VertexAttribute>();
+            BoneDrawable = new LineDrawable<P_VertexAttribute>();
             List<SharpOpenGL.SimpleMaterial.VertexAttribute> BoneVertices = new List<SharpOpenGL.SimpleMaterial.VertexAttribute>();
             List<uint> BoneIndices = new List<uint>();
 
@@ -73,7 +74,7 @@ namespace FBXImporter
 
             BoneDrawable.SetupData(ref BoneVertexArray, ref BoneIndexArray);
 
-            MeshDrawable = new TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute>();
+            MeshDrawable = new TriangleDrawable<P_VertexAttribute>();
 
             List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
             List<uint> ControlPointIndexList = _ParsedAnimation.Mesh.IndexList;
@@ -119,7 +120,7 @@ namespace FBXImporter
             var TempIndices = NewIndexList.ToArray();
 
 
-            MeshDrawable = new TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute>();
+            MeshDrawable = new TriangleDrawable<P_VertexAttribute>();
             MeshDrawable.SetupData(ref TempVertices, ref TempIndices);                       
         }
 
@@ -138,7 +139,7 @@ namespace FBXImporter
 
 
         ParsedFBXAnimation ParsedAnim = null;
-        TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute> MeshDrawable = null;
-        LineDrawable<SharpOpenGL.SimpleMaterial.VertexAttribute> BoneDrawable = null;
+        TriangleDrawable<P_VertexAttribute> MeshDrawable = null;
+        LineDrawable<P_VertexAttribute> BoneDrawable = null;
     }
 }

@@ -178,7 +178,7 @@ namespace FBXImporter
         protected FBXMesh MyFBXMesh = null;
         protected FBXMeshAnimation MyFBXAnim = null;
 
-        protected Core.Cube cube = null;
+        
 
         List<FBXMeshAnimation> AnimList = new List<FBXMeshAnimation>();
 

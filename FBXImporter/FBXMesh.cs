@@ -2,7 +2,9 @@
 using OpenTK;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Primitive;
 using FBXWrapper;
+using SharpOpenGL.SimpleMaterial;
 
 namespace FBXImporter
 {
@@ -60,11 +62,11 @@ namespace FBXImporter
             var TempIndices =  NewIndexList.ToArray();
             
 
-            MeshDrawable = new TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute>();
+            MeshDrawable = new TriangleDrawable<P_VertexAttribute>();
             MeshDrawable.SetupData(ref TempVertices, ref TempIndices);
 
-            BoneDrawable = new LineDrawable<SharpOpenGL.SimpleMaterial.VertexAttribute>();
-            List<SharpOpenGL.SimpleMaterial.VertexAttribute> BoneVertices = new List<SharpOpenGL.SimpleMaterial.VertexAttribute>();
+            BoneDrawable = new LineDrawable<P_VertexAttribute>();
+            var BoneVertices = new List<P_VertexAttribute>();
             List<uint> BoneIndices = new List<uint>();
                         
             OpenTK.Vector4 vOrigin = new OpenTK.Vector4(0, 0, 0, 1);
@@ -79,16 +81,10 @@ namespace FBXImporter
                     OpenTK.Matrix4 ChildTransform = (OpenTK.Matrix4) It.Current().ChildBoneList[i].LinkTransform;
                     OpenTK.Vector4 vEnd = OpenTK.Vector4.Transform(vOrigin, ChildTransform);
 
-                    SharpOpenGL.SimpleMaterial.VertexAttribute NewVertex1;
-                    NewVertex1.VertexPosition = vStart.Xyz;
-
-                    SharpOpenGL.SimpleMaterial.VertexAttribute NewVertex2;
-                    NewVertex2.VertexPosition = vEnd.Xyz;
-
-                    BoneVertices.Add(NewVertex1);
+                    BoneVertices.Add(vStart);
                     BoneIndices.Add((uint)BoneIndices.Count);
 
-                    BoneVertices.Add(NewVertex2);
+                    BoneVertices.Add(vEnd);
                     BoneIndices.Add((uint)BoneIndices.Count);
                 }
             }
@@ -116,8 +112,8 @@ namespace FBXImporter
         }
 
         ParsedFBXMeshBone RootBone = null;
-        TriangleDrawable<SharpOpenGL.BasicMaterial.VertexAttribute> MeshDrawable = null;
-        LineDrawable<SharpOpenGL.SimpleMaterial.VertexAttribute> BoneDrawable = null;
+        TriangleDrawable<P_VertexAttribute> MeshDrawable = null;
+        LineDrawable<P_VertexAttribute> BoneDrawable = null;
         public OpenTK.Vector3 MinVertex = new OpenTK.Vector3();
         public OpenTK.Vector3 MaxVertex = new OpenTK.Vector3();
     }
