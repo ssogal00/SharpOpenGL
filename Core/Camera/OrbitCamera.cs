@@ -29,11 +29,11 @@ namespace Core.Camera
             }
             else if(e.Key == OpenTK.Input.Key.A)
             {
-                RotateLeft();
+                RotateYawLeft();
             }
             else if(e.Key == OpenTK.Input.Key.D)
             {
-                RotateRight();
+                RotateYawRight();
             }
             else if(e.Key == Key.Q)
             {
@@ -95,13 +95,13 @@ namespace Core.Camera
             return LookAtLocation + translation.Xyz;
         }
 
-        public override void RotateRight()
+        public override void RotateYawRight()
         {
             Yaw += OpenTK.MathHelper.DegreesToRadians(3.0f);
             DestEyeLocation = GetDestEyeLocation();
         }
 
-        public override void RotateLeft()
+        public override void RotateYawLeft()
         {
             Yaw -= OpenTK.MathHelper.DegreesToRadians(3.0f);
             DestEyeLocation = GetDestEyeLocation();

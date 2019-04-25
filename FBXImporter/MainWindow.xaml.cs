@@ -62,8 +62,6 @@ namespace FBXImporter
             {
                 MyFBXMesh.SetFBXMeshInfo(TestParsedFbxMesh);
             }
-
-            cube = new Core.Cube();
             
             for (int i = 0; i < 100; i++)
             {

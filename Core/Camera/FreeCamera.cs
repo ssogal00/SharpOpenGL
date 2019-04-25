@@ -136,12 +136,22 @@ namespace Core.Camera
             Destination = EyeLocation - vMove;
         }
 
-        public override void RotateRight()
+        public override void RotateYaw(float amount)
+        {
+            Yaw -= amount;
+        }
+
+        public override void RotatePitch(float amount)
+        {
+            Pitch += amount;
+        }
+
+        public override void RotateYawRight()
         {
             Yaw -= m_fRotateAmount;
         }
 
-        public override void RotateLeft()
+        public override void RotateYawLeft()
         {
             Yaw += m_fRotateAmount;
         }
@@ -214,11 +224,11 @@ namespace Core.Camera
 
             if (e.Key == OpenTK.Input.Key.E)
             {
-                RotateRight();
+                RotateYawRight();
             }
             else if(e.Key == OpenTK.Input.Key.Q)
             {
-                RotateLeft();
+                RotateYawLeft();
             }
             else if (e.Key == OpenTK.Input.Key.C)
             {

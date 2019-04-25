@@ -28,12 +28,8 @@ namespace SharpOpenGL
         protected event EventHandler<ScreenResizeEventArgs> OnWindowResize;
         protected BlitToScreen ScreenBlit = new BlitToScreen();
 
-        // @ postprocess start
+        #region @PostProcess Start
         protected Skybox skyboxPostProcess = new Skybox();
-
-        //protected BlurPostProcess blurPostProcess = new BlurPostProcess();
-        //protected BloomPostProcess bloomPostProcess = new BloomPostProcess();
-
         protected DeferredLight lightPostProcess = new DeferredLight();
         protected GBufferVisualize gbufferVisualize = new GBufferVisualize();
         protected DepthVisualize depthVisualize = new DepthVisualize();
@@ -43,24 +39,24 @@ namespace SharpOpenGL
         protected SSAO ssaoPostProcess = new SSAO();
         protected HDAO hdaoPostProcess = new HDAO();
         protected FXAAPostProcess fxaa = new FXAAPostProcess();
-        // @postprocess end
+        #endregion
 
         protected LookUpTable2D lut = new LookUpTable2D();
         protected Prefilter prefilter = new Prefilter();
-
 
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
         protected StaticMeshObject sponzamesh = null;
         protected StaticMeshObject pistol = null;
         protected bool bInitialized = false;
 
-        protected MaterialBase GBufferMaterial = null;
-        protected MaterialBase GridMaterial = null;
-        protected MaterialBase WireframeMaterial = null;
-
-
         public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyDownEvent;
         public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyUpEvent;
+
+#region @Mouse Info
+        private OpenTK.Vector2 LastMouseBtnDownPosition = new Vector2(0);
+        private OpenTK.Vector2 LastMouseBtnMovePosition = new Vector2(0);
+        private bool LeftMouseBtnDown = false;
+#endregion
 
         public RenderingThreadWindow(int width, int height)
         :base (width, height)
@@ -102,10 +98,6 @@ namespace SharpOpenGL
             sponzamesh.Metallic = 0.6f;
             sponzamesh.Roughness = 0.3f;
 
-            GBufferMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
-            GridMaterial = ShaderManager.Get().GetMaterial("GridRenderMaterial");
-            WireframeMaterial = ShaderManager.Get().GetMaterial("GBufferPNC");
-
             if (equirectToCube.IsTransformCompleted == false)
             {
                 equirectToCube.Transform();
@@ -134,6 +126,7 @@ namespace SharpOpenGL
             bInitialized = true;
         }
 
+
         protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)
         {
             base.OnKeyDown(e);
@@ -146,6 +139,49 @@ namespace SharpOpenGL
             if (OnKeyUpEvent != null)
             {
                 OnKeyUpEvent(this, e);
+            }
+        }
+
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            if (e.Button == MouseButton.Left)
+            {
+                LastMouseBtnDownPosition = new Vector2(e.X, e.Y);
+                LeftMouseBtnDown = true;
+            }
+        }
+
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+        }
+        //
+        protected override void OnMouseMove(MouseMoveEventArgs e)
+        {
+            if (LeftMouseBtnDown)
+            {
+                if (Math.Abs(e.XDelta) > 0)
+                {
+                    CameraManager.Get().CurrentCamera.RotateYaw(e.XDelta * 0.01f);
+                }
+
+                if (Math.Abs(e.YDelta) > 0)
+                {
+                    CameraManager.Get().CurrentCamera.RotatePitch(e.YDelta * 0.01f);
+                }
+            }
+        }
+        //
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            if (e.Button == MouseButton.Left)
+            {
+                LeftMouseBtnDown = false;
             }
         }
 
