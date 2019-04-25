@@ -3,7 +3,7 @@ using ZeroFormatter;
 using ZeroFormatter.Formatters;
 using ZeroFormatter.Internal;
 
-namespace SharpOpenGL.StaticMesh
+namespace Core.StaticMesh
 {
     [ZeroFormattable]
     public class ObjMeshSection

@@ -90,6 +90,7 @@
     <Compile Include="Operator\Vector3MultiplyFloat.cs" />
     <Compile Include="Operator\Vector4AddNode.cs" />
     <Compile Include="Operator\Vector4MultiplyFloat.cs" />
+    <Compile Include="PreviewMeshObject.cs" />
     <Compile Include="Result\ResultNode.cs" />
     <Compile Include="TextureFile.cs" />
     <Compile Include="UniformParam\FloatUniformVariableNode.cs" />

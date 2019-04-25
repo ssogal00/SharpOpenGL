@@ -114,6 +114,8 @@
     <Compile Include="ResizableManager.cs" />
     <Compile Include="SamplerParameter.cs" />
     <Compile Include="ScopedStopWatch.cs" />
+    <Compile Include="StaticMesh\ObjMeshMaterial.cs" />
+    <Compile Include="StaticMesh\ObjMeshSection.cs" />
     <Compile Include="Texture\CubemapRenderTarget.cs" />
     <Compile Include="Texture\HDRTexture.cs" />
     <Compile Include="Texture\RenderBufferTarget.cs" />
@@ -150,9 +152,7 @@
     <Compile Include="VertexCustomAttribute\ComponentCount.cs" />
     <Compile Include="VertexCustomAttribute\ComponentType.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="StaticMesh\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ImageWrapper\ImageWrapper.vcxproj">
       <Project>{39e0b5dd-0884-494f-8b6a-f17ef1201f39}</Project>

@@ -30,20 +30,25 @@ namespace SharpOpenGL.Asset
             return null;
         }
 
+        private static object syncObject = new object();
+
         public static T LoadAssetSync<T>(string path) where T : AssetBase
         {
-            var cachedAsset = GetAsset<T>(Path.GetFileName(path));
-
-            if (cachedAsset != null)
+            lock (syncObject)
             {
-                return cachedAsset;
-            }
+                var cachedAsset = GetAsset<T>(Path.GetFileName(path));
 
-            byte[] data = File.ReadAllBytes(path);
-            T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
-            AssetMap.TryAdd(Path.GetFileName(path), asset);
-            
-            return asset;
+                if (cachedAsset != null)
+                {
+                    return cachedAsset;
+                }
+
+                byte[] data = File.ReadAllBytes(path);
+                T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
+                AssetMap.TryAdd(Path.GetFileName(path), asset);
+
+                return asset;
+            }
         }
 
         public static async Task<T> LoadAssetAsync<T>(string path) where T : AssetBase

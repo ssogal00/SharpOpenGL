@@ -9,6 +9,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using Core.Camera;
 using ZeroFormatter.Formatters;
 
 namespace MaterialEditor
@@ -57,6 +58,8 @@ namespace MaterialEditor
         protected DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer(DispatcherPriority.Normal);
         protected LiveMaterial liveMaterial = null;
 
+        protected OrbitCamera mainCamera = new OrbitCamera();
+
         protected float fAngle = 0.0f;
 
         protected ImpObservableCollection<TextureFile> textureFileList = new ImpObservableCollection<TextureFile>();
@@ -77,26 +80,13 @@ namespace MaterialEditor
             GL.Enable(EnableCap.DepthTest);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
-           
             
             mGlControl.SwapBuffers();
         }
 
         protected void OnLoaded(object sender, RoutedEventArgs e)
         {
-            var texturelist = Directory.EnumerateFiles("./Resources/SponzaTexture");
 
-            foreach(var texture in texturelist)
-            {
-                var fullPath = Path.GetFullPath(texture);
-                if (texture.EndsWith(".dds"))
-                {
-                    textureFileList.Add(new TextureFile(fullPath));
-                }
-            }
-
-            this.textureListView.ItemsSource = textureFileList;
         }
 
         public void GLControlMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)

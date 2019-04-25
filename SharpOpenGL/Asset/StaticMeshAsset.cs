@@ -1,15 +1,13 @@
-﻿using System;
+﻿using Core.Primitive;
+using Core.StaticMesh;
+using OpenTK;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Core;
 using System.Threading.Tasks;
-using OpenTK;
-using Core.Primitive;
 using ZeroFormatter;
-using Core.Texture;
-using System.Diagnostics;
 
 
 namespace SharpOpenGL.StaticMesh

@@ -207,8 +207,6 @@
     <Compile Include="Scene\TesselationScene.cs" />
     <Compile Include="ShaderManager.cs" />
     <Compile Include="StaticMeshCapture.cs" />
-    <Compile Include="StaticMesh\ObjMeshMaterial.cs" />
-    <Compile Include="StaticMesh\ObjMeshSection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Asset\StaticMeshAsset.cs" />
@@ -269,6 +267,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Camera\" />
+    <Folder Include="StaticMesh\" />
     <Folder Include="VertexCustomAttribute\" />
   </ItemGroup>
   <ItemGroup>

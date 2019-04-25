@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using ZeroFormatter;
 
-namespace SharpOpenGL.StaticMesh
+namespace Core.StaticMesh
 {
     [ZeroFormattable]
     public class ObjMeshMaterial
