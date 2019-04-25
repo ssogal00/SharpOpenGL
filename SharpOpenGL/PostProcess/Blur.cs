@@ -3,6 +3,7 @@ using Core.Texture;
 using OpenTK;
 using System;
 using System.Collections.Generic;
+using CompiledMaterial.Blur;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -24,14 +25,14 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<Blur.Blur>();
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<Blur>();
         }
 
         public override void Render(TextureBase input)
         {
             TempOutput.BindAndExecute(PostProcessMaterial, () =>
             {
-                var blurMaterial = (Blur.Blur) (PostProcessMaterial);
+                var blurMaterial = (Blur) (PostProcessMaterial);
                 blurMaterial.Horizontal = false;
                 blurMaterial.ColorTex2D = input;
                 BlitToScreenSpace();
@@ -39,7 +40,7 @@ namespace SharpOpenGL.PostProcess
 
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
-                var blurMaterial = (Blur.Blur) (PostProcessMaterial);
+                var blurMaterial = (Blur) (PostProcessMaterial);
                 blurMaterial.Horizontal = true;
                 blurMaterial.ColorTex2D = TempOutput.ColorAttachment0;
                 BlitToScreenSpace();

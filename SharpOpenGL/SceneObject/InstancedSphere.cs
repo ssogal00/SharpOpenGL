@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompiledMaterial.GBufferInstanced;
 using Core;
 using Core.Primitive;
 using OpenTK;
@@ -40,7 +41,7 @@ namespace SharpOpenGL
 
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferInstanced.GBufferInstanced>();
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferInstanced>();
 
                 bReadyToDraw = true;
             });
@@ -52,7 +53,7 @@ namespace SharpOpenGL
             {
                 using (var dummy = new ScopedBind(defaultMaterial))
                 {
-                    var gbufferDraw = (GBufferInstanced.GBufferInstanced) defaultMaterial;
+                    var gbufferDraw = (GBufferInstanced) defaultMaterial;
 
                     gbufferDraw.LightChannel = (int) Light.LightChannel.StaticMeshChannel;
                     

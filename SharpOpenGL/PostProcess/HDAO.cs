@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompiledMaterial.HDAOMaterial;
 using Core;
 using Core.Texture;
 using OpenTK;
@@ -16,7 +17,7 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<HDAOMaterial.HDAOMaterial>();
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<HDAOMaterial>();
         }
 
         private OpenTK.Vector2 FocalLen = new Vector2(0);
@@ -27,7 +28,7 @@ namespace SharpOpenGL.PostProcess
 
         public override void Render(TextureBase postionTex, TextureBase normalTex)
         {
-            var hdaoMaterial = (HDAOMaterial.HDAOMaterial)PostProcessMaterial;
+            var hdaoMaterial = (HDAOMaterial)PostProcessMaterial;
 
             Output.BindAndExecute(hdaoMaterial, () =>
             {

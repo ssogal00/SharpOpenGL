@@ -4,6 +4,7 @@ using Core.Texture;
 using System.Diagnostics;
 using System.Windows;
 using System.Drawing;
+using CompiledMaterial.DepthVisualizeMaterial;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -17,14 +18,14 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<DepthVisualizeMaterial.DepthVisualizeMaterial>();
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<DepthVisualizeMaterial>();
 
             Debug.Assert(PostProcessMaterial != null);
         }
 
         public override void Render(TextureBase Input0)
         {
-            var concretemtl = (DepthVisualizeMaterial.DepthVisualizeMaterial) (PostProcessMaterial);
+            var concretemtl = (DepthVisualizeMaterial) (PostProcessMaterial);
 
             Output.BindAndExecute(concretemtl, ()=>
             {

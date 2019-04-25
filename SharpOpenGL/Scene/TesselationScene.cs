@@ -9,7 +9,7 @@ using Core;
 using System.IO;
 using Core.Buffer;
 using OpenTK.Graphics.OpenGL;
-using  SharpOpenGL.GBufferDraw;
+using  CompiledMaterial.GBufferDraw;
 using Core.CustomEvent;
 using OpenTK;
 

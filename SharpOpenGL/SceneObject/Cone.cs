@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using OpenTK;
 using System.Diagnostics;
+using CompiledMaterial.GBufferPNC;
 using Core;
 using Core.Buffer;
 using Core.MaterialBase;
@@ -47,7 +48,7 @@ namespace SharpOpenGL
                 VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC.GBufferPNC>();
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC>();
 
                 bReadyToDraw = true;
             });

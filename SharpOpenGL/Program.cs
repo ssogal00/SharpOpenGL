@@ -18,6 +18,7 @@ using System;
 using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
+using CompiledMaterial.GBufferDraw;
 using SharpOpenGL.Asset;
 using ZeroFormatter.Formatters;
 
@@ -42,8 +43,8 @@ namespace SharpOpenGL
         {
         }
 
-        protected GBufferDraw.ModelTransform ModelMatrix = new GBufferDraw.ModelTransform();
-        protected GBufferDraw.CameraTransform Transform = new GBufferDraw.CameraTransform();
+        protected CompiledMaterial.GBufferDraw.ModelTransform ModelMatrix = new CompiledMaterial.GBufferDraw.ModelTransform();
+        protected CompiledMaterial.GBufferDraw.CameraTransform Transform = new CompiledMaterial.GBufferDraw.CameraTransform();
         
         protected Core.MaterialBase.MaterialBase GBufferMaterial = null;
         protected Core.MaterialBase.MaterialBase DefaultMaterial = null;

@@ -8,6 +8,7 @@ using Core;
 using Core.Primitive;
 using FBXWrapper;
 using OpenTK;
+using CompiledMaterial;
 
 namespace FBXImporter
 {
@@ -18,7 +19,7 @@ namespace FBXImporter
             ParsedAnim = _ParsedAnimation;
 
             BoneDrawable = new LineDrawable<P_VertexAttribute>();
-            List<SharpOpenGL.SimpleMaterial.VertexAttribute> BoneVertices = new List<SharpOpenGL.SimpleMaterial.VertexAttribute>();
+            List<CompiledMaterial.SimpleMaterial.VertexAttribute> BoneVertices = new List<CompiledMaterial.SimpleMaterial.VertexAttribute>();
             List<uint> BoneIndices = new List<uint>();
 
             OpenTK.Vector4 vOrigin = new OpenTK.Vector4(0, 0, 0, 1);
@@ -55,10 +56,10 @@ namespace FBXImporter
 
                     OpenTK.Vector4 vEnd = OpenTK.Vector4.Transform(vOrigin, CurrentTrasnform);
 
-                    SharpOpenGL.SimpleMaterial.VertexAttribute NewVertex1;
+                    CompiledMaterial.SimpleMaterial.VertexAttribute NewVertex1;
                     NewVertex1.VertexPosition = vStart.Xyz;
 
-                    SharpOpenGL.SimpleMaterial.VertexAttribute NewVertex2;
+                    CompiledMaterial.SimpleMaterial.VertexAttribute NewVertex2;
                     NewVertex2.VertexPosition = vEnd.Xyz;
 
                     BoneVertices.Add(NewVertex1);
@@ -76,7 +77,7 @@ namespace FBXImporter
 
             MeshDrawable = new TriangleDrawable<P_VertexAttribute>();
 
-            List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
+            List<CompiledMaterial.BasicMaterial.VertexAttribute> Vertices = new List<CompiledMaterial.BasicMaterial.VertexAttribute>();
             List<uint> ControlPointIndexList = _ParsedAnimation.Mesh.IndexList;
             List<uint> NewIndexList = new List<uint>();
 
@@ -107,7 +108,7 @@ namespace FBXImporter
             //for (int i = 0; i < _ParsedFBXMesh.ControlPointList.Count; ++i)
             for (int i = 0; i < TransformedVertices.Count; ++i)
             {
-                SharpOpenGL.BasicMaterial.VertexAttribute NewVertex = new SharpOpenGL.BasicMaterial.VertexAttribute();
+                CompiledMaterial.BasicMaterial.VertexAttribute NewVertex = new CompiledMaterial.BasicMaterial.VertexAttribute();
                 NewVertex.VertexPosition = TransformedVertices[i].Xyz;
                 //NewVertex.TexCoord = _ParsedFBXMesh.UVList[i];
 

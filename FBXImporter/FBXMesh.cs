@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Core.Primitive;
 using FBXWrapper;
-using SharpOpenGL.SimpleMaterial;
+using CompiledMaterial.SimpleMaterial;
+using CompiledMaterial.BasicMaterial;
 
 namespace FBXImporter
 {
@@ -21,7 +22,7 @@ namespace FBXImporter
 
             RootBone = parsedFBXMesh.RootBone;
 
-            List<SharpOpenGL.BasicMaterial.VertexAttribute> Vertices = new List<SharpOpenGL.BasicMaterial.VertexAttribute>();
+            List<CompiledMaterial.BasicMaterial.VertexAttribute> Vertices = new List<CompiledMaterial.BasicMaterial.VertexAttribute>();
             List<uint> ControlPointIndexList = parsedFBXMesh.IndexList;
             List<uint> NewIndexList = new List<uint>();
 
@@ -51,7 +52,7 @@ namespace FBXImporter
             
             for (int i = 0; i < TransformedVertices.Count; ++i)
             {
-                SharpOpenGL.BasicMaterial.VertexAttribute NewVertex = new SharpOpenGL.BasicMaterial.VertexAttribute();
+                CompiledMaterial.BasicMaterial.VertexAttribute NewVertex = new CompiledMaterial.BasicMaterial.VertexAttribute();
                 NewVertex.VertexPosition = TransformedVertices[i].Xyz;
 
                 Vertices.Add(NewVertex);

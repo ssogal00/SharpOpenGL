@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompiledMaterial.PrefilterMaterial;
 using Core;
 using Core.Texture;
 using OpenTK;
@@ -18,7 +19,7 @@ namespace SharpOpenGL.Transform
         {
             base.OnGLContextCreated(sender, e);
 
-            prefilterMaterial = ShaderManager.Get().GetMaterial<PrefilterMaterial.PrefilterMaterial>();
+            prefilterMaterial = ShaderManager.Get().GetMaterial<PrefilterMaterial>();
 
             cubemesh = new Cube();
             cubemesh.SetVisible(false);
@@ -108,7 +109,7 @@ namespace SharpOpenGL.Transform
         private static readonly int SizeX = 512;
         private static readonly int SizeY = 512;
 
-        private PrefilterMaterial.PrefilterMaterial prefilterMaterial = null;
+        private PrefilterMaterial prefilterMaterial = null;
 
         private Cube cubemesh = null;
 

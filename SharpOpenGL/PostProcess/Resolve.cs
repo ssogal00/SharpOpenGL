@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompiledMaterial.ResolveMaterial;
 using Core;
 using Core.CustomEvent;
 using Core.Texture;
@@ -22,7 +23,7 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<ResolveMaterial.ResolveMaterial>();
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<ResolveMaterial>();
         }
 
         public override void Render(TextureBase colorTex, TextureBase motionTex)
@@ -30,7 +31,7 @@ namespace SharpOpenGL.PostProcess
             Output.BindAndExecute(PostProcessMaterial,
                 () =>
                 {
-                    var resolveMaterial = (ResolveMaterial.ResolveMaterial) PostProcessMaterial;
+                    var resolveMaterial = (ResolveMaterial) PostProcessMaterial;
                     resolveMaterial.ColorTex2D = colorTex;
                     resolveMaterial.MotionTex2D = motionTex;
 

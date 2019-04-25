@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompiledMaterial.GBufferCubeTest;
 using Core;
 
 using Core.MaterialBase;
@@ -118,7 +119,7 @@ namespace SharpOpenGL
 
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferCubeTest.GBufferCubeTest>();
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferCubeTest>();
 
                 bReadyToDraw = true;
             });
@@ -130,7 +131,7 @@ namespace SharpOpenGL
             {
                 using (var dummy = new ScopedBind(defaultMaterial))
                 {
-                    var gbufferDraw = (GBufferCubeTest.GBufferCubeTest)defaultMaterial;
+                    var gbufferDraw = (GBufferCubeTest)defaultMaterial;
 
                     gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;

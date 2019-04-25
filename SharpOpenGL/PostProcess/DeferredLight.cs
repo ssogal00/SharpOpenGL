@@ -7,6 +7,7 @@ using SharpOpenGL.Light;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CompiledMaterial.LightMaterial;
 
 namespace SharpOpenGL.PostProcess
 {
@@ -22,7 +23,7 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = new SharpOpenGL.LightMaterial.LightMaterial();
+            PostProcessMaterial = new LightMaterial();
 
         }
 
@@ -54,7 +55,7 @@ namespace SharpOpenGL.PostProcess
 
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
-                var deferredLight = (LightMaterial.LightMaterial) PostProcessMaterial;
+                var deferredLight = (LightMaterial) PostProcessMaterial;
                 deferredLight.PositionTex2D = positionInput;
                 deferredLight.NormalTex2D = normalInput;
                 deferredLight.DiffuseTex2D = colorInput;

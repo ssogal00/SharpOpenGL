@@ -14,7 +14,7 @@ namespace ShaderCompiler
             string _VSSourceCode, string _FSSourceCode, string _MaterialName
             )
         {            
-            NameSpace = string.Format("SharpOpenGL.{0}", _MaterialName);
+            NameSpace = string.Format("CompiledMaterial.{0}", _MaterialName);
             FSProgram = FSProgramObject;
             VSProgram = VSProgramObject;
             VSSourceCode = _VSSourceCode;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SharpOpenGL;
+using CompiledMaterial;
 using Core.OpenGLShader;
 using Core.MaterialBase;
 using System.IO;

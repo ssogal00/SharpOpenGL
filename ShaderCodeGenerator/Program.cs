@@ -103,13 +103,13 @@ namespace ShaderCompiler
                             }
 
                             var VertexAttributeOutputFilename = "CompiledVertexAttributes.cs";
-                            File.WriteAllText(Path.Combine(outputpath, VertexAttributeOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(vertexAttributeContents));
+                            File.WriteAllText(Path.Combine(outputpath, VertexAttributeOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(vertexAttributeContents, "CompiledMaterial"));
 
                             var UniformVariableOutputFilename = "CompiledUniformVariable.cs";
-                            File.WriteAllText(Path.Combine(outputpath, UniformVariableOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(uniformVariableContents));
+                            File.WriteAllText(Path.Combine(outputpath, UniformVariableOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(uniformVariableContents, "CompiledMaterial"));
 
                             var CompiledMaterialOutputFilename = "CompiledMaterial.cs";
-                            File.WriteAllText(Path.Combine(outputpath, CompiledMaterialOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(materialContents));
+                            File.WriteAllText(Path.Combine(outputpath, CompiledMaterialOutputFilename), CodeGenerator.GetCodeWithNamesapceAndDependency(materialContents, "CompiledMaterial"));
                         }
                     }
                 }

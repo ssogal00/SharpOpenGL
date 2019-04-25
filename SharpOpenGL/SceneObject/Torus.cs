@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using CompiledMaterial.GBufferPNC;
 using Core;
 using Core.MaterialBase;
 using Core.Primitive;
@@ -36,7 +37,7 @@ namespace SharpOpenGL
                 var vertexArray = VertexList.ToArray();
                 drawable.SetupVertexData(ref vertexArray);
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC.GBufferPNC>();
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC>();
 
                 VertexList.Clear();
                 bReadyToDraw = true;

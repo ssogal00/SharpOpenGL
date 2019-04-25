@@ -7,6 +7,7 @@ using OpenTK.Graphics.OpenGL;
 using System;
 using Core.Texture;
 using System.Diagnostics;
+using CompiledMaterial.ScreenSpaceDraw;
 
 namespace SharpOpenGL
 {
@@ -33,7 +34,7 @@ namespace SharpOpenGL
 
         public void Create()
         {
-            Material = new ScreenSpaceDraw.ScreenSpaceDraw();
+            Material = new ScreenSpaceDraw();
 
             VB = new StaticVertexBuffer<PT_VertexAttribute>();
             IB = new IndexBuffer();
@@ -139,7 +140,7 @@ namespace SharpOpenGL
             VB.BufferData<PT_VertexAttribute>(ref VertexArray);
         }
 
-        protected SharpOpenGL.ScreenSpaceDraw.ScreenSpaceDraw Material = null;
+        protected ScreenSpaceDraw Material = null;
         protected List<uint> Indices = new List<uint>();
         protected StaticVertexBuffer<PT_VertexAttribute> VB = null;
         protected IndexBuffer IB = null;

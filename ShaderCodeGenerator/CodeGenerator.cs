@@ -44,7 +44,7 @@ namespace ShaderCompiler
             return Builder.ToString();
         }
 
-        public static string GetCodeWithNamesapceAndDependency(string CodeToWrap)
+        public static string GetCodeWithNamesapceAndDependency(string CodeToWrap, string NameSpace)
         {
             StringBuilder Builder = new StringBuilder("");
 
@@ -53,7 +53,7 @@ namespace ShaderCompiler
                 Builder.AppendLine(string.Format("using {0};", Dependency));
             }
 
-            Builder.AppendLine("namespace SharpOpenGL");
+            Builder.AppendLine(string.Format("namespace {0}", NameSpace));
             Builder.AppendLine("{");
             Builder.AppendLine(CodeToWrap);
             Builder.AppendLine("}");

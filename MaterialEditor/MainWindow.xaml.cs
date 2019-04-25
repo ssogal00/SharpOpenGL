@@ -10,6 +10,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using Core.Camera;
+using Core.Asset;
+using Core.StaticMesh;
 using ZeroFormatter.Formatters;
 
 namespace MaterialEditor
@@ -58,6 +60,7 @@ namespace MaterialEditor
         protected DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer(DispatcherPriority.Normal);
         protected LiveMaterial liveMaterial = null;
 
+        protected PreviewMesh previewMesh = null;
         protected OrbitCamera mainCamera = new OrbitCamera();
 
         protected float fAngle = 0.0f;
@@ -86,7 +89,7 @@ namespace MaterialEditor
 
         protected void OnLoaded(object sender, RoutedEventArgs e)
         {
-
+            previewMesh = new PreviewMesh("myteapot.staticmesh");
         }
 
         public void GLControlMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)

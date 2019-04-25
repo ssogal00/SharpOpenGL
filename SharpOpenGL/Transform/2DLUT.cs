@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompiledMaterial.LUTGenerateMaterial;
 using Core;
 using Core.MaterialBase;
 using Core.Texture;
@@ -18,7 +19,7 @@ namespace SharpOpenGL.Transform
         {
             base.OnGLContextCreated(sender, e);
 
-            material = ShaderManager.Get().GetMaterial<LUTGenerateMaterial.LUTGenerateMaterial>();
+            material = ShaderManager.Get().GetMaterial<LUTGenerateMaterial>();
         }
 
         protected override void CreateDefaultRenderTarget()
@@ -57,6 +58,6 @@ namespace SharpOpenGL.Transform
             );
         }
 
-        protected LUTGenerateMaterial.LUTGenerateMaterial material = null;
+        protected LUTGenerateMaterial material = null;
     }
 }

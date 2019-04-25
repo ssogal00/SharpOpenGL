@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using CompiledMaterial.GBufferDraw;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Core;
@@ -58,7 +59,7 @@ namespace SharpOpenGL
 
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw.GBufferDraw>();
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw>();
 
                 normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_normal-dx.imported");
                 diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_basecolor.imported");
@@ -75,7 +76,7 @@ namespace SharpOpenGL
             {
                 using (var dummy = new ScopedBind(defaultMaterial))
                 {
-                    var gbufferDraw = (GBufferDraw.GBufferDraw) defaultMaterial;
+                    var gbufferDraw = (GBufferDraw) defaultMaterial;
 
                     gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;

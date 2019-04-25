@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Animation;
+using CompiledMaterial.SSAOMaterial;
 using Core;
 using Core.Texture;
 using OpenTK;
@@ -30,7 +31,7 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<SSAOMaterial.SSAOMaterial>();
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<SSAOMaterial>();
 
             BuildKernel();
             BuildRandomRotationTexture();
@@ -38,7 +39,7 @@ namespace SharpOpenGL.PostProcess
 
         public override void Render(TextureBase positionTex, TextureBase normalTex)
         {
-            var ssaoMaterial = (SSAOMaterial.SSAOMaterial) PostProcessMaterial;
+            var ssaoMaterial = (SSAOMaterial) PostProcessMaterial;
 
             Output.BindAndExecute(ssaoMaterial, () =>
             {

@@ -6,6 +6,7 @@ using OpenTK;
 using Core.Asset;
 using System.Diagnostics;
 using System.IO;
+using CompiledMaterial.GBufferDraw;
 
 namespace SharpOpenGL
 {
@@ -93,7 +94,7 @@ namespace SharpOpenGL
                 return;
             }
 
-            var gbufferMaterial = ShaderManager.Get().GetMaterial<GBufferDraw.GBufferDraw>();
+            var gbufferMaterial = ShaderManager.Get().GetMaterial<GBufferDraw>();
 
             Debug.Assert(gbufferMaterial != null);
 

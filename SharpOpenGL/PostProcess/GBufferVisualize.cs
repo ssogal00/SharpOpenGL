@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompiledMaterial.GBufferDump;
 using Core;
 using Core.Texture;
 
@@ -57,14 +58,14 @@ namespace SharpOpenGL.PostProcess
         public override void OnGLContextCreated(object sender, EventArgs e)
         {
             base.OnGLContextCreated(sender, e);
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<GBufferDump.GBufferDump>();
+            PostProcessMaterial = ShaderManager.Get().GetMaterial<GBufferDump>();
         }
 
         public override void Render(TextureBase ColorInput, TextureBase NormalInput, TextureBase PositionInput, TextureBase MotionInput)
         {
             Output.ClearColor = Color.Violet;
 
-            var gbufferVisualize = (GBufferDump.GBufferDump) PostProcessMaterial;
+            var gbufferVisualize = (GBufferDump) PostProcessMaterial;
 
             Output.BindAndExecute(gbufferVisualize, () =>
             {

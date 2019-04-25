@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Threading;
+using CompiledMaterial.BasicMaterial;
+using CompiledMaterial.SimpleMaterial;
 
 namespace FBXImporter
 {
@@ -47,8 +49,8 @@ namespace FBXImporter
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.DepthTest);
 
-            TestMaterial = new SharpOpenGL.BasicMaterial.BasicMaterial();
-            Simple = new SharpOpenGL.SimpleMaterial.SimpleMaterial();
+            TestMaterial = new BasicMaterial();
+            Simple = new SimpleMaterial();
             TestMaterial.Use();
             if (MyFBXMesh != null)
             {
@@ -90,7 +92,7 @@ namespace FBXImporter
             LineTransform.Model = ModelTransform.Model;
 
             TestMaterial.Setup();
-            TestMaterial.SetUniformBufferValue<SharpOpenGL.BasicMaterial.Transform>("Transform", ref ModelTransform);
+            TestMaterial.SetUniformBufferValue<CompiledMaterial.BasicMaterial.Transform>("Transform", ref ModelTransform);
 
             if(MyFBXMesh != null)
             {                
@@ -98,7 +100,7 @@ namespace FBXImporter
             }
 
             Simple.Setup();
-            Simple.SetUniformBufferValue<SharpOpenGL.SimpleMaterial.Transform>("Transform", ref LineTransform);
+            Simple.SetUniformBufferValue<CompiledMaterial.SimpleMaterial.Transform>("Transform", ref LineTransform);
             if(MyFBXMesh != null)
             {
                 //MyFBXMesh.DrawBoneHierarchy();
@@ -150,16 +152,16 @@ namespace FBXImporter
             ModelTransform.View = Camera.View;
         }
 
-        protected SharpOpenGL.BasicMaterial.BasicMaterial TestMaterial = null;
-        protected SharpOpenGL.SimpleMaterial.SimpleMaterial Simple = null;
+        protected BasicMaterial TestMaterial = null;
+        protected SimpleMaterial Simple = null;
         
         
         protected Matrix4 ModelView = new Matrix4();
         protected Matrix4 Projection = new Matrix4();
         protected OrbitCamera Camera = new OrbitCamera();        
 
-        protected SharpOpenGL.BasicMaterial.Transform ModelTransform = new SharpOpenGL.BasicMaterial.Transform();
-        protected SharpOpenGL.SimpleMaterial.Transform LineTransform = new SharpOpenGL.SimpleMaterial.Transform();
+        protected CompiledMaterial.BasicMaterial.Transform ModelTransform = new CompiledMaterial.BasicMaterial.Transform();
+        protected CompiledMaterial.SimpleMaterial.Transform LineTransform = new CompiledMaterial.SimpleMaterial.Transform();
 
         protected ParsedFBXMesh TestParsedFbxMesh = null;
         protected ParsedFBXAnimStack TestAnimStack = null;

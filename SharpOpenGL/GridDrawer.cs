@@ -11,7 +11,8 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using SharpOpenGL.Asset;
-using SharpOpenGL.GridRenderMaterial;
+
+using CompiledMaterial.GridRenderMaterial;
 
 namespace SharpOpenGL
 {
@@ -80,8 +81,8 @@ namespace SharpOpenGL
         protected float gridSize = 100;
         protected int vertexCount = 0;
 
-        GridRenderMaterial.ModelTransform modelTransform = new ModelTransform();
-        GridRenderMaterial.CameraTransform cameraTransform = new CameraTransform();
+        CompiledMaterial.GridRenderMaterial.ModelTransform modelTransform = new ModelTransform();
+        CompiledMaterial.GridRenderMaterial.CameraTransform cameraTransform = new CameraTransform();
 
     }
 }

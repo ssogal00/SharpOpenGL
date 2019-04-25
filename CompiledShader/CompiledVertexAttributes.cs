@@ -11,7 +11,7 @@ using Core.MaterialBase;
 using ZeroFormatter;
 using ZeroFormatter.Formatters;
 using Core.CustomAttribute;
-namespace SharpOpenGL
+namespace CompiledMaterial
 {
 namespace BasicMaterial
 {

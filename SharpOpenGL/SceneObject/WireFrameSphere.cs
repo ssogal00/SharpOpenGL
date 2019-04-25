@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompiledMaterial.GBufferPNC;
 using Core.Primitive;
 using OpenTK;
 using Core;
@@ -51,7 +52,7 @@ namespace SharpOpenGL
 
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC.GBufferPNC>();
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC>();
 
                 bReadyToDraw = true;
             });
@@ -135,7 +136,7 @@ namespace SharpOpenGL
                 using (var dummy = new ScopedBind(defaultMaterial))
                 using (var wire = new WireFrameMode())
                 {
-                    var gbufferDraw = (GBufferPNC.GBufferPNC)defaultMaterial;
+                    var gbufferDraw = (GBufferPNC)defaultMaterial;
 
                     gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
                     gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;

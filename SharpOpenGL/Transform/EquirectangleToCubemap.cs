@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompiledMaterial.EquirectangleToCube;
 using Core;
 using Core.CustomAttribute;
 using Core.MaterialBase;
@@ -23,7 +24,7 @@ namespace SharpOpenGL
         {
             base.OnGLContextCreated(sender, e);
 
-            material = ShaderManager.Get().GetMaterial<EquirectangleToCube.EquirectangleToCube>();
+            material = ShaderManager.Get().GetMaterial<EquirectangleToCube>();
 
             // create hdr texture
             var hdr = new HDRTexture();
@@ -79,7 +80,7 @@ namespace SharpOpenGL
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
-            var equirectangleToCube = (EquirectangleToCube.EquirectangleToCube) material;
+            var equirectangleToCube = (EquirectangleToCube) material;
 
             using (var mtl =  new ScopedBind(equirectangleToCube))
             {

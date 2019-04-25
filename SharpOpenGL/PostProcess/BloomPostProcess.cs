@@ -1,6 +1,7 @@
 ﻿using Core;
 using Core.Texture;
 using System;
+using CompiledMaterial.BloomMaterial;
 
 
 namespace SharpOpenGL.PostProcess
@@ -24,14 +25,14 @@ namespace SharpOpenGL.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = new BloomMaterial.BloomMaterial();
+            PostProcessMaterial = new BloomMaterial();
         }
 
         public override void Render(TextureBase input)
         {
             Output.BindAndExecute(PostProcessMaterial, () =>
             {
-                var bloom = (BloomMaterial.BloomMaterial)(PostProcessMaterial);
+                var bloom = (BloomMaterial)(PostProcessMaterial);
 
                 bloom.ColorTex2D = input;
 

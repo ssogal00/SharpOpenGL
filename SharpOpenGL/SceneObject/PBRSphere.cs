@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using CompiledMaterial.GBufferDraw;
 using Core;
 using Core.Primitive;
 using Core.Texture;
@@ -56,7 +57,7 @@ namespace SharpOpenGL
 
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw.GBufferDraw>();
+                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw>();
 
                 if (normalTex == null && normalTexPath?.Length > 0)
                 {
@@ -126,7 +127,7 @@ namespace SharpOpenGL
             {
                 using (var dummy = new ScopedBind(defaultMaterial))
                 {
-                    var gbufferDraw = (GBufferDraw.GBufferDraw)defaultMaterial;
+                    var gbufferDraw = (GBufferDraw)defaultMaterial;
 
                     gbufferDraw.LightChannel = (int) Light.LightChannel.StaticMeshChannel;
                     gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;

@@ -7,8 +7,9 @@ using Core.Texture;
 using OpenTK;
 using Core.Asset;
 using SharpOpenGL.Font;
-using SharpOpenGL.GBufferDraw;
+
 using System.Drawing;
+using CompiledMaterial.GBufferDraw;
 
 
 namespace SharpOpenGL
@@ -44,7 +45,7 @@ namespace SharpOpenGL
                     
                     modelTransform.Model = Matrix4.CreateScale(1.0f);
                     
-                    gbufferMaterial.SetUniformBufferValue<GBufferDraw.CameraTransform>("CameraTransform", ref cameraTransform);
+                    gbufferMaterial.SetUniformBufferValue<CompiledMaterial.GBufferDraw.CameraTransform>("CameraTransform", ref cameraTransform);
                     gbufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelTransform);
                     staticMeshObject.Draw();
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CompiledMaterial.CubemapConvolution;
 using Core;
 using Core.MaterialBase;
 using Core.Texture;
@@ -19,7 +20,7 @@ namespace SharpOpenGL.Transform
         {
             base.OnGLContextCreated(sender, e);
 
-            material = ShaderManager.Get().GetMaterial<CubemapConvolution.CubemapConvolution>();
+            material = ShaderManager.Get().GetMaterial<CubemapConvolution>();
             
             //
             cubeMesh = new Cube();
@@ -76,7 +77,7 @@ namespace SharpOpenGL.Transform
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
-            var cubemapConvolution = (CubemapConvolution.CubemapConvolution) material;
+            var cubemapConvolution = (CubemapConvolution) material;
 
             using (var mtl = new ScopedBind(cubemapConvolution))
             {
