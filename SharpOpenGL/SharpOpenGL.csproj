@@ -161,6 +161,7 @@
     <Compile Include="CameraManager.cs" />
     <Compile Include="ConsoleCommandManager.cs" />
     <Compile Include="DebugDrawer.cs" />
+    <Compile Include="DrawBase.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="PostProcess\FXAAPostProcess.cs" />
     <Compile Include="PostProcess\HDAO.cs" />
