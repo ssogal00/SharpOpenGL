@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using ZeroFormatter.Formatters;
 using CompiledMaterial.GBufferDraw;
 using Core;
+using Core.Buffer;
 using OpenTK;
 using OpenTK.Graphics;
 
