@@ -72,7 +72,7 @@ namespace FBXImporter
             var BoneVertexArray = BoneVertices.ToArray();
             var BoneIndexArray = BoneIndices.ToArray();
 
-            BoneDrawable.SetupData(ref BoneVertexArray, ref BoneIndexArray);
+            //BoneDrawable.SetupData(ref BoneVertexArray, ref BoneIndexArray);
 
             MeshDrawable = new TriangleDrawable<P_VertexAttribute>();
 
@@ -121,7 +121,7 @@ namespace FBXImporter
 
 
             MeshDrawable = new TriangleDrawable<P_VertexAttribute>();
-            MeshDrawable.SetupData(ref TempVertices, ref TempIndices);                       
+            //MeshDrawable.SetupData(ref TempVertices, ref TempIndices);                       
         }
 
         public void DrawBoneHierarchy()

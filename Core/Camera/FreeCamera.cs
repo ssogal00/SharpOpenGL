@@ -221,23 +221,6 @@ namespace Core.Camera
                 MoveKeyDictionary[e.Key] = true;
                 Move();
             }
-
-            if (e.Key == OpenTK.Input.Key.E)
-            {
-                RotateYawRight();
-            }
-            else if(e.Key == OpenTK.Input.Key.Q)
-            {
-                RotateYawLeft();
-            }
-            else if (e.Key == OpenTK.Input.Key.C)
-            {
-                RotatePitchDownward();
-            }
-            else if (e.Key == OpenTK.Input.Key.V)
-            {
-                RotatePitchUpward();
-            }
         }
 
         public override void Tick(double fDeltaSeconds)

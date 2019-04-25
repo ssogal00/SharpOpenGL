@@ -55,7 +55,7 @@ namespace SharpOpenGL
 #region @Mouse Info
         private OpenTK.Vector2 LastMouseBtnDownPosition = new Vector2(0);
         private OpenTK.Vector2 LastMouseBtnMovePosition = new Vector2(0);
-        private bool LeftMouseBtnDown = false;
+        private bool RightMouseBtnDown = false;
 #endregion
 
         public RenderingThreadWindow(int width, int height)
@@ -144,10 +144,10 @@ namespace SharpOpenGL
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
-            if (e.Button == MouseButton.Left)
+            if (e.Button == MouseButton.Right)
             {
                 LastMouseBtnDownPosition = new Vector2(e.X, e.Y);
-                LeftMouseBtnDown = true;
+                RightMouseBtnDown = true;
             }
         }
 
@@ -163,7 +163,7 @@ namespace SharpOpenGL
         //
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
-            if (LeftMouseBtnDown)
+            if (RightMouseBtnDown)
             {
                 if (Math.Abs(e.XDelta) > 0)
                 {
@@ -179,9 +179,9 @@ namespace SharpOpenGL
         //
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
-            if (e.Button == MouseButton.Left)
+            if (e.Button == MouseButton.Right)
             {
-                LeftMouseBtnDown = false;
+                RightMouseBtnDown = false;
             }
         }
 

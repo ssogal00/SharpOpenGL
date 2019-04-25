@@ -63,7 +63,7 @@ namespace FBXImporter
             
 
             MeshDrawable = new TriangleDrawable<P_VertexAttribute>();
-            MeshDrawable.SetupData(ref TempVertices, ref TempIndices);
+           // MeshDrawable.SetupData(ref TempVertices, ref TempIndices);
 
             BoneDrawable = new LineDrawable<P_VertexAttribute>();
             var BoneVertices = new List<P_VertexAttribute>();
@@ -81,10 +81,10 @@ namespace FBXImporter
                     OpenTK.Matrix4 ChildTransform = (OpenTK.Matrix4) It.Current().ChildBoneList[i].LinkTransform;
                     OpenTK.Vector4 vEnd = OpenTK.Vector4.Transform(vOrigin, ChildTransform);
 
-                    BoneVertices.Add(vStart);
+                    //BoneVertices.Add(vStart);
                     BoneIndices.Add((uint)BoneIndices.Count);
 
-                    BoneVertices.Add(vEnd);
+                    //BoneVertices.Add(vEnd);
                     BoneIndices.Add((uint)BoneIndices.Count);
                 }
             }
