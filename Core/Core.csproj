@@ -64,6 +64,7 @@
     <Compile Include="AABB.cs" />
     <Compile Include="Asset.cs" />
     <Compile Include="Asset\AssetInfo.cs" />
+    <Compile Include="Asset\AssetManager.cs" />
     <Compile Include="Asset\StaticMeshAsset.cs" />
     <Compile Include="BindState.cs" />
     <Compile Include="Buffer\MultisampleGBuffer.cs" />

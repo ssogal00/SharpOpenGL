@@ -1,12 +1,7 @@
-﻿using System;
-using System.Drawing;
-using Core;
-using OpenTK;
+﻿using Core;
 using Core.Texture;
-using Core.StaticMesh;
-using SharpOpenGL.Asset;
 using OpenTK.Graphics.OpenGL;
-using Core.MaterialBase;
+using System;
 
 namespace SharpOpenGL.PostProcess
 {

@@ -3,7 +3,7 @@ using Core.CustomAttribute;
 using Core.Primitive;
 using Core.StaticMesh;
 using OpenTK;
-using SharpOpenGL.Asset;
+using Core.Asset;
 using System.Diagnostics;
 using System.IO;
 

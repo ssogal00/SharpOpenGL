@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using Core;
+﻿using Core;
 using Core.CustomAttribute;
 using Core.Texture;
-using Core.Tickable;
 using OpenTK;
-using SharpOpenGL.Light;
 using OpenTK.Graphics.OpenGL;
+using SharpOpenGL.Light;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SharpOpenGL.PostProcess
 {

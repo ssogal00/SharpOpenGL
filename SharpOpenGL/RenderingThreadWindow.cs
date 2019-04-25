@@ -6,7 +6,7 @@ using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-using SharpOpenGL.Asset;
+using Core.Asset;
 using SharpOpenGL.PostProcess;
 using SharpOpenGL.Transform;
 using System;

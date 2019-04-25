@@ -7,7 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SharpOpenGL.Asset
+namespace Core.Asset
 {
     public class AssetManager : Singleton<AssetManager>
     {

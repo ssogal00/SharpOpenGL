@@ -1,14 +1,8 @@
 ﻿using Core;
-using Core.CustomEvent;
-using Core.MaterialBase;
-
 using Core.Texture;
+using OpenTK;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using MathHelper = Core.MathHelper;
 
 namespace SharpOpenGL.PostProcess
 {

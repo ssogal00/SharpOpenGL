@@ -5,7 +5,7 @@ using Core.MaterialBase;
 using Core.StaticMesh;
 using Core.Texture;
 using OpenTK;
-using SharpOpenGL.Asset;
+using Core.Asset;
 using SharpOpenGL.Font;
 using SharpOpenGL.GBufferDraw;
 using System.Drawing;
