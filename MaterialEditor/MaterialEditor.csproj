@@ -9,11 +9,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MaterialEditor</RootNamespace>
     <AssemblyName>MaterialEditor</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -49,15 +50,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -199,10 +198,6 @@
     <ProjectReference Include="..\NodeEditorUtils\NodeEditorUtils.csproj">
       <Project>{4c8a458f-e1cd-4c8d-bb6b-9379a10205d6}</Project>
       <Name>NodeEditorUtils</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SharpOpenGL\SharpOpenGL.csproj">
-      <Project>{dea90434-3c61-4c6c-a682-7f8e00b9d2e7}</Project>
-      <Name>SharpOpenGL</Name>
     </ProjectReference>
     <ProjectReference Include="..\ZoomAndPan\ZoomAndPan.csproj">
       <Project>{a609faa5-6c95-45a7-abed-c2ade213d05c}</Project>

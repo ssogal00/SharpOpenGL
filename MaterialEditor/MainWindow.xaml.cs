@@ -1,28 +1,15 @@
-﻿using Core.Buffer;
-using Core.Camera;
-using Core.OpenGLShader;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using SharpOpenGL.StaticMesh;
-using System;
-using System.Windows;
-using System.Windows.Forms;
-
+﻿using Core.CustomEvent;
+using Core.CustomSerialize;
 using Core.MaterialBase;
-using System.Windows.Input;
-using SharpOpenGL;
-using Core.CustomEvent;
-using SharpOpenGL.GBufferDraw;
-using Core.Texture;
-using System.Windows.Threading;
+using MaterialEditor.Utils;
+using OpenTK.Graphics.OpenGL;
+using System;
 using System.Diagnostics;
 using System.IO;
-using Core;
-using Core.CustomSerialize;
-using MaterialEditor.Utils;
-using SharpOpenGL.Asset;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Threading;
 using ZeroFormatter.Formatters;
-using MathHelper = OpenTK.MathHelper;
 
 namespace MaterialEditor
 {
@@ -48,8 +35,6 @@ namespace MaterialEditor
         {
             fAngle += 1.0f;
 
-            modelTransform.Model = Matrix4.CreateFromAxisAngle(Vector3.UnitY, MathHelper.DegreesToRadians(fAngle)) * Matrix4.CreateScale(0.1f);
-
             mGlControl.Invalidate();
         }
         
@@ -62,19 +47,6 @@ namespace MaterialEditor
             }
         }
 
-        protected ShaderProgram ProgramObject;
-        
-        protected DynamicUniformBuffer TransformBuffer = null;
-        protected DynamicUniformBuffer ColorBuffer = null;
-
-        protected SharpOpenGL.GBufferDraw.CameraTransform cameraTransform = new CameraTransform();
-        protected ModelTransform modelTransform = new ModelTransform();
-
-        protected SharpOpenGL.PostProcess.DeferredLight LightPostProcess = null;
-
-        protected Texture2D test = null;
-        protected GBuffer MyGbuffer = new GBuffer(100,100);
-        protected BlitToScreen ScreenBlit = new BlitToScreen();        
 
         protected MaterialBase DeferredMaterial = null;
         protected Stopwatch watch = new Stopwatch();
@@ -84,8 +56,6 @@ namespace MaterialEditor
 
         protected DispatcherTimer timer = new System.Windows.Threading.DispatcherTimer(DispatcherPriority.Normal);
         protected LiveMaterial liveMaterial = null;
-
-        protected StaticMeshAsset mesh = null;
 
         protected float fAngle = 0.0f;
 
@@ -98,14 +68,6 @@ namespace MaterialEditor
             Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
             Formatter<DefaultResolver, OpenTK.Vector2>.Register(new Vector2Formatter<DefaultResolver>());
             Formatter<DefaultResolver, OpenTK.Vector4>.Register(new Vector4Formatter<DefaultResolver>());
-            
-
-            DeferredMaterial = ShaderManager.Get().GetMaterial("GBufferDraw");
-            LightPostProcess = new SharpOpenGL.PostProcess.DeferredLight();
-            
-           
-
-            liveMaterial = new LiveMaterial();
         }
 
         private void GLControlPaint(object sender, System.Windows.Forms.PaintEventArgs e)
