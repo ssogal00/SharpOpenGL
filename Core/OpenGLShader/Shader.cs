@@ -32,6 +32,32 @@ namespace Core.OpenGLShader
             }
         }
 
+        public bool CompileShader(string[] shaderSourceCodes, out string errorlog)
+        {
+            int [] LengthList = new int[shaderSourceCodes.Length];
+
+            for (int i = 0; i < shaderSourceCodes.Length; ++i)
+            {
+                LengthList[i] = shaderSourceCodes[i].Length;
+            }
+
+            GL.ShaderSource(shaderObject, shaderSourceCodes.Length, shaderSourceCodes, LengthList);
+            GL.CompileShader(shaderObject);
+
+            errorlog = string.Empty;
+
+            int nStatus;
+            GL.GetShader(shaderObject, ShaderParameter.CompileStatus, out nStatus);
+
+            if (nStatus != 1)
+            {
+                GL.GetShaderInfoLog(shaderObject, out errorlog);
+
+                return false;
+            }
+
+            return true;
+        }
         
 
         public bool CompileShader(string shaderSourceCode, out string errorlog)
