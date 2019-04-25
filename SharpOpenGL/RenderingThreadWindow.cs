@@ -53,6 +53,7 @@ namespace SharpOpenGL
         public RenderingThreadWindow(int width, int height)
         :base (width, height)
         {
+            
         }
 
         protected override void OnLoad(EventArgs e)

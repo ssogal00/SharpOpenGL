@@ -10,11 +10,18 @@ namespace Core.Camera
     {
         public OrbitCamera()
             : base(OpenTK.MathHelper.PiOver6, 1.0f, 1.0f, 10000.0f)
-        { }
+        {
+            EyeLocation = new Vector3(5, 5, 5);
+            DestLocation = new Vector3(5, 5, 5);
+            LookAtLocation = new Vector3(0, 0, 0);
+        }
 
         public OrbitCamera(float fFOV, float fAspectRatio, float fNear, float fFar)            
             : base(fFOV, fAspectRatio, fNear, fFar)
-        {            
+        {
+            EyeLocation = new Vector3(5, 5, 5);
+            DestLocation = new Vector3(5, 5, 5);
+            LookAtLocation = new Vector3(0, 0, 0);
         }
 
         public override void OnKeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)

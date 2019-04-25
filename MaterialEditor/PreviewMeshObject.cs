@@ -21,6 +21,14 @@ namespace MaterialEditor
             meshDrawable.SetupData(ref vertexArray, ref indexArray);
         }
 
+        public void Draw()
+        {
+            if (meshDrawable != null)
+            {
+                meshDrawable.Draw();
+            }
+        }
+
         private TriangleDrawable<PNTT_VertexAttribute> meshDrawable = new TriangleDrawable<PNTT_VertexAttribute>();
     }
 }

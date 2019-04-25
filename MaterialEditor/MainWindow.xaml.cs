@@ -1,18 +1,19 @@
-﻿using Core.CustomEvent;
+﻿using Core.Camera;
+using Core.CustomEvent;
 using Core.CustomSerialize;
 using Core.MaterialBase;
 using MaterialEditor.Utils;
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
-using Core.Camera;
-using Core.Asset;
-using Core.StaticMesh;
 using ZeroFormatter.Formatters;
+using CompiledMaterial.GBufferDraw;
+using Core;
+using OpenTK;
+using OpenTK.Graphics;
 
 namespace MaterialEditor
 {
@@ -38,6 +39,11 @@ namespace MaterialEditor
         {
             fAngle += 1.0f;
 
+            if (mainCamera != null)
+            {
+                mainCamera.Tick(0.1f);
+            }
+
             mGlControl.Invalidate();
         }
         
@@ -62,6 +68,7 @@ namespace MaterialEditor
 
         protected PreviewMesh previewMesh = null;
         protected OrbitCamera mainCamera = new OrbitCamera();
+        protected GBufferDraw gbufferDrawMaterial = null;
 
         protected float fAngle = 0.0f;
 
@@ -81,15 +88,33 @@ namespace MaterialEditor
             GL.CullFace(CullFaceMode.Back);
             GL.FrontFace(FrontFaceDirection.Cw);
             GL.Enable(EnableCap.DepthTest);
-
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            //
+
+            gbufferDrawMaterial.BindAndExecute(() =>
+            {
+                gbufferDrawMaterial.CameraTransform_Proj = this.mainCamera.Proj;
+                gbufferDrawMaterial.CameraTransform_View = this.mainCamera.View;
+                gbufferDrawMaterial.ModelTransform_Model = Matrix4.Identity;
+                gbufferDrawMaterial.DiffuseMapExist = false;
+                gbufferDrawMaterial.DiffuseOverride = Vector3.One;
+                gbufferDrawMaterial.NormalMapExist = false;
+                gbufferDrawMaterial.MaskMapExist = false;
+                gbufferDrawMaterial.RoughnessExist = false;
+                
+                previewMesh.Draw();
+            });
+
+            //
             
             mGlControl.SwapBuffers();
         }
 
         protected void OnLoaded(object sender, RoutedEventArgs e)
         {
-            previewMesh = new PreviewMesh("myteapot.staticmesh");
+            previewMesh = new PreviewMesh("./Resources/Imported/StaticMesh/myteapot.staticmesh");
+            gbufferDrawMaterial = new GBufferDraw();
         }
 
         public void GLControlMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -111,6 +136,11 @@ namespace MaterialEditor
             }
 
             float fAspectRatio = mGlControl.Size.Width / (float)mGlControl.Size.Height;
+
+            if (mainCamera != null)
+            {
+                mainCamera.AspectRatio = fAspectRatio;
+            }
         }
 
         /// <summary>
