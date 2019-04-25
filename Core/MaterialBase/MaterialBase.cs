@@ -40,7 +40,7 @@ namespace Core.MaterialBase
             fragmentShader = new FragmentShader();
 
             MaterialProgram = new Core.OpenGLShader.ShaderProgram();
-
+            
             vertexShader.CompileShader(vertexShaderCode);
             fragmentShader.CompileShader(fragmentShaderCode);
 

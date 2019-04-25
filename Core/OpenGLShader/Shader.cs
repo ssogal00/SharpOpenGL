@@ -23,20 +23,16 @@ namespace Core.OpenGLShader
 
         public void CompileShader(string ShaderSourceCode)
         {
-            GL.ShaderSource(shaderObject, ShaderSourceCode);
-            GL.CompileShader(shaderObject);            
+            string ShaderErrLog = "";
+            bool bSuccess = CompileShader(ShaderSourceCode, out ShaderErrLog);
 
-            int nStatus;
-            GL.GetShader(shaderObject, ShaderParameter.CompileStatus, out nStatus);
-
-            if (nStatus != 1)
+            if (bSuccess == false)
             {
-                string ShaderErrLog;
-                GL.GetShaderInfoLog(shaderObject, out ShaderErrLog);
-
                 Console.WriteLine(ShaderErrLog);
             }
         }
+
+        
 
         public bool CompileShader(string shaderSourceCode, out string errorlog)
         {
