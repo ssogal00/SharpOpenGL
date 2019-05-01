@@ -93,22 +93,23 @@ namespace MaterialEditor
 
             //
 
-            gbufferDrawMaterial.BindAndExecute(() =>
+            if (gbufferDrawMaterial != null)
             {
-                gbufferDrawMaterial.CameraTransform_Proj = this.mainCamera.Proj;
-                gbufferDrawMaterial.CameraTransform_View = this.mainCamera.View;
-                gbufferDrawMaterial.ModelTransform_Model = Matrix4.Identity;
-                gbufferDrawMaterial.DiffuseMapExist = false;
-                gbufferDrawMaterial.DiffuseOverride = Vector3.One;
-                gbufferDrawMaterial.NormalMapExist = false;
-                gbufferDrawMaterial.MaskMapExist = false;
-                gbufferDrawMaterial.RoughnessExist = false;
-                
-                previewMesh.Draw();
-            });
+                gbufferDrawMaterial.BindAndExecute(() =>
+                {
+                    gbufferDrawMaterial.CameraTransform_Proj = this.mainCamera.Proj;
+                    gbufferDrawMaterial.CameraTransform_View = this.mainCamera.View;
+                    gbufferDrawMaterial.ModelTransform_Model = Matrix4.Identity;
+                    gbufferDrawMaterial.DiffuseMapExist = false;
+                    gbufferDrawMaterial.DiffuseOverride = Vector3.One;
+                    gbufferDrawMaterial.NormalMapExist = false;
+                    gbufferDrawMaterial.MaskMapExist = false;
+                    gbufferDrawMaterial.RoughnessExist = false;
 
-            //
-            
+                    previewMesh.Draw();
+                });
+            }
+
             mGlControl.SwapBuffers();
         }
 
@@ -120,7 +121,10 @@ namespace MaterialEditor
 
         public void GLControlMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            
+            if (mainCamera != null)
+            {
+                mainCamera.MoveBackward();
+            }
         }
 
         private void GLControlResize(object sender, EventArgs e)

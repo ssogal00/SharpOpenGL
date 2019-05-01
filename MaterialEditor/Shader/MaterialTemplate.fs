@@ -19,7 +19,7 @@ uniform float time;
 
 {sampler2DVariableDeclaration}
 
-vec4 GetDiffuseColor()
+vec3 GetDiffuseColor()
 {
     return {diffuseColorCode};
 }
@@ -37,16 +37,26 @@ vec3 GetNormalColor()
 }
 
 
-float GetSpecularColor()
+float GetMetallicCode()
 {
-	return {specularColorCode};
+	return {metallicCode};
+}
+
+float GetRoughnessCode()
+{
+	return {roughnessCode};
 }
 
 
 void main()
 {   
-    DiffuseColor = GetDiffuseColor();
+    DiffuseColor.xyz = GetDiffuseColor();
+    
+    DiffuseColor.a = GetRoughnessCode();
+
     NormalColor.xyz = GetNormalColor();
-	NormalColor.a = GetSpecularColor();
+
+	NormalColor.a = GetMetallicCode();
+	
     PositionColor = vec4(stage_in.Position, 0);
 }

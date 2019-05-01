@@ -17,9 +17,10 @@ namespace MaterialEditor
             base.CreateInputOutputConnectors();
 
             // input
-            InputConnectors.Add(new ConnectorViewModel("Albedo", ConnectorDataType.ConstantVector4,0));
-            InputConnectors.Add(new ConnectorViewModel("Normal", ConnectorDataType.ConstantVector4,1));
-            InputConnectors.Add(new ConnectorViewModel("Specular", ConnectorDataType.ConstantFloat,2));
+            InputConnectors.Add(new ConnectorViewModel("Diffuse", ConnectorDataType.ConstantVector3, 0));
+            InputConnectors.Add(new ConnectorViewModel("Normal", ConnectorDataType.ConstantVector3, 1));
+            InputConnectors.Add(new ConnectorViewModel("Metallic", ConnectorDataType.ConstantFloat, 2));
+            InputConnectors.Add(new ConnectorViewModel("Roughness", ConnectorDataType.ConstantFloat, 3));
         }
 
         public string GetDiffuseColorCode()
@@ -32,9 +33,14 @@ namespace MaterialEditor
             return GetExpressionForInput(1);            
         }
 
-        public string GetSpecularColorCode()
+        public string GetMetallicCode()
         {
             return GetExpressionForInput(2);
+        }
+
+        public string GetRoughnessCode()
+        {
+            return GetExpressionForInput(3);
         }
 
     }

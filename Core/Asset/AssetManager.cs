@@ -29,15 +29,15 @@ namespace Core.Asset
 
         public static T LoadAssetSync<T>(string path) where T : AssetBase
         {
+            var cachedAsset = GetAsset<T>(Path.GetFileName(path));
+
+            if (cachedAsset != null)
+            {
+                return cachedAsset;
+            }
+
             lock (syncObject)
             {
-                var cachedAsset = GetAsset<T>(Path.GetFileName(path));
-
-                if (cachedAsset != null)
-                {
-                    return cachedAsset;
-                }
-
                 byte[] data = File.ReadAllBytes(path);
                 T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
                 AssetMap.TryAdd(Path.GetFileName(path), asset);
@@ -50,15 +50,15 @@ namespace Core.Asset
         {   
             return await Task.Factory.StartNew(() =>
             {
+                var cachedAsset = GetAsset<T>(Path.GetFileName(path));
+
+                if (cachedAsset != null)
+                {
+                    return cachedAsset;
+                }
+
                 lock (syncObject)
                 {
-                    var cachedAsset = GetAsset<T>(Path.GetFileName(path));
-
-                    if (cachedAsset != null)
-                    {
-                        return cachedAsset;
-                    }
-
                     byte[] data = File.ReadAllBytes(path);
                     T asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<T>(data);
                     AssetMap.TryAdd(Path.GetFileName(path), asset);

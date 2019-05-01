@@ -81,7 +81,7 @@ namespace MaterialEditor
 
             var fsTemplate = GetFragmentShaderCode();
             var vsTemplate = GetVertexShaderCode();
-
+            
             fsTemplate = fsTemplate.Replace("{uniformVariableDeclaration}", uniformVarCode);
 
             if(sampler2DCode.Length > 0)
@@ -109,11 +109,18 @@ namespace MaterialEditor
                 fsTemplate = fsTemplate.Replace("{normalColorCode}", normalColorCode);
             }
 
-            var specularColorCode = resultNode.GetSpecularColorCode();
+            var metallicCode = resultNode.GetMetallicCode();
 
-            if (specularColorCode.Length > 0)
+            if (metallicCode.Length > 0)
             {
-                fsTemplate = fsTemplate.Replace("{specularColorCode}", specularColorCode);
+                fsTemplate = fsTemplate.Replace("{metallicCode}", metallicCode);
+            }
+
+            var roughnessCode = resultNode.GetRoughnessCode();
+
+            if (roughnessCode.Length > 0)
+            {
+                fsTemplate = fsTemplate.Replace("{roughnessCode}", roughnessCode);
             }
 
             // if compile succeeds
@@ -181,8 +188,6 @@ namespace MaterialEditor
 
             MaterialProgram.AttachShader(vertexShader);
             MaterialProgram.AttachShader(fragmentShader);
-            //MaterialProgram.AttachShader(tesselControlShader);
-            //MaterialProgram.AttachShader(tesselEvaluationShader);
 
             string linkResult;
 
