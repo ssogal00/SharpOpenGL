@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+using ZeroFormatter;
+using ZeroFormatter.Formatters;
+using ZeroFormatter.Internal;
 
 namespace MaterialEditor
 {
+    [ZeroFormattable]
     public class ConstantVector3Node : NodeViewModel
     {
         protected OpenTK.Vector3 vec3;
@@ -31,7 +35,8 @@ namespace MaterialEditor
             return string.Empty;
         }
 
-        public float XValue
+        [Index(0)]
+        public virtual float XValue
         {
             get
             {
@@ -43,8 +48,8 @@ namespace MaterialEditor
                 OnPropertyChanged("XValue");
             }
         }
-
-        public float YValue
+        [Index(1)]
+        public virtual float YValue
         {
             get
             {
@@ -56,8 +61,8 @@ namespace MaterialEditor
                 OnPropertyChanged("YValue");
             }
         }
-
-        public float ZValue
+        [Index(2)]
+        public virtual float ZValue
         {
             get { return vec3.Z; }
             set
@@ -67,6 +72,7 @@ namespace MaterialEditor
             }
         }
 
+        [Index(3)]
         public Vector3 Vector3Value
         {
             get

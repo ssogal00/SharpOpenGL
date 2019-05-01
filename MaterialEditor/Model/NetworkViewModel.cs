@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using MaterialEditor.Utils;
+
+using ZeroFormatter;
 
 namespace MaterialEditor
 {
+    [ZeroFormattable]
     public class NetworkViewModel : AbstractModelBase
     {
         protected ImpObservableCollection<NodeViewModel> nodes = null;
@@ -35,6 +37,7 @@ namespace MaterialEditor
             }
         }
 
+        [Index(0)]
         public ImpObservableCollection<ConnectionViewModel> Connections
         {
             get
@@ -49,7 +52,8 @@ namespace MaterialEditor
             }
         }
 
-        public ImpObservableCollection<NodeViewModel> Nodes
+        [Index(1)]
+        public virtual ImpObservableCollection<NodeViewModel> Nodes
         {
             get
             {

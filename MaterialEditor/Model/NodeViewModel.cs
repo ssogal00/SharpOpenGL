@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 using MaterialEditor.Utils;
 using System.Windows;
+using ZeroFormatter;
 
 namespace MaterialEditor
 {
@@ -12,6 +13,7 @@ namespace MaterialEditor
     /// Defines a node in the view-model.
     /// Nodes are connected to other nodes through attached connectors (aka anchor/connection points).
     /// </summary>
+    [ZeroFormattable]
     public class NodeViewModel : AbstractModelBase
     {
         #region Private Data Members
@@ -114,7 +116,8 @@ namespace MaterialEditor
         /// <summary>
         /// The name of the node.
         /// </summary>
-        public string Name
+        [Index(0)]
+        public virtual string Name
         {
             get
             {
@@ -136,6 +139,7 @@ namespace MaterialEditor
         /// <summary>
         /// The X coordinate for the position of the node.
         /// </summary>
+        [Index(1)]
         public double X
         {
             get
@@ -158,7 +162,8 @@ namespace MaterialEditor
         /// <summary>
         /// The Y coordinate for the position of the node.
         /// </summary>
-        public double Y
+        [Index(2)]
+        public virtual double Y
         {
             get
             {
@@ -180,7 +185,8 @@ namespace MaterialEditor
         /// <summary>
         /// The Z index of the node.
         /// </summary>
-        public int ZIndex
+        [Index(3)]
+        public virtual int ZIndex
         {
             get
             {
@@ -208,6 +214,8 @@ namespace MaterialEditor
         ///     When the size is computed via the UI it is then pushed into the view-model
         ///     so that our application code has access to the size of a node.
         /// </summary>
+        ///
+        [Index(4)]
         public Size Size
         {
             get

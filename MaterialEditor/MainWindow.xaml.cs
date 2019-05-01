@@ -34,8 +34,6 @@ namespace MaterialEditor
             watch.Start();
         }
 
-
-
         private void Tick(object sender, EventArgs e)
         {
             fAngle += 1.0f;
@@ -115,8 +113,17 @@ namespace MaterialEditor
 
         protected void OnLoaded(object sender, RoutedEventArgs e)
         {
+            InitializeZeroFormatter();
+
             previewMesh = new PreviewMesh("./Resources/Imported/StaticMesh/myteapot.staticmesh");
             gbufferDrawMaterial = new GBufferDraw();
+        }
+
+        private void InitializeZeroFormatter()
+        {
+            Formatter<DefaultResolver, OpenTK.Vector3>.Register(new Vector3Formatter<DefaultResolver>());
+            Formatter<DefaultResolver, OpenTK.Vector2>.Register(new Vector2Formatter<DefaultResolver>());
+            Formatter<DefaultResolver, OpenTK.Vector4>.Register(new Vector4Formatter<DefaultResolver>());
         }
 
         public void GLControlMouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
