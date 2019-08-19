@@ -43,6 +43,10 @@ namespace SharpOpenGL
                     var IndexArr = meshAsset.VertexIndices.ToArray();
                     meshdrawable.SetupData(ref Arr, ref IndexArr);
 
+                    var lineArr = meshAsset.TBNVertices.ToArray();
+                    var lineIndexArr = meshAsset.TBNIndices.ToArray();
+                    linedrawable.SetupData(ref lineArr, ref lineIndexArr);
+
                     this.LoadTextures();
                     bReadyToDraw = true;
                 }
@@ -61,6 +65,10 @@ namespace SharpOpenGL
                     var Arr = meshAsset.Vertices.ToArray();
                     var IndexArr = meshAsset.VertexIndices.ToArray();
                     meshdrawable.SetupData(ref Arr, ref IndexArr);
+
+                    var lineArr = meshAsset.TBNVertices.ToArray();
+                    var lineIndexArr = meshAsset.TBNIndices.ToArray();
+                    linedrawable.SetupData(ref lineArr, ref lineIndexArr);
 
                     this.LoadTextures();
                     bReadyToDraw = true;
