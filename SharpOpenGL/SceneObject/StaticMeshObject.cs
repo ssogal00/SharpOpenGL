@@ -6,6 +6,7 @@ using OpenTK;
 using Core.Asset;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using CompiledMaterial.GBufferDraw;
 
 namespace SharpOpenGL
@@ -201,6 +202,9 @@ namespace SharpOpenGL
 
         // for rendering
         TriangleDrawable<PNTT_VertexAttribute> meshdrawable = null;
+
+        // for tbn debug rendering
+        LineDrawable<PC_VertexAttribute> linedrawable = null;
 
         private void LoadTextures()
         {

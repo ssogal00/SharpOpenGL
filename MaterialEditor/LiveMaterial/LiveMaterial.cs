@@ -115,12 +115,20 @@ namespace MaterialEditor
             {
                 fsTemplate = fsTemplate.Replace("{metallicCode}", metallicCode);
             }
+            else
+            {
+                fsTemplate = fsTemplate.Replace("{metallicCode}", "1.0f");
+            }
 
             var roughnessCode = resultNode.GetRoughnessCode();
 
             if (roughnessCode.Length > 0)
             {
                 fsTemplate = fsTemplate.Replace("{roughnessCode}", roughnessCode);
+            }
+            else
+            {
+                fsTemplate = fsTemplate.Replace("{roughnessCode}", "1.0f");
             }
 
             // if compile succeeds

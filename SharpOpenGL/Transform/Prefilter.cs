@@ -49,7 +49,8 @@ namespace SharpOpenGL.Transform
                     int mipWidth = (int) (SizeX * Math.Pow(0.5, (double)miplevel));
                     int mipHeight = (int) (SizeY * Math.Pow(0.5, (double)miplevel));
 
-                    prefilterMaterial.Roughness = (float)miplevel / (float)(maxMipLevels - 1);
+                    //prefilterMaterial.Roughness = (float)miplevel / (float)(maxMipLevels - 1);
+                    prefilterMaterial.Roughness = 1.0f;
 
                     cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveX, miplevel);
                     prefilterMaterial.View = CaptureViews[0];
@@ -90,8 +91,14 @@ namespace SharpOpenGL.Transform
             var colorDataX = cubemapRenderTarget.GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveX, 0);
             FreeImageHelper.SaveAsBmp(ref colorDataX, cubemapRenderTarget.Width, cubemapRenderTarget.Height, "PrefilterPosX.bmp");
 
-            var colorData = cubemapRenderTarget.GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveZ, 0);
-            FreeImageHelper.SaveAsBmp(ref colorData, cubemapRenderTarget.Width, cubemapRenderTarget.Height, "PrefilterPosZ.bmp");
+            var colorDataNegX = cubemapRenderTarget.GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapNegativeX, 0);
+            FreeImageHelper.SaveAsBmp(ref colorDataNegX, cubemapRenderTarget.Width, cubemapRenderTarget.Height, "PrefilterNegPosX.bmp");
+
+            var colorDataZ = cubemapRenderTarget.GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveZ, 0);
+            FreeImageHelper.SaveAsBmp(ref colorDataZ, cubemapRenderTarget.Width, cubemapRenderTarget.Height, "PrefilterPosZ.bmp");
+
+            var colorDataNegZ = cubemapRenderTarget.GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapNegativeZ, 0);
+            FreeImageHelper.SaveAsBmp(ref colorDataNegZ, cubemapRenderTarget.Width, cubemapRenderTarget.Height, "PrefilterNegPosZ.bmp");
         }
        
         private OpenTK.Matrix4 CaptureProjection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(90), 1.0f, 0.1f, 10.0f);

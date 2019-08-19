@@ -20,6 +20,11 @@ namespace Core.StaticMesh
         [Index(0)]
         public virtual List<PNTT_VertexAttribute> Vertices { get; protected set; } = new List<PNTT_VertexAttribute>();
 
+        [Index(12)]
+        public virtual List<PC_VertexAttribute> TBNVertices { get; protected set; } = new List<PC_VertexAttribute>();
+
+        public virtual List<uint> TBNIndices { get; protected set; } = new List<uint>();
+
         // serialized mesh sections
         [Index(1)]
         public virtual List<ObjMeshSection> MeshSectionList { get; protected set; } = new List<ObjMeshSection>();
@@ -298,6 +303,8 @@ namespace Core.StaticMesh
 
             GenerateVertices();
 
+            GenerateTBNVertices();
+
             Clear();
         }
 
@@ -348,6 +355,40 @@ namespace Core.StaticMesh
             }
         }
 
+        protected void GenerateTBNVertices()
+        {
+            foreach (var v in Vertices)
+            {
+                PC_VertexAttribute v1 = new PC_VertexAttribute();
+                v1.VertexPosition = v.VertexPosition;
+                v1.VertexColor = Vector3.UnitY;
+
+                PC_VertexAttribute v2 = new PC_VertexAttribute();
+                v2.VertexPosition = v.VertexPosition + v.VertexNormal * 3.0f;
+                v2.VertexColor = Vector3.UnitY;
+
+                PC_VertexAttribute v3 = new PC_VertexAttribute();
+                v3.VertexPosition = v.VertexPosition + v.Tangent.Xyz * 3.0f;
+                v3.VertexColor = Vector3.UnitZ;
+
+                PC_VertexAttribute v4 = new PC_VertexAttribute();
+                v4.VertexPosition = v.VertexPosition + v.Tangent.Xyz * 3.0f;
+                v4.VertexColor = Vector3.UnitZ;
+
+                TBNVertices.Add(v1);
+                TBNIndices.Add((uint)TBNVertices.Count);
+
+                TBNVertices.Add(v2);
+                TBNIndices.Add((uint)TBNVertices.Count);
+
+                TBNVertices.Add(v3);
+                TBNIndices.Add((uint)TBNVertices.Count);
+
+                TBNVertices.Add(v4);
+                TBNIndices.Add((uint)TBNVertices.Count);
+            }
+        }
+
         protected void GenerateVertices()
         {
             var Count = VertexIndices.Count;
@@ -373,7 +414,8 @@ namespace Core.StaticMesh
                         if (HasTexCoordinate)
                         {
                             V1.TexCoord = TempTexCoordList[(int)TexCoordIndexList[i]];
-                            V1.Tangent = TempTangentList[(int)VertexIndexList[i]];
+                            //V1.Tangent = TempTangentList[(int)VertexIndexList[i]];
+                            V1.Tangent = TempTangentList[(int) i];
                         }
 
                         if (HasNormal)
@@ -382,7 +424,8 @@ namespace Core.StaticMesh
                         }
 
                         uint index = 0;
-                        if (GetSimilarVertexIndex(ref V1, out index))
+                        //if (GetSimilarVertexIndex(ref V1, out index))
+                        if(false)
                         {
                             VertexIndices.Add(index);
                         }
@@ -390,7 +433,7 @@ namespace Core.StaticMesh
                         {
                             Vertices.Add(V1);
                             uint newIndex = (uint)Vertices.Count - 1;
-                            VertexCacheMap.Add(V1, newIndex);
+                            //VertexCacheMap.Add(V1, newIndex);
                             VertexIndices.Add(newIndex);
                         }
                     }
