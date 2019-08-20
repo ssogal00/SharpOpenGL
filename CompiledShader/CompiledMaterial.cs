@@ -6462,5 +6462,141 @@ void main()
 	}
 }
 }
+namespace TBNMaterial
+{
+
+
+public class TBNMaterial : MaterialBase
+{
+	public TBNMaterial() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+
+
+
+
+    private CameraTransform cameratransform = new CameraTransform();
+	public CameraTransform CameraTransform
+	{
+		get { return cameratransform; }
+		set 
+		{ 
+			cameratransform = value; 
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+		}
+	}
+
+	public OpenTK.Matrix4 CameraTransform_View
+	{
+		get { return cameratransform.View ; }
+		set 
+		{ 
+			cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 0 );
+		}
+	}
+	public OpenTK.Matrix4 CameraTransform_Proj
+	{
+		get { return cameratransform.Proj ; }
+		set 
+		{ 
+			cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"CameraTransform", ref value, 64 );
+		}
+	}
+
+    private ModelTransform modeltransform = new ModelTransform();
+	public ModelTransform ModelTransform
+	{
+		get { return modeltransform; }
+		set 
+		{ 
+			modeltransform = value; 
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+		}
+	}
+
+	public OpenTK.Matrix4 ModelTransform_Model
+	{
+		get { return modeltransform.Model ; }
+		set 
+		{ 
+			modeltransform.Model = value;
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Matrix4 >(@"ModelTransform", ref value, 0 );
+		}
+	}
+
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"
+#version 450
+
+uniform ModelTransform
+{
+    mat4x4 Model;
+};
+
+uniform CameraTransform
+{
+    mat4x4 View;
+    mat4x4 Proj;
+};
+
+
+
+layout (location = 0) in vec3 VertexPosition;
+layout (location = 1) in vec3 VertexColor;
+
+
+layout (location = 0 ) out vec3 OutPosition;
+layout (location = 1 ) out vec3 OutColor;
+
+void main()
+{   
+    gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
+    OutPosition = gl_Position.xyz;    
+    OutColor = VertexColor;
+}
+
+";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"
+#version 450 core
+
+layout (location = 0 ) in vec3 InPosition;
+layout (location = 1 ) in vec3 InColor;
+
+layout (location = 0) out vec4 PositionColor;
+layout (location = 1) out vec4 DiffuseColor;
+layout (location = 2) out vec4 NormalColor;
+layout (location = 3) out vec4 VelocityColor;
+
+void main() 
+{      
+    DiffuseColor = vec4(InColor, 1); 
+}";
+	}
+}
+}
 
 }

@@ -29,4 +29,5 @@
 	<Material name="PrefilterMaterial" vertexShader="Prefilter.vs.glsl" fragmentShader="Prefilter.fs.glsl"/>
 	<Material name="HDAOMaterial" vertexShader="HDAO.vs.glsl" fragmentShader="HDAO.fs.glsl"/>
 	<Material name="FXAAMaterial" vertexShader="FXAA.vs.glsl" fragmentShader="FXAA.fs.glsl"/>
+	<Material name="TBNMaterial" vertexShader="TBNDebug.vs.glsl" fragmentShader="TBNDebug.fs.glsl"/>
 </MaterialList>

@@ -91,7 +91,7 @@ namespace MaterialEditor
 
             //
 
-            if (gbufferDrawMaterial != null)
+            if (gbufferDrawMaterial != null && previewMesh != null)
             {
                 gbufferDrawMaterial.BindAndExecute(() =>
                 {
@@ -115,7 +115,7 @@ namespace MaterialEditor
         {
             InitializeZeroFormatter();
 
-            previewMesh = new PreviewMesh("./Resources/Imported/StaticMesh/myteapot.staticmesh");
+            //previewMesh = new PreviewMesh("./Resources/Imported/StaticMesh/myteapot.staticmesh");
             gbufferDrawMaterial = new GBufferDraw();
         }
 

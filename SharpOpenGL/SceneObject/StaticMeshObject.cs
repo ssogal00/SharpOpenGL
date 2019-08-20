@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using CompiledMaterial.GBufferDraw;
+using CompiledMaterial.TBNMaterial;
 
 namespace SharpOpenGL
 {
@@ -43,6 +44,7 @@ namespace SharpOpenGL
                     var IndexArr = meshAsset.VertexIndices.ToArray();
                     meshdrawable.SetupData(ref Arr, ref IndexArr);
 
+                    linedrawable = new LineDrawable<PC_VertexAttribute>();
                     var lineArr = meshAsset.TBNVertices.ToArray();
                     var lineIndexArr = meshAsset.TBNIndices.ToArray();
                     linedrawable.SetupData(ref lineArr, ref lineIndexArr);
@@ -66,6 +68,7 @@ namespace SharpOpenGL
                     var IndexArr = meshAsset.VertexIndices.ToArray();
                     meshdrawable.SetupData(ref Arr, ref IndexArr);
 
+                    linedrawable = new LineDrawable<PC_VertexAttribute>();
                     var lineArr = meshAsset.TBNVertices.ToArray();
                     var lineIndexArr = meshAsset.TBNIndices.ToArray();
                     linedrawable.SetupData(ref lineArr, ref lineIndexArr);
@@ -94,6 +97,28 @@ namespace SharpOpenGL
             meshdrawable.Draw(0, (uint)(meshAsset.VertexIndices.Count));
         }
 
+        public void DebugDraw()
+        {
+            if(bReadyToDraw == false)
+            {
+                return;
+            }
+
+            var material = ShaderManager.Get().GetMaterial<TBNMaterial>();
+
+            Debug.Assert(material != null);
+
+            material.Bind();
+
+            material.ModelTransform_Model = this.ParentMatrix * this.LocalMatrix;
+            material.CameraTransform_View = CameraManager.Get().CurrentCameraView;
+            material.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+
+            linedrawable.BindVertexAndIndexBuffer();
+
+            linedrawable.Draw();
+            //linedrawable.Draw(0, (uint) meshAsset.TBNIndices.Count);
+        }
         
 
         public override void Draw()
@@ -202,6 +227,8 @@ namespace SharpOpenGL
             }
 
             gbufferMaterial.LightChannel = (int)Light.LightChannel.SkyBoxChannel;
+
+            DebugDraw();
         }
        
         protected string assetpath = "";
