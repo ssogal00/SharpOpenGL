@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Animation;
-using CompiledMaterial.SSAOMaterial;
+﻿using CompiledMaterial.SSAOMaterial;
 using Core;
 using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System;
+using System.Collections.Generic;
 using MathHelper = Core.MathHelper;
 
 namespace SharpOpenGL.PostProcess

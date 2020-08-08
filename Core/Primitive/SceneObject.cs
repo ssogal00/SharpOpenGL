@@ -4,6 +4,7 @@ using OpenTK;
 
 namespace Core.Primitive
 {
+    
     public abstract class SceneObject
     {
         [ExposeUI("ObjectName")]

@@ -269,10 +269,6 @@
     <Folder Include="VertexCustomAttribute\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AdornedControl\AdornedControl.csproj">
-      <Project>{ab6aff8f-5381-49f4-a87d-c1f721fddf08}</Project>
-      <Name>AdornedControl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CompiledShader\CompiledShader.csproj">
       <Project>{50ad8c27-759d-4399-8056-59ca4d413829}</Project>
       <Name>CompiledShader</Name>
@@ -289,21 +285,9 @@
       <Project>{39e0b5dd-0884-494f-8b6a-f17ef1201f39}</Project>
       <Name>ImageWrapper</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MaterialEditor\MaterialEditor.csproj">
-      <Project>{5d63a866-c89f-4686-9e09-869e707ee43e}</Project>
-      <Name>MaterialEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NodeEditorUtils\NodeEditorUtils.csproj">
-      <Project>{4c8a458f-e1cd-4c8d-bb6b-9379a10205d6}</Project>
-      <Name>NodeEditorUtils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ObjectEditor\ObjectEditor.csproj">
       <Project>{2079b69a-ad1b-46ae-bf5f-5e4ce2546cbf}</Project>
       <Name>ObjectEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ZoomAndPan\ZoomAndPan.csproj">
-      <Project>{a609faa5-6c95-45a7-abed-c2ade213d05c}</Project>
-      <Name>ZoomAndPan</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

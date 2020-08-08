@@ -1,7 +1,6 @@
 ﻿using Core;
 using System;
-using System.Runtime.Remoting.Channels;
-using MaterialEditor;
+
 
 namespace SharpOpenGL
 {
@@ -27,24 +26,16 @@ namespace SharpOpenGL
         {   
             editorWindow = new ObjectEditor.MainWindow();
 
-            materialEditorWindow = new MaterialEditor.MainWindow();
-
             editorWindow.ObjectCreateEventHandler += Engine.Get().OnObjectCreate;
 
             editorWindow.Show();
-            materialEditorWindow.Show();
 
             editorWindow.Closed += (sender, args) =>
             {
                 editorWindow.Dispatcher.InvokeShutdown();
             };
-            materialEditorWindow.Closed += (sender, args) =>
-            {
-                materialEditorWindow.Dispatcher.InvokeShutdown();
-            };
 
             System.Windows.Threading.Dispatcher.Run();
-
             Console.WriteLine("Here");
         }
 
@@ -59,21 +50,9 @@ namespace SharpOpenGL
                 });
             }
 
-            if (!materialEditorWindow.Dispatcher.HasShutdownFinished &&
-                !materialEditorWindow.Dispatcher.HasShutdownStarted)
-            {
-                materialEditorWindow.Dispatcher.Invoke(
-                    () =>
-                    {
-                        materialEditorWindow.Close();
-                    });
-            }
         }
 
         public static ObjectEditor.MainWindow EditorWindow => editorWindow;
         private static ObjectEditor.MainWindow editorWindow = null;
-
-        private static MaterialEditor.MainWindow materialEditorWindow = null;
-        public static MaterialEditor.MainWindow MaterialEditorWindow => materialEditorWindow;
     }
 }

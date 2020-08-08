@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CompiledMaterial.GBufferCubeTest;
+﻿using CompiledMaterial.GBufferCubeTest;
 using Core;
-
-using Core.MaterialBase;
 using Core.Primitive;
 using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using MathHelper = Core.MathHelper;
+using System.Collections.Generic;
+
 
 namespace SharpOpenGL
 {
+    
     public class Cube : SceneObject
     {
         private static int CubeCount = 0;
