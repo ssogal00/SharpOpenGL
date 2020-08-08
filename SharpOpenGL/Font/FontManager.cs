@@ -12,7 +12,9 @@ using FreeTypeLibWrapper;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL.Asset;
 using System.Diagnostics;
+using System.Reactive.Subjects;
 using SixLabors.ImageSharp.Primitives;
+
 
 
 namespace SharpOpenGL.Font
