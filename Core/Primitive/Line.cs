@@ -1,21 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using OpenTK;
-using OpenTK.Graphics;
-
-using OpenTK.Graphics.OpenGL;
-using Core;
-using Core.Buffer;
-
-using System.Runtime.InteropServices;
-
-using Core.VertexCustomAttribute;
-
-namespace Core.Primitive
+﻿namespace Core.Primitive
 {
     public class Line
     {

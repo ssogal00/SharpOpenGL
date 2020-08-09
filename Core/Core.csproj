@@ -84,10 +84,13 @@
     <Compile Include="Buffer\MultisampleGBuffer.cs" />
     <Compile Include="Buffer\RenderBuffer.cs" />
     <Compile Include="Buffer\TypedDynamicUniformBuffer.cs" />
+    <Compile Include="Component.cs" />
     <Compile Include="CustomAttribute\ConsoleCommandAttribute.cs" />
     <Compile Include="CustomAttribute\UIAttribute.cs" />
     <Compile Include="CustomSerialize\MatrixSerialize.cs" />
     <Compile Include="CustomSerialize\VectorSerialize.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="IImportable.cs" />
     <Compile Include="OpenGLShader\ShaderDefine.cs" />
     <Compile Include="OpenGLStateTracker.cs" />
@@ -126,6 +129,7 @@
     <Compile Include="PatchDrawable.cs" />
     <Compile Include="Primitive\GenericVertexAttribute.cs" />
     <Compile Include="QuadDrawable.cs" />
+    <Compile Include="Rendering\PipelineStateObject.cs" />
     <Compile Include="RenderResource.cs" />
     <Compile Include="ResizableManager.cs" />
     <Compile Include="SamplerParameter.cs" />
@@ -177,6 +181,7 @@
       <Name>ImageWrapper</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
