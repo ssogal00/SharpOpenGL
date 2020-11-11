@@ -169,9 +169,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\Core\CoreFramework.csproj">
       <Project>{1115dd7b-beb3-4d5c-9528-9e852ecc63d5}</Project>
-      <Name>Core</Name>
+      <Name>CoreFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

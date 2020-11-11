@@ -223,9 +223,9 @@
       <Project>{50ad8c27-759d-4399-8056-59ca4d413829}</Project>
       <Name>CompiledShader</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\Core\CoreFramework.csproj">
       <Project>{1115dd7b-beb3-4d5c-9528-9e852ecc63d5}</Project>
-      <Name>Core</Name>
+      <Name>CoreFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\FreeTypeWrapper\FreeTypeWrapper.vcxproj">
       <Project>{9d0ab4d9-ea47-4ccd-a0dc-5063f072356f}</Project>
