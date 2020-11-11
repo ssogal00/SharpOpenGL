@@ -3,6 +3,7 @@
 #include "GlyphInfo.h"
 #include "Windows.h"
 #include <msclr/marshal_cppstd.h>
+#include <cmath>
 using namespace msclr::interop;
 using namespace System;
 using namespace System::Collections::Generic;
@@ -53,7 +54,7 @@ bool FreeTypeLibWrapper::FreeType::Initialize(System::String^ filePath, int _res
 
 		const int numGlyphs = numGlyph;
 
-		const int NumGlyphsPerRow = (int)ceilf(std::sqrtf(static_cast<float>(numGlyphs))); //=numRows (texture is a square)
+		const int NumGlyphsPerRow = (int)ceilf(std::sqrt(static_cast<float>(numGlyphs))); //=numRows (texture is a square)
 		const int TexSize = static_cast<int>((NumGlyphsPerRow) * squareSize);
 
 		//
