@@ -34,12 +34,6 @@ namespace SharpOpenGL
             
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
-            
-
-            LightManager.Get().Initialize();
-
-            var sphere = SceneObjectManager.Get().CreateSceneObject<InstancedSphere>();
-
             var rusted = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
             rusted.Scale = 1.5f;
             rusted.Translation = new Vector3(-190, 30, -80);
@@ -88,14 +82,7 @@ namespace SharpOpenGL
 
             bInitialized = true;
         }
-
-        public void OnObjectCreate(object sender, EventArgs args)
-        {
-            SceneObjectManager.Get().CreateSceneObject<Sphere>();
-        }
-
-        public bool SeperateRenderingThreadEnabled => bIsSperateRenderingThread;
-
+        
         public void Tick()
         {
             if (bFirstTick == true)
@@ -119,8 +106,6 @@ namespace SharpOpenGL
         }
 
         public bool IsRequestExit => bIsRequestExit;
-
-        protected bool bIsSperateRenderingThread = true;
 
         protected bool bIsRequestExit = false;
 

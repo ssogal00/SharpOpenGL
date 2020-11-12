@@ -13,17 +13,17 @@ using SharpOpenGL.PostProcess;
 using SharpOpenGL.Transform;
 using System;
 using System.Drawing;
-using MouseButton = System.Windows.Input.MouseButton;
-using MouseButtonEventArgs = OpenTK.Windowing.Common.MouseButtonEventArgs;
-
 using System.Reactive;
-
-
+using System.Reactive.Linq;
+using MouseButtonEventArgs = OpenTK.Windowing.Common.MouseButtonEventArgs;
 
 namespace SharpOpenGL
 {
     public class RenderingThreadWindow : GameWindow
     {
+        protected IObservable<Unit> GLContextCreated;
+        protected IObservable<Tuple<int,int>> WindowResized;
+
         protected event EventHandler<EventArgs> OnGLContextCreated;
         protected event EventHandler<ScreenResizeEventArgs> OnWindowResize;
         protected BlitToScreen ScreenBlit = new BlitToScreen();
@@ -73,8 +73,6 @@ namespace SharpOpenGL
             get => this.ClientSize.Y;
         }
 
-
-
         protected override void OnLoad()
         {
             this.Title = "MyEngine";
@@ -85,7 +83,6 @@ namespace SharpOpenGL
             OnGLContextCreated += RenderResource.OnOpenGLContextCreated;
 
             OnWindowResize += CameraManager.Get().OnWindowResized;
-
             OnKeyDownEvent += CameraManager.Get().OnKeyDown;
             OnKeyUpEvent += CameraManager.Get().OnKeyUp;
 
@@ -249,24 +246,6 @@ namespace SharpOpenGL
             RenderingThread.Get().ExecuteTimeSlice();
         }
 
-        private void RenderSkybox()
-        {
-            skyboxPostProcess.Render();
-        }
-
-        private void ClearGBuffer()
-        {
-            renderGBuffer.BindAndExecute(
-                () =>
-                {
-                    renderGBuffer.Clear();
-                });
-        }
-
-        private void DrawSceneObjects()
-        {
-
-        }
         
         protected override void OnRenderFrame(FrameEventArgs e)
         {
@@ -286,19 +265,11 @@ namespace SharpOpenGL
                     renderGBuffer.Clear();
                 });
 
-            renderGBuffer.BindAndExecute
-            (
-                () =>
-                {
-                    skyboxPostProcess.Render();
-                    SceneObjectManager.Get().Draw();
-                    DebugDrawer.Get().DebugDraw();
-                }
-            );
 
-            if (DebugDrawer.Get().IsGBufferDump)
+            if (true)
             {
                 gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
+                this.MakeCurrent();
                 ScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0,0,2,2);
             }
             else if (DebugDrawer.Get().IsDepthDump)

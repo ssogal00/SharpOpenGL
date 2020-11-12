@@ -80,7 +80,7 @@ namespace Core.Buffer
 
         public void Clear()
         {
-            GL.ClearColor(1, 1, 1, 1);
+            GL.ClearColor(1, 0, 0, 1);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
