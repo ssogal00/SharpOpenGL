@@ -31,7 +31,7 @@ namespace SharpOpenGL
         [ExposeUI] public float SceneMetallic { get; set; } = 0.6f;
         [ExposeUI] public float DepthDenominator { get; set; } = 10.0f;
 
-        [ExposeUI, Range(300,1000)]
+        [ExposeUI, Core.CustomAttribute.Range(300,1000)]
         public float LightIntensity { get; set; } = 300.0f;
     }
 }

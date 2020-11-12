@@ -9,6 +9,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using CompiledMaterial.GBufferDraw;
 using CompiledMaterial.TBNMaterial;
+using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {

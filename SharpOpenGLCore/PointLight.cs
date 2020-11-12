@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.CustomAttribute;
 using Core.MaterialBase;
 using OpenTK;
+using OpenTK.Mathematics;
 
 namespace SharpOpenGL.Light
 {

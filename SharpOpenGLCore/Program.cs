@@ -13,6 +13,9 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Navigation;
+using Core.Asset;
+using Core.StaticMesh;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using SharpOpenGL.Font;
 using SharpOpenGL.PostProcess;
@@ -22,23 +25,12 @@ namespace SharpOpenGL
 {
     public class MainWindow : GameWindow
     {
+        private GameWindowSettings settings = new GameWindowSettings();
         public MainWindow()
-        : base(512, 384)
+        : base(GameWindowSettings.Default, NativeWindowSettings.Default)
         {
         }
-        public MainWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options,
-            DisplayDevice device)
-        : base(width, height, mode, title, options, device)
-        {
-        }
-
-        public MainWindow(int width, int height, GraphicsMode mode, string title, GameWindowFlags options,
-            DisplayDevice device, int major, int minor, GraphicsContextFlags flags, IGraphicsContext sharedContext,
-            bool isSingleThreaded)
-            : base(width, height, mode, title, options, device, major, minor, flags, sharedContext, isSingleThreaded)
-        {
-        }
-
+        
         protected CompiledMaterial.GBufferDraw.ModelTransform ModelMatrix = new CompiledMaterial.GBufferDraw.ModelTransform();
         protected CompiledMaterial.GBufferDraw.CameraTransform Transform = new CompiledMaterial.GBufferDraw.CameraTransform();
 
@@ -69,8 +61,8 @@ namespace SharpOpenGL
         public event EventHandler<EventArgs> OnResourceCreate;
         public event EventHandler<ScreenResizeEventArgs> OnWindowResize;
 
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyDownEvent;
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> OnKeyUpEvent;
+        public event EventHandler<KeyboardKeyEventArgs> OnKeyDownEvent;
+        public event EventHandler<KeyboardKeyEventArgs> OnKeyUpEvent;
 
         protected BlitToScreen ScreenBlit = new BlitToScreen();
 
@@ -82,13 +74,23 @@ namespace SharpOpenGL
 
         RenderingThread renderingThread = new RenderingThread();
 
-        protected override void OnUnload(EventArgs e)
+        public int Width
+        {
+            get => this.ClientSize.X;
+        }
+
+        public int Height
+        {
+            get => this.ClientSize.Y;
+        }
+
+        protected override void OnUnload()
         {
             //renderingThread.RequestExit();
             //renderThread.Join();
         }
 
-        protected override void OnLoad(EventArgs e)
+        protected override void OnLoad()
         {
             /*renderThread = new Thread(renderingThread.Run);
             renderThread.Priority = ThreadPriority.AboveNormal;
@@ -128,7 +130,7 @@ namespace SharpOpenGL
 
             AssetManager.Get().ImportStaticMeshes();
 
-            OnResourceCreate(this, e);
+            OnResourceCreate(this, new EventArgs());
 
             ScreenBlit.SetGridSize(2, 2);
 
@@ -147,7 +149,7 @@ namespace SharpOpenGL
             GridMaterial = ShaderManager.Get().GetMaterial("GridRenderMaterial");
             ThreeDTextMaterial = ShaderManager.Get().GetMaterial("ThreeDTextRenderMaterial");
 
-            FontManager.Get().Initialize();
+            //FontManager.Get().Initialize();
 
             TestText = new ThreeDText("Hello World");
         }
@@ -182,7 +184,7 @@ namespace SharpOpenGL
         {
             //base.OnUpdateFrame(e);
 
-            if (this.WindowState == OpenTK.WindowState.Minimized)
+            if (this.WindowState == OpenTK.Windowing.Common.WindowState.Minimized)
             {
                 return;
             }
@@ -266,7 +268,7 @@ namespace SharpOpenGL
             if (OnKeyUpEvent != null) OnKeyUpEvent(this, e);
         }
 
-        protected override void OnResize(EventArgs e)
+        protected override void OnResize(ResizeEventArgs e)
         {
             base.OnResize(e);
 

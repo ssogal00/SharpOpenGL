@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Core;
+using OpenTK.Windowing.Common;
+using OpenTK.Windowing.GraphicsLibraryFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Core;
-using OpenTK.Input;
-using System.Windows.Forms;
-using Core.CustomAttribute;
+
 
 namespace SharpOpenGL
 {
@@ -20,63 +20,36 @@ namespace SharpOpenGL
             
         }
         
-        public void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)
+        public void OnKeyDown(KeyboardKeyEventArgs e)
         {
             switch (e.Key)
             {
-                case Key.BackSpace:
-                    if (ConsoleCommandString.Length != 1)
-                    {
-                        ConsoleCommandString = ConsoleCommandString.Remove(ConsoleCommandString.Length - 1, 1);
-                    }
-                    break;
-
-                case Key.CapsLock:
-                case Key.ShiftLeft:
-                case Key.ShiftRight:
-                case Key.NumLock:
-                    break;
-
-                case Key.Tilde:
-                    ToggleActive();
-                    break;
                 
-                case Key.Comma:
+                
+                case Keys.Comma:
                     ConsoleCommandString += ",";
                     break;
 
-                case Key.Period:
+                case Keys.Period:
                     ConsoleCommandString += ".";
                     break;
                     
-                case Key.Space:
+                case Keys.Space:
                     ConsoleCommandString += " ";
                     break;
 
-                case Key.Tab:
+                case Keys.Tab:
                     ConsoleCommandString += "\t";
                     break;
 
-                case Key.Escape:
+                case Keys.Escape:
                     IsActive = false;
                     break;
 
-                case Key.Enter:
-                case Key.KeypadEnter:
-                    ExecuteConsoleCommand(ConsoleCommandString);
-                    IsActive = false;
-                    break;
 
-                default:
-                    if (Control.IsKeyLocked(Keys.CapsLock))
-                    {
-                        ConsoleCommandString += e.Key.ToString();
-                    }
-                    else
-                    {
-                        ConsoleCommandString += e.Key.ToString().ToLower();
-                    }
                     
+
+                
 
                     break;
             }

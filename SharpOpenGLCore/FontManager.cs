@@ -3,9 +3,6 @@ using Core.MaterialBase;
 using Core.Texture;
 using FreeTypeLibWrapper;
 using OpenTK.Graphics.OpenGL;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -56,31 +53,7 @@ namespace SharpOpenGL.Font
             }
             var textureData = freeTypeLib.GetTextureData();
 
-            using(Image<Rgba32> img = new Image<Rgba32>(realTextureSize, realTextureSize))
-            {
-                img.Mutate(x => x.Fill(Rgba32.Black));
-                for (int x = 0; x < realTextureSize; ++x)
-                {
-                    for (int y = 0; y < realTextureSize; ++y)
-                    {
-                        var index = (y * realTextureSize + x) * 2;
-                        if (textureData[index] > 0)
-                        {
-                            Rgba32 color = new Rgba32();
-                            color.R = textureData[index];
-                            color.G = textureData[index];
-                            color.B = textureData[index];
-                            //color.A = textureData[index];
-                            img[x, y] = color;
-                        }
-                    }
-                }
-
-                using (FileStream fs = File.Create("freetype.png"))
-                {
-                    img.SaveAsPng(fs);
-                }
-            }
+            
             
             fontAtlas.Load(textureData.ToArray(), realTextureSize, realTextureSize, PixelInternalFormat.LuminanceAlpha, PixelFormat.LuminanceAlpha);
             

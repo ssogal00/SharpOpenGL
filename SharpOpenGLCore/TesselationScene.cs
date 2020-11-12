@@ -12,6 +12,7 @@ using OpenTK.Graphics.OpenGL;
 using  CompiledMaterial.GBufferDraw;
 using Core.CustomEvent;
 using OpenTK;
+using OpenTK.Mathematics;
 
 namespace SharpOpenGL.Scene
 {

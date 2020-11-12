@@ -1,15 +1,10 @@
-﻿using System;
+﻿using Core;
+using Core.Texture;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
-using Core;
-using Core.Texture;
-using OpenTK.Graphics.ES20;
-using SharpOpenGL.Asset;
 using PixelType = OpenTK.Graphics.OpenGL.PixelType;
 
 namespace SharpOpenGL

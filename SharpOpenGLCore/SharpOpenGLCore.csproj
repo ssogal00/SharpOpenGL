@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CompiledShaderCore\CompiledShaderCore.csproj" />
     <ProjectReference Include="..\Engine\Engine.csproj" />
+    <ProjectReference Include="..\FreeTypeWrapper\FreeTypeWrapper.vcxproj" />
   </ItemGroup>
 
 </Project>

@@ -18,7 +18,7 @@ namespace SharpOpenGL
     {
         protected static int SphereCount = 0;
 
-        public override OpenTK.Matrix4 LocalMatrix
+        public override Matrix4 LocalMatrix
         {
             get
             {
@@ -91,7 +91,7 @@ namespace SharpOpenGL
 
                     gbufferDraw.Roughness = this.Roughness;
                     gbufferDraw.Metalic = this.Metallic;
-                    gbufferDraw.DiffuseOverride = OpenTK.Vector3.UnitX;
+                    gbufferDraw.DiffuseOverride = Vector3.UnitX;
                     
                     gbufferDraw.DiffuseTex2D = diffuseTex;
                     gbufferDraw.NormalTex2D = normalTex;

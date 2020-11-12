@@ -1,4 +1,5 @@
 ﻿using Core;
+using Core.Asset;
 using Core.Buffer;
 using Core.CustomEvent;
 using Core.Primitive;
@@ -7,13 +8,14 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
+using OpenTK.Windowing.GraphicsLibraryFramework;
 using SharpOpenGL.PostProcess;
 using SharpOpenGL.Transform;
 using System;
 using System.Drawing;
-using System.Windows.Input;
+using MouseButton = System.Windows.Input.MouseButton;
 using MouseButtonEventArgs = OpenTK.Windowing.Common.MouseButtonEventArgs;
-using OpenTK.Windowing.Common;
+
 
 namespace SharpOpenGL
 {
@@ -54,12 +56,22 @@ namespace SharpOpenGL
 #endregion
 
         public RenderingThreadWindow(int width, int height)
-        :base (width, height)
+        :base (GameWindowSettings.Default, NativeWindowSettings.Default)
         {
             
         }
 
-        protected override void OnLoad(EventArgs e)
+        public int Width
+        {
+            get => this.ClientSize.X;
+        }
+
+        public int Height
+        {
+            get => this.ClientSize.Y;
+        }
+
+        protected override void OnLoad()
         {
             this.Title = "MyEngine";
 
@@ -86,7 +98,7 @@ namespace SharpOpenGL
             AssetManager.Get().ImportStaticMeshes();
             TextureManager.Get().ImportTextures();
 
-            OnGLContextCreated(this, e);
+            OnGLContextCreated(this, new EventArgs());
             ScreenBlit.SetGridSize(2, 2);
 
             sponzamesh = new StaticMeshObject("sponza2.staticmesh");
@@ -147,28 +159,28 @@ namespace SharpOpenGL
             }
         }
 
-        protected override void OnMouseEnter(EventArgs e)
+        protected override void OnMouseEnter()
         {
-            base.OnMouseEnter(e);
+            base.OnMouseEnter();
         }
 
-        protected override void OnMouseLeave(EventArgs e)
+        protected override void OnMouseLeave()
         {
-            base.OnMouseLeave(e);
+            base.OnMouseLeave();
         }
         //
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
             if (RightMouseBtnDown)
             {
-                if (Math.Abs(e.XDelta) > 0)
+                if (Math.Abs(e.DeltaX) > 0)
                 {
-                    CameraManager.Get().CurrentCamera.RotateYaw(e.XDelta * 0.01f);
+                    CameraManager.Get().CurrentCamera.RotateYaw(e.DeltaX * 0.01f);
                 }
 
-                if (Math.Abs(e.YDelta) > 0)
+                if (Math.Abs(e.DeltaY) > 0)
                 {
-                    CameraManager.Get().CurrentCamera.RotatePitch(e.YDelta * 0.01f);
+                    CameraManager.Get().CurrentCamera.RotatePitch(e.DeltaY * 0.01f);
                 }
             }
         }
@@ -184,19 +196,19 @@ namespace SharpOpenGL
 
         public void HandleKeyDownEvent(object sender, KeyboardKeyEventArgs e)
         {
-            if (e.Key == Key.F1)
+            if (e.Key == Keys.F1)
             {
                 CameraManager.Get().SwitchCamera();
             }
-            else if (e.Key == Key.F2)
+            else if (e.Key == Keys.F2)
             {
                 CameraManager.Get().CurrentCamera.FOV += OpenTK.Mathematics.MathHelper.DegreesToRadians(1.0f);
             }
-            else if (e.Key == Key.F3)
+            else if (e.Key == Keys.F3)
             {
                 CameraManager.Get().CurrentCamera.FOV -= OpenTK.Mathematics.MathHelper.DegreesToRadians(1.0f);
             }
-            else if (e.Key == Key.Tilde)
+            else if (e.Key == Keys.F6)
             {   
                 UIThread.Get().Enqueue
                 (
@@ -207,22 +219,22 @@ namespace SharpOpenGL
                     }
                 );
             }
-            else if (e.Key == Key.F4)
+            else if (e.Key == Keys.F4)
             {
                 DebugDrawer.Get().IsGBufferDump = !DebugDrawer.Get().IsGBufferDump;
             }
-            else if (e.Key == Key.F5)
+            else if (e.Key == Keys.F5)
             {
                 gbufferVisualize.ChangeVisualizeMode();
             }
         }
 
-        protected override void OnUnload(EventArgs e)
+        protected override void OnUnload()
         {
             Engine.Get().RequestExit();
         }
         
-        protected override void OnResize(EventArgs e)
+        protected override void OnResize(ResizeEventArgs e)
         {
             base.OnResize(e);
 
