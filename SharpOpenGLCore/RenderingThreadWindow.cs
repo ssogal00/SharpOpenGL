@@ -56,7 +56,7 @@ namespace SharpOpenGL
 #endregion
 
         public RenderingThreadWindow(int width, int height)
-        :base (new GameWindowSettings{IsMultiThreaded = true, UpdateFrequency = 240, RenderFrequency = 240}, NativeWindowSettings.Default)
+        :base (new GameWindowSettings{IsMultiThreaded = false, UpdateFrequency = 500, RenderFrequency = 500}, NativeWindowSettings.Default)
         {
         }
 
@@ -73,6 +73,8 @@ namespace SharpOpenGL
         protected override void OnLoad()
         {
             this.Title = "MyEngine";
+
+            this.MakeCurrent();
 
             OnGLContextCreated += Sampler.OnResourceCreate;
             OnGLContextCreated += RenderResource.OnOpenGLContextCreated;
@@ -263,6 +265,7 @@ namespace SharpOpenGL
         
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            this.MakeCurrent();
             GL.ClearColor(Color.BlueViolet);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
