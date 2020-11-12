@@ -123,7 +123,7 @@ namespace Core.Asset
                     staticMesh.ImportAssetSync();
 
                     string importedAssetPath = Path.Combine("./Resources/Imported/StaticMesh", Path.GetFileNameWithoutExtension(objfile) + ".staticmesh");
-                    staticMesh.SaveImportedAsset(importedAssetPath);
+                    //staticMesh.SaveImportedAsset(importedAssetPath);
                     AssetMap.TryAdd(filename + ".staticmesh", staticMesh);
                 }
                 else
@@ -137,7 +137,7 @@ namespace Core.Asset
                     }
 
                     string importedAssetPath = Path.Combine("./Resources/Imported/StaticMesh", Path.GetFileNameWithoutExtension(objfile) + ".staticmesh");
-                    staticMesh.SaveImportedAsset(importedAssetPath);
+                    //staticMesh.SaveImportedAsset(importedAssetPath);
                     AssetMap.TryAdd(filename + ".staticmesh", staticMesh);
                 }
             }

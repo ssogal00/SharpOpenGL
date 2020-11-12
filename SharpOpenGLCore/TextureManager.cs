@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using SharpOpenGL.Asset;
 using PixelType = OpenTK.Graphics.OpenGL.PixelType;
 
 namespace SharpOpenGL
@@ -54,7 +55,7 @@ namespace SharpOpenGL
                     {
                         Console.WriteLine(string.Format("Importing Texture {0}", importedFileName));
                         textureAsset.ImportAssetSync();
-                        textureAsset.SaveImportedAsset(importedFileName);
+                        //textureAsset.SaveImportedAsset(importedFileName);
                     }
                 }
             }

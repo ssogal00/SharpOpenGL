@@ -3,7 +3,7 @@ using Core.Texture;
 using OpenTK.Graphics.OpenGL;
 using System;
 using CompiledMaterial.CubemapMaterial;
-
+using OpenTK.Mathematics;
 namespace SharpOpenGL.PostProcess
 {
     public class Skybox : PostProcessBase
@@ -38,7 +38,7 @@ namespace SharpOpenGL.PostProcess
                 PostProcessMaterial.BindAndExecute(() =>
                 {
                     var specificMaterial = (CubemapMaterial) PostProcessMaterial;
-                    specificMaterial.ModelMatrix = OpenTK.Matrix4.CreateScale(10.0f) * OpenTK.Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
+                    specificMaterial.ModelMatrix = Matrix4.CreateScale(10.0f) * Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
                     specificMaterial.ViewMatrix = CameraManager.Get().CurrentCameraView;
                     specificMaterial.ProjMatrix = CameraManager.Get().CurrentCameraProj;
                     specificMaterial.TexCubemap2D = cubemapTexture;

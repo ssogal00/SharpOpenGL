@@ -34,7 +34,7 @@ namespace SharpOpenGL
             
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
-            FontManager.Get().Initialize();
+            
 
             LightManager.Get().Initialize();
 

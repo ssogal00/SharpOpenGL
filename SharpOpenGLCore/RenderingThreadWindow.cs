@@ -56,9 +56,8 @@ namespace SharpOpenGL
 #endregion
 
         public RenderingThreadWindow(int width, int height)
-        :base (GameWindowSettings.Default, NativeWindowSettings.Default)
+        :base (new GameWindowSettings{IsMultiThreaded = true, UpdateFrequency = 240, RenderFrequency = 240}, NativeWindowSettings.Default)
         {
-            
         }
 
         public int Width
@@ -122,15 +121,7 @@ namespace SharpOpenGL
             skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
 
             // add ui editable objects
-            UIThread.Get().Enqueue
-            (
-                () =>
-                {
-                    UIThread.EditorWindow.SetSceneObjectList(SceneObjectManager.Get().GetEditableSceneObjectList());
-                    UIThread.EditorWindow.AddObjectToWatch(DebugDrawer.Get());
-                }
-            );
-
+            
             bInitialized = true;
         }
 
@@ -152,11 +143,7 @@ namespace SharpOpenGL
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
-            if (e.Button == MouseButton.Right)
-            {
-                LastMouseBtnDownPosition = new Vector2(e.X, e.Y);
-                RightMouseBtnDown = true;
-            }
+            
         }
 
         protected override void OnMouseEnter()
@@ -187,10 +174,7 @@ namespace SharpOpenGL
         //
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
-            if (e.Button == MouseButton.Right)
-            {
-                RightMouseBtnDown = false;
-            }
+            
         }
 
 
@@ -210,14 +194,7 @@ namespace SharpOpenGL
             }
             else if (e.Key == Keys.F6)
             {   
-                UIThread.Get().Enqueue
-                (
-                    () =>
-                    {
-                        UIThread.EditorWindow.SetSceneObjectList(SceneObjectManager.Get().GetEditableSceneObjectList());
-                        UIThread.EditorWindow.AddObjectToWatch(DebugDrawer.Get());
-                    }
-                );
+                
             }
             else if (e.Key == Keys.F4)
             {
@@ -286,7 +263,7 @@ namespace SharpOpenGL
         
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            GL.ClearColor(Color.Aqua);
+            GL.ClearColor(Color.BlueViolet);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
             if (bInitialized == false || Engine.Get().IsInitialized == false)

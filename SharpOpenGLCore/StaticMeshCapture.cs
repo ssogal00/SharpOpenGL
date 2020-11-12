@@ -50,7 +50,7 @@ namespace SharpOpenGL
                     gbufferMaterial.SetUniformBufferValue<ModelTransform>("ModelTransform", ref modelTransform);
                     staticMeshObject.Draw();
 
-                    FontManager.Get().RenderText(10, 100, "Hello");
+                    
                     //
                     
                 });

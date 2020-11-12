@@ -13,18 +13,18 @@ namespace SharpOpenGL
 
         public void Enqueue(Action action)
         {
-            if (editorWindow != null && editorWindow.Dispatcher != null)
+            /*if (editorWindow != null && editorWindow.Dispatcher != null)
             {
                 if (editorWindow.Dispatcher.HasShutdownFinished == false)
                 {
                     editorWindow.Dispatcher.InvokeAsync(action);
                 }
-            }
+            }*/
         }
 
         public void Run()
         {   
-            editorWindow = new ObjectEditor.MainWindow();
+            /*editorWindow = new ObjectEditor.MainWindow();
 
             editorWindow.ObjectCreateEventHandler += Engine.Get().OnObjectCreate;
 
@@ -35,24 +35,25 @@ namespace SharpOpenGL
                 editorWindow.Dispatcher.InvokeShutdown();
             };
 
+            */
+
             System.Windows.Threading.Dispatcher.Run();
             Console.WriteLine("Here");
         }
 
         public void RequestExit()
         {
-            if (!editorWindow.Dispatcher.HasShutdownFinished && !editorWindow.Dispatcher.HasShutdownStarted)
+            /*if (!editorWindow.Dispatcher.HasShutdownFinished && !editorWindow.Dispatcher.HasShutdownStarted)
             {
                 editorWindow.Dispatcher.Invoke(
                 () =>
                 {
                     editorWindow.Close();
                 });
-            }
-
+            }*/
         }
 
-        public static ObjectEditor.MainWindow EditorWindow => editorWindow;
-        private static ObjectEditor.MainWindow editorWindow = null;
+        //public static ObjectEditor.MainWindow EditorWindow => editorWindow;
+        //private static ObjectEditor.MainWindow editorWindow = null;
     }
 }

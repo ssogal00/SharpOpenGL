@@ -11,6 +11,7 @@
     <PackageReference Include="OpenTK.OpenAL" Version="4.1.0" />
     <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
     <PackageReference Include="ZeroFormatter" Version="1.6.4" />
+    <PackageReference Include="ZeroFormatter.Interfaces" Version="1.6.4" />
     <FrameworkReference Include="Microsoft.WindowsDesktop.App" />
   </ItemGroup>
 

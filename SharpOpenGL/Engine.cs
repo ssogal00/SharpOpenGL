@@ -13,11 +13,11 @@ using Core.Texture;
 using Core.Tickable;
 using SharpOpenGL.Asset;
 using SharpOpenGL.Font;
-using ObjectEditor;
+
 using OpenTK;
 using SharpOpenGL;
 using SharpOpenGL.Light;
-using ImageLibWrapper;
+
 
 namespace SharpOpenGL
 {

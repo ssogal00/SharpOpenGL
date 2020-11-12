@@ -227,17 +227,9 @@
       <Project>{1115dd7b-beb3-4d5c-9528-9e852ecc63d5}</Project>
       <Name>CoreFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FreeTypeWrapper\FreeTypeWrapper.vcxproj">
-      <Project>{9d0ab4d9-ea47-4ccd-a0dc-5063f072356f}</Project>
-      <Name>FreeTypeWrapper</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ImageWrapper\ImageWrapper.vcxproj">
       <Project>{39e0b5dd-0884-494f-8b6a-f17ef1201f39}</Project>
       <Name>ImageWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ObjectEditor\ObjectEditor.csproj">
-      <Project>{2079b69a-ad1b-46ae-bf5f-5e4ce2546cbf}</Project>
-      <Name>ObjectEditor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

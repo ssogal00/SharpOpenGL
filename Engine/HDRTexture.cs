@@ -24,7 +24,7 @@ namespace Core.Texture
 
         public override void Load(string FilePath)
         {
-            using (var bitmap = new ScopedSTBImage(FilePath, true))
+            using (var bitmap = new ScopedFreeImage(""))
             {
                 this.BindAtUnit(TextureUnit.Texture0);
                 m_Width = bitmap.Width;

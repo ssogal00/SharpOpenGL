@@ -24,7 +24,7 @@ namespace SharpOpenGL
                 Directory.CreateDirectory("./Resources/Imported/Shader");
             }
 
-            var compiledShaderAssembly = Assembly.Load("CompiledShader");
+            var compiledShaderAssembly = Assembly.Load("CompiledShaderCore");
             var types = compiledShaderAssembly.GetTypes();
 
             foreach (var t in types)

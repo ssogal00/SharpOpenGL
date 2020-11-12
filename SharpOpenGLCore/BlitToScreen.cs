@@ -8,6 +8,7 @@ using System;
 using Core.Texture;
 using System.Diagnostics;
 using CompiledMaterial.ScreenSpaceDraw;
+using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {
@@ -105,33 +106,33 @@ namespace SharpOpenGL
 
             // upper left
             var EachVertex = new PT_VertexAttribute();
-            EachVertex.VertexPosition = new OpenTK.Vector3(fOriginX, fOriginY , 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(0, 1);
+            EachVertex.VertexPosition = new Vector3(fOriginX, fOriginY , 0);
+            EachVertex.TexCoord = new Vector2(0, 1);
             VertexList.Add(EachVertex);
 
             // lower right
-            EachVertex.VertexPosition = new OpenTK.Vector3(fOriginX + fRowGridLength, fOriginY - fColGridLength, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(1, 0);
+            EachVertex.VertexPosition = new Vector3(fOriginX + fRowGridLength, fOriginY - fColGridLength, 0);
+            EachVertex.TexCoord = new Vector2(1, 0);
             VertexList.Add(EachVertex);
 
             // lower left
-            EachVertex.VertexPosition = new OpenTK.Vector3(fOriginX, fOriginY - fColGridLength, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(0, 0);
+            EachVertex.VertexPosition = new Vector3(fOriginX, fOriginY - fColGridLength, 0);
+            EachVertex.TexCoord = new Vector2(0, 0);
             VertexList.Add(EachVertex);
 
             // upper left
-            EachVertex.VertexPosition = new OpenTK.Vector3(fOriginX, fOriginY, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(0, 1);
+            EachVertex.VertexPosition = new Vector3(fOriginX, fOriginY, 0);
+            EachVertex.TexCoord = new Vector2(0, 1);
             VertexList.Add(EachVertex);
 
             // upper right
-            EachVertex.VertexPosition = new OpenTK.Vector3(fOriginX + fRowGridLength, fOriginY, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(1, 1);
+            EachVertex.VertexPosition = new Vector3(fOriginX + fRowGridLength, fOriginY, 0);
+            EachVertex.TexCoord = new Vector2(1, 1);
             VertexList.Add(EachVertex);
 
             // lower right
-            EachVertex.VertexPosition = new OpenTK.Vector3(fOriginX + fRowGridLength, fOriginY - fColGridLength, 0);
-            EachVertex.TexCoord = new OpenTK.Vector2(1, 0);
+            EachVertex.VertexPosition = new Vector3(fOriginX + fRowGridLength, fOriginY - fColGridLength, 0);
+            EachVertex.TexCoord = new Vector2(1, 0);
             VertexList.Add(EachVertex);
 
             // feed vertex buffer

@@ -32,7 +32,7 @@ namespace SharpOpenGL
         {
             RenderingThreadId = Thread.CurrentThread.ManagedThreadId;
             window = new RenderingThreadWindow(512, 384);
-            window.Run(200);
+            window.Run();
         }
 
         public bool IsInRenderingThread()

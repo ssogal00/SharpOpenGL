@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Core;
-
+using OpenTK.Mathematics;
 namespace SharpOpenGL.Light
 {
     public class LightManager : Singleton<LightManager>
@@ -47,8 +47,8 @@ namespace SharpOpenGL.Light
                 var G = (float)random.Next(1, 2);
                 var B = (float)random.Next(1, 2);
 
-                light1.Translation = new OpenTK.Vector3(X,Y,Z);
-                light1.Color = new OpenTK.Vector3(R, G, B);
+                light1.Translation = new Vector3(X,Y,Z);
+                light1.Color = new Vector3(R, G, B);
                 AddLight(light1);
             }
         }
