@@ -327,7 +327,7 @@ public class ScreenSpaceDraw : MaterialBase
 
 	public static string GetVSSourceCode()
 	{
-		return @"#version 450 core
+		return @"#version 460 core
 
 
 layout(location=0) in vec3 VertexPosition;
@@ -345,7 +345,7 @@ void main()
 	public static string GetFSSourceCode()
 	{
 		return @"
-#version 450 core
+#version 460 core
 
 in vec2 OutTexCoord;
 
@@ -4154,7 +4154,7 @@ public class FontRenderMaterial : MaterialBase
 
 	public static string GetVSSourceCode()
 	{
-		return @"#version 450 core
+		return @"#version 330 core
 
 layout(location=0) in vec3 VertexPosition;
 layout(location=1) in vec2 VertexTexCoord;
@@ -4175,7 +4175,7 @@ void main()
 
 	public static string GetFSSourceCode()
 	{
-		return @"#version 450 core
+		return @"#version 330 core
 
 in vec2 TexCoord;
 

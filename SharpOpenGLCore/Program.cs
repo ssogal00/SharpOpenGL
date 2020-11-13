@@ -31,12 +31,10 @@ namespace SharpOpenGL
         [STAThread]
         static void Main()
         {
-            var renderThread = new Thread(RenderingThread.Get().Run);
+            /*var renderThread = new Thread(RenderingThread.Get().Run);
             renderThread.Priority = ThreadPriority.AboveNormal;
             renderThread.Name = "RenderingThread";
             renderThread.Start();
-
-            Engine.Get().Initialize();
 
             while (true)
             {
@@ -44,11 +42,13 @@ namespace SharpOpenGL
                 {
                     break;
                 }
-                Engine.Get().Tick();
                 Thread.Sleep(1000 / 60);
             }
 
-            renderThread.Join();
+            renderThread.Join();*/
+
+            MyGameWindow gamewindow = new MyGameWindow();
+            gamewindow.Run();
         }
     }
 }
