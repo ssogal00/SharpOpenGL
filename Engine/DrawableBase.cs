@@ -77,6 +77,7 @@ namespace Core
         {
             if (bReadyToDraw)
             {
+                VA.Bind();
                 BindVertexBuffer();
                 GL.DrawArrays(type, 0, VertexCount);
             }
@@ -86,6 +87,7 @@ namespace Core
         {
             if (bReadyToDraw)
             {
+                VA.Bind();
                 BindVertexBuffer();
                 GL.DrawArraysInstanced(type, 0, VertexCount, instancecount);
             }

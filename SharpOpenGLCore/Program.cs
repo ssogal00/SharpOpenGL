@@ -44,6 +44,7 @@ namespace SharpOpenGL
                 {
                     break;
                 }
+                Engine.Get().Tick();
                 Thread.Sleep(1000 / 60);
             }
 

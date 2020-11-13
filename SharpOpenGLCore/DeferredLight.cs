@@ -54,7 +54,7 @@ namespace SharpOpenGL.PostProcess
         {
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
 
-            Output.BindAndExecute(PostProcessMaterial, () =>
+            Output.BindAndExecute(PostProcessMaterial,  () =>
             {
                 var deferredLight = (LightMaterial) PostProcessMaterial;
                 deferredLight.PositionTex2D = positionInput;

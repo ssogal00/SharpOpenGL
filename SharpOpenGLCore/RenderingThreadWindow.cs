@@ -279,7 +279,7 @@ namespace SharpOpenGL
                 }
             );
 
-            if (true)
+            if (false)
             {
                 gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
                 ScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0, 0, 2, 2);
@@ -295,7 +295,7 @@ namespace SharpOpenGL
 
                 GL.Viewport(0, 0, Width, Height);
 
-                if (DebugDrawer.Get().IsFXAAEnabled)
+                if (false)
                 {
                     fxaa.Render(lightPostProcess.OutputColorTex0);
                     ScreenBlit.Blit(fxaa.OutputColorTex0, 0, 0, 2, 2);
