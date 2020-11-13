@@ -12,6 +12,7 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 using SharpOpenGL.PostProcess;
 using SharpOpenGL.Transform;
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -77,12 +78,11 @@ namespace SharpOpenGL
         {
             this.Title = "MyEngine";
 
-            this.MakeCurrent();
-
             OnGLContextCreated += Sampler.OnResourceCreate;
             OnGLContextCreated += RenderResource.OnOpenGLContextCreated;
 
             OnWindowResize += CameraManager.Get().OnWindowResized;
+
             OnKeyDownEvent += CameraManager.Get().OnKeyDown;
             OnKeyUpEvent += CameraManager.Get().OnKeyUp;
 
@@ -95,7 +95,7 @@ namespace SharpOpenGL
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.TextureCubeMap);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
-            
+
 
             ShaderManager.Get().CompileShaders();
             AssetManager.Get().ImportStaticMeshes();
@@ -114,7 +114,7 @@ namespace SharpOpenGL
                 equirectToCube.Transform();
                 convolution.SetSourceCubemap(equirectToCube.ResultCubemap);
                 convolution.Transform();
-                
+
             }
 
             prefilter.SetEnvMap(equirectToCube.ResultCubemap);
@@ -124,7 +124,6 @@ namespace SharpOpenGL
 
             skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
 
-            // add ui editable objects
             
             bInitialized = true;
         }
@@ -246,7 +245,14 @@ namespace SharpOpenGL
             RenderingThread.Get().ExecuteTimeSlice();
         }
 
-        
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            SharpOpenGL.Engine.Get().RequestExit();
+        }
+
+
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             this.MakeCurrent();
@@ -265,19 +271,18 @@ namespace SharpOpenGL
                     renderGBuffer.Clear();
                 });
 
-            renderGBuffer.BindAndExecute(
+            renderGBuffer.BindAndExecute
+            (
                 () =>
                 {
                     SceneObjectManager.Get().Draw();
-                    DebugDrawer.Get().DebugDraw();
-                });
-
+                }
+            );
 
             if (true)
             {
                 gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
-                this.MakeCurrent();
-                ScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0,0,2,2);
+                ScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0, 0, 2, 2);
             }
             else if (DebugDrawer.Get().IsDepthDump)
             {
@@ -286,9 +291,9 @@ namespace SharpOpenGL
             }
             else
             {
-                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment ,convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
+                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
 
-                GL.Viewport(0,0, Width, Height);
+                GL.Viewport(0, 0, Width, Height);
 
                 if (DebugDrawer.Get().IsFXAAEnabled)
                 {

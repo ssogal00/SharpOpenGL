@@ -15,9 +15,7 @@ namespace SharpOpenGL
 
         public static int RenderingThreadId = 0;
         private Stopwatch stopwatch = new Stopwatch();
-        private MyGameWindow window = null;
-
-        public MyGameWindow Window => window;
+        private RenderingThreadWindow window = null;
 
         public RenderingThread()
         {
@@ -31,7 +29,7 @@ namespace SharpOpenGL
         public void Run()
         {
             RenderingThreadId = Thread.CurrentThread.ManagedThreadId;
-            window = new MyGameWindow();
+            window = new RenderingThreadWindow(1024,768);
             window.Run();
         }
 

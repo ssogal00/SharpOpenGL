@@ -68,7 +68,7 @@ namespace SharpOpenGL
         {
             using (var depthDisable = new ScopedDisable(EnableCap.DepthTest))
             {
-                Material.BindAndExecute(VB,IB,() =>
+                Material.BindAndExecute(VA, VB, IB,() =>
                 {
                     UpdateVertexBuffer(rowIndex, colIndex, GridRowSize, GridColSize, gridRowSpan, gridColSpan);
                     Material.ColorTex2D = texture;

@@ -21,8 +21,12 @@ namespace SharpOpenGL.PostProcess
         public override void Initialize()
         {
             // create vertex, index buffer for screen space drawing
+
             VB = new StaticVertexBuffer<PT_VertexAttribute>();
             IB = new IndexBuffer();
+            VA = new VertexArray();
+
+            VA.Bind();
             UpdateVertexBuffer();
             UpdateIndexBuffer();
 
@@ -43,7 +47,7 @@ namespace SharpOpenGL.PostProcess
 
         protected void BlitToScreenSpace()
         {
-            using (var s = new ScopedBind(VB, IB))
+            using (var s = new ScopedBind(VA,VB, IB))
             {
                 GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
             }
@@ -109,6 +113,8 @@ namespace SharpOpenGL.PostProcess
         protected List<uint> Indices = new List<uint>();
         protected StaticVertexBuffer<PT_VertexAttribute> VB = null;
         protected IndexBuffer IB = null;
+        protected VertexArray VA = null;
+
         List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
 
         protected bool bCreateCustomRenderTarget = false;
