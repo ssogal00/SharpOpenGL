@@ -14,6 +14,7 @@ namespace Core
     {
         public DrawableBase()
         {
+            VA = new VertexArray();
             VB = new StaticVertexBuffer<T>();
             IB = new IndexBuffer();
         }
@@ -21,6 +22,8 @@ namespace Core
 
         public void SetupVertexData(ref T[] VertexList)
         {
+            VA.Bind();
+
             VB.Bind();
             VB.BufferData<T>(ref VertexList);
             VertexCount = VertexList.Count();
@@ -40,12 +43,15 @@ namespace Core
 
         public void BindVertexAndIndexBuffer()
         {
+            VA.Bind();
             BindVertexBuffer();
             BindIndexBuffer();
         }
 
         public void SetupData(ref T[] VertexList, ref uint[] IndexList)
         {
+            VA.Bind();
+
             VB.Bind();
             VB.BufferData<T>(ref VertexList);
             VertexCount = VertexList.Count();
@@ -134,6 +140,7 @@ namespace Core
 
         protected StaticVertexBuffer<T> VB = null;
         protected IndexBuffer IB = null;
+        protected VertexArray VA = null;
 
         protected int VertexCount = 0;
         protected int IndexCount = 0;

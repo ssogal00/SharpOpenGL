@@ -43,12 +43,8 @@ namespace SharpOpenGL
 
             var texture = TextureManager.Get()
                 .LoadTexture2D("./Imported/Resources/Texture/bamboo/bamboo-wood-semigloss-roughness.imported");
-
-            VB.Bind();
-            IB.Bind();
-            Material.Bind();
-            Material.ColorTex2D = texture;
-            GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
+            
+            blit.Blit(texture);
 
             SwapBuffers();
         }
@@ -57,21 +53,13 @@ namespace SharpOpenGL
 
         private Sphere mSphere = null;
 
+        private int vertexArrayObject;
+
         protected override void OnLoad()
         {
             ShaderManager.Get().CompileShaders();
             Sampler.OnResourceCreate(this,null);
-
-            Material = new ScreenSpaceDraw();
-
-            VB = new StaticVertexBuffer<PT_VertexAttribute>();
-            IB = new IndexBuffer();
-
-            // feed index buffer
-            uint[] IndexArray = { 0, 1, 2, 3, 4, 5 };
-            IB.BufferData<uint>(ref IndexArray);
-            UpdateVertexBuffer(0,0,1,1,1,1);
-            
+            blit.Create();
         }
 
         protected void UpdateVertexBuffer(int gridRowIndex, int gridColIndex, int gridRowSize, int gridColSize, int gridRowSpan, int gridColSpan)

@@ -31,6 +31,14 @@ namespace Core
             first.Unbind(); second.Unbind(); third.Unbind();
         }
 
+        public static void BindAndExecute(this IBindable first, IBindable second, IBindable third, IBindable forth, Action action)
+        {
+            first.Bind(); second.Bind(); third.Bind(); forth.Bind();
+            action();
+            first.Unbind(); second.Unbind(); third.Unbind(); forth.Unbind();
+        }
+
+
         public static void BindAndExecute(this IEnumerable<IBindable> bindableList, Action action)
         {
             //            

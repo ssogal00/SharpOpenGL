@@ -265,6 +265,13 @@ namespace SharpOpenGL
                     renderGBuffer.Clear();
                 });
 
+            renderGBuffer.BindAndExecute(
+                () =>
+                {
+                    SceneObjectManager.Get().Draw();
+                    DebugDrawer.Get().DebugDraw();
+                });
+
 
             if (true)
             {

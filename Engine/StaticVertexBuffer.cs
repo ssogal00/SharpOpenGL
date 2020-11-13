@@ -9,6 +9,35 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core.Buffer
 {
+    public class VertexArray : IBindable, IDisposable
+    {
+        private int mVertexArray = 0;
+
+        public VertexArray()
+        {
+            mVertexArray = GL.GenVertexArray();
+        }
+
+        public void Bind()
+        {
+            GL.BindVertexArray(mVertexArray);
+        }
+
+        public void Unbind()
+        {
+            GL.BindVertexArray(0);
+        }
+
+        public void Dispose()
+        {
+            if (mVertexArray != 0)
+            {
+                GL.DeleteVertexArray(mVertexArray);
+                mVertexArray = 0;
+            }
+        }
+    }
+
     public class StaticVertexBuffer<T> : OpenGLBuffer where T : struct, IGenericVertexAttribute
     {   
         public StaticVertexBuffer()

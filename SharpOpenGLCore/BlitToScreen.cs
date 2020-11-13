@@ -37,6 +37,8 @@ namespace SharpOpenGL
         {
             Material = new ScreenSpaceDraw();
 
+            VA = new VertexArray();
+            VA.Bind();
             VB = new StaticVertexBuffer<PT_VertexAttribute>();
             IB = new IndexBuffer();
             UpdateVertexBuffer(0, 0, 1, 1, 1, 1);
@@ -54,7 +56,7 @@ namespace SharpOpenGL
         {
             using (var depthDisable = new ScopedDisable(EnableCap.DepthTest))
             {
-                Material.BindAndExecute(VB, IB, () =>
+                Material.BindAndExecute(VA, () =>
                 {
                     Material.ColorTex2D = texture;
                     GL.DrawElements(PrimitiveType.Triangles, 6, DrawElementsType.UnsignedInt, 0);
@@ -145,6 +147,8 @@ namespace SharpOpenGL
         protected List<uint> Indices = new List<uint>();
         protected StaticVertexBuffer<PT_VertexAttribute> VB = null;
         protected IndexBuffer IB = null;
+        protected VertexArray VA = null;
+
         List<PT_VertexAttribute> VertexList = new List<PT_VertexAttribute>();
         
         // 
