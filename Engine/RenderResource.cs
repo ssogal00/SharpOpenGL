@@ -38,6 +38,11 @@ namespace Core
             Initialize();
         }
 
+        public virtual void OnGLContextCreated()
+        {
+            Initialize();
+        }
+
         public virtual void Initialize()
         {
             bInit = true;

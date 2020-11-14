@@ -57,13 +57,12 @@ namespace SharpOpenGL
                 currentCamera.OnKeyUp(sender, e);
             }
         }
-        
 
-        public void OnWindowResized(object sender, ScreenResizeEventArgs eventArgs)
+        public void OnWindowResized(int width, int height)
         {
             if (currentCamera != null)
             {
-                currentCamera.OnWindowResized(sender, eventArgs);
+                currentCamera.OnWindowResized(width, height);
             }
         }
 

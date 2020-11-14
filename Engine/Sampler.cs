@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace Core.Texture
 {
@@ -89,7 +83,7 @@ namespace Core.Texture
             }
         }
 
-        public static void OnResourceCreate(object sender, EventArgs e)
+        public static void OnGLContextCreated()
         {
             DefaultLinearSampler = new Sampler();
             DefaultLinearSampler.SetMagFilter(TextureMagFilter.Linear);
@@ -105,7 +99,11 @@ namespace Core.Texture
             DefaultCubemapSampler.SetWrapS(TextureWrapMode.ClampToEdge);
             DefaultCubemapSampler.SetWrapT(TextureWrapMode.ClampToEdge);
             DefaultCubemapSampler.SetWrapR(TextureWrapMode.ClampToEdge);
+        }
 
+        public static void OnResourceCreate(object sender, EventArgs e)
+        {
+            OnGLContextCreated();
         }
 
         public static Sampler DefaultLinearSampler = null;

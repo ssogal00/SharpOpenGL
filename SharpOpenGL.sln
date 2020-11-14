@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30309.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreFramework", "Core\CoreFramework.csproj", "{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FBXWrapper", "FBXWrapper\FBXWrapper.vcxproj", "{C7791532-CE38-47A3-B1CE-9E4CFCCE94E2}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImageWrapper", "ImageWrapper\ImageWrapper.vcxproj", "{39E0B5DD-0884-494F-8B6A-F17EF1201F39}"
@@ -17,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpOpenGLCore", "SharpOpe
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FreeTypeWrapper", "FreeTypeWrapper\FreeTypeWrapper.vcxproj", "{9D0AB4D9-EA47-4CCD-A0DC-5063F072356F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaderCompilerCore", "ShaderCompilerCore\ShaderCompilerCore.csproj", "{0A02530D-D32E-4D41-BB75-C03CA4AAED76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShaderCompilerCore", "ShaderCompilerCore\ShaderCompilerCore.csproj", "{0A02530D-D32E-4D41-BB75-C03CA4AAED76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,18 +27,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Debug|x64.Build.0 = Debug|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Debug|x86.Build.0 = Debug|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Release|x64.ActiveCfg = Release|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Release|x64.Build.0 = Release|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Release|x86.ActiveCfg = Release|Any CPU
-		{1115DD7B-BEB3-4D5C-9528-9E852ECC63D5}.Release|x86.Build.0 = Release|Any CPU
 		{C7791532-CE38-47A3-B1CE-9E4CFCCE94E2}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{C7791532-CE38-47A3-B1CE-9E4CFCCE94E2}.Debug|Any CPU.Build.0 = Debug|Win32
 		{C7791532-CE38-47A3-B1CE-9E4CFCCE94E2}.Debug|x64.ActiveCfg = Debug|x64

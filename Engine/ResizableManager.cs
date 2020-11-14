@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Core.CustomEvent;
+using System.Reactive;
+using System.Reactive.Subjects;
 
 namespace Core
 {
@@ -12,9 +15,9 @@ namespace Core
     {
         public void AddResizable(IResizable newResizable)
         {
-            ResizeEventHandler += newResizable.OnResize;
+            ResizeEventHandler.Subscribe(x => newResizable.OnResize(x.Item1, x.Item2));
         }
 
-        public EventHandler<ScreenResizeEventArgs> ResizeEventHandler;
+        public Subject<Tuple<int, int>> ResizeEventHandler = new Subject<Tuple<int, int>>();
     }
 }

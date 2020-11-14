@@ -140,10 +140,10 @@ namespace Core.Camera
             set { DestEyeLocation = value;}
         }
 
-        public override void OnWindowResized(object sender, ScreenResizeEventArgs eventArgs)
+        public override void OnWindowResized(int width, int height)
         {
-            var Width = eventArgs.Width;
-            var Height = eventArgs.Height;
+            var Width = width;
+            var Height = height;
 
             float fAspectRatio = Width / (float)Height;
 

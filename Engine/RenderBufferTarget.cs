@@ -15,7 +15,7 @@ namespace Core.Texture
 
         }
 
-        public void OnResize(object sender, ScreenResizeEventArgs args)
+        public void OnResize(int width , int height)
         {
 
         }

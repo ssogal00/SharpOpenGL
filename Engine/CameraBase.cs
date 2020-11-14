@@ -1,4 +1,5 @@
-﻿using Core.CustomAttribute;
+﻿using System.Windows.Interop;
+using Core.CustomAttribute;
 using Core.CustomEvent;
 using Core.Tickable;
 
@@ -113,14 +114,11 @@ namespace Core.Camera
         public virtual void OnKeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         { }
 
-        public virtual void OnWindowResized(object sender, ScreenResizeEventArgs eventArgs)
+        
+        public virtual void OnWindowResized(int width, int height)
         {
-            var Width = eventArgs.Width;
-            var Height = eventArgs.Height;
-
-            float fAspectRatio = Width / (float)Height;
-
-            AspectRatio = fAspectRatio;            
+            float fAspectRatio = width / (float) height;
+            AspectRatio = fAspectRatio;
         }
 
         protected Vector3 UpDir = new Vector3(0,1,0);

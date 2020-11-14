@@ -67,9 +67,9 @@ namespace Core.Buffer
             CreateGBuffer();
         }
 
-        public void OnResize(object sender, ScreenResizeEventArgs e)
+        public void OnResize(int width, int height)
         {
-            Resize(e.Width, e.Height);
+            Resize(width, height);
         }
 
         public void Bind()

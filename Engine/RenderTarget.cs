@@ -78,9 +78,9 @@ namespace Core.Texture
             FrameBufferObject.Unbind();
         }
 
-        public void OnResize(object sender, Core.CustomEvent.ScreenResizeEventArgs e)
+        public void OnResize(int width, int height)
         {
-            Resize(e.Width, e.Height);
+            Resize(width, height);
         }
         
         public virtual void PrepareToDraw()

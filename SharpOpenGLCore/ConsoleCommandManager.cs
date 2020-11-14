@@ -45,13 +45,6 @@ namespace SharpOpenGL
                 case Keys.Escape:
                     IsActive = false;
                     break;
-
-
-                    
-
-                
-
-                    break;
             }
         }
 

@@ -16,14 +16,16 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using System.Threading;
 using MouseButtonEventArgs = OpenTK.Windowing.Common.MouseButtonEventArgs;
 
 namespace SharpOpenGL
 {
     public class RenderingThreadWindow : GameWindow
     {
-        protected IObservable<Unit> GLContextCreated;
-        protected IObservable<Tuple<int,int>> WindowResized;
+        protected Subject<Unit> GLContextCreated = new Subject<Unit>();
+        protected Subject<Tuple<int,int>> WindowResized = new Subject<Tuple<int, int>>();
 
         protected event EventHandler<EventArgs> OnGLContextCreated;
         protected event EventHandler<ScreenResizeEventArgs> OnWindowResize;
@@ -53,6 +55,8 @@ namespace SharpOpenGL
         public event EventHandler<KeyboardKeyEventArgs> OnKeyDownEvent;
         public event EventHandler<KeyboardKeyEventArgs> OnKeyUpEvent;
 
+        public AutoResetEvent RenderingDone = new AutoResetEvent(false);
+
 #region @Mouse Info
         private Vector2 LastMouseBtnDownPosition = new Vector2(0);
         private Vector2 LastMouseBtnMovePosition = new Vector2(0);
@@ -62,6 +66,15 @@ namespace SharpOpenGL
         public RenderingThreadWindow(int width, int height)
         :base (new GameWindowSettings{IsMultiThreaded = false, UpdateFrequency = 500, RenderFrequency = 500}, NativeWindowSettings.Default)
         {
+            GLContextCreated.Subscribe(_ =>
+            {
+                Sampler.OnGLContextCreated();
+            });
+
+            WindowResized.Subscribe((x) =>
+            {
+                CameraManager.Get().OnWindowResized(x.Item1, x.Item2);
+            });
         }
 
         public int Width
@@ -78,10 +91,9 @@ namespace SharpOpenGL
         {
             this.Title = "MyEngine";
 
-            OnGLContextCreated += Sampler.OnResourceCreate;
             OnGLContextCreated += RenderResource.OnOpenGLContextCreated;
 
-            OnWindowResize += CameraManager.Get().OnWindowResized;
+            GLContextCreated.OnNext(Unit.Default);
 
             OnKeyDownEvent += CameraManager.Get().OnKeyDown;
             OnKeyUpEvent += CameraManager.Get().OnKeyUp;
@@ -233,8 +245,11 @@ namespace SharpOpenGL
 
             float fAspectRatio = Width / (float)Height;
 
-            OnWindowResize(this, eventArgs);
-            ResizableManager.Get().ResizeEventHandler(this, eventArgs);
+            var newSize = new Tuple<int, int>(Width, Height);
+
+            WindowResized.OnNext(newSize);
+
+            ResizableManager.Get().ResizeEventHandler.OnNext(newSize);
             
             this.Title = string.Format("MyEngine({0}x{1})", Width, Height);
         }
@@ -243,6 +258,7 @@ namespace SharpOpenGL
         {
             base.OnUpdateFrame(e);
             RenderingThread.Get().ExecuteTimeSlice();
+
         }
 
 
@@ -280,7 +296,7 @@ namespace SharpOpenGL
                 }
             );
 
-            if (false)
+            if (true)
             {
                 gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
                 ScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0, 0, 2, 2);

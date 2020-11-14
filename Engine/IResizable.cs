@@ -9,6 +9,6 @@ namespace Core
 {
     public interface IResizable
     {
-        void OnResize(object sender, ScreenResizeEventArgs args);
+        void OnResize(int width, int height);
     }
 }
