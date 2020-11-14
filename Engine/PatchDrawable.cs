@@ -17,8 +17,9 @@ namespace Core
         {
             if (bReadyToDraw)
             {
-                BindVertexAndIndexBuffer();
+                BindVertexArray();
                 GL.DrawElements(PrimitiveType.Patches, IndexCount, DrawElementsType.UnsignedInt, 0);
+                UnbindVertexArray();
             }
         }
     

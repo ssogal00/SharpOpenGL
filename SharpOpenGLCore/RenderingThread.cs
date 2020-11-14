@@ -17,6 +17,8 @@ namespace SharpOpenGL
         private Stopwatch stopwatch = new Stopwatch();
         private RenderingThreadWindow window = null;
 
+        public AutoResetEvent RenderingFinished = new AutoResetEvent(false);
+
         public RenderingThread()
         {
         }

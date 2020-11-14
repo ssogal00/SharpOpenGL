@@ -1,25 +1,6 @@
-using Core;
-using Core.Buffer;
-using Core.CustomEvent;
-using Core.CustomSerialize;
-using Core.Texture;
-using Core.Tickable;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Mathematics;
-using OpenTK.Windowing.Common;
-using OpenTK.Windowing.Desktop;
 using System;
-using System.Drawing;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Navigation;
-using Core.Asset;
-using Core.StaticMesh;
-using OpenTK.Windowing.GraphicsLibraryFramework;
-using SharpOpenGL.Font;
-using SharpOpenGL.PostProcess;
-using ZeroFormatter.Formatters;
+using System.Diagnostics;
 
 namespace SharpOpenGL
 {
@@ -45,13 +26,10 @@ namespace SharpOpenGL
                     break;
                 }
                 Engine.Get().Tick();
-                Thread.Sleep(1000 / 60);
             }
 
+            // wait for rendering thread to finish
             renderThread.Join();
-
-            /*MyGameWindow gamewindow = new MyGameWindow();
-            gamewindow.Run();*/
         }
     }
 }

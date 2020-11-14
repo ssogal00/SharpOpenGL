@@ -14,8 +14,9 @@ namespace Core
         {
             if (bReadyToDraw)
             {
-                BindVertexAndIndexBuffer();
+                BindVertexArray();
                 GL.DrawElements(PrimitiveType.Lines, IndexCount, DrawElementsType.UnsignedInt, 0);
+                UnbindVertexArray();
             }
         }
 
@@ -26,8 +27,6 @@ namespace Core
                 var ByteOffset = new IntPtr(Offset * sizeof(uint));
 
                 GL.DrawElements(PrimitiveType.Lines, (int)Count, DrawElementsType.UnsignedInt, ByteOffset);
-
-
             }
         }
     }

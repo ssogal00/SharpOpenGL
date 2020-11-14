@@ -271,6 +271,8 @@ namespace SharpOpenGL
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            Engine.Get().WaitForGameThread();
+
             this.MakeCurrent();
             GL.ClearColor(Color.BlueViolet);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);

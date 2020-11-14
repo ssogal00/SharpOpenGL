@@ -44,16 +44,14 @@ namespace Core
             IB.Bind();
         }
 
-        protected void BindVertexArray()
+        public void BindVertexArray()
         {
             VA.Bind();
         }
 
-        public void BindVertexAndIndexBuffer()
+        public void UnbindVertexArray()
         {
-            VA.Bind();
-            VB.Bind();
-            IB.Bind();
+            VA.Unbind();
         }
 
         public void SetupData(ref T[] VertexList, ref uint[] IndexList)
@@ -111,7 +109,7 @@ namespace Core
         {
             if (bReadyToDraw)
             {
-                //BindVertexAndIndexBuffer();
+                //BindVertexArray();
                 //GL.DrawElementsInstancedBaseInstance(type, IndexCount, DrawElementsType.UnsignedInt,new IntPtr(ref IndexList), instanceCount,0);
             }
         }
@@ -120,7 +118,7 @@ namespace Core
         {
             if(bReadyToDraw)
             {
-                BindVertexAndIndexBuffer();
+                BindVertexArray();
                 GL.DrawElements(type, IndexCount, DrawElementsType.UnsignedInt, 0);
             }
         }
@@ -130,7 +128,7 @@ namespace Core
         {
             if(bReadyToDraw)
             {
-                BindVertexAndIndexBuffer();
+                BindVertexArray();
                 GL.DrawElements(PrimitiveType.Lines, IndexCount, DrawElementsType.UnsignedInt, 0);
             }
         }
@@ -139,7 +137,7 @@ namespace Core
         {
             if(bReadyToDraw)
             {
-                BindVertexAndIndexBuffer();
+                BindVertexArray();
                 GL.DrawElements(PrimitiveType.Triangles, IndexCount, DrawElementsType.UnsignedInt, 0);
             }
         }
@@ -148,7 +146,7 @@ namespace Core
         {
             if(bReadyToDraw)
             {
-                BindVertexAndIndexBuffer();
+                BindVertexArray();
                 GL.DrawElements(PrimitiveType.LineStrip, IndexCount, DrawElementsType.UnsignedInt, 0);
             }
         }

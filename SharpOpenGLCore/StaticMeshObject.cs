@@ -94,8 +94,9 @@ namespace SharpOpenGL
             {
                 return;
             }
-            meshdrawable.BindVertexAndIndexBuffer();
+            
             meshdrawable.Draw(0, (uint)(meshAsset.VertexIndices.Count));
+            
         }
 
         public void DebugDraw()
@@ -110,15 +111,11 @@ namespace SharpOpenGL
             Debug.Assert(material != null);
 
             material.Bind();
-
             material.ModelTransform_Model = this.ParentMatrix * this.LocalMatrix;
             material.CameraTransform_View = CameraManager.Get().CurrentCameraView;
             material.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
 
-            linedrawable.BindVertexAndIndexBuffer();
-
             linedrawable.Draw();
-            //linedrawable.Draw(0, (uint) meshAsset.TBNIndices.Count);
         }
         
 
@@ -145,8 +142,6 @@ namespace SharpOpenGL
 
             gbufferMaterial.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
             gbufferMaterial.CameraTransform_View = CameraManager.Get().CurrentCameraView;
-
-            meshdrawable.BindVertexAndIndexBuffer();
 
             if (meshAsset.MaterialMap.Count == 0)
             {
@@ -226,7 +221,6 @@ namespace SharpOpenGL
                 meshdrawable.Draw(section.StartIndex, (uint) (section.EndIndex - section.StartIndex));
 
             }
-
             gbufferMaterial.LightChannel = (int)Light.LightChannel.SkyBoxChannel;
 
             DebugDraw();

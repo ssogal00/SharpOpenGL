@@ -85,19 +85,29 @@ namespace SharpOpenGL
         
         public void Tick()
         {
-            if (bFirstTick == true)
+            // frametime in milliseconds
+            long frameMilliseconds = stopwatch.ElapsedMilliseconds;
+            // gamethread 120fps
+            float frameCap = (1.0f / 120.0f) * 1000;
+
+            if (stopwatch.ElapsedMilliseconds < frameCap)
             {
-                bFirstTick = false;
+                int sleeptime = (int)(frameCap - frameMilliseconds);
+                Thread.Sleep(sleeptime);
             }
 
-            if (bFirstTick == false)
-            {
-                TickableObjectManager.Tick(stopwatch.ElapsedMilliseconds * 0.001);
-                SceneObjectManager.Get().Tick(stopwatch.ElapsedMilliseconds * 0.001);
-                stopwatch.Reset();
-            }
+            TickableObjectManager.Tick(stopwatch.ElapsedMilliseconds * 0.001f);
+            SceneObjectManager.Get().Tick(stopwatch.ElapsedMilliseconds * 0.001f);
 
+            GameThreadDone.Set();
+
+            stopwatch.Reset();
             stopwatch.Start();
+        }
+
+        public void WaitForGameThread(int miliseconds=30)
+        {
+            GameThreadDone.WaitOne(miliseconds);
         }
 
         public void RequestExit()
@@ -110,6 +120,6 @@ namespace SharpOpenGL
         protected bool bIsRequestExit = false;
 
         
-
+        public AutoResetEvent GameThreadDone = new AutoResetEvent(false);
     }
 }
