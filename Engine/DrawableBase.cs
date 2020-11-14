@@ -22,13 +22,16 @@ namespace Core
 
         public void SetupVertexData(ref T[] VertexList)
         {
+            
             VA.Bind();
-
             VB.Bind();
+            
             VB.BufferData<T>(ref VertexList);
             VertexCount = VertexList.Count();
-
             bReadyToDraw = true;
+            
+            VA.Unbind();
+            VB.Unbind();
         }
 
         protected void BindVertexBuffer()
@@ -41,26 +44,35 @@ namespace Core
             IB.Bind();
         }
 
+        protected void BindVertexArray()
+        {
+            VA.Bind();
+        }
+
         public void BindVertexAndIndexBuffer()
         {
             VA.Bind();
-            BindVertexBuffer();
-            BindIndexBuffer();
+            VB.Bind();
+            IB.Bind();
         }
 
         public void SetupData(ref T[] VertexList, ref uint[] IndexList)
         {
             VA.Bind();
-
             VB.Bind();
+            IB.Bind();
+            
             VB.BufferData<T>(ref VertexList);
             VertexCount = VertexList.Count();
 
-            IB.Bind();
             IB.BufferData<uint>(ref IndexList);
             IndexCount = IndexList.Count();
 
             bReadyToDraw = true;
+
+            VA.Unbind();
+            VB.Unbind();
+            IB.Unbind();
         }
 
         public virtual void Draw(uint Offset, uint Count)
@@ -78,8 +90,10 @@ namespace Core
             if (bReadyToDraw)
             {
                 VA.Bind();
-                BindVertexBuffer();
-                GL.DrawArrays(type, 0, VertexCount);
+                {
+                    GL.DrawArrays(type, 0, VertexCount);
+                }
+                VA.Unbind();
             }
         }
 
@@ -88,8 +102,8 @@ namespace Core
             if (bReadyToDraw)
             {
                 VA.Bind();
-                BindVertexBuffer();
                 GL.DrawArraysInstanced(type, 0, VertexCount, instancecount);
+                VA.Unbind();
             }
         }
 
