@@ -49,5 +49,7 @@ namespace DirectXTexWrapper
 		// TODO: Add your methods for this class here.
 	public:
 		ManagedScratchImage^ LoadFromDDSFile(System::String^ filePath);
+		ManagedScratchImage^ LoadFromTGAFile(System::String^ filePath);
+		ManagedScratchImage^ LoadFromHDRFile(System::String^ filePath);
 	};
 }
