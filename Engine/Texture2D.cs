@@ -44,11 +44,20 @@ namespace Core.Texture
                 m_Width = (int)scratchImage.m_metadata.width;
                 m_Height = (int) scratchImage.m_metadata.height;
 
-                var internalFormat = ToInternalFormat(scratchImage.m_metadata.format);
+                var pixelInternalFormat = ToPixelInternalFormat(scratchImage.m_metadata.format);
                 var pixelFormat = ToPixelFormat(scratchImage.m_metadata.format);
                 var pixelType = ToPixelType(scratchImage.m_metadata.format);
+                var internalFormat = ToInternalFormat(scratchImage.m_metadata.format);
 
-                GL.TexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, pixelFormat, pixelType, scratchImage.m_image[0].pixels);
+                if (IsCompressed(scratchImage.m_metadata.format))
+                {
+                    //GL.TexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, pixelFormat, pixelType, scratchImage.m_image[0].pixels);
+                    GL.CompressedTexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, (int)scratchImage.m_image[0].slicePitch, scratchImage.m_image[0].pixels);
+                }
+                else
+                {
+                    GL.TexImage2D(TextureTarget.Texture2D, 0, pixelInternalFormat, m_Width, m_Height, 0, pixelFormat, pixelType, scratchImage.m_image[0].pixels);
+                }
             }
         }
 

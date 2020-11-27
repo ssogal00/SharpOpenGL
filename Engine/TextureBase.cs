@@ -122,6 +122,10 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_SNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_TYPELESS:
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
+                    
                     return PixelFormat.Rgba;
                 
                 case DXGI_FORMAT.DXGI_FORMAT_R32G32B32_FLOAT:
@@ -180,7 +184,68 @@ namespace Core.Texture
             }
         }
 
-        public static PixelInternalFormat ToInternalFormat(DXGI_FORMAT format)
+        public static InternalFormat ToInternalFormat(DXGI_FORMAT format)
+        {
+            switch (format)
+            {
+                // r32g32b32a32
+                case DXGI_FORMAT.DXGI_FORMAT_R32G32B32A32_FLOAT:
+                    return InternalFormat.Rgba32f;
+                case DXGI_FORMAT.DXGI_FORMAT_R32G32B32A32_UINT:
+                    return InternalFormat.Rgba32ui;
+                case DXGI_FORMAT.DXGI_FORMAT_R32G32B32A32_SINT:
+                    return InternalFormat.Rgba32i;
+
+                // r16g16b16a16
+                case DXGI_FORMAT.DXGI_FORMAT_R16G16B16A16_FLOAT:
+                    return InternalFormat.Rgba16f;
+                case DXGI_FORMAT.DXGI_FORMAT_R16G16B16A16_UINT:
+                    return InternalFormat.Rgba16ui;
+                case DXGI_FORMAT.DXGI_FORMAT_R16G16B16A16_SINT:
+                    return InternalFormat.Rgba16i;
+                //case DXGI_FORMAT.DXGI_FORMAT_R16G16B16A16_SNORM:
+                //    return InternalFormat.Rgba16Snorm;
+                case DXGI_FORMAT.DXGI_FORMAT_R16G16B16A16_UNORM:
+                    return InternalFormat.Rgba16;
+                case DXGI_FORMAT.DXGI_FORMAT_R16G16B16A16_TYPELESS:
+                    return InternalFormat.Rgba16;
+
+                // r32g32b32
+                //case DXGI_FORMAT.DXGI_FORMAT_R32G32B32_FLOAT:
+                //    return InternalFormat.Rgb32f;
+                case DXGI_FORMAT.DXGI_FORMAT_R32G32B32_SINT:
+                    return InternalFormat.Rgb32i;
+                case DXGI_FORMAT.DXGI_FORMAT_R32G32B32_UINT:
+                    return InternalFormat.Rgb32ui;
+                case DXGI_FORMAT.DXGI_FORMAT_R32G32B32_TYPELESS:
+                    return InternalFormat.Rgb;
+
+                // r8g8b8a8
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_SINT:
+                    return InternalFormat.Rgba8i;
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UINT:
+                    return InternalFormat.Rgba8ui;
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_SNORM:
+                    return InternalFormat.Rgba8Snorm;
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM:
+                    return InternalFormat.Rgba;
+
+                // r8g8
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8_SINT:
+                    return InternalFormat.Rg8i;
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8_UINT:
+                    return InternalFormat.Rg8ui;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_SNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
+                    return InternalFormat.CompressedRgbaS3tcDxt5Ext;
+            }
+
+            return InternalFormat.Rgba;
+        }
+
+        public static PixelInternalFormat ToPixelInternalFormat(DXGI_FORMAT format)
         {
             switch (format)
             {
