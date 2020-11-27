@@ -2,6 +2,7 @@
 using OpenTK.Graphics.OpenGL;
 using FreeImageAPI;
 using Core.Texture;
+using DirectXTexWrapper;
 
 namespace Core.Texture
 {
@@ -32,6 +33,25 @@ namespace Core.Texture
                 GL.TexImage2D(TextureTarget.Texture2D, 0, bitmap.ImagePixelInternalFormat, bitmap.Width, bitmap.Height, 0, bitmap.OpenglPixelFormat, bitmap.OpenglPixelType, bitmap.Bytes);
             }
         }
+
+        public override void LoadFromDDSFile(string path)
+        {
+            var scratchImage = DXTLoader.LoadFromDDSFile(path);
+            
+            if (scratchImage != null)
+            {
+                this.BindAtUnit(TextureUnit.Texture0);
+                m_Width = (int)scratchImage.m_metadata.width;
+                m_Height = (int) scratchImage.m_metadata.height;
+
+                var internalFormat = ToInternalFormat(scratchImage.m_metadata.format);
+                var pixelFormat = ToPixelFormat(scratchImage.m_metadata.format);
+                var pixelType = ToPixelType(scratchImage.m_metadata.format);
+
+                GL.TexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, pixelFormat, pixelType, scratchImage.m_image[0].pixels);
+            }
+        }
+
 
         public override void Load(string filePath, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         {

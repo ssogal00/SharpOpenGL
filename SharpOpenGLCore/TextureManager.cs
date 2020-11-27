@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using DirectXTexWrapper;
+using OpenTK.Graphics.OpenGL4;
 using SharpOpenGL.Asset;
 using PixelType = OpenTK.Graphics.OpenGL.PixelType;
+
 
 namespace SharpOpenGL
 {
@@ -84,6 +87,21 @@ namespace SharpOpenGL
             }
         }
 
+        public Texture2D LoadDDSTexture2D(string path)
+        {
+            
+            ManagedScratchImage image = DXTLoader.LoadFromDDSFile(path);
+            switch (image.m_metadata.format)
+            {
+                
+            }
+
+            return null;
+        }
+
+
+
+
         public Texture2D LoadTexture2D(string path)
         {
             var importedPath = ConvertToImportedPath(path);
@@ -108,11 +126,6 @@ namespace SharpOpenGL
                 Texture2DAsset asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<Texture2DAsset>(data);
                 
                 var newTexture = new Texture2D();
-                Console.WriteLine("Loading {0} started", importedPath);
-                if (importedPath.Contains("spnza_bricks"))
-                {
-                    Console.WriteLine("Loading {0} started", importedPath);
-                }
 
                 ApproximateTextureMemory += asset.ByteLength;
 

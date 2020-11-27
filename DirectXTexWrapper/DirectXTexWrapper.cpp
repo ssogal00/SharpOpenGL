@@ -14,8 +14,8 @@ DirectXTexWrapper::ManagedTexMetaData::ManagedTexMetaData(const DirectX::TexMeta
 	this->arraySize = metaData.arraySize;
 	this->mipLevels = metaData.mipLevels;
 	this->depth = metaData.depth;
-	this->format = metaData.format;
-	this->dimension = metaData.dimension;
+	this->format = static_cast<DirectXTexWrapper::DXGI_FORMAT>(metaData.format);
+	this->dimension = static_cast<DirectXTexWrapper::TEX_DIMENSION>(metaData.dimension);
 	this->miscFlags = metaData.miscFlags;
 	this->miscFlags2 = metaData.miscFlags2;	
 }
@@ -36,7 +36,7 @@ DirectXTexWrapper::ManagedImage::ManagedImage(const DirectX::Image& image)
 {
 	this->width = image.width;
 	this->height = image.height;
-	this->format = image.format;
+	this->format = static_cast<DirectXTexWrapper::DXGI_FORMAT>(image.format);
 	this->rowPitch = image.rowPitch;
 	this->slicePitch = image.slicePitch;
 	pixels = gcnew array<uint8_t>(image.slicePitch);
