@@ -95,3 +95,5 @@ DirectXTexWrapper::ManagedScratchImage^ DirectXTexWrapper::DXTLoader::LoadFromHD
 
 	return gcnew ManagedScratchImage(image);
 }
+
+

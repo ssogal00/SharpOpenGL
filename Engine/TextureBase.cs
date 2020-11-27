@@ -119,6 +119,9 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_R32G32B32A32_UINT:
                 case DXGI_FORMAT.DXGI_FORMAT_R32G32B32A32_SINT:
                 case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_SINT:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_SNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
                     return PixelFormat.Rgba;
                 
                 case DXGI_FORMAT.DXGI_FORMAT_R32G32B32_FLOAT:
@@ -142,6 +145,39 @@ namespace Core.Texture
             }
 
             return PixelFormat.Bgra;
+        }
+
+
+        public static bool IsCompressed(DXGI_FORMAT fmt)
+        {
+            switch (fmt)
+            {
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB:
+                case DXGI_FORMAT.DXGI_FORMAT_BC2_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC2_UNORM_SRGB:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
+                case DXGI_FORMAT.DXGI_FORMAT_BC4_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC4_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC4_SNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_SNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC6H_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC6H_UF16:
+                case DXGI_FORMAT.DXGI_FORMAT_BC6H_SF16:
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM_SRGB:
+                    return true;
+
+                default:
+                    return false;
+            }
         }
 
         public static PixelInternalFormat ToInternalFormat(DXGI_FORMAT format)
@@ -189,6 +225,17 @@ namespace Core.Texture
                     return PixelInternalFormat.Rgba8Snorm;
                 case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM:
                     return PixelInternalFormat.Rgba;
+
+                // r8g8
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8_SINT:
+                    return PixelInternalFormat.Rg8i;
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8_UINT:
+                    return PixelInternalFormat.Rg8ui;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_SNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
+                    return PixelInternalFormat.CompressedRgbaS3tcDxt5Ext;
             }
 
             return PixelInternalFormat.CompressedRgba;

@@ -46,6 +46,7 @@ namespace SharpOpenGL
 
         protected LookUpTable2D lut = new LookUpTable2D();
         protected Prefilter prefilter = new Prefilter();
+        protected Texture2D testTexture = null;
 
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
         protected StaticMeshObject sponzamesh = null;
@@ -120,6 +121,9 @@ namespace SharpOpenGL
             sponzamesh.IsMetallicOverride = sponzamesh.IsRoughnessOverride = true;
             sponzamesh.Metallic = 0.6f;
             sponzamesh.Roughness = 0.3f;
+
+            testTexture = new Texture2D();
+            testTexture.LoadFromDDSFile("./Resources/SponzaTexture/Background_Albedo.dds");
 
             /*if (equirectToCube.IsTransformCompleted == false)
             {
