@@ -17,8 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CompiledShaderCore\CompiledShaderCore.csproj" />
+    <ProjectReference Include="..\DirectXTexWrapper\DirectXTexWrapper.vcxproj" />
     <ProjectReference Include="..\Engine\Engine.csproj" />
-    <ProjectReference Include="..\ImageWrapper\ImageWrapper.vcxproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

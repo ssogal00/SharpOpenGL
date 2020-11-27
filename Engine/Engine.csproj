@@ -18,8 +18,4 @@
     <FrameworkReference Include="Microsoft.WindowsDesktop.App" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ImageWrapper\ImageWrapper.vcxproj" />
-  </ItemGroup>
-
 </Project>

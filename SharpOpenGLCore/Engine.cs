@@ -3,17 +3,16 @@ using Core.CustomSerialize;
 using Core.Primitive;
 using Core.Tickable;
 using OpenTK.Mathematics;
-using SharpOpenGL.Font;
-using SharpOpenGL.Light;
-using System;
 using System.Diagnostics;
 using System.Threading;
 using ZeroFormatter.Formatters;
+using DirectXTexWrapper;
 
 namespace SharpOpenGL
 {
     public class Engine : Singleton<Engine>
     {
+
         protected int MainThreadId = 0;
 
         protected Stopwatch stopwatch = new Stopwatch();
@@ -26,6 +25,8 @@ namespace SharpOpenGL
 
         public void Initialize()
         {
+            
+            
             Formatter<DefaultResolver, Vector3>.Register(new Vector3Formatter<DefaultResolver>());
             Formatter<DefaultResolver, Vector2>.Register(new Vector2Formatter<DefaultResolver>());
             Formatter<DefaultResolver, Vector4>.Register(new Vector4Formatter<DefaultResolver>());

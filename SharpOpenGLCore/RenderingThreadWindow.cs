@@ -121,12 +121,11 @@ namespace SharpOpenGL
             sponzamesh.Metallic = 0.6f;
             sponzamesh.Roughness = 0.3f;
 
-            if (equirectToCube.IsTransformCompleted == false)
+            /*if (equirectToCube.IsTransformCompleted == false)
             {
                 equirectToCube.Transform();
                 convolution.SetSourceCubemap(equirectToCube.ResultCubemap);
                 convolution.Transform();
-
             }
 
             prefilter.SetEnvMap(equirectToCube.ResultCubemap);
@@ -134,7 +133,7 @@ namespace SharpOpenGL
 
             lut.Render();
 
-            skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
+            skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);*/
 
             
             bInitialized = true;
