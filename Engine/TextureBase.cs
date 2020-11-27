@@ -39,6 +39,10 @@ namespace Core.Texture
         {
         }
 
+        public virtual void LoadFromTGAFile(string path)
+        {
+
+        }
         public virtual byte[] GetTexImageAsByte()
         {
             return null;
@@ -119,6 +123,9 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_R32G32B32A32_UINT:
                 case DXGI_FORMAT.DXGI_FORMAT_R32G32B32A32_SINT:
                 case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_SINT:
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UINT:
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_TYPELESS:
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_SNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_TYPELESS:
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
@@ -240,6 +247,21 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_TYPELESS:
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
                     return InternalFormat.CompressedRgbaS3tcDxt5Ext;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
+                    return InternalFormat.CompressedRgbaS3tcDxt3Ext;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB:
+                    return InternalFormat.CompressedRgbaS3tcDxt1Ext;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM_SRGB:
+                    return InternalFormat.CompressedRgbaBptcUnorm;
             }
 
             return InternalFormat.Rgba;
@@ -301,6 +323,11 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_TYPELESS:
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
                     return PixelInternalFormat.CompressedRgbaS3tcDxt5Ext;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
+                    return PixelInternalFormat.CompressedRgbaS3tcDxt3Ext;
             }
 
             return PixelInternalFormat.CompressedRgba;
@@ -313,16 +340,21 @@ namespace Core.Texture
                 return textureObject != -1;
             }
         }
-
+        
         public int Width { get { return m_Width; } }
         public int Height { get { return m_Height; } }
         public int TextureObject { get { return textureObject; } }
 
+        public int MipCount
+        {
+            get => m_MipCount;
+        }
+
         protected int m_Width = 0;
         protected int m_Height = 0;
+        protected int m_MipCount = 1;
         protected int textureObject = -1;
 
         protected Sampler m_Sampler = null;
-        protected string m_TextureName = "";
     }
 }

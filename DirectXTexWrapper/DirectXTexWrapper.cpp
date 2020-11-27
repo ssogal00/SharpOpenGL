@@ -20,6 +20,11 @@ DirectXTexWrapper::ManagedTexMetaData::ManagedTexMetaData(const DirectX::TexMeta
 	this->miscFlags2 = metaData.miscFlags2;	
 }
 
+bool DirectXTexWrapper::ManagedTexMetaData::IsCubemap()
+{
+	return (miscFlags & (uint32_t) TEX_MISC_FLAG::TEX_MISC_TEXTURECUBE) != 0;
+}
+
 DirectXTexWrapper::ManagedScratchImage::ManagedScratchImage(const DirectX::ScratchImage& scratchImage)
 {
 	m_metadata = gcnew ManagedTexMetaData(scratchImage.GetMetadata());

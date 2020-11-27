@@ -43,6 +43,7 @@ namespace Core.Texture
                 this.BindAtUnit(TextureUnit.Texture0);
                 m_Width = (int)scratchImage.m_metadata.width;
                 m_Height = (int) scratchImage.m_metadata.height;
+                m_MipCount = (int)scratchImage.m_metadata.mipLevels;
 
                 var pixelInternalFormat = ToPixelInternalFormat(scratchImage.m_metadata.format);
                 var pixelFormat = ToPixelFormat(scratchImage.m_metadata.format);
@@ -51,13 +52,47 @@ namespace Core.Texture
 
                 if (IsCompressed(scratchImage.m_metadata.format))
                 {
-                    //GL.TexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, pixelFormat, pixelType, scratchImage.m_image[0].pixels);
-                    GL.CompressedTexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, (int)scratchImage.m_image[0].slicePitch, scratchImage.m_image[0].pixels);
+                    int blocksize = 0;
+
+                    if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt3Ext)
+                    {
+                        blocksize = 16;
+                    }
+                    else if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt5Ext)
+                    {
+                        blocksize = 16;
+                    }
+                    else if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt1Ext)
+                    {
+                        blocksize = 8;
+                    }
+
+                    int imageSize = ((m_Width + 3) / 4) * ((m_Height + 3) / 4) * blocksize;
+                    
+                    GL.CompressedTexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, imageSize, scratchImage.m_image[0].pixels);
                 }
                 else
                 {
                     GL.TexImage2D(TextureTarget.Texture2D, 0, pixelInternalFormat, m_Width, m_Height, 0, pixelFormat, pixelType, scratchImage.m_image[0].pixels);
                 }
+            }
+        }
+
+        public override void LoadFromTGAFile(string path)
+        {
+            var scratchImage = DXTLoader.LoadFromTGAFile(path);
+
+            if (scratchImage != null)
+            {
+                this.BindAtUnit(TextureUnit.Texture0);
+                m_Width = (int)scratchImage.m_metadata.width;
+                m_Height = (int)scratchImage.m_metadata.height;
+
+                var pixelInternalFormat = ToPixelInternalFormat(scratchImage.m_metadata.format);
+                var pixelFormat = ToPixelFormat(scratchImage.m_metadata.format);
+                var pixelType = ToPixelType(scratchImage.m_metadata.format);
+
+                GL.TexImage2D(TextureTarget.Texture2D, 0, pixelInternalFormat, m_Width, m_Height, 0, pixelFormat, pixelType, scratchImage.m_image[0].pixels);
             }
         }
 

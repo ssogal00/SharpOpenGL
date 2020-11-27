@@ -141,6 +141,27 @@ namespace DirectXTexWrapper
         TEX_DIMENSION_TEXTURE3D = 4,
     };
 
+    public enum  class TEX_MISC_FLAG
+        // Subset here matches D3D10_RESOURCE_MISC_FLAG and D3D11_RESOURCE_MISC_FLAG
+    {
+        TEX_MISC_TEXTURECUBE = 0x4L,
+    };
+
+    public enum class TEX_MISC_FLAG2
+    {
+        TEX_MISC2_ALPHA_MODE_MASK = 0x7L,
+    };
+
+    public enum class TEX_ALPHA_MODE
+        // Matches DDS_ALPHA_MODE, encoded in MISC_FLAGS2
+    {
+        TEX_ALPHA_MODE_UNKNOWN = 0,
+        TEX_ALPHA_MODE_STRAIGHT = 1,
+        TEX_ALPHA_MODE_PREMULTIPLIED = 2,
+        TEX_ALPHA_MODE_OPAQUE = 3,
+        TEX_ALPHA_MODE_CUSTOM = 4,
+    };
+
 	
 	public ref class ManagedTexMetaData
 	{
@@ -155,6 +176,8 @@ namespace DirectXTexWrapper
 		uint32_t        miscFlags2;
 		DXGI_FORMAT     format;
 		TEX_DIMENSION   dimension;
+
+        bool IsCubemap();
 	};
 
 	public ref class ManagedImage
