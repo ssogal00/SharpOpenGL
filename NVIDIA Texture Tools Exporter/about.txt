@@ -1,0 +1,20 @@
+                      NVIDIA Texture Tools Exporter
+                             Version 2020.1.2
+                  Copyright 2004-2020 NVIDIA Corporation
+
+For comments, feature requests, and bugs, contact texturetools@nvidia.com.
+
+By Neil Bickford and Chris Hebert. User interface designed by Boris Ustaev.
+
+Uses NVIDIA Texture Tools 3.0.2 by Fei Yang, Ignacio Castaño, and contributors.
+
+Original plugins by Eric Foo and Doug Rogers, with contributions from
+Fabio Policarpo.
+
+Thanks to Alexey Panteleev, Andrew Page, Ashlee Martino-Tarr, Brian Burke,
+Christophe Kulesza, Christophe Soum, Chu Tang, Doug Mendez, Fei Yang,
+Florent Rouat, Guillaume Polaillon, Justin Thomas, Michael Songy, Michael Steele,
+Rick Grandy, Sean Kilbride, Stanley Tack, Susan Fintz, Tristan Lorach, and
+Vincent Brisebois.
+
+And to you, for reading these credits.
