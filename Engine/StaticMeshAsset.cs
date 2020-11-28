@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 using OpenTK.Mathematics;
 using ZeroFormatter;
 
@@ -97,6 +98,9 @@ namespace Core.StaticMesh
         List<uint> TexCoordIndexList = new List<uint>();
         List<uint> NormalIndexList = new List<uint>();
 
+        [IgnoreFormat]
+        public bool Debugging => m_bDebug;
+        protected bool m_bDebug = false;
         
 
         // import sync
@@ -307,7 +311,10 @@ namespace Core.StaticMesh
 
             GenerateVertices();
 
-            GenerateTBNVertices();
+            if (m_bDebug)
+            {
+                GenerateTBNVertices();
+            }
 
             Clear();
         }

@@ -45,10 +45,13 @@ namespace SharpOpenGL
                     var IndexArr = meshAsset.VertexIndices.ToArray();
                     meshdrawable.SetupData(ref Arr, ref IndexArr);
 
-                    linedrawable = new LineDrawable<PC_VertexAttribute>();
-                    var lineArr = meshAsset.TBNVertices.ToArray();
-                    var lineIndexArr = meshAsset.TBNIndices.ToArray();
-                    linedrawable.SetupData(ref lineArr, ref lineIndexArr);
+                    if (asset.Debugging)
+                    {
+                        linedrawable = new LineDrawable<PC_VertexAttribute>();
+                        var lineArr = meshAsset.TBNVertices.ToArray();
+                        var lineIndexArr = meshAsset.TBNIndices.ToArray();
+                        linedrawable.SetupData(ref lineArr, ref lineIndexArr);
+                    }
 
                     this.LoadTextures();
                     bReadyToDraw = true;
@@ -69,10 +72,13 @@ namespace SharpOpenGL
                     var IndexArr = meshAsset.VertexIndices.ToArray();
                     meshdrawable.SetupData(ref Arr, ref IndexArr);
 
-                    linedrawable = new LineDrawable<PC_VertexAttribute>();
-                    var lineArr = meshAsset.TBNVertices.ToArray();
-                    var lineIndexArr = meshAsset.TBNIndices.ToArray();
-                    linedrawable.SetupData(ref lineArr, ref lineIndexArr);
+                    if (meshAsset.Debugging)
+                    {
+                        linedrawable = new LineDrawable<PC_VertexAttribute>();
+                        var lineArr = meshAsset.TBNVertices.ToArray();
+                        var lineIndexArr = meshAsset.TBNIndices.ToArray();
+                        linedrawable.SetupData(ref lineArr, ref lineIndexArr);
+                    }
 
                     this.LoadTextures();
                     bReadyToDraw = true;
@@ -115,7 +121,10 @@ namespace SharpOpenGL
             material.CameraTransform_View = CameraManager.Get().CurrentCameraView;
             material.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
 
-            linedrawable.Draw();
+            if (linedrawable != null)
+            {
+                linedrawable.Draw();
+            }
         }
         
 
