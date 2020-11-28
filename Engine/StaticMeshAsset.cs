@@ -215,7 +215,7 @@ namespace Core.StaticMesh
                         if (tokens.Count() >= 3)
                         {
                             Vector2 V = new Vector2();
-                            V.X = 1 - Convert.ToSingle(tokens[1]);
+                            V.X = Convert.ToSingle(tokens[1]);
                             V.Y = 1 - Convert.ToSingle(tokens[2]);
 
                             TempTexCoordList.Add(V);

@@ -1,4 +1,5 @@
 ﻿
+using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using FreeImageAPI;
 using Core.Texture;
@@ -92,6 +93,25 @@ namespace Core.Texture
                 return false;
             }
         }
+
+        public override async Task<bool> LoadFromDDSFileAsync(string path)
+        {
+            ManagedScratchImage result = await Task.Factory.StartNew(() =>
+            {
+                return DXTLoader.LoadFromDDSFile(path);
+            });
+
+            if (result != null)
+            {
+                LoadInternal(result);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public override bool LoadFromTGAFile(string path)
         {
             var scratchImage = DXTLoader.LoadFromTGAFile(path);

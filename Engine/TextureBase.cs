@@ -2,6 +2,7 @@
 using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using DirectXTexWrapper;
 using PixelInternalFormat = OpenTK.Graphics.OpenGL.PixelInternalFormat;
 
@@ -37,6 +38,8 @@ namespace Core.Texture
         public virtual void Load(float[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         { }
 
+        
+
         public virtual bool LoadFromDDSFile(string path)
         {
             return false;
@@ -48,6 +51,11 @@ namespace Core.Texture
         }
 
         public virtual bool LoadFromJPGFile(string path)
+        {
+            return false;
+        }
+
+        public async virtual Task<bool> LoadFromDDSFileAsync(string path)
         {
             return false;
         }
@@ -294,7 +302,7 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_TYPELESS:
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
                     return InternalFormat.CompressedRgbaS3tcDxt3Ext;
-
+                    
                 case DXGI_FORMAT.DXGI_FORMAT_BC1_TYPELESS:
                 case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB:
@@ -315,7 +323,6 @@ namespace Core.Texture
 
                 case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
                     return InternalFormat.CompressedRgbaBptcUnorm;
-
 
 
                 default:

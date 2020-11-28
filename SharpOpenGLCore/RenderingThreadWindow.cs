@@ -123,7 +123,7 @@ namespace SharpOpenGL
             sponzamesh.Roughness = 0.3f;
 
             testTexture = new Texture2D();
-            testTexture.LoadFromDDSFile("./Resources/SponzaTexture/Background_Albedo.dds");
+            testTexture.LoadFromDDSFile("./Resources/SponzaTexture/VaseRound_diffuse.dds");
 
             /*if (equirectToCube.IsTransformCompleted == false)
             {
