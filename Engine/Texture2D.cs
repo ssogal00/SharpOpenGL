@@ -34,68 +34,89 @@ namespace Core.Texture
             }
         }
 
-        public override void LoadFromDDSFile(string path)
+        
+
+        private void LoadInternal(ManagedScratchImage scratchImage)
         {
-            var scratchImage = DXTLoader.LoadFromDDSFile(path);
-            
-            if (scratchImage != null)
+            this.BindAtUnit(TextureUnit.Texture0);
+            m_Width = (int)scratchImage.m_metadata.width;
+            m_Height = (int)scratchImage.m_metadata.height;
+            m_MipCount = (int)scratchImage.m_metadata.mipLevels;
+
+            var pixelInternalFormat = ToPixelInternalFormat(scratchImage.m_metadata.format);
+            var pixelFormat = ToPixelFormat(scratchImage.m_metadata.format);
+            var pixelType = ToPixelType(scratchImage.m_metadata.format);
+            var internalFormat = ToInternalFormat(scratchImage.m_metadata.format);
+
+            if (IsCompressed(scratchImage.m_metadata.format))
             {
-                this.BindAtUnit(TextureUnit.Texture0);
-                m_Width = (int)scratchImage.m_metadata.width;
-                m_Height = (int) scratchImage.m_metadata.height;
-                m_MipCount = (int)scratchImage.m_metadata.mipLevels;
+                int blocksize = 0;
 
-                var pixelInternalFormat = ToPixelInternalFormat(scratchImage.m_metadata.format);
-                var pixelFormat = ToPixelFormat(scratchImage.m_metadata.format);
-                var pixelType = ToPixelType(scratchImage.m_metadata.format);
-                var internalFormat = ToInternalFormat(scratchImage.m_metadata.format);
-
-                if (IsCompressed(scratchImage.m_metadata.format))
+                if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt3Ext)
                 {
-                    int blocksize = 0;
-
-                    if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt3Ext)
-                    {
-                        blocksize = 16;
-                    }
-                    else if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt5Ext)
-                    {
-                        blocksize = 16;
-                    }
-                    else if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt1Ext)
-                    {
-                        blocksize = 8;
-                    }
-
-                    int imageSize = ((m_Width + 3) / 4) * ((m_Height + 3) / 4) * blocksize;
-                    
-                    GL.CompressedTexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, imageSize, scratchImage.m_image[0].pixels);
+                    blocksize = 16;
                 }
-                else
+                else if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt5Ext)
                 {
-                    GL.TexImage2D(TextureTarget.Texture2D, 0, pixelInternalFormat, m_Width, m_Height, 0, pixelFormat, pixelType, scratchImage.m_image[0].pixels);
+                    blocksize = 16;
                 }
+                else if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt1Ext)
+                {
+                    blocksize = 8;
+                }
+
+                int imageSize = ((m_Width + 3) / 4) * ((m_Height + 3) / 4) * blocksize;
+
+                GL.CompressedTexImage2D(TextureTarget.Texture2D, 0, internalFormat, m_Width, m_Height, 0, imageSize, scratchImage.m_image[0].pixels);
+            }
+            else
+            {
+                GL.TexImage2D(TextureTarget.Texture2D, 0, pixelInternalFormat, m_Width, m_Height, 0, pixelFormat, pixelType, scratchImage.m_image[0].pixels);
             }
         }
+        public override bool LoadFromDDSFile(string path)
+        {
+            var scratchImage = DXTLoader.LoadFromDDSFile(path);
 
-        public override void LoadFromTGAFile(string path)
+            if (scratchImage != null)
+            {
+                LoadInternal(scratchImage);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public override bool LoadFromTGAFile(string path)
         {
             var scratchImage = DXTLoader.LoadFromTGAFile(path);
 
             if (scratchImage != null)
             {
-                this.BindAtUnit(TextureUnit.Texture0);
-                m_Width = (int)scratchImage.m_metadata.width;
-                m_Height = (int)scratchImage.m_metadata.height;
-
-                var pixelInternalFormat = ToPixelInternalFormat(scratchImage.m_metadata.format);
-                var pixelFormat = ToPixelFormat(scratchImage.m_metadata.format);
-                var pixelType = ToPixelType(scratchImage.m_metadata.format);
-
-                GL.TexImage2D(TextureTarget.Texture2D, 0, pixelInternalFormat, m_Width, m_Height, 0, pixelFormat, pixelType, scratchImage.m_image[0].pixels);
+                LoadInternal(scratchImage);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
+        public override bool LoadFromJPGFile(string path)
+        {
+            var scratchImage = DXTLoader.LoadFromJPGFile(path);
+
+            if (scratchImage != null)
+            {
+                LoadInternal(scratchImage);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public override void Load(string filePath, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         {

@@ -76,17 +76,6 @@ namespace SharpOpenGL
             return path;
         }
 
-        public void UnloadTexture(string path)
-        {
-            var importedPath = ConvertToImportedPath(path);
-
-            if (TextureMap.ContainsKey(importedPath))
-            {
-                TextureMap[importedPath].Dispose();
-                TextureMap.Remove(importedPath);
-            }
-        }
-
         public Texture2D LoadDDSTexture2D(string path)
         {
             
@@ -100,7 +89,64 @@ namespace SharpOpenGL
         }
 
 
+        public void UnloadTexture(string path)
+        {
+            if (TextureMap.ContainsKey(path))
+            {
+                TextureMap[path].Dispose();
+                TextureMap.Remove(path);
+            }
+        }
 
+        public Texture2D LoadTexture2D2(string path)
+        {
+            //
+            if (!RenderingThread.IsInRenderingThread())
+            {
+                return null;
+            }
+
+            if (TextureMap.ContainsKey(path))
+            {
+                return (Texture2D) TextureMap[path];
+            }
+
+            if (File.Exists(path) == false)
+            {
+                return null;
+            }
+
+            Texture2D result = new Texture2D();
+            bool bSuccess = false;
+            // dds
+            if (path.EndsWith(".dds", StringComparison.InvariantCultureIgnoreCase))
+            {
+                bSuccess = result.LoadFromDDSFile(path);
+            }
+            // jpg
+            else if (path.EndsWith(".jpg", StringComparison.InvariantCultureIgnoreCase) ||
+                     path.EndsWith(".jpeg", StringComparison.InvariantCultureIgnoreCase))
+            {
+                bSuccess = result.LoadFromJPGFile(path);
+            }
+            // tga
+            else if (path.EndsWith(".tga", StringComparison.InvariantCultureIgnoreCase))
+            {
+                bSuccess = result.LoadFromTGAFile(path);
+            }
+
+            //
+            if (bSuccess)
+            {
+                TextureMap.Add(path, result);
+                return result;
+            }
+            else
+            {
+                result.Dispose();
+                return null;
+            }
+        }
 
         public Texture2D LoadTexture2D(string path)
         {
@@ -147,11 +193,21 @@ namespace SharpOpenGL
         // assume exists
         public Texture2D GetTexture2D(string path)
         {
-            var importedPath = ConvertToImportedPath(path);
+            /*var importedPath = ConvertToImportedPath(path);
 
             if (TextureMap.ContainsKey(importedPath))
             {
                 return (Texture2D)TextureMap[importedPath];
+            }
+            else
+            {
+                Debug.Assert(false, string.Format("{0} not exist", path));
+                return null;
+            }*/
+
+            if (TextureMap.ContainsKey(path))
+            {
+                return (Texture2D) TextureMap[path];
             }
             else
             {
@@ -162,11 +218,16 @@ namespace SharpOpenGL
 
         public void CacheTexture2D(string path)
         {
-            var importedPath = ConvertToImportedPath(path);
+            /*var importedPath = ConvertToImportedPath(path);
 
             if (TextureMap.ContainsKey(importedPath) == false)
             {
                 LoadTexture2D(path);
+            }*/
+
+            if (TextureMap.ContainsKey(path) == false)
+            {
+                LoadTexture2D2(path);
             }
         }
 

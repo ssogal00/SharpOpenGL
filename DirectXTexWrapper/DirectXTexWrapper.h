@@ -210,5 +210,6 @@ namespace DirectXTexWrapper
 		static ManagedScratchImage^ LoadFromDDSFile(System::String^ filePath);
 		static ManagedScratchImage^ LoadFromTGAFile(System::String^ filePath);
 		static ManagedScratchImage^ LoadFromHDRFile(System::String^ filePath);
+        static ManagedScratchImage^ LoadFromJPGFile(System::String^ filePath);
 	};
 }

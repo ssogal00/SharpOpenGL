@@ -101,4 +101,20 @@ DirectXTexWrapper::ManagedScratchImage^ DirectXTexWrapper::DXTLoader::LoadFromHD
 	return gcnew ManagedScratchImage(image);
 }
 
+DirectXTexWrapper::ManagedScratchImage^ DirectXTexWrapper::DXTLoader::LoadFromJPGFile(System::String^ filePath)
+{
+	std::wstring FileName = marshal_as<std::wstring>(filePath);
+
+	DirectX::TexMetadata metaData;
+	DirectX::ScratchImage image;
+
+	HRESULT result = DirectX::LoadFromWICFile(FileName.c_str(), DirectX::WIC_FLAGS_NONE, &metaData, image, nullptr);
+
+	if (result != S_OK)
+	{
+		return nullptr;
+	}
+
+	return gcnew ManagedScratchImage(image);
+}
 

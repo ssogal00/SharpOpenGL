@@ -1,6 +1,7 @@
 ﻿
 using OpenTK.Graphics.OpenGL;
 using System;
+using System.Diagnostics;
 using DirectXTexWrapper;
 
 
@@ -35,14 +36,21 @@ namespace Core.Texture
         public virtual void Load(float[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         { }
 
-        public virtual void LoadFromDDSFile(string path)
+        public virtual bool LoadFromDDSFile(string path)
         {
+            return false;
         }
 
-        public virtual void LoadFromTGAFile(string path)
+        public virtual bool LoadFromTGAFile(string path)
         {
-
+            return false;
         }
+
+        public virtual bool LoadFromJPGFile(string path)
+        {
+            return false;
+        }
+
         public virtual byte[] GetTexImageAsByte()
         {
             return null;
@@ -107,8 +115,26 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_R16_SINT:
                     return PixelType.Int;
 
+                case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM:
                     return PixelType.UnsignedByte;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
+                    return PixelType.UnsignedByte;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_SNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
+                    return PixelType.UnsignedByte;
+
+                case DXGI_FORMAT.DXGI_FORMAT_R8_UNORM:
+                    return PixelType.UnsignedByte;
+
+                default:
+                    Debug.Assert(false, "Unknown Format");
+                    break;
             }
 
             return PixelType.UnsignedByte;
@@ -153,6 +179,13 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM_SRGB:
                 case DXGI_FORMAT.DXGI_FORMAT_B4G4R4A4_UNORM:
                     return PixelFormat.Bgra;
+
+                case DXGI_FORMAT.DXGI_FORMAT_R8_UNORM:
+                    return PixelFormat.Red;
+
+                default:
+                    Debug.Assert(false, "Unknown Format");
+                    break;
             }
 
             return PixelFormat.Bgra;
@@ -262,6 +295,19 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM_SRGB:
                     return InternalFormat.CompressedRgbaBptcUnorm;
+
+                case DXGI_FORMAT.DXGI_FORMAT_R8_UNORM:
+                    return InternalFormat.R8;
+
+                case DXGI_FORMAT.DXGI_FORMAT_R8_SNORM:
+                    return InternalFormat.R8Snorm;
+
+                case DXGI_FORMAT.DXGI_FORMAT_R8_UINT:
+                    return InternalFormat.R8ui;
+
+                default:
+                    Debug.Assert(false, "Unknown Format");
+                    break;
             }
 
             return InternalFormat.Rgba;
@@ -328,6 +374,19 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
                     return PixelInternalFormat.CompressedRgbaS3tcDxt3Ext;
+
+                case DXGI_FORMAT.DXGI_FORMAT_R8_UNORM:
+                    return PixelInternalFormat.R8;
+
+                case DXGI_FORMAT.DXGI_FORMAT_R8_SNORM:
+                    return PixelInternalFormat.R8Snorm;
+
+                case DXGI_FORMAT.DXGI_FORMAT_R8_UINT:
+                    return PixelInternalFormat.R8ui;
+
+                default:
+                    Debug.Assert(false, "Unknown Format");
+                    break;
             }
 
             return PixelInternalFormat.CompressedRgba;
@@ -345,6 +404,8 @@ namespace Core.Texture
         public int Height { get { return m_Height; } }
         public int TextureObject { get { return textureObject; } }
 
+        public string ResourcePath = "";
+
         public int MipCount
         {
             get => m_MipCount;
@@ -354,7 +415,5 @@ namespace Core.Texture
         protected int m_Height = 0;
         protected int m_MipCount = 1;
         protected int textureObject = -1;
-
-        protected Sampler m_Sampler = null;
     }
 }
