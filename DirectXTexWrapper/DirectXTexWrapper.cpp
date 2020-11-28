@@ -27,12 +27,13 @@ bool DirectXTexWrapper::ManagedTexMetaData::IsCubemap()
 
 DirectXTexWrapper::ManagedScratchImage::ManagedScratchImage(const DirectX::ScratchImage& scratchImage)
 {
+	
 	m_metadata = gcnew ManagedTexMetaData(scratchImage.GetMetadata());
 	m_nimages = scratchImage.GetImageCount();
-	m_image = gcnew array<ManagedImage^>(m_nimages);
-
+	m_image = gcnew array<ManagedImage^>(m_nimages);	
+	
 	for (int i = 0; i < m_nimages; ++i)
-	{
+	{		
 		m_image[i] = gcnew ManagedImage(scratchImage.GetImages()[i]);
 	}
 }
@@ -44,7 +45,8 @@ DirectXTexWrapper::ManagedImage::ManagedImage(const DirectX::Image& image)
 	this->format = static_cast<DirectXTexWrapper::DXGI_FORMAT>(image.format);
 	this->rowPitch = image.rowPitch;
 	this->slicePitch = image.slicePitch;
-	pixels = gcnew array<uint8_t>(image.slicePitch);
+	pixels = gcnew array<uint8_t>(image.slicePitch);	
+	
 	Marshal::Copy(IntPtr((void*)image.pixels), this->pixels, 0, image.slicePitch);
 }
 
@@ -54,15 +56,15 @@ DirectXTexWrapper::ManagedScratchImage^ DirectXTexWrapper::DXTLoader::LoadFromDD
 	std::wstring FileName = marshal_as<std::wstring>(filePath);
 
 	DirectX::TexMetadata metaData;
-	DirectX::ScratchImage image;
+	DirectX::ScratchImage image;	
 
 	HRESULT result = DirectX::LoadFromDDSFile(FileName.c_str(), DirectX::DDS_FLAGS_NONE, &metaData, image );
 	
 	if(result != S_OK)
-	{
+	{		
 		return nullptr;
-	}
-
+	}	
+	
 	return gcnew ManagedScratchImage(image);
 }
 
@@ -78,7 +80,7 @@ DirectXTexWrapper::ManagedScratchImage^ DirectXTexWrapper::DXTLoader::LoadFromTG
 	if (result != S_OK)
 	{
 		return nullptr;
-	}
+	}	
 
 	return gcnew ManagedScratchImage(image);
 }
@@ -96,7 +98,7 @@ DirectXTexWrapper::ManagedScratchImage^ DirectXTexWrapper::DXTLoader::LoadFromHD
 	if (result != S_OK)
 	{
 		return nullptr;
-	}
+	}	
 
 	return gcnew ManagedScratchImage(image);
 }

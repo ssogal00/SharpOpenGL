@@ -3,6 +3,7 @@ using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
 using DirectXTexWrapper;
+using PixelInternalFormat = OpenTK.Graphics.OpenGL.PixelInternalFormat;
 
 
 namespace Core.Texture
@@ -129,6 +130,11 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
                     return PixelType.UnsignedByte;
 
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM_SRGB:
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_TYPELESS:
+                    return PixelType.UnsignedByte;
+
                 case DXGI_FORMAT.DXGI_FORMAT_R8_UNORM:
                     return PixelType.UnsignedByte;
 
@@ -182,6 +188,9 @@ namespace Core.Texture
 
                 case DXGI_FORMAT.DXGI_FORMAT_R8_UNORM:
                     return PixelFormat.Red;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
+                    return PixelFormat.Rgba;
 
                 default:
                     Debug.Assert(false, "Unknown Format");
@@ -292,9 +301,8 @@ namespace Core.Texture
                     return InternalFormat.CompressedRgbaS3tcDxt1Ext;
 
                 case DXGI_FORMAT.DXGI_FORMAT_BC7_TYPELESS:
-                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM_SRGB:
-                    return InternalFormat.CompressedRgbaBptcUnorm;
+                    return InternalFormat.CompressedSrgbAlphaBptcUnorm;
 
                 case DXGI_FORMAT.DXGI_FORMAT_R8_UNORM:
                     return InternalFormat.R8;
@@ -304,6 +312,11 @@ namespace Core.Texture
 
                 case DXGI_FORMAT.DXGI_FORMAT_R8_UINT:
                     return InternalFormat.R8ui;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
+                    return InternalFormat.CompressedRgbaBptcUnorm;
+
+
 
                 default:
                     Debug.Assert(false, "Unknown Format");
@@ -374,6 +387,12 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
                     return PixelInternalFormat.CompressedRgbaS3tcDxt3Ext;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM_SRGB:
+                    return PixelInternalFormat.CompressedSrgbAlphaBptcUnorm;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
+                    return PixelInternalFormat.CompressedRgbaBptcUnorm;
 
                 case DXGI_FORMAT.DXGI_FORMAT_R8_UNORM:
                     return PixelInternalFormat.R8;

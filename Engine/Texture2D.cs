@@ -50,7 +50,7 @@ namespace Core.Texture
 
             if (IsCompressed(scratchImage.m_metadata.format))
             {
-                int blocksize = 0;
+                int blocksize = 16;
 
                 if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt3Ext)
                 {
@@ -63,6 +63,10 @@ namespace Core.Texture
                 else if (internalFormat == InternalFormat.CompressedRgbaS3tcDxt1Ext)
                 {
                     blocksize = 8;
+                }
+                else if (internalFormat == InternalFormat.CompressedRgbaBptcUnorm)
+                {
+                    blocksize = 16;
                 }
 
                 int imageSize = ((m_Width + 3) / 4) * ((m_Height + 3) / 4) * blocksize;

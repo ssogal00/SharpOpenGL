@@ -301,13 +301,19 @@ namespace SharpOpenGL
                 }
             );
 
+            bool bTestTextureTest = true;
+
             if (true)
             {
                 gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
                 ScreenBlit.Blit(gbufferVisualize.OutputColorTex0,0,0,2,2);
-                //gbufferVisualize.Render(testTexture);
-                //ScreenBlit.Blit(testTexture, 0, 0, 2, 2);
             }
+            else if (bTestTextureTest)
+            {
+                gbufferVisualize.Render(testTexture);
+                ScreenBlit.Blit(testTexture, 0, 0, 2, 2);
+            }
+
             else if (DebugDrawer.Get().IsDepthDump)
             {
                 depthVisualize.Render(renderGBuffer.GetDepthAttachment);

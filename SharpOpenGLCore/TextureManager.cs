@@ -193,18 +193,6 @@ namespace SharpOpenGL
         // assume exists
         public Texture2D GetTexture2D(string path)
         {
-            /*var importedPath = ConvertToImportedPath(path);
-
-            if (TextureMap.ContainsKey(importedPath))
-            {
-                return (Texture2D)TextureMap[importedPath];
-            }
-            else
-            {
-                Debug.Assert(false, string.Format("{0} not exist", path));
-                return null;
-            }*/
-
             if (TextureMap.ContainsKey(path))
             {
                 return (Texture2D) TextureMap[path];
@@ -218,13 +206,6 @@ namespace SharpOpenGL
 
         public void CacheTexture2D(string path)
         {
-            /*var importedPath = ConvertToImportedPath(path);
-
-            if (TextureMap.ContainsKey(importedPath) == false)
-            {
-                LoadTexture2D(path);
-            }*/
-
             if (TextureMap.ContainsKey(path) == false)
             {
                 LoadTexture2D2(path);
