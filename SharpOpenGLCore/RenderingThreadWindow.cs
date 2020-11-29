@@ -139,7 +139,6 @@ namespace SharpOpenGL
 
             skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
 
-            
             bInitialized = true;
         }
 
@@ -301,7 +300,7 @@ namespace SharpOpenGL
                 }
             );
 
-            bool bTestTextureTest = true;
+            bool bTestTextureTest = false;
 
             if (true)
             {

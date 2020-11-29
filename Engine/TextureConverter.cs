@@ -10,7 +10,23 @@ namespace Core
 {
     public class TextureConverter : Singleton<TextureConverter>
     {
-        
+        public async Task<bool> ConvertTexturesInFolderAsync(string folder)
+        {
+            bool bSuccess = true;
+            foreach (var file in Directory.EnumerateFiles(folder))
+            {
+                if(file.EndsWith(".tga", StringComparison.InvariantCultureIgnoreCase) 
+                   || file.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase)
+                   || file.EndsWith("jpg", StringComparison.InvariantCultureIgnoreCase)
+                   || file.EndsWith("jpeg", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    bool bResult = await ConvertTexture2DAsync(file);
+                    bSuccess &= bResult;
+                }
+            }
+
+            return bSuccess;
+        }
 
         public async Task<bool> ConvertTexture2DAsync(string path)
         {
