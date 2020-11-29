@@ -98,7 +98,7 @@ namespace SharpOpenGL
             }
         }
 
-        public Texture2D LoadTexture2D2(string path)
+        public Texture2D LoadTexture2D(string path)
         {
             //
             if (!RenderingThread.IsInRenderingThread())
@@ -125,7 +125,8 @@ namespace SharpOpenGL
             }
             // jpg
             else if (path.EndsWith(".jpg", StringComparison.InvariantCultureIgnoreCase) ||
-                     path.EndsWith(".jpeg", StringComparison.InvariantCultureIgnoreCase))
+                     path.EndsWith(".jpeg", StringComparison.InvariantCultureIgnoreCase) || 
+                     path.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase))
             {
                 bSuccess = result.LoadFromJPGFile(path);
             }
@@ -148,47 +149,6 @@ namespace SharpOpenGL
             }
         }
 
-        public Texture2D LoadTexture2D(string path)
-        {
-            var importedPath = ConvertToImportedPath(path);
-
-            if (TextureMap.ContainsKey(importedPath))
-            {
-                return (Texture2D) TextureMap[importedPath];
-            }
-            else
-            {
-                byte[] data = null;
-                if (File.Exists(importedPath) == false)
-                {   
-                    data = File.ReadAllBytes("./Imported/Resources/Texture/Checker.imported");
-                }
-                else
-                {
-                    // deserialize
-                    data = File.ReadAllBytes(importedPath);
-                }
-                
-                Texture2DAsset asset = ZeroFormatter.ZeroFormatterSerializer.Deserialize<Texture2DAsset>(data);
-                
-                var newTexture = new Texture2D();
-
-                ApproximateTextureMemory += asset.ByteLength;
-
-                if (asset.OpenglPixelType == PixelType.Float)
-                {
-                    newTexture.Load(asset.Floats, asset.Width, asset.Height, asset.ImagePixelInternalFormat, asset.OpenglPixelFormat);
-                }
-                else
-                {
-                    newTexture.Load(asset.Bytes, asset.Width, asset.Height, asset.ImagePixelInternalFormat, asset.OpenglPixelFormat);
-                }
-                Console.WriteLine("Loading {0} completed", importedPath);
-                Console.WriteLine("Texture Mem : {0}",ApproximateTextureMemory);
-                TextureMap.Add(importedPath, newTexture);
-                return newTexture;
-            }
-        }
 
         // assume exists
         public Texture2D GetTexture2D(string path)
@@ -208,7 +168,7 @@ namespace SharpOpenGL
         {
             if (TextureMap.ContainsKey(path) == false)
             {
-                LoadTexture2D2(path);
+                LoadTexture2D(path);
             }
         }
 

@@ -138,6 +138,11 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC5_UNORM:
                     return PixelType.UnsignedByte;
 
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB:
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_TYPELESS:
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM:
+                    return PixelType.UnsignedByte;
+
                 case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM_SRGB:
                 case DXGI_FORMAT.DXGI_FORMAT_BC7_TYPELESS:
@@ -172,7 +177,8 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_TYPELESS:
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
-                    
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB:
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM:
                     return PixelFormat.Rgba;
                 
                 case DXGI_FORMAT.DXGI_FORMAT_R32G32B32_FLOAT:
@@ -394,6 +400,11 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM:
                 case DXGI_FORMAT.DXGI_FORMAT_BC3_UNORM_SRGB:
                     return PixelInternalFormat.CompressedRgbaS3tcDxt3Ext;
+
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM:
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_UNORM_SRGB:
+                case DXGI_FORMAT.DXGI_FORMAT_BC1_TYPELESS:
+                    return PixelInternalFormat.CompressedRgbaS3tcDxt1Ext;
 
                 case DXGI_FORMAT.DXGI_FORMAT_BC7_UNORM_SRGB:
                     return PixelInternalFormat.CompressedSrgbAlphaBptcUnorm;

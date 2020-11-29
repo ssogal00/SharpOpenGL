@@ -23,10 +23,8 @@ namespace SharpOpenGL
 
         public bool IsInitialized => bInitialized;
 
-        public void Initialize()
+        public async void Initialize()
         {
-            
-            
             Formatter<DefaultResolver, Vector3>.Register(new Vector3Formatter<DefaultResolver>());
             Formatter<DefaultResolver, Vector2>.Register(new Vector2Formatter<DefaultResolver>());
             Formatter<DefaultResolver, Vector4>.Register(new Vector4Formatter<DefaultResolver>());
@@ -35,13 +33,15 @@ namespace SharpOpenGL
             
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
+            await TextureConverter.Get().ConvertTexture2DAsync("./Resources/Texture/metalgrid4/metalgrid4_basecolor.png");
+
             var rusted = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
             rusted.Scale = 1.5f;
             rusted.Translation = new Vector3(-190, 30, -80);
-            rusted.SetNormalTex("./Imported/Resources/Texture/rustediron/rustediron2_normal.imported");
-            rusted.SetDiffuseTex("./Imported/Resources/Texture/rustediron/rustediron2_basecolor.imported");
-            rusted.SetMetallicTex("./Imported/Resources/Texture/rustediron/rustediron2_metallic.imported");
-            rusted.SetRoughnessTex("./Imported/Resources/Texture/rustediron/rustediron2_roughness.imported");
+            rusted.SetNormalTex("./Resources/Texture/rustediron/rustediron2_normal.dds");
+            rusted.SetDiffuseTex("./Resources/Texture/rustediron/rustediron2_basecolor.dds");
+            rusted.SetMetallicTex("./Resources/Texture/rustediron/rustediron2_metallic.dds");
+            rusted.SetRoughnessTex("./Resources/Texture/rustediron/rustediron2_roughness.dds");
 
             var gold = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
             gold.Scale = 1.5f;
