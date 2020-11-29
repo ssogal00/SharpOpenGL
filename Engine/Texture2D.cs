@@ -88,6 +88,22 @@ namespace Core.Texture
             }
         }
 
+        public override bool LoadFromHDRFile(string path)
+        {
+            var scratchImage = DXTLoader.LoadFromHDRFile(path);
+
+            if (scratchImage != null)
+            {
+                LoadInternal(scratchImage);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        
+
         public override async Task<bool> LoadFromDDSFileAsync(string path)
         {
             ManagedScratchImage result = await Task.Factory.StartNew(() =>

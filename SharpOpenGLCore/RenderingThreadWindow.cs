@@ -125,7 +125,7 @@ namespace SharpOpenGL
             testTexture = new Texture2D();
             testTexture.LoadFromDDSFile("./Resources/SponzaTexture/VaseRound_diffuse.dds");
 
-            /*if (equirectToCube.IsTransformCompleted == false)
+            if (equirectToCube.IsTransformCompleted == false)
             {
                 equirectToCube.Transform();
                 convolution.SetSourceCubemap(equirectToCube.ResultCubemap);
@@ -137,7 +137,7 @@ namespace SharpOpenGL
 
             lut.Render();
 
-            skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);*/
+            skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
 
             
             bInitialized = true;

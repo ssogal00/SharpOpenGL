@@ -38,8 +38,11 @@ namespace Core.Texture
         public virtual void Load(float[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         { }
 
-        
 
+        public virtual bool LoadFromHDRFile(string path)
+        {
+            return false;
+        }
         public virtual bool LoadFromDDSFile(string path)
         {
             return false;

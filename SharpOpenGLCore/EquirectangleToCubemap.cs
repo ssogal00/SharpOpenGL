@@ -28,9 +28,9 @@ namespace SharpOpenGL
             material = ShaderManager.Get().GetMaterial<EquirectangleToCube>();
 
             // create hdr texture
-            /*var hdr = new HDRTexture();
-            hdr.Load("./Resources/Texture/HDR/Ueno-Shrine_3k.hdr");
-            equirectangularTex = hdr;*/
+            var hdr = new Texture2D();
+            hdr.LoadFromHDRFile("./Resources/Texture/HDR/Ueno-Shrine_3k.hdr");
+            equirectangularTex = hdr;
 
             //
             cubeMesh = new Cube();

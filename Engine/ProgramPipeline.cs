@@ -21,10 +21,6 @@ namespace Core.OpenGLShader
             pipelineObject = -1;
         }
 
-        public void UseVertexShaderProgram(VertexShader shader)
-        {
-            //GL.UseProgramStages(pipelineObject, ProgramStageMask.VertexShaderBit,);
-        }
 
         public void UseVertexShaderProgram(int vsProgramObject)
         {

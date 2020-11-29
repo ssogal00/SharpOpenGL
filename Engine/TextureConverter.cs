@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System.Linq;
 
 namespace Core
 {
@@ -12,6 +14,12 @@ namespace Core
 
         public async Task<bool> ConvertTexture2DAsync(string path)
         {
+            var outputFile= Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path)) + ".dds";
+            if (File.Exists(outputFile))
+            {
+                return true;
+            }
+
             if (path.EndsWith(".tga", StringComparison.InvariantCultureIgnoreCase) 
                 || path.EndsWith(".jpg", StringComparison.InvariantCultureIgnoreCase)
                 || path.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase))

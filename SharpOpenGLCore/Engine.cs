@@ -33,8 +33,6 @@ namespace SharpOpenGL
             
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
-            await TextureConverter.Get().ConvertTexture2DAsync("./Resources/Texture/metalgrid4/metalgrid4_basecolor.png");
-
             var rusted = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
             rusted.Scale = 1.5f;
             rusted.Translation = new Vector3(-190, 30, -80);
