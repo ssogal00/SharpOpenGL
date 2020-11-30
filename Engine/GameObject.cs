@@ -43,8 +43,8 @@ namespace Core.Primitive
 
         public virtual void Tick(double elapsed) { }
 
-        //Draw with default material
-        public abstract void Draw();
+        //Render with default material
+        public abstract void Render();
 
         //
         public virtual void JustDraw() { }
@@ -74,8 +74,6 @@ namespace Core.Primitive
         {
 
         }
-
-        protected string ObjectName = "";
 
         public bool IsReadyToDraw => bReadyToDraw;
 

@@ -45,7 +45,7 @@ namespace SharpOpenGL
             });
         }
 
-        public override void Draw()
+        public override void Render()
         {
             if (bReadyToDraw)
             {

@@ -122,7 +122,7 @@ namespace SharpOpenGL
             this.metallicTexPath = metallicTex;
         }
 
-        public override void Draw()
+        public override void Render()
         {
             if (bReadyToDraw)
             {

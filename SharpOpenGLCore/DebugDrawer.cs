@@ -16,7 +16,7 @@ namespace SharpOpenGL
             var pointLights = LightManager.Get().GetLightListOfType<PointLight>();
             foreach (var point in pointLights)
             {
-                point.Draw();
+                point.Render();
             }
         }
 

@@ -19,12 +19,12 @@ namespace SharpOpenGL.Light
             wireframesphere = new WireFrameSphere(3, 5, 5);
         }
 
-        public override void Draw()
+        public override void Render()
         {
             if (wireframesphere != null)
             {
                 wireframesphere.Translation = this.Translation;
-                wireframesphere.Draw();
+                wireframesphere.Render();
             }
         }
 
