@@ -4,7 +4,7 @@ using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {
-    public class Arrow : SceneObject
+    public class Arrow : GameObject
     {
         // @ ISceneobject interface
 

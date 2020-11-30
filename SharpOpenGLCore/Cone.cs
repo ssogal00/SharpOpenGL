@@ -12,7 +12,7 @@ using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {
-    public class Cone : SceneObject
+    public class Cone : GameObject
     {
         public override Matrix4 LocalMatrix
         {

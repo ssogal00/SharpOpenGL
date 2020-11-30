@@ -12,7 +12,7 @@ using SharpOpenGL.Font;
 
 namespace SharpOpenGL
 {
-    public class ThreeDText : SceneObject
+    public class ThreeDText : GameObject
     {
         public string TextContent = "";
 

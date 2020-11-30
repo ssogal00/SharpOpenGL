@@ -13,7 +13,7 @@ using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {
-    public class StaticMeshObject : SceneObject
+    public class StaticMeshObject : GameObject
     {
         private static int StaticMeshCount = 0;
         public StaticMeshObject(string assetpath)

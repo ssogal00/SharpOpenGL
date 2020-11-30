@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace SharpOpenGL
 {
     
-    public class Cube : SceneObject
+    public class Cube : GameObject
     {
         private static int CubeCount = 0;
 

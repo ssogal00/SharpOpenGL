@@ -13,7 +13,7 @@ using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {
-    public class Cylinder : SceneObject
+    public class Cylinder : GameObject
     {
         public override Matrix4 LocalMatrix
         {

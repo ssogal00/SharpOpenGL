@@ -14,7 +14,7 @@ using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {
-    public class Sphere : SceneObject
+    public class Sphere : GameObject
     {
         protected static int SphereCount = 0;
 

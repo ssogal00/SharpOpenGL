@@ -12,28 +12,28 @@ namespace Core.Primitive
     public class SceneObjectManager : Singleton<SceneObjectManager>
     {
 
-        public T CreateSceneObject<T>() where T : SceneObject, new()
+        public T CreateSceneObject<T>() where T : GameObject, new()
         {
             var result = new T();
             SceneObjectMap.TryAdd(result.Name, result);
             return result;
         }
 
-        public T CreateSceneObject<T, TParam1>(TParam1 param1) where T : SceneObject, new()
+        public T CreateSceneObject<T, TParam1>(TParam1 param1) where T : GameObject, new()
         {
             T result = Activator.CreateInstance(typeof(T), new object[] {param1}) as T;
             //SceneObjectList.Add(result);
             return result;
         }
 
-        public T CreateSceneObject<T, TParam1, TParam2>(TParam1 param1, TParam2 param2) where T : SceneObject, new()
+        public T CreateSceneObject<T, TParam1, TParam2>(TParam1 param1, TParam2 param2) where T : GameObject, new()
         {
             T result = Activator.CreateInstance(typeof(T), new object[] { param1, param2 }) as T;
             //SceneObjectList.Add(result);
             return result;
         }
 
-        public T CreateSceneObject<T, TParam1, TParam2, TParam3>(TParam1 param1, TParam2 param2, TParam3 param3) where T : SceneObject, new()
+        public T CreateSceneObject<T, TParam1, TParam2, TParam3>(TParam1 param1, TParam2 param2, TParam3 param3) where T : GameObject, new()
         {
             T result = Activator.CreateInstance(typeof(T), new object[] { param1, param2, param3 }) as T;
             SceneObjectMap.TryAdd(result.Name, result);
@@ -56,17 +56,17 @@ namespace Core.Primitive
             }
         }
 
-        public void AddSceneObject(SceneObject obj)
+        public void AddSceneObject(GameObject obj)
         {
             SceneObjectMap.TryAdd(obj.Name, obj);
         }
 
-        public void RemoveSceneObject(SceneObject obj)
+        public void RemoveSceneObject(GameObject obj)
         {
             
         }
 
-        public SceneObject GetSceneObject(string name)
+        public GameObject GetSceneObject(string name)
         {
             if (SceneObjectMap.ContainsKey(name))
             {
@@ -76,7 +76,7 @@ namespace Core.Primitive
             return null;
         }
 
-        public SceneObject GetAnySceneObjectOf<T>()
+        public GameObject GetAnySceneObjectOf<T>()
         {
             foreach (var obj in SceneObjectMap.Values)
             {
@@ -89,7 +89,7 @@ namespace Core.Primitive
             return null;
         }
 
-        public IEnumerable<T> GetSceneObjectListOfType<T>() where  T : SceneObject
+        public IEnumerable<T> GetSceneObjectListOfType<T>() where  T : GameObject
         {
             foreach (var obj in SceneObjectMap.Values)
             {
@@ -110,6 +110,6 @@ namespace Core.Primitive
             return SceneObjectMap.Values.Where(x => x.IsEditable);
         }
 
-        protected ConcurrentDictionary<string, SceneObject> SceneObjectMap = new ConcurrentDictionary<string, SceneObject>();
+        protected ConcurrentDictionary<string, GameObject> SceneObjectMap = new ConcurrentDictionary<string, GameObject>();
     }
 }

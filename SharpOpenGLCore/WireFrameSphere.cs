@@ -13,7 +13,7 @@ using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {
-    public class WireFrameSphere : SceneObject
+    public class WireFrameSphere : GameObject
     {
         public override Matrix4 LocalMatrix
         {

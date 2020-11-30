@@ -14,7 +14,7 @@ using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {
-    public class Torus : SceneObject
+    public class Torus : GameObject
     {
         public Torus(float radius1, float radius2, int sampleCount)
         {

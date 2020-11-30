@@ -7,9 +7,9 @@ using Core.Primitive;
 
 namespace SharpOpenGL
 {
-    public class TestSceneObject : Core.Primitive.SceneObject
+    public class TestGameObject : Core.Primitive.GameObject
     {
-        public TestSceneObject() { }
+        public TestGameObject() { }
         public override void Draw()
         {
 

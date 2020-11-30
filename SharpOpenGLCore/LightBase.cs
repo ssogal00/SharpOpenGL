@@ -16,7 +16,7 @@ namespace SharpOpenGL.Light
         SkyBoxChannel = 0,
         StaticMeshChannel = 1,
     }
-    public abstract class LightBase : SceneObject
+    public abstract class LightBase : GameObject
     {
         protected LightBase(string name, int count)
         : base(name, count)

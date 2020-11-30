@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Core.Camera;
-using Core.Buffer;
+﻿using System.Collections.Generic;
 using Core.CustomEvent;
 using Core.MaterialBase;
 using Core.Primitive;
@@ -19,7 +15,6 @@ namespace SharpOpenGL.Scene
 
         protected virtual void InitializeScene()
         {
-
         }
         
         public virtual void Draw()
@@ -29,19 +24,16 @@ namespace SharpOpenGL.Scene
 
         public virtual void Draw(MaterialBase material)
         {
-            
         }
 
-
-        public virtual void CreateSceneResources()
-        { }
-
-        public virtual void OnResize(object sender, ScreenResizeEventArgs args)
+        public virtual void AddSceneObject(GameObject obj)
         {
+
         }
 
-        public Vector3 CameraStartPos = new Vector3();
-        public Vector3 CaemraStartDir = new Vector3();
-
+        public Vector3 CameraStartPos = Vector3.Zero;
+        public Vector3 CaemraStartDir = Vector3.UnitX;
+        
+        protected List<GameObject> mSceneObjectList = new List<GameObject>();
     }
 }

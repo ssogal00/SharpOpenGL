@@ -10,7 +10,7 @@ using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {
-    public class ThreeAxis : SceneObject
+    public class ThreeAxis : GameObject
     {
         // @ ISceneobject interface
 
