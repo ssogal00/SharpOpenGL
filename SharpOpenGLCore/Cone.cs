@@ -22,6 +22,10 @@ namespace SharpOpenGL
             }
         }
 
+        protected override void PrepareRenderingData()
+        {
+        }
+
         public Cone()
         {
         }

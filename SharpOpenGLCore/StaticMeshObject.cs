@@ -33,6 +33,10 @@ namespace SharpOpenGL
 
         [ExposeUI] public bool IsMetallicOverride { get; set; } = false;
 
+        protected override void PrepareRenderingData()
+        {
+        }
+
         public StaticMeshObject(StaticMeshAsset asset)
         : base("StaticMesh", StaticMeshCount++)
         {
@@ -128,7 +132,7 @@ namespace SharpOpenGL
         }
         
 
-        public override void Draw()
+        public override void Render()
         {
             if (bReadyToDraw == false)
             {

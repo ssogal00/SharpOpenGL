@@ -22,6 +22,9 @@ namespace SharpOpenGL
             GenerateVertices();
         }
 
+        protected override void PrepareRenderingData()
+        {
+        }
 
         public override Matrix4 LocalMatrix
         {
@@ -37,7 +40,7 @@ namespace SharpOpenGL
             base.Initialize();
         }
 
-        public override void Draw()
+        public override void Render()
         {
             
         }

@@ -46,6 +46,8 @@ namespace Core.Primitive
         //Render with default material
         public abstract void Render();
 
+        protected abstract void PrepareRenderingData();
+
         //
         public virtual void JustDraw() { }
 

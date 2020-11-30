@@ -32,7 +32,7 @@ namespace SharpOpenGL
             Radius = 10;
             StackCount = 25;
             SectorCount = 25;
-            Initialize();
+            GenerateVertices();
         }
 
         public override bool IsEditable { get; set; } = false;
@@ -45,34 +45,40 @@ namespace SharpOpenGL
             Radius = radius;
             StackCount = stackcount;
             SectorCount = sectorcount;
-
-            Initialize();
+            GenerateVertices();
         }
         public override void Initialize()
         {   
             GenerateVertices();
+        }
 
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
-            {
-                drawable = new DrawableBase<PNTT_VertexAttribute>();
-                var vertexArray = VertexList.ToArray();
-                drawable.SetupVertexData(ref vertexArray);
+        protected override void PrepareRenderingData()
+        {
+            drawable = new DrawableBase<PNTT_VertexAttribute>();
+            var vertexArray = VertexList.ToArray();
+            drawable.SetupVertexData(ref vertexArray);
 
-                VertexList.Clear();
+            VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw>();
+            defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw>();
 
-                normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_normal-dx.imported");
-                diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_basecolor.imported");
-                roughTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_roughness.imported");
-                metalicTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/copper-rock1-metal.imported");
+            normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_normal-dx.imported");
+            diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_basecolor.imported");
+            roughTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_roughness.imported");
+            metalicTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/copper-rock1-metal.imported");
 
-                bReadyToDraw = true;
-            });
+            bReadyToDraw = true;
         }
 
         public override void Render()
         {
+            Debug.Assert(RenderingThread.IsInRenderingThread());
+            
+            if (!bReadyToDraw)
+            {
+                PrepareRenderingData();
+            }
+
             if (bReadyToDraw)
             {
                 using (var dummy = new ScopedBind(defaultMaterial))

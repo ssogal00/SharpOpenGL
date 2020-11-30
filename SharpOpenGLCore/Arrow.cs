@@ -18,6 +18,10 @@ namespace SharpOpenGL
             }
         }
 
+        protected override void PrepareRenderingData()
+        {
+        }
+
         // @ ISceneobject interface
 
         public Vector3 Color= new Vector3(1,0,0);
@@ -34,17 +38,17 @@ namespace SharpOpenGL
             ArrowHead.Color = color;
         }
         
-        public override void Draw()
+        public override void Render()
         {
             if (ArrowBody.IsReadyToDraw && ArrowHead.IsReadyToDraw)
             {
                 ArrowBody.ParentMatrix = ParentMatrix;
-                ArrowBody.Draw();
+                ArrowBody.Render();
 
                 //
                 ArrowHead.ParentMatrix = ParentMatrix;
                 ArrowHead.Translation = ArrowHeadTranslation;
-                ArrowHead.Draw();
+                ArrowHead.Render();
             }
         }
 

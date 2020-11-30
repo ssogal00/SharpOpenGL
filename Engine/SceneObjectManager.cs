@@ -44,7 +44,7 @@ namespace Core.Primitive
         {
             foreach (var obj in SceneObjectMap.Values.Where(x => x.IsVisible))
             {
-                obj.Draw();
+                obj.Render();
             }
         }
 

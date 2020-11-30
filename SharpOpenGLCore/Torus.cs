@@ -26,6 +26,9 @@ namespace SharpOpenGL
             Initialize();
         }
 
+        protected override void PrepareRenderingData()
+        {
+        }
         public override void Initialize()
         {   
             GenerateVertices();

@@ -19,6 +19,10 @@ namespace SharpOpenGL.Light
             wireframesphere = new WireFrameSphere(3, 5, 5);
         }
 
+        protected override void PrepareRenderingData()
+        {
+        }
+
         public override void Render()
         {
             if (wireframesphere != null)

@@ -10,9 +10,13 @@ namespace SharpOpenGL
     public class TestGameObject : Core.Primitive.GameObject
     {
         public TestGameObject() { }
-        public override void Draw()
+        public override void Render()
         {
 
+        }
+
+        protected override void PrepareRenderingData()
+        {
         }
     }
 }

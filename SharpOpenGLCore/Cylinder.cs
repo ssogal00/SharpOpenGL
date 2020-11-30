@@ -50,6 +50,9 @@ namespace SharpOpenGL
             });
         }
 
+        protected override void PrepareRenderingData()
+        {
+        }
         public override void Render()
         {
             if (bReadyToDraw)

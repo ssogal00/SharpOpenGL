@@ -11,9 +11,13 @@ namespace SharpOpenGL.Light
     public class SpotLight : LightBase
     {
         private static int SpotLightCount = 0;
-        public override void Draw()
+        public override void Render()
         {
 
+        }
+
+        protected override void PrepareRenderingData()
+        {
         }
 
         public SpotLight()

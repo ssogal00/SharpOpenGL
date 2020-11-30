@@ -22,7 +22,9 @@ namespace SharpOpenGL
                 return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
             }
         }
-
+        protected override void PrepareRenderingData()
+        {
+        }
         public Cube()
             : base("Cube", CubeCount++)
         {

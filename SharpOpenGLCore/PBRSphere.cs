@@ -29,7 +29,6 @@ namespace SharpOpenGL
         public PBRSphere(string diffuseTex, string normalTex, string roghnessTex, string metallicTex)
         : this()
         {
-            
             this.diffuseTexPath = diffuseTex;
             this.normalTexPath = normalTex;
             this.roughnessTexPath = roghnessTex;
@@ -46,59 +45,59 @@ namespace SharpOpenGL
 
         private double Elapsed = 0;
 
+        protected override void PrepareRenderingData()
+        {
+            drawable = new DrawableBase<PNTT_VertexAttribute>();
+            var vertexArray = VertexList.ToArray();
+            drawable.SetupVertexData(ref vertexArray);
+
+            VertexList.Clear();
+
+            defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw>();
+
+            if (normalTex == null && normalTexPath?.Length > 0)
+            {
+                normalTex = TextureManager.Get().LoadTexture2D(normalTexPath);
+                if (normalTex != null)
+                {
+                    bNormalExist = true;
+                }
+            }
+
+            if (diffuseTex == null && diffuseTexPath?.Length > 0)
+            {
+                diffuseTex = TextureManager.Get().LoadTexture2D(diffuseTexPath);
+                if (diffuseTex != null)
+                {
+                    bDiffuseExist = true;
+                }
+            }
+
+            if (roughTex == null && roughnessTexPath?.Length > 0)
+            {
+                roughTex = TextureManager.Get().LoadTexture2D(roughnessTexPath);
+
+                if (roughTex != null)
+                {
+                    bRoughnessExist = true;
+                }
+            }
+
+            if (metalicTex == null && metallicTexPath?.Length > 0)
+            {
+                metalicTex = TextureManager.Get().LoadTexture2D(metallicTexPath);
+                if (metalicTex != null)
+                {
+                    bMetallicExist = true;
+                }
+            }
+
+            bReadyToDraw = true;
+        }
+
         public override void Initialize()
         {
             GenerateVertices();
-
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
-            {
-                drawable = new DrawableBase<PNTT_VertexAttribute>();
-                var vertexArray = VertexList.ToArray();
-                drawable.SetupVertexData(ref vertexArray);
-
-                VertexList.Clear();
-
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw>();
-
-                if (normalTex == null && normalTexPath?.Length > 0)
-                {
-                    normalTex = TextureManager.Get().LoadTexture2D(normalTexPath);
-                    if (normalTex != null)
-                    {
-                        bNormalExist = true;
-                    }
-                }
-
-                if (diffuseTex == null && diffuseTexPath?.Length > 0)
-                {
-                    diffuseTex = TextureManager.Get().LoadTexture2D(diffuseTexPath);
-                    if (diffuseTex != null)
-                    {
-                        bDiffuseExist = true;
-                    }
-                }
-
-                if (roughTex == null && roughnessTexPath?.Length > 0)
-                {
-                    roughTex = TextureManager.Get().LoadTexture2D(roughnessTexPath);
-
-                    if (roughTex != null)
-                    {
-                        bRoughnessExist = true;
-                    }
-                }
-
-                if (metalicTex == null && metallicTexPath?.Length > 0)
-                {
-                    metalicTex = TextureManager.Get().LoadTexture2D(metallicTexPath);
-                    if (metalicTex != null)
-                    {
-                        bMetallicExist = true;
-                    }
-                }
-
-                bReadyToDraw = true;
-            });
         }
 
         public void SetNormalTex(string normalTex)
@@ -124,6 +123,11 @@ namespace SharpOpenGL
 
         public override void Render()
         {
+            if (bReadyToDraw == false)
+            {
+                PrepareRenderingData();
+            }
+
             if (bReadyToDraw)
             {
                 using (var dummy = new ScopedBind(defaultMaterial))

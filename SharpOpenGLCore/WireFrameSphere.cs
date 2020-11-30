@@ -31,6 +31,10 @@ namespace SharpOpenGL
             Initialize();
         }
 
+        protected override void PrepareRenderingData()
+        {
+        }
+
         public override bool IsEditable { get; set; } = false;
 
         public WireFrameSphere(float r, int stack, int sector)
