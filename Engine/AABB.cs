@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Runtime.Intrinsics;
+using OpenTK;
 
 using OpenTK.Mathematics;
 
@@ -16,6 +17,7 @@ namespace Core
         public void Draw()
         {
 
+            
         }
     }
 }

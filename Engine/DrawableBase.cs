@@ -34,16 +34,6 @@ namespace Core
             VB.Unbind();
         }
 
-        protected void BindVertexBuffer()
-        {
-            VB.Bind();
-        }
-
-        protected void BindIndexBuffer()
-        {
-            IB.Bind();
-        }
-
         public void BindVertexArray()
         {
             VA.Bind();

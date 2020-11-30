@@ -28,6 +28,8 @@ namespace Core.Primitive
 
         [ExposeUI, UIGroup("Rotation")] public virtual float Roll { get; set; } = 0;
 
+        public float Alpha = 0;
+
         public virtual Matrix4 ParentMatrix { get; set; } = Matrix4.Identity;
 
         public virtual Matrix4 LocalMatrix

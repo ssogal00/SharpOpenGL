@@ -6,6 +6,7 @@ using Core.Buffer;
 using Core.CustomEvent;
 using Core.MaterialBase;
 using Core.Primitive;
+using OpenTK.Mathematics;
 
 
 namespace SharpOpenGL.Scene
@@ -14,6 +15,11 @@ namespace SharpOpenGL.Scene
     {
         public SceneBase()
         {
+        }
+
+        protected virtual void InitializeScene()
+        {
+
         }
         
         public virtual void Draw()
@@ -26,18 +32,6 @@ namespace SharpOpenGL.Scene
             
         }
 
-        public void AddSceneObject(SceneObject newSceneObject, MaterialBase material)
-        {
-            if (SceneObjects.ContainsKey(material))
-            {
-                SceneObjects[material].Add(newSceneObject);
-            }
-            else
-            {
-                SceneObjects[material] = new List<SceneObject> {newSceneObject};
-            }
-        }
-
 
         public virtual void CreateSceneResources()
         { }
@@ -46,14 +40,8 @@ namespace SharpOpenGL.Scene
         {
         }
 
-        public virtual void OnResize(int width, int height) { }
-        
-        protected CameraBase camera = null;
-        protected GBuffer gbuffer = new GBuffer(1024, 768);
-        protected int width = 1024;
-        protected int height = 768;
-
-        protected Dictionary<MaterialBase, List<SceneObject>> SceneObjects = new Dictionary<MaterialBase, List<SceneObject>>();
+        public Vector3 CameraStartPos = new Vector3();
+        public Vector3 CaemraStartDir = new Vector3();
 
     }
 }
