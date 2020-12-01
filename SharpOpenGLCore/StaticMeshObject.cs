@@ -7,6 +7,7 @@ using Core.Asset;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using CompiledMaterial.GBufferDraw;
 using CompiledMaterial.TBNMaterial;
 using OpenTK.Mathematics;
@@ -58,28 +59,22 @@ namespace SharpOpenGL
         {
         }
 
+        public static async Task<StaticMeshObject> CreateStaticMeshObjectAsync(string assetPath)
+        {
+            var asset = await AssetManager.LoadAssetAsync<StaticMeshAsset>(assetPath);
+            return new StaticMeshObject(asset);
+        }
+
         public StaticMeshObject(StaticMeshAsset asset)
         : base("StaticMesh", StaticMeshCount++)
         {
+            meshAsset = asset;
+
             RenderingThread.Get().ExecuteImmediatelyIfRenderingThread
             (
                 () =>
                 {
-                    meshdrawable = new TriangleDrawable<PNTT_VertexAttribute>();
-                    var Arr = meshAsset.Vertices.ToArray();
-                    var IndexArr = meshAsset.VertexIndices.ToArray();
-                    meshdrawable.SetupData(ref Arr, ref IndexArr);
-
-                    if (asset.Debugging)
-                    {
-                        linedrawable = new LineDrawable<PC_VertexAttribute>();
-                        var lineArr = meshAsset.TBNVertices.ToArray();
-                        var lineIndexArr = meshAsset.TBNIndices.ToArray();
-                        linedrawable.SetupData(ref lineArr, ref lineIndexArr);
-                    }
-
-                    this.LoadTextures();
-                    bReadyToDraw = true;
+                    PrepareRenderingData();
                 }
             );
         }
@@ -92,22 +87,7 @@ namespace SharpOpenGL
             (
                 () =>
                 {
-                    meshdrawable = new TriangleDrawable<PNTT_VertexAttribute>();
-                    var Arr = meshAsset.Vertices.ToArray();
-                    var IndexArr = meshAsset.VertexIndices.ToArray();
-                    meshdrawable.SetupData(ref Arr, ref IndexArr);
-
-                    if (meshAsset.Debugging)
-                    {
-                        linedrawable = new LineDrawable<PC_VertexAttribute>();
-                        var lineArr = meshAsset.TBNVertices.ToArray();
-                        var lineIndexArr = meshAsset.TBNIndices.ToArray();
-                        linedrawable.SetupData(ref lineArr, ref lineIndexArr);
-                    }
-
-                    this.LoadTextures();
-
-                    bReadyToDraw = true;
+                    PrepareRenderingData();
                 }
             );
         }

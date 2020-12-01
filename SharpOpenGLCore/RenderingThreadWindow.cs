@@ -32,7 +32,7 @@ namespace SharpOpenGL
         protected BlitToScreen ScreenBlit = new BlitToScreen();
 
         #region @PostProcess Start
-        protected Skybox skyboxPostProcess = new Skybox();
+        //protected Skybox skyboxPostProcess = new Skybox();
         protected DeferredLight lightPostProcess = new DeferredLight();
         protected GBufferVisualize gbufferVisualize = new GBufferVisualize();
         protected DepthVisualize depthVisualize = new DepthVisualize();
@@ -116,10 +116,10 @@ namespace SharpOpenGL
             OnGLContextCreated(this, new EventArgs());
             ScreenBlit.SetGridSize(2, 2);
 
-            sponzamesh = new StaticMeshObject("sponza2.staticmesh");
+            /*sponzamesh = new StaticMeshObject("sponza2.staticmesh");
             sponzamesh.IsMetallicOverride = sponzamesh.IsRoughnessOverride = true;
             sponzamesh.Metallic = 0.6f;
-            sponzamesh.Roughness = 0.3f;
+            sponzamesh.Roughness = 0.3f;*/
 
             testTexture = new Texture2D();
             testTexture.LoadFromDDSFile("./Resources/SponzaTexture/VaseRound_diffuse.dds");
@@ -136,7 +136,7 @@ namespace SharpOpenGL
 
             lut.Render();
 
-            skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
+            //skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
 
             bInitialized = true;
         }
@@ -294,7 +294,7 @@ namespace SharpOpenGL
             (
                 () =>
                 {
-                    skyboxPostProcess.Render();
+                    //skyboxPostProcess.Render();
                     Engine.Get().CurrentScene.Render();
                 }
             );

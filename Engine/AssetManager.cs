@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using OpenTK.Graphics.ES11;
 
 namespace Core.Asset
 {
@@ -47,16 +48,23 @@ namespace Core.Asset
         }
 
         public static async Task<T> LoadAssetAsync<T>(string path) where T : AssetBase
-        {   
+        {
+            string importedPath = $"./Resources/Imported/StaticMesh/{path}";
+
+            if (!File.Exists(importedPath))
+            {
+                return await ImportAssetAsync<T>(path);
+            }
+
+            var cachedAsset = GetAsset<T>(Path.GetFileName(path));
+
+            if (cachedAsset != null)
+            {
+                return cachedAsset;
+            }
+
             return await Task.Factory.StartNew(() =>
             {
-                var cachedAsset = GetAsset<T>(Path.GetFileName(path));
-
-                if (cachedAsset != null)
-                {
-                    return cachedAsset;
-                }
-
                 lock (syncObject)
                 {
                     byte[] data = File.ReadAllBytes(path);
@@ -68,12 +76,50 @@ namespace Core.Asset
             });
         }
 
+        public static async Task<T> ImportAssetAsync<T>(string path) where T : AssetBase
+        {
+            if (!path.Contains(".staticmesh"))
+            {
+                throw new InvalidOperationException("invalid static mesh asset path");
+            }
+
+            string importedPath = Path.Combine("./Resources/Imported/StaticMesh", path);
+
+            if (!File.Exists(importedPath))
+            {
+                var meshName =Path.GetFileNameWithoutExtension(path);
+                var objPath = $"./Resources/ObjMesh/{meshName}.obj";
+                var mtlPath = $"./Resources/ObjMesh/{meshName}.mtl";
+
+                if (File.Exists(objPath) && File.Exists(mtlPath))
+                {
+                    var asset = await StaticMeshAsset.ImportAssetAsync(objPath, mtlPath);
+                    AssetMap.TryAdd(meshName, asset);
+                    return (T)asset;
+                }
+                else if (File.Exists(objPath) && !File.Exists(mtlPath))
+                {
+                    var asset = await StaticMeshAsset.ImportAssetAsync(objPath);
+                    AssetMap.TryAdd(meshName, asset);
+                    return (T)asset;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return await LoadAssetAsync<T>(path);
+            }
+        }
+
         public void ImportTextures()
         {
 
         }
 
-        public void ImportStaticMeshes()
+        public async Task ImportStaticMeshes()
         {
             List<string> objFileList = new List<string>();
             List<string> mtlFileList = new List<string>();
@@ -120,16 +166,15 @@ namespace Core.Asset
                 if (mtlFileName != null)
                 {
                     var staticMesh = new StaticMeshAsset(objfile, mtlFileName);
-                    staticMesh.ImportAssetSync();
+                    await staticMesh.ImportAssetAsync();
 
                     string importedAssetPath = Path.Combine("./Resources/Imported/StaticMesh", Path.GetFileNameWithoutExtension(objfile) + ".staticmesh");
-                    //staticMesh.SaveImportedAsset(importedAssetPath);
                     AssetMap.TryAdd(filename + ".staticmesh", staticMesh);
                 }
                 else
                 {
                     var staticMesh = new StaticMeshAsset(objfile);
-                    staticMesh.ImportAssetSync();
+                    await staticMesh.ImportAssetAsync();
 
                     if (Directory.Exists("./Resources/Imported/StaticMesh") == false)
                     {
@@ -137,7 +182,6 @@ namespace Core.Asset
                     }
 
                     string importedAssetPath = Path.Combine("./Resources/Imported/StaticMesh", Path.GetFileNameWithoutExtension(objfile) + ".staticmesh");
-                    //staticMesh.SaveImportedAsset(importedAssetPath);
                     AssetMap.TryAdd(filename + ".staticmesh", staticMesh);
                 }
             }

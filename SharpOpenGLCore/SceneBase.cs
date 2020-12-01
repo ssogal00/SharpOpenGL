@@ -12,7 +12,7 @@ namespace SharpOpenGL.Scene
         {
         }
 
-        public virtual void InitializeScene()
+        public async virtual void InitializeScene()
         {
         }
 

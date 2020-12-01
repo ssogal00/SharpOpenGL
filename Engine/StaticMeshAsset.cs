@@ -117,6 +117,20 @@ namespace Core.StaticMesh
                 this.Import(ObjFilePath, MtlFilePath);
             });
         }
+
+        public static async Task<AssetBase> ImportAssetAsync(string objPath, string mtlPath)
+        {
+            var result = new StaticMeshAsset(objPath, mtlPath);
+            await result.ImportAssetAsync();
+            return result;
+        }
+
+        public static async Task<AssetBase> ImportAssetAsync(string objPath)
+        {
+            var result = new StaticMeshAsset(objPath);
+            await result.ImportAssetAsync();
+            return result;
+        }
         
         // save
         public override void SaveImportedAsset(string path)
