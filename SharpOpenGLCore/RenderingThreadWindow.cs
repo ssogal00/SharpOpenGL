@@ -28,7 +28,6 @@ namespace SharpOpenGL
         protected Subject<Tuple<int,int>> WindowResized = new Subject<Tuple<int, int>>();
 
         protected event EventHandler<EventArgs> OnGLContextCreated;
-        protected event EventHandler<ScreenResizeEventArgs> OnWindowResize;
         protected BlitToScreen ScreenBlit = new BlitToScreen();
 
         #region @PostProcess Start
@@ -36,22 +35,15 @@ namespace SharpOpenGL
         protected DeferredLight lightPostProcess = new DeferredLight();
         protected GBufferVisualize gbufferVisualize = new GBufferVisualize();
         protected DepthVisualize depthVisualize = new DepthVisualize();
-        protected ResolvePostProcess resolvePostProcess = new ResolvePostProcess();
         protected EquirectangleToCubemap equirectToCube = new EquirectangleToCubemap();
         protected CubemapConvolutionTransform convolution = new CubemapConvolutionTransform();
-        protected SSAO ssaoPostProcess = new SSAO();
-        protected HDAO hdaoPostProcess = new HDAO();
         protected FXAAPostProcess fxaa = new FXAAPostProcess();
         #endregion
 
         protected LookUpTable2D lut = new LookUpTable2D();
         protected Prefilter prefilter = new Prefilter();
         protected Texture2D testTexture = null;
-
         protected GBuffer renderGBuffer = new GBuffer(1024, 768);
-        protected StaticMeshObject sponzamesh = null;
-        protected StaticMeshObject pistol = null;
-        protected bool bInitialized = false;
 
         public event EventHandler<KeyboardKeyEventArgs> OnKeyDownEvent;
         public event EventHandler<KeyboardKeyEventArgs> OnKeyUpEvent;
@@ -88,11 +80,12 @@ namespace SharpOpenGL
             get => this.ClientSize.Y;
         }
 
+
         protected override void OnLoad()
         {
             this.Title = "MyEngine";
 
-            OnGLContextCreated += RenderResource.OnOpenGLContextCreated;
+            OnGLContextCreated += RenderingThreadObject.OnOpenGLContextCreated;
 
             GLContextCreated.OnNext(Unit.Default);
 
@@ -109,18 +102,11 @@ namespace SharpOpenGL
             GL.Enable(EnableCap.TextureCubeMap);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
 
-
             ShaderManager.Get().CompileShaders();
-            TextureManager.Get().ImportTextures();
 
             OnGLContextCreated(this, new EventArgs());
             ScreenBlit.SetGridSize(2, 2);
-
-            /*sponzamesh = new StaticMeshObject("sponza2.staticmesh");
-            sponzamesh.IsMetallicOverride = sponzamesh.IsRoughnessOverride = true;
-            sponzamesh.Metallic = 0.6f;
-            sponzamesh.Roughness = 0.3f;*/
-
+            
             testTexture = new Texture2D();
             testTexture.LoadFromDDSFile("./Resources/SponzaTexture/VaseRound_diffuse.dds");
 
@@ -137,8 +123,6 @@ namespace SharpOpenGL
             lut.Render();
 
             //skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
-
-            bInitialized = true;
         }
 
 
@@ -278,7 +262,7 @@ namespace SharpOpenGL
             GL.ClearColor(Color.BlueViolet);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
-            if (bInitialized == false || Engine.Get().IsInitialized == false)
+            if (Engine.Get().IsInitialized == false)
             {
                 SwapBuffers();
                 return;

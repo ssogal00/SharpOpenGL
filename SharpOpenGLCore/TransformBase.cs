@@ -7,7 +7,7 @@ using Core;
 
 namespace SharpOpenGL.Transform
 {
-    public class TransformBase : RenderResource
+    public class TransformBase : RenderingThreadObject
     {
         public override void OnGLContextCreated(object sender, EventArgs e)
         {

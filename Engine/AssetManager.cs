@@ -114,11 +114,6 @@ namespace Core.Asset
             }
         }
 
-        public void ImportTextures()
-        {
-
-        }
-
         public async Task ImportStaticMeshes()
         {
             List<string> objFileList = new List<string>();

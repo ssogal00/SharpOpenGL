@@ -7,7 +7,7 @@ using OpenTK.Mathematics;
 
 namespace Core.Texture
 {
-    public class RenderTarget : RenderResource, IBindable, IResizable
+    public class RenderTarget : RenderingThreadObject, IBindable, IResizable
     {
 
         public RenderTarget(int width, int height, int attachementCount,  bool bFixedSize = false, float customScale = 1.0f, bool bIncludeDepthAttachment = true)

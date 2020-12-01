@@ -6,7 +6,7 @@ using Core.CustomEvent;
 
 namespace Core.Buffer
 {
-    public class GBuffer : RenderResource, IBindable, IResizable
+    public class GBuffer : RenderingThreadObject, IBindable, IResizable
     {        
         public GBuffer(int width, int height)
         {

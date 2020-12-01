@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,17 +8,13 @@ using System.Threading.Tasks;
 
 namespace Core
 {    
-    public class RenderResource : IDisposable
+    public class RenderingThreadObject : IDisposable
     {
         // 
         public static EventHandler<EventArgs> OnOpenGLContextCreated;
 
-        //
-        public static EventHandler<EventArgs> OnRenderingThreadTick;
-
-        public RenderResource()
+        public RenderingThreadObject()
         {
-            
             OnOpenGLContextCreated += this.OnGLContextCreated;
             
         }

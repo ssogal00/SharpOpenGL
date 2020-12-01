@@ -12,7 +12,7 @@ using OpenTK.Mathematics;
 
 namespace SharpOpenGL
 {
-    public class BlitToScreen : RenderResource
+    public class BlitToScreen : RenderingThreadObject
     {
         public BlitToScreen()
         {

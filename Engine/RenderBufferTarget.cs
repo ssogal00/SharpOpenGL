@@ -8,7 +8,7 @@ using Core.CustomEvent;
 
 namespace Core.Texture
 {
-    public class RenderBufferTarget : RenderResource , IBindable, IResizable
+    public class RenderBufferTarget : RenderingThreadObject , IBindable, IResizable
     {
         public RenderBufferTarget()
         {

@@ -9,7 +9,7 @@ using OpenTK.Mathematics;
 
 namespace SharpOpenGL.PostProcess
 {
-    public abstract class PostProcessBase : RenderResource
+    public abstract class PostProcessBase : RenderingThreadObject
     {   
         public PostProcessBase()
         {

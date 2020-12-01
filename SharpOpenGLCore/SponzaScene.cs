@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive.Threading.Tasks;
 using System.Text;
 using SharpOpenGL;
 using SharpOpenGL.Scene;
@@ -10,13 +11,14 @@ namespace SharpOpenGLCore
     {
         public async override void InitializeScene()
         {
-            var sponzamesh = await StaticMeshObject.CreateStaticMeshObjectAsync("sponza2.staticmesh");
+            StaticMeshObject.CreateStaticMeshObjectAsync("sponza2.staticmesh").ToObservable().Subscribe(sponzamesh =>
+            {
+                mGameObjectList.Add(sponzamesh);
 
-            mGameObjectList.Add(sponzamesh);
-
-            sponzamesh.IsMetallicOverride = sponzamesh.IsRoughnessOverride = true;
-            sponzamesh.Metallic = 0.7f;
-            sponzamesh.Roughness = 0.3f;
+                sponzamesh.IsMetallicOverride = sponzamesh.IsRoughnessOverride = true;
+                sponzamesh.Metallic = 0.7f;
+                sponzamesh.Roughness = 0.3f;
+            });
         }
 
     }
