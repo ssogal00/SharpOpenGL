@@ -16,7 +16,8 @@ namespace SharpOpenGL
     {
         public BlitToScreen()
         {
-            //            
+            //    
+            Initialize();
         }
 
         protected int width = 1024;
@@ -33,10 +34,11 @@ namespace SharpOpenGL
             height = newHeight;
         }
 
-        public void Create()
+        public override void Initialize()
         {
+            Debug.Assert(RenderingThreadWindow.IsGLContextInitialized);
+            
             Material = new ScreenSpaceDraw();
-
             VA = new VertexArray();
             VA.Bind();
             VB = new StaticVertexBuffer<PT_VertexAttribute>();
@@ -45,11 +47,6 @@ namespace SharpOpenGL
             // feed index buffer
             uint[] IndexArray = { 0, 1, 2, 3, 4, 5 };
             IB.BufferData<uint>(ref IndexArray);
-        }
-
-        public override void OnGLContextCreated(object sender, System.EventArgs eventArgs)
-        {            
-            Create();
         }
         
         public void Blit(TextureBase texture)

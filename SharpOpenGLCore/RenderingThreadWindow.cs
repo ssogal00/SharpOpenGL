@@ -24,14 +24,15 @@ namespace SharpOpenGL
         protected Subject<Tuple<int,int>> WindowResized = new Subject<Tuple<int, int>>();
 
         protected event EventHandler<EventArgs> OnGLContextCreated;
-        protected BlitToScreen ScreenBlit = new BlitToScreen();
-        
+
         public event EventHandler<KeyboardKeyEventArgs> OnKeyDownEvent;
         public event EventHandler<KeyboardKeyEventArgs> OnKeyUpEvent;
 
         public AutoResetEvent RenderingDone = new AutoResetEvent(false);
 
         protected SceneRendererBase mDefaultSceneRender = new DefaultSceneRenderer();
+
+        public static bool IsGLContextInitialized = false;
 
 #region @Mouse Info
         private Vector2 LastMouseBtnDownPosition = new Vector2(0);
@@ -67,6 +68,7 @@ namespace SharpOpenGL
 
         protected override void OnLoad()
         {
+            IsGLContextInitialized = true;
             this.Title = "MyEngine";
             ShaderManager.Get().CompileShaders();
             mDefaultSceneRender.Initialize();

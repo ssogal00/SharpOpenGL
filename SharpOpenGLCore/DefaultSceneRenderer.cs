@@ -115,7 +115,7 @@ namespace SharpOpenGLCore
             }*/
         }
 
-        protected BlitToScreen ScreenBlit = new BlitToScreen();
+        protected BlitToScreen ScreenBlit;
 
         #region @PostProcess Start
         protected DeferredLight lightPostProcess;

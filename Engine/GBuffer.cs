@@ -12,7 +12,9 @@ namespace Core.Buffer
         {
             ResizableManager.Get().AddResizable(this);
             BufferHeight = height;
-            BufferWidth = width;              
+            BufferWidth = width;
+
+            Initialize();
         }
 
         public GBuffer()
@@ -20,6 +22,7 @@ namespace Core.Buffer
             ResizableManager.Get().AddResizable(this);
             BufferWidth = 1024;
             BufferHeight = 768;
+            Initialize();
         }
 
         protected virtual void CreateGBuffer()
@@ -59,11 +62,6 @@ namespace Core.Buffer
         public override void Initialize()
         {
             base.Initialize();
-            CreateGBuffer();
-        }
-
-        public override void OnGLContextCreated(object sender, EventArgs e)
-        {
             CreateGBuffer();
         }
 
