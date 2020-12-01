@@ -2,7 +2,7 @@
 using OpenTK.Mathematics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System;
 
 namespace SharpOpenGL.Scene
 {
@@ -29,11 +29,22 @@ namespace SharpOpenGL.Scene
         
         public virtual void Render()
         {
+            foreach (var item in mGameObjectList)
+            {
+                item.Render();
+            }
         }
 
         public T CreateGameObject<T>() where T : GameObject, new()
         {
             var result = new T();
+            mGameObjectList.Add(result);
+            return result;
+        }
+
+        public T CreateGameObject<T, TParam1>(TParam1 param1) where T : GameObject, new()
+        {
+            T result = Activator.CreateInstance(typeof(T), new object[] { param1 }) as T;
             mGameObjectList.Add(result);
             return result;
         }

@@ -35,6 +35,27 @@ namespace SharpOpenGL
 
         protected override void PrepareRenderingData()
         {
+            meshdrawable = new TriangleDrawable<PNTT_VertexAttribute>();
+            var Arr = meshAsset.Vertices.ToArray();
+            var IndexArr = meshAsset.VertexIndices.ToArray();
+            meshdrawable.SetupData(ref Arr, ref IndexArr);
+
+            if (meshAsset.Debugging)
+            {
+                linedrawable = new LineDrawable<PC_VertexAttribute>();
+                var lineArr = meshAsset.TBNVertices.ToArray();
+                var lineIndexArr = meshAsset.TBNIndices.ToArray();
+                linedrawable.SetupData(ref lineArr, ref lineIndexArr);
+            }
+
+            this.LoadTextures();
+
+            bReadyToDraw = true;
+        }
+
+        public StaticMeshObject()
+        : base("StaticMesh", StaticMeshCount++)
+        {
         }
 
         public StaticMeshObject(StaticMeshAsset asset)
@@ -85,6 +106,7 @@ namespace SharpOpenGL
                     }
 
                     this.LoadTextures();
+
                     bReadyToDraw = true;
                 }
             );

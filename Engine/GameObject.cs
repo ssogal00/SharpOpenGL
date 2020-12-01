@@ -6,7 +6,7 @@ using OpenTK.Mathematics;
 namespace Core.Primitive
 {
     
-    public abstract class GameObject
+    public abstract class GameObject : IDisposable
     {
         [ExposeUI("ObjectName")]
         public virtual string Name { get; set; }
@@ -37,6 +37,11 @@ namespace Core.Primitive
         public virtual Matrix4 LocalMatrix
         {
             get;
+        }
+
+        public virtual void Dispose()
+        {
+
         }
 
         public virtual bool IsEditable { get; set; } = true;

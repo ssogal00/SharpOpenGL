@@ -111,7 +111,6 @@ namespace SharpOpenGL
 
 
             ShaderManager.Get().CompileShaders();
-            AssetManager.Get().ImportStaticMeshes();
             TextureManager.Get().ImportTextures();
 
             OnGLContextCreated(this, new EventArgs());
@@ -296,7 +295,6 @@ namespace SharpOpenGL
                 () =>
                 {
                     skyboxPostProcess.Render();
-                    //SceneObjectManager.Get().Draw();
                     Engine.Get().CurrentScene.Render();
                 }
             );

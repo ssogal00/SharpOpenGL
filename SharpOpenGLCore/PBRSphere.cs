@@ -119,6 +119,11 @@ namespace SharpOpenGL
             this.metallicTexPath = metallicTex;
         }
 
+        public override void Dispose()
+        {
+            TextureManager.Get().UnloadTexture(diffuseTexPath);
+        }
+
         public override void Render()
         {
             if (bReadyToDraw == false)
