@@ -104,7 +104,10 @@ namespace SharpOpenGL
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
-            
+            if (e.Button == MouseButton.Right)
+            {
+                RightMouseBtnDown = true;
+            }
         }
 
         protected override void OnMouseEnter()
@@ -135,7 +138,10 @@ namespace SharpOpenGL
         //
         protected override void OnMouseUp(MouseButtonEventArgs e)
         {
-            
+            if (e.Button == MouseButton.Right)
+            {
+                RightMouseBtnDown = false;
+            }
         }
 
 
