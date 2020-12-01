@@ -26,7 +26,7 @@ namespace SharpOpenGLCore
             lut = new LookUpTable2D();
             prefilter = new Prefilter();
             renderGBuffer = new GBuffer(1024,768);
-            ScreenBlit.SetGridSize(2, 2);
+            ScreenBlit.SetGridSize(1, 1);
 
             /* 
             if (equirectToCube.IsTransformCompleted == false)
@@ -65,7 +65,7 @@ namespace SharpOpenGLCore
 
             // blit gbuffer to screen
             gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
-            ScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0, 0, 2, 2);
+            ScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0, 0, 1, 1);
 
             /*renderGBuffer.BindAndExecute(
                 () =>

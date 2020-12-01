@@ -238,7 +238,7 @@ namespace SharpOpenGL
             }
             gbufferMaterial.LightChannel = (int)Light.LightChannel.SkyBoxChannel;
 
-            DebugDraw();
+            //DebugDraw();
         }
        
         protected string assetpath = "";

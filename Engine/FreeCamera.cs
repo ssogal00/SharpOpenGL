@@ -20,7 +20,7 @@ namespace Core.Camera
             : base(OpenTK.Mathematics.MathHelper.PiOver6, 1.0f, 1.0f, 10000.0f)
         {
             LookAtDir = new Vector3(1, 0, 0);
-            EyeLocation = new Vector3(20, 20, 20);
+            EyeLocation = new Vector3(0, 20, 0);
             
             Destination = EyeLocation;
         }
@@ -29,7 +29,7 @@ namespace Core.Camera
             : base(fFOV, fAspectRatio, fNear, fFar)
         {
             LookAtDir = new Vector3(1, 0, 0);
-            EyeLocation = new Vector3(20, 20, 20);
+            EyeLocation = new Vector3(0, 0, 0);
             Destination = EyeLocation;
         }
 
@@ -267,7 +267,7 @@ namespace Core.Camera
             ViewMatrix = Matrix4.LookAt(EyeLocation, EyeLocation + Vector3.Multiply(m_RotationMatrix.Row2, 1.0f), Vector3.UnitY);
         }
 
-        public float Yaw { get; set; } = -90.0f;
+        public float Yaw { get; set; } = OpenTK.Mathematics.MathHelper.PiOver2;
 
         protected float Pitch = 0;
 
