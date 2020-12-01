@@ -10,13 +10,12 @@ using Core.Texture;
 
 namespace SharpOpenGL.PostProcess
 {
-    
-
     public class GBufferVisualize : PostProcessBase
     {
         public GBufferVisualize()
             : base()
         {
+            Initialize();
         }
 
         protected enum EVisualizeMode
@@ -55,9 +54,9 @@ namespace SharpOpenGL.PostProcess
             }
         }
 
-        public override void OnGLContextCreated(object sender, EventArgs e)
+        public override void Initialize()
         {
-            base.OnGLContextCreated(sender, e);
+            base.Initialize();
             PostProcessMaterial = ShaderManager.Get().GetMaterial<GBufferDump>();
         }
 
