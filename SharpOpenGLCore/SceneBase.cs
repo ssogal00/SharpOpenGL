@@ -11,29 +11,20 @@ namespace SharpOpenGL.Scene
     {
         public SceneBase()
         {
+            InitializeScene();
         }
 
         protected virtual void InitializeScene()
         {
         }
         
-        public virtual void Draw()
+        public virtual void Render()
         {
-            
-        }
-
-        public virtual void Draw(MaterialBase material)
-        {
-        }
-
-        public virtual void AddSceneObject(GameObject obj)
-        {
-
         }
 
         public Vector3 CameraStartPos = Vector3.Zero;
         public Vector3 CaemraStartDir = Vector3.UnitX;
         
-        protected List<GameObject> mSceneObjectList = new List<GameObject>();
+        protected List<GameObject> mGameObjectList = new List<GameObject>();
     }
 }
