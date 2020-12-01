@@ -296,7 +296,8 @@ namespace SharpOpenGL
                 () =>
                 {
                     skyboxPostProcess.Render();
-                    SceneObjectManager.Get().Draw();
+                    //SceneObjectManager.Get().Draw();
+                    Engine.Get().CurrentScene.Render();
                 }
             );
 

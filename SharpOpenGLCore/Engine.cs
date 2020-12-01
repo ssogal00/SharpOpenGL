@@ -7,6 +7,8 @@ using System.Diagnostics;
 using System.Threading;
 using ZeroFormatter.Formatters;
 using DirectXTexWrapper;
+using SharpOpenGL.Scene;
+using SharpOpenGLCore;
 
 namespace SharpOpenGL
 {
@@ -23,6 +25,10 @@ namespace SharpOpenGL
 
         public bool IsInitialized => bInitialized;
 
+        private SceneBase mCurrentScene =  new SphereScene();
+
+        public SceneBase CurrentScene => mCurrentScene;
+
         public async void Initialize()
         {
             Formatter<DefaultResolver, Vector3>.Register(new Vector3Formatter<DefaultResolver>());
@@ -32,6 +38,8 @@ namespace SharpOpenGL
             MainThreadId = Thread.CurrentThread.ManagedThreadId;
             
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
+
+            mCurrentScene.InitializeScene();
             
             var rusted = SceneObjectManager.Get().CreateSceneObject<PBRSphere>();
             rusted.Scale = 1.5f;
