@@ -1,16 +1,12 @@
 ﻿using Core;
-using Core.Asset;
-using Core.Buffer;
 using Core.CustomEvent;
-using Core.Primitive;
 using Core.Texture;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using SharpOpenGL.PostProcess;
-using SharpOpenGL.Transform;
+using SharpOpenGLCore;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -29,26 +25,13 @@ namespace SharpOpenGL
 
         protected event EventHandler<EventArgs> OnGLContextCreated;
         protected BlitToScreen ScreenBlit = new BlitToScreen();
-
-        #region @PostProcess Start
-        //protected Skybox skyboxPostProcess = new Skybox();
-        protected DeferredLight lightPostProcess = new DeferredLight();
-        protected GBufferVisualize gbufferVisualize = new GBufferVisualize();
-        protected DepthVisualize depthVisualize = new DepthVisualize();
-        protected EquirectangleToCubemap equirectToCube = new EquirectangleToCubemap();
-        protected CubemapConvolutionTransform convolution = new CubemapConvolutionTransform();
-        protected FXAAPostProcess fxaa = new FXAAPostProcess();
-        #endregion
-
-        protected LookUpTable2D lut = new LookUpTable2D();
-        protected Prefilter prefilter = new Prefilter();
-        protected Texture2D testTexture = null;
-        protected GBuffer renderGBuffer = new GBuffer(1024, 768);
-
+        
         public event EventHandler<KeyboardKeyEventArgs> OnKeyDownEvent;
         public event EventHandler<KeyboardKeyEventArgs> OnKeyUpEvent;
 
         public AutoResetEvent RenderingDone = new AutoResetEvent(false);
+
+        protected SceneRendererBase mDefaultSceneRender = new DefaultSceneRenderer();
 
 #region @Mouse Info
         private Vector2 LastMouseBtnDownPosition = new Vector2(0);
@@ -62,6 +45,7 @@ namespace SharpOpenGL
             GLContextCreated.Subscribe(_ =>
             {
                 Sampler.OnGLContextCreated();
+                RenderingThreadObject.OnOpenGLContextCreated(null, null);
             });
 
             WindowResized.Subscribe((x) =>
@@ -84,14 +68,13 @@ namespace SharpOpenGL
         protected override void OnLoad()
         {
             this.Title = "MyEngine";
-
-            OnGLContextCreated += RenderingThreadObject.OnOpenGLContextCreated;
+            ShaderManager.Get().CompileShaders();
+            mDefaultSceneRender.Initialize();
 
             GLContextCreated.OnNext(Unit.Default);
 
             OnKeyDownEvent += CameraManager.Get().OnKeyDown;
             OnKeyUpEvent += CameraManager.Get().OnKeyUp;
-
             OnKeyDownEvent += this.HandleKeyDownEvent;
 
             VSync = VSyncMode.Off;
@@ -101,28 +84,6 @@ namespace SharpOpenGL
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.TextureCubeMap);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
-
-            ShaderManager.Get().CompileShaders();
-
-            OnGLContextCreated(this, new EventArgs());
-            ScreenBlit.SetGridSize(2, 2);
-            
-            testTexture = new Texture2D();
-            testTexture.LoadFromDDSFile("./Resources/SponzaTexture/VaseRound_diffuse.dds");
-
-            if (equirectToCube.IsTransformCompleted == false)
-            {
-                equirectToCube.Transform();
-                convolution.SetSourceCubemap(equirectToCube.ResultCubemap);
-                convolution.Transform();
-            }
-
-            prefilter.SetEnvMap(equirectToCube.ResultCubemap);
-            prefilter.Transform();
-
-            lut.Render();
-
-            //skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
         }
 
 
@@ -202,7 +163,7 @@ namespace SharpOpenGL
             }
             else if (e.Key == Keys.F5)
             {
-                gbufferVisualize.ChangeVisualizeMode();
+                //gbufferVisualize.ChangeVisualizeMode();
             }
         }
 
@@ -268,55 +229,7 @@ namespace SharpOpenGL
                 return;
             }
 
-            renderGBuffer.BindAndExecute(
-                () =>
-                {
-                    renderGBuffer.Clear();
-                });
-
-            renderGBuffer.BindAndExecute
-            (
-                () =>
-                {
-                    //skyboxPostProcess.Render();
-                    Engine.Get().CurrentScene.Render();
-                }
-            );
-
-            bool bTestTextureTest = false;
-
-            if (true)
-            {
-                gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
-                ScreenBlit.Blit(gbufferVisualize.OutputColorTex0,0,0,2,2);
-            }
-            else if (bTestTextureTest)
-            {
-                gbufferVisualize.Render(testTexture);
-                ScreenBlit.Blit(testTexture, 0, 0, 2, 2);
-            }
-
-            else if (DebugDrawer.Get().IsDepthDump)
-            {
-                depthVisualize.Render(renderGBuffer.GetDepthAttachment);
-                ScreenBlit.Blit(depthVisualize.OutputColorTex0, 0, 0, 2, 2);
-            }
-            else
-            {
-                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
-
-                GL.Viewport(0, 0, Width, Height);
-
-                if (false)
-                {
-                    fxaa.Render(lightPostProcess.OutputColorTex0);
-                    ScreenBlit.Blit(fxaa.OutputColorTex0, 0, 0, 2, 2);
-                }
-                else
-                {
-                    ScreenBlit.Blit(lightPostProcess.OutputColorTex0, 0, 0, 2, 2);
-                }
-            }
+            mDefaultSceneRender.RenderScene(Engine.Get().CurrentScene);
 
             SwapBuffers();
         }

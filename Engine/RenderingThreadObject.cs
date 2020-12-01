@@ -16,7 +16,6 @@ namespace Core
         public RenderingThreadObject()
         {
             OnOpenGLContextCreated += this.OnGLContextCreated;
-            
         }
 
         public virtual void ReleaseResource()
