@@ -14,11 +14,6 @@ namespace SharpOpenGL.PostProcess
         public FXAAPostProcess()
         {
             this.Name = "FXAAPostProcess";
-        }
-
-        public override void OnGLContextCreated(object sender, EventArgs e)
-        {
-            base.OnGLContextCreated(sender, e);
             PostProcessMaterial = ShaderManager.Get().GetMaterial<FXAAMaterial>();
         }
 

@@ -83,7 +83,7 @@ namespace Core.Texture
             }
         }
 
-        public static void OnGLContextCreated()
+        public static void Initialize()
         {
             DefaultLinearSampler = new Sampler();
             DefaultLinearSampler.SetMagFilter(TextureMagFilter.Linear);
@@ -99,11 +99,6 @@ namespace Core.Texture
             DefaultCubemapSampler.SetWrapS(TextureWrapMode.ClampToEdge);
             DefaultCubemapSampler.SetWrapT(TextureWrapMode.ClampToEdge);
             DefaultCubemapSampler.SetWrapR(TextureWrapMode.ClampToEdge);
-        }
-
-        public static void OnResourceCreate(object sender, EventArgs e)
-        {
-            OnGLContextCreated();
         }
 
         public static Sampler DefaultLinearSampler = null;

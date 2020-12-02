@@ -20,7 +20,30 @@ namespace SharpOpenGL
 {
     public class EquirectangleToCubemap : TransformBase
     {
+        public EquirectangleToCubemap()
+        {
+            Initialize();
+        }
+        public override void Initialize()
+        {
+            material = ShaderManager.Get().GetMaterial<EquirectangleToCube>();
 
+            // create hdr texture
+            var hdr = new Texture2D();
+            hdr.LoadFromHDRFile("./Resources/Texture/HDR/GCanyon_C_YumaPoint_3k.hdr");
+            equirectangularTex = hdr;
+
+            // 
+            cubeMesh = new Cube();
+
+            PositiveX.Initialize();
+            PositiveY.Initialize();
+            PositiveZ.Initialize();
+            NegativeX.Initialize();
+            NegativeY.Initialize();
+            NegativeZ.Initialize();
+        }
+        
         public override void OnGLContextCreated(object sender, EventArgs e)
         {
             base.OnGLContextCreated(sender, e);

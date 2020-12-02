@@ -15,17 +15,20 @@ namespace SharpOpenGL.Transform
 {
     public class Prefilter : TransformBase
     {
-
-        public override void OnGLContextCreated(object sender, EventArgs e)
+        public Prefilter()
         {
-            base.OnGLContextCreated(sender, e);
-
             prefilterMaterial = ShaderManager.Get().GetMaterial<PrefilterMaterial>();
 
             cubemesh = new Cube();
             cubemesh.SetVisible(false);
 
             cubemapRenderTarget = new CubemapRenderTarget(SizeX, SizeY, true);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            cubemapRenderTarget.Dispose();
         }
 
         public override void Transform()

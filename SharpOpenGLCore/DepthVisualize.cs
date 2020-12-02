@@ -10,14 +10,9 @@ namespace SharpOpenGL.PostProcess
 {
     public class DepthVisualize : PostProcessBase
     {
-        public DepthVisualize ()
-            :base()
-        { }
-
-        public override void OnGLContextCreated(object sender, EventArgs e)
+        public DepthVisualize()
+            : base()
         {
-            base.OnGLContextCreated(sender, e);
-
             PostProcessMaterial = ShaderManager.Get().GetMaterial<DepthVisualizeMaterial>();
 
             Debug.Assert(PostProcessMaterial != null);

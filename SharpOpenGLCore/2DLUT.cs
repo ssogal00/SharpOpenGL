@@ -14,11 +14,8 @@ namespace SharpOpenGL.Transform
 {
     public class LookUpTable2D : PostProcessBase
     {
-       
-        public override void OnGLContextCreated(object sender, EventArgs e)
+        public LookUpTable2D()
         {
-            base.OnGLContextCreated(sender, e);
-
             material = ShaderManager.Get().GetMaterial<LUTGenerateMaterial>();
         }
 

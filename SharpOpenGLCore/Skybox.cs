@@ -13,12 +13,6 @@ namespace SharpOpenGL.PostProcess
         {
             // just draw on current binded render target
             bOwnItsRenderTarget = false;
-        }
-
-        public override void OnGLContextCreated(object sender, EventArgs e)
-        {
-            base.OnGLContextCreated(sender, e);
-            
             PostProcessMaterial = ShaderManager.Get().GetMaterial<CubemapMaterial>();
 
             sphereMeshObject = new StaticMeshObject("./Resources/Imported/StaticMesh/sphere3.staticmesh");

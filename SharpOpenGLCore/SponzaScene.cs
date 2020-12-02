@@ -16,8 +16,8 @@ namespace SharpOpenGLCore
                 mGameObjectList.Add(sponzamesh);
 
                 sponzamesh.IsMetallicOverride = sponzamesh.IsRoughnessOverride = true;
-                sponzamesh.Metallic = 0.7f;
-                sponzamesh.Roughness = 0.3f;
+                sponzamesh.Metallic = 0.0f;
+                sponzamesh.Roughness = 0.90f;
             });
         }
 

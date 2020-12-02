@@ -13,6 +13,7 @@ namespace SharpOpenGL.PostProcess
     {   
         public PostProcessBase()
         {
+            Initialize();
         }
 
         [ExposeUI]

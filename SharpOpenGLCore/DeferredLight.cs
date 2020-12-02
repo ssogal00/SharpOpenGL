@@ -18,14 +18,7 @@ namespace SharpOpenGL.PostProcess
             : base()
         {
             this.Name = "deferredLight";
-        }
-
-        public override void OnGLContextCreated(object sender, EventArgs e)
-        {
-            base.OnGLContextCreated(sender, e);
-
             PostProcessMaterial = new LightMaterial();
-
         }
 
         private void UpdateLightInfo()

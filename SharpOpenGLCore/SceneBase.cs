@@ -64,5 +64,7 @@ namespace SharpOpenGL.Scene
         public Vector3 CameraStartDir = Vector3.UnitX;
         
         protected List<GameObject> mGameObjectList = new List<GameObject>();
+
+        
     }
 }

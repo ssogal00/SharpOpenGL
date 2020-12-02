@@ -12,7 +12,7 @@ namespace SharpOpenGLCore
 
         }
 
-        public virtual void Initialize()
+        public virtual void LoadScene()
         {
 
         }
@@ -21,5 +21,11 @@ namespace SharpOpenGLCore
         {
             //
         }
+        public virtual void UnloadScene()
+        {
+
+        }
+
+        protected bool mSceneLoaded = false;
     }
 }

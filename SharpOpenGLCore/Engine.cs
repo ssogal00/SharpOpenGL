@@ -26,7 +26,8 @@ namespace SharpOpenGL
 
         public bool IsInitialized => bInitialized;
 
-        private SceneBase mCurrentScene =  new SponzaScene();
+        //private SceneBase mCurrentScene =  new SponzaScene();
+        private SceneBase mCurrentScene = new SphereScene();
 
         public SceneBase CurrentScene => mCurrentScene;
 
@@ -36,7 +37,7 @@ namespace SharpOpenGL
             Formatter<DefaultResolver, Vector3>.Register(new Vector3Formatter<DefaultResolver>());
             Formatter<DefaultResolver, Vector2>.Register(new Vector2Formatter<DefaultResolver>());
             Formatter<DefaultResolver, Vector4>.Register(new Vector4Formatter<DefaultResolver>());
-
+            
             MainThreadId = Thread.CurrentThread.ManagedThreadId;
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 

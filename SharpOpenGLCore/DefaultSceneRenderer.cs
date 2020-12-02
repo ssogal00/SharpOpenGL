@@ -14,66 +14,72 @@ namespace SharpOpenGLCore
 {
     public class DefaultSceneRenderer : SceneRendererBase
     {
-        public override void Initialize()
+        public override void LoadScene()
         {
-            ScreenBlit = new BlitToScreen();
+            mScreenBlit = new BlitToScreen();
             lightPostProcess = new DeferredLight();
             gbufferVisualize = new GBufferVisualize();
             depthVisualize = new DepthVisualize();
-            equirectToCube = new EquirectangleToCubemap();
+            mEquirectToCubemap = new EquirectangleToCubemap();
             convolution = new CubemapConvolutionTransform();
             fxaa = new FXAAPostProcess();
             lut = new LookUpTable2D();
             prefilter = new Prefilter();
-            renderGBuffer = new GBuffer(1024,768);
-            ScreenBlit.SetGridSize(1, 1);
+            mRenderGBuffer = new GBuffer(1024,768);
+            mScreenBlit.SetGridSize(1, 1);
+            mSkybox = new Skybox();
+            
+            mEquirectToCubemap.Transform();
+            convolution.SetSourceCubemap(mEquirectToCubemap.ResultCubemap);
+            convolution.Transform();
 
-            /* 
-            if (equirectToCube.IsTransformCompleted == false)
-            {
-                equirectToCube.Transform();
-                convolution.SetSourceCubemap(equirectToCube.ResultCubemap);
-                convolution.Transform();
-            }
-
-            prefilter.SetEnvMap(equirectToCube.ResultCubemap);
+            prefilter.SetEnvMap(mEquirectToCubemap.ResultCubemap);
             prefilter.Transform();
 
             lut.Render();
 
-            skyboxPostProcess.SetCubemapTexture(equirectToCube.ResultCubemap);
-             */
+            mSkybox.SetCubemapTexture(mEquirectToCubemap.ResultCubemap);
         }
 
         public override void RenderScene(SceneBase scene)
         {
             // clear gbuffer
-            renderGBuffer.BindAndExecute(
+            mRenderGBuffer.BindAndExecute(
                 () =>
                 {
-                    renderGBuffer.Clear();
+                    mRenderGBuffer.Clear();
                 });
 
             // render scene
-            renderGBuffer.BindAndExecute
+            // fill gbuffer
+            mRenderGBuffer.BindAndExecute
             (
                 () =>
                 {
+                    mSkybox.Render();
                     scene.Render();
                 }
             );
+            
+            // lighting
+            lightPostProcess.Render(mRenderGBuffer.GetColorAttachement, 
+                mRenderGBuffer.GetNormalAttachment, 
+                mRenderGBuffer.GetPositionAttachment, 
+                convolution.ResultCubemap, 
+                lut.GetOutputRenderTarget().ColorAttachment0, 
+                prefilter.ResultCubemap);
 
             // blit gbuffer to screen
-            gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
-            ScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0, 0, 1, 1);
+            // gbufferVisualize.Render(mRenderGBuffer.GetColorAttachement, mRenderGBuffer.GetNormalAttachment, mRenderGBuffer.GetPositionAttachment, mRenderGBuffer.GetMotionAttachment);
+            mScreenBlit.Blit(lightPostProcess.OutputColorTex0, 0, 0, 1, 1);
 
-            /*renderGBuffer.BindAndExecute(
+            /*mRenderGBuffer.BindAndExecute(
                 () =>
                 {
-                    renderGBuffer.Clear();
+                    mRenderGBuffer.Clear();
                 });
 
-            renderGBuffer.BindAndExecute
+            mRenderGBuffer.BindAndExecute
             (
                 () =>
                 {
@@ -83,52 +89,54 @@ namespace SharpOpenGLCore
 
             if (true)
             {
-                gbufferVisualize.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, renderGBuffer.GetMotionAttachment);
-                ScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0, 0, 2, 2);
+                gbufferVisualize.Render(mRenderGBuffer.GetColorAttachement, mRenderGBuffer.GetNormalAttachment, mRenderGBuffer.GetPositionAttachment, mRenderGBuffer.GetMotionAttachment);
+                mScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0, 0, 2, 2);
             }
             else if (bTestTextureTest)
             {
                 gbufferVisualize.Render(testTexture);
-                ScreenBlit.Blit(testTexture, 0, 0, 2, 2);
+                mScreenBlit.Blit(testTexture, 0, 0, 2, 2);
             }
 
             else if (DebugDrawer.Get().IsDepthDump)
             {
-                depthVisualize.Render(renderGBuffer.GetDepthAttachment);
-                ScreenBlit.Blit(depthVisualize.OutputColorTex0, 0, 0, 2, 2);
+                depthVisualize.Render(mRenderGBuffer.GetDepthAttachment);
+                mScreenBlit.Blit(depthVisualize.OutputColorTex0, 0, 0, 2, 2);
             }
             else
             {
-                lightPostProcess.Render(renderGBuffer.GetColorAttachement, renderGBuffer.GetNormalAttachment, renderGBuffer.GetPositionAttachment, convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
+                lightPostProcess.Render(mRenderGBuffer.GetColorAttachement, mRenderGBuffer.GetNormalAttachment, mRenderGBuffer.GetPositionAttachment, convolution.ResultCubemap, lut.GetOutputRenderTarget().ColorAttachment0, prefilter.ResultCubemap);
 
                 GL.Viewport(0, 0, Width, Height);
 
                 if (false)
                 {
                     fxaa.Render(lightPostProcess.OutputColorTex0);
-                    ScreenBlit.Blit(fxaa.OutputColorTex0, 0, 0, 2, 2);
+                    mScreenBlit.Blit(fxaa.OutputColorTex0, 0, 0, 2, 2);
                 }
                 else
                 {
-                    ScreenBlit.Blit(lightPostProcess.OutputColorTex0, 0, 0, 2, 2);
+                    mScreenBlit.Blit(lightPostProcess.OutputColorTex0, 0, 0, 2, 2);
                 }
             }*/
         }
 
-        protected BlitToScreen ScreenBlit;
+        protected BlitToScreen mScreenBlit;
 
         #region @PostProcess Start
         protected DeferredLight lightPostProcess;
         protected GBufferVisualize gbufferVisualize;
         protected DepthVisualize depthVisualize;
-        protected EquirectangleToCubemap equirectToCube;
+        protected EquirectangleToCubemap mEquirectToCubemap;
         protected CubemapConvolutionTransform convolution;
         protected FXAAPostProcess fxaa;
         #endregion
 
         protected LookUpTable2D lut;
         protected Prefilter prefilter;
-        protected GBuffer renderGBuffer;
+        protected GBuffer mRenderGBuffer;
+
+        protected Skybox mSkybox;
 
     }
 }

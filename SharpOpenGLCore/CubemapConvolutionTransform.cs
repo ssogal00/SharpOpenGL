@@ -16,16 +16,25 @@ namespace SharpOpenGL.Transform
 {
     public class CubemapConvolutionTransform : TransformBase
     {
-
-        public override void OnGLContextCreated(object sender, EventArgs e)
+        public CubemapConvolutionTransform()
         {
-            base.OnGLContextCreated(sender, e);
+            Initialize();
+        }
 
+        public override void Initialize()
+        {
             material = ShaderManager.Get().GetMaterial<CubemapConvolution>();
-            
+
             //
             cubeMesh = new Cube();
             cubeMesh.SetVisible(false);
+
+            PositiveX.Initialize();
+            PositiveY.Initialize();
+            PositiveZ.Initialize();
+            NegativeX.Initialize();
+            NegativeY.Initialize();
+            NegativeZ.Initialize();
         }
 
         public void SetSourceCubemap(CubemapTexture sourceCubemap)

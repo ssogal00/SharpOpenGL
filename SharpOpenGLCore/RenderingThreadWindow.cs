@@ -30,7 +30,7 @@ namespace SharpOpenGL
 
         public AutoResetEvent RenderingDone = new AutoResetEvent(false);
 
-        protected SceneRendererBase mDefaultSceneRender = new DefaultSceneRenderer();
+        protected SceneRendererBase mDefaultSceneRenderer = new DefaultSceneRenderer();
 
         public static bool IsGLContextInitialized = false;
 
@@ -45,7 +45,6 @@ namespace SharpOpenGL
         {
             GLContextCreated.Subscribe(_ =>
             {
-                Sampler.OnGLContextCreated();
                 RenderingThreadObject.OnOpenGLContextCreated(null, null);
             });
 
@@ -69,11 +68,17 @@ namespace SharpOpenGL
         protected override void OnLoad()
         {
             IsGLContextInitialized = true;
-            this.Title = "MyEngine";
-            ShaderManager.Get().CompileShaders();
-            mDefaultSceneRender.Initialize();
 
-            GLContextCreated.OnNext(Unit.Default);
+            Sampler.Initialize();
+            ShaderManager.Get().CompileShaders();
+
+            this.Title = "MyEngine";
+
+            GL.CullFace(CullFaceMode.Back);
+            GL.FrontFace(FrontFaceDirection.Cw);
+            GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.TextureCubeMap);
+            GL.Enable(EnableCap.TextureCubeMapSeamless);
 
             OnKeyDownEvent += CameraManager.Get().OnKeyDown;
             OnKeyUpEvent += CameraManager.Get().OnKeyUp;
@@ -81,13 +86,8 @@ namespace SharpOpenGL
 
             VSync = VSyncMode.Off;
 
-            GL.CullFace(CullFaceMode.Back);
-            GL.FrontFace(FrontFaceDirection.Cw);
-            GL.Enable(EnableCap.DepthTest);
-            GL.Enable(EnableCap.TextureCubeMap);
-            GL.Enable(EnableCap.TextureCubeMapSeamless);
+            mDefaultSceneRenderer.LoadScene();
         }
-
 
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
@@ -212,17 +212,14 @@ namespace SharpOpenGL
         {
             base.OnUpdateFrame(e);
             RenderingThread.Get().ExecuteTimeSlice();
-
         }
-
 
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
             SharpOpenGL.Engine.Get().RequestExit();
         }
-
-
+        
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             Engine.Get().WaitForGameThread();
@@ -237,7 +234,7 @@ namespace SharpOpenGL
                 return;
             }
 
-            mDefaultSceneRender.RenderScene(Engine.Get().CurrentScene);
+            mDefaultSceneRenderer.RenderScene(Engine.Get().CurrentScene);
 
             SwapBuffers();
         }
