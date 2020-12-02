@@ -36,6 +36,8 @@ namespace SharpOpenGLCore
             prefilter.SetEnvMap(mEquirectToCubemap.ResultCubemap);
             prefilter.Transform();
 
+            gbufferVisualize.ChangeVisualizeMode();
+
             lut.Render();
 
             mSkybox.SetCubemapTexture(mEquirectToCubemap.ResultCubemap);
@@ -70,8 +72,10 @@ namespace SharpOpenGLCore
                 prefilter.ResultCubemap);
 
             // blit gbuffer to screen
-            // gbufferVisualize.Render(mRenderGBuffer.GetColorAttachement, mRenderGBuffer.GetNormalAttachment, mRenderGBuffer.GetPositionAttachment, mRenderGBuffer.GetMotionAttachment);
-            mScreenBlit.Blit(lightPostProcess.OutputColorTex0, 0, 0, 1, 1);
+            
+             //gbufferVisualize.Render(mRenderGBuffer.GetColorAttachement, mRenderGBuffer.GetNormalAttachment, mRenderGBuffer.GetPositionAttachment, mRenderGBuffer.GetMotionAttachment);
+             mScreenBlit.Blit(lightPostProcess.OutputColorTex0, 0, 0, 1, 1);
+            //mScreenBlit.Blit(lightPostProcess.OutputColorTex0, 0, 0, 1, 1);
 
             /*mRenderGBuffer.BindAndExecute(
                 () =>

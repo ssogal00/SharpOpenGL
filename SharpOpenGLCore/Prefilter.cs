@@ -53,8 +53,7 @@ namespace SharpOpenGL.Transform
                     int mipWidth = (int) (SizeX * Math.Pow(0.5, (double)miplevel));
                     int mipHeight = (int) (SizeY * Math.Pow(0.5, (double)miplevel));
 
-                    //prefilterMaterial.Roughness = (float)miplevel / (float)(maxMipLevels - 1);
-                    prefilterMaterial.Roughness = 1.0f;
+                    prefilterMaterial.Roughness = (float)miplevel / (float)(maxMipLevels - 1);
 
                     cubemapRenderTarget.BindFaceForRendering(TextureTarget.TextureCubeMapPositiveX, miplevel);
                     prefilterMaterial.View = CaptureViews[0];
