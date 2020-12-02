@@ -11,7 +11,6 @@ using Core.MaterialBase;
 using ZeroFormatter;
 using ZeroFormatter.Formatters;
 using Core.CustomAttribute;
-using OpenTK.Mathematics;
 namespace CompiledMaterial
 {
 namespace BasicMaterial
@@ -25,11 +24,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -51,7 +50,7 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -71,11 +70,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -97,19 +96,19 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexNormal;
+	public OpenTK.Mathematics.Vector3 VertexNormal;
 		
 	[Index(2)]
 	[FieldOffset(24), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 		
 	[Index(3)]
 	[FieldOffset(32), ComponentCount(4), ComponentType(VertexAttribPointerType.Float)]
-	public Vector4 Tangent;
+	public OpenTK.Mathematics.Vector4 Tangent;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -135,7 +134,7 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 Position;
+	public OpenTK.Mathematics.Vector3 Position;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -155,7 +154,7 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 Position;
+	public OpenTK.Mathematics.Vector3 Position;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -175,19 +174,19 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexNormal;
+	public OpenTK.Mathematics.Vector3 VertexNormal;
 		
 	[Index(2)]
 	[FieldOffset(24), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 		
 	[Index(3)]
 	[FieldOffset(32), ComponentCount(4), ComponentType(VertexAttribPointerType.Float)]
-	public Vector4 Tangent;
+	public OpenTK.Mathematics.Vector4 Tangent;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -213,19 +212,19 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexNormal;
+	public OpenTK.Mathematics.Vector3 VertexNormal;
 		
 	[Index(2)]
 	[FieldOffset(24), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 		
 	[Index(3)]
 	[FieldOffset(32), ComponentCount(4), ComponentType(VertexAttribPointerType.Float)]
-	public Vector4 Tangent;
+	public OpenTK.Mathematics.Vector4 Tangent;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -251,11 +250,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -277,15 +276,15 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexNormal;
+	public OpenTK.Mathematics.Vector3 VertexNormal;
 		
 	[Index(2)]
 	[FieldOffset(24), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexColor;
+	public OpenTK.Mathematics.Vector3 VertexColor;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -309,11 +308,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexNormal;
+	public OpenTK.Mathematics.Vector3 VertexNormal;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -335,19 +334,19 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexNormal;
+	public OpenTK.Mathematics.Vector3 VertexNormal;
 		
 	[Index(2)]
 	[FieldOffset(24), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexColor;
+	public OpenTK.Mathematics.Vector3 VertexColor;
 		
 	[Index(3)]
 	[FieldOffset(36), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -373,11 +372,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 VertexTexCoord;
+	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -399,11 +398,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 VertexTexCoord;
+	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -425,11 +424,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 VertexTexCoord;
+	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -451,11 +450,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -477,19 +476,19 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexNormal;
+	public OpenTK.Mathematics.Vector3 VertexNormal;
 		
 	[Index(2)]
 	[FieldOffset(24), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 		
 	[Index(3)]
 	[FieldOffset(32), ComponentCount(4), ComponentType(VertexAttribPointerType.Float)]
-	public Vector4 Tangent;
+	public OpenTK.Mathematics.Vector4 Tangent;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -515,11 +514,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -541,11 +540,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 VertexTexCoord;
+	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -567,11 +566,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 VertexTexCoord;
+	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -593,7 +592,7 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -613,11 +612,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 TexCoord;
+	public OpenTK.Mathematics.Vector2 TexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -639,11 +638,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 VertexTexCoord;
+	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -665,11 +664,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 VertexTexCoord;
+	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -691,11 +690,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 InPosition;
+	public OpenTK.Mathematics.Vector3 InPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 InTexCoords;
+	public OpenTK.Mathematics.Vector2 InTexCoords;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -717,7 +716,7 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 Position;
+	public OpenTK.Mathematics.Vector3 Position;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -737,11 +736,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 VertexTexCoord;
+	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -763,11 +762,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public Vector2 VertexTexCoord;
+	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
@@ -789,11 +788,11 @@ public struct VertexAttribute
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexPosition;
+	public OpenTK.Mathematics.Vector3 VertexPosition;
 		
 	[Index(1)]
 	[FieldOffset(12), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public Vector3 VertexColor;
+	public OpenTK.Mathematics.Vector3 VertexColor;
 	
 	public static void VertexAttributeBinding()
 	{

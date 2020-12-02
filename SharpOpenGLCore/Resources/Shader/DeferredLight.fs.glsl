@@ -103,50 +103,7 @@ void main()
     F0 = mix(F0, albedo, metallic);
 	           
     // reflectance equation
-    vec3 Lo = vec3(0.0);
-    for(int i = 0; i < lightCount; ++i) 
-    {
-        // calculate per-light radiance        
-        vec4 lightPosInViewSpace = View *  vec4(lightPositions[i], 1);
-        vec3 L = normalize(lightPosInViewSpace.xyz - Position);        
-        vec3 H = normalize(V + L);
-
-		float scaleFactor = 0.1f;
-        float distance = clamp(length(lightPosInViewSpace.xyz - Position), lightMinMaxs[i].x, lightMinMaxs[i].y) * scaleFactor;
-        float lightRadius = lightMinMaxs[i].y * scaleFactor;
-
-        float attenuation = pow( clamp(1 - pow(distance / lightRadius, 4), 0, 1) , 2) / (distance * distance + 1);
-
-        //float distanceFactor = ((50-1) / (lightMinMaxs[i].y - lightMinMaxs[i].x)) * (distance - lightMinMaxs[i].x) + 1;
-        //float attenuation = 1.0 / (distanceFactor * distanceFactor);                
-        
-        vec3 radiance     = lightColors[i] * attenuation;
-        // cook-torrance brdf
-        float NDF = DistributionGGX(N, H, roughness);        
-        float G   = GeometrySmith(N, V, L, roughness);        
-        vec3 F    = fresnelSchlick(clamp(dot(H, V), 0.0, 1.0), F0);              
-        
-        vec3 nominator    = NDF * G * F; 
-        float denominator = 4 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0);
-        vec3 specular = nominator / max(denominator, 0.001); // prevent divide by zero for NdotV=0.0 or NdotL=0.0
-        
-        // kS is equal to Fresnel
-        vec3 kS = F;
-        // for energy conservation, the diffuse and specular light can't
-        // be above 1.0 (unless the surface emits light); to preserve this
-        // relationship the diffuse component (kD) should equal 1.0 - kS.
-        vec3 kD = vec3(1.0) - kS;
-        // multiply kD by the inverse metalness such that only non-metals 
-        // have diffuse lighting, or a linear blend if partly metal (pure metals
-        // have no diffuse light).
-        kD *= 1.0 - metallic;	  
-
-        // scale light by NdotL
-        float NdotL = max(dot(N, L), 0.0);
-
-        // add to outgoing radiance Lo
-        Lo += (kD * albedo / PI + specular) * radiance * NdotL;  // note that we already multiplied the BRDF by the Fresnel (kS) so we won't multiply by kS again
-    }   
+    vec3 Lo = vec3(0.0);   
 
     
     // ambient lighting (we now use IBL as the ambient term)

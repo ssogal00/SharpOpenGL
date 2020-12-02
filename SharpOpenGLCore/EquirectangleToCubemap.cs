@@ -43,22 +43,7 @@ namespace SharpOpenGL
             NegativeY.Initialize();
             NegativeZ.Initialize();
         }
-        
-        public override void OnGLContextCreated(object sender, EventArgs e)
-        {
-            base.OnGLContextCreated(sender, e);
 
-            material = ShaderManager.Get().GetMaterial<EquirectangleToCube>();
-
-            // create hdr texture
-            var hdr = new Texture2D();
-            hdr.LoadFromHDRFile("./Resources/Texture/HDR/Ueno-Shrine_3k.hdr");
-            equirectangularTex = hdr;
-
-            //
-            cubeMesh = new Cube();
-            cubeMesh.SetVisible(false);
-        }
 
         public void Save()
         {
