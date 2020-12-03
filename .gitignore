@@ -348,14 +348,12 @@ __pycache__/
 
 SharpOpenGL/bin
 SharpOpenGL/obj
-Core/bin
-Core/obj
+
 ShaderCodeGenerator/bin
 ShaderCodeGenerator/obj
 MaterialEditor/bin
 MaterialEditor/obj
-CompiledShader/bin
-CompiledShader/obj
+
 packages
 FBXImporter/bin
 FBXImporter/obj
