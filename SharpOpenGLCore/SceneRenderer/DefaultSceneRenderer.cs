@@ -14,7 +14,7 @@ namespace SharpOpenGLCore
 {
     public class DefaultSceneRenderer : SceneRendererBase
     {
-        public override void LoadScene()
+        public override void Initialize()
         {
             mScreenBlit = new BlitToScreen();
             lightPostProcess = new DeferredLight();

@@ -163,7 +163,7 @@ namespace Core.Texture
             }
         }
 
-        public override void Load(byte[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
+        public override void LoadFromMemory(byte[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         {
             this.BindAtUnit(TextureUnit.Texture0);
             m_Width = width;

@@ -12,6 +12,7 @@ using DirectXTexWrapper;
 using FreeTypeGLWrapper;
 using SharpOpenGL.Scene;
 using SharpOpenGLCore;
+using SharpOpenGLCore.Scene;
 
 namespace SharpOpenGL
 {
@@ -28,7 +29,8 @@ namespace SharpOpenGL
 
         public bool IsInitialized => bInitialized;
 
-        //private SceneBase mCurrentScene =  new SponzaScene();
+        
+        // private SceneBase mCurrentScene = new FontTestScene();
         private SceneBase mCurrentScene = new SphereScene();
 
         public SceneBase CurrentScene => mCurrentScene;
@@ -46,8 +48,6 @@ namespace SharpOpenGL
             AssetManager.Get().ImportStaticMeshes();
 
             mCurrentScene.InitializeScene();
-
-            ManagedTextureAtlas result = FreeTypeGL.GenerateTextureAtlas(512, 512, 72, "./Resources/Fonts/Vera.ttf");
 
             bInitialized = true;
         }

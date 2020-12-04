@@ -3,6 +3,7 @@ using OpenTK.Mathematics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
+using SharpOpenGLCore;
 
 namespace SharpOpenGL.Scene
 {
@@ -14,6 +15,21 @@ namespace SharpOpenGL.Scene
 
         public async virtual void InitializeScene()
         {
+        }
+
+        public virtual SceneRendererBase GetSceneRenderer()
+        {
+            if (mSceneRenderer == null)
+            {
+                mSceneRenderer = CreateSceneRenderer();
+            }
+
+            return mSceneRenderer;
+        }
+
+        protected virtual SceneRendererBase CreateSceneRenderer()
+        {
+            return null;
         }
 
         public virtual void DestroyScene()
@@ -65,6 +81,8 @@ namespace SharpOpenGL.Scene
         
         protected List<GameObject> mGameObjectList = new List<GameObject>();
 
-        
+        protected SceneRendererBase mSceneRenderer = null;
+
+
     }
 }

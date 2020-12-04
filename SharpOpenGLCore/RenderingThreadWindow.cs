@@ -14,6 +14,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
+using SharpOpenGLCore.SceneRenderer;
 using MouseButtonEventArgs = OpenTK.Windowing.Common.MouseButtonEventArgs;
 
 namespace SharpOpenGL
@@ -30,7 +31,8 @@ namespace SharpOpenGL
 
         public AutoResetEvent RenderingDone = new AutoResetEvent(false);
 
-        protected SceneRendererBase mDefaultSceneRenderer = new DefaultSceneRenderer();
+        
+        protected SceneRendererBase mDefaultSceneRenderer = null;
 
         public static bool IsGLContextInitialized = false;
 
@@ -86,7 +88,8 @@ namespace SharpOpenGL
 
             VSync = VSyncMode.Off;
 
-            mDefaultSceneRenderer.LoadScene();
+            mDefaultSceneRenderer = Engine.Get().CurrentScene.GetSceneRenderer();
+            mDefaultSceneRenderer.Initialize();
         }
 
         protected override void OnKeyDown(KeyboardKeyEventArgs e)

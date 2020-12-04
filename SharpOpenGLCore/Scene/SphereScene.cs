@@ -68,5 +68,10 @@ namespace SharpOpenGLCore
                 item.Render();
             }
         }
+
+        protected override SceneRendererBase CreateSceneRenderer()
+        {
+            return new DefaultSceneRenderer();
+        }
     }
 }

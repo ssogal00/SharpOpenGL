@@ -33,7 +33,7 @@ namespace Core.Texture
         {
         }
 
-        public virtual void Load(byte[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
+        public virtual void LoadFromMemory(byte[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         { }
         public virtual void Load(float[] data, int width, int height, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         { }

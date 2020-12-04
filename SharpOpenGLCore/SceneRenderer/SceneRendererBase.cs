@@ -12,7 +12,7 @@ namespace SharpOpenGLCore
 
         }
 
-        public virtual void LoadScene()
+        public virtual void Initialize()
         {
 
         }

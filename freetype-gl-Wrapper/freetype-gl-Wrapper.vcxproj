@@ -92,7 +92,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;$(SolutionDir)\freetype-gl\windows\freetype-2.10.4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)\freetype-gl\Debug\freetype-gl.lib;$(SolutionDir)\freetype-gl\windows\freetype-2.10.4\freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -115,7 +115,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;$(SolutionDir)\freetype-gl\windows\freetype-2.10.4;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)\freetype-gl\Release\freetype-gl.lib;$(SolutionDir)\freetype-gl\windows\freetype-2.10.4\freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>

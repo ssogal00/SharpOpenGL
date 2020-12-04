@@ -21,5 +21,9 @@ namespace SharpOpenGLCore
             });
         }
 
+        protected override SceneRendererBase CreateSceneRenderer()
+        {
+            return new DefaultSceneRenderer();
+        }
     }
 }

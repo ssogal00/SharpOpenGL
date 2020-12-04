@@ -16,9 +16,19 @@ FreeTypeGLWrapper::ManagedTextureAtlas^ FreeTypeGLWrapper::FreeTypeGL::GenerateT
 {
 	texture_atlas_t* pAtlas = texture_atlas_new(width, height, 1);
 
+	if(pAtlas == nullptr)
+	{
+		return nullptr;
+	}
+
 	std::string fontFilePath = msclr::interop::marshal_as<std::string>(fontpath);	
 
 	texture_font_t* pFont = texture_font_new_from_file(pAtlas, 72, fontFilePath.c_str());
+
+	if(pFont == nullptr)
+	{
+		return nullptr;
+	}
 
 	pFont->rendermode = RENDER_SIGNED_DISTANCE_FIELD;
 
