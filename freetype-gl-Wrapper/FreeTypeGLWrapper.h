@@ -8,6 +8,7 @@ namespace FreeTypeGLWrapper
 {	
     public ref class ManagedTextureAtlas
     {
+    public:
         /**
          *  Width (in pixels) of the underlying texture
          */
@@ -38,7 +39,7 @@ namespace FreeTypeGLWrapper
 	public ref class FreeTypeGL
 	{
 	public:
-        ManagedTextureAtlas^ GenerateTextureAtlas(int width, int height, int fontsize, String^ fontpath);
+        static ManagedTextureAtlas^ GenerateTextureAtlas(int width, int height, int fontsize, String^ fontpath);
 		// TODO: Add your methods for this class here.
 	};
 }
