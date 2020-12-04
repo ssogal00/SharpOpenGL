@@ -4,10 +4,12 @@ using Core.Primitive;
 using Core.Tickable;
 using OpenTK.Mathematics;
 using System.Diagnostics;
+using System.DirectoryServices;
 using System.Threading;
 using Core.Asset;
 using ZeroFormatter.Formatters;
 using DirectXTexWrapper;
+using FreeTypeGLWrapper;
 using SharpOpenGL.Scene;
 using SharpOpenGLCore;
 
@@ -44,6 +46,8 @@ namespace SharpOpenGL
             AssetManager.Get().ImportStaticMeshes();
 
             mCurrentScene.InitializeScene();
+
+            ManagedTextureAtlas result = FreeTypeGL.GenerateTextureAtlas(512, 512, 72, "./Resources/Fonts/Vera.ttf");
 
             bInitialized = true;
         }

@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\GitHub\SharpOpenGL\freetype-gl\CMakeFiles\1c5e56583389454a51ff8c061949ac49\INSTALL_force.rule">
+    <CustomBuild Include="C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\2a6ceba4928fd10752b7572785965928\INSTALL_force.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{BB124254-B4F7-3C53-84BF-1A5864BC5B9D}</UniqueIdentifier>
+      <UniqueIdentifier>{FFA04AE8-C8F8-344B-BBD0-2F3ED1920B7E}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

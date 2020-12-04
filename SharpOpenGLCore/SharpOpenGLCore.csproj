@@ -19,6 +19,7 @@
     <ProjectReference Include="..\CompiledShaderCore\CompiledShaderCore.csproj" />
     <ProjectReference Include="..\DirectXTexWrapper\DirectXTexWrapper.vcxproj" />
     <ProjectReference Include="..\Engine\Engine.csproj" />
+    <ProjectReference Include="..\freetype-gl-Wrapper\freetype-gl-Wrapper.vcxproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
