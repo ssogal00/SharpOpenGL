@@ -3,6 +3,7 @@
 #include "freetype-gl.h"
 
 using namespace System;
+using namespace System::Collections::Generic;
 
 namespace FreeTypeGLWrapper
 {	
@@ -32,7 +33,7 @@ namespace FreeTypeGLWrapper
         /**
          * Atlas data
          */
-        array<unsigned char>^ data;        
+        array<uint8_t>^ data;        
 
     };
 

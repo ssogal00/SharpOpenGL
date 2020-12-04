@@ -9,11 +9,12 @@
 using namespace msclr::interop;
 using namespace System;
 using namespace System::Collections::Generic;
+using namespace System::Runtime::InteropServices;
 #using <mscorlib.dll>
 
 FreeTypeGLWrapper::ManagedTextureAtlas^ FreeTypeGLWrapper::FreeTypeGL::GenerateTextureAtlas(int width, int height, int fontsize, String^ fontpath)
 {
-	/*texture_atlas_t* pAtlas = texture_atlas_new(width, height, 1);
+	texture_atlas_t* pAtlas = texture_atlas_new(width, height, 1);
 
 	std::string fontFilePath = msclr::interop::marshal_as<std::string>(fontpath);	
 
@@ -25,7 +26,7 @@ FreeTypeGLWrapper::ManagedTextureAtlas^ FreeTypeGLWrapper::FreeTypeGL::GenerateT
 		"@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_"
 		"`abcdefghijklmnopqrstuvwxyz{|}~";
 
-	texture_font_load_glyph(pFont, cache);
+	int returncode = texture_font_load_glyphs(pFont, cache);
 
 	texture_font_delete(pFont);
 
@@ -33,7 +34,13 @@ FreeTypeGLWrapper::ManagedTextureAtlas^ FreeTypeGLWrapper::FreeTypeGL::GenerateT
 
 	result->height = pAtlas->height;
 	result->width = pAtlas->width;
+	result->used = pAtlas->used;
 
-	return result;*/
-	return nullptr;
+	int length = pAtlas->width * pAtlas->height;
+
+	result->data = gcnew array<uint8_t>(pAtlas->width * pAtlas->height);
+	
+	Marshal::Copy(IntPtr((void*)pAtlas->data), result->data, 0, length);	
+
+	return result;
 }
