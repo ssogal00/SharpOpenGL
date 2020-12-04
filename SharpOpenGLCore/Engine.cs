@@ -30,8 +30,8 @@ namespace SharpOpenGL
         public bool IsInitialized => bInitialized;
 
         
-        // private SceneBase mCurrentScene = new FontTestScene();
-        private SceneBase mCurrentScene = new SphereScene();
+        private SceneBase mCurrentScene = new FontTestScene();
+        //private SceneBase mCurrentScene = new SphereScene();
 
         public SceneBase CurrentScene => mCurrentScene;
 
