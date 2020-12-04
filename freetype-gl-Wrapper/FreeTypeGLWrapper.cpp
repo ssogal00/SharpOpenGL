@@ -49,8 +49,15 @@ FreeTypeGLWrapper::ManagedTextureAtlas^ FreeTypeGLWrapper::FreeTypeGL::GenerateT
 	int length = pAtlas->width * pAtlas->height;
 
 	result->data = gcnew array<uint8_t>(pAtlas->width * pAtlas->height);
+
+	// upside down
+	for(int row = 0; row <  result->height; ++row)
+	{
+		int startIndex = result->width * result->height - ((row + 1) * result->width);
+		Marshal::Copy(IntPtr((void*)(pAtlas->data + row * result->width)), result->data, startIndex, result->width);
+	}
 	
-	Marshal::Copy(IntPtr((void*)pAtlas->data), result->data, 0, length);	
+	//Marshal::Copy(IntPtr((void*)pAtlas->data), result->data, 0, length);	
 
 	return result;
 }
