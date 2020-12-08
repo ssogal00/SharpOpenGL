@@ -3,7 +3,10 @@
  * Distributed under the OSI-approved BSD 2-Clause License.  See accompanying
  * file `LICENSE` for more details.
  */
-uniform sampler2D u_texture;
+
+#version 450 core
+
+layout (binding = 0) uniform sampler2D FontTexture;
 
        vec3 glyph_color    = vec3(1.0,1.0,1.0);
 const float glyph_center   = 0.50;
@@ -12,17 +15,16 @@ const float outline_center = 0.55;
        vec3 glow_color     = vec3(1.0,1.0,1.0);
 const float glow_center    = 1.25;
 
-#version 450 core
 
-layout (location = 0 ) in vec3 InPosition;
-layout (location = 1 ) in vec2 InTexCoord;
-layout (location = 2 ) in vec4 InVertexColor;
+
+
+layout (location = 0 ) in vec2 InTexCoord;
 
 layout (location = 0) out vec4 FragColor;
 
 void main(void)
 {
-    vec4  color = texture2D(u_texture, InTexCoord.xy);
+    vec4  color = texture(FontTexture, InTexCoord.xy);
     float dist  = color.r;
     float width = fwidth(dist);
     float alpha = smoothstep(glyph_center-width, glyph_center+width, dist);
@@ -46,8 +48,7 @@ void main(void)
     color = vec4(rgb, max(alpha,mu));
     float beta = smoothstep(outline_center-width, outline_center+width, dist);
     rgb = mix(outline_color, color.rgb, beta);
-    FragColor = vec4(rgb, max(color.a,beta));
-
+    FragColor = vec4(rgb, max(color.a,beta));    
 }
 
 

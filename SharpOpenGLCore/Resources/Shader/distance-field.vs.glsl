@@ -8,15 +8,13 @@
 
 layout (location = 0) in vec3 VertexPosition;
 layout (location = 1) in vec2 VertexTexCoord;
-layout (location = 2) in vec4 VertexColor;
 
-layout (location = 0 ) out vec3 OutPosition;
-layout (location = 1 ) out vec2 OutTexCoord;
-layout (location = 2 ) out vec4 OutVertexColor;
+layout (location = 0) out vec2 OutTexCoord;
 
-uniform mat4 u_model;
-uniform mat4 u_view;
-uniform mat4 u_projection;
+
+uniform mat4 Model;
+uniform mat4 View;
+uniform mat4 Projection;
 uniform vec4 u_color;
 
 //attribute vec3 vertex;
@@ -26,10 +24,13 @@ uniform vec4 u_color;
 
 void main(void)
 {
-	OutTexCoord.xy = VertexTexCoord.xy;
-	OutVertexColor = VertexColor * u_color;
+	OutTexCoord.xy = VertexTexCoord.xy;	
+
     
     // gl_TexCoord[0].xy = tex_coord.xy;
     // gl_FrontColor     = color * u_color;    
-    gl_Position       = u_projection*(u_view*(u_model*vec4(VertexPosition,1.0)));    
+
+    gl_Position = vec4(VertexPosition.xy, 0, 1.0);
+
+    // gl_Position       = Projection*(View*(Model*vec4(VertexPosition,1.0)));
 }

@@ -6511,5 +6511,171 @@ void main()
 	}
 }
 }
+namespace SignedDistanceField
+{
+
+
+public class SignedDistanceField : MaterialBase
+{
+	public SignedDistanceField() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetFontTexture2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"FontTexture", TextureObject);
+	}
+
+	public void SetFontTexture2D(Core.Texture.TextureBase TextureObject, Sampler SamplerObject)
+	{
+		SetTexture(@"FontTexture", TextureObject, SamplerObject);
+	}
+
+	public TextureBase FontTexture2D 
+	{	
+		set 
+		{	
+			fonttexture = value;
+			SetTexture(@"FontTexture", fonttexture);
+		}
+	}
+
+	public TextureBase FontTexture2D_PointSample
+	{	
+		set 
+		{	
+			fonttexture = value;
+			SetTexture(@"FontTexture", fonttexture, Sampler.DefaultPointSampler);
+		}
+	}
+
+	public TextureBase FontTexture2D_LinearSample
+	{	
+		set 
+		{	
+			fonttexture = value;
+			SetTexture(@"FontTexture", fonttexture, Sampler.DefaultLinearSampler);
+		}
+	}
+
+	private TextureBase fonttexture = null;
+
+
+
+
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"/* Freetype GL - A C OpenGL Freetype engine
+ *
+ * Distributed under the OSI-approved BSD 2-Clause License.  See accompanying
+ * file `LICENSE` for more details.
+ */
+
+#version 450
+
+layout (location = 0) in vec3 VertexPosition;
+layout (location = 1) in vec2 VertexTexCoord;
+
+layout (location = 0) out vec2 OutTexCoord;
+
+
+uniform mat4 Model;
+uniform mat4 View;
+uniform mat4 Projection;
+uniform vec4 u_color;
+
+//attribute vec3 vertex;
+//attribute vec2 tex_coord;
+//attribute vec4 color;
+
+
+void main(void)
+{
+	OutTexCoord.xy = VertexTexCoord.xy;	
+
+    
+    // gl_TexCoord[0].xy = tex_coord.xy;
+    // gl_FrontColor     = color * u_color;    
+
+    gl_Position = vec4(VertexPosition.xy, 0, 1.0);
+
+    // gl_Position       = Projection*(View*(Model*vec4(VertexPosition,1.0)));
+}
+";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"/* Freetype GL - A C OpenGL Freetype engine
+ *
+ * Distributed under the OSI-approved BSD 2-Clause License.  See accompanying
+ * file `LICENSE` for more details.
+ */
+
+#version 450 core
+
+layout (binding = 0) uniform sampler2D FontTexture;
+
+       vec3 glyph_color    = vec3(1.0,1.0,1.0);
+const float glyph_center   = 0.50;
+       vec3 outline_color  = vec3(0.0,0.0,0.0);
+const float outline_center = 0.55;
+       vec3 glow_color     = vec3(1.0,1.0,1.0);
+const float glow_center    = 1.25;
+
+
+
+
+layout (location = 0 ) in vec2 InTexCoord;
+
+layout (location = 0) out vec4 FragColor;
+
+void main(void)
+{
+    vec4  color = texture(FontTexture, InTexCoord.xy);
+    float dist  = color.r;
+    float width = fwidth(dist);
+    float alpha = smoothstep(glyph_center-width, glyph_center+width, dist);
+
+    // Smooth
+    // gl_FragColor = vec4(glyph_color, alpha);
+
+    // Outline
+    // float mu = smoothstep(outline_center-width, outline_center+width, dist);
+    // vec3 rgb = mix(outline_color, glyph_color, mu);
+    // gl_FragColor = vec4(rgb, max(alpha,mu));
+
+    // Glow
+    //vec3 rgb = mix(glow_color, glyph_color, alpha);
+    //float mu = smoothstep(glyph_center, glow_center, sqrt(dist));
+    //gl_FragColor = vec4(rgb, max(alpha,mu));
+
+    // Glow + outline
+    vec3 rgb = mix(glow_color, glyph_color, alpha);
+    float mu = smoothstep(glyph_center, glow_center, sqrt(dist));
+    color = vec4(rgb, max(alpha,mu));
+    float beta = smoothstep(outline_center-width, outline_center+width, dist);
+    rgb = mix(outline_color, color.rgb, beta);
+    FragColor = vec4(rgb, max(color.a,beta));    
+}
+
+
+";
+	}
+}
+}
 
 }

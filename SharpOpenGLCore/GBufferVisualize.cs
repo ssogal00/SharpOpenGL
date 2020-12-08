@@ -34,7 +34,7 @@ namespace SharpOpenGL.PostProcess
             switch (eVisualizeMode)
             {
                 case EVisualizeMode.EColor:
-                    eVisualizeMode = EVisualizeMode.ENormal;
+                    eVisualizeMode = EVisualizeMode.EColor;
                     break;
                 case EVisualizeMode.ENormal:
                     eVisualizeMode = EVisualizeMode.EPosition;
@@ -84,7 +84,7 @@ namespace SharpOpenGL.PostProcess
             });
         }
 
-        protected EVisualizeMode eVisualizeMode = EVisualizeMode.EColor;
+        protected EVisualizeMode eVisualizeMode = EVisualizeMode.EPosition;
 
     }
 }

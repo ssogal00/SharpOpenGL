@@ -369,5 +369,8 @@ public struct ModelTransform
 namespace TBNMaterial
 {
 }
+namespace SignedDistanceField
+{
+}
 
 }
