@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -23,8 +24,46 @@ namespace Core.GLTF
             writer.WriteStringValue(data);
         }
     }
+
+    public class DictionaryToArrayConverter<TDictionary, TKey, TValue> : JsonConverter<List<TValue>> where TDictionary : class, IDictionary<TKey, TValue>
+    {
+        public override List<TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.StartArray)
+            {
+                List<TValue> result = JsonSerializer.Deserialize<List<TValue>>(ref reader, options);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+
+            if (reader.TokenType == JsonTokenType.StartObject)
+            {
+                Dictionary<TKey, TValue> dicResult = JsonSerializer.Deserialize<Dictionary<TKey, TValue>>(ref reader, options);
+                if (dicResult != null)
+                {
+                    return dicResult.Select(x => x.Value).ToList();
+                }
+            }
+
+            return null;
+        }
+
+        public override void Write(Utf8JsonWriter writer, List<TValue> value, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+
     public class GLTF
     {
+        [JsonConstructor]
+        public GLTF()
+        {
+
+        }
         public Dictionary<string, Accessor> accessors { get; set; }
         public Dictionary<string, BufferView> bufferViews { get; set; }
         public Dictionary<string, Buffer> buffers { get; set; }
