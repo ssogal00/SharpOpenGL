@@ -1,75 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Core.GLTF
+namespace GLTF.V1
 {
-    public class JsonNumToStringConverter : JsonConverter<string>
+    public class GLTF_V1
     {
-        public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType == JsonTokenType.Number)
-            {
-                return reader.TryGetInt64(out long l) ? l.ToString() : reader.GetDouble().ToString();
-            }
-
-            return reader.GetString();
-        }
-
-        public override void Write(Utf8JsonWriter writer, string data, JsonSerializerOptions options)
-        {
-            writer.WriteStringValue(data);
-        }
-    }
-
-    public class DictionaryToArrayConverter<TDictionary, TKey, TValue> : JsonConverter<List<TValue>> where TDictionary : class, IDictionary<TKey, TValue>
-    {
-        public override List<TValue> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            if (reader.TokenType == JsonTokenType.StartArray)
-            {
-                List<TValue> result = JsonSerializer.Deserialize<List<TValue>>(ref reader, options);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-
-            if (reader.TokenType == JsonTokenType.StartObject)
-            {
-                Dictionary<TKey, TValue> dicResult = JsonSerializer.Deserialize<Dictionary<TKey, TValue>>(ref reader, options);
-                if (dicResult != null)
-                {
-                    return dicResult.Select(x => x.Value).ToList();
-                }
-            }
-
-            return null;
-        }
-
-        public override void Write(Utf8JsonWriter writer, List<TValue> value, JsonSerializerOptions options)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-
-    public class GLTF
-    {
-        [JsonConstructor]
-        public GLTF()
-        {
-
-        }
         public Dictionary<string, Accessor> accessors { get; set; }
         public Dictionary<string, BufferView> bufferViews { get; set; }
         public Dictionary<string, Buffer> buffers { get; set; }
         public Dictionary<string, Camera> cameras { get; set; }
         public Dictionary<string, Mesh> meshes { get; set; }
-
     }
 
     public class Camera
@@ -118,7 +60,6 @@ namespace Core.GLTF
 
     public class Accessor
     {
-        [JsonConverter(typeof(JsonNumToStringConverter))]
         public string bufferView { get; set; }
         public int byteOffset { get; set; }
         public int byteStride { get; set; }
@@ -136,11 +77,15 @@ namespace Core.GLTF
 
     public class BufferView
     {
-        [JsonPropertyName("buffer")]
         public string buffer { get; set; }
-        [JsonPropertyName("byteLength")]
         public int byteLength { get; set; }
         public int byteOffset { get; set; }
+
+        /// <summary>
+        /// buffer target
+        /// 34962 : "ARRAY_BUFFER"
+        /// 34963 : "ELEMENT_ARRAY_BUFFER"
+        /// </summary>
         public int target { get; set; }
     }
 }
