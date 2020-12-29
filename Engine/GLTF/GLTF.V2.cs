@@ -1,10 +1,124 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace GLTF.V2
 {
+    public enum ComponentType
+    {
+        BYTE = 5120,
+        UNSIGNED_BYTE = 5121,
+        SHORT = 5122,
+        UNSIGNED_SHORT=5123,
+        UNSIGNED_INT=5125,
+        FLOAT=5126,
+    }
+
+    public enum AttributeType
+    {
+        /// SCALAR
+        /// VEC2
+        /// VEC3
+        /// VEC4
+        /// MAT2
+        /// MAT3
+        /// MAT4
+        
+        SCALAR,
+        VEC2,
+        VEC3,
+        VEC4,
+        MAT2,
+        MAT3,
+        MAT4,
+    }
+
+    public class JsonNumToComponentTypeConverter : JsonConverter<ComponentType>
+    {
+        public override ComponentType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.Number)
+            {
+                var value = reader.GetInt32();
+                switch (value)
+                {
+                    case 5120:
+                        return ComponentType.BYTE;
+                    case 5121:
+                        return ComponentType.UNSIGNED_BYTE;
+                    case 5123:
+                        return ComponentType.UNSIGNED_SHORT;
+                    case 5125:
+                        return ComponentType.UNSIGNED_INT;
+                    case 5126:
+                        return ComponentType.FLOAT;
+                }
+            }
+
+            return ComponentType.BYTE;
+        }
+
+        public override void Write(Utf8JsonWriter writer, ComponentType data, JsonSerializerOptions options)
+        {
+            writer.WriteNumberValue((int)data);
+        }
+    }
+
+    public class JsonStringToAttributeTypeConverter : JsonConverter<AttributeType>
+    {
+        public override AttributeType Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.String)
+            {
+                var str = reader.GetString();
+                AttributeType result;
+                AttributeType.TryParse(str, out result);
+                return result;
+            }
+
+            return AttributeType.SCALAR;
+        }
+
+        public override void Write(Utf8JsonWriter writer, AttributeType value, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class Helper
+    {
+        public static int ComponentSizeInByte(int componentType)
+        {
+            /// 5120 : BYTE
+            /// 5121 : UNSIGNED_BYTE
+            /// 5122 : SHORT
+            /// 5123 : UNSIGNED_SHORT
+            /// 5125 : UNSIGNED_INT
+            /// 5126 : FLOAT
+            
+            switch (componentType)
+            {
+                case 5120:
+                    return 1;
+                case 5121:
+                    return 1;
+                case 5122:
+                    return 2;
+                case 5123:
+                    return 2;
+                case 5125:
+                    return 4;
+                case 5126:
+                    return 4;
+            }
+
+            return 1;
+        }
+    }
+
     public class GLTF_V2
     {
         public List<Accessor> accessors { get; set; }
@@ -12,8 +126,8 @@ namespace GLTF.V2
         public List<Buffer> buffers { get; set; }
         public List<Camera> cameras { get; set; }
         public List<Mesh> meshes { get; set; }
-
         public AssetInfo asset { get; set; }
+        public string Path = "";
     }
 
     public class AssetInfo

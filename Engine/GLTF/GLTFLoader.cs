@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using GLTF.V1;
-using GLTF.V2;
+﻿using GLTF.V2;
+using System;
 using System.IO;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace GLTF
 {
@@ -19,6 +14,7 @@ namespace GLTF
             {
                 var json = File.ReadAllText(path);
                 var result = JsonSerializer.Deserialize<GLTF_V2>(json);
+                
                 return result;
             }
             catch (Exception e)
