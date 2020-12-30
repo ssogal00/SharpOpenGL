@@ -39,47 +39,6 @@ namespace Core.Buffer
         }
     }
 
-    /// <summary>
-    /// Structure of Arrays
-    /// </summary>
-    public class SOAVertexBuffer<T1, T2> : IBindable, IDisposable
-    {
-        SOAVertexBuffer()
-        {
-            mBufferObject1 = GL.GenBuffer();
-            mBufferObject2 = GL.GenBuffer();
-        }
-        public void Bind()
-        {
-        }
-
-        public void Unbind()
-        {
-        }
-
-        public void BufferData<T1,T2>(ref T1 Data1, ref T2 Data2) where T1: struct where T2 : struct
-        {
-            GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject1);
-            var Size1 = new IntPtr(Marshal.SizeOf(Data1));
-            GL.BufferData<T1>(BufferTarget.ArrayBuffer, Size1, ref Data1, BufferUsageHint.StaticDraw);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject2);
-            var Size2 = new IntPtr(Marshal.SizeOf(Data2));
-            GL.BufferData<T2>(BufferTarget.ArrayBuffer, Size2, ref Data2, BufferUsageHint.StaticDraw);
-        }
-
-        public void Dispose()
-        {
-            GL.DeleteBuffer(mBufferObject1);
-            GL.DeleteBuffer(mBufferObject2);
-
-            mBufferObject1 = mBufferObject2 = 0;
-        }
-
-        private int mBufferObject1 = 0;
-        private int mBufferObject2 = 0;
-    }
-
     
 
     ///
