@@ -5,6 +5,17 @@ using OpenTK;
 
 namespace Core.Buffer
 {
+    public interface IBufferDataSetup
+    {
+        public void BufferData<T>(ref T[] Data) where T : struct;
+        public void BufferData<T1, T2>(ref T1[] Data1, ref T2[] Data2) where T1 : struct where T2 : struct;
+        public void BufferData<T1, T2, T3>(ref T1[] Data1, ref T2[] Data2, ref T3[] Data3) where T1 : struct where T2 : struct where T3 : struct;
+
+        public void BufferData<T>(ref T Data) where T : struct;
+        public void BufferData<T1, T2>(ref T1 Data1, ref T2 Data2) where T1 : struct where T2 : struct;
+        public void BufferData<T1, T2, T3>(ref T1 Data1, ref T2 Data2, ref T3 Data3) where T1 : struct where T2 : struct where T3 : struct;
+    }
+
     public abstract class OpenGLBuffer : IDisposable, IBindable
     {
         public OpenGLBuffer()

@@ -23,7 +23,7 @@ namespace SharpOpenGL.PostProcess
         {
             // create vertex, index buffer for screen space drawing
 
-            VB = new StaticVertexBuffer<PT_VertexAttribute>();
+            VB = new AOSVertexBuffer<PT_VertexAttribute>();
             IB = new IndexBuffer();
             VA = new VertexArray();
 
@@ -112,7 +112,7 @@ namespace SharpOpenGL.PostProcess
                 
         // indices and vertices to draw in screen space
         protected List<uint> Indices = new List<uint>();
-        protected StaticVertexBuffer<PT_VertexAttribute> VB = null;
+        protected AOSVertexBuffer<PT_VertexAttribute> VB = null;
         protected IndexBuffer IB = null;
         protected VertexArray VA = null;
 

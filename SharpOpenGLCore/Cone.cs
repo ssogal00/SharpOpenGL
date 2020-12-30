@@ -46,7 +46,7 @@ namespace SharpOpenGL
             RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(
             () =>
             {
-                VB = new StaticVertexBuffer<PNC_VertexAttribute>();
+                VB = new AOSVertexBuffer<PNC_VertexAttribute>();
                 VB.Bind();
 
                 var vertexArray = VertexList.ToArray();
@@ -138,6 +138,6 @@ namespace SharpOpenGL
         protected int VertexCount = 0;
 
         protected List<PNC_VertexAttribute> VertexList = new List<PNC_VertexAttribute>();
-        protected StaticVertexBuffer<PNC_VertexAttribute> VB = null;
+        protected AOSVertexBuffer<PNC_VertexAttribute> VB = null;
     }
 }

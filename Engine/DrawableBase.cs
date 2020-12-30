@@ -15,7 +15,7 @@ namespace Core
         public DrawableBase()
         {
             VA = new VertexArray();
-            VB = new StaticVertexBuffer<T>();
+            VB = new AOSVertexBuffer<T>();
             IB = new IndexBuffer();
         }
 
@@ -142,7 +142,7 @@ namespace Core
         }
         
 
-        protected StaticVertexBuffer<T> VB = null;
+        protected AOSVertexBuffer<T> VB = null;
         protected IndexBuffer IB = null;
         protected VertexArray VA = null;
 

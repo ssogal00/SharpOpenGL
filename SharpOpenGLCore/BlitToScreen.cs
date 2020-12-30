@@ -41,7 +41,7 @@ namespace SharpOpenGL
             Material = new ScreenSpaceDraw();
             VA = new VertexArray();
             VA.Bind();
-            VB = new StaticVertexBuffer<PT_VertexAttribute>();
+            VB = new AOSVertexBuffer<PT_VertexAttribute>();
             IB = new IndexBuffer();
             UpdateVertexBuffer(0, 0, 1, 1, 1, 1);
             // feed index buffer
@@ -142,7 +142,7 @@ namespace SharpOpenGL
 
         protected ScreenSpaceDraw Material = null;
         protected List<uint> Indices = new List<uint>();
-        protected StaticVertexBuffer<PT_VertexAttribute> VB = null;
+        protected AOSVertexBuffer<PT_VertexAttribute> VB = null;
         protected IndexBuffer IB = null;
         protected VertexArray VA = null;
 
