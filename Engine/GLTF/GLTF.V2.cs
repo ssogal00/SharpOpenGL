@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Core;
 
 namespace GLTF.V2
 {
@@ -34,6 +35,13 @@ namespace GLTF.V2
         MAT2,
         MAT3,
         MAT4,
+    }
+
+    public enum BufferTarget
+    {
+        //
+        ARRAY_BUFFER = 34962,
+        ELEMENT_ARRAY_BUFFER = 34963,
     }
 
     public class JsonNumToComponentTypeConverter : JsonConverter<ComponentType>
@@ -121,12 +129,24 @@ namespace GLTF.V2
 
     public class GLTF_V2
     {
+        [JsonPropertyName("accessors")]
         public List<Accessor> accessors { get; set; }
+
+        [JsonPropertyName("bufferViews")]
         public List<BufferView> bufferViews { get; set; }
+        
+        [JsonPropertyName("buffers")]
         public List<Buffer> buffers { get; set; }
+        
+        [JsonPropertyName("cameras")]
         public List<Camera> cameras { get; set; }
+        
+        [JsonPropertyName("meshes")]
         public List<Mesh> meshes { get; set; }
+        
+        [JsonPropertyName("asset")]
         public AssetInfo asset { get; set; }
+        
         public string Path = "";
     }
 
@@ -194,7 +214,9 @@ namespace GLTF.V2
         /// MAT3
         /// MAT4 
         /// </summary>
-        public string type { get; set; }
+        /// 
+        [JsonConverter(typeof(JsonStringToAttributeTypeConverter))]
+        public AttributeType type { get; set; }
         public int count { get; set; }
         /// <summary>
         /// 5120 : BYTE
@@ -204,7 +226,9 @@ namespace GLTF.V2
         /// 5125 : UNSIGNED_INT
         /// 5126 : FLOAT
         /// </summary>
-        public int componentType { get; set; }
+        ///
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public ComponentType componentType { get; set; }
     }
 
     public class Buffer
