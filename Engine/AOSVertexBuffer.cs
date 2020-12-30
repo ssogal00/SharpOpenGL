@@ -51,16 +51,13 @@ namespace Core.Buffer
         }
         public void Bind()
         {
-            
         }
 
         public void Unbind()
         {
-
         }
 
-        public void BufferData<T1,T2>(ref T1 Data1, ref T2 Data2) where T1: struct
-                                                    where T2 : struct
+        public void BufferData<T1,T2>(ref T1 Data1, ref T2 Data2) where T1: struct where T2 : struct
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject1);
             var Size1 = new IntPtr(Marshal.SizeOf(Data1));
@@ -75,6 +72,7 @@ namespace Core.Buffer
         {
             GL.DeleteBuffer(mBufferObject1);
             GL.DeleteBuffer(mBufferObject2);
+
             mBufferObject1 = mBufferObject2 = 0;
         }
 
@@ -82,6 +80,7 @@ namespace Core.Buffer
         private int mBufferObject2 = 0;
     }
 
+    
 
     ///
     /// Array of Structures 
@@ -117,27 +116,6 @@ namespace Core.Buffer
         public void BindVertexAttribute()
         {
             vertexAttributeInstance.VertexAttributeBinding();
-        }
-
-        public bool IsCompatible(MaterialBase.MaterialBase material)
-        {
-            var vbAttributes = vertexAttributeInstance.GetVertexAttributes();
-            var materialAttributes = material.GetVertexAttributes();
-
-            if (vbAttributes.Count != materialAttributes.Count)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < vbAttributes.Count; ++i)
-            {
-                if (vbAttributes[i].IsCompatible(materialAttributes[i]) == false)
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
     }
 }
