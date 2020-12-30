@@ -119,6 +119,11 @@ namespace GLTF
                         var parsed = ToVector2(ref sliced);
                         mVector2BufferViews[bufferViewIndex].Add(parsed);
                     }
+                    else if (attributeType == AttributeType.VEC4)
+                    {
+                        var parsed = ToVector4(ref sliced);
+                        mVector4BufferViews[bufferViewIndex].Add(parsed);
+                    }
                     else if (attributeType == AttributeType.SCALAR)
                     {
                         if (componentType == ComponentType.UNSIGNED_SHORT)

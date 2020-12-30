@@ -146,8 +146,16 @@ namespace GLTF.V2
         
         [JsonPropertyName("asset")]
         public AssetInfo asset { get; set; }
+
+        [JsonPropertyName("materials")]
+        public List<Material> materials { get; set; }
         
         public string Path = "";
+    }
+
+    public class Material
+    {
+        
     }
 
     public class AssetInfo
