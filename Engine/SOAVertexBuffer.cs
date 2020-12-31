@@ -16,12 +16,12 @@ namespace Core.Buffer
         where T1 : struct, IGenericVertexAttribute
         where T2 : struct, IGenericVertexAttribute
     {
-        SOAVertexBuffer()
+        public SOAVertexBuffer()
         {
             mBufferObject1 = GL.GenBuffer();
             mBufferObject2 = GL.GenBuffer();
         }
-        public void Bind()
+        public virtual void Bind()
         {
             mVertexAttribute1.VertexAttributeBinding(0);
             mVertexAttribute2.VertexAttributeBinding(1);
@@ -31,15 +31,22 @@ namespace Core.Buffer
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
+        public virtual void Dispose()
+        {
+            GL.DeleteBuffer(mBufferObject1);
+            GL.DeleteBuffer(mBufferObject2);
 
-        private void SetData<T>(int bufferObject, ref T data) where T : struct
+            mBufferObject1 = mBufferObject2 = 0;
+        }
+
+        protected void SetData<T>(int bufferObject, ref T data) where T : struct
         {
             GL.BindBuffer(BufferTarget.ArrayBuffer, bufferObject);
             var size = new IntPtr(Marshal.SizeOf(data));
             GL.BufferData<T>(BufferTarget.ArrayBuffer, size, ref data, BufferUsageHint.StaticDraw);
         }
 
-        private void SetArrayData<T>(int bufferObject, ref T[] data) where T : struct
+        protected void SetArrayData<T>(int bufferObject, ref T[] data) where T : struct
         {
             if (data != null)
             {
@@ -57,15 +64,7 @@ namespace Core.Buffer
             SetData<T1>(mBufferObject1, ref Data1);
             SetData<T2>(mBufferObject2, ref Data2);
         }
-
-        public void Dispose()
-        {
-            GL.DeleteBuffer(mBufferObject1);
-            GL.DeleteBuffer(mBufferObject2);
-
-            mBufferObject1 = mBufferObject2 = 0;
-        }
-
+        
         public void BufferData<T1, T2>(ref T1[] Data1, ref T2[] Data2) 
             where T1 : struct, IGenericVertexAttribute
             where T2 : struct, IGenericVertexAttribute
@@ -73,7 +72,6 @@ namespace Core.Buffer
             Bind();
 
             SetArrayData(mBufferObject1, ref Data1);
-
             SetArrayData(mBufferObject2, ref Data2);
         }
 
@@ -85,27 +83,20 @@ namespace Core.Buffer
     }
 
 
-    public class SOAVertexBuffer<T1, T2, T3> : IBindable, IDisposable
+    public class SOAVertexBuffer<T1, T2, T3> : SOAVertexBuffer<T1,T2>
         where T1 : struct, IGenericVertexAttribute
         where T2 : struct, IGenericVertexAttribute
         where T3 : struct, IGenericVertexAttribute
     {
-        SOAVertexBuffer()
+        public SOAVertexBuffer()
+        : base()
         {
-            mBufferObject1 = GL.GenBuffer();
-            mBufferObject2 = GL.GenBuffer();
             mBufferObject3 = GL.GenBuffer();
         }
-        public void Bind()
+        public override void Bind()
         {
-            mVertexAttribute1.VertexAttributeBinding(0);
-            mVertexAttribute2.VertexAttributeBinding(1);
+            base.Bind();
             mVertexAttribute3.VertexAttributeBinding(2);
-        }
-
-        public void Unbind()
-        {
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
         }
 
         public void BufferData<T1, T2, T3>(ref T1 Data1, ref T2 Data2, ref T3 Data3)
@@ -115,17 +106,11 @@ namespace Core.Buffer
         {
             Bind();
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject1);
-            var Size1 = new IntPtr(Marshal.SizeOf(Data1));
-            GL.BufferData<T1>(BufferTarget.ArrayBuffer, Size1, ref Data1, BufferUsageHint.StaticDraw);
+            SetData(mBufferObject1, ref Data1);
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject2);
-            var Size2 = new IntPtr(Marshal.SizeOf(Data2));
-            GL.BufferData<T2>(BufferTarget.ArrayBuffer, Size2, ref Data2, BufferUsageHint.StaticDraw);
+            SetData(mBufferObject2, ref Data2);
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject3);
-            var Size3 = new IntPtr(Marshal.SizeOf(Data3));
-            GL.BufferData<T3>(BufferTarget.ArrayBuffer, Size3, ref Data3, BufferUsageHint.StaticDraw);
+            SetData(mBufferObject3, ref Data3);
         }
 
         public void BufferData<T1, T2, T3>(ref T1[] Data1, ref T2[] Data2, ref T3[] Data3)
@@ -135,57 +120,37 @@ namespace Core.Buffer
         {
             Bind();
 
-            if (Data1 != null)
-            {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject1);
-                var Size = new IntPtr(Marshal.SizeOf(Data1[0]) * Data1.Length);
-                GL.BufferData<T1>(BufferTarget.ArrayBuffer, Size, Data1, BufferUsageHint.StaticDraw);
-            }
-
-            if (Data2 != null)
-            {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject2);
-                var Size = new IntPtr(Marshal.SizeOf(Data2[0]) * Data2.Length);
-                GL.BufferData<T2>(BufferTarget.ArrayBuffer, Size, Data2, BufferUsageHint.StaticDraw);
-            }
+            SetArrayData(mBufferObject1, ref Data1);
+            SetArrayData(mBufferObject2, ref Data2);
+            SetArrayData(mBufferObject3, ref Data3);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            GL.DeleteBuffer(mBufferObject1);
-            GL.DeleteBuffer(mBufferObject2);
+            base.Dispose();
             GL.DeleteBuffer(mBufferObject3);
 
             mBufferObject1 = mBufferObject2 = mBufferObject3= 0;
         }
-
-        private int mBufferObject1 = 0;
-        private int mBufferObject2 = 0;
-        private int mBufferObject3 = 0;
-
-        private T1 mVertexAttribute1 = default(T1);
-        private T2 mVertexAttribute2 = default(T2);
-        private T3 mVertexAttribute3 = default(T3);
+        
+        protected int mBufferObject3 = 0;
+        protected T3 mVertexAttribute3 = default(T3);
     }
 
-    public class SOAVertexBuffer<T1, T2, T3,T4> : IBindable, IDisposable
+    public class SOAVertexBuffer<T1, T2, T3,T4> : SOAVertexBuffer<T1,T2,T3>
         where T1 : struct, IGenericVertexAttribute
         where T2 : struct, IGenericVertexAttribute
         where T3 : struct, IGenericVertexAttribute
         where T4 : struct, IGenericVertexAttribute
     {
-        SOAVertexBuffer()
+        public SOAVertexBuffer()
+        : base()
         {
-            mBufferObject1 = GL.GenBuffer();
-            mBufferObject2 = GL.GenBuffer();
-            mBufferObject3 = GL.GenBuffer();
             mBufferObject4 = GL.GenBuffer();
         }
-        public void Bind()
+        public override void Bind()
         {
-            mVertexAttribute1.VertexAttributeBinding(0);
-            mVertexAttribute2.VertexAttributeBinding(1);
-            mVertexAttribute3.VertexAttributeBinding(2);
+            base.Bind();
             mVertexAttribute4.VertexAttributeBinding(3);
         }
 
@@ -202,20 +167,13 @@ namespace Core.Buffer
         {
             Bind();
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject1);
-            var Size1 = new IntPtr(Marshal.SizeOf(Data1));
-            GL.BufferData<T1>(BufferTarget.ArrayBuffer, Size1, ref Data1, BufferUsageHint.StaticDraw);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject2);
-            var Size2 = new IntPtr(Marshal.SizeOf(Data2));
-            GL.BufferData<T2>(BufferTarget.ArrayBuffer, Size2, ref Data2, BufferUsageHint.StaticDraw);
-
-            GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject3);
-            var Size3 = new IntPtr(Marshal.SizeOf(Data3));
-            GL.BufferData<T3>(BufferTarget.ArrayBuffer, Size3, ref Data3, BufferUsageHint.StaticDraw);
+            SetData(mBufferObject1, ref Data1);
+            SetData(mBufferObject2, ref Data2);
+            SetData(mBufferObject3, ref Data3);
+            SetData(mBufferObject4, ref Data4);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             GL.DeleteBuffer(mBufferObject1);
             GL.DeleteBuffer(mBufferObject2);
@@ -225,14 +183,8 @@ namespace Core.Buffer
             mBufferObject1 = mBufferObject2 = mBufferObject3 = mBufferObject4 = 0;
         }
 
-        private int mBufferObject1 = 0;
-        private int mBufferObject2 = 0;
-        private int mBufferObject3 = 0;
-        private int mBufferObject4 = 0;
-
-        private T1 mVertexAttribute1 = default(T1);
-        private T2 mVertexAttribute2 = default(T2);
-        private T3 mVertexAttribute3 = default(T3);
-        private T4 mVertexAttribute4 = default(T4);
+        
+        protected int mBufferObject4 = 0;
+        protected T4 mVertexAttribute4 = default(T4);
     }
 }
