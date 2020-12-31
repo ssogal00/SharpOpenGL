@@ -62,7 +62,7 @@ namespace Core.Buffer
             SetData<T1>(mBufferObject1, ref Data1);
         }
 
-        public void BufferData<T1, T2>(ref T1[] Data1)
+        public void BufferData<T1>(ref T1[] Data1)
             where T1 : struct, IGenericVertexAttribute
         {
             Bind();

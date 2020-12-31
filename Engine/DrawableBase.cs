@@ -152,27 +152,26 @@ namespace Core
 
     /// use seperate vertex attributes
     /// Structure of array way
-    
+    ///
 
-    public class MeshDrawableBase<T1, T2> where T1 : struct, IGenericVertexAttribute
-        where T2 : struct, IGenericVertexAttribute
+    public class MeshDrawableBase<T1> where T1 : struct, IGenericVertexAttribute
     {
         public MeshDrawableBase()
         {
-            mVB = new SOAVertexBuffer<T1, T2>();
+            mVB1 = new SOAVertexBuffer<T1>();
             mIB = new IndexBuffer();
             mVA = new VertexArray();
         }
 
-        public void SetupData(ref T1[] vertexAttributeList1, ref T2[] vertexAttributeList2, ref uint[] indexList)
+        public virtual void SetupData(ref T1[] vertexAttributeList1, ref uint[] indexList)
         {
-            Debug.Assert(vertexAttributeList1 != null && vertexAttributeList2 != null);
+            Debug.Assert(vertexAttributeList1 != null);
 
             mVA.Bind();
-            mVB.Bind();
             mIB.Bind();
 
-            mVB.BufferData<T1,T2>(ref vertexAttributeList1, ref vertexAttributeList2);
+            mVB1.BindAtIndex(0);
+            mVB1.BufferData<T1>(ref vertexAttributeList1);
             mVertexCount = vertexAttributeList1.Count();
 
             mIB.BufferData<uint>(ref indexList);
@@ -181,7 +180,7 @@ namespace Core
             mbReadyToDraw = true;
 
             mVA.Unbind();
-            mVB.Unbind();
+            mVB1.Unbind();
             mIB.Unbind();
         }
 
@@ -207,12 +206,113 @@ namespace Core
             }
         }
 
-        protected SOAVertexBuffer<T1, T2> mVB = null;
+        protected SOAVertexBuffer<T1> mVB1 = null;
         protected IndexBuffer mIB = null;
         protected VertexArray mVA = null;
 
         protected int mVertexCount = 0;
         protected int mIndexCount = 0;
         protected bool mbReadyToDraw = false;
+    }
+
+    public class MeshDrawableBase<T1, T2> : MeshDrawableBase<T1>
+        where T1 : struct, IGenericVertexAttribute
+        where T2 : struct, IGenericVertexAttribute
+    {
+        public MeshDrawableBase()
+        :base()
+        {
+            mVB2 = new SOAVertexBuffer<T2>();
+        }
+
+        public override void SetupData(ref T1[] vertexAttributeList1, ref uint[] indexList)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public virtual void SetupData(ref T1[] vertexAttributeList1, ref T2[] vertexAttributeList2, ref uint[] indexList)
+        {
+            Debug.Assert(vertexAttributeList1 != null && vertexAttributeList2 != null);
+            Debug.Assert(vertexAttributeList1.Length == vertexAttributeList2.Length);
+
+            mVA.Bind();
+            mIB.Bind();
+
+            mVB1.BindAtIndex(0);
+            mVB1.BufferData<T1>(ref vertexAttributeList1);
+            mVertexCount = vertexAttributeList1.Count();
+
+            mVB2.BindAtIndex(1);
+            mVB2.BufferData<T2>(ref vertexAttributeList2);
+
+            mIB.BufferData<uint>(ref indexList);
+            mIndexCount = indexList.Count();
+
+            mbReadyToDraw = true;
+
+            mVA.Unbind();
+            mVB1.Unbind();
+            mVB2.Unbind();
+            mIB.Unbind();
+        }
+
+        protected SOAVertexBuffer<T2> mVB2 = null;
+    }
+
+    public class MeshDrawableBase<T1, T2,T3> : MeshDrawableBase<T1,T2>
+        where T1 : struct, IGenericVertexAttribute
+        where T2 : struct, IGenericVertexAttribute
+        where T3 : struct, IGenericVertexAttribute
+    {
+        public MeshDrawableBase()
+            : base()
+        {
+            mVB3 = new SOAVertexBuffer<T3>();
+        }
+
+        public override void SetupData(ref T1[] vertexAttributeList1, ref uint[] indexList)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public override void SetupData(ref T1[] vertexAttributeList1, ref T2[] vertexAttributeList2, ref uint[] indexList)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public virtual void SetupData(ref T1[] vertexAttributeList1, ref T2[] vertexAttributeList2, ref T3[] vertexAttributeList3, ref uint[] indexList)
+        {
+            Debug.Assert(vertexAttributeList1 != null && vertexAttributeList2 != null);
+            Debug.Assert(vertexAttributeList1.Length == vertexAttributeList2.Length);
+
+            mVA.Bind();
+            mIB.Bind();
+
+            // attribute 1
+            mVB1.BindAtIndex(0);
+            mVB1.BufferData<T1>(ref vertexAttributeList1);
+            mVertexCount = vertexAttributeList1.Count();
+
+            // attribute 2
+            mVB2.BindAtIndex(1);
+            mVB2.BufferData<T2>(ref vertexAttributeList2);
+
+            // attribute 3
+            mVB3.BindAtIndex(2);
+            mVB3.BufferData<T3>(ref vertexAttributeList3);
+
+            mIB.BufferData<uint>(ref indexList);
+            mIndexCount = indexList.Count();
+
+            mbReadyToDraw = true;
+
+            mVA.Unbind();
+            mVB1.Unbind();
+            mVB2.Unbind();
+            mVB3.Unbind();
+            mIB.Unbind();
+        }
+
+        protected SOAVertexBuffer<T3> mVB3 = null;
     }
 }
