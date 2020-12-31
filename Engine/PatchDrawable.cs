@@ -15,10 +15,10 @@ namespace Core
 
         public override void Draw()
         {
-            if (bReadyToDraw)
+            if (mbReadyToDraw)
             {
                 BindVertexArray();
-                GL.DrawElements(PrimitiveType.Patches, IndexCount, DrawElementsType.UnsignedInt, 0);
+                GL.DrawElements(PrimitiveType.Patches, mIndexCount, DrawElementsType.UnsignedInt, 0);
                 UnbindVertexArray();
             }
         }

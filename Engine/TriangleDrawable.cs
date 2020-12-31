@@ -13,17 +13,17 @@ namespace Core
 
         public override void Draw()
         {
-            if (bReadyToDraw)
+            if (mbReadyToDraw)
             {
                 BindVertexArray();
-                GL.DrawElements(PrimitiveType.Triangles, IndexCount, DrawElementsType.UnsignedInt, 0);
+                GL.DrawElements(PrimitiveType.Triangles, mIndexCount, DrawElementsType.UnsignedInt, 0);
                 UnbindVertexArray();
             }
         }
 
         public override void Draw(uint Offset, uint Count)
         {
-            if(bReadyToDraw)
+            if(mbReadyToDraw)
             {
                 BindVertexArray();
                 var ByteOffset = new IntPtr(Offset * sizeof(uint));

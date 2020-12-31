@@ -195,6 +195,8 @@ namespace GLTF
             return new Vector4(x, y, z,w);
         }
 
+
+
         // buffer
         private List<byte[]> mBufferDatas = new List<byte[]>();
         // bufferView

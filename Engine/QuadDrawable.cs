@@ -11,10 +11,10 @@ namespace Core
         }
         public override void Draw()
         {
-            if (bReadyToDraw)
+            if (mbReadyToDraw)
             {
                 BindVertexArray();
-                GL.DrawElements(PrimitiveType.Quads, IndexCount, DrawElementsType.UnsignedInt, 0);
+                GL.DrawElements(PrimitiveType.Quads, mIndexCount, DrawElementsType.UnsignedInt, 0);
                 UnbindVertexArray();
             }
         }
