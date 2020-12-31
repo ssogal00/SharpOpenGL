@@ -150,6 +150,9 @@ namespace Core
         protected bool mbReadyToDraw = false;
     }
 
+    /// use seperate vertex attributes
+    /// Structure of array way
+    
 
     public class MeshDrawableBase<T1, T2> where T1 : struct, IGenericVertexAttribute
         where T2 : struct, IGenericVertexAttribute

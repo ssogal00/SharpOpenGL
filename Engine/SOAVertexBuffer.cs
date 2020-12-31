@@ -8,23 +8,23 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core.Buffer
 {
-    /// <summary>
-    /// Structure of Arrays
-    /// 2 attributes
-    /// </summary>
-    public class SOAVertexBuffer<T1, T2> : IBindable, IDisposable
+
+    public class SOAVertexBuffer<T1> : IBindable, IDisposable
         where T1 : struct, IGenericVertexAttribute
-        where T2 : struct, IGenericVertexAttribute
     {
         public SOAVertexBuffer()
         {
             mBufferObject1 = GL.GenBuffer();
-            mBufferObject2 = GL.GenBuffer();
         }
+        
         public virtual void Bind()
         {
             mVertexAttribute1.VertexAttributeBinding(0);
-            mVertexAttribute2.VertexAttributeBinding(1);
+        }
+
+        public virtual void BindAtIndex(int index)
+        {
+            mVertexAttribute1.VertexAttributeBinding(index);
         }
 
         public void Unbind()
@@ -34,9 +34,8 @@ namespace Core.Buffer
         public virtual void Dispose()
         {
             GL.DeleteBuffer(mBufferObject1);
-            GL.DeleteBuffer(mBufferObject2);
 
-            mBufferObject1 = mBufferObject2 = 0;
+            mBufferObject1 = 0;
         }
 
         protected void SetData<T>(int bufferObject, ref T data) where T : struct
@@ -56,6 +55,57 @@ namespace Core.Buffer
             }
         }
 
+        public void BufferData<T1>(ref T1 Data1)
+            where T1 : struct, IGenericVertexAttribute
+        {
+            Bind();
+            SetData<T1>(mBufferObject1, ref Data1);
+        }
+
+        public void BufferData<T1, T2>(ref T1[] Data1)
+            where T1 : struct, IGenericVertexAttribute
+        {
+            Bind();
+            SetArrayData(mBufferObject1, ref Data1);
+        }
+
+        protected int mBufferObject1 = 0;
+
+        protected T1 mVertexAttribute1 = default(T1);
+    }
+
+    /// <summary>
+    /// Structure of Arrays
+    /// 2 attributes
+    /// </summary>
+    public class SOAVertexBuffer<T1, T2> : SOAVertexBuffer<T1>
+        where T1 : struct, IGenericVertexAttribute
+        where T2 : struct, IGenericVertexAttribute
+    {
+        public SOAVertexBuffer()
+        :base()
+        {
+            mBufferObject2 = GL.GenBuffer();
+        }
+        public override void Bind()
+        {
+            mVertexAttribute1.VertexAttributeBinding(0);
+            mVertexAttribute2.VertexAttributeBinding(1);
+        }
+
+        public override void BindAtIndex(int index)
+        {
+            throw new InvalidOperationException("Invalid operation");
+        }
+
+        public override void Dispose()
+        {
+            GL.DeleteBuffer(mBufferObject1);
+            GL.DeleteBuffer(mBufferObject2);
+
+            mBufferObject1 = mBufferObject2 = 0;
+        }
+
         public void BufferData<T1, T2>(ref T1 Data1, ref T2 Data2)
             where T1 : struct, IGenericVertexAttribute
             where T2 : struct, IGenericVertexAttribute
@@ -70,15 +120,11 @@ namespace Core.Buffer
             where T2 : struct, IGenericVertexAttribute
         {
             Bind();
-
             SetArrayData(mBufferObject1, ref Data1);
             SetArrayData(mBufferObject2, ref Data2);
         }
 
-        protected int mBufferObject1 = 0;
         protected int mBufferObject2 = 0;
-
-        protected T1 mVertexAttribute1 = default(T1);
         protected T2 mVertexAttribute2 = default(T2);
     }
 
