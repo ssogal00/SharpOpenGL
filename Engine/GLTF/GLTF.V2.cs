@@ -192,7 +192,7 @@ namespace GLTF.V2
     public class Primitive
     {
         public int mode { get; set; }
-        public Attributes attributes { get; set; }
+        public Dictionary<string,int> attributes { get; set; }
         public int indices { get; set; }
         public int material { get; set; }
     }

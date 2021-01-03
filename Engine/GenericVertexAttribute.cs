@@ -40,7 +40,7 @@ namespace Core.Primitive
     }
 
     [StructLayout(LayoutKind.Explicit, Size = 12)]
-    public struct Vec3_VertexAttribute
+    public struct Vec3_VertexAttribute : IGenericVertexAttribute
     {
         [FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
         public Vector3 Value;
@@ -63,7 +63,7 @@ namespace Core.Primitive
 
 
     [StructLayout(LayoutKind.Explicit, Size = 8)]
-    public struct Vec2_VertexAttribute
+    public struct Vec2_VertexAttribute : IGenericVertexAttribute
     {
         [FieldOffset(0), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
         public Vector2 Value;

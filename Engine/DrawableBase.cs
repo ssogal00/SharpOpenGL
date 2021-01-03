@@ -315,4 +315,74 @@ namespace Core
 
         protected SOAVertexBuffer<T3> mVB3 = null;
     }
+
+
+    public class MeshDrawableBase<T1, T2, T3, T4> : MeshDrawableBase<T1, T2, T3>
+        where T1 : struct, IGenericVertexAttribute
+        where T2 : struct, IGenericVertexAttribute
+        where T3 : struct, IGenericVertexAttribute
+        where T4 : struct, IGenericVertexAttribute
+    {
+        public MeshDrawableBase()
+            : base()
+        {
+            mVB4 = new SOAVertexBuffer<T4>();
+        }
+
+        public override void SetupData(ref T1[] vertexAttributeList1, ref uint[] indexList)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public override void SetupData(ref T1[] vertexAttributeList1, ref T2[] vertexAttributeList2, ref uint[] indexList)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public override void SetupData(ref T1[] vertexAttributeList1, ref T2[] vertexAttributeList2,
+            ref T3[] vertexAttributeList3, ref uint[] indexList)
+        {
+            throw new InvalidOperationException();
+        }
+
+        public virtual void SetupData(ref T1[] vertexAttributeList1, ref T2[] vertexAttributeList2, ref T3[] vertexAttributeList3, ref T4[] vertexAttributeList4, ref uint[] indexList)
+        {
+            Debug.Assert(vertexAttributeList1 != null && vertexAttributeList2 != null);
+            Debug.Assert(vertexAttributeList1.Length == vertexAttributeList2.Length);
+
+            mVA.Bind();
+            mIB.Bind();
+
+            // attribute 1
+            mVB1.BindAtIndex(0);
+            
+            mVB1.BufferData<T1>(ref vertexAttributeList1);
+            mVertexCount = vertexAttributeList1.Count();
+
+            // attribute 2
+            mVB2.BindAtIndex(1);
+            mVB2.BufferData<T2>(ref vertexAttributeList2);
+
+            // attribute 3
+            mVB3.BindAtIndex(2);
+            mVB3.BufferData<T3>(ref vertexAttributeList3);
+
+            mVB4.BindAtIndex(3);
+            mVB4.BufferData<T4>(ref vertexAttributeList4);
+
+            mIB.BufferData<uint>(ref indexList);
+            mIndexCount = indexList.Count();
+
+            mbReadyToDraw = true;
+
+            mVA.Unbind();
+            mVB1.Unbind();
+            mVB2.Unbind();
+            mVB3.Unbind();
+            mVB4.Unbind();
+            mIB.Unbind();
+        }
+
+        protected SOAVertexBuffer<T4> mVB4 = null;
+    }
 }

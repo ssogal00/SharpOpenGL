@@ -38,9 +38,6 @@ namespace Core.Buffer
             }
         }
     }
-
-    
-
     ///
     /// Array of Structures 
     /// 
