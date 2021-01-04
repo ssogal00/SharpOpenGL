@@ -140,7 +140,6 @@ namespace Core
             }
         }
 
-
         protected AOSVertexBuffer<T> mVB = null;
         protected IndexBuffer mIB = null;
         protected VertexArray mVA = null;
@@ -258,6 +257,8 @@ namespace Core
 
         protected SOAVertexBuffer<T2> mVB2 = null;
     }
+
+
 
     public class MeshDrawableBase<T1, T2,T3> : MeshDrawableBase<T1,T2>
         where T1 : struct, IGenericVertexAttribute

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using GLTF.V2;
 using System.IO;
+using System.Linq;
 using System.Printing;
 using System.Windows.Documents.DocumentStructures;
 using System.Xaml;
@@ -20,12 +21,14 @@ namespace GLTF
     {
         public readonly int index = 0;
         public readonly string name = "";
+        public readonly AttributeType attributeType = AttributeType.SCALAR;
 
 
-        public VertexAttributeSemantic(int attributeIndex, string attributeName)
+        public VertexAttributeSemantic(int attributeIndex, string attributeName, AttributeType @type)
         {
             this.index = attributeIndex;
             this.name = attributeName;
+            this.attributeType = @type;
         }
         public bool Equals(VertexAttributeSemantic semantic)
         {
@@ -185,7 +188,7 @@ namespace GLTF
                 }
             }
 
-            List<GLTFMesh> parsedMesh = new List<GLTFMesh>();
+            List<GLTFMesh> parsedMeshList = new List<GLTFMesh>();
 
             for (int i = 0; i < gltf.meshes.Count; ++i)
             {
@@ -195,13 +198,16 @@ namespace GLTF
                 {
                     int accessorIndex = 0;
                     int indexToBufferView = 0;
+                    
                     foreach (var kvp in gltf.meshes[i].primitives[j].attributes)
                     {
                         string semantic = kvp.Key;
                         accessorIndex = kvp.Value;
 
-                        var attributeSemantic = new VertexAttributeSemantic(accessorIndex, semantic);
+                        var attributeSemantic = new VertexAttributeSemantic(accessorIndex, semantic, gltf.accessors[accessorIndex].type);
                         
+                        mesh.mVertexAttributeList.Add(attributeSemantic);
+
                         indexToBufferView = gltf.accessors[accessorIndex].bufferView;
                         
                         if (gltf.accessors[accessorIndex].type == AttributeType.SCALAR)
@@ -236,13 +242,45 @@ namespace GLTF
                 }
             }
 
-            return null;
+            return parsedMeshList;
         }
 
         public GLTFMesh()
         {
             
         }
+
+        public List<VertexAttributeSemantic> VertexAttributeList
+        {
+            get => mVertexAttributeList;
+        }
+        public Dictionary<VertexAttributeSemantic, List<float>> FloatVertexAttributes
+        {
+            get => mFloatVertexAttributes;
+        }
+        public Dictionary<VertexAttributeSemantic, List<Vector2>> Vector2VertexAttributes
+        {
+            get => mVector2VertexAttributes;
+        }
+        public Dictionary<VertexAttributeSemantic, List<Vector3>> Vector3VertexAttributes
+        {
+            get => mVector3VertexAttributes;
+        }
+        public Dictionary<VertexAttributeSemantic, List<Vector4>> Vector4VertexAttributes
+        {
+            get => mVector4VertexAttributes;
+        }
+
+        public List<uint> UIntIndices
+        {
+            get => mUIntIndices;
+        }
+        public List<ushort> UShortIndices
+        {
+            get => mUShortIndices;
+        }
+
+        protected List<VertexAttributeSemantic> mVertexAttributeList = new List<VertexAttributeSemantic>();
 
         protected Dictionary<VertexAttributeSemantic, List<float>> mFloatVertexAttributes = new Dictionary<VertexAttributeSemantic, List<float>>();
 
@@ -303,9 +341,5 @@ namespace GLTF
 
             return new Vector4(x, y, z,w);
         }
-        
-        
-
-        
     }
 }

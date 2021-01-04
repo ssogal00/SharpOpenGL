@@ -55,15 +55,13 @@ namespace Core.Buffer
             }
         }
 
-        public void BufferData<T1>(ref T1 Data1)
-            where T1 : struct, IGenericVertexAttribute
+        public void BufferData<T>(ref T Data1) where T : struct
         {
             Bind();
-            SetData<T1>(mBufferObject1, ref Data1);
+            SetData<T>(mBufferObject1, ref Data1);
         }
 
-        public void BufferData<T1>(ref T1[] Data1)
-            where T1 : struct, IGenericVertexAttribute
+        public void BufferData<T>(ref T[] Data1) where T : struct
         {
             Bind();
             SetArrayData(mBufferObject1, ref Data1);
