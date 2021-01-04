@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Core.OpenGLShader;
 using Core.Primitive;
+using GLTF;
 using OpenTK.Graphics.OpenGL;
 
 
@@ -147,6 +148,33 @@ namespace Core
         protected int mVertexCount = 0;
         protected int mIndexCount = 0;
         protected bool mbReadyToDraw = false;
+    }
+
+    public class GenericMeshDrawable
+    {
+        public GenericMeshDrawable()
+        {
+            mIndexBuffer = new IndexBuffer();
+            mVertexArray = new VertexArray();
+
+        }
+
+        public void SetupData<T>(int index, ref T[] vertexAttributeList)
+        {
+
+        }
+
+        protected List<VertexAttributeSemantic> mVertexAttributeSemantics = null;
+
+        protected Dictionary<int, SOAVertexBuffer<Vec3_VertexAttribute>> mVec3Attributes = null;
+
+        protected Dictionary<int, SOAVertexBuffer<Vec4_VertexAttribute>> mVec4Attributes = null;
+
+        protected Dictionary<int, SOAVertexBuffer<Vec2_VertexAttribute>> mVec2Attributes = null;
+
+        protected IndexBuffer mIndexBuffer = null;
+
+        protected VertexArray mVertexArray = null;
     }
 
     /// use seperate vertex attributes
