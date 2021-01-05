@@ -242,6 +242,30 @@ public struct CameraTransform
 namespace GBufferPNCT
 {
 }
+namespace GBufferPNT
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=128)]
+public struct CameraTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 View;
+	[FieldOffset(64), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Proj;
+}
+
+
+[StructLayout(LayoutKind.Explicit,Size=64)]
+public struct ModelTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Model;
+}
+}
+namespace GBufferPNT
+{
+}
 namespace Blur
 {
 }

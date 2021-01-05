@@ -2753,6 +2753,196 @@ void main()
 	}
 }
 }
+namespace GBufferPNT
+{
+
+
+public class GBufferPNT : MaterialBase
+{
+	public GBufferPNT() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return MaterialProgram;
+	}
+
+	public void Use()
+	{
+		MaterialProgram.UseProgram();
+	}
+
+	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"DiffuseTex", TextureObject);
+	}
+
+	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject, Sampler SamplerObject)
+	{
+		SetTexture(@"DiffuseTex", TextureObject, SamplerObject);
+	}
+
+	public TextureBase DiffuseTex2D 
+	{	
+		set 
+		{	
+			diffusetex = value;
+			SetTexture(@"DiffuseTex", diffusetex);
+		}
+	}
+
+	public TextureBase DiffuseTex2D_PointSample
+	{	
+		set 
+		{	
+			diffusetex = value;
+			SetTexture(@"DiffuseTex", diffusetex, Sampler.DefaultPointSampler);
+		}
+	}
+
+	public TextureBase DiffuseTex2D_LinearSample
+	{	
+		set 
+		{	
+			diffusetex = value;
+			SetTexture(@"DiffuseTex", diffusetex, Sampler.DefaultLinearSampler);
+		}
+	}
+
+	private TextureBase diffusetex = null;
+
+
+
+
+    private CameraTransform cameratransform = new CameraTransform();
+	public CameraTransform CameraTransform
+	{
+		get { return cameratransform; }
+		set 
+		{ 
+			cameratransform = value; 
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+		}
+	}
+
+	public OpenTK.Mathematics.Matrix4 CameraTransform_View
+	{
+		get { return cameratransform.View ; }
+		set 
+		{ 
+			cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Mathematics.Matrix4 >(@"CameraTransform", ref value, 0 );
+		}
+	}
+	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
+	{
+		get { return cameratransform.Proj ; }
+		set 
+		{ 
+			cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Mathematics.Matrix4 >(@"CameraTransform", ref value, 64 );
+		}
+	}
+
+    private ModelTransform modeltransform = new ModelTransform();
+	public ModelTransform ModelTransform
+	{
+		get { return modeltransform; }
+		set 
+		{ 
+			modeltransform = value; 
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+		}
+	}
+
+	public OpenTK.Mathematics.Matrix4 ModelTransform_Model
+	{
+		get { return modeltransform.Model ; }
+		set 
+		{ 
+			modeltransform.Model = value;
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			//this.SetUniformBufferMemberValue< OpenTK.Mathematics.Matrix4 >(@"ModelTransform", ref value, 0 );
+		}
+	}
+
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"#version 450 core
+
+
+uniform ModelTransform
+{
+	mat4x4 Model;
+};
+
+uniform CameraTransform
+{
+	mat4x4 View;
+	mat4x4 Proj;
+};
+
+uniform mat4 NormalMatrix;
+
+
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec3 VertexNormal;
+layout(location=2) in vec2 TexCoord;
+
+layout(location=0) out vec4 OutPosition;
+layout(location=1) out vec3 OutNormal;
+layout(location=2) out vec2 OutTexCoord;
+
+
+  
+void main()
+{	
+	mat4 ModelView = View * Model;
+	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
+	OutPosition =   (ModelView * vec4(VertexPosition, 1));	
+	OutNormal =  normalize(mat3(ModelView) * VertexNormal);
+	OutTexCoord = TexCoord;
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"
+#version 450 core
+
+
+layout(location=0) in vec4 InPosition;
+layout(location=1) in vec3 InNormal;
+layout(location=2) in vec2 InTexCoord;
+
+
+
+layout (location = 0) out vec4 PositionColor;
+layout (location = 1) out vec4 DiffuseColor;
+layout (location = 2) out vec4 NormalColor;
+
+
+layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
+layout (location = 1, binding=1) uniform sampler2D NormalTex;
+layout (location = 2, binding=2) uniform sampler2D MaskTex;
+layout (location = 3, binding=3) uniform sampler2D MetalicTex;
+layout (location = 4, binding=4) uniform sampler2D RoughnessTex;
+
+void main()
+{   	
+	DiffuseColor = texture(DiffuseTex, InTexCoord);
+    NormalColor = vec4(InNormal.xyz,0);    
+    PositionColor = InPosition;
+}";
+	}
+}
+}
 namespace Blur
 {
 

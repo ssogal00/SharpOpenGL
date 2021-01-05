@@ -16,6 +16,15 @@ namespace Core.Primitive
         void VertexAttributeBinding(int index);
     }
 
+    public static class VertexAttributeExtensions
+    {
+        public static void VertexAttributeBind(this Vector3 vec, int index)
+        {
+            GL.EnableVertexAttribArray(index);
+            GL.VertexAttribPointer(index, 3, VertexAttribPointerType.Float, false, 0, new IntPtr(0));
+        }
+    }
+
     [StructLayout(LayoutKind.Explicit, Size = 16)]
     public struct Vec4_VertexAttribute : IGenericVertexAttribute
     {
@@ -35,7 +44,7 @@ namespace Core.Primitive
         public void VertexAttributeBinding(int index)
         {
             GL.EnableVertexAttribArray(index);
-            GL.VertexAttribPointer(index, 4, VertexAttribPointerType.Float, false, 16, new IntPtr(0));
+            GL.VertexAttribPointer(index, 4, VertexAttribPointerType.Float, false, 0, new IntPtr(0));
         }
     }
 
@@ -57,7 +66,7 @@ namespace Core.Primitive
         public void VertexAttributeBinding(int index)
         {
             GL.EnableVertexAttribArray(index);
-            GL.VertexAttribPointer(index, 3, VertexAttribPointerType.Float, false, 12, new IntPtr(0));
+            GL.VertexAttribPointer(index, 3, VertexAttribPointerType.Float, false, 0, new IntPtr(0));
         }
     }
 
@@ -80,7 +89,7 @@ namespace Core.Primitive
         public void VertexAttributeBinding(int index)
         {
             GL.EnableVertexAttribArray(index);
-            GL.VertexAttribPointer(index, 2, VertexAttribPointerType.Float, false, 8, new IntPtr(0));
+            GL.VertexAttribPointer(index, 2, VertexAttribPointerType.Float, false, 0, new IntPtr(0));
         }
     }
 

@@ -45,9 +45,9 @@ namespace GLTF
             return index;
         }
     }
-    public class GLTFMesh
+    public class GLTFMeshAsset
     {
-        public static List<GLTFMesh> LoadFrom(GLTF_V2 gltf)
+        public static List<GLTFMeshAsset> LoadFrom(GLTF_V2 gltf)
         {
             // buffer
             List<byte[]> mBufferDatas = new List<byte[]>();
@@ -188,11 +188,11 @@ namespace GLTF
                 }
             }
 
-            List<GLTFMesh> parsedMeshList = new List<GLTFMesh>();
+            List<GLTFMeshAsset> parsedMeshList = new List<GLTFMeshAsset>();
 
             for (int i = 0; i < gltf.meshes.Count; ++i)
             {
-                var mesh = new GLTFMesh();
+                var mesh = new GLTFMeshAsset();
 
                 for (int j = 0; j < gltf.meshes[i].primitives.Count; ++j)
                 {
@@ -240,12 +240,14 @@ namespace GLTF
                         mesh.mUShortIndices = uShortBufferViews[indexToBufferView];
                     }
                 }
+
+                parsedMeshList.Add(mesh);
             }
 
             return parsedMeshList;
         }
 
-        public GLTFMesh()
+        public GLTFMeshAsset()
         {
             
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Core;
 using GLTF;
 using SharpOpenGL.Scene;
 using SharpOpenGLCore.SceneRenderer;
@@ -14,14 +15,26 @@ namespace SharpOpenGLCore.Scene
         {
             var v2Sample = GLTFLoader.LoadGLTFV2(@"C:\MyGitHub\glTF-Sample-Models\2.0\DamagedHelmet\glTF\DamagedHelmet.gltf");
 
-            var sampleMesh = new GLTFMesh(v2Sample);
+            var sampleMesh = GLTFMeshAsset.LoadFrom(v2Sample);
 
-            Console.WriteLine(v2Sample.Path);
+            if (sampleMesh.Count > 0)
+            {
+                mTestMeshObject = new GLTFStaticMeshObject(sampleMesh[0]);
+                mTestMeshObject.Scale = 10.0f;
+            }
+        }
+
+        public override void Render()
+        {
+            mTestMeshObject?.Render();
         }
 
         protected override SceneRendererBase CreateSceneRenderer()
         {
-            return new FontTestSceneRenderer();
+            //return new FontTestSceneRenderer();
+            return new DefaultSceneRenderer();
         }
+
+        private GLTFStaticMeshObject mTestMeshObject;
     }
 }

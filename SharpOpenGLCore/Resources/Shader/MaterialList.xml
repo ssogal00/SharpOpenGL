@@ -13,6 +13,7 @@
 	<Material name="GBufferPNC" vertexShader="GBufferPNC.vs.glsl" fragmentShader="GBufferPNC.fs.glsl"/>
 	<Material name="GBufferCubeTest" vertexShader="GBufferCubeTest.vs.glsl" fragmentShader="GBufferCubeTest.fs.glsl"/>
 	<Material name="GBufferPNCT" vertexShader="GBufferPNCT.vs.glsl" fragmentShader="GBufferPNCT.fs.glsl"/>
+	<Material name="GBufferPNT" vertexShader="GBufferPNT.vs.glsl" fragmentShader="GBufferPNT.fs.glsl"/>
 	<Material name="Blur" vertexShader="Blur.vs.glsl" fragmentShader="Blur.fs.glsl"/>
 	<Material name="BloomMaterial" vertexShader="Bloom.vs.glsl" fragmentShader="Bloom.fs.glsl"/>
 	<Material name="LightMaterial" vertexShader="DeferredLight.vs.glsl" fragmentShader="DeferredLight.fs.glsl"/>

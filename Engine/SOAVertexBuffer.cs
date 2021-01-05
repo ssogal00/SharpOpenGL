@@ -8,6 +8,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Core.Buffer
 {
+    public interface IVertexBuffer
+    {
+    }
 
     public class SOAVertexBuffer<T1> : IBindable, IDisposable
         where T1 : struct, IGenericVertexAttribute
@@ -19,7 +22,7 @@ namespace Core.Buffer
         
         public virtual void Bind()
         {
-            mVertexAttribute1.VertexAttributeBinding(0);
+            //mVertexAttribute1.VertexAttributeBinding(0);
         }
 
         public virtual void BindAtIndex(int index)
@@ -40,7 +43,7 @@ namespace Core.Buffer
 
         protected void SetData<T>(int bufferObject, ref T data) where T : struct
         {
-            GL.BindBuffer(BufferTarget.ArrayBuffer, bufferObject);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject1);
             var size = new IntPtr(Marshal.SizeOf(data));
             GL.BufferData<T>(BufferTarget.ArrayBuffer, size, ref data, BufferUsageHint.StaticDraw);
         }
@@ -49,7 +52,7 @@ namespace Core.Buffer
         {
             if (data != null)
             {
-                GL.BindBuffer(BufferTarget.ArrayBuffer, bufferObject);
+                GL.BindBuffer(BufferTarget.ArrayBuffer, mBufferObject1);
                 var size = new IntPtr(Marshal.SizeOf(data[0]) * data.Length);
                 GL.BufferData<T>(BufferTarget.ArrayBuffer, size, data, BufferUsageHint.StaticDraw);
             }
@@ -57,13 +60,11 @@ namespace Core.Buffer
 
         public void BufferData<T>(ref T Data1) where T : struct
         {
-            Bind();
             SetData<T>(mBufferObject1, ref Data1);
         }
 
         public void BufferData<T>(ref T[] Data1) where T : struct
         {
-            Bind();
             SetArrayData(mBufferObject1, ref Data1);
         }
 

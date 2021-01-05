@@ -31,7 +31,7 @@ namespace SharpOpenGL
 
         
         private SceneBase mCurrentScene = new FontTestScene();
-        //private SceneBase mCurrentScene = new SphereScene();
+        //private SceneBase mCurrentScene = new SponzaScene();
 
         public SceneBase CurrentScene => mCurrentScene;
 

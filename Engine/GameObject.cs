@@ -36,8 +36,11 @@ namespace Core.Primitive
 
         public virtual Matrix4 LocalMatrix
         {
-            get;
-        }
+            get
+            {
+                return Matrix4.CreateScale(Scale) * Matrix4.CreateRotationY(Yaw) * Matrix4.CreateRotationX(Pitch) * Matrix4.CreateTranslation(Translation);
+            }
+        }   
 
         public virtual void Dispose()
         {

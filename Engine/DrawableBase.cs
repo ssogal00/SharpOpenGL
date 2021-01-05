@@ -8,6 +8,7 @@ using Core.OpenGLShader;
 using Core.Primitive;
 using GLTF;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Mathematics;
 
 
 namespace Core
@@ -150,29 +151,117 @@ namespace Core
         protected bool mbReadyToDraw = false;
     }
 
-    public class GenericMeshDrawable
+    public class GenericMeshDrawable : IDisposable, IBindable
     {
         public GenericMeshDrawable()
         {
             mIndexBuffer = new IndexBuffer();
             mVertexArray = new VertexArray();
-
         }
 
-        public void SetupData<T>(int index, ref T[] vertexAttributeList)
+        public void Dispose()
         {
-
+            mIndexBuffer?.Dispose();
+            mVertexArray?.Dispose();
+            mVertexBuffers?.ForEach((x)=> x.Dispose());
         }
 
-        protected List<VertexAttributeSemantic> mVertexAttributeSemantics = null;
+        public void Bind()
+        {
+            mVertexArray.Bind();
+            
+        }
 
-        protected Dictionary<int, SOAVertexBuffer<Vec3_VertexAttribute>> mVec3Attributes = null;
+        public void Unbind()
+        {
+            mVertexArray.Unbind();
+            
+        }
 
-        protected Dictionary<int, SOAVertexBuffer<Vec4_VertexAttribute>> mVec4Attributes = null;
+        public void SetupData<T>(ref T[] vertexAttributes0) where T : struct
+        {
+            SetVertexBufferData(0, ref vertexAttributes0);
+        }
 
-        protected Dictionary<int, SOAVertexBuffer<Vec2_VertexAttribute>> mVec2Attributes = null;
+        public void SetupData<T1, T2>(ref T1[] vertexAttributeData0, ref T2[] vertexAttributeData1) 
+            where T1 : struct where T2 : struct
+        {
+            SetVertexBufferData(0, ref vertexAttributeData0);
+            SetVertexBufferData(1, ref vertexAttributeData1);
+        }
+
+        public void SetupData<T1, T2, T3>(ref T1[] vertexAttributeData0, ref T2[] vertexAttributeData1,
+            ref T3[] vertexAttributeData2)
+            where T1 : struct where T2 : struct where T3 : struct
+        {
+            SetVertexBufferData(0, ref vertexAttributeData0);
+            SetVertexBufferData(1, ref vertexAttributeData1);
+            SetVertexBufferData(2, ref vertexAttributeData2);
+        }
+
+        public void SetIndexBufferData(ref uint[] indexList)
+        {
+            mIndexBuffer.Bind();
+            mIndexBuffer.BufferData(ref indexList);
+            mIndexCount = indexList.Length;
+            mIndexBuffer.Unbind();
+        }
+
+        public void SetIndexBufferData(ref ushort[] indexList)
+        {
+            mIndexBuffer.Bind();
+            mIndexBuffer.BufferData(ref indexList);
+            mIndexCount = indexList.Length;
+            mIndexBuffer.Unbind();
+        }
+
+        public void SetVertexBufferData<T>(int index, ref T[] vertexAttributeData) where T : struct
+        {
+            Debug.Assert(vertexAttributeData != null && vertexAttributeData.Length > 0);
+            
+            if (vertexAttributeData[0] is Vector3)
+            {
+                var vb = new SOAVertexBuffer<Vec3_VertexAttribute>();
+                mVertexBuffers.Add(vb);
+                vb.BufferData<T>(ref vertexAttributeData);
+                vb.BindAtIndex(index);
+            }
+            else if (vertexAttributeData[0] is Vector2)
+            {
+                var vb = new SOAVertexBuffer<Vec2_VertexAttribute>();
+                mVertexBuffers.Add(vb);
+                vb.BufferData<T>(ref vertexAttributeData);
+                vb.BindAtIndex(index);
+            }
+            else if (vertexAttributeData[0] is Vector4)
+            {
+                var vb = new SOAVertexBuffer<Vec4_VertexAttribute>();
+                mVertexBuffers.Add(vb);
+                vb.BufferData<T>(ref vertexAttributeData);
+                vb.BindAtIndex(index);
+            }
+        }
+
+        public void Draw()
+        {
+            mVertexArray.Bind();
+            GL.DrawElements(PrimitiveType.Triangles, mIndexCount, DrawElementsType.UnsignedInt, 0);
+            mVertexArray.Unbind();
+        }
+
+        public void Draw(uint Offset, uint Count)
+        {
+            mVertexArray.Bind();
+            var ByteOffset = new IntPtr(Offset * sizeof(uint));
+            GL.DrawArrays(PrimitiveType.Triangles,0, (int) Count);
+            mVertexArray.Unbind();
+        }
+
+        protected List<IDisposable> mVertexBuffers = new List<IDisposable>();
 
         protected IndexBuffer mIndexBuffer = null;
+
+        protected int mIndexCount = 0;
 
         protected VertexArray mVertexArray = null;
     }
