@@ -13,7 +13,7 @@ namespace SharpOpenGLCore.Scene
     {
         public override void InitializeScene()
         {
-            var v2Sample = GLTFLoader.LoadGLTFV2(@"C:\MyGitHub\glTF-Sample-Models\2.0\DamagedHelmet\glTF\DamagedHelmet.gltf");
+            var v2Sample = GLTFLoader.LoadGLTFV2("./Resources/GLTF/DamagedHelmet/glTF/DamagedHelmet.gltf");
 
             var sampleMesh = GLTFMeshAsset.LoadFrom(v2Sample);
 

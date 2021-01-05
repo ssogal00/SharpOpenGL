@@ -253,7 +253,7 @@ namespace Core
         {
             mVertexArray.Bind();
             var ByteOffset = new IntPtr(Offset * sizeof(uint));
-            GL.DrawArrays(PrimitiveType.Triangles,0, (int) Count);
+            GL.DrawArrays(PrimitiveType.TriangleStrip,0, (int) Count);
             mVertexArray.Unbind();
         }
 
