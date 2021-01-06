@@ -36,7 +36,7 @@ namespace SharpOpenGLCore
                 mtl.CameraTransform_View = CameraManager.Get().CurrentCameraView;
                 mtl.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                 mtl.ModelTransform_Model = this.LocalMatrix;
-                mDrawable.Draw(0, mIndexCount);
+                mDrawable.DrawIndexed();
                 mtl.Unbind();
             }
         }

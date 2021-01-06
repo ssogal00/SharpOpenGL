@@ -178,41 +178,23 @@ namespace Core
             
         }
 
-        public void SetupData<T>(ref T[] vertexAttributes0) where T : struct
-        {
-            SetVertexBufferData(0, ref vertexAttributes0);
-        }
-
-        public void SetupData<T1, T2>(ref T1[] vertexAttributeData0, ref T2[] vertexAttributeData1) 
-            where T1 : struct where T2 : struct
-        {
-            SetVertexBufferData(0, ref vertexAttributeData0);
-            SetVertexBufferData(1, ref vertexAttributeData1);
-        }
-
-        public void SetupData<T1, T2, T3>(ref T1[] vertexAttributeData0, ref T2[] vertexAttributeData1,
-            ref T3[] vertexAttributeData2)
-            where T1 : struct where T2 : struct where T3 : struct
-        {
-            SetVertexBufferData(0, ref vertexAttributeData0);
-            SetVertexBufferData(1, ref vertexAttributeData1);
-            SetVertexBufferData(2, ref vertexAttributeData2);
-        }
-
         public void SetIndexBufferData(ref uint[] indexList)
         {
             mIndexBuffer.Bind();
             mIndexBuffer.BufferData(ref indexList);
             mIndexCount = indexList.Length;
             mIndexBuffer.Unbind();
+            mIndexType = DrawElementsType.UnsignedInt;
         }
 
         public void SetIndexBufferData(ref ushort[] indexList)
         {
             mIndexBuffer.Bind();
             mIndexBuffer.BufferData(ref indexList);
+            mIndexArray = indexList;
             mIndexCount = indexList.Length;
             mIndexBuffer.Unbind();
+            mIndexType = DrawElementsType.UnsignedShort;
         }
 
         public void SetVertexBufferData<T>(int index, ref T[] vertexAttributeData) where T : struct
@@ -241,29 +223,48 @@ namespace Core
                 vb.BindAtIndex(index);
             }
         }
-
-        public void Draw()
+        
+        public void DrawIndexed()
         {
             mVertexArray.Bind();
-            GL.DrawElements(PrimitiveType.Triangles, mIndexCount, DrawElementsType.UnsignedInt, 0);
+            mIndexBuffer.Bind();
+            
+            GL.DrawElements(PrimitiveType.Triangles, mIndexCount, mIndexType, 0);
+
+            mVertexArray.Unbind();
+            mIndexBuffer.Unbind();
+        }
+
+        public void DrawIndexed(ref uint[] indexArray)
+        {
+            mVertexArray.Bind();
+            
+            GL.DrawElements(PrimitiveType.Triangles, indexArray.Length, DrawElementsType.UnsignedInt, indexArray);
+
             mVertexArray.Unbind();
         }
 
-        public void Draw(uint Offset, uint Count)
+        public void DrawIndexed(ref ushort[] indexArray)
         {
             mVertexArray.Bind();
-            var ByteOffset = new IntPtr(Offset * sizeof(uint));
-            GL.DrawArrays(PrimitiveType.TriangleStrip,0, (int) Count);
+
+            GL.DrawElements(PrimitiveType.Triangles, indexArray.Length, DrawElementsType.UnsignedShort, indexArray);
+
             mVertexArray.Unbind();
         }
+        
 
         protected List<IDisposable> mVertexBuffers = new List<IDisposable>();
 
         protected IndexBuffer mIndexBuffer = null;
 
+        protected ushort[] mIndexArray = null;
+
         protected int mIndexCount = 0;
 
         protected VertexArray mVertexArray = null;
+
+        protected DrawElementsType mIndexType = DrawElementsType.UnsignedInt;
     }
 
     /// use seperate vertex attributes
