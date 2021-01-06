@@ -148,14 +148,49 @@ namespace GLTF.V2
         public AssetInfo asset { get; set; }
 
         [JsonPropertyName("materials")]
-        public List<Material> materials { get; set; }
-        
+        public List<GLTFMaterial> materials { get; set; }
+
+        [JsonPropertyName("images")]
+        public List<GLTFImage> images { get; set; }
+
         public string Path = "";
     }
 
-    public class Material
+    public class GLTFImage
     {
+        [JsonPropertyName("uri")]
+        public string uri { get; set; }
+    }
+
+    public class TextureIndex
+    {
+        [JsonPropertyName("index")]
+        public int index { get; set; }
+    }
+
+    public class PBRMetallicRoughness
+    {
+        [JsonPropertyName("baseColorTexture")]
+        public TextureIndex baseColorTexture { get; set; }
+
+        [JsonPropertyName("metallicRoughnessTexture")]
+        public TextureIndex metallicRoughnessTexture { get; set; }
+    }
+
+    public class GLTFMaterial
+    {
+        [JsonPropertyName("emissiveTexture")] 
+        public TextureIndex emissiveTexture { get; set; }
         
+        [JsonPropertyName("occlusionTexture")] 
+        public TextureIndex occlusionTexture { get; set; }
+
+        [JsonPropertyName("normalTexture")]
+        public TextureIndex normalTexture { get; set; }
+
+        [JsonPropertyName("name")]
+        public string name { get; set; }
+
     }
 
     public class AssetInfo
@@ -194,6 +229,7 @@ namespace GLTF.V2
         public int mode { get; set; }
         public Dictionary<string,int> attributes { get; set; }
         public int indices { get; set; }
+        [JsonPropertyName("material")]
         public int material { get; set; }
     }
 

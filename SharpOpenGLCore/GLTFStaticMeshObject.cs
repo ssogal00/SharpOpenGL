@@ -12,6 +12,7 @@ using OpenTK.Mathematics;
 using SharpOpenGL;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using System.Threading;
 
 namespace SharpOpenGLCore
 {

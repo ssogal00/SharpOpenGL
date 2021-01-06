@@ -18,7 +18,6 @@ namespace SharpOpenGL
 {
     public class Engine : Singleton<Engine>
     {
-
         protected int MainThreadId = 0;
 
         protected Stopwatch stopwatch = new Stopwatch();
@@ -45,7 +44,7 @@ namespace SharpOpenGL
             MainThreadId = Thread.CurrentThread.ManagedThreadId;
             OpenGLContext.Get().SetMainThreadId(MainThreadId);
 
-            AssetManager.Get().ImportStaticMeshes();
+            await AssetManager.Get().ImportStaticMeshes();
 
             mCurrentScene.InitializeScene();
 

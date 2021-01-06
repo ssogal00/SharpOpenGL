@@ -22,7 +22,6 @@ namespace Core.StaticMesh
         [Index(0)]
         public virtual List<PNTT_VertexAttribute> Vertices { get; protected set; } = new List<PNTT_VertexAttribute>();
 
-        
 
         // serialized mesh sections
         [Index(1)]

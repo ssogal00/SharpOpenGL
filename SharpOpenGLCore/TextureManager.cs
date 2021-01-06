@@ -76,19 +76,6 @@ namespace SharpOpenGL
             return path;
         }
 
-        public Texture2D LoadDDSTexture2D(string path)
-        {
-            
-            ManagedScratchImage image = DXTLoader.LoadFromDDSFile(path);
-            switch (image.m_metadata.format)
-            {
-                
-            }
-
-            return null;
-        }
-
-
         public void UnloadTexture(string path)
         {
             if (TextureMap.ContainsKey(path))
@@ -171,8 +158,6 @@ namespace SharpOpenGL
                 LoadTexture2D(path);
             }
         }
-
-        private int ApproximateTextureMemory = 0;
 
         Dictionary<string, TextureBase> TextureMap = new Dictionary<string, TextureBase>();
     }

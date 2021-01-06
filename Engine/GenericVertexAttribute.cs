@@ -23,6 +23,18 @@ namespace Core.Primitive
             GL.EnableVertexAttribArray(index);
             GL.VertexAttribPointer(index, 3, VertexAttribPointerType.Float, false, 0, new IntPtr(0));
         }
+
+        public static void VertexAttributeBind(this Vector4 vec, int index)
+        {
+            GL.EnableVertexAttribArray(index);
+            GL.VertexAttribPointer(index, 4, VertexAttribPointerType.Float, false, 0, new IntPtr(0));
+        }
+
+        public static void VertexAttributeBind(this Vector2 vec, int index)
+        {
+            GL.EnableVertexAttribArray(index);
+            GL.VertexAttribPointer(index, 2, VertexAttribPointerType.Float, false, 0, new IntPtr(0));
+        }
     }
 
     [StructLayout(LayoutKind.Explicit, Size = 16)]

@@ -45,23 +45,46 @@ namespace Core
             mVA.Unbind();
         }
 
+        public void BindIndexBuffer()
+        {
+            mIB?.Bind();
+        }
+
+        public void UnbindIndexBuffer()
+        {
+            mIB?.Unbind();
+        }
+
+        public void SetupData(ref T[] vertexList, ref ushort[] indexList)
+        {
+            using (var dummy = new ScopedBind(mVA, mVB, mIB))
+            {
+                mVB.BufferData<T>(ref vertexList);
+                mVertexCount = vertexList.Count();
+
+                mIB.BufferData<ushort>(ref indexList);
+                mIndexCount = indexList.Count();
+
+                mIndexType = DrawElementsType.UnsignedShort;
+
+                mbReadyToDraw = true;
+            }
+        }
+
         public void SetupData(ref T[] vertexList, ref uint[] indexList)
         {
-            mVA.Bind();
-            mVB.Bind();
-            mIB.Bind();
+            using (var dummy = new ScopedBind(mVA, mIB, mVB))
+            {
+                mVB.BufferData<T>(ref vertexList);
+                mVertexCount = vertexList.Count();
 
-            mVB.BufferData<T>(ref vertexList);
-            mVertexCount = vertexList.Count();
+                mIB.BufferData<uint>(ref indexList);
+                mIndexCount = indexList.Count();
 
-            mIB.BufferData<uint>(ref indexList);
-            mIndexCount = indexList.Count();
+                mIndexType = DrawElementsType.UnsignedInt;
 
-            mbReadyToDraw = true;
-
-            mVA.Unbind();
-            mVB.Unbind();
-            mIB.Unbind();
+                mbReadyToDraw = true;
+            }
         }
 
         public virtual void Draw(uint Offset, uint Count)
@@ -72,6 +95,20 @@ namespace Core
         public virtual void Draw()
         {
 
+        }
+
+        public virtual void DrawIndexed()
+        {
+            if (mbReadyToDraw)
+            {
+                mVA.Bind();
+                mIB.Bind();
+
+                
+
+                mIB.Unbind();
+                mVA.Unbind();
+            }
         }
 
         public virtual void DrawArrays(PrimitiveType type)
@@ -96,58 +133,13 @@ namespace Core
             }
         }
 
-        public virtual void DrawElementsInstanced(ref uint[] IndexList, PrimitiveType type, int instanceCount)
-        {
-            if (mbReadyToDraw)
-            {
-                //BindVertexArray();
-                //GL.DrawElementsInstancedBaseInstance(type, mIndexCount, DrawElementsType.UnsignedInt,new IntPtr(ref indexList), instanceCount,0);
-            }
-        }
-
-        public virtual void DrawElements(PrimitiveType type)
-        {
-            if (mbReadyToDraw)
-            {
-                BindVertexArray();
-                GL.DrawElements(type, mIndexCount, DrawElementsType.UnsignedInt, 0);
-            }
-        }
-
-
-        public virtual void DrawLinesElements()
-        {
-            if (mbReadyToDraw)
-            {
-                BindVertexArray();
-                GL.DrawElements(PrimitiveType.Lines, mIndexCount, DrawElementsType.UnsignedInt, 0);
-            }
-        }
-
-        public virtual void DrawTrianglesElements()
-        {
-            if (mbReadyToDraw)
-            {
-                BindVertexArray();
-                GL.DrawElements(PrimitiveType.Triangles, mIndexCount, DrawElementsType.UnsignedInt, 0);
-            }
-        }
-
-        public virtual void DrawLineStripElements()
-        {
-            if (mbReadyToDraw)
-            {
-                BindVertexArray();
-                GL.DrawElements(PrimitiveType.LineStrip, mIndexCount, DrawElementsType.UnsignedInt, 0);
-            }
-        }
-
         protected AOSVertexBuffer<T> mVB = null;
         protected IndexBuffer mIB = null;
         protected VertexArray mVA = null;
 
         protected int mVertexCount = 0;
         protected int mIndexCount = 0;
+        protected DrawElementsType mIndexType = DrawElementsType.UnsignedInt;
         protected bool mbReadyToDraw = false;
     }
 
@@ -169,13 +161,11 @@ namespace Core
         public void Bind()
         {
             mVertexArray.Bind();
-            
         }
 
         public void Unbind()
         {
             mVertexArray.Unbind();
-            
         }
 
         public void SetIndexBufferData(ref uint[] indexList)

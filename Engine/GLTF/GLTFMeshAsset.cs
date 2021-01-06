@@ -17,6 +17,23 @@ using AttributeType = GLTF.V2.AttributeType;
 
 namespace GLTF
 {
+    public enum PBRTextureType
+    {
+        Emissive,
+        Normal,
+        Occlusion,
+        BaseColor,
+        MetallicRoughness,
+    }
+
+    public class PBRInfo
+    {
+        public string EmissiveTexture;
+        public string NormalTexture;
+        public string OcclusionTexture;
+        public string BaseColorTexture;
+    }
+
     public class VertexAttributeSemantic : IEquatable<VertexAttributeSemantic>
     {
         public readonly int index = 0;
@@ -249,8 +266,13 @@ namespace GLTF
 
         public GLTFMeshAsset()
         {
-            
         }
+
+        
+
+        public List<string> TexturePaths { get; set; }
+
+        public string Name { get; set; }
 
         public List<VertexAttributeSemantic> VertexAttributeList
         {

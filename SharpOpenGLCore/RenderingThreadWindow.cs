@@ -24,8 +24,6 @@ namespace SharpOpenGL
         protected Subject<Unit> GLContextCreated = new Subject<Unit>();
         protected Subject<Tuple<int,int>> WindowResized = new Subject<Tuple<int, int>>();
 
-        protected event EventHandler<EventArgs> OnGLContextCreated;
-
         public event EventHandler<KeyboardKeyEventArgs> OnKeyDownEvent;
         public event EventHandler<KeyboardKeyEventArgs> OnKeyUpEvent;
 

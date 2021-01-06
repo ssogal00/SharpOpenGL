@@ -22,7 +22,6 @@ namespace Core.Buffer
         
         public virtual void Bind()
         {
-            //mVertexAttribute1.VertexAttributeBinding(0);
         }
 
         public virtual void BindAtIndex(int index)

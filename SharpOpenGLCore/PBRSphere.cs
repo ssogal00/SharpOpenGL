@@ -41,8 +41,6 @@ namespace SharpOpenGL
         {
         }
 
-        private double Elapsed = 0;
-
         protected override void PrepareRenderingData()
         {
             drawable = new DrawableBase<PNTT_VertexAttribute>();
