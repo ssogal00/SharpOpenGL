@@ -152,6 +152,11 @@ namespace GLTF
                     Debug.Assert(vector2BufferViews.ContainsKey(bufferViewIndex) == false);
                     vector2BufferViews.Add(bufferViewIndex, new List<Vector2>());
                 }
+                else if (attributeType == AttributeType.VEC4)
+                {
+                    Debug.Assert(vector4BufferViews.ContainsKey(bufferViewIndex) == false);
+                    vector4BufferViews.Add(bufferViewIndex, new List<Vector4>());
+                }
                 else if (attributeType == AttributeType.SCALAR)
                 {
                     if (componentType == ComponentType.UNSIGNED_SHORT)
@@ -211,6 +216,7 @@ namespace GLTF
             {
                 var mesh = new GLTFMeshAsset();
 
+                // parse vertex index info
                 for (int j = 0; j < gltf.meshes[i].primitives.Count; ++j)
                 {
                     int accessorIndex = 0;
@@ -258,7 +264,12 @@ namespace GLTF
                     }
                 }
 
-                parsedMeshList.Add(mesh);
+                // parse PBR texture info
+
+                
+                
+
+                
             }
 
             return parsedMeshList;
@@ -268,7 +279,7 @@ namespace GLTF
         {
         }
 
-        
+        public PBRInfo PBRInfo = new PBRInfo();
 
         public List<string> TexturePaths { get; set; }
 
