@@ -238,8 +238,6 @@ namespace GLTF
 
         protected List<ushort> mUShortIndices = new List<ushort>();
 
-        protected List<byte[]> mBufferViews = new List<byte[]>();
-
         private static uint ToUInt(ref Span<byte> span)
         {
             return BitConverter.ToUInt32(span);
