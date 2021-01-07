@@ -16,6 +16,8 @@ namespace Core.Primitive
         void VertexAttributeBinding(int index);
     }
 
+    
+
     public static class VertexAttributeExtensions
     {
         public static void VertexAttributeBind(this Vector3 vec, int index)

@@ -18,6 +18,41 @@ namespace SharpOpenGLCore
 {
     public class GLTFStaticMeshObject : GameObject
     {
+        private static readonly Dictionary<string, int> mVertexAttributePriority = new Dictionary<string, int>
+        {
+            {"POSITION", 0},
+            {"NORMAL", 1},
+            {"TEXCOORD_0", 2},
+            {"TEXCOORD_1", 3},
+            {"TANGENT", 4}
+        };
+
+        private static int GetSemanticPriority(string semanticName)
+        {
+            if (semanticName.StartsWith("POSITION", true, null))
+            {
+                return 0;
+            }
+
+            else if (semanticName.StartsWith("NORMAL", true, null))
+            {
+                return 1;
+            }
+
+            else if (semanticName.StartsWith("TEXCOORD_0", true, null))
+            {
+                return 2;
+            }
+
+            else if (semanticName.StartsWith("TANGENT", true, null))
+            {
+                return 3;
+            }
+
+            return 0;
+        }
+
+
         public GLTFStaticMeshObject(GLTFMeshAsset asset)
         {
             mGLTFAsset = asset;
@@ -49,25 +84,34 @@ namespace SharpOpenGLCore
             mDrawable = new GenericMeshDrawable();
             mDrawable.Bind();
 
-            var attrList = mGLTFAsset.VertexAttributeList.OrderBy(x => x.index);
-            
+            var attrList = mGLTFAsset.VertexAttributeMap
+                .OrderBy(x => GetSemanticPriority(x.Key))
+                .Select(x => x.Value)
+                .ToArray();
+
+            for (int i = 0; i < attrList.Count(); ++i)
+            {
+                if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC3)
+                {
+                    var data = mGLTFAsset.Vector3VertexAttributes[attrList[i]].ToArray();
+                    mDrawable.SetVertexBufferData(i, ref data);
+                }
+                else if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC2)
+                {
+                    var data = mGLTFAsset.Vector2VertexAttributes[attrList[i]].ToArray();
+                    mDrawable.SetVertexBufferData(i, ref data);
+                }
+                else if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC4)
+                {
+                    var data = mGLTFAsset.Vector4VertexAttributes[attrList[i]].ToArray();
+                    mDrawable.SetVertexBufferData(i, ref data);
+                }
+            }
+
+
             foreach (var attr in attrList)
             {
-                if (attr.attributeType == GLTF.V2.AttributeType.VEC3)
-                {
-                    var data= mGLTFAsset.Vector3VertexAttributes[attr].ToArray();
-                    mDrawable.SetVertexBufferData(attr.index - 1, ref data);
-                }
-                else if (attr.attributeType == GLTF.V2.AttributeType.VEC2)
-                {
-                    var data = mGLTFAsset.Vector2VertexAttributes[attr].ToArray();
-                    mDrawable.SetVertexBufferData(attr.index - 1, ref data);
-                }
-                else if (attr.attributeType == GLTF.V2.AttributeType.VEC4)
-                {
-                    var data = mGLTFAsset.Vector4VertexAttributes[attr].ToArray();
-                    mDrawable.SetVertexBufferData(attr.index - 1, ref data);
-                }
+                
             }
 
             if (mGLTFAsset.UIntIndices.Count > 0)

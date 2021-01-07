@@ -67,7 +67,11 @@ namespace GLTF
         public static List<GLTFMeshAsset> LoadFrom(GLTF_V2 gltf)
         {
             // buffer
-            List<byte[]> mBufferDatas = new List<byte[]>();
+            List<byte[]> bufferDatas = new List<byte[]>();
+            List<byte[]> bufferViews = new List<byte[]>();
+            Dictionary<int,AttributeType> bufferViewAttributeTypes = new Dictionary<int, AttributeType>();
+            Dictionary<int, ComponentType> bufferViewComponentTypes = new Dictionary<int, ComponentType>();
+
             // bufferView
             Dictionary<int, List<Vector4>> vector4BufferViews = new Dictionary<int, List<Vector4>>();
             Dictionary<int, List<Vector3>> vector3BufferViews = new Dictionary<int, List<Vector3>>();
@@ -79,26 +83,43 @@ namespace GLTF
 
             var baseDir = Path.GetDirectoryName(gltf.Path);
 
+            // buffers
             for (int i = 0; i < gltf.buffers.Count; ++i)
             {
                 var filepath = gltf.buffers[i].uri;
+
+                Debug.Assert(File.Exists(Path.Combine(baseDir, filepath)));
+
                 byte[] result = File.ReadAllBytes(Path.Combine(baseDir, filepath));
-                mBufferDatas.Add(result);
+                bufferDatas.Add(result);
             }
 
-            // fill buffer views
+            // guess attribute & component type
             for (int i = 0; i < gltf.accessors.Count; ++i)
             {
-                var bufferViewIndex = gltf.accessors[i].bufferView;
-                var componentType = gltf.accessors[i].componentType;
-                var count = gltf.accessors[i].count;
-                var attributeType = gltf.accessors[i].type;
+                if (bufferViewComponentTypes.ContainsKey(gltf.accessors[i].bufferView) == false)
+                {
+                    bufferViewComponentTypes.Add(gltf.accessors[i].bufferView, gltf.accessors[i].componentType);
+                }
 
-                var bufferIndex = gltf.bufferViews[bufferViewIndex].buffer;
-                var offset = gltf.bufferViews[bufferViewIndex].byteOffset;
-                var length = gltf.bufferViews[bufferViewIndex].byteLength;
+                if (bufferViewAttributeTypes.ContainsKey(gltf.accessors[i].bufferView) == false)
+                {
+                    bufferViewAttributeTypes.Add(gltf.accessors[i].bufferView, gltf.accessors[i].type);
+                }
+            }
 
-                var span = new Span<byte>(mBufferDatas[bufferIndex], offset, length);
+            // buffer views
+            for (int bufferViewIndex = 0; bufferViewIndex < gltf.bufferViews.Count; ++bufferViewIndex)
+            {
+                int bufferIndex = gltf.bufferViews[bufferViewIndex].buffer;
+
+                var span = new Span<byte>(bufferDatas[bufferIndex], gltf.bufferViews[bufferViewIndex].byteOffset, gltf.bufferViews[bufferViewIndex].byteLength);
+
+                Debug.Assert(bufferViewComponentTypes.ContainsKey(bufferViewIndex));
+                Debug.Assert(bufferViewAttributeTypes.ContainsKey(bufferViewIndex));
+
+                var attributeType = bufferViewAttributeTypes[bufferViewIndex];
+                var componentType = bufferViewComponentTypes[bufferViewIndex];
 
                 int countPerRead = 1;
                 int bytesPerRead = 1;
@@ -141,7 +162,11 @@ namespace GLTF
                         break;
                 }
 
-                //
+                // convert bytes to specific type array
+                int stride = countPerRead * bytesPerRead;
+
+                int readcount = gltf.bufferViews[bufferViewIndex].byteLength / stride;
+
                 if (attributeType == AttributeType.VEC3)
                 {
                     Debug.Assert(vector3BufferViews.ContainsKey(bufferViewIndex) == false);
@@ -169,11 +194,9 @@ namespace GLTF
                     }
                 }
 
-                int bytesToRead = bytesPerRead * countPerRead;
-
-                for (int readCount = 0; readCount < count; ++readCount)
+                for (int i = 0; i < readcount; ++i)
                 {
-                    var sliced = span.Slice(readCount * bytesToRead, bytesToRead);
+                    var sliced = span.Slice(i * stride, stride);
                     if (attributeType == AttributeType.VEC3)
                     {
                         var parsed = ToVector3(ref sliced);
@@ -216,60 +239,64 @@ namespace GLTF
             {
                 var mesh = new GLTFMeshAsset();
 
-                // parse vertex index info
-                for (int j = 0; j < gltf.meshes[i].primitives.Count; ++j)
+                // for each mesh
+                // parser index array and vertex attributes
+                for (int pindex = 0; pindex < gltf.meshes[i].primitives.Count; ++pindex)
                 {
-                    int accessorIndex = 0;
-                    int indexToBufferView = 0;
-                    
-                    foreach (var kvp in gltf.meshes[i].primitives[j].attributes)
+                    // index array
+                    int indexArraryAccessorIndex = gltf.meshes[i].primitives[pindex].indices;
+                    int indexArrayBufferViewIndex = gltf.accessors[indexArraryAccessorIndex].bufferView;
+
+                    if (gltf.accessors[indexArraryAccessorIndex].componentType == ComponentType.UNSIGNED_INT)
+                    {
+                        mesh.mUIntIndices = uIntBufferViews[indexArrayBufferViewIndex];
+                    }
+                    else if (gltf.accessors[indexArraryAccessorIndex].componentType == ComponentType.UNSIGNED_SHORT)
+                    {
+                        mesh.mUShortIndices = uShortBufferViews[indexArrayBufferViewIndex];
+                    }
+
+                    // vertex attributes
+                    foreach (var kvp in gltf.meshes[i].primitives[pindex].attributes)
                     {
                         string semantic = kvp.Key;
-                        accessorIndex = kvp.Value;
+                        int accessorIndex = kvp.Value;
+                        int bufferViewIndex = gltf.accessors[accessorIndex].bufferView;
 
-                        var attributeSemantic = new VertexAttributeSemantic(accessorIndex, semantic, gltf.accessors[accessorIndex].type);
-                        
-                        mesh.mVertexAttributeList.Add(attributeSemantic);
+                        var attributeSemantic = new VertexAttributeSemantic(bufferViewIndex, semantic,
+                            gltf.accessors[accessorIndex].type);
 
-                        indexToBufferView = gltf.accessors[accessorIndex].bufferView;
-                        
-                        if (gltf.accessors[accessorIndex].type == AttributeType.SCALAR)
+                        // we found new vertex attribute
+                        if (!mesh.mVertexAttributeMap.ContainsKey(semantic))
                         {
-                            mesh.mFloatVertexAttributes.Add(attributeSemantic, floatBufferViews[indexToBufferView]);
-                        }
-                        else if (gltf.accessors[accessorIndex].type == AttributeType.VEC2)
-                        {
-                            mesh.mVector2VertexAttributes.Add(attributeSemantic, vector2BufferViews[indexToBufferView]);
-                        }
-                        else if (gltf.accessors[accessorIndex].type == AttributeType.VEC3)
-                        {
-                            mesh.mVector3VertexAttributes.Add(attributeSemantic, vector3BufferViews[indexToBufferView]);
-                        }
-                        else if (gltf.accessors[accessorIndex].type == AttributeType.VEC4)
-                        {
-                            mesh.mVector4VertexAttributes.Add(attributeSemantic, vector4BufferViews[indexToBufferView]);
-                        }
-                    }
+                            mesh.mVertexAttributeMap.Add(semantic, attributeSemantic);
 
-                    accessorIndex = gltf.meshes[i].primitives[j].indices;
-                    indexToBufferView = gltf.accessors[accessorIndex].bufferView;
-
-                    if (gltf.accessors[accessorIndex].componentType == ComponentType.UNSIGNED_INT)
-                    {
-                        mesh.mUIntIndices = uIntBufferViews[indexToBufferView];
-                    }
-                    else if (gltf.accessors[accessorIndex].componentType == ComponentType.UNSIGNED_SHORT)
-                    {
-                        mesh.mUShortIndices = uShortBufferViews[indexToBufferView];
+                            if (gltf.accessors[accessorIndex].type == AttributeType.SCALAR)
+                            {
+                                mesh.mFloatVertexAttributes.Add(attributeSemantic,
+                                    floatBufferViews[bufferViewIndex]);
+                            }
+                            else if (gltf.accessors[accessorIndex].type == AttributeType.VEC2)
+                            {
+                                mesh.mVector2VertexAttributes.Add(attributeSemantic,
+                                    vector2BufferViews[bufferViewIndex]);
+                            }
+                            else if (gltf.accessors[accessorIndex].type == AttributeType.VEC3)
+                            {
+                                mesh.mVector3VertexAttributes.Add(attributeSemantic,
+                                    vector3BufferViews[bufferViewIndex]);
+                            }
+                            else if (gltf.accessors[accessorIndex].type == AttributeType.VEC4)
+                            {
+                                mesh.mVector4VertexAttributes.Add(attributeSemantic,
+                                    vector4BufferViews[bufferViewIndex]);
+                            }
+                        }
                     }
                 }
-
-                // parse PBR texture info
-
-                
                 
 
-                
+                parsedMeshList.Add(mesh);
             }
 
             return parsedMeshList;
@@ -289,6 +316,12 @@ namespace GLTF
         {
             get => mVertexAttributeList;
         }
+
+        public Dictionary<string, VertexAttributeSemantic> VertexAttributeMap
+        {
+            get => mVertexAttributeMap;
+        }
+
         public Dictionary<VertexAttributeSemantic, List<float>> FloatVertexAttributes
         {
             get => mFloatVertexAttributes;
@@ -317,6 +350,8 @@ namespace GLTF
 
         protected List<VertexAttributeSemantic> mVertexAttributeList = new List<VertexAttributeSemantic>();
 
+        protected Dictionary<string, VertexAttributeSemantic> mVertexAttributeMap = new Dictionary<string, VertexAttributeSemantic>();
+
         protected Dictionary<VertexAttributeSemantic, List<float>> mFloatVertexAttributes = new Dictionary<VertexAttributeSemantic, List<float>>();
 
         protected Dictionary<VertexAttributeSemantic, List<Vector3>> mVector3VertexAttributes = new Dictionary<VertexAttributeSemantic, List<Vector3>>();
@@ -326,7 +361,10 @@ namespace GLTF
         protected Dictionary<VertexAttributeSemantic, List<Vector4>> mVector4VertexAttributes = new Dictionary<VertexAttributeSemantic, List<Vector4>>();
 
         protected List<uint> mUIntIndices= new List<uint>();
+
         protected List<ushort> mUShortIndices = new List<ushort>();
+
+        protected List<byte[]> mBufferViews = new List<byte[]>();
 
         private static uint ToUInt(ref Span<byte> span)
         {

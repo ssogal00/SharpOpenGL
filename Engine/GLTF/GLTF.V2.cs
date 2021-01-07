@@ -27,7 +27,7 @@ namespace GLTF.V2
         /// MAT2
         /// MAT3
         /// MAT4
-        
+        None,
         SCALAR,
         VEC2,
         VEC3,
@@ -248,7 +248,6 @@ namespace GLTF.V2
     {
         public int bufferView { get; set; }
         public int byteOffset { get; set; }
-        public int byteStride { get; set; }
         /// <summary>
         /// SCALAR
         /// VEC2
@@ -293,5 +292,8 @@ namespace GLTF.V2
         /// 34963 : "ELEMENT_ARRAY_BUFFER"
         /// </summary>
         public int target { get; set; }
+
+        public string name { get; set; }
+        public int byteStride { get; set; }
     }
 }
