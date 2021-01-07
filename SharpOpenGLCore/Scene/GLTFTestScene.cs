@@ -13,20 +13,24 @@ namespace SharpOpenGLCore.Scene
     {
         public override void InitializeScene()
         {
-            var v2Sample = GLTFLoader.LoadGLTFV2("./Resources/GLTF/DamagedHelmet/glTF/DamagedHelmet.gltf");
+            var v2Sample = GLTFLoader.LoadGLTFV2("./Resources/GLTF/FlightHelmet/glTF/FlightHelmet.gltf");
 
             var sampleMesh = GLTFMeshAsset.LoadFrom(v2Sample);
 
-            if (sampleMesh.Count > 0)
+            sampleMesh.ForEach(item =>
             {
-                mTestMeshObject = new GLTFStaticMeshObject(sampleMesh[0]);
-                mTestMeshObject.Scale = 10.0f;
-            }
+                var newmesh = new GLTFStaticMeshObject(item);
+                newmesh.Scale = 10;
+                mMeshList.Add(newmesh);
+            });
         }
 
         public override void Render()
         {
-            mTestMeshObject?.Render();
+            foreach (var mesh in mMeshList)
+            {
+                mesh?.Render();
+            }
         }
 
         protected override SceneRendererBase CreateSceneRenderer()
@@ -34,6 +38,6 @@ namespace SharpOpenGLCore.Scene
             return new DefaultSceneRenderer();
         }
 
-        private GLTFStaticMeshObject mTestMeshObject;
+        private List<GLTFStaticMeshObject> mMeshList = new List<GLTFStaticMeshObject>();
     }
 }

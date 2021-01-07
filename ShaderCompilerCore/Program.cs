@@ -45,7 +45,7 @@ namespace ShaderCompiler
                         if (File.Exists(materialXml))
                         {
                             var Root = XElement.Load(materialXml);
-                            foreach (var Node in Root.Descendants("GLTFMaterial"))
+                            foreach (var Node in Root.Descendants("Material"))
                             {
                                 string vsPath = Node.Attribute("vertexShader").Value;
                                 string fsPath = Node.Attribute("fragmentShader").Value;

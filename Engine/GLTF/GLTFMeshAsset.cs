@@ -69,16 +69,6 @@ namespace GLTF
             // buffer
             List<byte[]> bufferDatas = new List<byte[]>();
             List<byte[]> bufferViews = new List<byte[]>();
-            Dictionary<int,AttributeType> bufferViewAttributeTypes = new Dictionary<int, AttributeType>();
-            Dictionary<int, ComponentType> bufferViewComponentTypes = new Dictionary<int, ComponentType>();
-
-            // bufferView
-            Dictionary<int, List<Vector4>> vector4BufferViews = new Dictionary<int, List<Vector4>>();
-            Dictionary<int, List<Vector3>> vector3BufferViews = new Dictionary<int, List<Vector3>>();
-            Dictionary<int, List<Vector2>> vector2BufferViews = new Dictionary<int, List<Vector2>>();
-
-            Dictionary<int, List<ushort>> uShortBufferViews = new Dictionary<int, List<ushort>>();
-            Dictionary<int, List<uint>> uIntBufferViews = new Dictionary<int, List<uint>>();
             Dictionary<int, List<float>> floatBufferViews = new Dictionary<int, List<float>>();
 
             var baseDir = Path.GetDirectoryName(gltf.Path);
@@ -94,143 +84,11 @@ namespace GLTF
                 bufferDatas.Add(result);
             }
 
-            // guess attribute & component type
-            for (int i = 0; i < gltf.accessors.Count; ++i)
+            // bufferViews
+            for (int i = 0; i < gltf.bufferViews.Count; ++i)
             {
-                if (bufferViewComponentTypes.ContainsKey(gltf.accessors[i].bufferView) == false)
-                {
-                    bufferViewComponentTypes.Add(gltf.accessors[i].bufferView, gltf.accessors[i].componentType);
-                }
-
-                if (bufferViewAttributeTypes.ContainsKey(gltf.accessors[i].bufferView) == false)
-                {
-                    bufferViewAttributeTypes.Add(gltf.accessors[i].bufferView, gltf.accessors[i].type);
-                }
-            }
-
-            // buffer views
-            for (int bufferViewIndex = 0; bufferViewIndex < gltf.bufferViews.Count; ++bufferViewIndex)
-            {
-                int bufferIndex = gltf.bufferViews[bufferViewIndex].buffer;
-
-                var span = new Span<byte>(bufferDatas[bufferIndex], gltf.bufferViews[bufferViewIndex].byteOffset, gltf.bufferViews[bufferViewIndex].byteLength);
-
-                Debug.Assert(bufferViewComponentTypes.ContainsKey(bufferViewIndex));
-                Debug.Assert(bufferViewAttributeTypes.ContainsKey(bufferViewIndex));
-
-                var attributeType = bufferViewAttributeTypes[bufferViewIndex];
-                var componentType = bufferViewComponentTypes[bufferViewIndex];
-
-                int countPerRead = 1;
-                int bytesPerRead = 1;
-
-                switch (attributeType)
-                {
-                    case AttributeType.VEC3:
-                        countPerRead = 3;
-                        break;
-                    case AttributeType.VEC2:
-                        countPerRead = 2;
-                        break;
-                    case AttributeType.VEC4:
-                        countPerRead = 4;
-                        break;
-                    case AttributeType.SCALAR:
-                        countPerRead = 1;
-                        break;
-                    case AttributeType.MAT2:
-                        countPerRead = 4;
-                        break;
-                    case AttributeType.MAT3:
-                        countPerRead = 9;
-                        break;
-                }
-
-                switch (componentType)
-                {
-                    case ComponentType.UNSIGNED_INT:
-                    case ComponentType.FLOAT:
-                        bytesPerRead = 4;
-                        break;
-                    case ComponentType.BYTE:
-                    case ComponentType.UNSIGNED_BYTE:
-                        bytesPerRead = 1;
-                        break;
-                    case ComponentType.SHORT:
-                    case ComponentType.UNSIGNED_SHORT:
-                        bytesPerRead = 2;
-                        break;
-                }
-
-                // convert bytes to specific type array
-                int stride = countPerRead * bytesPerRead;
-
-                int readcount = gltf.bufferViews[bufferViewIndex].byteLength / stride;
-
-                if (attributeType == AttributeType.VEC3)
-                {
-                    Debug.Assert(vector3BufferViews.ContainsKey(bufferViewIndex) == false);
-                    vector3BufferViews.Add(bufferViewIndex, new List<Vector3>());
-                }
-                else if (attributeType == AttributeType.VEC2)
-                {
-                    Debug.Assert(vector2BufferViews.ContainsKey(bufferViewIndex) == false);
-                    vector2BufferViews.Add(bufferViewIndex, new List<Vector2>());
-                }
-                else if (attributeType == AttributeType.VEC4)
-                {
-                    Debug.Assert(vector4BufferViews.ContainsKey(bufferViewIndex) == false);
-                    vector4BufferViews.Add(bufferViewIndex, new List<Vector4>());
-                }
-                else if (attributeType == AttributeType.SCALAR)
-                {
-                    if (componentType == ComponentType.UNSIGNED_SHORT)
-                    {
-                        uShortBufferViews.Add(bufferViewIndex, new List<ushort>());
-                    }
-                    else if (componentType == ComponentType.UNSIGNED_INT)
-                    {
-                        uIntBufferViews.Add(bufferViewIndex, new List<uint>());
-                    }
-                }
-
-                for (int i = 0; i < readcount; ++i)
-                {
-                    var sliced = span.Slice(i * stride, stride);
-                    if (attributeType == AttributeType.VEC3)
-                    {
-                        var parsed = ToVector3(ref sliced);
-                        vector3BufferViews[bufferViewIndex].Add(parsed);
-                    }
-                    else if (attributeType == AttributeType.VEC2)
-                    {
-                        var parsed = ToVector2(ref sliced);
-                        vector2BufferViews[bufferViewIndex].Add(parsed);
-                    }
-                    else if (attributeType == AttributeType.VEC4)
-                    {
-                        var parsed = ToVector4(ref sliced);
-                        vector4BufferViews[bufferViewIndex].Add(parsed);
-                    }
-                    else if (attributeType == AttributeType.SCALAR)
-                    {
-                        if (componentType == ComponentType.UNSIGNED_SHORT)
-                        {
-                            var parsed = ToUShort(ref sliced);
-                            uShortBufferViews[bufferViewIndex].Add(parsed);
-                        }
-                        else if (componentType == ComponentType.UNSIGNED_INT)
-                        {
-                            var parsed = ToUInt(ref sliced);
-                            uIntBufferViews[bufferViewIndex].Add(parsed);
-                        }
-                        else if (componentType == ComponentType.FLOAT)
-                        {
-                            var parsed = BitConverter.ToSingle(sliced);
-                            floatBufferViews[bufferViewIndex].Add(parsed);
-                        }
-                    }
-                }
+                var arr = (new Span<byte>( bufferDatas[gltf.bufferViews[i].buffer], gltf.bufferViews[i].byteOffset, gltf.bufferViews[i].byteLength)).ToArray();
+                bufferViews.Add(arr);
             }
 
             List<GLTFMeshAsset> parsedMeshList = new List<GLTFMeshAsset>();
@@ -246,14 +104,22 @@ namespace GLTF
                     // index array
                     int indexArraryAccessorIndex = gltf.meshes[i].primitives[pindex].indices;
                     int indexArrayBufferViewIndex = gltf.accessors[indexArraryAccessorIndex].bufferView;
-
+                    
                     if (gltf.accessors[indexArraryAccessorIndex].componentType == ComponentType.UNSIGNED_INT)
                     {
-                        mesh.mUIntIndices = uIntBufferViews[indexArrayBufferViewIndex];
+                        int byteLength = 4 * gltf.accessors[indexArraryAccessorIndex].count;
+                        
+                        var indexSpan = new Span<byte>(bufferDatas[indexArrayBufferViewIndex]);
+                        
+                        mesh.UIntIndices = ToUIntList(ref indexSpan, gltf.accessors[indexArrayBufferViewIndex].byteOffset, byteLength, gltf.accessors[indexArraryAccessorIndex].count);
                     }
                     else if (gltf.accessors[indexArraryAccessorIndex].componentType == ComponentType.UNSIGNED_SHORT)
                     {
-                        mesh.mUShortIndices = uShortBufferViews[indexArrayBufferViewIndex];
+                        int byteLength = 2 * gltf.accessors[indexArraryAccessorIndex].count;
+
+                        var indexSpan = new Span<byte>(bufferDatas[indexArrayBufferViewIndex]);
+
+                        mesh.UShortIndices = ToUShortList(ref indexSpan, gltf.accessors[indexArraryAccessorIndex].byteOffset, byteLength, gltf.accessors[indexArraryAccessorIndex].count);
                     }
 
                     // vertex attributes
@@ -263,8 +129,7 @@ namespace GLTF
                         int accessorIndex = kvp.Value;
                         int bufferViewIndex = gltf.accessors[accessorIndex].bufferView;
 
-                        var attributeSemantic = new VertexAttributeSemantic(bufferViewIndex, semantic,
-                            gltf.accessors[accessorIndex].type);
+                        var attributeSemantic = new VertexAttributeSemantic(bufferViewIndex, semantic, gltf.accessors[accessorIndex].type);
 
                         // we found new vertex attribute
                         if (!mesh.mVertexAttributeMap.ContainsKey(semantic))
@@ -273,28 +138,35 @@ namespace GLTF
 
                             if (gltf.accessors[accessorIndex].type == AttributeType.SCALAR)
                             {
-                                mesh.mFloatVertexAttributes.Add(attributeSemantic,
-                                    floatBufferViews[bufferViewIndex]);
+                                var floatSpan = new Span<byte>(bufferViews[bufferViewIndex]);
+                                var length = gltf.accessors[accessorIndex].count * 4 * 2;
+                                List<float> floatList = ToFloatList(ref floatSpan, gltf.accessors[accessorIndex].byteOffset, length, gltf.accessors[accessorIndex].count);
+                                mesh.mFloatVertexAttributes.Add(attributeSemantic, floatList);
                             }
                             else if (gltf.accessors[accessorIndex].type == AttributeType.VEC2)
                             {
-                                mesh.mVector2VertexAttributes.Add(attributeSemantic,
-                                    vector2BufferViews[bufferViewIndex]);
+                                var vec2Span = new Span<byte>(bufferViews[bufferViewIndex]);
+                                var length = gltf.accessors[accessorIndex].count * 4 * 2;
+                                List<Vector2> vec2List = ToVector2List(ref vec2Span, gltf.accessors[accessorIndex].byteOffset, length, gltf.accessors[accessorIndex].count);
+                                mesh.mVector2VertexAttributes.Add(attributeSemantic, vec2List);
                             }
                             else if (gltf.accessors[accessorIndex].type == AttributeType.VEC3)
                             {
-                                mesh.mVector3VertexAttributes.Add(attributeSemantic,
-                                    vector3BufferViews[bufferViewIndex]);
+                                var vec3Span = new Span<byte>(bufferViews[bufferViewIndex]);
+                                var length = gltf.accessors[accessorIndex].count * 4 * 3;
+                                List<Vector3> vec3List = ToVector3List(ref vec3Span, gltf.accessors[accessorIndex].byteOffset, length, gltf.accessors[accessorIndex].count);
+                                mesh.mVector3VertexAttributes.Add(attributeSemantic, vec3List);
                             }
                             else if (gltf.accessors[accessorIndex].type == AttributeType.VEC4)
                             {
-                                mesh.mVector4VertexAttributes.Add(attributeSemantic,
-                                    vector4BufferViews[bufferViewIndex]);
+                                var vec4Span = new Span<byte>(bufferViews[bufferViewIndex]);
+                                var length = gltf.accessors[accessorIndex].count * 4 * 4;
+                                List<Vector4> vec4List = ToVector4List(ref vec4Span, gltf.accessors[accessorIndex].byteOffset, length, gltf.accessors[accessorIndex].count);
+                                mesh.mVector4VertexAttributes.Add(attributeSemantic, vec4List);
                             }
                         }
                     }
                 }
-                
 
                 parsedMeshList.Add(mesh);
             }
@@ -342,10 +214,12 @@ namespace GLTF
         public List<uint> UIntIndices
         {
             get => mUIntIndices;
+            set => mUIntIndices = value;
         }
         public List<ushort> UShortIndices
         {
             get => mUShortIndices;
+            set => mUShortIndices = value;
         }
 
         protected List<VertexAttributeSemantic> mVertexAttributeList = new List<VertexAttributeSemantic>();
@@ -411,8 +285,91 @@ namespace GLTF
             var y = BitConverter.ToSingle(yPart);
             var z = BitConverter.ToSingle(zPart);
             var w = BitConverter.ToSingle(wPart);
-
             return new Vector4(x, y, z,w);
+        }
+
+        private static List<ushort> ToUShortList(ref Span<byte> span, int start, int length, int count)
+        {
+            List<ushort> result = new List<ushort>();
+
+            var tempSpan = span.Slice(start, length);
+            for (int i = 0; i < count; ++i)
+            {
+                var anotherSpan = tempSpan.Slice(i * 2, 2);
+                result.Add(ToUShort(ref anotherSpan));
+            }
+
+            return result;
+        }
+
+        private static List<uint> ToUIntList(ref Span<byte> span, int start, int length, int count)
+        {
+            List<uint> result = new List<uint>();
+
+            var tempSpan = span.Slice(start, length);
+            for (int i = 0; i < count; ++i)
+            {
+                var anotherSpan = tempSpan.Slice(i * 4, 4);
+                result.Add(ToUInt(ref anotherSpan));
+            }
+
+            return result;
+        }
+
+        private static List<float> ToFloatList(ref Span<byte> span, int start, int length, int count)
+        {
+            List<float> result = new List<float>();
+
+            var tempSpan = span.Slice(start, length);
+            for (int i = 0; i < count; ++i)
+            {
+                var anotherSpan = tempSpan.Slice(i * 4, 4);
+                result.Add(BitConverter.ToSingle(anotherSpan));
+            }
+
+            return result;
+        }
+
+        private static List<Vector3> ToVector3List(ref Span<byte> span, int start, int length, int count)
+        {
+            List<Vector3> result = new List<Vector3>();
+
+            var tempSpan = span.Slice(start, length);
+            for (int i = 0; i < count; ++i)
+            {
+                var anotherSpan = tempSpan.Slice(i * 3 * 4, 12);
+                result.Add(ToVector3(ref anotherSpan));
+            }
+
+            return result;
+        }
+
+        private static List<Vector2> ToVector2List(ref Span<byte> span, int start, int length, int count)
+        {
+            List<Vector2> result = new List<Vector2>();
+
+            var tempSpan = span.Slice(start, length);
+            for (int i = 0; i < count; ++i)
+            {
+                var anotherSpan = tempSpan.Slice(i * 2 * 4, 8);
+                result.Add(ToVector2(ref anotherSpan));
+            }
+
+            return result;
+        }
+
+        private static List<Vector4> ToVector4List(ref Span<byte> span, int start, int length, int count)
+        {
+            List<Vector4> result = new List<Vector4>();
+
+            var tempSpan = span.Slice(start, length);
+            for (int i = 0; i < count; ++i)
+            {
+                var anotherSpan = tempSpan.Slice(i * 4 * 4, 16);
+                result.Add(ToVector4(ref anotherSpan));
+            }
+
+            return result;
         }
     }
 }

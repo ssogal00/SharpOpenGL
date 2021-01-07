@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using CompiledMaterial.GBufferPNT;
+using CompiledMaterial.GBufferPNTT;
 using Core;
 using Core.Buffer;
 using Core.Primitive;
@@ -66,7 +67,7 @@ namespace SharpOpenGLCore
         {
             if (bReadyToDraw)
             {
-                var mtl = ShaderManager.Get().GetMaterial<GBufferPNT>();
+                var mtl = ShaderManager.Get().GetMaterial<GBufferPNTT>();
 
                 mtl.Bind();
                 mtl.CameraTransform_View = CameraManager.Get().CurrentCameraView;
