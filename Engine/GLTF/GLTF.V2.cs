@@ -148,12 +148,61 @@ namespace GLTF.V2
         public AssetInfo asset { get; set; }
 
         [JsonPropertyName("materials")]
-        public List<GLTFMaterial> materials { get; set; }
+        public List<GLTFJsonMaterial> materials { get; set; }
 
         [JsonPropertyName("images")]
         public List<GLTFImage> images { get; set; }
 
         public string Path = "";
+
+        public string GetNormalTexturePath(int meshIndex, int primitiveIndex)
+        {
+            int materialIndex = meshes[meshIndex].primitives[primitiveIndex].material;
+            
+            if (materials[materialIndex].normalTexture.index >= 0)
+            {
+                return images[materials[materialIndex].normalTexture.index].uri;
+            }
+
+            return string.Empty;
+        }
+
+        public string GetBaseColorTexturePath(int meshIndex, int primitiveIndex)
+        {
+            int materialIndex = meshes[meshIndex].primitives[primitiveIndex].material;
+            int textureIndex = materials[materialIndex].pbrMetallicRoughness.baseColorTexture.index;
+
+            if (textureIndex >= 0)
+            {
+                return images[textureIndex].uri;
+            }
+
+            return string.Empty;
+        }
+
+        public string GetMetallicRoughnessTexturePath(int meshIndex, int primitiveIndex)
+        {
+            int materialIndex = meshes[meshIndex].primitives[primitiveIndex].material;
+            int textureIndex = materials[materialIndex].pbrMetallicRoughness.metallicRoughnessTexture.index;
+            if (textureIndex >= 0)
+            {
+                return images[textureIndex].uri;
+            }
+
+            return string.Empty;
+        }
+
+        public string GetOcclusionTexturePath(int meshIndex, int primitiveIndex)
+        {
+            int materialIndex = meshes[meshIndex].primitives[primitiveIndex].material;
+            int textureIndex = materials[materialIndex].occlusionTexture.index;
+            if (textureIndex >= 0)
+            {
+                return images[textureIndex].uri;
+            }
+
+            return string.Empty;
+        }
     }
 
     public class GLTFImage
@@ -164,8 +213,7 @@ namespace GLTF.V2
 
     public class TextureIndex
     {
-        [JsonPropertyName("index")]
-        public int index { get; set; }
+        [JsonPropertyName("index")] public int index { get; set; } = -1;
     }
 
     public class PBRMetallicRoughness
@@ -177,16 +225,22 @@ namespace GLTF.V2
         public TextureIndex metallicRoughnessTexture { get; set; }
     }
 
-    public class GLTFMaterial
+    public class GLTFJsonMaterial
     {
-        [JsonPropertyName("emissiveTexture")] 
+        [JsonPropertyName("emissiveTexture")]
         public TextureIndex emissiveTexture { get; set; }
         
-        [JsonPropertyName("occlusionTexture")] 
+        [JsonPropertyName("occlusionTexture")]
         public TextureIndex occlusionTexture { get; set; }
 
         [JsonPropertyName("normalTexture")]
         public TextureIndex normalTexture { get; set; }
+
+        [JsonPropertyName("doubleSided")] 
+        public bool doubleSided { get; set; }
+
+        [JsonPropertyName("pbrMetallicRoughness")]
+        public PBRMetallicRoughness pbrMetallicRoughness { get; set; }
 
         [JsonPropertyName("name")]
         public string name { get; set; }

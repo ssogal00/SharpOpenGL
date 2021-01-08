@@ -93,16 +93,16 @@ namespace GLTF
 
             List<GLTFMeshAsset> parsedMeshList = new List<GLTFMeshAsset>();
 
-            for (int i = 0; i < gltf.meshes.Count; ++i)
+            for (int meshIndex = 0; meshIndex < gltf.meshes.Count; ++meshIndex)
             {
                 var mesh = new GLTFMeshAsset();
 
                 // for each mesh
                 // parser index array and vertex attributes
-                for (int pindex = 0; pindex < gltf.meshes[i].primitives.Count; ++pindex)
+                for (int pindex = 0; pindex < gltf.meshes[meshIndex].primitives.Count; ++pindex)
                 {
                     // index array
-                    int indexArraryAccessorIndex = gltf.meshes[i].primitives[pindex].indices;
+                    int indexArraryAccessorIndex = gltf.meshes[meshIndex].primitives[pindex].indices;
                     int indexArrayBufferViewIndex = gltf.accessors[indexArraryAccessorIndex].bufferView;
                     
                     if (gltf.accessors[indexArraryAccessorIndex].componentType == ComponentType.UNSIGNED_INT)
@@ -123,7 +123,7 @@ namespace GLTF
                     }
 
                     // vertex attributes
-                    foreach (var kvp in gltf.meshes[i].primitives[pindex].attributes)
+                    foreach (var kvp in gltf.meshes[meshIndex].primitives[pindex].attributes)
                     {
                         string semantic = kvp.Key;
                         int accessorIndex = kvp.Value;
@@ -166,6 +166,17 @@ namespace GLTF
                             }
                         }
                     }
+
+                    // materials
+                    var normTexture = gltf.GetNormalTexturePath(meshIndex, pindex);
+                    var colorTexture = gltf.GetBaseColorTexturePath(meshIndex, pindex);
+                    var metallicRoughTexture = gltf.GetMetallicRoughnessTexturePath(meshIndex, pindex);
+                    var occlusionTexture = gltf.GetMetallicRoughnessTexturePath(meshIndex, pindex);
+                    
+                    mesh.TextureMap.Add(PBRTextureType.Normal, normTexture);
+                    mesh.TextureMap.Add(PBRTextureType.BaseColor, colorTexture);
+                    mesh.TextureMap.Add(PBRTextureType.MetallicRoughness, metallicRoughTexture);
+                    mesh.TextureMap.Add(PBRTextureType.Occlusion, occlusionTexture);
                 }
 
                 parsedMeshList.Add(mesh);
@@ -221,6 +232,8 @@ namespace GLTF
             get => mUShortIndices;
             set => mUShortIndices = value;
         }
+
+        public Dictionary<PBRTextureType, string> TextureMap = new Dictionary<PBRTextureType, string>();
 
         protected List<VertexAttributeSemantic> mVertexAttributeList = new List<VertexAttributeSemantic>();
 
