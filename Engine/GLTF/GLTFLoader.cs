@@ -14,7 +14,7 @@ namespace GLTF
             {
                 var json = File.ReadAllText(path);
                 var result = JsonSerializer.Deserialize<GLTF_V2>(json);
-                result.Path = path;
+                result.BaseDir = Path.GetDirectoryName(path);
                 return result;
             }
             catch (Exception e)
@@ -33,7 +33,7 @@ namespace GLTF
                 using (var m = new MemoryStream(json))
                 {
                     GLTF_V2 result = await JsonSerializer.DeserializeAsync<GLTF_V2>(m);
-                    result.Path = path;
+                    result.BaseDir = path;
                     return result;
                 }
             }

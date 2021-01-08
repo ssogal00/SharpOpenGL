@@ -45,6 +45,7 @@ namespace Core.Texture
         protected virtual void Alloc()
         {
             //GL.TexImage2D(TextureTarget.Texture2D, 0, textureFormat, m_Width, m_Height, 0, PixelFormat.Rgba, PixelType.Float, new IntPtr(0));
+            
             GL.TexImage2D(TextureTarget.Texture2D, 0, textureFormat, m_Width, m_Height, 0, this.pixelFormat, this.pixelType, new IntPtr(0));
         }
 

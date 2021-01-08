@@ -62,6 +62,18 @@ namespace GLTF
             return index;
         }
     }
+
+    public class GLTFMeshMaterial
+    {
+        public string Name = "";
+
+        public Dictionary<PBRTextureType, string> TextureMap = new Dictionary<PBRTextureType, string>();
+
+        public AlphaMode Alpha = AlphaMode.OPAQUE;
+
+        public Vector3 EmissiveFactor = Vector3.Zero;
+    }
+
     public class GLTFMeshAsset
     {
         public static List<GLTFMeshAsset> LoadFrom(GLTF_V2 gltf)
@@ -71,7 +83,7 @@ namespace GLTF
             List<byte[]> bufferViews = new List<byte[]>();
             Dictionary<int, List<float>> floatBufferViews = new Dictionary<int, List<float>>();
 
-            var baseDir = Path.GetDirectoryName(gltf.Path);
+            var baseDir = gltf.BaseDir;
 
             // buffers
             for (int i = 0; i < gltf.buffers.Count; ++i)
@@ -172,11 +184,14 @@ namespace GLTF
                     var colorTexture = gltf.GetBaseColorTexturePath(meshIndex, pindex);
                     var metallicRoughTexture = gltf.GetMetallicRoughnessTexturePath(meshIndex, pindex);
                     var occlusionTexture = gltf.GetMetallicRoughnessTexturePath(meshIndex, pindex);
+
+                    mesh.Material = new GLTFMeshMaterial();
                     
-                    mesh.TextureMap.Add(PBRTextureType.Normal, normTexture);
-                    mesh.TextureMap.Add(PBRTextureType.BaseColor, colorTexture);
-                    mesh.TextureMap.Add(PBRTextureType.MetallicRoughness, metallicRoughTexture);
-                    mesh.TextureMap.Add(PBRTextureType.Occlusion, occlusionTexture);
+                    mesh.Material.Name = gltf.GetMaterialName(gltf.meshes[meshIndex].primitives[pindex].material);
+                    mesh.Material.TextureMap.Add(PBRTextureType.Normal, normTexture);
+                    mesh.Material.TextureMap.Add(PBRTextureType.BaseColor, colorTexture);
+                    mesh.Material.TextureMap.Add(PBRTextureType.MetallicRoughness, metallicRoughTexture);
+                    mesh.Material.TextureMap.Add(PBRTextureType.Occlusion, occlusionTexture);
                 }
 
                 parsedMeshList.Add(mesh);
@@ -189,7 +204,7 @@ namespace GLTF
         {
         }
 
-        public PBRInfo PBRInfo = new PBRInfo();
+        public GLTFMeshMaterial Material { get; set; }
 
         public List<string> TexturePaths { get; set; }
 

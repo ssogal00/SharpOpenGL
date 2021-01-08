@@ -5,6 +5,9 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Core;
+using OpenTK.Audio.OpenAL;
+using System.IO;
+
 
 namespace GLTF.V2
 {
@@ -42,6 +45,13 @@ namespace GLTF.V2
         //
         ARRAY_BUFFER = 34962,
         ELEMENT_ARRAY_BUFFER = 34963,
+    }
+
+    public enum AlphaMode
+    {
+        OPAQUE,
+        MASK,
+        BLEND
     }
 
     public class JsonNumToComponentTypeConverter : JsonConverter<ComponentType>
@@ -91,6 +101,27 @@ namespace GLTF.V2
         }
 
         public override void Write(Utf8JsonWriter writer, AttributeType value, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class JsonStringToAlphaModeConverter : JsonConverter<AlphaMode>
+    {
+        public override AlphaMode Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.String)
+            {
+                var str = reader.GetString();
+                AlphaMode mode;
+                AlphaMode.TryParse(str, out mode);
+                return mode;
+            }
+
+            return AlphaMode.OPAQUE;
+        }
+
+        public override void Write(Utf8JsonWriter writer, AlphaMode value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
@@ -153,7 +184,12 @@ namespace GLTF.V2
         [JsonPropertyName("images")]
         public List<GLTFImage> images { get; set; }
 
-        public string Path = "";
+        public string BaseDir = "";
+
+        public string GetMaterialName(int materialIndex)
+        {
+            return materials[materialIndex].name;
+        }
 
         public string GetNormalTexturePath(int meshIndex, int primitiveIndex)
         {
@@ -161,7 +197,7 @@ namespace GLTF.V2
             
             if (materials[materialIndex].normalTexture.index >= 0)
             {
-                return images[materials[materialIndex].normalTexture.index].uri;
+                return Path.Combine(this.BaseDir, images[materials[materialIndex].normalTexture.index].uri);
             }
 
             return string.Empty;
@@ -174,7 +210,7 @@ namespace GLTF.V2
 
             if (textureIndex >= 0)
             {
-                return images[textureIndex].uri;
+                return Path.Combine(BaseDir, images[textureIndex].uri);
             }
 
             return string.Empty;
@@ -186,7 +222,7 @@ namespace GLTF.V2
             int textureIndex = materials[materialIndex].pbrMetallicRoughness.metallicRoughnessTexture.index;
             if (textureIndex >= 0)
             {
-                return images[textureIndex].uri;
+                return Path.Combine(BaseDir, images[textureIndex].uri);
             }
 
             return string.Empty;
@@ -198,7 +234,7 @@ namespace GLTF.V2
             int textureIndex = materials[materialIndex].occlusionTexture.index;
             if (textureIndex >= 0)
             {
-                return images[textureIndex].uri;
+                return Path.Combine(BaseDir, images[textureIndex].uri);
             }
 
             return string.Empty;
@@ -244,6 +280,8 @@ namespace GLTF.V2
 
         [JsonPropertyName("name")]
         public string name { get; set; }
+
+        [JsonPropertyName("alphaMode")] public AlphaMode alphaMode { get; set; } = AlphaMode.OPAQUE;
 
     }
 

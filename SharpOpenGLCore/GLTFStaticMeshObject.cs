@@ -14,6 +14,7 @@ using SharpOpenGL;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Threading;
+using System.IO;
 
 namespace SharpOpenGLCore
 {
@@ -73,7 +74,15 @@ namespace SharpOpenGLCore
                 mtl.CameraTransform_View = CameraManager.Get().CurrentCameraView;
                 mtl.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
                 mtl.ModelTransform_Model = this.LocalMatrix;
+
+                if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.BaseColor))
+                {
+                    var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.BaseColor];
+                    mtl.DiffuseTex2D = TextureManager.Get().GetTexture2D(path);
+                }
+                
                 mDrawable.DrawIndexed();
+
                 mtl.Unbind();
             }
         }
@@ -109,12 +118,6 @@ namespace SharpOpenGLCore
                 }
             }
 
-
-            foreach (var attr in attrList)
-            {
-                
-            }
-
             if (mGLTFAsset.UIntIndices.Count > 0)
             {
                 var arr = mGLTFAsset.UIntIndices.ToArray();
@@ -128,9 +131,22 @@ namespace SharpOpenGLCore
                 mIndexCount = (uint)arr.Length;
             }
 
+            LoadTextures();
+
             mDrawable.Unbind();
 
             bReadyToDraw = true;
+        }
+
+        private void LoadTextures()
+        {
+            foreach (var kvp in this.mGLTFAsset.Material.TextureMap)
+            {
+                if (File.Exists(kvp.Value))
+                {
+                    TextureManager.Get().CacheTexture2D(kvp.Value);
+                }
+            }
         }
 
         private GenericMeshDrawable mDrawable = null;

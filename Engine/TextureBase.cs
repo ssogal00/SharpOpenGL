@@ -296,6 +296,10 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM:
                     return InternalFormat.Rgba;
 
+
+                case DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM:
+                    return InternalFormat.Rgba;
+
                 // r8g8
                 case DXGI_FORMAT.DXGI_FORMAT_R8G8_SINT:
                     return InternalFormat.Rg8i;
@@ -386,6 +390,10 @@ namespace Core.Texture
                 case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_SNORM:
                     return PixelInternalFormat.Rgba8Snorm;
                 case DXGI_FORMAT.DXGI_FORMAT_R8G8B8A8_UNORM:
+                    return PixelInternalFormat.Rgba;
+
+                // b8g8r8a8
+                case DXGI_FORMAT.DXGI_FORMAT_B8G8R8A8_UNORM:
                     return PixelInternalFormat.Rgba;
 
                 // r8g8
