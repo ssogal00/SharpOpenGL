@@ -1,12 +1,11 @@
-﻿using System;
-using Core.Buffer;
+﻿using Core.Buffer;
 using Core.OpenGLShader;
-using System.Collections.Generic;
-using System.Diagnostics;
-
 using Core.Texture;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 
 namespace Core.MaterialBase
@@ -119,13 +118,13 @@ namespace Core.MaterialBase
 
         protected virtual void CleanUpUniformBufferMap()
         {
-            if(UniformBufferMap != null)
+            if(mUniformBufferMap != null)
             {
-                foreach(var buffer in UniformBufferMap)
+                foreach(var buffer in mUniformBufferMap)
                 {
                     buffer.Value.Dispose();
                 }
-                UniformBufferMap.Clear();
+                mUniformBufferMap.Clear();
             }
         }
 
@@ -135,13 +134,13 @@ namespace Core.MaterialBase
 
             if (names.Count > 0)
             {
-                UniformBufferMap = new Dictionary<string, DynamicUniformBuffer>();
+                mUniformBufferMap = new Dictionary<string, DynamicUniformBuffer>();
             }
 
             foreach (var name in names)
             {
                 var uniformBuffer = new DynamicUniformBuffer(mMaterialProgram, name);
-                UniformBufferMap.Add(name, uniformBuffer);
+                mUniformBufferMap.Add(name, uniformBuffer);
             }
         }
 
@@ -151,13 +150,13 @@ namespace Core.MaterialBase
 
             if (samplerNames.Count > 0)
             {
-                SamplerMap = new Dictionary<string, TextureUnit>();
+                mSamplerMap = new Dictionary<string, TextureUnit>();
                 
             }
 
             for (int i = 0; i < samplerNames.Count; ++i)
             {
-                SamplerMap.Add(samplerNames[i], TextureUnit.Texture0 + i);
+                mSamplerMap.Add(samplerNames[i], TextureUnit.Texture0 + i);
             }
         }
 
@@ -169,7 +168,7 @@ namespace Core.MaterialBase
 
             var attrList = mMaterialProgram.GetActiveVertexAttributeList();
 
-            UniformVariableNames = mMaterialProgram.GetActiveUniformNames();
+            mUniformVariableNames = mMaterialProgram.GetActiveUniformNames();
         }
 
         public void SetTexture(string name, Core.Texture.TextureBase texture)
@@ -179,12 +178,12 @@ namespace Core.MaterialBase
 
         public void SetTexture(string name, Core.Texture.TextureBase texture, Sampler sampler)
         {
-            if (SamplerMap == null)
+            if (mSamplerMap == null)
             {
                 return;
             }
 
-            if (SamplerMap.ContainsKey(name) == false)
+            if (mSamplerMap.ContainsKey(name) == false)
             {
                 return;
             }
@@ -210,9 +209,9 @@ namespace Core.MaterialBase
         {
             mMaterialProgram.UseProgram();
 
-            if (UniformBufferMap != null)
+            if (mUniformBufferMap != null)
             {
-                foreach (var uniformBuffer in UniformBufferMap)
+                foreach (var uniformBuffer in mUniformBufferMap)
                 {
                     mMaterialProgram.BindUniformBlock(uniformBuffer.Key);
                 }
@@ -226,7 +225,7 @@ namespace Core.MaterialBase
 
         public bool HasUniformBuffer(string uniformBufferName)
         {
-            if(UniformBufferMap.ContainsKey(uniformBufferName))
+            if(mUniformBufferMap.ContainsKey(uniformBufferName))
             {
                 return true;
             }
@@ -238,7 +237,7 @@ namespace Core.MaterialBase
         {
             if(HasUniformBuffer(bufferName))
             {   
-                UniformBufferMap[bufferName].BufferData(ref data);
+                mUniformBufferMap[bufferName].BufferData(ref data);
             }
         }
 
@@ -246,7 +245,7 @@ namespace Core.MaterialBase
         {
             if (HasUniformBuffer(bufferName))
             {   
-                UniformBufferMap[bufferName].BufferSubData<TMember>(ref data, offset);
+                mUniformBufferMap[bufferName].BufferSubData<TMember>(ref data, offset);
             }
         }
 
@@ -257,7 +256,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, data);
             }
@@ -270,7 +269,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, data);
             }
@@ -283,7 +282,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, data);
             }
@@ -291,7 +290,7 @@ namespace Core.MaterialBase
 
         public void SetUniformVarData(string varName, float[] data, bool bChecked = false)
         {
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformFloatArrayData(varName , ref data);
             }
@@ -299,7 +298,7 @@ namespace Core.MaterialBase
 
         public void SetUniformVarData(string varName, ref float[] data, bool bChecked = false)
         {
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformFloatArrayData(varName, ref data);
             }
@@ -307,7 +306,7 @@ namespace Core.MaterialBase
 
         public void SetUniformVarData(string varName, double[] data, bool bChecked = false)
         {
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformDoubleArrayData(varName, ref data);
             }
@@ -315,7 +314,7 @@ namespace Core.MaterialBase
 
         public void SetUniformVarData(string varname, ref Vector2[] data)
         {
-            if (UniformVariableNames.Contains(varname))
+            if (mUniformVariableNames.Contains(varname))
             {
                 mMaterialProgram.SetUniformVector2ArrayData(varname, ref data);
             }
@@ -323,7 +322,7 @@ namespace Core.MaterialBase
 
         public void SetUniformVarData(string varname, ref Vector3[] data)
         {
-            if (UniformVariableNames.Contains(varname))
+            if (mUniformVariableNames.Contains(varname))
             {
                 mMaterialProgram.SetUniformVector3ArrayData(varname, ref data);
             }
@@ -331,7 +330,7 @@ namespace Core.MaterialBase
 
         public void SetUniformVarData(string varname, ref Vector4[] data)
         {
-            if (UniformVariableNames.Contains(varname))
+            if (mUniformVariableNames.Contains(varname))
             {
                 mMaterialProgram.SetUniformVector4ArrayData(varname, ref data);
             }
@@ -344,7 +343,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, data);
             }
@@ -357,7 +356,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, data);
             }
@@ -370,7 +369,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, data);
             }
@@ -383,7 +382,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, ref data);
             }
@@ -396,7 +395,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, data);
             }
@@ -409,7 +408,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, data);
             }
@@ -417,7 +416,7 @@ namespace Core.MaterialBase
 
         private void CheckUniformVariableExist(string variablename)
         {
-            Debug.Assert(UniformVariableNames.Contains(variablename));
+            Debug.Assert(mUniformVariableNames.Contains(variablename));
         }
 
         public void SetUniformVarData(string varName, Matrix4 data, bool bChecked = false)
@@ -427,7 +426,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, data);
             }
@@ -440,7 +439,7 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
-            if (UniformVariableNames.Contains(varName))
+            if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVarData(varName, ref data);
             }
@@ -448,19 +447,19 @@ namespace Core.MaterialBase
 
         public void SetUniformVector2ArrayData(string varName, ref float[] data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
+            Debug.Assert(mUniformVariableNames.Contains(varName));
             mMaterialProgram.SetUniformVector2ArrayData(varName, ref data);
         }
 
         public void SetUniformVector3ArrayData(string varName, ref float[] data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
+            Debug.Assert(mUniformVariableNames.Contains(varName));
             mMaterialProgram.SetUniformVector3ArrayData(varName, ref data);
         }
 
         public void SetUniformVector4ArrayData(string varName, ref float[] data)
         {
-            Debug.Assert(UniformVariableNames.Contains(varName));
+            Debug.Assert(mUniformVariableNames.Contains(varName));
             mMaterialProgram.SetUniformVector4ArrayData(varName, ref data);
         }
 
@@ -475,8 +474,8 @@ namespace Core.MaterialBase
         }
         
 
-        protected Dictionary<string, DynamicUniformBuffer> UniformBufferMap = null;
-        protected Dictionary<string, TextureUnit> SamplerMap = null;
-        protected List<string> UniformVariableNames = null;
+        protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = null;
+        protected Dictionary<string, TextureUnit> mSamplerMap = null;
+        protected List<string> mUniformVariableNames = null;
     }
 }

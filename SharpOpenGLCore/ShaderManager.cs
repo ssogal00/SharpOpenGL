@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Core;
 using Core.MaterialBase;
 using GLTF.V2;
@@ -59,7 +60,7 @@ namespace SharpOpenGL
                 {
                     var vsCode = File.ReadAllText(item.VertexShaderPath);
                     var fsCode = File.ReadAllText(item.FragmentShaderPath);
-
+                    new MaterialBase(vsCode, fsCode, item.VertexShaderDefines, item.FragmentShaderDefines);
                 }
             }
         }

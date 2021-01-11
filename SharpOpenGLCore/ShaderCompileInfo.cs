@@ -6,6 +6,12 @@ using System.Text.Json.Serialization;
 
 namespace SharpOpenGLCore
 {
+    public class ShaderMacro
+    {
+        public string name { get; set; }
+        public string value { get; set; }
+    }
+
     public class ShaderCompileInfo
     {
         [JsonPropertyName("vertexShader")] 
