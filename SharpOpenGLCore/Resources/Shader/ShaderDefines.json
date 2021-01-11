@@ -5,8 +5,8 @@
 			"vertexShader" : "./Resources/Shader/Uber.vs.glsl",
 			"name" : "GBufferBase",
 			"id" : 1,
-			"vertexShaderDefines" : [{"VERTEX_PNTT" : 1}],
-			"fragmentShaderDefines" : [{"VERTEX_PNTT" : 1}]
+			"vertexShaderDefines" : [ { "name" : "VERTEX_PNTT", "value" : 1}],
+			"fragmentShaderDefines" : [{ "name" : "VERTEX_PNTT", "value" : 1}]
 		}
 	]
 }
