@@ -32,6 +32,18 @@ namespace Core.OpenGLShader
             }
         }
 
+        public void CompileShader(string shaderSourceCode, List<Tuple<string, string>> defines)
+        {
+            string ShaderErrLog = "";
+            bool bSuccess = CompileShader(shaderSourceCode, defines, out ShaderErrLog);
+
+            if (bSuccess == false)
+            {
+                Console.WriteLine(ShaderErrLog);
+            }
+        }
+
+
         public bool CompileShader(string[] shaderSourceCodes, out string errorlog)
         {
             int [] LengthList = new int[shaderSourceCodes.Length];
@@ -58,7 +70,37 @@ namespace Core.OpenGLShader
 
             return true;
         }
-        
+
+        public bool CompileShader(string shaderSourceCode, List<Tuple<string, string>> defines, out string errorLog)
+        {
+            string defineString = "";
+            if(defines != null)
+            {
+                foreach (var define in defines)
+                {
+                     defineString += $"#define {define.Item1} {define.Item2}";
+                }
+            }
+
+            string modifiedSourceCode = defineString + shaderSourceCode;
+
+            GL.ShaderSource(shaderObject, modifiedSourceCode);
+            GL.CompileShader(shaderObject);
+
+            errorLog = string.Empty;
+
+            int nStatus;
+            GL.GetShader(shaderObject, ShaderParameter.CompileStatus, out nStatus);
+
+            if (nStatus != 1)
+            {
+                GL.GetShaderInfoLog(shaderObject, out errorLog);
+
+                return false;
+            }
+
+            return true;
+        }
 
         public bool CompileShader(string shaderSourceCode, out string errorlog)
         {

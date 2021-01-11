@@ -22,79 +22,84 @@ layout(location=2) in vec3 InColor;
 
 #endif
 
+layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
+layout (location = 1, binding=1) uniform sampler2D NormalTex;
+layout (location = 2, binding=2) uniform sampler2D MaskTex;
+layout (location = 3, binding=3) uniform sampler2D MetallicTex;
+layout (location = 4, binding=4) uniform sampler2D RoughnessTex;
+
 layout (location = 0) out vec4 PositionColor;
 layout (location = 1) out vec4 DiffuseColor;
 layout (location = 2) out vec4 NormalColor;
 layout (location = 3) out vec4 VelocityColor;
 
-
-#if NORMAL_EXIST
-uniform sampler2D NormalTex;
-#endif
-
-
-#if METALLIC_EXIST
-uniform sampler2D MetallicTex;
-#else
-uniform float Metallic = 0;
-#endif
-
-#if ROUGHNESS_EXIST
-uniform sampler2D RoughnessTex;
-#else
-uniform float Roughness = 0;
-#endif
-
-#if MASK_EXIST
-uniform sampler2D MaskTex;
-#endif
-
-#if DIFFUSE_EXIST
-uniform sampler2D DiffuseTex;
-#else
-uniform vec3 DiffuseColor;
-#endif
+uniform MaterialProperty
+{
+	bool MetallicExist;
+	bool RoghnessExist;
+	bool MaskExist;
+	bool NormalExist;
+	float Metallic;
+	float Roughness;
+	float DiffuseColor;	
+};
 
 void main()
 {   
-#if MASK_EXIST
-	vec4 MaskValue= texture(MaskTex, InTexCoord);
-	if(MaskValue.x > 0)
+	if(MaskExist)
 	{
-		DiffuseColor = texture(DiffuseTex, InTexCoord);
+		vec4 MaskValue= texture(MaskTex, InTexCoord);
+		if(MaskValue.x > 0)
+		{
+			DiffuseColor = texture(DiffuseTex, InTexCoord);
+		}
+		else
+		{
+			discard;
+		}    
 	}
 	else
 	{
-		discard;
-	}    
-#else
-	DiffuseColor = texture(DiffuseTex, InTexCoord);    
-#endif
+		DiffuseColor = texture(DiffuseTex, InTexCoord);    
+	}
 
-#if ROUGHNESS_EXIST
-    DiffuseColor.a = texture(RoughnessTex, InTexCoord).x;
-#else
-    DiffuseColor.a = Roughness;
-#endif   
+	if(RoghnessExist)
+    {
+    	DiffuseColor.a = texture(RoughnessTex, InTexCoord).x;
+    }
+    else
+    {
+    	DiffuseColor.a = Roughness;
+	}
 
-#if VERTEX_PNTT && NORMAL_EXIST
-    mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
+#if VERTEX_PNTT
+	if(NormalExist)
+    {
+    	mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
 								    InBinormal.x, InBinormal.y, InBinormal.z, 
 								    InNormal.x, InNormal.y, InNormal.z);    
     
-    vec3 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord ).xyz) - vec3(1.0f));
-    vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
+	    vec3 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord ).xyz) - vec3(1.0f));
+	    vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
 
-    NormalColor.xyz = BumpNormal.xyz;
-#else    
-    NormalColor.xyz = InNormal.xyz;
-#endif    
-    
-#if METALLIC_EXIST    
-    NormalColor.a = texture(MetalicTex, InTexCoord).x;        
+	    NormalColor.xyz = BumpNormal.xyz;
+    }
+    else
+    {
+    	NormalColor.xyz = InNormal.xyz;
+	}
 #else
-    NormalColor.a = Metalic;
-#endif    
+	NormalColor = InNormal.xyz;
+#endif
+    
+	if(MetallicExist)
+    {
+    	NormalColor.a = texture(MetalicTex, InTexCoord).x;
+	}
+	else
+    {
+    	NormalColor.a = Metallic;
+	}
 
     PositionColor = InPosition;
 }

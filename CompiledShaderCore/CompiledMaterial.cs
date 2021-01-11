@@ -26,12 +26,12 @@ public class BasicMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 
@@ -166,12 +166,12 @@ public class SimpleMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 
@@ -271,12 +271,12 @@ public class ScreenSpaceDraw : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
@@ -372,12 +372,12 @@ public class GBufferDraw : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
@@ -958,12 +958,12 @@ public class EquirectangleToCube : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetEquirectangularMap2D(Core.Texture.TextureBase TextureObject)
@@ -1090,12 +1090,12 @@ public class CubemapConvolution : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetEnvironmentMap2D(Core.Texture.TextureBase TextureObject)
@@ -1249,12 +1249,12 @@ public class GBufferInstanced : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
@@ -1720,12 +1720,12 @@ public class GBufferWithoutTexture : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 
@@ -1936,12 +1936,12 @@ public class GBufferDump : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
@@ -2262,12 +2262,12 @@ public class GBufferPNC : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 
@@ -2396,12 +2396,12 @@ public class GBufferCubeTest : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetEquirectangularMap2D(Core.Texture.TextureBase TextureObject)
@@ -2590,12 +2590,12 @@ public class GBufferPNCT : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetSpecularTex2D(Core.Texture.TextureBase TextureObject)
@@ -2766,12 +2766,12 @@ public class GBufferPNT : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
@@ -2956,12 +2956,12 @@ public class GBufferPNTT : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
@@ -3149,12 +3149,12 @@ public class Blur : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
@@ -3291,12 +3291,12 @@ public class BloomMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
@@ -3404,12 +3404,12 @@ public class LightMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetBrdfLUT2D(Core.Texture.TextureBase TextureObject)
@@ -3852,12 +3852,12 @@ public class CubemapMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SettexCubemap2D(Core.Texture.TextureBase TextureObject)
@@ -4012,12 +4012,12 @@ public class MSGBufferMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 
@@ -4257,12 +4257,12 @@ public class DepthVisualizeMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetDepthTex2D(Core.Texture.TextureBase TextureObject)
@@ -4384,12 +4384,12 @@ public class FontRenderMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetFontTexture2D(Core.Texture.TextureBase TextureObject)
@@ -4499,12 +4499,12 @@ public class FontBoxRenderMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 
@@ -4597,12 +4597,12 @@ public class GridRenderMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 
@@ -4727,12 +4727,12 @@ public class ThreeDTextRenderMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetFontTexture2D(Core.Texture.TextureBase TextureObject)
@@ -4872,12 +4872,12 @@ public class ResolveMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetColorTex2D(Core.Texture.TextureBase TextureObject)
@@ -5026,12 +5026,12 @@ public class SSAOMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
@@ -5306,12 +5306,12 @@ public class LUTGenerateMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 
@@ -5469,12 +5469,12 @@ public class PrefilterMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetEnvironmentMap2D(Core.Texture.TextureBase TextureObject)
@@ -5699,12 +5699,12 @@ public class HDAOMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetNormalMap2D(Core.Texture.TextureBase TextureObject)
@@ -6391,12 +6391,12 @@ public class FXAAMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetScreenTex2D(Core.Texture.TextureBase TextureObject)
@@ -6771,12 +6771,12 @@ public class TBNMaterial : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 
@@ -6907,12 +6907,12 @@ public class SignedDistanceField : MaterialBase
 
 	public ShaderProgram GetProgramObject()
 	{
-		return MaterialProgram;
+		return mMaterialProgram;
 	}
 
 	public void Use()
 	{
-		MaterialProgram.UseProgram();
+		mMaterialProgram.UseProgram();
 	}
 
 	public void SetFontTexture2D(Core.Texture.TextureBase TextureObject)

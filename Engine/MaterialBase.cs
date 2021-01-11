@@ -13,9 +13,9 @@ namespace Core.MaterialBase
 {
     public class MaterialBase : Core.AssetBase, IBindable
     {
-        protected ShaderProgram MaterialProgram = null;
-        protected Core.OpenGLShader.VertexShader vertexShader = null;
-        protected Core.OpenGLShader.FragmentShader fragmentShader = null;
+        protected ShaderProgram mMaterialProgram = null;
+        protected Core.OpenGLShader.VertexShader mVertexShader = null;
+        protected Core.OpenGLShader.FragmentShader mFragmentShader = null;
         protected Core.OpenGLShader.TesselControlShader tesselControlShader = null;
         protected Core.OpenGLShader.TesselEvalShader tesselEvaluationShader = null;
 
@@ -27,26 +27,54 @@ namespace Core.MaterialBase
 
         protected string CompileResult = "";
 
+
+
         public MaterialBase(ShaderProgram program)
         {
-            MaterialProgram = program;
+            mMaterialProgram = program;
+            Initialize();
+        }
+
+        public MaterialBase(string vertexShaderCode, string fragmentShaderCode, 
+            List<Tuple<string, string>> vsDefines, List<Tuple<string, string>> fsDefines) 
+        {
+            mVertexShader = new VertexShader();
+            mFragmentShader = new FragmentShader();
+
+            mMaterialProgram = new Core.OpenGLShader.ShaderProgram();
+
+            mVertexShader.CompileShader(vertexShaderCode, vsDefines);
+            mFragmentShader.CompileShader(fragmentShaderCode, fsDefines);
+
+            mMaterialProgram.AttachShader(mVertexShader);
+            mMaterialProgram.AttachShader(mFragmentShader);
+
+            bool bSuccess = mMaterialProgram.LinkProgram(out CompileResult);
+
+            if (bSuccess == false)
+            {
+                Console.Write("{0}", CompileResult);
+            }
+
+            Debug.Assert(bSuccess == true);
+
             Initialize();
         }
 
         public MaterialBase(string vertexShaderCode, string fragmentShaderCode)
         {
-            vertexShader = new VertexShader();
-            fragmentShader = new FragmentShader();
+            mVertexShader = new VertexShader();
+            mFragmentShader = new FragmentShader();
 
-            MaterialProgram = new Core.OpenGLShader.ShaderProgram();
+            mMaterialProgram = new Core.OpenGLShader.ShaderProgram();
             
-            vertexShader.CompileShader(vertexShaderCode);
-            fragmentShader.CompileShader(fragmentShaderCode);
+            mVertexShader.CompileShader(vertexShaderCode);
+            mFragmentShader.CompileShader(fragmentShaderCode);
 
-            MaterialProgram.AttachShader(vertexShader);
-            MaterialProgram.AttachShader(fragmentShader);
+            mMaterialProgram.AttachShader(mVertexShader);
+            mMaterialProgram.AttachShader(mFragmentShader);
 
-            bool bSuccess = MaterialProgram.LinkProgram(out CompileResult);
+            bool bSuccess = mMaterialProgram.LinkProgram(out CompileResult);
 
             if (bSuccess == false)
             {
@@ -60,24 +88,24 @@ namespace Core.MaterialBase
 
         public MaterialBase(string vertexShaderCode, string fragmentShaderCode, string tesselControlShaderCode, string tesselEvalShaderCode)
         {
-            vertexShader = new VertexShader();
-            fragmentShader = new FragmentShader();
+            mVertexShader = new VertexShader();
+            mFragmentShader = new FragmentShader();
             tesselControlShader = new TesselControlShader();
             tesselEvaluationShader = new TesselEvalShader();
 
-            MaterialProgram = new Core.OpenGLShader.ShaderProgram();
+            mMaterialProgram = new Core.OpenGLShader.ShaderProgram();
 
-            vertexShader.CompileShader(vertexShaderCode);
-            fragmentShader.CompileShader(fragmentShaderCode);
+            mVertexShader.CompileShader(vertexShaderCode);
+            mFragmentShader.CompileShader(fragmentShaderCode);
             tesselControlShader.CompileShader(tesselControlShaderCode);
             tesselEvaluationShader.CompileShader(tesselEvalShaderCode);
 
-            MaterialProgram.AttachShader(vertexShader);
-            MaterialProgram.AttachShader(fragmentShader);
-            MaterialProgram.AttachShader(tesselControlShader);
-            MaterialProgram.AttachShader(tesselEvaluationShader);
+            mMaterialProgram.AttachShader(mVertexShader);
+            mMaterialProgram.AttachShader(mFragmentShader);
+            mMaterialProgram.AttachShader(tesselControlShader);
+            mMaterialProgram.AttachShader(tesselEvaluationShader);
 
-            bool bSuccess = MaterialProgram.LinkProgram(out CompileResult);
+            bool bSuccess = mMaterialProgram.LinkProgram(out CompileResult);
 
             Debug.Assert(bSuccess == true);
 
@@ -103,7 +131,7 @@ namespace Core.MaterialBase
 
         protected virtual void BuildUniformBufferMap()
         {
-            var names = MaterialProgram.GetActiveUniformBlockNames();
+            var names = mMaterialProgram.GetActiveUniformBlockNames();
 
             if (names.Count > 0)
             {
@@ -112,14 +140,14 @@ namespace Core.MaterialBase
 
             foreach (var name in names)
             {
-                var uniformBuffer = new DynamicUniformBuffer(MaterialProgram, name);
+                var uniformBuffer = new DynamicUniformBuffer(mMaterialProgram, name);
                 UniformBufferMap.Add(name, uniformBuffer);
             }
         }
 
         protected virtual void BuildSamplerMap()
         {
-            var samplerNames = MaterialProgram.GetSampler2DNames();
+            var samplerNames = mMaterialProgram.GetSampler2DNames();
 
             if (samplerNames.Count > 0)
             {
@@ -139,9 +167,9 @@ namespace Core.MaterialBase
 
             BuildSamplerMap();
 
-            var attrList = MaterialProgram.GetActiveVertexAttributeList();
+            var attrList = mMaterialProgram.GetActiveVertexAttributeList();
 
-            UniformVariableNames = MaterialProgram.GetActiveUniformNames();
+            UniformVariableNames = mMaterialProgram.GetActiveUniformNames();
         }
 
         public void SetTexture(string name, Core.Texture.TextureBase texture)
@@ -161,7 +189,7 @@ namespace Core.MaterialBase
                 return;
             }
 
-            var Loc = MaterialProgram.GetSampler2DUniformLocation(name);
+            var Loc = mMaterialProgram.GetSampler2DUniformLocation(name);
             GL.ActiveTexture(TextureUnit.Texture0 + Loc);
             texture.Bind();
             sampler.BindSampler(TextureUnit.Texture0 + Loc);
@@ -180,13 +208,13 @@ namespace Core.MaterialBase
 
         public virtual void Setup()
         {
-            MaterialProgram.UseProgram();
+            mMaterialProgram.UseProgram();
 
             if (UniformBufferMap != null)
             {
                 foreach (var uniformBuffer in UniformBufferMap)
                 {
-                    MaterialProgram.BindUniformBlock(uniformBuffer.Key);
+                    mMaterialProgram.BindUniformBlock(uniformBuffer.Key);
                 }
             }
         }
@@ -231,7 +259,7 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
@@ -244,7 +272,7 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
@@ -257,7 +285,7 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
@@ -265,7 +293,7 @@ namespace Core.MaterialBase
         {
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformFloatArrayData(varName , ref data);
+                mMaterialProgram.SetUniformFloatArrayData(varName , ref data);
             }
         }
 
@@ -273,7 +301,7 @@ namespace Core.MaterialBase
         {
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformFloatArrayData(varName, ref data);
+                mMaterialProgram.SetUniformFloatArrayData(varName, ref data);
             }
         }
 
@@ -281,7 +309,7 @@ namespace Core.MaterialBase
         {
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformDoubleArrayData(varName, ref data);
+                mMaterialProgram.SetUniformDoubleArrayData(varName, ref data);
             }
         }
 
@@ -289,7 +317,7 @@ namespace Core.MaterialBase
         {
             if (UniformVariableNames.Contains(varname))
             {
-                MaterialProgram.SetUniformVector2ArrayData(varname, ref data);
+                mMaterialProgram.SetUniformVector2ArrayData(varname, ref data);
             }
         }
 
@@ -297,7 +325,7 @@ namespace Core.MaterialBase
         {
             if (UniformVariableNames.Contains(varname))
             {
-                MaterialProgram.SetUniformVector3ArrayData(varname, ref data);
+                mMaterialProgram.SetUniformVector3ArrayData(varname, ref data);
             }
         }
 
@@ -305,7 +333,7 @@ namespace Core.MaterialBase
         {
             if (UniformVariableNames.Contains(varname))
             {
-                MaterialProgram.SetUniformVector4ArrayData(varname, ref data);
+                mMaterialProgram.SetUniformVector4ArrayData(varname, ref data);
             }
         }
 
@@ -318,7 +346,7 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
@@ -331,7 +359,7 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVarData(varName, data);
             }
         }        
 
@@ -344,7 +372,7 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
@@ -357,7 +385,7 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, ref data);
+                mMaterialProgram.SetUniformVarData(varName, ref data);
             }
         }
 
@@ -370,7 +398,7 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
@@ -383,7 +411,7 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
@@ -401,7 +429,7 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVarData(varName, data);
             }
         }
 
@@ -414,33 +442,33 @@ namespace Core.MaterialBase
 
             if (UniformVariableNames.Contains(varName))
             {
-                MaterialProgram.SetUniformVarData(varName, ref data);
+                mMaterialProgram.SetUniformVarData(varName, ref data);
             }
         }
 
         public void SetUniformVector2ArrayData(string varName, ref float[] data)
         {
             Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVector2ArrayData(varName, ref data);
+            mMaterialProgram.SetUniformVector2ArrayData(varName, ref data);
         }
 
         public void SetUniformVector3ArrayData(string varName, ref float[] data)
         {
             Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVector3ArrayData(varName, ref data);
+            mMaterialProgram.SetUniformVector3ArrayData(varName, ref data);
         }
 
         public void SetUniformVector4ArrayData(string varName, ref float[] data)
         {
             Debug.Assert(UniformVariableNames.Contains(varName));
-            MaterialProgram.SetUniformVector4ArrayData(varName, ref data);
+            mMaterialProgram.SetUniformVector4ArrayData(varName, ref data);
         }
 
         public List<VertexAttribute> GetVertexAttributes()
         {
-            if (MaterialProgram.ProgramLinked)
+            if (mMaterialProgram.ProgramLinked)
             {
-                return MaterialProgram.GetActiveVertexAttributeList();
+                return mMaterialProgram.GetActiveVertexAttributeList();
             }
 
             return new List<VertexAttribute>();

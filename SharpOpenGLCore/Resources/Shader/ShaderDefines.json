@@ -1,0 +1,12 @@
+{	
+	"shaders" : [
+		{
+			"fragmentShader" : "./Resources/Shader/Uber.fs.glsl",
+			"vertexShader" : "./Resources/Shader/Uber.vs.glsl",
+			"name" : "GBufferBase",
+			"id" : 1,
+			"vertexShaderDefines" : [{"VERTEX_PNTT" : 1}],
+			"fragmentShaderDefines" : [{"VERTEX_PNTT" : 1}]
+		}
+	]
+}

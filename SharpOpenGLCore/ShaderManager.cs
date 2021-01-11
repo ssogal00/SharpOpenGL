@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Core;
 using Core.MaterialBase;
+using GLTF.V2;
+using SharpOpenGLCore;
 
 namespace SharpOpenGL
 {
@@ -33,6 +37,29 @@ namespace SharpOpenGL
                 {
                     var instance = (MaterialBase)Activator.CreateInstance(t);
                     ShaderMap.Add(t.Name, instance);
+                }
+            }
+        }
+
+        public void PreCompileShaders()
+        {
+            Debug.Assert(RenderingThread.IsInRenderingThread());
+
+            if(File.Exists("./Resources/Shader/ShaderDefines.json")== false)
+            {
+                return;
+            }
+
+            var json = File.ReadAllText("./Resources/Shader/ShaderDefines.json");
+            var result = JsonSerializer.Deserialize<ShaderListToCompile>(json);
+
+            if (result != null)
+            {
+                foreach(var item in result.ShaderList)
+                {
+                    var vsCode = File.ReadAllText(item.VertexShaderPath);
+                    var fsCode = File.ReadAllText(item.FragmentShaderPath);
+
                 }
             }
         }
