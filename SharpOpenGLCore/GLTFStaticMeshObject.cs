@@ -80,6 +80,12 @@ namespace SharpOpenGLCore
                     var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.BaseColor];
                     mtl.DiffuseTex2D = TextureManager.Get().GetTexture2D(path);
                 }
+
+                if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Normal))
+                {
+                    var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.Normal];
+                    
+                }
                 
                 mDrawable.DrawIndexed();
 
