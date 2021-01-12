@@ -112,16 +112,19 @@ namespace SharpOpenGLCore
                 {
                     var data = mGLTFAsset.Vector3VertexAttributes[attrList[i]].ToArray();
                     mDrawable.SetVertexBufferData(i, ref data);
+                    mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec3);
                 }
                 else if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC2)
                 {
                     var data = mGLTFAsset.Vector2VertexAttributes[attrList[i]].ToArray();
                     mDrawable.SetVertexBufferData(i, ref data);
+                    mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec2);
                 }
                 else if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC4)
                 {
                     var data = mGLTFAsset.Vector4VertexAttributes[attrList[i]].ToArray();
                     mDrawable.SetVertexBufferData(i, ref data);
+                    mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec4);
                 }
             }
 
@@ -161,5 +164,7 @@ namespace SharpOpenGLCore
         protected GLTFMeshAsset mGLTFAsset;
 
         protected uint mIndexCount = 0;
+
+        protected List<ActiveAttribType> mGLVertexAttributeTypeList = new List<ActiveAttribType>();
     }
 }
