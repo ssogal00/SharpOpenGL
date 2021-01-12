@@ -71,7 +71,7 @@ namespace SharpOpenGL
 
             Sampler.Initialize();
             ShaderManager.Get().CompileShaders();
-            ShaderManager.Get().PreCompileShaders();
+            
 
             this.Title = "MyEngine";
 
@@ -80,7 +80,7 @@ namespace SharpOpenGL
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.TextureCubeMap);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
-
+            
             OnKeyDownEvent += CameraManager.Get().OnKeyDown;
             OnKeyUpEvent += CameraManager.Get().OnKeyUp;
             OnKeyDownEvent += this.HandleKeyDownEvent;

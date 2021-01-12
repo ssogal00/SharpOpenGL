@@ -7,10 +7,28 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
+using Core.CustomAttribute;
 
 
 namespace Core.MaterialBase
 {
+    [StructLayout(LayoutKind.Explicit, Size = 128)]
+    public struct CameraTransform
+    {
+        [FieldOffset(0), ExposeUI]
+        public OpenTK.Mathematics.Matrix4 View;
+        [FieldOffset(64), ExposeUI]
+        public OpenTK.Mathematics.Matrix4 Proj;
+    }
+
+    [StructLayout(LayoutKind.Explicit, Size = 64)]
+    public struct ModelTransform
+    {
+        [FieldOffset(0), ExposeUI]
+        public OpenTK.Mathematics.Matrix4 Model;
+    }
+
     public class MaterialBase : Core.AssetBase, IBindable
     {
         protected ShaderProgram mMaterialProgram = null;
@@ -24,9 +42,7 @@ namespace Core.MaterialBase
         public static readonly string StageInputName = "stage_in";
 
         protected string CompileResult = "";
-
-
-
+        
         public MaterialBase(ShaderProgram program)
         {
             mMaterialProgram = program;
@@ -458,6 +474,8 @@ namespace Core.MaterialBase
             return new List<ActiveAttribType>();
         }
 
+        protected CameraTransform mCameraTransform = new CameraTransform();
+        protected ModelTransform mModelTransform = new ModelTransform();
 
         protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = null;
         protected Dictionary<string, TextureUnit> mSamplerMap = null;
