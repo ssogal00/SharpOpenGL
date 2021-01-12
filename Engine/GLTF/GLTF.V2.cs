@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using Core;
 using OpenTK.Audio.OpenAL;
 using System.IO;
+using OpenTK.Mathematics;
 
 
 namespace GLTF.V2
@@ -52,6 +53,47 @@ namespace GLTF.V2
         OPAQUE,
         MASK,
         BLEND
+    }
+
+    public class JsonNumArrayToVector4TypeConverter : JsonConverter<Vector4>
+    {
+        public override Vector4 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.StartArray)
+            {
+                var x = reader.GetSingle();
+                var y = reader.GetSingle();
+                var z = reader.GetSingle();
+                var w = reader.GetSingle();
+                return new Vector4(x,y,z,w);
+            }
+
+            return Vector4.Zero;
+        }
+        public override void Write(Utf8JsonWriter writer, Vector4 data, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class JsonNumArrayToVector3TypeConverter : JsonConverter<Vector3>
+    {
+        public override Vector3 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.StartArray)
+            {
+                var x = reader.GetSingle();
+                var y = reader.GetSingle();
+                var z = reader.GetSingle();
+                return new Vector3(x, y, z);
+            }
+
+            return Vector3.Zero;
+        }
+        public override void Write(Utf8JsonWriter writer, Vector3 data, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class JsonNumToComponentTypeConverter : JsonConverter<ComponentType>
@@ -257,8 +299,17 @@ namespace GLTF.V2
         [JsonPropertyName("baseColorTexture")]
         public TextureIndex baseColorTexture { get; set; }
 
+        [JsonPropertyName("baseColorFactor")]
+        public Vector4 baseColorFactor { get; set; }
+        
         [JsonPropertyName("metallicRoughnessTexture")]
         public TextureIndex metallicRoughnessTexture { get; set; }
+
+        [JsonPropertyName("metallicFactor")]
+        public float metallicFactor { get; set; }
+
+        [JsonPropertyName("roughnessFactor")]
+        public float roughnessFactor { get; set; }
     }
 
     public class GLTFJsonMaterial
