@@ -1,4 +1,4 @@
-#version 450 core
+
 
 #if VERTEX_PNTT
 
@@ -40,8 +40,7 @@ uniform MaterialProperty
 	bool MaskExist;
 	bool NormalExist;
 	float Metallic;
-	float Roughness;
-	float DiffuseColor;	
+	float Roughness;	
 };
 
 void main()
@@ -89,12 +88,12 @@ void main()
     	NormalColor.xyz = InNormal.xyz;
 	}
 #else
-	NormalColor = InNormal.xyz;
+	NormalColor.xyz = InNormal.xyz;
 #endif
     
 	if(MetallicExist)
     {
-    	NormalColor.a = texture(MetalicTex, InTexCoord).x;
+    	NormalColor.a = texture(MetallicTex, InTexCoord).x;
 	}
 	else
     {

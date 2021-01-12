@@ -49,12 +49,10 @@ namespace Core.MaterialBase
             mMaterialProgram.AttachShader(mFragmentShader);
 
             bool bSuccess = mMaterialProgram.LinkProgram(out CompileResult);
-
             if (bSuccess == false)
             {
                 Console.Write("{0}", CompileResult);
             }
-
             Debug.Assert(bSuccess == true);
 
             Initialize();

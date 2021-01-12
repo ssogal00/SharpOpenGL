@@ -71,6 +71,7 @@ namespace SharpOpenGL
 
             Sampler.Initialize();
             ShaderManager.Get().CompileShaders();
+            ShaderManager.Get().PreCompileShaders();
 
             this.Title = "MyEngine";
 

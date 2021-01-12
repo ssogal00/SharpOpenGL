@@ -3,10 +3,16 @@
 		{
 			"fragmentShader" : "./Resources/Shader/Uber.fs.glsl",
 			"vertexShader" : "./Resources/Shader/Uber.vs.glsl",
-			"name" : "GBufferBase",
-			"id" : 1,
-			"vertexShaderDefines" : [ { "name" : "VERTEX_PNTT", "value" : 1}],
-			"fragmentShaderDefines" : [{ "name" : "VERTEX_PNTT", "value" : 1}]
+			"name" : "GBufferMacro1",			
+			"vertexShaderDefines" : [ { "name" : "VERTEX_PNTT", "value" : "1"}],
+			"fragmentShaderDefines" : [{ "name" : "VERTEX_PNTT", "value" : "1"}]
+		},
+		{
+			"fragmentShader" : "./Resources/Shader/Uber.fs.glsl",
+			"vertexShader" : "./Resources/Shader/Uber.vs.glsl",
+			"name" : "GBufferMacro2",			
+			"vertexShaderDefines" : [ { "name" : "VERTEX_PNT", "value" : "1"}],
+			"fragmentShaderDefines" : [{ "name" : "VERTEX_PNT", "value" : "1"}]
 		}
 	]
 }

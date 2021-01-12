@@ -21,13 +21,13 @@ namespace SharpOpenGLCore
         public string FragmentShaderPath { get; set; }
 
         [JsonPropertyName("vertexShaderDefines")]
-        public List<string> VertexShaderDefines { get; set; }
+        public List<ShaderMacro> VertexShaderDefines { get; set; }
 
         [JsonPropertyName("fragmentShaderDefines")]
-        public List<string> FragmentShaderDefines { get; set; }
+        public List<ShaderMacro> FragmentShaderDefines { get; set; }
 
         [JsonPropertyName("name")] 
-        public string Name;
+        public string Name { get; set; }
     }
 
     public class ShaderListToCompile

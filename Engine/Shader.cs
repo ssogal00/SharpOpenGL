@@ -73,16 +73,17 @@ namespace Core.OpenGLShader
 
         public bool CompileShader(string shaderSourceCode, List<Tuple<string, string>> defines, out string errorLog)
         {
+            string versionString = "#version 450 core\n";
             string defineString = "";
             if(defines != null)
             {
                 foreach (var define in defines)
                 {
-                     defineString += $"#define {define.Item1} {define.Item2}";
+                    defineString += $"#define {define.Item1} {define.Item2}\n";
                 }
             }
 
-            string modifiedSourceCode = defineString + shaderSourceCode;
+            string modifiedSourceCode = versionString + defineString + shaderSourceCode;
 
             GL.ShaderSource(shaderObject, modifiedSourceCode);
             GL.CompileShader(shaderObject);
@@ -95,7 +96,6 @@ namespace Core.OpenGLShader
             if (nStatus != 1)
             {
                 GL.GetShaderInfoLog(shaderObject, out errorLog);
-
                 return false;
             }
 

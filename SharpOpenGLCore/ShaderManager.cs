@@ -37,7 +37,7 @@ namespace SharpOpenGL
                 if (t.IsSubclassOf(typeof(MaterialBase)))
                 {
                     var instance = (MaterialBase)Activator.CreateInstance(t);
-                    ShaderMap.Add(t.Name, instance);
+                    mShaderMap.Add(t.Name, instance);
                 }
             }
         }
@@ -60,16 +60,23 @@ namespace SharpOpenGL
                 {
                     var vsCode = File.ReadAllText(item.VertexShaderPath);
                     var fsCode = File.ReadAllText(item.FragmentShaderPath);
-                    new MaterialBase(vsCode, fsCode, item.VertexShaderDefines, item.FragmentShaderDefines);
+
+                    var vsDefines = item.VertexShaderDefines.Select(x => new Tuple<string,string>(x.name, x.value)).ToList();
+                    var fsDefines = item.FragmentShaderDefines.Select(x => new Tuple<string,string>(x.name, x.value)).ToList();
+
+                    var mtl = new MaterialBase(vsCode, fsCode, vsDefines, fsDefines);
+
+
+                    mShaderMap.Add(item.Name, mtl);
                 }
             }
         }
 
         public MaterialBase GetMaterial(string name)
         {
-            if (ShaderMap.ContainsKey(name))
+            if (mShaderMap.ContainsKey(name))
             {
-                return ShaderMap[name];
+                return mShaderMap[name];
             }
 
             return null;
@@ -77,7 +84,7 @@ namespace SharpOpenGL
 
         public T GetMaterial<T>() where T : MaterialBase
         {
-            foreach (var item in ShaderMap)
+            foreach (var item in mShaderMap)
             {
                 if (item.Value is T)
                 {
@@ -88,6 +95,6 @@ namespace SharpOpenGL
             return default(T);
         }
 
-        private Dictionary<string, MaterialBase> ShaderMap = new Dictionary<string, MaterialBase>();
+        private Dictionary<string, MaterialBase> mShaderMap = new Dictionary<string, MaterialBase>();
     }
 }
