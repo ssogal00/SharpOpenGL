@@ -27,4 +27,8 @@
     <Exec Command="if not exist $(TargetDir)\Resources mkdir $(TargetDir)\Resources&#xD;&#xA;if not exist $(TargetDir)\Resources\SponzaTexture mkdir $(TargetDir)\Resources\SponzaTexture&#xD;&#xA;if not exist $(TargetDir)\Resources\ObjMesh mkdir $(TargetDir)\Resources\ObjMesh&#xD;&#xA;if not exist $(TargetDir)\Resources\Shader mkdir $(TargetDir)\Resources\Shader&#xD;&#xA;if not exist $(TargetDir)\Resources\Cubemap mkdir $(TargetDir)\Resources\Cubemap&#xD;&#xA;if not exist $(TargetDir)\Resources\Font mkdir $(TargetDir)\Resources\Font&#xD;&#xA;if not exist $(TargetDir)\Resources\Fonts mkdir $(TargetDir)\Resources\Fonts&#xD;&#xA;if not exist $(TargetDir)\Resources\Texture mkdir $(TargetDir)\Resources\Texture&#xD;&#xA;if not exist $(TargetDir)\Resources\$(PlatformName) mkdir $(TargetDir)\Resources\$(PlatformName)&#xD;&#xA;xcopy /D /Y /S $(ProjectDir)\Resources\ $(TargetDir)\Resources\&#xD;&#xA;&#xD;&#xA;xcopy /D /Y /S $(ProjectDir)\Shader $(TargetDir)\Resources\Shader&#xD;&#xA;&#xD;&#xA;xcopy /F /Y /S $(SolutionDir)\NVIDIATextureToolsExporter\nvtt_export.exe $(TargetDir)&#xD;&#xA;xcopy /F /Y /S $(SolutionDir)\NVIDIATextureToolsExporter\FreeImage.dll $(TargetDir)&#xD;&#xA;" />
   </Target>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="$(SolutionDir)ShaderCompilerCore\bin\$(Configuration)\netcoreapp3.1\ShaderCompilerCore.exe $(SolutionDir)SharpOpenGLCore\Resources\Shader $(SolutionDir)CompiledShaderCore" />
+  </Target>
+
 </Project>
