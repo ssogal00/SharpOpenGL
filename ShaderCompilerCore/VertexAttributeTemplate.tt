@@ -1,0 +1,54 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="OpenTK" #>
+<#@ import namespace="OpenTK.Graphics.OpenGL" #>
+
+<#
+	int nTotalSize = 0;
+	for(int i =0; i < VertexAttributeList.Count; ++i)
+	{
+		nTotalSize += VertexAttributeList[i].Size;
+	}
+#>
+
+[ZeroFormattable]
+[StructLayout(LayoutKind.Explicit,Size=<#= nTotalSize #>)]
+public struct VertexAttribute
+{
+<# 
+for(int i = 0; i < VertexAttributeList.Count; ++i)
+{
+	int nOffset = 0;
+	for(int j = 0; j < i; ++j)
+	{
+		nOffset += VertexAttributeList[j].Size;
+	}
+#>	
+	[Index(<#=i#>)]
+	[FieldOffset(<#=nOffset#>), ComponentCount(<#=VertexAttributeList[i].ComponentCount#>), ComponentType(VertexAttribPointerType.<#=VertexAttributeList[i].ComponentType.ToString()#>)]
+	public <#=VertexAttributeList[i].AttributeTypeString#> <#=VertexAttributeList[i].Name#>;
+	<#
+	}
+	#>
+
+	public static void VertexAttributeBinding()
+	{
+<#
+for(int index = 0; index < VertexAttributeList.Count; ++index)    
+{
+	int nOffset = 0;
+	for(int j = 0; j < index; ++j)
+	{
+		nOffset += VertexAttributeList[j].Size;
+	}
+#>
+		GL.EnableVertexAttribArray(<#=index#>);
+		GL.VertexAttribPointer(<#=index#>, <#=VertexAttributeList[index].ComponentCount#>, VertexAttribPointerType.<#=VertexAttributeList[index].ComponentType.ToString()#>, false, <#=nTotalSize#>, new IntPtr(<#=nOffset#>));
+<#
+}
+#>
+	}
+}

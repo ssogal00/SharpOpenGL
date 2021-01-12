@@ -9,7 +9,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Core.OpenGLShader;
 
-namespace ShaderCompiler
+namespace ShaderCompilerCore
 {
     public partial class SamplerGenerator
     {

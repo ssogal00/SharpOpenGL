@@ -15,7 +15,7 @@ using System.IO;
 using System.Xml.Linq;
 using OpenTK.Windowing.Desktop;
 
-namespace ShaderCompiler
+namespace ShaderCompilerCore
 {
     public static class Program
     {

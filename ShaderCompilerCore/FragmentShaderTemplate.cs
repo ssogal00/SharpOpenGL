@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace ShaderCompiler
+namespace ShaderCompilerCore
 {
     using System.Linq;
     using System.Text;
@@ -18,7 +18,7 @@ namespace ShaderCompiler
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+    #line 1 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class FragmentShaderTemplate : FragmentShaderTemplateBase
     {
@@ -30,7 +30,7 @@ namespace ShaderCompiler
         {
             this.Write("\r\npublic interface IFragmentShaderInterface\r\n{\r\n");
             
-            #line 9 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 9 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
 foreach(var Sampler in ProgramObject.GetSampler2DNames())
 {
             
@@ -38,14 +38,14 @@ foreach(var Sampler in ProgramObject.GetSampler2DNames())
             #line hidden
             this.Write("\tvoid Set");
             
-            #line 11 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 11 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
             
             #line default
             #line hidden
             this.Write("2D(Core.Texture.Texture2D TextureObject);\r\n");
             
-            #line 12 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 12 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
 }
             
             #line default
@@ -65,7 +65,7 @@ public class FragmentShaderBase
 	}
 ");
             
-            #line 26 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 26 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
  int index = 0;
 foreach(var Sampler in ProgramObject.GetSampler2DNames())
 {
@@ -74,7 +74,7 @@ foreach(var Sampler in ProgramObject.GetSampler2DNames())
             #line hidden
             this.Write("\tpublic void Set");
             
-            #line 29 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 29 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
             
             #line default
@@ -82,7 +82,7 @@ foreach(var Sampler in ProgramObject.GetSampler2DNames())
             this.Write("2D(Core.Texture.Texture2D TextureObject)\r\n\t{\r\n\t\tGL.ActiveTexture(TextureUnit.Text" +
                     "ure");
             
-            #line 31 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 31 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(index));
             
             #line default
@@ -90,34 +90,34 @@ foreach(var Sampler in ProgramObject.GetSampler2DNames())
             this.Write(");\r\n        TextureObject.Bind();\r\n        var Loc = FSProgram.GetSampler2DUnifor" +
                     "mLocation(\"");
             
-            #line 33 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 33 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
             
             #line default
             #line hidden
             this.Write("\");\r\n\t\tGL.Uniform1(Loc, (int)(");
             
-            #line 34 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 34 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(index));
             
             #line default
             #line hidden
             this.Write("));\r\n\t}\r\n");
             
-            #line 36 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 36 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
 index++;
             
             #line default
             #line hidden
             
-            #line 37 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 37 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\tprotected string GetShaderSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
-            #line 40 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\FragmentShaderTemplate.tt"
+            #line 40 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\FragmentShaderTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(SourceCode));
             
             #line default

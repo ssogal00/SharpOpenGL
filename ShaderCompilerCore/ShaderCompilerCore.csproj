@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,6 +7,70 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Engine\Engine.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="FragmentShaderTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FragmentShaderTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="MaterialTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MaterialTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="SamplerGenerator.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SamplerGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Update="ShaderUniformBlockTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ShaderUniformBlockTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="ShaderUniformTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ShaderUniformTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="VertexAttributeTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>VertexAttributeTemplate.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="FragmentShaderTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>FragmentShaderTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="MaterialTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MaterialTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="SamplerGenerator.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>SamplerGenerator.cs</LastGenOutput>
+    </None>
+    <None Update="ShaderUniformBlockTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ShaderUniformBlockTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="ShaderUniformTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ShaderUniformTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="VertexAttributeTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>VertexAttributeTemplate.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

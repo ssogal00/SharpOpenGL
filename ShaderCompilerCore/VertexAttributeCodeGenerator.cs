@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Core.OpenGLShader;
 
-namespace ShaderCompiler
+namespace ShaderCompilerCore
 {
     public class VertexAttributeCodeGenerator : CodeGenerator
     {

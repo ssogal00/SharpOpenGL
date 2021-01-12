@@ -8,7 +8,7 @@ using Core;
 
 using ShaderProgram = Core.OpenGLShader.ShaderProgram;
 
-namespace ShaderCompiler
+namespace ShaderCompilerCore
 {
     public class FragmentShaderCodeGenerator : CodeGenerator
     {   

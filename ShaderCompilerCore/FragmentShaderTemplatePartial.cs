@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Core;
 using Core.OpenGLShader;
 
-namespace ShaderCompiler
+namespace ShaderCompilerCore
 {
     public partial class FragmentShaderTemplate
     {

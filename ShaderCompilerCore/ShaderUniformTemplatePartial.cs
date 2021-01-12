@@ -9,7 +9,7 @@ using Core.OpenGLShader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace ShaderCompiler   
+namespace ShaderCompilerCore
 {
     public partial class ShaderUniformTemplate
     {

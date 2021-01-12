@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Core.OpenGLShader;
+using ShaderCompilerCore;
 
-namespace ShaderCompiler
+namespace ShaderCompilerCore
 {
     public class ShaderUniformCodeGenerator : CodeGenerator
     {

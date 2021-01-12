@@ -1,0 +1,42 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+public interface IFragmentShaderInterface
+{
+<#foreach(var Sampler in ProgramObject.GetSampler2DNames())
+{#>
+	void Set<#=Sampler#>2D(Core.Texture.Texture2D TextureObject);
+<#}#>
+}
+
+public class FragmentShaderBase
+{
+	ShaderProgram FSProgram;
+	Core.OpenGLShader.FragmentShader FSShader;
+
+	public FragmentShaderBase(ShaderProgram programObject)
+	{
+		FSProgram = programObject;			
+		FSShader.CompileShader(GetShaderSourceCode());
+		FSProgram.AttachShader(FSShader);
+	}
+<# int index = 0;
+foreach(var Sampler in ProgramObject.GetSampler2DNames())
+{#>
+	public void Set<#=Sampler#>2D(Core.Texture.Texture2D TextureObject)
+	{
+		GL.ActiveTexture(TextureUnit.Texture<#=index#>);
+        TextureObject.Bind();
+        var Loc = FSProgram.GetSampler2DUniformLocation("<#=Sampler#>");
+		GL.Uniform1(Loc, (int)(<#=index#>));
+	}
+<#index++;#>
+<#}#>
+	protected string GetShaderSourceCode()
+	{
+		return @"<#=SourceCode#>";
+	}
+}

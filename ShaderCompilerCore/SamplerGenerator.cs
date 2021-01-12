@@ -7,7 +7,7 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace ShaderCompiler
+namespace ShaderCompilerCore
 {
     using System.Linq;
     using System.Text;
@@ -20,7 +20,7 @@ namespace ShaderCompiler
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\SamplerGenerator.tt"
+    #line 1 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\SamplerGenerator.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class SamplerGenerator : SamplerGeneratorBase
     {
@@ -32,14 +32,14 @@ namespace ShaderCompiler
         {
             this.Write("\r\n\r\npublic class ");
             
-            #line 10 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\SamplerGenerator.tt"
+            #line 10 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\SamplerGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(StructName));
             
             #line default
             #line hidden
             this.Write("\r\n{\t\r\n\t");
             
-            #line 12 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\SamplerGenerator.tt"
+            #line 12 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\SamplerGenerator.tt"
  
 	foreach(var name in SamplerNameIndexMap.Keys) 
 	{
@@ -49,21 +49,21 @@ namespace ShaderCompiler
             #line hidden
             this.Write("\t\tpublic readonly string ");
             
-            #line 16 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\SamplerGenerator.tt"
+            #line 16 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\SamplerGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write(" = \"");
             
-            #line 16 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\SamplerGenerator.tt"
+            #line 16 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\SamplerGenerator.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(name));
             
             #line default
             #line hidden
             this.Write("\";\r\n\t");
             
-            #line 17 "C:\GitHub\SharpOpenGL\ShaderCodeGenerator\SamplerGenerator.tt"
+            #line 17 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\SamplerGenerator.tt"
 
 	}
 	

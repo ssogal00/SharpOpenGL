@@ -15,8 +15,6 @@ namespace Core.MaterialBase
         protected ShaderProgram mMaterialProgram = null;
         protected Core.OpenGLShader.VertexShader mVertexShader = null;
         protected Core.OpenGLShader.FragmentShader mFragmentShader = null;
-        protected Core.OpenGLShader.TesselControlShader tesselControlShader = null;
-        protected Core.OpenGLShader.TesselEvalShader tesselEvaluationShader = null;
 
         protected string VertexShaderCode = "";
         protected string FragmentShaderCode = "";
@@ -83,33 +81,6 @@ namespace Core.MaterialBase
             Initialize();
         }
 
-        public MaterialBase(string vertexShaderCode, string fragmentShaderCode, string tesselControlShaderCode, string tesselEvalShaderCode)
-        {
-            mVertexShader = new VertexShader();
-            mFragmentShader = new FragmentShader();
-            tesselControlShader = new TesselControlShader();
-            tesselEvaluationShader = new TesselEvalShader();
-
-            mMaterialProgram = new Core.OpenGLShader.ShaderProgram();
-
-            mVertexShader.CompileShader(vertexShaderCode);
-            mFragmentShader.CompileShader(fragmentShaderCode);
-            tesselControlShader.CompileShader(tesselControlShaderCode);
-            tesselEvaluationShader.CompileShader(tesselEvalShaderCode);
-
-            mMaterialProgram.AttachShader(mVertexShader);
-            mMaterialProgram.AttachShader(mFragmentShader);
-            mMaterialProgram.AttachShader(tesselControlShader);
-            mMaterialProgram.AttachShader(tesselEvaluationShader);
-
-            bool bSuccess = mMaterialProgram.LinkProgram(out CompileResult);
-
-            Debug.Assert(bSuccess == true);
-
-            Initialize();
-        }
-
-
         public MaterialBase()
         {
         }
@@ -149,14 +120,15 @@ namespace Core.MaterialBase
             if (samplerNames.Count > 0)
             {
                 mSamplerMap = new Dictionary<string, TextureUnit>();
-                
             }
 
             for (int i = 0; i < samplerNames.Count; ++i)
             {
                 mSamplerMap.Add(samplerNames[i], TextureUnit.Texture0 + i);
+                mSamplerIndexMap.Add(i, samplerNames[i]);
             }
         }
+
 
         protected virtual void Initialize()
         {
@@ -167,6 +139,11 @@ namespace Core.MaterialBase
             var attrList = mMaterialProgram.GetActiveVertexAttributeList();
 
             mUniformVariableNames = mMaterialProgram.GetActiveUniformNames();
+        }
+
+        public void SetTexture(int index, Core.Texture.TextureBase texture)
+        {
+
         }
 
         public void SetTexture(string name, Core.Texture.TextureBase texture)
@@ -474,6 +451,8 @@ namespace Core.MaterialBase
 
         protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = null;
         protected Dictionary<string, TextureUnit> mSamplerMap = null;
+        // for fast access
+        protected Dictionary<int, string> mSamplerIndexMap = new Dictionary<int, string>();
         protected List<string> mUniformVariableNames = null;
     }
 }

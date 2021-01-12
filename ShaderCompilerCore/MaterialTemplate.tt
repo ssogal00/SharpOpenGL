@@ -1,0 +1,209 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="ShaderCompiler"#>
+
+
+public class <#=ShaderName#> : MaterialBase
+{
+	public <#=ShaderName#>() 
+	 : base (GetVSSourceCode(), GetFSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return mMaterialProgram;
+	}
+
+	public void Use()
+	{
+		mMaterialProgram.UseProgram();
+	}
+
+<# int index = 0;
+foreach(var Sampler in FSProgram.GetSampler2DNames())
+{#>
+	public void Set<#=Sampler#>2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"<#=Sampler#>", TextureObject);
+	}
+
+	public void Set<#=Sampler#>2D(Core.Texture.TextureBase TextureObject, Sampler SamplerObject)
+	{
+		SetTexture(@"<#=Sampler#>", TextureObject, SamplerObject);
+	}
+
+	public TextureBase <#=Sampler.FirstCharToUpper()#>2D 
+	{	
+		set 
+		{	
+			<#=Sampler.ToLower()#> = value;
+			SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>);
+		}
+	}
+
+	public TextureBase <#=Sampler.FirstCharToUpper()#>2D_PointSample
+	{	
+		set 
+		{	
+			<#=Sampler.ToLower()#> = value;
+			SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>, Sampler.DefaultPointSampler);
+		}
+	}
+
+	public TextureBase <#=Sampler.FirstCharToUpper()#>2D_LinearSample
+	{	
+		set 
+		{	
+			<#=Sampler.ToLower()#> = value;
+			SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>, Sampler.DefaultLinearSampler);
+		}
+	}
+
+	private TextureBase <#=Sampler.ToLower()#> = null;
+<#index++;#>
+<#}#>
+
+<#foreach(var item in VSProgram.GetActiveUniformVariableMetaDataList())#>
+<#{#>
+<#if(item.IsArray)#>
+<#{#>
+	public <#=item.VariableTypeString#>[] <#=item.VariableName.FirstCharToUpper()#>
+	{
+		get { return <#=item.VariableName.ToLower()#>; }
+		set 
+		{
+			<#=item.VariableName.ToLower()#> = value;
+			SetUniformVarData(@"<#=item.VariableName#>", ref <#=item.VariableName.ToLower()#>);			
+		}
+	}
+	private <#=item.VariableTypeString#>[] <#=item.VariableName.ToLower()#>;
+<#}#>
+<#else#>
+<#{#>
+	public <#=item.VariableTypeString#> <#=item.VariableName.FirstCharToUpper()#>
+	{
+		get { return <#=item.VariableName.ToLower()#>; }
+		set 
+		{
+			<#=item.VariableName.ToLower()#> = value;
+			SetUniformVarData(@"<#=item.VariableName#>", <#=item.VariableName.ToLower()#>);			
+		}
+	}
+	private <#=item.VariableTypeString#> <#=item.VariableName.ToLower()#>;
+<#}#>
+<#}#>
+
+<#foreach(var item in FSProgram.GetActiveUniformVariableMetaDataList())#>
+<#{#>	
+<#if(item.IsArray)#>
+<#{#>
+	public <#=item.VariableTypeString#>[] <#=item.VariableName.FirstCharToUpper()#>
+	{
+		get { return <#=item.VariableName.ToLower()#>; }
+		set 
+		{
+			<#=item.VariableName.ToLower()#> = value;
+			SetUniformVarData(@"<#=item.VariableName#>", ref <#=item.VariableName.ToLower()#>);			
+		}
+	}
+	private <#=item.VariableTypeString#>[] <#=item.VariableName.ToLower()#>;
+<#}#>
+<#else#>
+<#{#>
+	public <#=item.VariableTypeString#> <#=item.VariableName.FirstCharToUpper()#>
+	{
+		get { return <#=item.VariableName.ToLower()#>; }
+		set 
+		{
+			<#=item.VariableName.ToLower()#> = value;
+			SetUniformVarData(@"<#=item.VariableName#>", <#=item.VariableName.ToLower()#>);			
+		}
+	}
+	private <#=item.VariableTypeString#> <#=item.VariableName.ToLower()#>;
+<#}#>
+<#}#>
+
+<#var BlockNameList = new List<string>();#>
+
+<#for(int i = 0; i < VSProgram.GetActiveUniformBlockCount(); ++i)
+{
+    var blockname = VSProgram.GetUniformBlockName(i);
+	BlockNameList.Add(blockname);
+#>
+    private <#=blockname#> <#=blockname.ToLower()#> = new <#=blockname#>();
+	public <#=blockname#> <#=blockname#>
+	{
+		get { return <#=blockname.ToLower()#>; }
+		set 
+		{ 
+			<#=blockname.ToLower()#> = value; 
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref value);
+		}
+	}
+
+<# var MetaDataList = VSProgram.GetUniformVariableMetaDataListInBlock(i).OrderBy(x => x.VariableOffset).ToList();#>
+<# foreach(var data in MetaDataList) #>
+<# { #>
+	public <#=data.VariableTypeString#> <#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
+	{
+		get { return <#=blockname.ToLower()#>.<#=data.VariableName#> ; }
+		set 
+		{ 
+			<#=blockname.ToLower()#>.<#=data.VariableName#> = value;
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);
+			//this.SetUniformBufferMemberValue< <#=data.VariableTypeString#> >(@"<#=blockname#>", ref value, <#=data.VariableOffset#> );
+		}
+	}
+<# } #>
+
+<#}#>
+
+<#for(int i = 0; i < FSProgram.GetActiveUniformBlockCount(); ++i)
+{
+    var blockname = FSProgram.GetUniformBlockName(i);
+	if(BlockNameList.Contains(blockname))
+	{
+		continue;
+	}
+#>
+    private <#=blockname#> <#=blockname.ToLower()#> = new <#=blockname#>();
+	public <#=blockname#> <#=blockname#>
+	{
+		get { return <#=blockname.ToLower()#>; }
+		set 
+		{ 
+			<#=blockname.ToLower()#> = value; 
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);
+		}
+	}
+
+<# var MetaDataList = FSProgram.GetUniformVariableMetaDataListInBlock(i).OrderBy(x => x.VariableOffset).ToList();#>
+<# foreach(var data in MetaDataList) #>
+<# { #>
+	public <#=data.VariableTypeString#> <#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
+	{
+		get { return <#=blockname.ToLower()#>.<#=data.VariableName#> ; }
+		set 
+		{ 
+			<#=blockname.ToLower()#>.<#=data.VariableName#> = value; 
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);
+			//this.SetUniformBufferMemberValue< <#=data.VariableTypeString#> >(@"<#=blockname#>", ref value, <#=data.VariableOffset#> );
+		}
+	}
+<# } #>
+<#}#>
+
+	public static string GetVSSourceCode()
+	{
+		return @"<#=VSSourceCode#>";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"<#=FSSourceCode#>";
+	}
+}
