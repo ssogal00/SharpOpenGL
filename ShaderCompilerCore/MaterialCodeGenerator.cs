@@ -10,21 +10,35 @@ namespace ShaderCompilerCore
 {
     public class MaterialCodeGenerator : CodeGenerator
     {
-        public MaterialCodeGenerator(Core.OpenGLShader.ShaderProgram VSProgramObject, Core.OpenGLShader.ShaderProgram FSProgramObject,
+        public MaterialCodeGenerator(Core.OpenGLShader.ShaderProgram mVsProgramObject, Core.OpenGLShader.ShaderProgram FSProgramObject,
             string _VSSourceCode, string _FSSourceCode, string _MaterialName
             )
         {            
             NameSpace = string.Format("CompiledMaterial.{0}", _MaterialName);
             FSProgram = FSProgramObject;
-            VSProgram = VSProgramObject;
+            mVSProgram = mVsProgramObject;
             VSSourceCode = _VSSourceCode;
             FSSourceCode = _FSSourceCode;
             MaterialName = _MaterialName;
         }
 
+        public MaterialCodeGenerator(ShaderProgram mVsProgram, ShaderProgram fsProgram,
+            string vsSourceCode, List<Tuple<string, string>> vsDefines,
+            string fsSourceCode, List<Tuple<string, string>> fsDefines,
+            string mtlName)
+        {
+            NameSpace = string.Format("CompiledMaterial.{0}", mtlName);
+            FSProgram = fsProgram;
+            mVSProgram = mVsProgram;
+
+            VSSourceCode = vsSourceCode;
+            FSSourceCode = fsSourceCode;
+            MaterialName = mtlName;
+        }
+
         public override string GetCodeContents()
         {
-            var template = new MaterialTemplate(VSProgram, FSProgram, VSSourceCode, FSSourceCode, MaterialName);
+            var template = new MaterialTemplate(mVSProgram, FSProgram, VSSourceCode, FSSourceCode, MaterialName);
 
             var sb = new StringBuilder();
             sb.AppendLine("namespace " + MaterialName);
@@ -35,7 +49,7 @@ namespace ShaderCompilerCore
             return sb.ToString();
         }
 
-        ShaderProgram VSProgram;
+        ShaderProgram mVSProgram;
         ShaderProgram FSProgram;
         string VSSourceCode;
         string FSSourceCode;

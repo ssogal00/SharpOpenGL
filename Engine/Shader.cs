@@ -12,7 +12,22 @@ namespace Core.OpenGLShader
     public class Shader : IDisposable
     {
         public Shader()
-        {            
+        {
+        }
+
+        public static string ComposeShaderCode(List<Tuple<string, string>> defines, string originalCode)
+        {
+            string defineString = "";
+            if (defines != null)
+            {
+                foreach (var define in defines)
+                {
+                    defineString += $"#define {define.Item1} {define.Item2}\n";
+                }
+            }
+
+            string composedSourceCode = VersionString + defineString + originalCode;
+            return composedSourceCode;
         }
 
         public void Dispose()
@@ -73,17 +88,7 @@ namespace Core.OpenGLShader
 
         public bool CompileShader(string shaderSourceCode, List<Tuple<string, string>> defines, out string errorLog)
         {
-            string versionString = "#version 450 core\n";
-            string defineString = "";
-            if(defines != null)
-            {
-                foreach (var define in defines)
-                {
-                    defineString += $"#define {define.Item1} {define.Item2}\n";
-                }
-            }
-
-            string modifiedSourceCode = versionString + defineString + shaderSourceCode;
+            string modifiedSourceCode = ComposeShaderCode(defines, shaderSourceCode);
 
             GL.ShaderSource(shaderObject, modifiedSourceCode);
             GL.CompileShader(shaderObject);
@@ -133,5 +138,7 @@ namespace Core.OpenGLShader
         }
 
         private int shaderObject = -1;
+
+        public static string VersionString = "#version 450 core\n";
     }
 }

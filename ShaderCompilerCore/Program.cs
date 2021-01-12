@@ -12,6 +12,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 using System.IO;
+using System.Text.Json;
 using System.Xml.Linq;
 using OpenTK.Windowing.Desktop;
 
@@ -42,14 +43,66 @@ namespace ShaderCompilerCore
                         string uniformVariableContents = "";
                         string materialContents = "";
 
+                        var jsonPath = Path.Combine(args[0], "ShaderDefines.json");
+                        var json = File.ReadAllText(jsonPath);
+                        var result = JsonSerializer.Deserialize<ShaderListToCompile>(json);
+                        
+                        if (result != null)
+                        {
+                            foreach (var item in result.ShaderList)
+                            {
+                                var vsCode = File.ReadAllText(Path.Combine(args[0], Path.GetFileName(item.VertexShaderPath)));
+                                var fsCode = File.ReadAllText(Path.Combine(args[0], Path.GetFileName(item.FragmentShaderPath)));
+
+                                var vsDefines = item.VertexShaderDefines.Select(x => new Tuple<string, string>(x.name, x.value)).ToList();
+                                var fsDefines = item.FragmentShaderDefines.Select(x => new Tuple<string, string>(x.name, x.value)).ToList();
+                                
+                                FragmentShader fs = new FragmentShader();
+                                VertexShader vs = new VertexShader();
+
+                                ShaderProgram fsProgram = new ShaderProgram();
+                                ShaderProgram vsProgram = new ShaderProgram();
+
+                                var composedFSCode = Shader.ComposeShaderCode(fsDefines, fsCode);
+                                var composedVSCode = Shader.ComposeShaderCode(vsDefines, vsCode);
+
+                                fs.CompileShader(composedFSCode);
+                                fsProgram.AttachShader(fs);
+
+                                vs.CompileShader(composedVSCode);
+                                vsProgram.AttachShader(vs);
+
+                                string fsResult = "";
+                                string vsResult = "";
+
+                                if (fsProgram.LinkProgram(out fsResult) && vsProgram.LinkProgram(out vsResult))
+                                {
+                                    var materialCode = new MaterialCodeGenerator(vsProgram, fsProgram, 
+                                        composedVSCode, composedFSCode, item.Name);
+
+                                    var codeContents = materialCode.GetCodeContents();
+                                    materialContents += codeContents;
+                                }
+                                else
+                                {
+                                    var sb = new StringBuilder();
+                                    sb.AppendLine(string.Format(@"Vertex Shader : {0} , Error : {1}", item.VertexShaderPath, vsResult));
+                                    sb.AppendLine(string.Format(@"Fragment Shader : {0}, Error : {1}", item.FragmentShaderPath, fsResult));
+                                    
+                                    Console.Write(sb.ToString());
+                                    Debug.Assert(false, sb.ToString());
+                                }
+                            }
+                        }
+
                         if (File.Exists(materialXml))
                         {
                             var Root = XElement.Load(materialXml);
-                            foreach (var Node in Root.Descendants("Material"))
+                            foreach (var node in Root.Descendants("Material"))
                             {
-                                string vsPath = Node.Attribute("vertexShader").Value;
-                                string fsPath = Node.Attribute("fragmentShader").Value;
-                                string materialName = Node.Attribute("name").Value;
+                                string vsPath = node.Attribute("vertexShader").Value;
+                                string fsPath = node.Attribute("fragmentShader").Value;
+                                string materialName = node.Attribute("name").Value;
 
                                 FragmentShader fs = new FragmentShader();
                                 VertexShader vs = new VertexShader();
