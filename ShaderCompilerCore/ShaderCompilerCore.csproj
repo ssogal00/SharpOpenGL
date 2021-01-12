@@ -54,6 +54,7 @@
     <None Update="MaterialTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MaterialTemplate.cs</LastGenOutput>
+      <CustomToolNamespace></CustomToolNamespace>
     </None>
     <None Update="SamplerGenerator.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>

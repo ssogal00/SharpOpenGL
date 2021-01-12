@@ -904,50 +904,29 @@ for(int i = 0; i < FSProgram.GetActiveUniformBlockCount(); ++i)
             
             #line default
             #line hidden
-            this.Write(");\r\n\t\t\t//this.SetUniformBufferMemberValue< ");
+            this.Write(");\t\t\t\r\n\t\t}\r\n\t}\r\n");
             
-            #line 194 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableTypeString));
-            
-            #line default
-            #line hidden
-            this.Write(" >(@\"");
-            
-            #line 194 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
-            
-            #line default
-            #line hidden
-            this.Write("\", ref value, ");
-            
-            #line 194 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableOffset));
-            
-            #line default
-            #line hidden
-            this.Write(" );\r\n\t\t}\r\n\t}\r\n");
-            
-            #line 197 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 196 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 198 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 197 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
-            this.Write("\r\n\tpublic static string GetVSSourceCode()\r\n\t{\r\n\t\treturn @\"");
+            this.Write("\t\r\n\r\n\tpublic static string GetVSSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
-            #line 202 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 201 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VSSourceCode));
             
             #line default
             #line hidden
             this.Write("\";\r\n\t}\r\n\r\n\tpublic static string GetFSSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
-            #line 207 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 206 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FSSourceCode));
             
             #line default

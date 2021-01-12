@@ -92,6 +92,17 @@ namespace ShaderCompilerCore
                                     Console.Write(sb.ToString());
                                     Debug.Assert(false, sb.ToString());
                                 }
+
+                                var vsUniformCodeGen = new ShaderUniformCodeGenerator(vsProgram, item.Name);
+                                var vertexUniformVariableContents = vsUniformCodeGen.GetCodeContents();
+                                uniformVariableContents += vertexUniformVariableContents;
+
+                                var fsUniformCodeGen = new ShaderUniformCodeGenerator(fsProgram, item.Name);
+                                var fragmentUniformVariableContents = fsUniformCodeGen.GetCodeContents();
+                                if (vertexUniformVariableContents != fragmentUniformVariableContents)
+                                {
+                                    uniformVariableContents += fragmentUniformVariableContents;
+                                }
                             }
                         }
 

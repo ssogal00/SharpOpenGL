@@ -22,20 +22,6 @@ namespace ShaderCompilerCore
             MaterialName = _MaterialName;
         }
 
-        public MaterialCodeGenerator(ShaderProgram mVsProgram, ShaderProgram fsProgram,
-            string vsSourceCode, List<Tuple<string, string>> vsDefines,
-            string fsSourceCode, List<Tuple<string, string>> fsDefines,
-            string mtlName)
-        {
-            NameSpace = string.Format("CompiledMaterial.{0}", mtlName);
-            FSProgram = fsProgram;
-            mVSProgram = mVsProgram;
-
-            VSSourceCode = vsSourceCode;
-            FSSourceCode = fsSourceCode;
-            MaterialName = mtlName;
-        }
-
         public override string GetCodeContents()
         {
             var template = new MaterialTemplate(mVSProgram, FSProgram, VSSourceCode, FSSourceCode, MaterialName);
@@ -48,6 +34,8 @@ namespace ShaderCompilerCore
 
             return sb.ToString();
         }
+
+
 
         ShaderProgram mVSProgram;
         ShaderProgram FSProgram;

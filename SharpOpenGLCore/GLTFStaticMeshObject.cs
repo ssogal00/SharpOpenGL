@@ -15,6 +15,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Threading;
 using System.IO;
+using AttributeType = OpenTK.Graphics.OpenGL.AttributeType;
 
 namespace SharpOpenGLCore
 {

@@ -13,6 +13,90 @@ using ZeroFormatter.Formatters;
 using Core.CustomAttribute;
 namespace CompiledMaterial
 {
+namespace GBufferMacro1
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=128)]
+public struct CameraTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 View;
+	[FieldOffset(64), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Proj;
+}
+
+
+[StructLayout(LayoutKind.Explicit,Size=64)]
+public struct ModelTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Model;
+}
+}
+namespace GBufferMacro1
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=32)]
+public struct MaterialProperty
+{
+	[FieldOffset(0), ExposeUI]
+	public System.Boolean MetallicExist;
+	[FieldOffset(4), ExposeUI]
+	public System.Boolean RoghnessExist;
+	[FieldOffset(8), ExposeUI]
+	public System.Boolean MaskExist;
+	[FieldOffset(12), ExposeUI]
+	public System.Boolean NormalExist;
+	[FieldOffset(16), ExposeUI]
+	public System.Single Metallic;
+	[FieldOffset(20), ExposeUI]
+	public System.Single Roughness;
+}
+}
+namespace GBufferMacro2
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=128)]
+public struct CameraTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 View;
+	[FieldOffset(64), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Proj;
+}
+
+
+[StructLayout(LayoutKind.Explicit,Size=64)]
+public struct ModelTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Model;
+}
+}
+namespace GBufferMacro2
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=32)]
+public struct MaterialProperty
+{
+	[FieldOffset(0), ExposeUI]
+	public System.Boolean MetallicExist;
+	[FieldOffset(4), ExposeUI]
+	public System.Boolean RoghnessExist;
+	[FieldOffset(8), ExposeUI]
+	public System.Boolean MaskExist;
+	[FieldOffset(12), ExposeUI]
+	public System.Boolean NormalExist;
+	[FieldOffset(16), ExposeUI]
+	public System.Single Metallic;
+	[FieldOffset(20), ExposeUI]
+	public System.Single Roughness;
+}
+}
 namespace BasicMaterial
 {
 

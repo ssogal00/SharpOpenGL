@@ -3,7 +3,7 @@
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="ShaderCompiler"#>
+<#@ import namespace="ShaderCompilerCore"#>
 
 
 public class <#=ShaderName#> : MaterialBase
@@ -190,12 +190,11 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		set 
 		{ 
 			<#=blockname.ToLower()#>.<#=data.VariableName#> = value; 
-			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);
-			//this.SetUniformBufferMemberValue< <#=data.VariableTypeString#> >(@"<#=blockname#>", ref value, <#=data.VariableOffset#> );
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);			
 		}
 	}
 <# } #>
-<#}#>
+<#}#>	
 
 	public static string GetVSSourceCode()
 	{

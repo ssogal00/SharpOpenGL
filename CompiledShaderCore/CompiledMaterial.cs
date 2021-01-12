@@ -300,8 +300,7 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			materialproperty.MetallicExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"MaterialProperty", ref value, 0 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
 	public System.Boolean MaterialProperty_RoghnessExist
@@ -310,8 +309,7 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			materialproperty.RoghnessExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"MaterialProperty", ref value, 4 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
 	public System.Boolean MaterialProperty_MaskExist
@@ -320,8 +318,7 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			materialproperty.MaskExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"MaterialProperty", ref value, 8 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
 	public System.Boolean MaterialProperty_NormalExist
@@ -330,8 +327,7 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			materialproperty.NormalExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"MaterialProperty", ref value, 12 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
 	public System.Single MaterialProperty_Metallic
@@ -340,8 +336,7 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			materialproperty.Metallic = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Single >(@"MaterialProperty", ref value, 16 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
 	public System.Single MaterialProperty_Roughness
@@ -350,10 +345,10 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			materialproperty.Roughness = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Single >(@"MaterialProperty", ref value, 20 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -797,8 +792,7 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			materialproperty.MetallicExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"MaterialProperty", ref value, 0 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
 	public System.Boolean MaterialProperty_RoghnessExist
@@ -807,8 +801,7 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			materialproperty.RoghnessExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"MaterialProperty", ref value, 4 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
 	public System.Boolean MaterialProperty_MaskExist
@@ -817,8 +810,7 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			materialproperty.MaskExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"MaterialProperty", ref value, 8 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
 	public System.Boolean MaterialProperty_NormalExist
@@ -827,8 +819,7 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			materialproperty.NormalExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"MaterialProperty", ref value, 12 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
 	public System.Single MaterialProperty_Metallic
@@ -837,8 +828,7 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			materialproperty.Metallic = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Single >(@"MaterialProperty", ref value, 16 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
 	public System.Single MaterialProperty_Roughness
@@ -847,10 +837,10 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			materialproperty.Roughness = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-			//this.SetUniformBufferMemberValue< System.Single >(@"MaterialProperty", ref value, 20 );
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
 		}
 	}
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -1135,6 +1125,7 @@ public class BasicMaterial : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -1253,6 +1244,7 @@ public class SimpleMaterial : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -1354,6 +1346,7 @@ public class ScreenSpaceDraw : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -1802,6 +1795,7 @@ public class GBufferDraw : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -2061,6 +2055,7 @@ public class EquirectangleToCube : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -2193,6 +2188,7 @@ public class CubemapConvolution : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -2586,6 +2582,7 @@ public class GBufferInstanced : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -2861,6 +2858,7 @@ public class GBufferWithoutTexture : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -3150,8 +3148,7 @@ public class GBufferDump : MaterialBase
 		set 
 		{ 
 			dump.PositionDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 0 );
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
 		}
 	}
 	public System.Boolean Dump_NormalDump
@@ -3160,8 +3157,7 @@ public class GBufferDump : MaterialBase
 		set 
 		{ 
 			dump.NormalDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 4 );
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
 		}
 	}
 	public System.Boolean Dump_MetalicDump
@@ -3170,8 +3166,7 @@ public class GBufferDump : MaterialBase
 		set 
 		{ 
 			dump.MetalicDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 8 );
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
 		}
 	}
 	public System.Boolean Dump_DiffuseDump
@@ -3180,8 +3175,7 @@ public class GBufferDump : MaterialBase
 		set 
 		{ 
 			dump.DiffuseDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 12 );
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
 		}
 	}
 	public System.Boolean Dump_RoughnessDump
@@ -3190,8 +3184,7 @@ public class GBufferDump : MaterialBase
 		set 
 		{ 
 			dump.RoughnessDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 16 );
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
 		}
 	}
 	public System.Boolean Dump_MotionBlurDump
@@ -3200,10 +3193,10 @@ public class GBufferDump : MaterialBase
 		set 
 		{ 
 			dump.MotionBlurDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
-			//this.SetUniformBufferMemberValue< System.Boolean >(@"Dump", ref value, 20 );
+			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
 		}
 	}
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -3349,6 +3342,7 @@ public class GBufferPNC : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -3533,6 +3527,7 @@ public class GBufferCubeTest : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -3715,6 +3710,7 @@ public class GBufferPNCT : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -3903,6 +3899,7 @@ public class GBufferPNT : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -4093,6 +4090,7 @@ public class GBufferPNTT : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -4254,6 +4252,7 @@ public class Blur : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -4374,6 +4373,7 @@ public class BloomMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -4694,8 +4694,7 @@ public class LightMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
-			//this.SetUniformBufferMemberValue< OpenTK.Mathematics.Matrix4 >(@"CameraTransform", ref value, 0 );
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);			
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -4704,10 +4703,10 @@ public class LightMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
-			//this.SetUniformBufferMemberValue< OpenTK.Mathematics.Matrix4 >(@"CameraTransform", ref value, 64 );
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);			
 		}
 	}
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -4976,6 +4975,7 @@ public class CubemapMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -5144,6 +5144,7 @@ public class MSGBufferMaterial : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -5362,6 +5363,7 @@ public class DepthVisualizeMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -5477,6 +5479,7 @@ public class FontRenderMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -5576,6 +5579,7 @@ public class FontBoxRenderMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -5707,6 +5711,7 @@ public class GridRenderMaterial : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -5851,6 +5856,7 @@ public class ThreeDTextRenderMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -5993,6 +5999,7 @@ public class ResolveMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -6229,6 +6236,7 @@ public class SSAOMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -6351,6 +6359,7 @@ public class LUTGenerateMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -6583,6 +6592,7 @@ public class PrefilterMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -6886,6 +6896,7 @@ public class HDAOMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -7485,6 +7496,7 @@ public class FXAAMaterial : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -7870,6 +7882,7 @@ public class TBNMaterial : MaterialBase
 	}
 
 
+	
 
 	public static string GetVSSourceCode()
 	{
@@ -7990,6 +8003,7 @@ public class SignedDistanceField : MaterialBase
 
 
 
+	
 
 	public static string GetVSSourceCode()
 	{

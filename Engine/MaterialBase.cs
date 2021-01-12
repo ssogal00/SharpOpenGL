@@ -6,6 +6,7 @@ using OpenTK.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 
 namespace Core.MaterialBase
@@ -447,7 +448,16 @@ namespace Core.MaterialBase
 
             return new List<VertexAttribute>();
         }
-        
+
+        public List<ActiveAttribType> GetVertexAttributeTypeList()
+        {
+            if (mMaterialProgram.ProgramLinked)
+            {
+                return mMaterialProgram.GetActiveVertexAttributeList().Select(x=>x.AttributeType).ToList();
+            }
+            return new List<ActiveAttribType>();
+        }
+
 
         protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = null;
         protected Dictionary<string, TextureUnit> mSamplerMap = null;
