@@ -24,6 +24,8 @@ namespace GLTF
         Occlusion,
         BaseColor,
         MetallicRoughness,
+        Opacity,
+        Mask,
     }
 
     public class PBRInfo
@@ -183,7 +185,7 @@ namespace GLTF
                     var normTexture = gltf.GetNormalTexturePath(meshIndex, pindex);
                     var colorTexture = gltf.GetBaseColorTexturePath(meshIndex, pindex);
                     var metallicRoughTexture = gltf.GetMetallicRoughnessTexturePath(meshIndex, pindex);
-                    var occlusionTexture = gltf.GetMetallicRoughnessTexturePath(meshIndex, pindex);
+                    var occlusionTexture = gltf.GetOcclusionTexturePath(meshIndex, pindex);
 
                     mesh.Material = new GLTFMeshMaterial();
                     

@@ -61,6 +61,7 @@ namespace SharpOpenGLCore
         public GLTFStaticMeshObject(GLTFMeshAsset asset)
         {
             mGLTFAsset = asset;
+            mEncodedPBRInfo = EncodePBRInfo();
             RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
             {
                 PrepareRenderingData();
@@ -81,7 +82,7 @@ namespace SharpOpenGLCore
 
                 mModelTransformInfo.Model = this.LocalMatrix;
                 mtl.SetUniformBufferValue<ModelTransform>(@"ModelTransform", ref mModelTransformInfo);
-
+                
                 mMaterialProperty.MetallicExist = true;
                 mMaterialProperty.NormalExist = true;
                 mMaterialProperty.MaskExist = false;
@@ -117,6 +118,55 @@ namespace SharpOpenGLCore
                 mtl.Unbind();
             }
         }
+
+        // bit position 0 => metallicExist;
+        // bit position 1 => roghnessExist;
+        // bit position 2 => maskExist;
+        // bit position 3 => normalExist;
+        // bit position 4 => occlusionExist;
+        // bit position 5 => opacityExist;
+        // bit position 6 => emissiveExist;
+        // bit position 7 => ?
+
+        // gltf stores occlusion(R), roughness(G), metallic(B)
+        // bit position 8,9 => metallic swizzle index
+        // bit position 10,11 => roughness swizzle index
+        // bit position 12,13 => occlusion swizzle index
+
+        private uint EncodePBRInfo()
+        {
+            uint encoded = 0;
+            if (mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.MetallicRoughness))
+            {
+                encoded |= (1);
+                encoded |= (1 << 2);
+
+                // metallic index
+                encoded |= (1 << 8);
+                encoded |= (1 << 9);
+
+                // roughness index
+                encoded |= (0 << 10);
+                encoded |= (1 << 11);
+            }
+
+            if (mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Occlusion))
+            {
+                encoded |= (1 << 4);
+                // occlusion index
+                encoded |= (0 << 12);
+                encoded |= (0 << 13);
+            }
+
+            if (mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Normal))
+            {
+                encoded |= (1 << 3);
+            }
+            
+            return encoded;
+        }
+
+
 
         protected override void PrepareRenderingData()
         {
@@ -196,5 +246,7 @@ namespace SharpOpenGLCore
         protected ModelTransform mModelTransformInfo = new ModelTransform();
 
         protected MaterialProperty mMaterialProperty = new MaterialProperty();
+
+        protected uint mEncodedPBRInfo = 0;
     }
 }

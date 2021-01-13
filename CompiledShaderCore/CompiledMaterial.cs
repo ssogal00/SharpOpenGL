@@ -554,11 +554,11 @@ float GetRoughnessValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord).g;
+			return texture(MetallicRoughnessTex, texcoord)[1];
 		}
 		else
 		{
-			return texture(RoughnessTex, texcoord).g;
+			return texture(RoughnessTex, texcoord)[1];
 		}
 	}
 	else
@@ -1119,11 +1119,11 @@ float GetRoughnessValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord).g;
+			return texture(MetallicRoughnessTex, texcoord)[1];
 		}
 		else
 		{
-			return texture(RoughnessTex, texcoord).g;
+			return texture(RoughnessTex, texcoord)[1];
 		}
 	}
 	else

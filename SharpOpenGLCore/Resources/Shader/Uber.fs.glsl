@@ -36,6 +36,16 @@ layout (location = 3) out vec4 VelocityColor;
 
 uniform MaterialProperty
 {
+	// 00000000 00000000 00000000 00000000
+	// 00000000
+	// bit position 0 => metallicExist;
+	// bit position 1 => roghnessExist;
+	// bit position 2 => maskExist;
+	// bit position 3 => normalExist;
+	// bit position 4 => occlusionExist;
+
+
+	uint encodedPBRInfo;
 	bool MetallicExist;
 	bool RoghnessExist;
 	bool MaskExist;
@@ -51,11 +61,11 @@ float GetMetallicValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord).b;
+			return texture(MetallicRoughnessTex, texcoord)[2];
 		}
 		else
 		{
-			return texture(MetallicTex, texcoord).b;
+			return texture(MetallicTex, texcoord)[2];
 		}
 	}
 	else
@@ -70,11 +80,11 @@ float GetRoughnessValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord).g;
+			return texture(MetallicRoughnessTex, texcoord)[1];
 		}
 		else
 		{
-			return texture(RoughnessTex, texcoord).g;
+			return texture(RoughnessTex, texcoord)[1];
 		}
 	}
 	else

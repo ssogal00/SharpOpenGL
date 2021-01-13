@@ -59,7 +59,7 @@ namespace ShaderCompilerCore
                                 
                                 FragmentShader fs = new FragmentShader();
                                 VertexShader vs = new VertexShader();
-
+                                
                                 ShaderProgram fsProgram = new ShaderProgram();
                                 ShaderProgram vsProgram = new ShaderProgram();
 
