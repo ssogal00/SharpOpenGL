@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using CompiledMaterial.GBufferPNT;
 using CompiledMaterial.GBufferPNTT;
 using Core;
 using Core.Buffer;
@@ -69,7 +68,7 @@ namespace SharpOpenGLCore
         {
             if (bReadyToDraw)
             {
-                var mtl = ShaderManager.Get().GetMaterial<GBufferPNTT>();
+                /*var mtl = ShaderManager.Get().GetMaterial<GBufferPNTT>();
 
                 mtl.Bind();
                 mtl.CameraTransform_View = CameraManager.Get().CurrentCameraView;
@@ -88,6 +87,33 @@ namespace SharpOpenGLCore
 
                 }
                 
+                mDrawable.DrawIndexed();
+
+                mtl.Unbind();*/
+
+                var mtl = ShaderManager.Get().GetMaterial("GBufferMacro1");
+
+                mtl.Bind();
+
+                mTransformInfo.Proj = CameraManager.Get().CurrentCameraProj;
+                mTransformInfo.View = CameraManager.Get().CurrentCameraView;
+                mtl.SetUniformBufferValue<CameraTransform>(@"CameraTransform", ref mTransformInfo);
+
+                mModelTransformInfo.Model = this.LocalMatrix;
+                mtl.SetUniformBufferValue<ModelTransform>(@"ModelTransform", ref mModelTransformInfo);
+
+                if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.BaseColor))
+                {
+                    var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.BaseColor];
+                    mtl.SetTexture("DiffuseTex", TextureManager.Get().GetTexture2D(path));
+                }
+
+                if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Normal))
+                {
+                    var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.Normal];
+                    mtl.SetTexture("NormalTex", TextureManager.Get().GetTexture2D(path));
+                }
+
                 mDrawable.DrawIndexed();
 
                 mtl.Unbind();
@@ -166,5 +192,9 @@ namespace SharpOpenGLCore
         protected uint mIndexCount = 0;
 
         protected List<ActiveAttribType> mGLVertexAttributeTypeList = new List<ActiveAttribType>();
+
+        protected CameraTransform mTransformInfo = new CameraTransform();
+
+        protected ModelTransform mModelTransformInfo = new ModelTransform();
     }
 }
