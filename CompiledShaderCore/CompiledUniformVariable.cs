@@ -42,18 +42,20 @@ namespace GBufferMacro1
 public struct MaterialProperty
 {
 	[FieldOffset(0), ExposeUI]
-	public System.Boolean MetallicExist;
+	public System.UInt32 encodedPBRInfo;
 	[FieldOffset(4), ExposeUI]
-	public System.Boolean RoghnessExist;
+	public System.Boolean MetallicExist;
 	[FieldOffset(8), ExposeUI]
-	public System.Boolean MaskExist;
+	public System.Boolean RoghnessExist;
 	[FieldOffset(12), ExposeUI]
-	public System.Boolean NormalExist;
+	public System.Boolean MaskExist;
 	[FieldOffset(16), ExposeUI]
-	public System.Single Metallic;
+	public System.Boolean NormalExist;
 	[FieldOffset(20), ExposeUI]
-	public System.Single Roughness;
+	public System.Single Metallic;
 	[FieldOffset(24), ExposeUI]
+	public System.Single Roughness;
+	[FieldOffset(28), ExposeUI]
 	public System.Boolean MetallicRoughnessOneTexture;
 }
 }
@@ -86,18 +88,20 @@ namespace GBufferMacro2
 public struct MaterialProperty
 {
 	[FieldOffset(0), ExposeUI]
-	public System.Boolean MetallicExist;
+	public System.UInt32 encodedPBRInfo;
 	[FieldOffset(4), ExposeUI]
-	public System.Boolean RoghnessExist;
+	public System.Boolean MetallicExist;
 	[FieldOffset(8), ExposeUI]
-	public System.Boolean MaskExist;
+	public System.Boolean RoghnessExist;
 	[FieldOffset(12), ExposeUI]
-	public System.Boolean NormalExist;
+	public System.Boolean MaskExist;
 	[FieldOffset(16), ExposeUI]
-	public System.Single Metallic;
+	public System.Boolean NormalExist;
 	[FieldOffset(20), ExposeUI]
-	public System.Single Roughness;
+	public System.Single Metallic;
 	[FieldOffset(24), ExposeUI]
+	public System.Single Roughness;
+	[FieldOffset(28), ExposeUI]
 	public System.Boolean MetallicRoughnessOneTexture;
 }
 }

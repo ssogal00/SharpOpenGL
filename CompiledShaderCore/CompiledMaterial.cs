@@ -332,6 +332,15 @@ public class GBufferMacro1 : MaterialBase
 		}
 	}
 
+	public System.UInt32 MaterialProperty_EncodedPBRInfo
+	{
+		get { return materialproperty.encodedPBRInfo ; }
+		set 
+		{ 
+			materialproperty.encodedPBRInfo = value; 
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
+		}
+	}
 	public System.Boolean MaterialProperty_MetallicExist
 	{
 		get { return materialproperty.MetallicExist ; }
@@ -520,6 +529,16 @@ layout (location = 3) out vec4 VelocityColor;
 
 uniform MaterialProperty
 {
+	// 00000000 00000000 00000000 00000000
+	// 00000000
+	// bit position 0 => metallicExist;
+	// bit position 1 => roghnessExist;
+	// bit position 2 => maskExist;
+	// bit position 3 => normalExist;
+	// bit position 4 => occlusionExist;
+
+
+	uint encodedPBRInfo;
 	bool MetallicExist;
 	bool RoghnessExist;
 	bool MaskExist;
@@ -535,11 +554,11 @@ float GetMetallicValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord).b;
+			return texture(MetallicRoughnessTex, texcoord)[2];
 		}
 		else
 		{
-			return texture(MetallicTex, texcoord).b;
+			return texture(MetallicTex, texcoord)[2];
 		}
 	}
 	else
@@ -897,6 +916,15 @@ public class GBufferMacro2 : MaterialBase
 		}
 	}
 
+	public System.UInt32 MaterialProperty_EncodedPBRInfo
+	{
+		get { return materialproperty.encodedPBRInfo ; }
+		set 
+		{ 
+			materialproperty.encodedPBRInfo = value; 
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
+		}
+	}
 	public System.Boolean MaterialProperty_MetallicExist
 	{
 		get { return materialproperty.MetallicExist ; }
@@ -1085,6 +1113,16 @@ layout (location = 3) out vec4 VelocityColor;
 
 uniform MaterialProperty
 {
+	// 00000000 00000000 00000000 00000000
+	// 00000000
+	// bit position 0 => metallicExist;
+	// bit position 1 => roghnessExist;
+	// bit position 2 => maskExist;
+	// bit position 3 => normalExist;
+	// bit position 4 => occlusionExist;
+
+
+	uint encodedPBRInfo;
 	bool MetallicExist;
 	bool RoghnessExist;
 	bool MaskExist;
@@ -1100,11 +1138,11 @@ float GetMetallicValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord).b;
+			return texture(MetallicRoughnessTex, texcoord)[2];
 		}
 		else
 		{
-			return texture(MetallicTex, texcoord).b;
+			return texture(MetallicTex, texcoord)[2];
 		}
 	}
 	else

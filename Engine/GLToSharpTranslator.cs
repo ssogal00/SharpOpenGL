@@ -170,6 +170,9 @@ namespace Core.OpenGLType
                 case ActiveUniformType.Int:
                     return typeof(int).ToString();
 
+                case ActiveUniformType.UnsignedInt:
+                    return typeof(uint).ToString();
+
                 case ActiveUniformType.DoubleVec2:
                     return typeof(Vector2d).ToString();
 
