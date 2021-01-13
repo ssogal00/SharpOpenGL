@@ -27,6 +27,7 @@ layout (location = 1, binding=1) uniform sampler2D NormalTex;
 layout (location = 2, binding=2) uniform sampler2D MaskTex;
 layout (location = 3, binding=3) uniform sampler2D MetallicTex;
 layout (location = 4, binding=4) uniform sampler2D RoughnessTex;
+layout(location = 5, binding = 5) uniform sampler2D MetallicRoughnessTex;
 
 layout (location = 0) out vec4 PositionColor;
 layout (location = 1) out vec4 DiffuseColor;
@@ -40,8 +41,47 @@ uniform MaterialProperty
 	bool MaskExist;
 	bool NormalExist;
 	float Metallic;
-	float Roughness;	
+	float Roughness;
+	bool MetallicRoughnessOneTexture;
 };
+
+float GetMetallicValue(vec2 texcoord)
+{
+	if (MetallicExist)
+	{
+		if (MetallicRoughnessOneTexture)
+		{
+			return texture(MetallicRoughnessTex, texcoord).b;
+		}
+		else
+		{
+			return texture(MetallicTex, texcoord).b;
+		}
+	}
+	else
+	{
+		return Metallic;
+	}
+}
+
+float GetRoughnessValue(vec2 texcoord)
+{
+	if (MetallicExist)
+	{
+		if (MetallicRoughnessOneTexture)
+		{
+			return texture(MetallicRoughnessTex, texcoord).g;
+		}
+		else
+		{
+			return texture(RoughnessTex, texcoord).g;
+		}
+	}
+	else
+	{
+		return Roughness;
+	}
+}
 
 void main()
 {   
@@ -61,15 +101,8 @@ void main()
 	{
 		DiffuseColor = texture(DiffuseTex, InTexCoord);    
 	}
-
-	if(RoghnessExist)
-    {
-    	DiffuseColor.a = texture(RoughnessTex, InTexCoord).x;
-    }
-    else
-    {
-    	DiffuseColor.a = Roughness;
-	}
+	
+	DiffuseColor.a = GetRoughnessValue(InTexCoord);    
 
 #if VERTEX_PNTT
 	if(NormalExist)
@@ -90,15 +123,8 @@ void main()
 #else
 	NormalColor.xyz = InNormal.xyz;
 #endif
-    
-	if(MetallicExist)
-    {
-    	NormalColor.a = texture(MetallicTex, InTexCoord).x;
-	}
-	else
-    {
-    	NormalColor.a = Metallic;
-	}
+    	
+	NormalColor.a = GetMetallicValue(InTexCoord);	
 
     PositionColor = InPosition;
 }

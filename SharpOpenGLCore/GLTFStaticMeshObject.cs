@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using CompiledMaterial.GBufferPNTT;
 using Core;
 using Core.Buffer;
 using Core.Primitive;
@@ -14,7 +13,11 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Threading;
 using System.IO;
+using System.Windows.Media.Media3D;
+using CompiledMaterial.GBufferMacro1;
 using AttributeType = OpenTK.Graphics.OpenGL.AttributeType;
+using CameraTransform = CompiledMaterial.GBufferPNTT.CameraTransform;
+using ModelTransform = CompiledMaterial.GBufferPNTT.ModelTransform;
 
 namespace SharpOpenGLCore
 {
@@ -68,29 +71,6 @@ namespace SharpOpenGLCore
         {
             if (bReadyToDraw)
             {
-                /*var mtl = ShaderManager.Get().GetMaterial<GBufferPNTT>();
-
-                mtl.Bind();
-                mtl.CameraTransform_View = CameraManager.Get().CurrentCameraView;
-                mtl.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
-                mtl.ModelTransform_Model = this.LocalMatrix;
-
-                if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.BaseColor))
-                {
-                    var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.BaseColor];
-                    mtl.DiffuseTex2D = TextureManager.Get().GetTexture2D(path);
-                }
-
-                if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Normal))
-                {
-                    var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.Normal];
-
-                }
-                
-                mDrawable.DrawIndexed();
-
-                mtl.Unbind();*/
-
                 var mtl = ShaderManager.Get().GetMaterial("GBufferMacro1");
 
                 mtl.Bind();
@@ -102,16 +82,34 @@ namespace SharpOpenGLCore
                 mModelTransformInfo.Model = this.LocalMatrix;
                 mtl.SetUniformBufferValue<ModelTransform>(@"ModelTransform", ref mModelTransformInfo);
 
+                mMaterialProperty.MetallicExist = true;
+                mMaterialProperty.NormalExist = true;
+                mMaterialProperty.MaskExist = false;
+                mMaterialProperty.MetallicRoughnessOneTexture = true;
+                mMaterialProperty.RoghnessExist = true;
+
+                mtl.SetUniformBufferValue<MaterialProperty>(@"MaterialProperty", ref mMaterialProperty);
+
+                // base 
                 if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.BaseColor))
                 {
                     var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.BaseColor];
                     mtl.SetTexture("DiffuseTex", TextureManager.Get().GetTexture2D(path));
                 }
 
+                // normal
                 if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Normal))
                 {
                     var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.Normal];
                     mtl.SetTexture("NormalTex", TextureManager.Get().GetTexture2D(path));
+                }
+
+                // metallic roughness
+                if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.MetallicRoughness))
+                {
+                    var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.MetallicRoughness];
+                    mtl.SetTexture("MetallicTex", TextureManager.Get().GetTexture2D(path));
+                    mtl.SetTexture("RoughnessTex", TextureManager.Get().GetTexture2D(path));
                 }
 
                 mDrawable.DrawIndexed();
@@ -196,5 +194,7 @@ namespace SharpOpenGLCore
         protected CameraTransform mTransformInfo = new CameraTransform();
 
         protected ModelTransform mModelTransformInfo = new ModelTransform();
+
+        protected MaterialProperty mMaterialProperty = new MaterialProperty();
     }
 }

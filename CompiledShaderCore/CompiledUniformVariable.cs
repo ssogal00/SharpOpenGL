@@ -53,6 +53,8 @@ public struct MaterialProperty
 	public System.Single Metallic;
 	[FieldOffset(20), ExposeUI]
 	public System.Single Roughness;
+	[FieldOffset(24), ExposeUI]
+	public System.Boolean MetallicRoughnessOneTexture;
 }
 }
 namespace GBufferMacro2
@@ -95,6 +97,8 @@ public struct MaterialProperty
 	public System.Single Metallic;
 	[FieldOffset(20), ExposeUI]
 	public System.Single Roughness;
+	[FieldOffset(24), ExposeUI]
+	public System.Boolean MetallicRoughnessOneTexture;
 }
 }
 namespace BasicMaterial
