@@ -85,7 +85,7 @@ namespace SharpOpenGLCore
                 if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Normal))
                 {
                     var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.Normal];
-                    
+
                 }
                 
                 mDrawable.DrawIndexed();

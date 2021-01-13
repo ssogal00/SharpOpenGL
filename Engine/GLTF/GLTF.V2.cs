@@ -332,7 +332,9 @@ namespace GLTF.V2
         [JsonPropertyName("name")]
         public string name { get; set; }
 
-        [JsonPropertyName("alphaMode")] public AlphaMode alphaMode { get; set; } = AlphaMode.OPAQUE;
+        [JsonPropertyName("alphaMode")] 
+        [JsonConverter(typeof(JsonStringToAlphaModeConverter))]
+        public AlphaMode alphaMode { get; set; } = AlphaMode.OPAQUE;
 
     }
 
