@@ -8,7 +8,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using OpenTK.Mathematics;
-
+using OpenTK.Platform.Windows;
 namespace Core.OpenGLType
 {
     public static class GLToSharpTranslator 
@@ -154,6 +154,7 @@ namespace Core.OpenGLType
                 case ActiveUniformType.Sampler1DArray:
                 case ActiveUniformType.Sampler2DArray:
                 case ActiveUniformType.Sampler2DMultisample:
+                    
                     return true;
                 default:
                     return false;

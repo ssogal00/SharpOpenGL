@@ -57,6 +57,39 @@ namespace SharpOpenGLCore
             return 0;
         }
 
+        private static bool CanCreateTangent(List<VertexAttributeSemantic> semanticList)
+        {
+            bool bContainsTexCoord = false;
+            bool bContainsNormal = false;
+            bool bContainsTangent = false;
+            bool bContainsPosition = false;
+
+            foreach (var semantic in semanticList)
+            {
+                if (semantic.name.StartsWith("TEXCOORD", true, null))
+                {
+                    bContainsTexCoord = true;
+                }
+
+                if (semantic.name.StartsWith("NORMAL", true, null))
+                {
+                    bContainsNormal = true;
+                }
+
+                if (semantic.name.StartsWith("TANGENT", true, null))
+                {
+                    bContainsTangent = true;
+                }
+
+                if (semantic.name.StartsWith("POSITION", true, null))
+                {
+                    bContainsPosition = true;
+                }
+            }
+
+            return bContainsTexCoord && bContainsNormal && (!bContainsTangent) && bContainsPosition;
+        }
+        
 
         public GLTFStaticMeshObject(GLTFMeshAsset asset)
         {

@@ -25,6 +25,8 @@ namespace SharpOpenGLCore.Scene
             });
         }
 
+
+
         public override void Render()
         {
             foreach (var mesh in mMeshList)
