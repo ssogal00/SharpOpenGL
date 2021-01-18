@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DirectXTexWrapper.h"
 #include <msclr/marshal_cppstd.h>
+
 using namespace msclr::interop;
 using namespace System;
 using namespace System::Collections::Generic;
@@ -14,7 +15,7 @@ DirectXTexWrapper::ManagedTexMetaData::ManagedTexMetaData(const DirectX::TexMeta
 	this->arraySize = metaData.arraySize;
 	this->mipLevels = metaData.mipLevels;
 	this->depth = metaData.depth;
-	this->format = static_cast<DirectXTexWrapper::DXGI_FORMAT>(metaData.format);
+	this->format = static_cast<DirectXTexWrapper::BRIDGE_DXGI_FORMAT>(metaData.format);
 	this->dimension = static_cast<DirectXTexWrapper::TEX_DIMENSION>(metaData.dimension);
 	this->miscFlags = metaData.miscFlags;
 	this->miscFlags2 = metaData.miscFlags2;	
@@ -42,7 +43,7 @@ DirectXTexWrapper::ManagedImage::ManagedImage(const DirectX::Image& image)
 {
 	this->width = image.width;
 	this->height = image.height;
-	this->format = static_cast<DirectXTexWrapper::DXGI_FORMAT>(image.format);
+	this->format = static_cast<DirectXTexWrapper::BRIDGE_DXGI_FORMAT>(image.format);
 	this->rowPitch = image.rowPitch;
 	this->slicePitch = image.slicePitch;
 	pixels = gcnew array<uint8_t>(image.slicePitch);	
@@ -129,6 +130,7 @@ bool DirectXTexWrapper::DXTSaver::SaveAsDDSFile(System::String^ filePath, Manage
 	image.height = managedImage->height;
 	image.slicePitch = managedImage->slicePitch;
 	image.rowPitch = managedImage->rowPitch;
+	image.format = (DXGI_FORMAT) (managedImage->format);
 
 	Marshal::Copy(IntPtr((void*)image.pixels), managedImage->pixels, 0, managedImage->slicePitch);	
 	

@@ -2,12 +2,13 @@
 
 #include "DirectXTex.h"
 
+
 using namespace System;
 using namespace System::Collections::Generic;
 
 namespace DirectXTexWrapper
 {
-    public enum class DXGI_FORMAT
+    public enum class BRIDGE_DXGI_FORMAT
     {
         DXGI_FORMAT_UNKNOWN = 0,
         DXGI_FORMAT_R32G32B32A32_TYPELESS = 1,
@@ -174,7 +175,7 @@ namespace DirectXTexWrapper
 		size_t          mipLevels;
 		uint32_t        miscFlags;
 		uint32_t        miscFlags2;
-		DXGI_FORMAT     format;
+		BRIDGE_DXGI_FORMAT     format;
 		TEX_DIMENSION   dimension;
 
         bool IsCubemap();
@@ -186,7 +187,7 @@ namespace DirectXTexWrapper
 		ManagedImage(const DirectX::Image& image);
 		size_t      width;
 		size_t      height;
-		DXGI_FORMAT format;
+		BRIDGE_DXGI_FORMAT format;
 		size_t      rowPitch;
 		size_t      slicePitch;
 		array<uint8_t>^ pixels;
