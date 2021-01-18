@@ -105,6 +105,12 @@ public struct MaterialProperty
 	public System.Boolean MetallicRoughnessOneTexture;
 }
 }
+namespace ScreenSpaceDraw
+{
+}
+namespace EquirectangleToCube
+{
+}
 namespace BasicMaterial
 {
 
@@ -149,9 +155,6 @@ public struct Transform
 namespace SimpleMaterial
 {
 }
-namespace ScreenSpaceDraw
-{
-}
 namespace GBufferDraw
 {
 
@@ -186,9 +189,6 @@ public struct PrevTransform
 }
 }
 namespace GBufferDraw
-{
-}
-namespace EquirectangleToCube
 {
 }
 namespace CubemapConvolution

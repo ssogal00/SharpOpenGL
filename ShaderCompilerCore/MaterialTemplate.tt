@@ -33,9 +33,10 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		SetTexture(@"<#=Sampler#>", TextureObject);
 	}
 
-	public void Set<#=Sampler#>2D(Core.Texture.TextureBase TextureObject, Sampler SamplerObject)
+	public void Set<#=Sampler#>2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"<#=Sampler#>", TextureObject, SamplerObject);
+		// SetTexture(@"<#=Sampler#>", textureObject, samplerObject);
+		SetTextureByIndex(<#=Sampler#>Index, textureObject, samplerObject);
 	}
 
 	public TextureBase <#=Sampler.FirstCharToUpper()#>2D 

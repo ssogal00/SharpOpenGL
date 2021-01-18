@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +27,10 @@ namespace Core.OpenGLShader
                 }
             }
 
-            string composedSourceCode = VersionString + defineString + originalCode;
+            var codes = originalCode.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            bool versionCodeExist = codes.Where(x => x.StartsWith("#version")).Count() > 0;
+            
+            string composedSourceCode = (versionCodeExist ? "" : VersionString) + defineString + originalCode;
             return composedSourceCode;
         }
 

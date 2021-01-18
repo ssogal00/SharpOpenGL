@@ -13,6 +13,20 @@
 			"name" : "GBufferMacro2",			
 			"vertexShaderDefines" : [ { "name" : "VERTEX_PNT", "value" : "1"}],
 			"fragmentShaderDefines" : [{ "name" : "VERTEX_PNT", "value" : "1"}]
+		},
+		{
+			"vertexShader" : "./Resources/Shader/Screen.vs.glsl",
+			"fragmentShader" : "./Resources/Shader/Screen.fs.glsl",
+			"name" : "ScreenSpaceDraw",
+			"vertexShaderDefines" : [],
+			"fragmentShaderDefines" : []
+		},
+		{
+			"name" : "EquirectangleToCube",
+			"vertexShader" : "./Resources/Shader/EquirectangleToCubemap.vs.glsl",
+			"fragmentShader" : "./Resources/Shader/EquirectangleToCubemap.fs.glsl",
+			"vertexShaderDefines" : [],
+			"fragmentShaderDefines" : []
 		}
 	]
 }

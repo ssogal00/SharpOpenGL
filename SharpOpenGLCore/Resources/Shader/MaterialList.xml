@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <MaterialList>
 	<Material name="BasicMaterial" vertexShader="TestShader.vs.glsl" fragmentShader="TestShader.fs.glsl"/>
-	<Material name="SimpleMaterial" vertexShader="TestShader2.vs.glsl" fragmentShader="TestShader2.fs.glsl"/>
-	<Material name="ScreenSpaceDraw" vertexShader="Screen.vs.glsl" fragmentShader="Screen.fs.glsl"/>
+	<Material name="SimpleMaterial" vertexShader="TestShader2.vs.glsl" fragmentShader="TestShader2.fs.glsl"/>	
 	<Material name="GBufferDraw" vertexShader="GBuffer.vs.glsl" fragmentShader="GBuffer.fs.glsl">		
-	</Material>
-	<Material name="EquirectangleToCube" vertexShader="EquirectangleToCubemap.vs.glsl" fragmentShader="EquirectangleToCubemap.fs.glsl" />
+	</Material>	
 	<Material name="CubemapConvolution" vertexShader="CubemapConvolution.vs.glsl" fragmentShader="CubemapConvolution.fs.glsl" />
 	<Material name="GBufferInstanced" vertexShader="GBufferInstanced.vs.glsl" fragmentShader="GBufferInstanced.fs.glsl"/>
 	<Material name="GBufferWithoutTexture" vertexShader="GBuffer.vs.glsl" fragmentShader="GBufferWithoutTexture.fs.glsl"/>
