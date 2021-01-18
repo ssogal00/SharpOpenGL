@@ -55,6 +55,8 @@ namespace GLTF.V2
         BLEND
     }
 
+    
+
     public class JsonNumArrayToVector4TypeConverter : JsonConverter<Vector4>
     {
         public override Vector4 Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -164,6 +166,57 @@ namespace GLTF.V2
         }
 
         public override void Write(Utf8JsonWriter writer, AlphaMode value, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class JsonMinMaxConverter : JsonConverter<MinMax>
+    {
+        public override MinMax Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            if (reader.TokenType == JsonTokenType.StartArray)
+            {
+                var result = new MinMax();
+                
+                result.Type = AttributeType.SCALAR;
+
+                float x = 0;
+                float y = 0;
+                float z = 0;
+                float w = 0;
+
+                if (reader.TryGetSingle(out x))
+                {
+                    result.Type = AttributeType.SCALAR;
+                    result.ScalarValue = x;
+                }
+
+                if (reader.TryGetSingle(out y))
+                {
+                    result.Type = AttributeType.VEC2;
+                    result.Vector2Value = new Vector2(x,y);
+                }
+
+                if (reader.TryGetSingle(out z))
+                {
+                    result.Type = AttributeType.VEC3;
+                    result.Vector3Value = new Vector3(x,y,z);
+                }
+
+                if (reader.TryGetSingle(out w))
+                {
+                    result.Type = AttributeType.VEC4;
+                    result.Vector4Value = new Vector4(x,y,z,w);
+                }
+
+                return result;
+            }
+
+            return null;
+        }
+
+        public override void Write(Utf8JsonWriter writer, MinMax value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }
@@ -344,6 +397,18 @@ namespace GLTF.V2
         public string version { get; set; }
     }
 
+    public class MinMax
+    {
+        public Vector4 Vector4Value { get; set; }
+        public Vector3 Vector3Value { get; set; }
+
+        public Vector2 Vector2Value { get; set; }
+
+        public float ScalarValue { get; set; }
+
+        public AttributeType Type { get; set; }
+    }
+
     public class Camera
     {
         public string name { get; set; }
@@ -417,6 +482,12 @@ namespace GLTF.V2
         ///
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ComponentType componentType { get; set; }
+
+        [JsonConverter(typeof(JsonMinMaxConverter))]
+        public MinMax min { get; set; }
+
+        [JsonConverter(typeof(JsonMinMaxConverter))]
+        public MinMax max { get; set; }
     }
 
     public class Buffer
