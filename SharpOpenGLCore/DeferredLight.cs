@@ -7,7 +7,7 @@ using SharpOpenGL.Light;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CompiledMaterial.LightMaterial;
+using CompiledMaterial.DeferredLightMaterial;
 using OpenTK.Mathematics;
 
 namespace SharpOpenGL.PostProcess
@@ -18,7 +18,7 @@ namespace SharpOpenGL.PostProcess
             : base()
         {
             this.Name = "deferredLight";
-            PostProcessMaterial = new LightMaterial();
+            PostProcessMaterial = new DeferredLightMaterial();
         }
 
         private void UpdateLightInfo()
@@ -49,7 +49,7 @@ namespace SharpOpenGL.PostProcess
 
             Output.BindAndExecute(PostProcessMaterial,  () =>
             {
-                var deferredLight = (LightMaterial) PostProcessMaterial;
+                var deferredLight = (DeferredLightMaterial) PostProcessMaterial;
                 deferredLight.PositionTex2D = positionInput;
                 deferredLight.NormalTex2D = normalInput;
                 deferredLight.DiffuseTex2D = colorInput;

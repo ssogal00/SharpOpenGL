@@ -6,16 +6,14 @@
 	</Material>	
 	<Material name="CubemapConvolution" vertexShader="CubemapConvolution.vs.glsl" fragmentShader="CubemapConvolution.fs.glsl" />
 	<Material name="GBufferInstanced" vertexShader="GBufferInstanced.vs.glsl" fragmentShader="GBufferInstanced.fs.glsl"/>
-	<Material name="GBufferWithoutTexture" vertexShader="GBuffer.vs.glsl" fragmentShader="GBufferWithoutTexture.fs.glsl"/>
-	<Material name="GBufferDump" vertexShader="GBufferDump.vs.glsl" fragmentShader="GBufferDump.fs.glsl"/>
+	<Material name="GBufferWithoutTexture" vertexShader="GBuffer.vs.glsl" fragmentShader="GBufferWithoutTexture.fs.glsl"/>	
 	<Material name="GBufferPNC" vertexShader="GBufferPNC.vs.glsl" fragmentShader="GBufferPNC.fs.glsl"/>
 	<Material name="GBufferCubeTest" vertexShader="GBufferCubeTest.vs.glsl" fragmentShader="GBufferCubeTest.fs.glsl"/>
 	<Material name="GBufferPNCT" vertexShader="GBufferPNCT.vs.glsl" fragmentShader="GBufferPNCT.fs.glsl"/>
 	<Material name="GBufferPNT" vertexShader="GBufferPNT.vs.glsl" fragmentShader="GBufferPNT.fs.glsl"/>
 	<Material name="GBufferPNTT" vertexShader="GBufferPNTT.vs.glsl" fragmentShader="GBufferPNTT.fs.glsl"/>
 	<Material name="Blur" vertexShader="Blur.vs.glsl" fragmentShader="Blur.fs.glsl"/>
-	<Material name="BloomMaterial" vertexShader="Bloom.vs.glsl" fragmentShader="Bloom.fs.glsl"/>
-	<Material name="LightMaterial" vertexShader="DeferredLight.vs.glsl" fragmentShader="DeferredLight.fs.glsl"/>
+	<Material name="BloomMaterial" vertexShader="Bloom.vs.glsl" fragmentShader="Bloom.fs.glsl"/>	
 	<Material name="CubemapMaterial" vertexShader="Cubemap.vs.glsl" fragmentShader="Cubemap.fs.glsl"/>
 	<Material name="MSGBufferMaterial" vertexShader="MultisampleGBuffer.vs.glsl" fragmentShader="MultisampleGBuffer.fs.glsl"/>
 	<Material name="DepthVisualizeMaterial" vertexShader="DepthVisualize.vs.glsl" fragmentShader="DepthVisualize.fs.glsl"/>

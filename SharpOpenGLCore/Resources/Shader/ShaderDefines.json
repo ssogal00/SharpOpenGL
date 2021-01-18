@@ -27,6 +27,20 @@
 			"fragmentShader" : "./Resources/Shader/EquirectangleToCubemap.fs.glsl",
 			"vertexShaderDefines" : [],
 			"fragmentShaderDefines" : []
+		},
+		{
+			"name" : "GBufferDump",
+			"vertexShader" : "./Resources/Shader/GBufferDump.vs.glsl",
+			"fragmentShader" : "./Resources/Shader/GBufferDump.fs.glsl",
+			"vertexShaderDefines" : [],
+			"fragmentShaderDefines" : []	
+		},
+		{
+			"name" : "DeferredLightMaterial",
+			"vertexShader" : "./Resources/Shader/DeferredLight.vs.glsl",
+			"fragmentShader" : "./Resources/Shader/DeferredLight.fs.glsl",
+			"vertexShaderDefines" : [],
+			"fragmentShaderDefines" : []		
 		}
 	]
 }

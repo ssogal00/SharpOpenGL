@@ -111,6 +111,46 @@ namespace ScreenSpaceDraw
 namespace EquirectangleToCube
 {
 }
+namespace GBufferDump
+{
+}
+namespace GBufferDump
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=32)]
+public struct Dump
+{
+	[FieldOffset(0), ExposeUI]
+	public System.Boolean PositionDump;
+	[FieldOffset(4), ExposeUI]
+	public System.Boolean NormalDump;
+	[FieldOffset(8), ExposeUI]
+	public System.Boolean MetalicDump;
+	[FieldOffset(12), ExposeUI]
+	public System.Boolean DiffuseDump;
+	[FieldOffset(16), ExposeUI]
+	public System.Boolean RoughnessDump;
+	[FieldOffset(20), ExposeUI]
+	public System.Boolean MotionBlurDump;
+}
+}
+namespace DeferredLightMaterial
+{
+}
+namespace DeferredLightMaterial
+{
+
+
+[StructLayout(LayoutKind.Explicit,Size=128)]
+public struct CameraTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 View;
+	[FieldOffset(64), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Proj;
+}
+}
 namespace BasicMaterial
 {
 
@@ -254,30 +294,6 @@ public struct PrevTransform
 namespace GBufferWithoutTexture
 {
 }
-namespace GBufferDump
-{
-}
-namespace GBufferDump
-{
-
-
-[StructLayout(LayoutKind.Explicit,Size=32)]
-public struct Dump
-{
-	[FieldOffset(0), ExposeUI]
-	public System.Boolean PositionDump;
-	[FieldOffset(4), ExposeUI]
-	public System.Boolean NormalDump;
-	[FieldOffset(8), ExposeUI]
-	public System.Boolean MetalicDump;
-	[FieldOffset(12), ExposeUI]
-	public System.Boolean DiffuseDump;
-	[FieldOffset(16), ExposeUI]
-	public System.Boolean RoughnessDump;
-	[FieldOffset(20), ExposeUI]
-	public System.Boolean MotionBlurDump;
-}
-}
 namespace GBufferPNC
 {
 
@@ -387,22 +403,6 @@ namespace Blur
 }
 namespace BloomMaterial
 {
-}
-namespace LightMaterial
-{
-}
-namespace LightMaterial
-{
-
-
-[StructLayout(LayoutKind.Explicit,Size=128)]
-public struct CameraTransform
-{
-	[FieldOffset(0), ExposeUI]
-	public OpenTK.Mathematics.Matrix4 View;
-	[FieldOffset(64), ExposeUI]
-	public OpenTK.Mathematics.Matrix4 Proj;
-}
 }
 namespace CubemapMaterial
 {
