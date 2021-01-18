@@ -25,7 +25,9 @@ public class <#=ShaderName#> : MaterialBase
 
 <# int index = 0;
 foreach(var Sampler in FSProgram.GetSampler2DNames())
-{#>
+{
+	int samplerIndex = FSProgram.GetSampler2DUniformLocation(Sampler);
+#>
 	public void Set<#=Sampler#>2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"<#=Sampler#>", TextureObject);
@@ -38,32 +40,21 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 
 	public TextureBase <#=Sampler.FirstCharToUpper()#>2D 
 	{	
-		set 
-		{	
-			<#=Sampler.ToLower()#> = value;
-			SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>);
-		}
+		//set => SetTexture(@"<#=Sampler#>", value);
+		set => SetTextureByIndex(<#=Sampler#>Index, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase <#=Sampler.FirstCharToUpper()#>2D_PointSample
 	{	
-		set 
-		{	
-			<#=Sampler.ToLower()#> = value;
-			SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>, Sampler.DefaultPointSampler);
-		}
+		set => SetTexture(@"<#=Sampler#>", value, Sampler.DefaultPointSampler);
 	}
 
 	public TextureBase <#=Sampler.FirstCharToUpper()#>2D_LinearSample
 	{	
-		set 
-		{	
-			<#=Sampler.ToLower()#> = value;
-			SetTexture(@"<#=Sampler#>", <#=Sampler.ToLower()#>, Sampler.DefaultLinearSampler);
-		}
+		set => SetTexture(@"<#=Sampler#>", value, Sampler.DefaultLinearSampler);
 	}
 
-	private TextureBase <#=Sampler.ToLower()#> = null;
+	private int <#=Sampler#>Index = <#=samplerIndex#>;
 <#index++;#>
 <#}#>
 
@@ -155,7 +146,6 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		{ 
 			<#=blockname.ToLower()#>.<#=data.VariableName#> = value;
 			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);
-			//this.SetUniformBufferMemberValue< <#=data.VariableTypeString#> >(@"<#=blockname#>", ref value, <#=data.VariableOffset#> );
 		}
 	}
 <# } #>

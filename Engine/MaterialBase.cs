@@ -142,7 +142,6 @@ namespace Core.MaterialBase
             for (int i = 0; i < samplerNames.Count; ++i)
             {
                 mSamplerMap.Add(samplerNames[i], TextureUnit.Texture0 + i);
-                mSamplerIndexMap.Add(i, samplerNames[i]);
             }
         }
 
@@ -185,6 +184,15 @@ namespace Core.MaterialBase
             texture.Bind();
             sampler.BindSampler(TextureUnit.Texture0 + Loc);
             texture.BindShader(TextureUnit.Texture0 + Loc, Loc);
+        }
+
+        // set texture by index
+        public void SetTextureByIndex(int index, Core.Texture.TextureBase texture, Sampler sampler)
+        {
+            GL.ActiveTexture(TextureUnit.Texture0 + index);
+            texture.Bind();
+            sampler.BindSampler(TextureUnit.Texture0 + index);
+            texture.BindShader(TextureUnit.Texture0 + index, index);
         }
 
         public void Bind()
@@ -479,8 +487,7 @@ namespace Core.MaterialBase
 
         protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = null;
         protected Dictionary<string, TextureUnit> mSamplerMap = null;
-        // for fast access
-        protected Dictionary<int, string> mSamplerIndexMap = new Dictionary<int, string>();
+
         protected List<string> mUniformVariableNames = null;
     }
 }

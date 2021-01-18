@@ -10,17 +10,16 @@ namespace Engine
     {
         public void SetBaseColorTex(Texture2D texture)
         {
-
         }
 
-        public void SetNormalTex(Texture2D texture)
+        public TextureBase DiffuseTex
         {
-
+            set => SetTexture(@"DiffuseTex", value);
         }
 
-        public void SetOcclusionTex(Texture2D texture)
+        public Texture2D NormalTex
         {
-
+            set => SetTexture(@"NormalTex", value);
         }
     }
 }

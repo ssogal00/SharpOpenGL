@@ -24,6 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Camera\" />
+    <Folder Include="Geometry\" />
     <Folder Include="Shader\" />
   </ItemGroup>
 

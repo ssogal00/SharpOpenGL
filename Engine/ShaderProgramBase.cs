@@ -760,11 +760,16 @@ namespace Core.OpenGLShader
                 for (int i = 0; i < Count; ++i)
                 {
                     int size;
+
                     ActiveUniformType type;
-                    
+
                     GL.GetActiveUniform(ProgramObject, i, out size, out type);
 
-                    if (type == ActiveUniformType.Sampler2D)
+                    if (type == ActiveUniformType.Sampler1D)
+                    {
+                        result.Add(GL.GetActiveUniformName(ProgramObject, i));
+                    }
+                    else if (type == ActiveUniformType.Sampler2D)
                     {
                         result.Add(GL.GetActiveUniformName(ProgramObject, i));
                     }

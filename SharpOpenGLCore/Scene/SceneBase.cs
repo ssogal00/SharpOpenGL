@@ -39,8 +39,8 @@ namespace SharpOpenGL.Scene
 
         protected virtual void InitializeCamera()
         {
-            CameraManager.Get().CurrentCamera.EyeLocation = CameraStartPos;
-            CameraManager.Get().CurrentCamera.LookAtLocation = CameraStartPos + CameraStartDir * 1.0f;
+            CameraManager.Get().CurrentCamera.EyeLocation = mCameraStartPos;
+            CameraManager.Get().CurrentCamera.LookAtLocation = mCameraStartPos + mCameraStartDir * 1.0f;
         }
         
         public virtual void Render()

@@ -59,26 +59,26 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\freetype-gl\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">freetype-gl.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">freetype-gl</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\freetype-gl\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\Release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">freetype-gl.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">freetype-gl</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(SolutionDir)\freetype-gl\MinSizeRel\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\MinSizeRel\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">freetype-gl.dir\MinSizeRel\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">freetype-gl</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(SolutionDir)\freetype-gl\RelWithDebInfo\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\RelWithDebInfo\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">freetype-gl.dir\RelWithDebInfo\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">freetype-gl</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype-2.10.4;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -95,10 +95,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -107,13 +107,11 @@
     </Midl>
     <Lib>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <AdditionalDependencies>freetype.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\freetype-gl\windows\freetype-2.10.4;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype-2.10.4;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -130,10 +128,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -146,7 +144,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <ExceptionHandling>
       </ExceptionHandling>
@@ -163,10 +161,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -179,7 +177,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>
@@ -195,10 +193,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_NONSTDC_NO_DEPRECATE;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>$(SolutionDir)\freetype-gl\windows\freetype;$(SolutionDir)\freetype-gl;$(SolutionDir)\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\MyGitHub\SharpOpenGL\freetype-gl\windows\freetype;C:\MyGitHub\SharpOpenGL\freetype-gl;C:\MyGitHub\SharpOpenGL\freetype-gl\windows\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -210,11 +208,11 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="$(SolutionDir)\freetype-gl\CMakeLists.txt">
+    <CustomBuild Include="C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeLists.txt">
       <StdOutEncoding>UTF-8</StdOutEncoding>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule $(SolutionDir)/freetype-gl/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/MyGitHub/SharpOpenGL/freetype-gl/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -S$(SolutionDir)/freetype-gl -B$(SolutionDir)/freetype-gl --check-stamp-file $(SolutionDir)/freetype-gl/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/MyGitHub/SharpOpenGL/freetype-gl -BC:/MyGitHub/SharpOpenGL/freetype-gl --check-stamp-file C:/MyGitHub/SharpOpenGL/freetype-gl/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -222,12 +220,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeCCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeCXXCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeRCCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeSystem.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\FindGLEW.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\RequireFunctionExists.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\RequireIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindFreetype.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)\freetype-gl\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeCCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeCXXCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeRCCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeSystem.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\FindGLEW.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\RequireFunctionExists.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\RequireIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindFreetype.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule $(SolutionDir)/freetype-gl/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/MyGitHub/SharpOpenGL/freetype-gl/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -S$(SolutionDir)/freetype-gl -B$(SolutionDir)/freetype-gl --check-stamp-file $(SolutionDir)/freetype-gl/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/MyGitHub/SharpOpenGL/freetype-gl -BC:/MyGitHub/SharpOpenGL/freetype-gl --check-stamp-file C:/MyGitHub/SharpOpenGL/freetype-gl/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -235,12 +233,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeCCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeCXXCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeRCCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeSystem.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\FindGLEW.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\RequireFunctionExists.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\RequireIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindFreetype.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\freetype-gl\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeCCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeCXXCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeRCCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeSystem.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\FindGLEW.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\RequireFunctionExists.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\RequireIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindFreetype.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule $(SolutionDir)/freetype-gl/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/MyGitHub/SharpOpenGL/freetype-gl/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -S$(SolutionDir)/freetype-gl -B$(SolutionDir)/freetype-gl --check-stamp-file $(SolutionDir)/freetype-gl/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/MyGitHub/SharpOpenGL/freetype-gl -BC:/MyGitHub/SharpOpenGL/freetype-gl --check-stamp-file C:/MyGitHub/SharpOpenGL/freetype-gl/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -248,12 +246,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeCCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeCXXCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeRCCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeSystem.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\FindGLEW.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\RequireFunctionExists.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\RequireIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindFreetype.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(SolutionDir)\freetype-gl\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeCCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeCXXCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeRCCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeSystem.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\FindGLEW.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\RequireFunctionExists.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\RequireIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindFreetype.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule $(SolutionDir)/freetype-gl/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/MyGitHub/SharpOpenGL/freetype-gl/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -S$(SolutionDir)/freetype-gl -B$(SolutionDir)/freetype-gl --check-stamp-file $(SolutionDir)/freetype-gl/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/MyGitHub/SharpOpenGL/freetype-gl -BC:/MyGitHub/SharpOpenGL/freetype-gl --check-stamp-file C:/MyGitHub/SharpOpenGL/freetype-gl/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -261,41 +259,41 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeCCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeCXXCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeRCCompiler.cmake;$(SolutionDir)\freetype-gl\CMakeFiles\3.18.1\CMakeSystem.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\FindGLEW.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\RequireFunctionExists.cmake;$(SolutionDir)\freetype-gl\cmake\Modules\RequireIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindFreetype.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(SolutionDir)\freetype-gl\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeCCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeCXXCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeRCCompiler.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\3.18.1\CMakeSystem.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\FindGLEW.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\RequireFunctionExists.cmake;C:\MyGitHub\SharpOpenGL\freetype-gl\cmake\Modules\RequireIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckFunctionExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\CheckSymbolExists.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindFreetype.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindOpenGL.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\Platform\WindowsPaths.cmake;C:\Program Files\CMake\share\cmake-3.18\Modules\SelectLibraryConfigurations.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\MyGitHub\SharpOpenGL\freetype-gl\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(SolutionDir)\freetype-gl\distance-field.c" />
-    <ClCompile Include="$(SolutionDir)\freetype-gl\edtaa3func.c" />
-    <ClCompile Include="$(SolutionDir)\freetype-gl\font-manager.c" />
-    <ClCompile Include="$(SolutionDir)\freetype-gl\platform.c" />
-    <ClCompile Include="$(SolutionDir)\freetype-gl\text-buffer.c" />
-    <ClCompile Include="$(SolutionDir)\freetype-gl\texture-atlas.c" />
-    <ClCompile Include="$(SolutionDir)\freetype-gl\texture-font.c" />
-    <ClCompile Include="$(SolutionDir)\freetype-gl\utf8-utils.c" />
-    <ClCompile Include="$(SolutionDir)\freetype-gl\vector.c" />
-    <ClCompile Include="$(SolutionDir)\freetype-gl\vertex-attribute.c" />
-    <ClCompile Include="$(SolutionDir)\freetype-gl\vertex-buffer.c" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\distance-field.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\edtaa3func.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\font-manager.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\freetype-gl.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\markup.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\opengl.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\platform.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\text-buffer.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\texture-atlas.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\texture-font.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\utf8-utils.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\vec234.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\vector.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\vertex-attribute.h" />
-    <ClInclude Include="$(SolutionDir)\freetype-gl\vertex-buffer.h" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\distance-field.c" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\edtaa3func.c" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\font-manager.c" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\platform.c" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\text-buffer.c" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\texture-atlas.c" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\texture-font.c" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\utf8-utils.c" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\vector.c" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\vertex-attribute.c" />
+    <ClCompile Include="C:\MyGitHub\SharpOpenGL\freetype-gl\vertex-buffer.c" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\distance-field.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\edtaa3func.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\font-manager.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\freetype-gl.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\markup.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\opengl.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\platform.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\text-buffer.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\texture-atlas.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\texture-font.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\utf8-utils.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\vec234.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\vector.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\vertex-attribute.h" />
+    <ClInclude Include="C:\MyGitHub\SharpOpenGL\freetype-gl\vertex-buffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(SolutionDir)\freetype-gl\ZERO_CHECK.vcxproj">
+    <ProjectReference Include="C:\MyGitHub\SharpOpenGL\freetype-gl\ZERO_CHECK.vcxproj">
       <Project>{C166EE0E-B373-3C88-BC6A-5EDAFDEEFF68}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
