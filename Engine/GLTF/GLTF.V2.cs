@@ -173,42 +173,83 @@ namespace GLTF.V2
 
     public class JsonMinMaxConverter : JsonConverter<MinMax>
     {
+
+        private bool ReadSingle(ref Utf8JsonReader reader, out float result)
+        {
+            result = float.MaxValue;
+
+            try
+            {
+                reader.TryGetSingle(out result);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public override MinMax Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             if (reader.TokenType == JsonTokenType.StartArray)
             {
-                var result = new MinMax();
+                MinMax result = new MinMax();
                 
-                result.Type = AttributeType.SCALAR;
-
                 float x = 0;
                 float y = 0;
                 float z = 0;
                 float w = 0;
 
-                if (reader.TryGetSingle(out x))
+                reader.Read();
+
+                // x
+                if (ReadSingle(ref reader, out x))
                 {
-                    result.Type = AttributeType.SCALAR;
-                    result.ScalarValue = x;
+                    reader.Read();
+                    if (reader.TokenType == JsonTokenType.EndArray)
+                    {
+                        result.ScalarValue = x;
+                        result.Type = AttributeType.SCALAR;
+                        return result;
+                    }
                 }
 
-                if (reader.TryGetSingle(out y))
+                // x
+                if (ReadSingle(ref reader, out y))
                 {
-                    result.Type = AttributeType.VEC2;
-                    result.Vector2Value = new Vector2(x,y);
+                    reader.Read();
+                    if (reader.TokenType == JsonTokenType.EndArray)
+                    {
+                        result.Vector2Value = new Vector2(x,y);
+                        result.Type = AttributeType.VEC2;
+                        return result;
+                    }
                 }
 
-                if (reader.TryGetSingle(out z))
+                // x
+                if (ReadSingle(ref reader, out z))
                 {
-                    result.Type = AttributeType.VEC3;
-                    result.Vector3Value = new Vector3(x,y,z);
+                    reader.Read();
+                    if (reader.TokenType == JsonTokenType.EndArray)
+                    {
+                        result.Vector3Value = new Vector3(x, y,z);
+                        result.Type = AttributeType.VEC3;
+                        return result;
+                    }
                 }
 
-                if (reader.TryGetSingle(out w))
+                // x
+                if (ReadSingle(ref reader, out w))
                 {
-                    result.Type = AttributeType.VEC4;
-                    result.Vector4Value = new Vector4(x,y,z,w);
+                    reader.Read();
+                    if (reader.TokenType == JsonTokenType.EndArray)
+                    {
+                        result.Vector4Value = new Vector4(x, y, z,w);
+                        result.Type = AttributeType.VEC4;
+                        return result;
+                    }
                 }
+
 
                 return result;
             }

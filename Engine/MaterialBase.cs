@@ -136,12 +136,13 @@ namespace Core.MaterialBase
 
             if (samplerNames.Count > 0)
             {
-                mSamplerMap = new Dictionary<string, TextureUnit>();
+                mSamplerMap = new Dictionary<string, int>();
             }
 
             for (int i = 0; i < samplerNames.Count; ++i)
             {
-                mSamplerMap.Add(samplerNames[i], TextureUnit.Texture0 + i);
+                int index = mMaterialProgram.GetSampler2DUniformLocation(samplerNames[i]);
+                mSamplerMap.Add(samplerNames[i], index);
             }
         }
 
@@ -179,11 +180,8 @@ namespace Core.MaterialBase
                 return;
             }
 
-            var Loc = mMaterialProgram.GetSampler2DUniformLocation(name);
-            GL.ActiveTexture(TextureUnit.Texture0 + Loc);
-            texture.Bind();
-            sampler.BindSampler(TextureUnit.Texture0 + Loc);
-            texture.BindShader(TextureUnit.Texture0 + Loc, Loc);
+            var location = mSamplerMap[name];
+            SetTextureByIndex(location, texture, sampler);
         }
 
         // set texture by index
@@ -486,7 +484,7 @@ namespace Core.MaterialBase
         protected ModelTransform mModelTransform = new ModelTransform();
 
         protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = null;
-        protected Dictionary<string, TextureUnit> mSamplerMap = null;
+        protected Dictionary<string, int> mSamplerMap = null;
 
         protected List<string> mUniformVariableNames = null;
     }

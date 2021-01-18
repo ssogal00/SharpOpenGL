@@ -35,14 +35,14 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 
 	public void Set<#=Sampler#>2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"<#=Sampler#>", textureObject, samplerObject);
-		SetTextureByIndex(<#=Sampler#>Index, textureObject, samplerObject);
+		SetTexture(@"<#=Sampler#>", textureObject, samplerObject);
+		//SetTextureByIndex(<#=Sampler#>Index, textureObject, samplerObject);
 	}
 
 	public TextureBase <#=Sampler.FirstCharToUpper()#>2D 
 	{	
-		//set => SetTexture(@"<#=Sampler#>", value);
-		set => SetTextureByIndex(<#=Sampler#>Index, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"<#=Sampler#>", value);
+		//set => SetTextureByIndex(<#=Sampler#>Index, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase <#=Sampler.FirstCharToUpper()#>2D_PointSample
@@ -54,7 +54,6 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	{	
 		set => SetTexture(@"<#=Sampler#>", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int <#=Sampler#>Index = <#=samplerIndex#>;
 <#index++;#>
 <#}#>

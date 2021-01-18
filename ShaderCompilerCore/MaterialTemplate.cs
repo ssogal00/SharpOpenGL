@@ -77,15 +77,15 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
             
             #line default
             #line hidden
-            this.Write("2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)\r\n\t{\r\n\t\t// SetTe" +
-                    "xture(@\"");
+            this.Write("2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)\r\n\t{\r\n\t\tSetTextu" +
+                    "re(@\"");
             
             #line 38 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
             
             #line default
             #line hidden
-            this.Write("\", textureObject, samplerObject);\r\n\t\tSetTextureByIndex(");
+            this.Write("\", textureObject, samplerObject);\r\n\t\t//SetTextureByIndex(");
             
             #line 39 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
@@ -99,14 +99,14 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
             
             #line default
             #line hidden
-            this.Write("2D \r\n\t{\t\r\n\t\t//set => SetTexture(@\"");
+            this.Write("2D \r\n\t{\t\r\n\t\tset => SetTexture(@\"");
             
             #line 44 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
             
             #line default
             #line hidden
-            this.Write("\", value);\r\n\t\tset => SetTextureByIndex(");
+            this.Write("\", value);\r\n\t\t//set => SetTextureByIndex(");
             
             #line 45 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
@@ -141,382 +141,382 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
             
             #line default
             #line hidden
-            this.Write("\", value, Sampler.DefaultLinearSampler);\r\n\t}\r\n\r\n\tprivate int ");
+            this.Write("\", value, Sampler.DefaultLinearSampler);\r\n\t}\r\n\tprivate int ");
             
-            #line 58 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 57 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Sampler));
             
             #line default
             #line hidden
             this.Write("Index = ");
             
-            #line 58 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 57 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(samplerIndex));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 59 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 58 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 index++;
             
             #line default
             #line hidden
             
-            #line 60 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 59 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 62 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 61 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 foreach(var item in VSProgram.GetActiveUniformVariableMetaDataList())
             
             #line default
             #line hidden
             
-            #line 63 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 62 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 {
             
             #line default
             #line hidden
             
-            #line 64 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 63 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 if(item.IsArray)
             
             #line default
             #line hidden
             
-            #line 65 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 64 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 {
             
             #line default
             #line hidden
             this.Write("\tpublic ");
             
-            #line 66 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 65 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableTypeString));
             
             #line default
             #line hidden
             this.Write("[] ");
             
-            #line 66 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 65 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.FirstCharToUpper()));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n\t\tget { return ");
             
-            #line 68 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 67 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write("; }\r\n\t\tset \r\n\t\t{\r\n\t\t\t");
+            
+            #line 70 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write(" = value;\r\n\t\t\tSetUniformVarData(@\"");
+            
+            #line 71 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName));
+            
+            #line default
+            #line hidden
+            this.Write("\", ref ");
             
             #line 71 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
-            this.Write(" = value;\r\n\t\t\tSetUniformVarData(@\"");
-            
-            #line 72 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName));
-            
-            #line default
-            #line hidden
-            this.Write("\", ref ");
-            
-            #line 72 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
-            
-            #line default
-            #line hidden
             this.Write(");\t\t\t\r\n\t\t}\r\n\t}\r\n\tprivate ");
             
-            #line 75 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 74 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableTypeString));
             
             #line default
             #line hidden
             this.Write("[] ");
             
-            #line 75 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 74 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 76 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 75 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 77 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 76 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 else
             
             #line default
             #line hidden
             
-            #line 78 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 77 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 {
             
             #line default
             #line hidden
             this.Write("\tpublic ");
             
-            #line 79 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 78 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableTypeString));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 79 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 78 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.FirstCharToUpper()));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n\t\tget { return ");
             
-            #line 81 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 80 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write("; }\r\n\t\tset \r\n\t\t{\r\n\t\t\t");
+            
+            #line 83 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
+            
+            #line default
+            #line hidden
+            this.Write(" = value;\r\n\t\t\tSetUniformVarData(@\"");
+            
+            #line 84 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName));
+            
+            #line default
+            #line hidden
+            this.Write("\", ");
             
             #line 84 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
-            this.Write(" = value;\r\n\t\t\tSetUniformVarData(@\"");
-            
-            #line 85 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName));
-            
-            #line default
-            #line hidden
-            this.Write("\", ");
-            
-            #line 85 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
-            
-            #line default
-            #line hidden
             this.Write(");\t\t\t\r\n\t\t}\r\n\t}\r\n\tprivate ");
             
-            #line 88 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 87 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableTypeString));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 88 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 87 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write(";\r\n");
+            
+            #line 88 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+}
+            
+            #line default
+            #line hidden
             
             #line 89 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
-            
-            #line 90 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
-}
-            
-            #line default
-            #line hidden
             this.Write("\r\n");
             
-            #line 92 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 91 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 foreach(var item in FSProgram.GetActiveUniformVariableMetaDataList())
             
             #line default
             #line hidden
             
-            #line 93 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 92 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 {
             
             #line default
             #line hidden
             this.Write("\t\r\n");
             
-            #line 94 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 93 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 if(item.IsArray)
             
             #line default
             #line hidden
             
-            #line 95 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 94 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 {
             
             #line default
             #line hidden
             this.Write("\tpublic ");
             
-            #line 96 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 95 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableTypeString));
             
             #line default
             #line hidden
             this.Write("[] ");
             
-            #line 96 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 95 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.FirstCharToUpper()));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n\t\tget { return ");
             
-            #line 98 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 97 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write("; }\r\n\t\tset \r\n\t\t{\r\n\t\t\t");
             
-            #line 101 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 100 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write(" = value;\r\n\t\t\tSetUniformVarData(@\"");
             
-            #line 102 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 101 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName));
             
             #line default
             #line hidden
             this.Write("\", ref ");
             
-            #line 102 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 101 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write(");\t\t\t\r\n\t\t}\r\n\t}\r\n\tprivate ");
             
-            #line 105 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 104 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableTypeString));
             
             #line default
             #line hidden
             this.Write("[] ");
             
-            #line 105 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 104 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 106 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 105 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 107 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 106 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 else
             
             #line default
             #line hidden
             
-            #line 108 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 107 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 {
             
             #line default
             #line hidden
             this.Write("\tpublic ");
             
-            #line 109 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 108 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableTypeString));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 109 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 108 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.FirstCharToUpper()));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n\t\tget { return ");
             
-            #line 111 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 110 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write("; }\r\n\t\tset \r\n\t\t{\r\n\t\t\t");
             
-            #line 114 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 113 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write(" = value;\r\n\t\t\tSetUniformVarData(@\"");
             
-            #line 115 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 114 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName));
             
             #line default
             #line hidden
             this.Write("\", ");
             
-            #line 115 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 114 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write(");\t\t\t\r\n\t\t}\r\n\t}\r\n\tprivate ");
             
-            #line 118 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 117 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableTypeString));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 118 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 117 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(item.VariableName.ToLower()));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 119 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 118 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             
-            #line 120 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 119 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 122 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 121 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 var BlockNameList = new List<string>();
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 124 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 123 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 for(int i = 0; i < VSProgram.GetActiveUniformBlockCount(); ++i)
 {
     var blockname = VSProgram.GetUniformBlockName(i);
@@ -527,173 +527,173 @@ for(int i = 0; i < VSProgram.GetActiveUniformBlockCount(); ++i)
             #line hidden
             this.Write("    private ");
             
-            #line 129 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 128 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 129 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 128 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(" = new ");
             
-            #line 129 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 128 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("();\r\n\tpublic ");
             
-            #line 130 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 129 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 130 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 129 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n\t\tget { return ");
             
-            #line 132 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 131 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write("; }\r\n\t\tset \r\n\t\t{ \r\n\t\t\t");
             
-            #line 135 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 134 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(" = value; \r\n\t\t\tthis.SetUniformBufferValue< ");
             
-            #line 136 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 135 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" >(@\"");
             
-            #line 136 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 135 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("\", ref value);\r\n\t\t}\r\n\t}\r\n\r\n");
             
-            #line 140 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 139 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
  var MetaDataList = VSProgram.GetUniformVariableMetaDataListInBlock(i).OrderBy(x => x.VariableOffset).ToList();
             
             #line default
             #line hidden
             
-            #line 141 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 140 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
  foreach(var data in MetaDataList) 
             
             #line default
             #line hidden
             
-            #line 142 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 141 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
  { 
             
             #line default
             #line hidden
             this.Write("\tpublic ");
             
-            #line 143 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 142 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableTypeString));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 143 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 142 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("_");
             
-            #line 143 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 142 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableName.FirstCharToUpper()));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n\t\tget { return ");
             
-            #line 145 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 144 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 145 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 144 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableName));
             
             #line default
             #line hidden
             this.Write(" ; }\r\n\t\tset \r\n\t\t{ \r\n\t\t\t");
             
-            #line 148 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 147 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 148 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 147 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableName));
             
             #line default
             #line hidden
             this.Write(" = value;\r\n\t\t\tthis.SetUniformBufferValue< ");
             
-            #line 149 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 148 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" >(@\"");
             
-            #line 149 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 148 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("\", ref ");
             
-            #line 149 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 148 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(");\r\n\t\t}\r\n\t}\r\n");
             
-            #line 152 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 151 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
  } 
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 154 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 153 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 156 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 155 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 for(int i = 0; i < FSProgram.GetActiveUniformBlockCount(); ++i)
 {
     var blockname = FSProgram.GetUniformBlockName(i);
@@ -707,186 +707,186 @@ for(int i = 0; i < FSProgram.GetActiveUniformBlockCount(); ++i)
             #line hidden
             this.Write("    private ");
             
-            #line 164 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 163 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 164 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 163 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(" = new ");
             
-            #line 164 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 163 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("();\r\n\tpublic ");
             
-            #line 165 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 164 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 165 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 164 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n\t\tget { return ");
             
-            #line 167 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 166 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write("; }\r\n\t\tset \r\n\t\t{ \r\n\t\t\t");
             
-            #line 170 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 169 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(" = value; \r\n\t\t\tthis.SetUniformBufferValue< ");
             
-            #line 171 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 170 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" >(@\"");
             
-            #line 171 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 170 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("\", ref ");
             
-            #line 171 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 170 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(");\r\n\t\t}\r\n\t}\r\n\r\n");
             
-            #line 175 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 174 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
  var MetaDataList = FSProgram.GetUniformVariableMetaDataListInBlock(i).OrderBy(x => x.VariableOffset).ToList();
             
             #line default
             #line hidden
             
-            #line 176 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 175 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
  foreach(var data in MetaDataList) 
             
             #line default
             #line hidden
             
-            #line 177 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 176 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
  { 
             
             #line default
             #line hidden
             this.Write("\tpublic ");
             
-            #line 178 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 177 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableTypeString));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 178 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 177 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("_");
             
-            #line 178 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 177 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableName.FirstCharToUpper()));
             
             #line default
             #line hidden
             this.Write("\r\n\t{\r\n\t\tget { return ");
             
-            #line 180 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 179 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 180 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 179 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableName));
             
             #line default
             #line hidden
             this.Write(" ; }\r\n\t\tset \r\n\t\t{ \r\n\t\t\t");
             
-            #line 183 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 182 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 183 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 182 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(data.VariableName));
             
             #line default
             #line hidden
             this.Write(" = value; \r\n\t\t\tthis.SetUniformBufferValue< ");
             
-            #line 184 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 183 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write(" >(@\"");
             
-            #line 184 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 183 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname));
             
             #line default
             #line hidden
             this.Write("\", ref ");
             
-            #line 184 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 183 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(blockname.ToLower()));
             
             #line default
             #line hidden
             this.Write(");\t\t\t\r\n\t\t}\r\n\t}\r\n");
             
-            #line 187 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 186 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
  } 
             
             #line default
             #line hidden
             
-            #line 188 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 187 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
 }
             
             #line default
             #line hidden
             this.Write("\t\r\n\r\n\tpublic static string GetVSSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
-            #line 192 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 191 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VSSourceCode));
             
             #line default
             #line hidden
             this.Write("\";\r\n\t}\r\n\r\n\tpublic static string GetFSSourceCode()\r\n\t{\r\n\t\treturn @\"");
             
-            #line 197 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
+            #line 196 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\MaterialTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(FSSourceCode));
             
             #line default

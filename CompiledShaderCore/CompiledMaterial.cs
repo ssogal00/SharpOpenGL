@@ -41,14 +41,14 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);
+		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		//set => SetTexture(@"DiffuseTex", value);
-		set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);
+		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -60,7 +60,6 @@ public class GBufferMacro1 : MaterialBase
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int DiffuseTexIndex = 0;
 	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -69,14 +68,14 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetMaskTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MaskTex", textureObject, samplerObject);
-		SetTextureByIndex(MaskTexIndex, textureObject, samplerObject);
+		SetTexture(@"MaskTex", textureObject, samplerObject);
+		//SetTextureByIndex(MaskTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MaskTex2D 
 	{	
-		//set => SetTexture(@"MaskTex", value);
-		set => SetTextureByIndex(MaskTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MaskTex", value);
+		//set => SetTextureByIndex(MaskTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MaskTex2D_PointSample
@@ -88,7 +87,6 @@ public class GBufferMacro1 : MaterialBase
 	{	
 		set => SetTexture(@"MaskTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MaskTexIndex = 2;
 	public void SetMetallicRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -97,14 +95,14 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetMetallicRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MetallicRoughnessTex", textureObject, samplerObject);
-		SetTextureByIndex(MetallicRoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetallicRoughnessTex", textureObject, samplerObject);
+		//SetTextureByIndex(MetallicRoughnessTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MetallicRoughnessTex2D 
 	{	
-		//set => SetTexture(@"MetallicRoughnessTex", value);
-		set => SetTextureByIndex(MetallicRoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetallicRoughnessTex", value);
+		//set => SetTextureByIndex(MetallicRoughnessTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MetallicRoughnessTex2D_PointSample
@@ -116,7 +114,6 @@ public class GBufferMacro1 : MaterialBase
 	{	
 		set => SetTexture(@"MetallicRoughnessTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MetallicRoughnessTexIndex = 5;
 	public void SetMetallicTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -125,14 +122,14 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetMetallicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MetallicTex", textureObject, samplerObject);
-		SetTextureByIndex(MetallicTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetallicTex", textureObject, samplerObject);
+		//SetTextureByIndex(MetallicTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MetallicTex2D 
 	{	
-		//set => SetTexture(@"MetallicTex", value);
-		set => SetTextureByIndex(MetallicTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetallicTex", value);
+		//set => SetTextureByIndex(MetallicTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MetallicTex2D_PointSample
@@ -144,7 +141,6 @@ public class GBufferMacro1 : MaterialBase
 	{	
 		set => SetTexture(@"MetallicTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MetallicTexIndex = 3;
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -153,14 +149,14 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"NormalTex", textureObject, samplerObject);
-		SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);
+		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		//set => SetTexture(@"NormalTex", value);
-		set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);
+		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -172,7 +168,6 @@ public class GBufferMacro1 : MaterialBase
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int NormalTexIndex = 1;
 	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -181,14 +176,14 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"RoughnessTex", textureObject, samplerObject);
-		SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"RoughnessTex", textureObject, samplerObject);
+		//SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase RoughnessTex2D 
 	{	
-		//set => SetTexture(@"RoughnessTex", value);
-		set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"RoughnessTex", value);
+		//set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase RoughnessTex2D_PointSample
@@ -200,7 +195,6 @@ public class GBufferMacro1 : MaterialBase
 	{	
 		set => SetTexture(@"RoughnessTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int RoughnessTexIndex = 4;
 
 
@@ -600,14 +594,14 @@ public class GBufferMacro2 : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);
+		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		//set => SetTexture(@"DiffuseTex", value);
-		set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);
+		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -619,7 +613,6 @@ public class GBufferMacro2 : MaterialBase
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int DiffuseTexIndex = 0;
 	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -628,14 +621,14 @@ public class GBufferMacro2 : MaterialBase
 
 	public void SetMaskTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MaskTex", textureObject, samplerObject);
-		SetTextureByIndex(MaskTexIndex, textureObject, samplerObject);
+		SetTexture(@"MaskTex", textureObject, samplerObject);
+		//SetTextureByIndex(MaskTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MaskTex2D 
 	{	
-		//set => SetTexture(@"MaskTex", value);
-		set => SetTextureByIndex(MaskTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MaskTex", value);
+		//set => SetTextureByIndex(MaskTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MaskTex2D_PointSample
@@ -647,7 +640,6 @@ public class GBufferMacro2 : MaterialBase
 	{	
 		set => SetTexture(@"MaskTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MaskTexIndex = 2;
 	public void SetMetallicRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -656,14 +648,14 @@ public class GBufferMacro2 : MaterialBase
 
 	public void SetMetallicRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MetallicRoughnessTex", textureObject, samplerObject);
-		SetTextureByIndex(MetallicRoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetallicRoughnessTex", textureObject, samplerObject);
+		//SetTextureByIndex(MetallicRoughnessTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MetallicRoughnessTex2D 
 	{	
-		//set => SetTexture(@"MetallicRoughnessTex", value);
-		set => SetTextureByIndex(MetallicRoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetallicRoughnessTex", value);
+		//set => SetTextureByIndex(MetallicRoughnessTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MetallicRoughnessTex2D_PointSample
@@ -675,7 +667,6 @@ public class GBufferMacro2 : MaterialBase
 	{	
 		set => SetTexture(@"MetallicRoughnessTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MetallicRoughnessTexIndex = 5;
 	public void SetMetallicTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -684,14 +675,14 @@ public class GBufferMacro2 : MaterialBase
 
 	public void SetMetallicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MetallicTex", textureObject, samplerObject);
-		SetTextureByIndex(MetallicTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetallicTex", textureObject, samplerObject);
+		//SetTextureByIndex(MetallicTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MetallicTex2D 
 	{	
-		//set => SetTexture(@"MetallicTex", value);
-		set => SetTextureByIndex(MetallicTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetallicTex", value);
+		//set => SetTextureByIndex(MetallicTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MetallicTex2D_PointSample
@@ -703,7 +694,6 @@ public class GBufferMacro2 : MaterialBase
 	{	
 		set => SetTexture(@"MetallicTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MetallicTexIndex = 3;
 	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -712,14 +702,14 @@ public class GBufferMacro2 : MaterialBase
 
 	public void SetRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"RoughnessTex", textureObject, samplerObject);
-		SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"RoughnessTex", textureObject, samplerObject);
+		//SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase RoughnessTex2D 
 	{	
-		//set => SetTexture(@"RoughnessTex", value);
-		set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"RoughnessTex", value);
+		//set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase RoughnessTex2D_PointSample
@@ -731,7 +721,6 @@ public class GBufferMacro2 : MaterialBase
 	{	
 		set => SetTexture(@"RoughnessTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int RoughnessTexIndex = 4;
 
 
@@ -1131,14 +1120,14 @@ public class ScreenSpaceDraw : MaterialBase
 
 	public void SetColorTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"ColorTex", textureObject, samplerObject);
-		SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
+		SetTexture(@"ColorTex", textureObject, samplerObject);
+		//SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase ColorTex2D 
 	{	
-		//set => SetTexture(@"ColorTex", value);
-		set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"ColorTex", value);
+		//set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase ColorTex2D_PointSample
@@ -1150,7 +1139,6 @@ public class ScreenSpaceDraw : MaterialBase
 	{	
 		set => SetTexture(@"ColorTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int ColorTexIndex = 0;
 
 
@@ -1223,14 +1211,14 @@ public class EquirectangleToCube : MaterialBase
 
 	public void SetEquirectangularMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"EquirectangularMap", textureObject, samplerObject);
-		SetTextureByIndex(EquirectangularMapIndex, textureObject, samplerObject);
+		SetTexture(@"EquirectangularMap", textureObject, samplerObject);
+		//SetTextureByIndex(EquirectangularMapIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase EquirectangularMap2D 
 	{	
-		//set => SetTexture(@"EquirectangularMap", value);
-		set => SetTextureByIndex(EquirectangularMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"EquirectangularMap", value);
+		//set => SetTextureByIndex(EquirectangularMapIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase EquirectangularMap2D_PointSample
@@ -1242,7 +1230,6 @@ public class EquirectangleToCube : MaterialBase
 	{	
 		set => SetTexture(@"EquirectangularMap", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int EquirectangularMapIndex = 0;
 
 	public OpenTK.Mathematics.Matrix4 Projection
@@ -1346,14 +1333,14 @@ public class GBufferDump : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);
+		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		//set => SetTexture(@"DiffuseTex", value);
-		set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);
+		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -1365,7 +1352,6 @@ public class GBufferDump : MaterialBase
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int DiffuseTexIndex = 1;
 	public void SetMotionBlurTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -1374,14 +1360,14 @@ public class GBufferDump : MaterialBase
 
 	public void SetMotionBlurTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MotionBlurTex", textureObject, samplerObject);
-		SetTextureByIndex(MotionBlurTexIndex, textureObject, samplerObject);
+		SetTexture(@"MotionBlurTex", textureObject, samplerObject);
+		//SetTextureByIndex(MotionBlurTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MotionBlurTex2D 
 	{	
-		//set => SetTexture(@"MotionBlurTex", value);
-		set => SetTextureByIndex(MotionBlurTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MotionBlurTex", value);
+		//set => SetTextureByIndex(MotionBlurTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MotionBlurTex2D_PointSample
@@ -1393,7 +1379,6 @@ public class GBufferDump : MaterialBase
 	{	
 		set => SetTexture(@"MotionBlurTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MotionBlurTexIndex = 3;
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -1402,14 +1387,14 @@ public class GBufferDump : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"NormalTex", textureObject, samplerObject);
-		SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);
+		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		//set => SetTexture(@"NormalTex", value);
-		set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);
+		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -1421,7 +1406,6 @@ public class GBufferDump : MaterialBase
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int NormalTexIndex = 2;
 	public void SetPositionTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -1430,14 +1414,14 @@ public class GBufferDump : MaterialBase
 
 	public void SetPositionTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"PositionTex", textureObject, samplerObject);
-		SetTextureByIndex(PositionTexIndex, textureObject, samplerObject);
+		SetTexture(@"PositionTex", textureObject, samplerObject);
+		//SetTextureByIndex(PositionTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase PositionTex2D 
 	{	
-		//set => SetTexture(@"PositionTex", value);
-		set => SetTextureByIndex(PositionTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"PositionTex", value);
+		//set => SetTextureByIndex(PositionTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase PositionTex2D_PointSample
@@ -1449,7 +1433,6 @@ public class GBufferDump : MaterialBase
 	{	
 		set => SetTexture(@"PositionTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int PositionTexIndex = 0;
 
 
@@ -1627,14 +1610,14 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetBrdfLUT2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"BrdfLUT", textureObject, samplerObject);
-		SetTextureByIndex(BrdfLUTIndex, textureObject, samplerObject);
+		SetTexture(@"BrdfLUT", textureObject, samplerObject);
+		//SetTextureByIndex(BrdfLUTIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase BrdfLUT2D 
 	{	
-		//set => SetTexture(@"BrdfLUT", value);
-		set => SetTextureByIndex(BrdfLUTIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"BrdfLUT", value);
+		//set => SetTextureByIndex(BrdfLUTIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase BrdfLUT2D_PointSample
@@ -1646,7 +1629,6 @@ public class DeferredLightMaterial : MaterialBase
 	{	
 		set => SetTexture(@"BrdfLUT", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int BrdfLUTIndex = 3;
 	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -1655,14 +1637,14 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);
+		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		//set => SetTexture(@"DiffuseTex", value);
-		set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);
+		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -1674,7 +1656,6 @@ public class DeferredLightMaterial : MaterialBase
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int DiffuseTexIndex = 1;
 	public void SetIrradianceMap2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -1683,14 +1664,14 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetIrradianceMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"IrradianceMap", textureObject, samplerObject);
-		SetTextureByIndex(IrradianceMapIndex, textureObject, samplerObject);
+		SetTexture(@"IrradianceMap", textureObject, samplerObject);
+		//SetTextureByIndex(IrradianceMapIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase IrradianceMap2D 
 	{	
-		//set => SetTexture(@"IrradianceMap", value);
-		set => SetTextureByIndex(IrradianceMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"IrradianceMap", value);
+		//set => SetTextureByIndex(IrradianceMapIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase IrradianceMap2D_PointSample
@@ -1702,7 +1683,6 @@ public class DeferredLightMaterial : MaterialBase
 	{	
 		set => SetTexture(@"IrradianceMap", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int IrradianceMapIndex = 4;
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -1711,14 +1691,14 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"NormalTex", textureObject, samplerObject);
-		SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);
+		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		//set => SetTexture(@"NormalTex", value);
-		set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);
+		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -1730,7 +1710,6 @@ public class DeferredLightMaterial : MaterialBase
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int NormalTexIndex = 2;
 	public void SetPositionTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -1739,14 +1718,14 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetPositionTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"PositionTex", textureObject, samplerObject);
-		SetTextureByIndex(PositionTexIndex, textureObject, samplerObject);
+		SetTexture(@"PositionTex", textureObject, samplerObject);
+		//SetTextureByIndex(PositionTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase PositionTex2D 
 	{	
-		//set => SetTexture(@"PositionTex", value);
-		set => SetTextureByIndex(PositionTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"PositionTex", value);
+		//set => SetTextureByIndex(PositionTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase PositionTex2D_PointSample
@@ -1758,7 +1737,6 @@ public class DeferredLightMaterial : MaterialBase
 	{	
 		set => SetTexture(@"PositionTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int PositionTexIndex = 0;
 	public void SetPrefilterMap2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -1767,14 +1745,14 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetPrefilterMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"PrefilterMap", textureObject, samplerObject);
-		SetTextureByIndex(PrefilterMapIndex, textureObject, samplerObject);
+		SetTexture(@"PrefilterMap", textureObject, samplerObject);
+		//SetTextureByIndex(PrefilterMapIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase PrefilterMap2D 
 	{	
-		//set => SetTexture(@"PrefilterMap", value);
-		set => SetTextureByIndex(PrefilterMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"PrefilterMap", value);
+		//set => SetTextureByIndex(PrefilterMapIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase PrefilterMap2D_PointSample
@@ -1786,7 +1764,6 @@ public class DeferredLightMaterial : MaterialBase
 	{	
 		set => SetTexture(@"PrefilterMap", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int PrefilterMapIndex = 5;
 
 
@@ -2254,14 +2231,14 @@ public class GBufferDraw : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);
+		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		//set => SetTexture(@"DiffuseTex", value);
-		set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);
+		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -2273,7 +2250,6 @@ public class GBufferDraw : MaterialBase
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int DiffuseTexIndex = 0;
 	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -2282,14 +2258,14 @@ public class GBufferDraw : MaterialBase
 
 	public void SetMaskTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MaskTex", textureObject, samplerObject);
-		SetTextureByIndex(MaskTexIndex, textureObject, samplerObject);
+		SetTexture(@"MaskTex", textureObject, samplerObject);
+		//SetTextureByIndex(MaskTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MaskTex2D 
 	{	
-		//set => SetTexture(@"MaskTex", value);
-		set => SetTextureByIndex(MaskTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MaskTex", value);
+		//set => SetTextureByIndex(MaskTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MaskTex2D_PointSample
@@ -2301,7 +2277,6 @@ public class GBufferDraw : MaterialBase
 	{	
 		set => SetTexture(@"MaskTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MaskTexIndex = 2;
 	public void SetMetalicTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -2310,14 +2285,14 @@ public class GBufferDraw : MaterialBase
 
 	public void SetMetalicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MetalicTex", textureObject, samplerObject);
-		SetTextureByIndex(MetalicTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetalicTex", textureObject, samplerObject);
+		//SetTextureByIndex(MetalicTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MetalicTex2D 
 	{	
-		//set => SetTexture(@"MetalicTex", value);
-		set => SetTextureByIndex(MetalicTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetalicTex", value);
+		//set => SetTextureByIndex(MetalicTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MetalicTex2D_PointSample
@@ -2329,7 +2304,6 @@ public class GBufferDraw : MaterialBase
 	{	
 		set => SetTexture(@"MetalicTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MetalicTexIndex = 3;
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -2338,14 +2312,14 @@ public class GBufferDraw : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"NormalTex", textureObject, samplerObject);
-		SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);
+		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		//set => SetTexture(@"NormalTex", value);
-		set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);
+		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -2357,7 +2331,6 @@ public class GBufferDraw : MaterialBase
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int NormalTexIndex = 1;
 	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -2366,14 +2339,14 @@ public class GBufferDraw : MaterialBase
 
 	public void SetRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"RoughnessTex", textureObject, samplerObject);
-		SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"RoughnessTex", textureObject, samplerObject);
+		//SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase RoughnessTex2D 
 	{	
-		//set => SetTexture(@"RoughnessTex", value);
-		set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"RoughnessTex", value);
+		//set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase RoughnessTex2D_PointSample
@@ -2385,7 +2358,6 @@ public class GBufferDraw : MaterialBase
 	{	
 		set => SetTexture(@"RoughnessTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int RoughnessTexIndex = 4;
 
 
@@ -2785,14 +2757,14 @@ public class CubemapConvolution : MaterialBase
 
 	public void SetEnvironmentMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"EnvironmentMap", textureObject, samplerObject);
-		SetTextureByIndex(EnvironmentMapIndex, textureObject, samplerObject);
+		SetTexture(@"EnvironmentMap", textureObject, samplerObject);
+		//SetTextureByIndex(EnvironmentMapIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase EnvironmentMap2D 
 	{	
-		//set => SetTexture(@"EnvironmentMap", value);
-		set => SetTextureByIndex(EnvironmentMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"EnvironmentMap", value);
+		//set => SetTextureByIndex(EnvironmentMapIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase EnvironmentMap2D_PointSample
@@ -2804,7 +2776,6 @@ public class CubemapConvolution : MaterialBase
 	{	
 		set => SetTexture(@"EnvironmentMap", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int EnvironmentMapIndex = 0;
 
 	public OpenTK.Mathematics.Matrix4 Projection
@@ -2935,14 +2906,14 @@ public class GBufferInstanced : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);
+		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		//set => SetTexture(@"DiffuseTex", value);
-		set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);
+		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -2954,7 +2925,6 @@ public class GBufferInstanced : MaterialBase
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int DiffuseTexIndex = 0;
 	public void SetMetalicTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -2963,14 +2933,14 @@ public class GBufferInstanced : MaterialBase
 
 	public void SetMetalicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MetalicTex", textureObject, samplerObject);
-		SetTextureByIndex(MetalicTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetalicTex", textureObject, samplerObject);
+		//SetTextureByIndex(MetalicTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MetalicTex2D 
 	{	
-		//set => SetTexture(@"MetalicTex", value);
-		set => SetTextureByIndex(MetalicTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetalicTex", value);
+		//set => SetTextureByIndex(MetalicTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MetalicTex2D_PointSample
@@ -2982,7 +2952,6 @@ public class GBufferInstanced : MaterialBase
 	{	
 		set => SetTexture(@"MetalicTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MetalicTexIndex = 3;
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -2991,14 +2960,14 @@ public class GBufferInstanced : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"NormalTex", textureObject, samplerObject);
-		SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);
+		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		//set => SetTexture(@"NormalTex", value);
-		set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);
+		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -3010,7 +2979,6 @@ public class GBufferInstanced : MaterialBase
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int NormalTexIndex = 1;
 	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -3019,14 +2987,14 @@ public class GBufferInstanced : MaterialBase
 
 	public void SetRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"RoughnessTex", textureObject, samplerObject);
-		SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"RoughnessTex", textureObject, samplerObject);
+		//SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase RoughnessTex2D 
 	{	
-		//set => SetTexture(@"RoughnessTex", value);
-		set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"RoughnessTex", value);
+		//set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase RoughnessTex2D_PointSample
@@ -3038,7 +3006,6 @@ public class GBufferInstanced : MaterialBase
 	{	
 		set => SetTexture(@"RoughnessTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int RoughnessTexIndex = 4;
 
 	public System.Int32 MetallicCount
@@ -3708,14 +3675,14 @@ public class GBufferCubeTest : MaterialBase
 
 	public void SetEquirectangularMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"EquirectangularMap", textureObject, samplerObject);
-		SetTextureByIndex(EquirectangularMapIndex, textureObject, samplerObject);
+		SetTexture(@"EquirectangularMap", textureObject, samplerObject);
+		//SetTextureByIndex(EquirectangularMapIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase EquirectangularMap2D 
 	{	
-		//set => SetTexture(@"EquirectangularMap", value);
-		set => SetTextureByIndex(EquirectangularMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"EquirectangularMap", value);
+		//set => SetTextureByIndex(EquirectangularMapIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase EquirectangularMap2D_PointSample
@@ -3727,7 +3694,6 @@ public class GBufferCubeTest : MaterialBase
 	{	
 		set => SetTexture(@"EquirectangularMap", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int EquirectangularMapIndex = 0;
 
 
@@ -3890,14 +3856,14 @@ public class GBufferPNCT : MaterialBase
 
 	public void SetSpecularTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"SpecularTex", textureObject, samplerObject);
-		SetTextureByIndex(SpecularTexIndex, textureObject, samplerObject);
+		SetTexture(@"SpecularTex", textureObject, samplerObject);
+		//SetTextureByIndex(SpecularTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase SpecularTex2D 
 	{	
-		//set => SetTexture(@"SpecularTex", value);
-		set => SetTextureByIndex(SpecularTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"SpecularTex", value);
+		//set => SetTextureByIndex(SpecularTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase SpecularTex2D_PointSample
@@ -3909,7 +3875,6 @@ public class GBufferPNCT : MaterialBase
 	{	
 		set => SetTexture(@"SpecularTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int SpecularTexIndex = 0;
 
 	public OpenTK.Mathematics.Matrix4 Model
@@ -4055,14 +4020,14 @@ public class GBufferPNT : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);
+		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		//set => SetTexture(@"DiffuseTex", value);
-		set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);
+		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -4074,7 +4039,6 @@ public class GBufferPNT : MaterialBase
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int DiffuseTexIndex = 0;
 
 
@@ -4233,14 +4197,14 @@ public class GBufferPNTT : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);
+		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		//set => SetTexture(@"DiffuseTex", value);
-		set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);
+		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -4252,7 +4216,6 @@ public class GBufferPNTT : MaterialBase
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int DiffuseTexIndex = 0;
 
 
@@ -4414,14 +4377,14 @@ public class Blur : MaterialBase
 
 	public void SetColorTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"ColorTex", textureObject, samplerObject);
-		SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
+		SetTexture(@"ColorTex", textureObject, samplerObject);
+		//SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase ColorTex2D 
 	{	
-		//set => SetTexture(@"ColorTex", value);
-		set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"ColorTex", value);
+		//set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase ColorTex2D_PointSample
@@ -4433,7 +4396,6 @@ public class Blur : MaterialBase
 	{	
 		set => SetTexture(@"ColorTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int ColorTexIndex = 0;
 
 
@@ -4547,14 +4509,14 @@ public class BloomMaterial : MaterialBase
 
 	public void SetColorTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"ColorTex", textureObject, samplerObject);
-		SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
+		SetTexture(@"ColorTex", textureObject, samplerObject);
+		//SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase ColorTex2D 
 	{	
-		//set => SetTexture(@"ColorTex", value);
-		set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"ColorTex", value);
+		//set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase ColorTex2D_PointSample
@@ -4566,7 +4528,6 @@ public class BloomMaterial : MaterialBase
 	{	
 		set => SetTexture(@"ColorTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int ColorTexIndex = 0;
 
 
@@ -4651,14 +4612,14 @@ public class CubemapMaterial : MaterialBase
 
 	public void SettexCubemap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"texCubemap", textureObject, samplerObject);
-		SetTextureByIndex(texCubemapIndex, textureObject, samplerObject);
+		SetTexture(@"texCubemap", textureObject, samplerObject);
+		//SetTextureByIndex(texCubemapIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase TexCubemap2D 
 	{	
-		//set => SetTexture(@"texCubemap", value);
-		set => SetTextureByIndex(texCubemapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"texCubemap", value);
+		//set => SetTextureByIndex(texCubemapIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase TexCubemap2D_PointSample
@@ -4670,7 +4631,6 @@ public class CubemapMaterial : MaterialBase
 	{	
 		set => SetTexture(@"texCubemap", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int texCubemapIndex = 0;
 
 	public OpenTK.Mathematics.Matrix4 ModelMatrix
@@ -5045,14 +5005,14 @@ public class DepthVisualizeMaterial : MaterialBase
 
 	public void SetDepthTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"DepthTex", textureObject, samplerObject);
-		SetTextureByIndex(DepthTexIndex, textureObject, samplerObject);
+		SetTexture(@"DepthTex", textureObject, samplerObject);
+		//SetTextureByIndex(DepthTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase DepthTex2D 
 	{	
-		//set => SetTexture(@"DepthTex", value);
-		set => SetTextureByIndex(DepthTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DepthTex", value);
+		//set => SetTextureByIndex(DepthTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase DepthTex2D_PointSample
@@ -5064,7 +5024,6 @@ public class DepthVisualizeMaterial : MaterialBase
 	{	
 		set => SetTexture(@"DepthTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int DepthTexIndex = 0;
 
 
@@ -5163,14 +5122,14 @@ public class FontRenderMaterial : MaterialBase
 
 	public void SetFontTexture2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"FontTexture", textureObject, samplerObject);
-		SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
+		SetTexture(@"FontTexture", textureObject, samplerObject);
+		//SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase FontTexture2D 
 	{	
-		//set => SetTexture(@"FontTexture", value);
-		set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"FontTexture", value);
+		//set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase FontTexture2D_PointSample
@@ -5182,7 +5141,6 @@ public class FontRenderMaterial : MaterialBase
 	{	
 		set => SetTexture(@"FontTexture", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int FontTextureIndex = 0;
 
 	public OpenTK.Mathematics.Vector2 ScreenSize
@@ -5496,14 +5454,14 @@ public class ThreeDTextRenderMaterial : MaterialBase
 
 	public void SetFontTexture2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"FontTexture", textureObject, samplerObject);
-		SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
+		SetTexture(@"FontTexture", textureObject, samplerObject);
+		//SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase FontTexture2D 
 	{	
-		//set => SetTexture(@"FontTexture", value);
-		set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"FontTexture", value);
+		//set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase FontTexture2D_PointSample
@@ -5515,7 +5473,6 @@ public class ThreeDTextRenderMaterial : MaterialBase
 	{	
 		set => SetTexture(@"FontTexture", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int FontTextureIndex = 0;
 
 	public OpenTK.Mathematics.Matrix4 Model
@@ -5632,14 +5589,14 @@ public class ResolveMaterial : MaterialBase
 
 	public void SetColorTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"ColorTex", textureObject, samplerObject);
-		SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
+		SetTexture(@"ColorTex", textureObject, samplerObject);
+		//SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase ColorTex2D 
 	{	
-		//set => SetTexture(@"ColorTex", value);
-		set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"ColorTex", value);
+		//set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase ColorTex2D_PointSample
@@ -5651,7 +5608,6 @@ public class ResolveMaterial : MaterialBase
 	{	
 		set => SetTexture(@"ColorTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int ColorTexIndex = 0;
 	public void SetMotionTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -5660,14 +5616,14 @@ public class ResolveMaterial : MaterialBase
 
 	public void SetMotionTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"MotionTex", textureObject, samplerObject);
-		SetTextureByIndex(MotionTexIndex, textureObject, samplerObject);
+		SetTexture(@"MotionTex", textureObject, samplerObject);
+		//SetTextureByIndex(MotionTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase MotionTex2D 
 	{	
-		//set => SetTexture(@"MotionTex", value);
-		set => SetTextureByIndex(MotionTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MotionTex", value);
+		//set => SetTextureByIndex(MotionTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase MotionTex2D_PointSample
@@ -5679,7 +5635,6 @@ public class ResolveMaterial : MaterialBase
 	{	
 		set => SetTexture(@"MotionTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int MotionTexIndex = 1;
 
 
@@ -5767,14 +5722,14 @@ public class SSAOMaterial : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"NormalTex", textureObject, samplerObject);
-		SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);
+		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		//set => SetTexture(@"NormalTex", value);
-		set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);
+		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -5786,7 +5741,6 @@ public class SSAOMaterial : MaterialBase
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int NormalTexIndex = 0;
 	public void SetPositionTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -5795,14 +5749,14 @@ public class SSAOMaterial : MaterialBase
 
 	public void SetPositionTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"PositionTex", textureObject, samplerObject);
-		SetTextureByIndex(PositionTexIndex, textureObject, samplerObject);
+		SetTexture(@"PositionTex", textureObject, samplerObject);
+		//SetTextureByIndex(PositionTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase PositionTex2D 
 	{	
-		//set => SetTexture(@"PositionTex", value);
-		set => SetTextureByIndex(PositionTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"PositionTex", value);
+		//set => SetTextureByIndex(PositionTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase PositionTex2D_PointSample
@@ -5814,7 +5768,6 @@ public class SSAOMaterial : MaterialBase
 	{	
 		set => SetTexture(@"PositionTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int PositionTexIndex = 1;
 	public void SetRandTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -5823,14 +5776,14 @@ public class SSAOMaterial : MaterialBase
 
 	public void SetRandTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"RandTex", textureObject, samplerObject);
-		SetTextureByIndex(RandTexIndex, textureObject, samplerObject);
+		SetTexture(@"RandTex", textureObject, samplerObject);
+		//SetTextureByIndex(RandTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase RandTex2D 
 	{	
-		//set => SetTexture(@"RandTex", value);
-		set => SetTextureByIndex(RandTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"RandTex", value);
+		//set => SetTextureByIndex(RandTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase RandTex2D_PointSample
@@ -5842,7 +5795,6 @@ public class SSAOMaterial : MaterialBase
 	{	
 		set => SetTexture(@"RandTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int RandTexIndex = 4;
 
 
@@ -6182,14 +6134,14 @@ public class PrefilterMaterial : MaterialBase
 
 	public void SetEnvironmentMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"EnvironmentMap", textureObject, samplerObject);
-		SetTextureByIndex(EnvironmentMapIndex, textureObject, samplerObject);
+		SetTexture(@"EnvironmentMap", textureObject, samplerObject);
+		//SetTextureByIndex(EnvironmentMapIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase EnvironmentMap2D 
 	{	
-		//set => SetTexture(@"EnvironmentMap", value);
-		set => SetTextureByIndex(EnvironmentMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"EnvironmentMap", value);
+		//set => SetTextureByIndex(EnvironmentMapIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase EnvironmentMap2D_PointSample
@@ -6201,7 +6153,6 @@ public class PrefilterMaterial : MaterialBase
 	{	
 		set => SetTexture(@"EnvironmentMap", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int EnvironmentMapIndex = 0;
 
 	public OpenTK.Mathematics.Matrix4 Projection
@@ -6403,14 +6354,14 @@ public class HDAOMaterial : MaterialBase
 
 	public void SetNormalMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"NormalMap", textureObject, samplerObject);
-		SetTextureByIndex(NormalMapIndex, textureObject, samplerObject);
+		SetTexture(@"NormalMap", textureObject, samplerObject);
+		//SetTextureByIndex(NormalMapIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase NormalMap2D 
 	{	
-		//set => SetTexture(@"NormalMap", value);
-		set => SetTextureByIndex(NormalMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalMap", value);
+		//set => SetTextureByIndex(NormalMapIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase NormalMap2D_PointSample
@@ -6422,7 +6373,6 @@ public class HDAOMaterial : MaterialBase
 	{	
 		set => SetTexture(@"NormalMap", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int NormalMapIndex = 4;
 	public void SetPositionMap2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -6431,14 +6381,14 @@ public class HDAOMaterial : MaterialBase
 
 	public void SetPositionMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"PositionMap", textureObject, samplerObject);
-		SetTextureByIndex(PositionMapIndex, textureObject, samplerObject);
+		SetTexture(@"PositionMap", textureObject, samplerObject);
+		//SetTextureByIndex(PositionMapIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase PositionMap2D 
 	{	
-		//set => SetTexture(@"PositionMap", value);
-		set => SetTextureByIndex(PositionMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"PositionMap", value);
+		//set => SetTextureByIndex(PositionMapIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase PositionMap2D_PointSample
@@ -6450,7 +6400,6 @@ public class HDAOMaterial : MaterialBase
 	{	
 		set => SetTexture(@"PositionMap", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int PositionMapIndex = 6;
 
 
@@ -7076,14 +7025,14 @@ public class FXAAMaterial : MaterialBase
 
 	public void SetScreenTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"ScreenTex", textureObject, samplerObject);
-		SetTextureByIndex(ScreenTexIndex, textureObject, samplerObject);
+		SetTexture(@"ScreenTex", textureObject, samplerObject);
+		//SetTextureByIndex(ScreenTexIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase ScreenTex2D 
 	{	
-		//set => SetTexture(@"ScreenTex", value);
-		set => SetTextureByIndex(ScreenTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"ScreenTex", value);
+		//set => SetTextureByIndex(ScreenTexIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase ScreenTex2D_PointSample
@@ -7095,7 +7044,6 @@ public class FXAAMaterial : MaterialBase
 	{	
 		set => SetTexture(@"ScreenTex", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int ScreenTexIndex = 1;
 
 
@@ -7581,14 +7529,14 @@ public class SignedDistanceField : MaterialBase
 
 	public void SetFontTexture2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		// SetTexture(@"FontTexture", textureObject, samplerObject);
-		SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
+		SetTexture(@"FontTexture", textureObject, samplerObject);
+		//SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
 	}
 
 	public TextureBase FontTexture2D 
 	{	
-		//set => SetTexture(@"FontTexture", value);
-		set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"FontTexture", value);
+		//set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
 	}
 
 	public TextureBase FontTexture2D_PointSample
@@ -7600,7 +7548,6 @@ public class SignedDistanceField : MaterialBase
 	{	
 		set => SetTexture(@"FontTexture", value, Sampler.DefaultLinearSampler);
 	}
-
 	private int FontTextureIndex = 0;
 
 
