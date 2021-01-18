@@ -58,7 +58,7 @@ DirectXTexWrapper::ManagedScratchImage^ DirectXTexWrapper::DXTLoader::LoadFromDD
 	DirectX::TexMetadata metaData;
 	DirectX::ScratchImage image;	
 
-	HRESULT result = DirectX::LoadFromDDSFile(FileName.c_str(), DirectX::DDS_FLAGS_NONE, &metaData, image );
+	HRESULT result = DirectX::LoadFromDDSFile(FileName.c_str(), DirectX::DDS_FLAGS_NONE, &metaData, image );	
 	
 	if(result != S_OK)
 	{		
@@ -118,5 +118,37 @@ DirectXTexWrapper::ManagedScratchImage^ DirectXTexWrapper::DXTLoader::LoadFromJP
 	}
 
 	return gcnew ManagedScratchImage(image);
+}
+
+bool DirectXTexWrapper::DXTSaver::SaveAsDDSFile(System::String^ filePath, ManagedImage^ managedImage)
+{
+	std::wstring fileName = marshal_as<std::wstring>(filePath);
+	
+	DirectX::Image image;
+	image.width = managedImage->width;
+	image.height = managedImage->height;
+	image.slicePitch = managedImage->slicePitch;
+	image.rowPitch = managedImage->rowPitch;
+
+	Marshal::Copy(IntPtr((void*)image.pixels), managedImage->pixels, 0, managedImage->slicePitch);	
+	
+	HRESULT result = DirectX::SaveToDDSFile(image, DirectX::DDS_FLAGS_NONE, fileName.c_str());	
+	
+	if(result != S_OK)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool DirectXTexWrapper::DXTSaver::SaveAsTGAFile(System::String^ filePath, ManagedImage^ managedImage)
+{
+	return true;
+}
+
+bool DirectXTexWrapper::DXTSaver::SaveAsJPGFile(System::String^ filePath, ManagedImage^ image)
+{
+	return true;
 }
 

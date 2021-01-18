@@ -239,6 +239,12 @@ namespace GLTF
             get => mVector4VertexAttributes;
         }
 
+        public Vector3 MaxPosition { get; }
+
+        public Vector3 MinPosition { get; }
+
+
+
         public List<uint> UIntIndices
         {
             get => mUIntIndices;
@@ -267,6 +273,7 @@ namespace GLTF
         protected List<uint> mUIntIndices= new List<uint>();
 
         protected List<ushort> mUShortIndices = new List<ushort>();
+        
 
         private static uint ToUInt(ref Span<byte> span)
         {

@@ -25,7 +25,10 @@ namespace SharpOpenGLCore.Scene
             });
         }
 
-
+        protected override void InitializeCamera()
+        {
+            base.InitializeCamera();
+        }
 
         public override void Render()
         {

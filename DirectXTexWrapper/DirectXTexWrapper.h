@@ -210,6 +210,15 @@ namespace DirectXTexWrapper
 		static ManagedScratchImage^ LoadFromDDSFile(System::String^ filePath);
 		static ManagedScratchImage^ LoadFromTGAFile(System::String^ filePath);
 		static ManagedScratchImage^ LoadFromHDRFile(System::String^ filePath);
-        static ManagedScratchImage^ LoadFromJPGFile(System::String^ filePath);
+        static ManagedScratchImage^ LoadFromJPGFile(System::String^ filePath);		
 	};
+
+	public ref class DXTSaver
+	{
+	public:
+        static bool SaveAsDDSFile(System::String^ filePath, ManagedImage^ image);
+        static bool SaveAsTGAFile(System::String^ filePath, ManagedImage^ image);
+        static bool SaveAsJPGFile(System::String^ filePath, ManagedImage^ image);
+	};
+	
 }
