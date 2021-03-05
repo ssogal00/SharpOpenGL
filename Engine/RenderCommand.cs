@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
-using OpenTK.Graphics;
-using Core.MaterialBase;
-using OpenTK.Graphics.OpenGL4;
+using System.Drawing;
+using OpenTK.Graphics.OpenGL;
 
 namespace Core
 {
+    // change render state or draw 
     public class RenderCommand
     {
         public RenderCommand()
@@ -26,6 +22,22 @@ namespace Core
         {
 
         }
+    }
+
+    public class ClearRenderCommand : RenderCommand
+    {
+        public ClearRenderCommand(Color clearColor, ClearBufferMask mask=ClearBufferMask.ColorBufferBit|ClearBufferMask.DepthBufferBit)
+        {
+        }
+
+        public override void Execute()
+        {
+            GL.ClearColor(mClearColor);
+            GL.Clear(mBufferMask);
+        }
+
+        private Color mClearColor = Color.White;
+        private ClearBufferMask mBufferMask = ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit;
     }
 
     public class DrawCommand : RenderCommand
@@ -57,9 +69,6 @@ namespace Core
 
 
 
-    public class SetRenderTargetCommand : RenderCommand
-    {
-
-    }
+    
 
 }
