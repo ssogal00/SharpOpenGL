@@ -2,3 +2,4 @@
 
 #include "freetype-wrapper.h"
 
+#include "ft2build.h"
