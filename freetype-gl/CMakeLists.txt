@@ -20,6 +20,7 @@ set(freetype-gl_BUILD_DEMOS OFF)
 set(freetype-gl_BUILD_APIDOC OFF)
 set(freetype-gl_BUILD_TESTS OFF)
 
+
 if((${CMAKE_SYSTEM_NAME} MATCHES "Darwin") OR
     (${CMAKE_SYSTEM_NAME} MATCHES "Android"))
     set(freetype-gl_WITH_GLEW_DEFAULT OFF)
@@ -40,6 +41,9 @@ include(RequireIncludeFile)
 include(RequireFunctionExists)
 include(CheckLibraryExists)
 include(CheckSymbolExists)
+
+include_directories("windows/freetype")
+include_directories("windows/glew/include")
 
 require_include_file(stdbool.h HAVE_STDBOOL_H)
 require_include_file(stdint.h HAVE_STDINT_H)
