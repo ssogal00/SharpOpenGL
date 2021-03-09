@@ -359,3 +359,7 @@ FBXImporter/bin
 FBXImporter/obj
 FBXWrapper/Debug
 Debug
+CMakeFiles
+*.cmake
+CMakeCache.txt
+*.vcxproj.filters
