@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using System.Text;
+using System.Windows.Forms;
 using Vector2 = OpenTK.Mathematics.Vector2;
 
 namespace SharpOpenGLCore
@@ -54,7 +55,7 @@ namespace SharpOpenGLCore
 
         }
 
-        protected virtual void BuildVertexList()
+        public virtual void BuildVertexList()
         {
             mCachedVertexList.Clear();
 
@@ -127,6 +128,8 @@ namespace SharpOpenGLCore
 
         protected float mScale = 1;
 
+        protected bool mDirtyMark = true;
+
         protected List<UIVertex> mCachedVertexList = new List<UIVertex>();
     }
 
@@ -144,7 +147,34 @@ namespace SharpOpenGLCore
 
         protected List<UIBase> mChildList=new List<UIBase>();
 
-        
+        public void BuildVertexList()
+        {
+            foreach (var item in mChildList)
+            {
+                item.BuildVertexList();
+            }
+        }
+
+        // Screen coordinate to shader position
+        Vector2 ToShaderPosition(Vector2 position)
+        {
+            // 0 ----------------------- (Width,0)
+            // | 
+            // |
+            // |
+            // (0,Height)--------------- (Width,Height)
+
+            // (-1,-1) ------------ (1,-1)
+            // | 
+            // |
+            // |
+            // (-1, 1) ------------ (1, 1)
+
+            float fX = ((position.X - Width * 0.5f) * 2) / (float)Width;
+            float fY = ((position.Y - Height * 0.5f) * 2) / (float) Height;
+
+            return new Vector2(fX, fY);
+        }
     }
 
 
