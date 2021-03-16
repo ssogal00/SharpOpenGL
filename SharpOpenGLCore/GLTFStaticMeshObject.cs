@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using CompiledMaterial.GBufferMacro1;
 using Core;
-using Core.Buffer;
 using Core.Primitive;
 using GLTF;
-using GLTF.V2;
-using OpenTK.Mathematics;
-using SharpOpenGL;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using System.Threading;
+using SharpOpenGL;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
-using System.Windows.Media.Media3D;
-using CompiledMaterial.GBufferMacro1;
-using AttributeType = OpenTK.Graphics.OpenGL.AttributeType;
+using System.Linq;
 using CameraTransform = CompiledMaterial.GBufferPNTT.CameraTransform;
 using ModelTransform = CompiledMaterial.GBufferPNTT.ModelTransform;
 
