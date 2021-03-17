@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using Core;
 using Core.Buffer;
 using Core.Primitive;
 using Vector2 = OpenTK.Mathematics.Vector2;
@@ -38,6 +39,23 @@ namespace SharpOpenGLCore
             Position = position;
             Texcoord = texcoord;
             Color = color;
+        }
+
+        public void VertexAttributeBinding()
+        {
+            GL.EnableVertexAttribArray(0);
+            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 32, new IntPtr(0));
+
+            GL.EnableVertexAttribArray(1);
+            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 32, new IntPtr(8));
+
+            GL.EnableVertexAttribArray(2);
+            GL.VertexAttribPointer(0, 4, VertexAttribPointerType.Float, false, 32, new IntPtr(16));
+        }
+
+        public void VertexAttributeBinding(int index)
+        {
+            throw new NotImplementedException();
         }
         
         [FieldOffset(0)]
@@ -171,7 +189,7 @@ namespace SharpOpenGLCore
     }
 
     // top most ui 
-    public class UIScreen : UIBase
+    public class UIScreen : UIBase, IResizable
     {
         public int Width = 1920;
         public int Height = 1080;
@@ -182,6 +200,16 @@ namespace SharpOpenGLCore
 
         protected AOSVertexBuffer<UIVertex> mVertexBuffer;
 
+        public UIScreen()
+        {
+            ResizableManager.Get().AddResizable(this);
+        }
+
+        public void OnResize(int newWidth, int newHeight)
+        {
+            Width = newWidth;
+            Height = newHeight;
+        }
 
         public void BuildVertexList()
         {
@@ -203,11 +231,12 @@ namespace SharpOpenGLCore
             mVertexBuffer.BufferData(ref vertices);
         }
 
+        //
         public void Render()
         {
             mVertexBuffer.Bind();
 
-            
+            GL.DrawArrays(PrimitiveType.Triangles, 0, mVertexList.Count);
 
             mVertexBuffer.Unbind();
         }
