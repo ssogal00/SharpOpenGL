@@ -9,6 +9,7 @@ using SharpOpenGL;
 using SharpOpenGL.PostProcess;
 using SharpOpenGL.Scene;
 using SharpOpenGL.Transform;
+using SharpOpenGLCore.UI;
 
 namespace SharpOpenGLCore
 {
@@ -60,6 +61,7 @@ namespace SharpOpenGLCore
                 {
                     mSkybox.Render();
                     scene.Render();
+                    UIManager.Instance.RenderUI();
                 }
             );
             
@@ -70,6 +72,7 @@ namespace SharpOpenGLCore
                 convolution.ResultCubemap, 
                 lut.GetOutputRenderTarget().ColorAttachment0, 
                 prefilter.ResultCubemap);
+
 
             // blit gbuffer to screen
             

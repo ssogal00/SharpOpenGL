@@ -6,6 +6,8 @@ using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Markup;
+using CompiledMaterial.FontRenderMaterial;
 using Core;
 using Core.Buffer;
 using Core.Primitive;
@@ -88,17 +90,17 @@ namespace SharpOpenGLCore
 
         }
 
-        public virtual void BuildVertexList(List<UIVertex> vertexList)
+        public virtual void BuildVertexList(List<UIVertex> vertexList, out bool bChanged)
         {
             if (mDirtyMark)
             {
                 mCachedVertexList.Clear();
                 Vector2 anchoredPos = GetAnchorPosition(mAnchorPos);
 
-                var leftTop = new UIVertex(anchoredPos + mLeftTop, Vector2.Zero);
-                var rightTop = new UIVertex(anchoredPos + RightTop, new Vector2(1, 0));
-                var leftBtm = new UIVertex(anchoredPos + LeftBottom, new Vector2(0, 1));
-                var rightBtm = new UIVertex(anchoredPos + mRightBottom, new Vector2(1, 1));
+                var leftTop = new UIVertex(anchoredPos + LeftTop, Vector2.Zero, new Vector4(1,0,0,0));
+                var rightTop = new UIVertex(anchoredPos + RightTop, new Vector2(1, 0), new Vector4(1, 0, 0, 0));
+                var leftBtm = new UIVertex(anchoredPos + LeftBottom, new Vector2(0, 1), new Vector4(0, 1, 0, 0));
+                var rightBtm = new UIVertex(anchoredPos + RightBottom, new Vector2(1, 1), new Vector4(0, 1, 0, 0));
 
                 mCachedVertexList.Add(leftTop);
                 mCachedVertexList.Add(rightTop);
@@ -109,6 +111,11 @@ namespace SharpOpenGLCore
                 mCachedVertexList.Add(rightBtm);
 
                 mDirtyMark = false;
+                bChanged = true;
+            }
+            else
+            {
+                bChanged = false;
             }
 
             vertexList.AddRange(mCachedVertexList);
@@ -200,9 +207,16 @@ namespace SharpOpenGLCore
 
         protected AOSVertexBuffer<UIVertex> mVertexBuffer;
 
+        protected DrawableBase<UIVertex> mDrawable;
+
         public UIScreen()
         {
             ResizableManager.Get().AddResizable(this);
+        }
+
+        public void AddChild(UIBase child)
+        {
+            mChildList.Add(child);
         }
 
         public void OnResize(int newWidth, int newHeight)
@@ -211,11 +225,22 @@ namespace SharpOpenGLCore
             Height = newHeight;
         }
 
-        public void BuildVertexList()
+        private void BuildVertexList()
         {
+            bool bNeedVertexBufferUpdate = false;
             foreach (var item in mChildList)
             {
-                item.BuildVertexList(mVertexList);
+                bool bChanged = false;
+                item.BuildVertexList(mVertexList, out bChanged);
+                if (bChanged)
+                {
+                    bNeedVertexBufferUpdate |= bChanged;
+                }
+            }
+
+            if (bNeedVertexBufferUpdate)
+            {
+                PrepareRenderingData();
             }
         }
 
@@ -234,9 +259,21 @@ namespace SharpOpenGLCore
         //
         public void Render()
         {
+            // build vertex list
+            BuildVertexList();
+
             mVertexBuffer.Bind();
 
-            GL.DrawArrays(PrimitiveType.Triangles, 0, mVertexList.Count);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 2);
+            GL.Disable(EnableCap.Blend);
+
+            var mtl = ShaderManager.Instance.GetMaterial<FontRenderMaterial>();
+            mtl.Bind();
+            mtl.ScreenSize = new Vector2(Width, Height);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 2);
+            mtl.Unbind();
 
             mVertexBuffer.Unbind();
         }

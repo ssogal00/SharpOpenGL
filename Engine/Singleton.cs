@@ -10,6 +10,11 @@ namespace Core
     {
         protected static T instance = new T();
 
+        public static T Instance
+        {
+            get => instance;
+        }
+
         public static T Get()
         {
             return instance;

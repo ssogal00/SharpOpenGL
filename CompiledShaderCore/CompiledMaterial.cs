@@ -5115,33 +5115,6 @@ public class FontRenderMaterial : MaterialBase
 		mMaterialProgram.UseProgram();
 	}
 
-	public void SetFontTexture2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"FontTexture", TextureObject);
-	}
-
-	public void SetFontTexture2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
-	{
-		SetTexture(@"FontTexture", textureObject, samplerObject);
-		//SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
-	}
-
-	public TextureBase FontTexture2D 
-	{	
-		set => SetTexture(@"FontTexture", value);
-		//set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
-	}
-
-	public TextureBase FontTexture2D_PointSample
-	{	
-		set => SetTexture(@"FontTexture", value, Sampler.DefaultPointSampler);
-	}
-
-	public TextureBase FontTexture2D_LinearSample
-	{	
-		set => SetTexture(@"FontTexture", value, Sampler.DefaultLinearSampler);
-	}
-	private int FontTextureIndex = 0;
 
 	public OpenTK.Mathematics.Vector2 ScreenSize
 	{
@@ -5165,14 +5138,17 @@ public class FontRenderMaterial : MaterialBase
 
 layout(location=0) in vec3 VertexPosition;
 layout(location=1) in vec2 VertexTexCoord;
+layout(location=2) in vec4 VertexColor;
 
 uniform vec2 ScreenSize;
 
-out vec2 TexCoord;
+layout(location=0) out vec2 TexCoord;
+layout(location=1) out vec4 OutColor;
   
 void main()
 {	
 	TexCoord = VertexTexCoord;
+	OutColor = VertexColor;
 	float fX = ((VertexPosition.x - ScreenSize.x * .5f) * 2.f) / ScreenSize.x;
 	float fY = ((VertexPosition.y - ScreenSize.y * .5f) * 2.f) / ScreenSize.y;
 
@@ -5184,7 +5160,8 @@ void main()
 	{
 		return @"#version 450 core
 
-in vec2 TexCoord;
+layout(location=0) in vec2 TexCoord;
+layout(location=1) in vec4 Color;
 
 uniform vec3 TextColor;
 uniform sampler2D FontTexture;
@@ -5192,9 +5169,8 @@ uniform sampler2D FontTexture;
 out vec4 FragColor;
 
 void main()
-{   
-	vec4 TexCol = texture(FontTexture, TexCoord);
-    FragColor =vec4(1,0,0,TexCol.a);
+{   	
+    FragColor = Color;
 }";
 	}
 }

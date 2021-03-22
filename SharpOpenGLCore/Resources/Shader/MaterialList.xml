@@ -28,5 +28,5 @@
 	<Material name="HDAOMaterial" vertexShader="HDAO.vs.glsl" fragmentShader="HDAO.fs.glsl"/>
 	<Material name="FXAAMaterial" vertexShader="FXAA.vs.glsl" fragmentShader="FXAA.fs.glsl"/>
 	<Material name="TBNMaterial" vertexShader="TBNDebug.vs.glsl" fragmentShader="TBNDebug.fs.glsl"/>
-	<Material name="SignedDistanceField" vertexShader="distance-field.vs.glsl" fragmentShader="distance-field.fs.glsl"/>
+	<Material name="SignedDistanceField" vertexShader="distance-field.vs.glsl" fragmentShader="distance-field.fs.glsl"/>	
 </MaterialList>
