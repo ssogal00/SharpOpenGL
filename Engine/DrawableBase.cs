@@ -26,7 +26,7 @@ namespace Core
         {
             mVA.Bind();
             mVB.Bind();
-
+            
             mVB.BufferData<T>(ref VertexList);
             mVertexCount = VertexList.Count();
             mbReadyToDraw = true;
@@ -120,6 +120,18 @@ namespace Core
                     GL.DrawArrays(type, 0, mVertexCount);
                 }
                 mVA.Unbind();
+            }
+        }
+
+        public virtual void DrawArrays(PrimitiveType type, int count)
+        {
+            if (mbReadyToDraw)
+            {
+                mVA.Bind();
+                {
+                    GL.DrawArrays(type, 0, count);
+                }
+                mVA.Bind();
             }
         }
 

@@ -11,6 +11,7 @@ using CompiledMaterial.FontRenderMaterial;
 using Core;
 using Core.Buffer;
 using Core.Primitive;
+using Core.VertexCustomAttribute;
 using Vector2 = OpenTK.Mathematics.Vector2;
 using OpenTK;
 using OpenTK.Graphics;
@@ -49,22 +50,22 @@ namespace SharpOpenGLCore
             GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 32, new IntPtr(0));
 
             GL.EnableVertexAttribArray(1);
-            GL.VertexAttribPointer(0, 2, VertexAttribPointerType.Float, false, 32, new IntPtr(8));
+            GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 32, new IntPtr(8));
 
             GL.EnableVertexAttribArray(2);
-            GL.VertexAttribPointer(0, 4, VertexAttribPointerType.Float, false, 32, new IntPtr(16));
+            GL.VertexAttribPointer(2, 4, VertexAttribPointerType.Float, false, 32, new IntPtr(16));
         }
 
         public void VertexAttributeBinding(int index)
         {
             throw new NotImplementedException();
         }
-        
-        [FieldOffset(0)]
+
+        [FieldOffset(0), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
         public Vector2 Position; // 8byte
-        [FieldOffset(8)]
+        [FieldOffset(8), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
         public Vector2 Texcoord;
-        [FieldOffset(16)]
+        [FieldOffset(16), ComponentCount(4), ComponentType(VertexAttribPointerType.Float)]
         public Vector4 Color; // including alpha
 
         
@@ -97,10 +98,10 @@ namespace SharpOpenGLCore
                 mCachedVertexList.Clear();
                 Vector2 anchoredPos = GetAnchorPosition(mAnchorPos);
 
-                var leftTop = new UIVertex(anchoredPos + LeftTop, Vector2.Zero, new Vector4(1,0,0,0));
-                var rightTop = new UIVertex(anchoredPos + RightTop, new Vector2(1, 0), new Vector4(1, 0, 0, 0));
-                var leftBtm = new UIVertex(anchoredPos + LeftBottom, new Vector2(0, 1), new Vector4(0, 1, 0, 0));
-                var rightBtm = new UIVertex(anchoredPos + RightBottom, new Vector2(1, 1), new Vector4(0, 1, 0, 0));
+                var leftTop = new UIVertex(anchoredPos + LeftTop, Vector2.Zero, new Vector4(1,0,0,1));
+                var rightTop = new UIVertex(anchoredPos + RightTop, new Vector2(1, 0), new Vector4(1, 0, 0, 1));
+                var leftBtm = new UIVertex(anchoredPos + LeftBottom, new Vector2(0, 1), new Vector4(1, 0, 0, 0));
+                var rightBtm = new UIVertex(anchoredPos + RightBottom, new Vector2(1, 1), new Vector4(1, 0, 0, 0));
 
                 mCachedVertexList.Add(leftTop);
                 mCachedVertexList.Add(rightTop);
@@ -198,14 +199,13 @@ namespace SharpOpenGLCore
     // top most ui 
     public class UIScreen : UIBase, IResizable
     {
-        public int Width = 1920;
-        public int Height = 1080;
+        public int Width = 640;
+        public int Height = 360;
 
         protected List<UIBase> mChildList=new List<UIBase>();
 
         protected List<UIVertex> mVertexList = new List<UIVertex>();
 
-        protected AOSVertexBuffer<UIVertex> mVertexBuffer;
 
         protected DrawableBase<UIVertex> mDrawable;
 
@@ -246,14 +246,14 @@ namespace SharpOpenGLCore
 
         protected void PrepareRenderingData()
         {
-            if (mVertexBuffer == null)
+            if (mDrawable == null)
             {
-                mVertexBuffer = new AOSVertexBuffer<UIVertex>();
+                mDrawable = new DrawableBase<UIVertex>();
             }
 
             var vertices = mVertexList.ToArray();
 
-            mVertexBuffer.BufferData(ref vertices);
+            mDrawable.SetupVertexData(ref vertices);
         }
 
         //
@@ -262,20 +262,17 @@ namespace SharpOpenGLCore
             // build vertex list
             BuildVertexList();
 
-            mVertexBuffer.Bind();
-
             GL.Enable(EnableCap.Blend);
+            GL.Disable(EnableCap.DepthTest);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 2);
-            GL.Disable(EnableCap.Blend);
-
+            
             var mtl = ShaderManager.Instance.GetMaterial<FontRenderMaterial>();
             mtl.Bind();
             mtl.ScreenSize = new Vector2(Width, Height);
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 2);
+            mDrawable.DrawArrays(PrimitiveType.Triangles);
+            GL.Disable(EnableCap.Blend);
+            GL.Enable(EnableCap.DepthTest);
             mtl.Unbind();
-
-            mVertexBuffer.Unbind();
         }
 
         // Screen coordinate to shader position

@@ -64,18 +64,6 @@ namespace SharpOpenGL
             }
         }
 
-        private string ConvertToImportedPath(string path)
-        {
-            if (path.EndsWith(".imported") == false)
-            {
-                var dirname = Path.Combine(importedDirName, Path.GetDirectoryName(path));
-                var filename = Path.GetFileNameWithoutExtension(path);
-                return Path.Combine(dirname, filename + ".imported");
-            }
-
-            return path;
-        }
-
         public void UnloadTexture(string path)
         {
             if (TextureMap.ContainsKey(path))

@@ -5136,7 +5136,7 @@ public class FontRenderMaterial : MaterialBase
 	{
 		return @"#version 450 core
 
-layout(location=0) in vec3 VertexPosition;
+layout(location=0) in vec2 VertexPosition;
 layout(location=1) in vec2 VertexTexCoord;
 layout(location=2) in vec4 VertexColor;
 
@@ -5152,7 +5152,7 @@ void main()
 	float fX = ((VertexPosition.x - ScreenSize.x * .5f) * 2.f) / ScreenSize.x;
 	float fY = ((VertexPosition.y - ScreenSize.y * .5f) * 2.f) / ScreenSize.y;
 
-	gl_Position = vec4(fX, fY, 0.0, 1.0);
+	gl_Position = vec4(fX, -fY, 0.0, 1.0);
 }";
 	}
 
@@ -5166,11 +5166,14 @@ layout(location=1) in vec4 Color;
 uniform vec3 TextColor;
 uniform sampler2D FontTexture;
 
-out vec4 FragColor;
+layout(location = 0) out vec4 PositionColor;
+layout(location = 1) out vec4 DiffuseColor;
+layout(location = 2) out vec4 NormalColor;
+layout(location = 3) out vec4 VelocityColor;
 
 void main()
 {   	
-    FragColor = Color;
+    DiffuseColor = Color;
 }";
 	}
 }

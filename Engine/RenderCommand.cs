@@ -22,6 +22,8 @@ namespace Core
         {
 
         }
+
+        protected int mOrder = 0;
     }
 
     public class ClearRenderCommand : RenderCommand
@@ -38,6 +40,38 @@ namespace Core
 
         private Color mClearColor = Color.White;
         private ClearBufferMask mBufferMask = ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit;
+    }
+
+    public class BlendingOnCommand : RenderCommand
+    {
+        public override void Execute()
+        {
+            GL.Enable(EnableCap.Blend);
+        }
+    }
+
+    public class BlendingOffCommand : RenderCommand
+    {
+        public override void Execute()
+        {
+            GL.Disable(EnableCap.Blend);
+        }
+    }
+
+    public class BlendingFuncCommand : RenderCommand
+    {
+        public BlendingFuncCommand(BlendingFactor src, BlendingFactor dst)
+        {
+            mSrc = src;
+            mDst = dst;
+        }
+        public override void Execute()
+        {
+            GL.BlendFunc(mSrc, mDst);
+        }
+
+        protected BlendingFactor mSrc;
+        protected BlendingFactor mDst;
     }
 
     public class DrawCommand : RenderCommand

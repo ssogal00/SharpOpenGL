@@ -138,6 +138,7 @@ namespace SharpOpenGL
                     gbufferDraw.EquirectangularMap2D = cubemapTex;
 
                     drawable.DrawArrays(PrimitiveType.Triangles);
+
                 }
             }
         }

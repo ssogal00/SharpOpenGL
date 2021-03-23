@@ -149,7 +149,7 @@ namespace Core.Texture
             else
             {
                 return false;
-            }
+            } 
         }
 
         public override void Load(string filePath, PixelInternalFormat internalFormat, PixelFormat pixelFormat)

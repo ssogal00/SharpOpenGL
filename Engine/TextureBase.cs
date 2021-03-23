@@ -87,11 +87,11 @@ namespace Core.Texture
         }
 
 
-        public virtual void BindShader(TextureUnit Unit, int SamplerLoc)
+        public virtual void BindShader(TextureUnit unit, int samplerLoc)
         {
             if (IsValid)
             {
-                GL.Uniform1(SamplerLoc, (int)(Unit - TextureUnit.Texture0));
+                GL.Uniform1(samplerLoc, (int)(unit - TextureUnit.Texture0));
             }
         }
 

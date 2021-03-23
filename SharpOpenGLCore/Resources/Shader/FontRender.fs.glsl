@@ -6,9 +6,12 @@ layout(location=1) in vec4 Color;
 uniform vec3 TextColor;
 uniform sampler2D FontTexture;
 
-out vec4 FragColor;
+layout(location = 0) out vec4 PositionColor;
+layout(location = 1) out vec4 DiffuseColor;
+layout(location = 2) out vec4 NormalColor;
+layout(location = 3) out vec4 VelocityColor;
 
 void main()
 {   	
-    FragColor = Color;
+    DiffuseColor = Color;
 }

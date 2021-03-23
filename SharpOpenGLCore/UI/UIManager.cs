@@ -14,8 +14,8 @@ namespace SharpOpenGLCore.UI
         {
             RootScreen = new UIScreen();
 
-            RootScreen.AddChild(new UIBox(Vector2.Zero, 100,100));
-            RootScreen.AddChild(new UIBox(new Vector2(100,100),100,100 ));
+            RootScreen.AddChild(new UIBox(Vector2.Zero, 600,600));
+            RootScreen.AddChild(new UIBox(new Vector2(100,100),600,600 ));
         }
 
         public void RenderUI()
