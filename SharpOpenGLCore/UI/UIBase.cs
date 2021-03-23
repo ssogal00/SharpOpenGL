@@ -264,7 +264,7 @@ namespace SharpOpenGLCore
             if (mTexture == null)
             {
                 mTexture = new Texture2D();
-                mTexture.LoadFromMemory(UIManager.Instance.FontData, 128, 128, PixelInternalFormat.Rgba, PixelFormat.Red);
+                mTexture.LoadFromMemory(UIManager.Instance.FontData, 64*4, 64*4, PixelInternalFormat.R8, PixelFormat.Red);
             }
 
             var vertices = mVertexList.ToArray();

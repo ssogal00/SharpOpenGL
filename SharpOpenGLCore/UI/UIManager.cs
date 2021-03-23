@@ -16,9 +16,8 @@ namespace SharpOpenGLCore.UI
         {
             RootScreen = new UIScreen();
 
-            RootScreen.AddChild(new UIBox(Vector2.Zero, 128,128));
-            RootScreen.AddChild(new UIBox(new Vector2(100,100),128,128 ));
-            var bytes = FreeType.GetFontAtlas(null, null);
+            RootScreen.AddChild(new UIBox(Vector2.Zero, 64*4,64*4));
+            var bytes = FreeType.GetFontAtlas(null, "abcdefghijklmn", 64);
             mFontAtlas = bytes;
         }
 

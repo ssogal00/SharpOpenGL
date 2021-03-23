@@ -13,7 +13,7 @@ using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 #using <mscorlib.dll>
 
-array<unsigned char>^ FreeTypeWrapper::FreeType::GetFontAtlas(System::String^ fontPath, System::String^ charSet)
+array<unsigned char>^ FreeTypeWrapper::FreeType::GetFontAtlas(System::String^ fontPath, System::String^ charSet, int pixelSize)
 {
 	FT_Library lib;
 
@@ -23,36 +23,45 @@ array<unsigned char>^ FreeTypeWrapper::FreeType::GetFontAtlas(System::String^ fo
 
 	FT_New_Face(lib, "C:\\windows\\fonts\\batang.ttc", 2, &face);
 
-	unsigned int index = FT_Get_Char_Index(face, TEXT('Çü'));	
+	int length = charSet->Length;
+
+	int squareSize = ceil(sqrt(length));	
+
+	std::wstring charSets = marshal_as<std::wstring>(charSet);
+
+	array<uint8_t>^ resultPixels = gcnew array<uint8_t>((pixelSize * squareSize) * (pixelSize*squareSize));
 
 	int error;
 
-	error = FT_Set_Pixel_Sizes(face, 128, 128);
+	error = FT_Set_Pixel_Sizes(face, pixelSize, pixelSize);
 
-	error = FT_Load_Glyph(face, index, FT_LOAD_DEFAULT | FT_LOAD_NO_BITMAP);
 
-	error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
-
-	int color;
-
-	int width = face->glyph->bitmap.width;
-	int height = face->glyph->bitmap.rows;
-	
-
-	array<uint8_t>^ result = gcnew array<uint8_t>(128*128);
-
-	for(int y = 0; y < face->glyph->bitmap.rows; y++)
+	for(int i = 0; i < length; ++i)
 	{
-		for(int x = 0; x < face->glyph->bitmap.width;x++)
+		int col = i % squareSize;
+		int row = i / squareSize;
+		
+		unsigned int charIndex = FT_Get_Char_Index(face, charSets[i]);
+		
+		error = FT_Load_Glyph(face, charIndex, FT_LOAD_DEFAULT | FT_LOAD_NO_BITMAP);
+
+		error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
+
+		int dstStartIndex = (pixelSize*pixelSize*squareSize) * row + (pixelSize * pixelSize) * col;
+
+		for (int y = 0; y < face->glyph->bitmap.rows; y++)
 		{
-			int targetIndex = 128 * y + x;
-			int srcIndex = y * width + x;
-			result[targetIndex] = face->glyph->bitmap.buffer[srcIndex];
-		}
-	}
-	
+			for (int x = 0; x < face->glyph->bitmap.width; x++)
+			{
+				int dstIndex = pixelSize *(y)+(x) + dstStartIndex;
+				int srcIndex = y * face->glyph->bitmap.width + x;
+				resultPixels[dstIndex] = face->glyph->bitmap.buffer[srcIndex];
+			}
+		}		
+	}	
+		
 	FT_Done_FreeType(lib);
-	
-	return result;
+
+	return resultPixels;
 }
  
