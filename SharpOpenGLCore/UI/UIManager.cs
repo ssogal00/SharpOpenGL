@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using OpenTK.Mathematics;
 using System.Text;
 using Core;
+using Core.Texture;
 using OpenTK.Graphics.OpenGL;
 
+using FreeTypeWrapper;
 
 namespace SharpOpenGLCore.UI
 {
@@ -14,8 +16,10 @@ namespace SharpOpenGLCore.UI
         {
             RootScreen = new UIScreen();
 
-            RootScreen.AddChild(new UIBox(Vector2.Zero, 600,600));
-            RootScreen.AddChild(new UIBox(new Vector2(100,100),600,600 ));
+            RootScreen.AddChild(new UIBox(Vector2.Zero, 128,128));
+            RootScreen.AddChild(new UIBox(new Vector2(100,100),128,128 ));
+            var bytes = FreeType.GetFontAtlas(null, null);
+            mFontAtlas = bytes;
         }
 
         public void RenderUI()
@@ -24,5 +28,9 @@ namespace SharpOpenGLCore.UI
         }
 
         public UIScreen RootScreen = null;
+
+        private byte[] mFontAtlas = null;
+
+        public byte[] FontData => mFontAtlas;
     }
 }

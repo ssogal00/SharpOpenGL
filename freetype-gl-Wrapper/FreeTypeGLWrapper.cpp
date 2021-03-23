@@ -20,6 +20,7 @@ FreeTypeGLWrapper::ManagedTextureAtlas^ FreeTypeGLWrapper::FreeTypeGL::GenerateT
 	{
 		return nullptr;
 	}
+	
 
 	std::string fontFilePath = msclr::interop::marshal_as<std::string>(fontpath);	
 

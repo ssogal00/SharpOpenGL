@@ -5115,6 +5115,33 @@ public class FontRenderMaterial : MaterialBase
 		mMaterialProgram.UseProgram();
 	}
 
+	public void SetFontTexture2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"FontTexture", TextureObject);
+	}
+
+	public void SetFontTexture2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
+	{
+		SetTexture(@"FontTexture", textureObject, samplerObject);
+		//SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
+	}
+
+	public TextureBase FontTexture2D 
+	{	
+		set => SetTexture(@"FontTexture", value);
+		//set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
+	}
+
+	public TextureBase FontTexture2D_PointSample
+	{	
+		set => SetTexture(@"FontTexture", value, Sampler.DefaultPointSampler);
+	}
+
+	public TextureBase FontTexture2D_LinearSample
+	{	
+		set => SetTexture(@"FontTexture", value, Sampler.DefaultLinearSampler);
+	}
+	private int FontTextureIndex = 0;
 
 	public OpenTK.Mathematics.Vector2 ScreenSize
 	{
@@ -5163,8 +5190,7 @@ void main()
 layout(location=0) in vec2 TexCoord;
 layout(location=1) in vec4 Color;
 
-uniform vec3 TextColor;
-uniform sampler2D FontTexture;
+layout(binding=0) uniform sampler2D FontTexture;
 
 layout(location = 0) out vec4 PositionColor;
 layout(location = 1) out vec4 DiffuseColor;
@@ -5173,7 +5199,8 @@ layout(location = 3) out vec4 VelocityColor;
 
 void main()
 {   	
-    DiffuseColor = Color;
+    DiffuseColor = texture(FontTexture, TexCoord);
+    
 }";
 	}
 }

@@ -11,12 +11,14 @@ using CompiledMaterial.FontRenderMaterial;
 using Core;
 using Core.Buffer;
 using Core.Primitive;
+using Core.Texture;
 using Core.VertexCustomAttribute;
 using Vector2 = OpenTK.Mathematics.Vector2;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using SharpOpenGL;
+using SharpOpenGLCore.UI;
 
 namespace SharpOpenGLCore
 {
@@ -157,6 +159,8 @@ namespace SharpOpenGLCore
 
         protected UIBase mParent = null;
 
+        protected List<UIBase> mChildList = new List<UIBase>();
+
         public Vector2 LeftTop => mLeftTop;
 
         protected Vector2 mLeftTop = Vector2.Zero;
@@ -184,6 +188,13 @@ namespace SharpOpenGLCore
     public class UIText : UIBase
     {
         public string Text = string.Empty;
+
+        public UIText(byte[] fontData)
+        {
+            mFontData = fontData;
+        }
+
+        private byte[] mFontData = null;
     }
 
     public class UIBox : UIBase
@@ -202,12 +213,11 @@ namespace SharpOpenGLCore
         public int Width = 640;
         public int Height = 360;
 
-        protected List<UIBase> mChildList=new List<UIBase>();
-
         protected List<UIVertex> mVertexList = new List<UIVertex>();
 
-
         protected DrawableBase<UIVertex> mDrawable;
+
+        protected Texture2D mTexture;
 
         public UIScreen()
         {
@@ -251,6 +261,12 @@ namespace SharpOpenGLCore
                 mDrawable = new DrawableBase<UIVertex>();
             }
 
+            if (mTexture == null)
+            {
+                mTexture = new Texture2D();
+                mTexture.LoadFromMemory(UIManager.Instance.FontData, 128, 128, PixelInternalFormat.Rgba, PixelFormat.Red);
+            }
+
             var vertices = mVertexList.ToArray();
 
             mDrawable.SetupVertexData(ref vertices);
@@ -263,14 +279,19 @@ namespace SharpOpenGLCore
             BuildVertexList();
 
             GL.Enable(EnableCap.Blend);
+            GL.Enable(EnableCap.AlphaTest);
             GL.Disable(EnableCap.DepthTest);
             GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
             
             var mtl = ShaderManager.Instance.GetMaterial<FontRenderMaterial>();
             mtl.Bind();
             mtl.ScreenSize = new Vector2(Width, Height);
+
+            mtl.FontTexture2D = mTexture;
+            
             mDrawable.DrawArrays(PrimitiveType.Triangles);
             GL.Disable(EnableCap.Blend);
+            GL.Disable(EnableCap.AlphaTest);
             GL.Enable(EnableCap.DepthTest);
             mtl.Unbind();
         }

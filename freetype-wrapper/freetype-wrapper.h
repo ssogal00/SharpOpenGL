@@ -1,10 +1,17 @@
 #pragma once
 
-using namespace System;
 
-namespace freetypewrapper {
-	public ref class Class1
+
+using namespace System::Collections::Generic;
+
+namespace FreeTypeWrapper
+{
+	public ref class FreeType
 	{
-		// TODO: Add your methods for this class here.
+	public:
+		static array<unsigned char>^ GetFontAtlas(System::String^ fontPath, System::String^ charSet);
+	protected:
+
+	private:
 	};
-}
+};

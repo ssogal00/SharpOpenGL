@@ -87,6 +87,8 @@ namespace SharpOpenGL
 
             VSync = VSyncMode.Off;
 
+            ResizableManager.Instance.ResizeEventHandler.OnNext(new Tuple<int,int>(this.Width, this.Height));
+
             mDefaultSceneRenderer = Engine.Get().CurrentScene.GetSceneRenderer();
             mDefaultSceneRenderer.Initialize();
         }

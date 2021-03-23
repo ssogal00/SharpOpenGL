@@ -16,5 +16,5 @@ void main()
 	float fX = ((VertexPosition.x - ScreenSize.x * .5f) * 2.f) / ScreenSize.x;
 	float fY = ((VertexPosition.y - ScreenSize.y * .5f) * 2.f) / ScreenSize.y;
 
-	gl_Position = vec4(fX, fY, 0.0, 1.0);
+	gl_Position = vec4(fX, -fY, 0.0, 1.0);
 }
