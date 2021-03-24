@@ -69,6 +69,9 @@ FreeTypeWrapper::FontAtlas^ FreeTypeWrapper::FreeType::GetFontAtlas(System::Stri
 		newGlyph->TexCoordBottomY = (pixelSize * row + face->glyph->bitmap.rows) / static_cast<float>(scanlineSize);
 		newGlyph->AdvanceX = face->glyph->advance.x;
 		newGlyph->AdvanceY = face->glyph->advance.y;
+
+
+		
 		
 		glyphMap->Add(charSets[i], newGlyph);
 
@@ -87,11 +90,18 @@ FreeTypeWrapper::FontAtlas^ FreeTypeWrapper::FreeType::GetFontAtlas(System::Stri
 				resultPixels[dstIndex] = face->glyph->bitmap.buffer[srcIndex];
 			}
 		}
-	}	
+	}
+
+	BBox^ box = gcnew BBox();
+	box->XMin = face->bbox.xMin;
+	box->XMax = face->bbox.xMax;
+	box->YMax = face->bbox.yMax;
+	box->YMin = face->bbox.yMin;
 		
 	FT_Done_FreeType(lib);
 
 	FontAtlas^ result = gcnew FontAtlas(resultPixels, glyphMap, pixelSize * squareSize);
+	result->Box = box;
 	return result;
 }
  

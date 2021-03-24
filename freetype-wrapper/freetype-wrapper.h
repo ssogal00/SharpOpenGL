@@ -6,6 +6,15 @@ using namespace System::Collections::Generic;
 
 namespace FreeTypeWrapper
 {
+	public ref class BBox
+	{
+	public:
+		int XMin;
+		int XMax;
+		int YMin;
+		int YMax;
+	};
+	
 	public ref class Glyph
 	{
 	public:
@@ -18,7 +27,7 @@ namespace FreeTypeWrapper
 		float TexCoordLeftX;
 		float TexCoordRightX;
 		float TexCoordTopY;
-		float TexCoordBottomY;
+		float TexCoordBottomY;		
 	};
 
 	public ref class FontAtlas
@@ -27,6 +36,8 @@ namespace FreeTypeWrapper
 		FontAtlas(array<unsigned char>^ bitmap, Dictionary<wchar_t, Glyph^>^ glyphMap, int squareSize);
 
 		int SquarePixelSize;
+
+		BBox^ Box;
 
 		array<unsigned char>^ Bitmap;
 
