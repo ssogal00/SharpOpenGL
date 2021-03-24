@@ -74,7 +74,6 @@ FreeTypeWrapper::FontAtlas^ FreeTypeWrapper::FreeType::GetFontAtlas(System::Stri
 
 		const int dstStartIndex = (pixelSize*pixelSize*squareSize) * row + (pixelSize * pixelSize) * col;
 		
-
 		for (int y = 0; y < face->glyph->bitmap.rows; y++)
 		{
 			for (int x = 0; x < face->glyph->bitmap.width; x++)

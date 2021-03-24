@@ -8,16 +8,24 @@ namespace SharpOpenGLCore.UI
 {
     public class UIText : UIBase
     {
-        public UIText(string contents)
+        public UIText(string contents, Vector2i origin)
         {
             mText = contents;
+            mOrigin = origin;
         }
 
         public override void BuildVertexList(List<UIVertex> vertexList, out bool bChanged)
         {
+            if (!mDirtyMark)
+            {
+                bChanged = false;
+                return;
+            }
+
             var atlas = UIManager.Instance.FontAtlas;
 
             bChanged = true;
+            mDirtyMark = false;
 
             Vector2i penPosition = new Vector2i(mOrigin.X, mOrigin.Y);
 
@@ -59,6 +67,9 @@ namespace SharpOpenGLCore.UI
                     vertexList.Add(leftBtm);
                     vertexList.Add(rightTop);
                     vertexList.Add(rightBtm);
+
+                    penPosition.X += (glyph.AdvanceX>>6);
+                    penPosition.Y += (glyph.AdvanceY>>6);
                 }
                 else
                 {
