@@ -17,8 +17,7 @@ namespace SharpOpenGLCore.UI
             RootScreen = new UIScreen();
 
             RootScreen.AddChild(new UIBox(Vector2.Zero, 64*4,64*4));
-            var bytes = FreeType.GetFontAtlas(null, "abcdefghijklmn", 64);
-            mFontAtlas = bytes;
+            mFontAtlas = FreeType.GetFontAtlas(null, "abcdefghijklmn", 64);
         }
 
         public void RenderUI()
@@ -28,8 +27,14 @@ namespace SharpOpenGLCore.UI
 
         public UIScreen RootScreen = null;
 
-        private byte[] mFontAtlas = null;
+        private FontAtlas mFontAtlas;
 
-        public byte[] FontData => mFontAtlas;
+        public FontAtlas FontAtlas
+        {
+            get
+            {
+                return mFontAtlas;
+            }
+        }
     }
 }

@@ -13,5 +13,5 @@ layout(location = 3) out vec4 VelocityColor;
 void main()
 {   	
     DiffuseColor = texture(FontTexture, TexCoord);
-    
+    DiffuseColor.a = texture(FontTexture, TexCoord).r;
 }

@@ -13,7 +13,15 @@ using namespace System::Collections::Generic;
 using namespace System::Runtime::InteropServices;
 #using <mscorlib.dll>
 
-array<unsigned char>^ FreeTypeWrapper::FreeType::GetFontAtlas(System::String^ fontPath, System::String^ charSet, int pixelSize)
+
+FreeTypeWrapper::FontAtlas::FontAtlas(array<unsigned char>^ bitmap, Dictionary<wchar_t, Glyph^>^ glyphMap, int squareSize)
+{
+	this->Bitmap = bitmap;
+	this->GlyphMap = glyphMap;
+	this->SquarePixelSize = squareSize;
+}
+
+FreeTypeWrapper::FontAtlas^ FreeTypeWrapper::FreeType::GetFontAtlas(System::String^ fontPath, System::String^ charSet, int pixelSize)
 {
 	FT_Library lib;
 
@@ -35,33 +43,56 @@ array<unsigned char>^ FreeTypeWrapper::FreeType::GetFontAtlas(System::String^ fo
 
 	error = FT_Set_Pixel_Sizes(face, pixelSize, pixelSize);
 
+	Dictionary<wchar_t, Glyph^>^ glyphMap = gcnew Dictionary<wchar_t, Glyph^>();
+
+	const int scanlineSize = pixelSize * squareSize;
 
 	for(int i = 0; i < length; ++i)
 	{
-		int col = i % squareSize;
-		int row = i / squareSize;
+		const int col = i % squareSize;
+		const int row = i / squareSize;
 		
-		unsigned int charIndex = FT_Get_Char_Index(face, charSets[i]);
+		unsigned int charIndex = FT_Get_Char_Index(face, charSets[i]);		
 		
 		error = FT_Load_Glyph(face, charIndex, FT_LOAD_DEFAULT | FT_LOAD_NO_BITMAP);
 
 		error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
 
-		int dstStartIndex = (pixelSize*pixelSize*squareSize) * row + (pixelSize * pixelSize) * col;
+		Glyph^ newGlyph = gcnew Glyph();
+		newGlyph->BitmapWidth = face->glyph->bitmap.width;
+		newGlyph->BitmapHeight = face->glyph->bitmap.rows;
+		newGlyph->BitmapLeft = face->glyph->bitmap_left;
+		newGlyph->BitmapTop = face->glyph->bitmap_top;
+		newGlyph->TexCoordLeftX = (pixelSize * col) / static_cast<float>(scanlineSize);
+		newGlyph->TexCoordRightX = (pixelSize * col + face->glyph->bitmap.width) / static_cast<float>(scanlineSize);
+		newGlyph->TexCoordTopY = (pixelSize * row) / static_cast<float>(scanlineSize);		
+		newGlyph->TexCoordBottomY = (pixelSize * row + face->glyph->bitmap.rows) / static_cast<float>(scanlineSize);
+		newGlyph->AdvanceX = face->glyph->advance.x;
+		newGlyph->AdvanceY = face->glyph->advance.y;
+		
+		glyphMap->Add(charSets[i], newGlyph);
+
+		const int dstStartIndex = (pixelSize*pixelSize*squareSize) * row + (pixelSize * pixelSize) * col;
+		
 
 		for (int y = 0; y < face->glyph->bitmap.rows; y++)
 		{
 			for (int x = 0; x < face->glyph->bitmap.width; x++)
 			{
-				int dstIndex = pixelSize *(y)+(x) + dstStartIndex;
-				int srcIndex = y * face->glyph->bitmap.width + x;
+				const int dstX = col * pixelSize + x;
+				const int dstY = scanlineSize * (row * pixelSize + y);
+
+				const int dstIndex = dstY + dstX;
+				
+				const int srcIndex = y * face->glyph->bitmap.width + x;
 				resultPixels[dstIndex] = face->glyph->bitmap.buffer[srcIndex];
 			}
-		}		
+		}
 	}	
 		
 	FT_Done_FreeType(lib);
 
-	return resultPixels;
+	FontAtlas^ result = gcnew FontAtlas(resultPixels, glyphMap, pixelSize * squareSize);
+	return result;
 }
  
