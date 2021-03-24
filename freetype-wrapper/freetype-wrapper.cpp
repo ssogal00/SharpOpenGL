@@ -3,6 +3,7 @@
 #define generic __identifier(generic)
 #include "ft2build.h"
 #include "freetype/freetype.h"
+#include "freetype/ftglyph.h"
 #undef generic
 #include <msclr/marshal.h>
 #include <msclr/marshal_cppstd.h>
@@ -20,6 +21,13 @@ FreeTypeWrapper::FontAtlas::FontAtlas(array<unsigned char>^ bitmap, Dictionary<w
 	this->GlyphMap = glyphMap;
 	this->SquarePixelSize = squareSize;
 }
+
+FreeTypeWrapper::BBox::BBox()
+{
+	this->XMax = this->YMax = INT_MIN;
+	this->XMin = this->YMin = INT_MAX;
+}
+
 
 FreeTypeWrapper::FontAtlas^ FreeTypeWrapper::FreeType::GetFontAtlas(System::String^ fontPath, System::String^ charSet, int pixelSize)
 {
@@ -58,6 +66,14 @@ FreeTypeWrapper::FontAtlas^ FreeTypeWrapper::FreeType::GetFontAtlas(System::Stri
 
 		error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
 
+		FT_Glyph testGlyph;
+		
+		error = FT_Get_Glyph(face->glyph, &testGlyph);
+
+		FT_BBox glyphBox;
+		
+		FT_Glyph_Get_CBox(testGlyph, FT_GLYPH_BBOX_PIXELS, &glyphBox);
+
 		Glyph^ newGlyph = gcnew Glyph();
 		newGlyph->BitmapWidth = face->glyph->bitmap.width;
 		newGlyph->BitmapHeight = face->glyph->bitmap.rows;
@@ -69,9 +85,11 @@ FreeTypeWrapper::FontAtlas^ FreeTypeWrapper::FreeType::GetFontAtlas(System::Stri
 		newGlyph->TexCoordBottomY = (pixelSize * row + face->glyph->bitmap.rows) / static_cast<float>(scanlineSize);
 		newGlyph->AdvanceX = face->glyph->advance.x;
 		newGlyph->AdvanceY = face->glyph->advance.y;
-
-
-		
+		newGlyph->Box = gcnew BBox();
+		newGlyph->Box->XMin = glyphBox.xMin;
+		newGlyph->Box->XMax = glyphBox.xMax;
+		newGlyph->Box->YMin = glyphBox.yMin;
+		newGlyph->Box->YMax = glyphBox.yMax;
 		
 		glyphMap->Add(charSets[i], newGlyph);
 

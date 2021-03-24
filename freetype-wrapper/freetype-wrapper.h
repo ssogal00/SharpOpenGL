@@ -7,8 +7,9 @@ using namespace System::Collections::Generic;
 namespace FreeTypeWrapper
 {
 	public ref class BBox
-	{
+	{		
 	public:
+		BBox();
 		int XMin;
 		int XMax;
 		int YMin;
@@ -27,7 +28,8 @@ namespace FreeTypeWrapper
 		float TexCoordLeftX;
 		float TexCoordRightX;
 		float TexCoordTopY;
-		float TexCoordBottomY;		
+		float TexCoordBottomY;
+		BBox^ Box;
 	};
 
 	public ref class FontAtlas
@@ -37,7 +39,7 @@ namespace FreeTypeWrapper
 
 		int SquarePixelSize;
 
-		BBox^ Box;
+		BBox^ EnclosingBox;
 
 		array<unsigned char>^ Bitmap;
 
