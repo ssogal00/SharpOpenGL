@@ -72,7 +72,6 @@ namespace SharpOpenGL
             Sampler.Initialize();
             ShaderManager.Get().CompileShaders();
             
-
             this.Title = "MyEngine";
 
             GL.CullFace(CullFaceMode.Back);

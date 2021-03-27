@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace SharpOpenGL
 {
@@ -12,9 +13,9 @@ namespace SharpOpenGL
         [STAThread]
         static void Main()
         {
-            Engine.Get().Initialize();
+            Engine.Instance.Initialize();
 
-            var renderThread = new Thread(RenderingThread.Get().Run);
+            var renderThread = new Thread(RenderingThread.Instance.Run);
             renderThread.Priority = ThreadPriority.AboveNormal;
             renderThread.Name = "RenderingThread";
             renderThread.Start();

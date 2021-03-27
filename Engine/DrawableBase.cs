@@ -22,6 +22,8 @@ namespace Core
             mIB = new IndexBuffer();
         }
 
+        public VertexArray VA => mVA;
+
         public virtual void SetupVertexData(ref T[] VertexList)
         {
             mVA.Bind();
@@ -237,6 +239,7 @@ namespace Core
             mIndexBuffer.Unbind();
         }
 
+        //
         public void DrawIndexed(ref uint[] indexArray)
         {
             mVertexArray.Bind();

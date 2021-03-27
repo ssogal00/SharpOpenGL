@@ -42,9 +42,9 @@ namespace SharpOpenGL
             Formatter<DefaultResolver, Vector4>.Register(new Vector4Formatter<DefaultResolver>());
             
             MainThreadId = Thread.CurrentThread.ManagedThreadId;
-            OpenGLContext.Get().SetMainThreadId(MainThreadId);
+            OpenGLContext.Instance.SetMainThreadId(MainThreadId);
 
-            await AssetManager.Get().ImportStaticMeshes();
+            await AssetManager.Instance.ImportStaticMeshes();
 
             mCurrentScene.InitializeScene();
 

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Security.RightsManagement;
+using Core.Buffer;
+using Core.Texture;
 using OpenTK.Graphics.OpenGL;
 
 namespace Core
@@ -74,35 +77,106 @@ namespace Core
         protected BlendingFactor mDst;
     }
 
-    public class DrawCommand : RenderCommand
+    public class MaterialSetUniformBufferCommand<T> : RenderCommand where T : struct
     {
-        public DrawCommand(MaterialBase.MaterialBase material, IBindable vertexBuffer, IBindable indexBuffer)
+        public MaterialSetUniformBufferCommand(MaterialBase.MaterialBase material, string name, ref T paramValue)
         {
-            MaterialToUse = material;
-            VertexBuffer = vertexBuffer;
-            IndexBuffer = indexBuffer;
+            mMaterial = material;
+            mName = name;
+            mParamValue = paramValue;
         }
 
         public override void Execute()
         {
-            MaterialToUse.Bind();
-            VertexBuffer.Bind();
-            IndexBuffer.Bind();
-
-            
-            
-            MaterialToUse.Unbind();
-            VertexBuffer.Unbind();
-            IndexBuffer.Unbind();
+            mMaterial.SetUniformBufferValue<T>(mName, ref mParamValue);
         }
 
-        private MaterialBase.MaterialBase MaterialToUse = null;
-        private IBindable VertexBuffer = null;
-        private IBindable IndexBuffer = null;
+        private MaterialBase.MaterialBase mMaterial;
+        private string mName;
+        private T mParamValue;
     }
 
+    public class MaterialSetTextureCommand : RenderCommand
+    {
+        public MaterialSetTextureCommand(MaterialBase.MaterialBase material, TextureBase texture, int location)
+        {
+            mMaterial = material;
+            mLocation = location;
+            mTexture = texture;
+        }
 
+        public override void Execute()
+        {
+            mMaterial.SetTextureByIndex(mLocation, mTexture, Sampler.DefaultLinearSampler);
+        }
 
+        private MaterialBase.MaterialBase mMaterial;
+        private int mLocation;
+        private TextureBase mTexture;
+    }
+
+    public class BindCommand : RenderCommand
+    {
+        public BindCommand(IBindable bindable)
+        {
+            mBindableList.Add(bindable);
+        }
+
+        public BindCommand(IBindable[] bindlist)
+        {
+            mBindableList.AddRange(bindlist);
+        }
+
+        public override void Execute()
+        {
+            foreach (var b in mBindableList)
+            {
+                b.Bind();
+            }
+        }
+
+        private List<IBindable> mBindableList = new List<IBindable>();
+    }
     
+    
+
+    public class DrawWithIndexCommand : RenderCommand
+    {
+        public DrawWithIndexCommand(VertexArray va, uint[] indices)
+        {
+            mVA = va;
+            mIndices = indices;
+        }
+
+        public override void Execute()
+        {
+            mVA.Bind();
+
+            GL.DrawElements(PrimitiveType.Triangles, mIndices.Length, DrawElementsType.UnsignedInt, mIndices);
+
+            mVA.Unbind();
+        }
+
+        protected VertexArray mVA;
+        protected uint[] mIndices;
+    }
+
+    public class DrawWithoutIndexCommand : RenderCommand
+    {
+        public DrawWithoutIndexCommand(VertexArray va)
+        {
+            mVA = va;
+        }
+
+        public override void Execute()
+        {
+            mVA.Bind();
+            
+            mVA.Unbind();
+        }
+
+        protected VertexArray mVA;
+    }
+
 
 }

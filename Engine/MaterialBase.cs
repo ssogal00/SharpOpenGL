@@ -158,9 +158,9 @@ namespace Core.MaterialBase
             mUniformVariableNames = mMaterialProgram.GetActiveUniformNames();
         }
 
-        public void SetTexture(int index, Core.Texture.TextureBase texture)
+        public void SetTexture(int location, Core.Texture.TextureBase texture)
         {
-
+            SetTextureByIndex(location, texture, Sampler.DefaultLinearSampler);
         }
 
         public void SetTexture(string name, Core.Texture.TextureBase texture)
@@ -485,6 +485,7 @@ namespace Core.MaterialBase
 
         protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = null;
         protected Dictionary<string, int> mSamplerMap = null;
+        
 
         protected List<string> mUniformVariableNames = null;
     }

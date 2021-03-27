@@ -41,6 +41,13 @@ namespace SharpOpenGL
         {
         }
 
+        public override List<RenderCommand> GetRenderCommands()
+        {
+            List<RenderCommand> commands = new List<RenderCommand>();
+            commands.Add(new DrawWithoutIndexCommand(this.drawable.VA));
+            return commands;
+        }
+
         protected override void PrepareRenderingData()
         {
             drawable = new DrawableBase<PNTT_VertexAttribute>();

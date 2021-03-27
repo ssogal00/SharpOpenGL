@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Core.CustomAttribute;
 using OpenTK;
 using OpenTK.Mathematics;
@@ -66,7 +67,7 @@ namespace Core.Primitive
         {
             Name = string.Format("SceneObject_{0}", ObjectCount);
             Id = ObjectCount++;
-            SceneObjectManager.Get().AddSceneObject(this);
+            SceneObjectManager.Instance.AddSceneObject(this);
         }
 
         protected GameObject(string name, int objectCount)
@@ -83,6 +84,11 @@ namespace Core.Primitive
         public virtual void Initialize()
         {
 
+        }
+
+        public virtual List<RenderCommand> GetRenderCommands()
+        {
+            return null;
         }
 
         public bool IsReadyToDraw => bReadyToDraw;
