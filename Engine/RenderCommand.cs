@@ -26,7 +26,12 @@ namespace Core
 
         }
 
+        public int Order => mOrder;
+        public string CommandName => mCommandName;
+
         protected int mOrder = 0;
+
+        protected string mCommandName = string.Empty;
     }
 
     public class ClearRenderCommand : RenderCommand
