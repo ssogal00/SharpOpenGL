@@ -10,9 +10,19 @@ namespace Core.Buffer
     {
         private int mVertexArray = 0;
 
+        public int Handle => mVertexArray;
+
+        private string mAlias = "";
+
         public VertexArray()
         {
             mVertexArray = GL.GenVertexArray();
+        }
+
+        public VertexArray(string alias)
+        {
+            mVertexArray = GL.GenVertexArray();
+            mAlias = alias;
         }
 
         public void Bind()

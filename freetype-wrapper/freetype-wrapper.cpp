@@ -55,6 +55,11 @@ FreeTypeWrapper::FontAtlas^ FreeTypeWrapper::FreeType::GetFontAtlas(System::Stri
 
 	const int scanlineSize = pixelSize * squareSize;
 
+	int enclosingMinX = INT_MAX;
+	int enclosingMaxX = INT_MIN;
+	int enclosingMinY = INT_MAX;
+	int enclosingMaxY = INT_MIN;
+
 	for(int i = 0; i < length; ++i)
 	{
 		const int col = i % squareSize;
@@ -90,6 +95,27 @@ FreeTypeWrapper::FontAtlas^ FreeTypeWrapper::FreeType::GetFontAtlas(System::Stri
 		newGlyph->Box->XMax = glyphBox.xMax;
 		newGlyph->Box->YMin = glyphBox.yMin;
 		newGlyph->Box->YMax = glyphBox.yMax;
+
+		// update enclosing box
+		if(glyphBox.xMin < enclosingMinX)
+		{
+			enclosingMinX = glyphBox.xMin;
+		}
+
+		if(glyphBox.xMax > enclosingMaxX)
+		{
+			enclosingMaxX = glyphBox.xMax;
+		}
+
+		if(glyphBox.yMin < enclosingMinY)
+		{
+			enclosingMinY = glyphBox.yMin;
+		}
+
+		if(glyphBox.yMax > enclosingMaxY)
+		{
+			enclosingMaxY = glyphBox.yMax;
+		}
 		
 		glyphMap->Add(charSets[i], newGlyph);
 
@@ -119,7 +145,7 @@ FreeTypeWrapper::FontAtlas^ FreeTypeWrapper::FreeType::GetFontAtlas(System::Stri
 	FT_Done_FreeType(lib);
 
 	FontAtlas^ result = gcnew FontAtlas(resultPixels, glyphMap, pixelSize * squareSize);
-	result->Box = box;
+	
 	return result;
 }
  
