@@ -12,6 +12,8 @@ namespace Engine
         public RenderThreadGameObject(GameObject gameObject)
         {
             mGameObject = gameObject;
+
+            
         }
 
         public virtual void Dispose()
@@ -19,15 +21,18 @@ namespace Engine
 
         }
 
+
+        protected void Intialize()
+        {
+            
+        }
+
         private GameObject mGameObject = null;
 
         private VertexArray mVertexArray;
 
-        
-    }
+        private IndexBuffer mIndexBuffer;
 
-    public class CubeRenderThreadObject
-    {
-
+        private Dictionary<int, OpenGLBuffer> mVertexAttributeMap = new Dictionary<int, OpenGLBuffer>();
     }
 }

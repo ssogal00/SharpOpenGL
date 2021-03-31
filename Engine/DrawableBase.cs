@@ -265,7 +265,7 @@ namespace Core
         }
         
 
-        protected List<IDisposable> mVertexBuffers = new List<IDisposable>();
+        protected List<OpenGLBuffer> mVertexBuffers = new List<OpenGLBuffer>();
 
         protected IndexBuffer mIndexBuffer = null;
 
