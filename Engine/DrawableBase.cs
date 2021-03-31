@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Core.OpenGLShader;
 using Core.Primitive;
+using Engine;
 using GLTF;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
@@ -13,13 +14,18 @@ using OpenTK.Mathematics;
 
 namespace Core
 {
-    public class DrawableBase<T> where T : struct, IGenericVertexAttribute
+    public class DrawableBase<T> : IDisposable where T : struct, IGenericVertexAttribute
     {
         public DrawableBase()
         {
-            mVA = new VertexArray();
-            mVB = new AOSVertexBuffer<T>();
-            mIB = new IndexBuffer();
+            mVA = ResourceManager.Instance.CreateVertexArray();
+            mVB = ResourceManager.Instance.CreateAOSVertexBuffer<T>();
+            mIB = ResourceManager.Instance.CreateIndexBuffer();
+        }
+
+        public void Dispose()
+        {
+            ResourceManager.Instance.DeleteVertexArray(mVA);
         }
 
         public VertexArray VA => mVA;

@@ -96,6 +96,11 @@ namespace Core
             mMaterial.SetUniformBufferValue<T>(mName, ref mParamValue);
         }
 
+        public void UpdateValue(ref T paramValue)
+        {
+            mParamValue = paramValue;
+        }
+
         private MaterialBase.MaterialBase mMaterial;
         private string mName;
         private T mParamValue;

@@ -39,7 +39,7 @@ namespace Core.Buffer
             base.Bind();
             //
             Debug.Assert(UniformBufferBlockIndex != -1);
-            GL.BindBufferBase(BufferRangeTarget.UniformBuffer, UniformBufferBlockIndex, bufferObject);
+            GL.BindBufferBase(BufferRangeTarget.UniformBuffer, UniformBufferBlockIndex, mBufferHandle);
         }
 
         public int UniformBufferBlockIndex = -1;

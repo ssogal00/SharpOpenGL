@@ -20,22 +20,18 @@ namespace Core.Buffer
     {
         public OpenGLBuffer()
         {
-            bufferObject = GL.GenBuffer();
+            mBufferHandle = GL.GenBuffer();
         }
 
         public void Dispose()
         {
             Unbind();
-            GL.DeleteBuffer(bufferObject);
+            GL.DeleteBuffer(mBufferHandle);
         }
 
         public virtual void Bind()
         {
-            #if DEBUG
-            
-            #endif
-
-            GL.BindBuffer(bufferTarget, bufferObject);
+            GL.BindBuffer(bufferTarget, mBufferHandle);
             bBind = true;
         }
 
@@ -48,6 +44,11 @@ namespace Core.Buffer
         {
             GL.BindBuffer(bufferTarget, 0);
             bBind = false;
+        }
+
+        public bool IsValid()
+        {
+            return mBufferHandle != -1;
         }
 
         public void BufferData(IntPtr Size, IntPtr Data)
@@ -122,17 +123,17 @@ namespace Core.Buffer
             protected set { bufferTarget = value; }
         }
 
-        public int BufferObject
+        public int BufferHandle
         {
-            get { return bufferObject; }
-            protected set { bufferObject = value; }
+            get { return mBufferHandle; }
+            protected set { mBufferHandle = value; }
         }
 
         protected BufferTarget bufferTarget;
 
         protected BufferUsageHint hint;
 
-        protected int bufferObject = 0;
+        protected int mBufferHandle = -1;
 
         protected bool bBind = false;
 
