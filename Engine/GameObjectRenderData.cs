@@ -4,15 +4,26 @@ using System.Security.RightsManagement;
 using System.Text;
 using System.Windows.Media.Media3D;
 using Core.Buffer;
+using Core.Texture;
 using GLTF;
 using OpenTK.Graphics.ES11;
 using OpenTK.Mathematics;
 
 namespace Engine
 {
+    public enum EVertexStructure
+    {
+        SOA,
+        AOS,
+    }
 
     public class GameObjectRenderData
     {
+        public GameObjectRenderData()
+        {
+
+        }
+
         public virtual List<uint> GetIndexData()
         {
             return null;
@@ -51,7 +62,14 @@ namespace Engine
             return null;
         }
 
+        public Dictionary<string, TextureBase> GetTextureParams()
+        {
+            return null;
+        }
+
         public bool IsVertexDataSOA = false;
+
+        public bool HasIndexData = false;
     }
 
     public class CubeRenderData : GameObjectRenderData
@@ -60,5 +78,10 @@ namespace Engine
         {
             return null;
         }
+    }
+
+    public class SphereRenderData : GameObjectRenderData
+    {
+        
     }
 }
