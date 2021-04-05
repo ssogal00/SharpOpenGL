@@ -22,9 +22,21 @@ namespace Engine
         }
 
 
+        public virtual void Render()
+        {
+
+        }
+
         protected void Intialize()
         {
-            
+            mVertexArray = ResourceManager.Instance.CreateVertexArray();
+            mIndexBuffer = ResourceManager.Instance.CreateIndexBuffer();
+        }
+
+        //
+        protected void UpdateMaterialParams()
+        {
+
         }
 
         private GameObject mGameObject = null;

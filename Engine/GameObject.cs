@@ -55,7 +55,11 @@ namespace Core.Primitive
         //Render with default material
         public abstract void Render();
 
-        
+        // 
+        public List<T> GetVertexAttribute<T>(int index)
+        {
+            return null;
+        }
 
         protected abstract void PrepareRenderingData();
 
