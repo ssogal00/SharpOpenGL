@@ -66,7 +66,10 @@ namespace Engine
 
             SetMaterialParams();
 
-            //
+            mVertexArray.Bind();
+            
+
+            mVertexArray.Unbind();
 
             material.Unbind();
         }
@@ -77,6 +80,7 @@ namespace Engine
             var vec2Params = mGameObject.GetVector2Params();
             var vec4Params = mGameObject.GetVector4Params();
             var mat4Params = mGameObject.GetMatrix4Params();
+            
 
             foreach (var kvp in vec3Params)
             {
@@ -88,6 +92,12 @@ namespace Engine
             {
                 var value = kvp.Value;
                 mGameObject.Material.SetUniformBufferValue<Vector4>(kvp.Key, ref value);
+            }
+
+            foreach (var kvp in vec2Params)
+            {
+                var value = kvp.Value;
+                mGameObject.Material.SetUniformBufferValue<Vector2>(kvp.Key, ref value);
             }
         }
 

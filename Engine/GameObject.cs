@@ -138,6 +138,8 @@ namespace Core.Primitive
 
         public MaterialBase.MaterialBase Material { get; set; } = null;
 
+        protected MaterialBase.MaterialBase defaultMaterial = null;
+
         public virtual Dictionary<string, Vector2> GetVector2Params()
         {
             return null;
