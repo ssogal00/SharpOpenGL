@@ -11,23 +11,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Shader\**" />
+    <EmbeddedResource Remove="Shader\**" />
+    <None Remove="Shader\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.Reactive" Version="5.0.0" />
     <PackageReference Include="System.Reactive.Linq" Version="5.0.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CompiledShaderCore\CompiledShaderCore.csproj" />
     <ProjectReference Include="..\DirectXTexWrapper\DirectXTexWrapper.vcxproj" />
     <ProjectReference Include="..\Engine\Engine.csproj" />
     <ProjectReference Include="..\freetype-gl-Wrapper\freetype-gl-Wrapper.vcxproj" />
     <ProjectReference Include="..\freetype-wrapper\freetype-wrapper.vcxproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Camera\" />
-    <Folder Include="Geometry\" />
-    <Folder Include="Shader\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

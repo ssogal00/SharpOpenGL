@@ -76,7 +76,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="$(SolutionDir)ShaderCompilerCore\bin\$(Configuration)\netcoreapp3.1\ShaderCompilerCore.exe $(SolutionDir)SharpOpenGLCore\Resources\Shader $(SolutionDir)CompiledShaderCore" />
+    <Exec Command="$(SolutionDir)ShaderCompilerCore\bin\$(Configuration)\netcoreapp3.1\ShaderCompilerCore.exe $(SolutionDir)SharpOpenGLCore\Resources\Shader $(SolutionDir)Engine\CompiledMaterial&#xD;&#xA;" />
   </Target>
 
 </Project>

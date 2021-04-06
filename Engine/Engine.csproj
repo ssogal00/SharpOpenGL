@@ -21,6 +21,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DirectXTexWrapper\DirectXTexWrapper.vcxproj" />
+    <ProjectReference Include="..\freetype-gl-Wrapper\freetype-gl-Wrapper.vcxproj" />
+    <ProjectReference Include="..\freetype-wrapper\freetype-wrapper.vcxproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CompiledMaterial\" />
   </ItemGroup>
 
 </Project>
