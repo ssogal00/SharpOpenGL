@@ -2,7 +2,7 @@
 using OpenTK;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class Arrow : GameObject
     {

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using OpenTK.Mathematics;
 using MathHelper = Core.MathHelper;
 
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
     public class SSAO : PostProcessBase
     {

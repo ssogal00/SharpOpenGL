@@ -10,7 +10,7 @@ using OpenTK.Graphics.OpenGL;
 using Core.Primitive;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class Cone : GameObject
     {

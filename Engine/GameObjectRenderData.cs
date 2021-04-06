@@ -41,10 +41,7 @@ namespace Engine
             return null;
         }
 
-        public Material GetMaterial()
-        {
-            return null;
-        }
+        
 
         // shader param
         public Dictionary<string, float> GetFloatParams()

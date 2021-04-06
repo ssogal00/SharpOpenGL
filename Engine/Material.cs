@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using SharpOpenGL;
+using Engine;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class TestMaterial { }
     

@@ -8,7 +8,7 @@ using CompiledMaterial.GBufferDump;
 using Core;
 using Core.Texture;
 
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
     public class GBufferVisualize : PostProcessBase
     {

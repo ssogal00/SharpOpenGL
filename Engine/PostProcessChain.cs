@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
     class PostProcessChain
     {

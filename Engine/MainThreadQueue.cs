@@ -4,7 +4,7 @@ using System.Threading;
 using System.Diagnostics;
 using Core;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class MainThreadQueue : Singleton<MainThreadQueue>
     {

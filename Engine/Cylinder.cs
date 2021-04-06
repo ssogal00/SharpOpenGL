@@ -11,7 +11,7 @@ using Core;
 using Core.Primitive;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class Cylinder : GameObject
     {

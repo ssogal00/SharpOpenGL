@@ -7,7 +7,7 @@ using CompiledMaterial.FXAAMaterial;
 using Core;
 using Core.Texture;
 
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
     public class FXAAPostProcess : PostProcessBase
     {

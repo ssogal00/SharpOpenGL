@@ -8,7 +8,7 @@ using Core.Primitive;
 using OpenTK;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class ThreeAxis : GameObject
     {

@@ -4,7 +4,7 @@ using OpenTK.Graphics.OpenGL;
 using System;
 using CompiledMaterial.CubemapMaterial;
 using OpenTK.Mathematics;
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
     public class Skybox : PostProcessBase
     {

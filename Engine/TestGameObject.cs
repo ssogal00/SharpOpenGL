@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Primitive;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class TestGameObject : Core.Primitive.GameObject
     {

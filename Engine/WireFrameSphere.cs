@@ -11,7 +11,7 @@ using Core.MaterialBase;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class WireFrameSphere : GameObject
     {

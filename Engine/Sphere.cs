@@ -12,7 +12,7 @@ using Core.Primitive;
 using Core.Texture;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class Sphere : GameObject
     {

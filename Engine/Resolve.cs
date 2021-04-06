@@ -9,7 +9,7 @@ using Core.CustomEvent;
 using Core.Texture;
 
 
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
     public class ResolvePostProcess : PostProcessBase
     {

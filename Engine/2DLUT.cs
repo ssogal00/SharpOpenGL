@@ -7,10 +7,10 @@ using CompiledMaterial.LUTGenerateMaterial;
 using Core;
 using Core.MaterialBase;
 using Core.Texture;
+using Engine.PostProcess;
 using OpenTK.Graphics.OpenGL;
-using SharpOpenGL.PostProcess;
 
-namespace SharpOpenGL.Transform
+namespace Engine.Transform
 {
     public class LookUpTable2D : PostProcessBase
     {

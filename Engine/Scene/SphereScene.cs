@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using Core.Primitive;
 using OpenTK.Mathematics;
-using SharpOpenGL;
-using SharpOpenGL.Scene;
+using Engine;
+using Engine.Scene;
 
-namespace SharpOpenGLCore
+namespace Engine
 {
     public class SphereScene : SceneBase
     {

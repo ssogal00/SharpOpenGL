@@ -6,7 +6,7 @@ using OpenTK;
 using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class CameraManager : Singleton<CameraManager>
     {

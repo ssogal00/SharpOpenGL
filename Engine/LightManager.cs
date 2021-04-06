@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core;
 using OpenTK.Mathematics;
-namespace SharpOpenGL.Light
+namespace Engine.Light
 {
     public class LightManager : Singleton<LightManager>
     {

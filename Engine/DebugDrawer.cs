@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Core;
 using Core.CustomAttribute;
-using SharpOpenGL.Light;
+using Engine.Light;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class DebugDrawer : Singleton<DebugDrawer>
     {

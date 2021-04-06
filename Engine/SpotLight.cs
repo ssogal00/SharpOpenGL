@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core;
 
-namespace SharpOpenGL.Light
+namespace Engine.Light
 {
 
     public class SpotLight : LightBase

@@ -3,7 +3,7 @@ using Core;
 using Core.Primitive;
 using GLTF;
 using OpenTK.Graphics.OpenGL;
-using SharpOpenGL;
+using Engine;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -11,7 +11,7 @@ using System.Linq;
 using CameraTransform = CompiledMaterial.GBufferPNTT.CameraTransform;
 using ModelTransform = CompiledMaterial.GBufferPNTT.ModelTransform;
 
-namespace SharpOpenGLCore
+namespace Engine
 {
     public class GLTFStaticMeshObject : GameObject
     {

@@ -8,7 +8,7 @@ using Core.MaterialBase;
 using OpenTK;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL.Light
+namespace Engine.Light
 {
     public class PointLight : LightBase
     {

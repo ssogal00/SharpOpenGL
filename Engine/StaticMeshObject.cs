@@ -12,7 +12,7 @@ using CompiledMaterial.GBufferDraw;
 using CompiledMaterial.TBNMaterial;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class StaticMeshObject : GameObject
     {

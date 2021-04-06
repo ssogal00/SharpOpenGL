@@ -9,7 +9,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL.Light
+namespace Engine.Light
 {
     enum LightChannel
     {

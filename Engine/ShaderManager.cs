@@ -11,9 +11,9 @@ using System.Windows.Forms;
 using Core;
 using Core.MaterialBase;
 using GLTF.V2;
-using SharpOpenGLCore;
+using Engine;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class ShaderManager : Singleton<ShaderManager>
     {

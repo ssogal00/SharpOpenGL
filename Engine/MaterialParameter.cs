@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.MaterialBase;
 
-namespace SharpOpenGL.Material
+namespace Engine.Material
 {
     public class MaterialParameter
     {

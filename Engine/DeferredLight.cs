@@ -3,16 +3,16 @@ using Core.CustomAttribute;
 using Core.Texture;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using SharpOpenGL.Light;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using CompiledMaterial.DeferredLightMaterial;
+using Engine.Light;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
-    public class DeferredLight : SharpOpenGL.PostProcess.PostProcessBase
+    public class DeferredLight : PostProcessBase
     {
         public DeferredLight()
             : base()

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using Core;
 using GLTF;
-using SharpOpenGL.Scene;
-using SharpOpenGLCore.SceneRenderer;
+using Engine.Scene;
+using Engine.SceneRenderer;
 using GLTF.V2;
 
-namespace SharpOpenGLCore.Scene
+namespace Engine.Scene
 {
     public class FontTestScene : SceneBase
     {

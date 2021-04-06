@@ -8,7 +8,7 @@ using OpenTK.Graphics.OpenGL;
 
 using FreeTypeWrapper;
 
-namespace SharpOpenGLCore.UI
+namespace Engine.UI
 {
     public class UIManager : Singleton<UIManager>
     {

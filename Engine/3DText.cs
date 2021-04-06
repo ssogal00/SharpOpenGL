@@ -8,9 +8,9 @@ using Core.Buffer;
 using Core.Texture;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using SharpOpenGL.Font;
+using Engine.Font;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class ThreeDText : GameObject
     {

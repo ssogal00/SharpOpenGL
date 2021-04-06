@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Core;
 
-namespace SharpOpenGL.Transform
+namespace Engine.Transform
 {
     public class TransformBase : RenderingThreadObject
     {

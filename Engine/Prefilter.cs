@@ -11,7 +11,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using MathHelper = OpenTK.Mathematics.MathHelper;
 
-namespace SharpOpenGL.Transform
+namespace Engine.Transform
 {
     public class Prefilter : TransformBase
     {

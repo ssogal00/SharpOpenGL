@@ -9,7 +9,7 @@ using Core.Texture;
 using ZeroFormatter;
 using OpenTK.Graphics.OpenGL;
 
-namespace SharpOpenGL.Asset
+namespace Engine.Asset
 {
     [ZeroFormattable]
     public class Texture2DAsset : Core.AssetBase

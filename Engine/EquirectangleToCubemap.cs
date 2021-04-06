@@ -9,14 +9,14 @@ using Core;
 using Core.CustomAttribute;
 using Core.MaterialBase;
 using Core.Texture;
+using Engine.Transform;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
-using SharpOpenGL.PostProcess;
-using SharpOpenGL.Transform;
+using Engine.PostProcess;
 using MathHelper = OpenTK.Mathematics.MathHelper;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class EquirectangleToCubemap : TransformBase
     {

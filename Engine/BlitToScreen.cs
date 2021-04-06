@@ -10,7 +10,7 @@ using System.Diagnostics;
 using CompiledMaterial.ScreenSpaceDraw;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class BlitToScreen : RenderingThreadObject
     {

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL.Font
+namespace Engine.Font
 {
     public class TextInstance : IDisposable
     {

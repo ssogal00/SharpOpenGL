@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using CompiledMaterial.Blur;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
-    public class BlurPostProcess : SharpOpenGL.PostProcess.PostProcessBase
+    public class BlurPostProcess : PostProcessBase
     {
         public BlurPostProcess()
             : base()

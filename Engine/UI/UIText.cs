@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGLCore.UI
+namespace Engine.UI
 {
     public class UIText : UIBase
     {

@@ -8,7 +8,7 @@ using OpenTK.Mathematics;
 using System.Collections.Generic;
 
 
-namespace SharpOpenGL
+namespace Engine
 {
     
     public class Cube : GameObject

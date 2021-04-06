@@ -6,7 +6,7 @@ using System.Windows;
 using System.Drawing;
 using CompiledMaterial.DepthVisualizeMaterial;
 
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
     public class DepthVisualize : PostProcessBase
     {

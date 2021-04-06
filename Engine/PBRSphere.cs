@@ -12,7 +12,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class PBRSphere : Sphere
     {

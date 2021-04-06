@@ -2,8 +2,9 @@ using System;
 using System.Threading;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Engine;
 
-namespace SharpOpenGL
+namespace SharpOpenGLCore
 {
     static class Program
     {
@@ -13,7 +14,7 @@ namespace SharpOpenGL
         [STAThread]
         static void Main()
         {
-            Engine.Instance.Initialize();
+            Engine.Engine.Instance.Initialize();
 
             var renderThread = new Thread(RenderingThread.Instance.Run);
             renderThread.Priority = ThreadPriority.AboveNormal;
@@ -22,11 +23,11 @@ namespace SharpOpenGL
 
             while (true)
             {
-                if (Engine.Get().IsRequestExit)
+                if (Engine.Engine.Instance.IsRequestExit)
                 {
                     break;
                 }
-                Engine.Get().Tick();
+                Engine.Engine.Instance.Tick();
             }
 
             // wait for rendering thread to finish

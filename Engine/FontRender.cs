@@ -7,9 +7,9 @@ using CompiledMaterial.ScreenSpaceDraw;
 using CompiledMaterial.SignedDistanceField;
 using Core;
 using Core.Texture;
-using SharpOpenGL;
+using Engine;
 
-namespace SharpOpenGLCore
+namespace Engine
 {
     public class FontRender : ScreenSpaceRender
     {

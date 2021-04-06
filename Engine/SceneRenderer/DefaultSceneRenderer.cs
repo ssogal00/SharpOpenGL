@@ -5,13 +5,13 @@ using Core;
 using Core.Buffer;
 using Core.Texture;
 using OpenTK.Windowing.Desktop;
-using SharpOpenGL;
-using SharpOpenGL.PostProcess;
-using SharpOpenGL.Scene;
-using SharpOpenGL.Transform;
-using SharpOpenGLCore.UI;
+using Engine;
+using Engine.PostProcess;
+using Engine.Scene;
+using Engine.Transform;
+using Engine.UI;
 
-namespace SharpOpenGLCore
+namespace Engine
 {
     public class DefaultSceneRenderer : SceneRendererBase
     {

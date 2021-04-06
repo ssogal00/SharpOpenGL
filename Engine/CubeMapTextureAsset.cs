@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZeroFormatter;
 
-namespace SharpOpenGL.Asset
+namespace Engine.Asset
 {
     [ZeroFormattable]
     public class CubeMapTextureAsset

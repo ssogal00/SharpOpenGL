@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 using OpenTK.Mathematics;
 
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
     public abstract class PostProcessBase : RenderingThreadObject
     {   

@@ -7,12 +7,12 @@ using CompiledMaterial.FontRenderMaterial;
 using Core;
 using Core.MaterialBase;
 using Core.Texture;
-using SharpOpenGL.Scene;
+using Engine.Scene;
 using FreeTypeGLWrapper;
 using OpenTK.Graphics.OpenGL;
-using SharpOpenGL;
+using Engine;
 
-namespace SharpOpenGLCore.SceneRenderer
+namespace Engine.SceneRenderer
 {
     class FontTestSceneRenderer : SceneRendererBase
     {

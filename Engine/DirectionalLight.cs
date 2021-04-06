@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using OpenTK.Graphics;
 
-namespace SharpOpenGL.Light
+namespace Engine.Light
 {
     
 }

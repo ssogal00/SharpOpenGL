@@ -2,7 +2,7 @@
 using System;
 
 
-namespace SharpOpenGL
+namespace Engine
 {
     class UIThread : Singleton<UIThread>
     {

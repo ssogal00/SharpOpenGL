@@ -4,7 +4,7 @@ using System;
 using CompiledMaterial.BloomMaterial;
 
 
-namespace SharpOpenGL.PostProcess
+namespace Engine.PostProcess
 {
     public class BloomPostProcess : PostProcessBase
     {

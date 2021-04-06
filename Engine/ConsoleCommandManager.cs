@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-namespace SharpOpenGL
+namespace Engine
 {
     internal class ConsoleCommandManager : Singleton<ConsoleCommandManager>
     {

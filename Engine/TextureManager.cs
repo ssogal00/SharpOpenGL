@@ -6,12 +6,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using DirectXTexWrapper;
+using Engine.Asset;
 using OpenTK.Graphics.OpenGL4;
-using SharpOpenGL.Asset;
 using PixelType = OpenTK.Graphics.OpenGL.PixelType;
 
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class TextureManager : Singleton<TextureManager>
     {

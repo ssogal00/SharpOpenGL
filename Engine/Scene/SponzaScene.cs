@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 using System.Text;
-using SharpOpenGL;
-using SharpOpenGL.Scene;
+using Engine;
+using Engine.Scene;
 
-namespace SharpOpenGLCore
+namespace Engine
 {
     public class SponzaScene : SceneBase
     {

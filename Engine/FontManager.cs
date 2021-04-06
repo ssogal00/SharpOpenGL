@@ -10,7 +10,7 @@ using System.Linq;
 
 
 
-namespace SharpOpenGL.Font
+namespace Engine.Font
 {
     public class FontManager : Singleton<FontManager>
     {

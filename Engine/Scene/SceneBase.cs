@@ -3,9 +3,9 @@ using OpenTK.Mathematics;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
-using SharpOpenGLCore;
+using Engine;
 
-namespace SharpOpenGL.Scene
+namespace Engine.Scene
 {
     public class SceneBase
     {

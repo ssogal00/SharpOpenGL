@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using SharpOpenGL.Scene;
+using Engine.Scene;
 
-namespace SharpOpenGLCore.Scene
+namespace Engine.Scene
 {
     public class OrderIndependantTransparencyScene : SceneBase
     {

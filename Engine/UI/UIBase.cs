@@ -17,10 +17,10 @@ using Vector2 = OpenTK.Mathematics.Vector2;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using SharpOpenGL;
-using SharpOpenGLCore.UI;
+using Engine;
+using Engine.UI;
 
-namespace SharpOpenGLCore
+namespace Engine
 {
     [StructLayout(LayoutKind.Explicit, Size = 32)]
     public struct UIVertex : IGenericVertexAttribute

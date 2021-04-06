@@ -9,12 +9,11 @@ using System.Threading;
 using Core.Asset;
 using ZeroFormatter.Formatters;
 using DirectXTexWrapper;
+using Engine.Scene;
 using FreeTypeGLWrapper;
-using SharpOpenGL.Scene;
-using SharpOpenGLCore;
-using SharpOpenGLCore.Scene;
+using Engine;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class Engine : Singleton<Engine>
     {

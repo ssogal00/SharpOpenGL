@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class RenderingThread : Singleton<RenderingThread>
     {

@@ -6,7 +6,7 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
-using SharpOpenGLCore;
+using Engine;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -14,10 +14,10 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
-using SharpOpenGLCore.SceneRenderer;
+using Engine.SceneRenderer;
 using MouseButtonEventArgs = OpenTK.Windowing.Common.MouseButtonEventArgs;
 
-namespace SharpOpenGL
+namespace Engine
 {
     public class RenderingThreadWindow : GameWindow
     {
@@ -220,7 +220,7 @@ namespace SharpOpenGL
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            SharpOpenGL.Engine.Get().RequestExit();
+            Engine.Get().RequestExit();
         }
         
         protected override void OnRenderFrame(FrameEventArgs e)
