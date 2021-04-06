@@ -363,3 +363,4 @@ CMakeFiles
 *.cmake
 CMakeCache.txt
 *.vcxproj.filters
+freetype-2.10.4/build/ALL_BUILD.vcxproj
