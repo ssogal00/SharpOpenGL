@@ -25,7 +25,6 @@
 	<Material name="SSAOMaterial" vertexShader="SSAO.vs.glsl" fragmentShader="SSAO.fs.glsl"/>
 	<Material name="LUTGenerateMaterial" vertexShader="2DLUT.vs.glsl" fragmentShader="2DLUT.fs.glsl"/>
 	<Material name="PrefilterMaterial" vertexShader="Prefilter.vs.glsl" fragmentShader="Prefilter.fs.glsl"/>
-	<Material name="HDAOMaterial" vertexShader="HDAO.vs.glsl" fragmentShader="HDAO.fs.glsl"/>
 	<Material name="FXAAMaterial" vertexShader="FXAA.vs.glsl" fragmentShader="FXAA.fs.glsl"/>
 	<Material name="TBNMaterial" vertexShader="TBNDebug.vs.glsl" fragmentShader="TBNDebug.fs.glsl"/>
 	<Material name="SignedDistanceField" vertexShader="distance-field.vs.glsl" fragmentShader="distance-field.fs.glsl"/>	

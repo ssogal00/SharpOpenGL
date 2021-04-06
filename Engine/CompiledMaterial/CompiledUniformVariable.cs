@@ -479,9 +479,6 @@ namespace LUTGenerateMaterial
 namespace PrefilterMaterial
 {
 }
-namespace HDAOMaterial
-{
-}
 namespace FXAAMaterial
 {
 }
