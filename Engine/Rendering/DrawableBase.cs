@@ -216,21 +216,21 @@ namespace Core
                 var vb = new SOAVertexBuffer<Vec3_VertexAttribute>();
                 mVertexBuffers.Add(vb);
                 vb.BufferData<T>(ref vertexAttributeData);
-                vb.BindAtIndex(index);
+                vb.BindVertexAttribute(index);
             }
             else if (vertexAttributeData[0] is Vector2)
             {
                 var vb = new SOAVertexBuffer<Vec2_VertexAttribute>();
                 mVertexBuffers.Add(vb);
                 vb.BufferData<T>(ref vertexAttributeData);
-                vb.BindAtIndex(index);
+                vb.BindVertexAttribute(index);
             }
             else if (vertexAttributeData[0] is Vector4)
             {
                 var vb = new SOAVertexBuffer<Vec4_VertexAttribute>();
                 mVertexBuffers.Add(vb);
                 vb.BufferData<T>(ref vertexAttributeData);
-                vb.BindAtIndex(index);
+                vb.BindVertexAttribute(index);
             }
         }
         
@@ -298,7 +298,7 @@ namespace Core
             mVA.Bind();
             mIB.Bind();
 
-            mVB1.BindAtIndex(0);
+            mVB1.BindVertexAttribute(0);
             mVB1.BufferData<T1>(ref vertexAttributeList1);
             mVertexCount = vertexAttributeList1.Count();
 
@@ -366,11 +366,11 @@ namespace Core
             mVA.Bind();
             mIB.Bind();
 
-            mVB1.BindAtIndex(0);
+            mVB1.BindVertexAttribute(0);
             mVB1.BufferData<T1>(ref vertexAttributeList1);
             mVertexCount = vertexAttributeList1.Count();
 
-            mVB2.BindAtIndex(1);
+            mVB2.BindVertexAttribute(1);
             mVB2.BufferData<T2>(ref vertexAttributeList2);
 
             mIB.BufferData<uint>(ref indexList);
@@ -419,16 +419,16 @@ namespace Core
             mIB.Bind();
 
             // attribute 1
-            mVB1.BindAtIndex(0);
+            mVB1.BindVertexAttribute(0);
             mVB1.BufferData<T1>(ref vertexAttributeList1);
             mVertexCount = vertexAttributeList1.Count();
 
             // attribute 2
-            mVB2.BindAtIndex(1);
+            mVB2.BindVertexAttribute(1);
             mVB2.BufferData<T2>(ref vertexAttributeList2);
 
             // attribute 3
-            mVB3.BindAtIndex(2);
+            mVB3.BindVertexAttribute(2);
             mVB3.BufferData<T3>(ref vertexAttributeList3);
 
             mIB.BufferData<uint>(ref indexList);
@@ -484,20 +484,20 @@ namespace Core
             mIB.Bind();
 
             // attribute 1
-            mVB1.BindAtIndex(0);
+            mVB1.BindVertexAttribute(0);
             
             mVB1.BufferData<T1>(ref vertexAttributeList1);
             mVertexCount = vertexAttributeList1.Count();
 
             // attribute 2
-            mVB2.BindAtIndex(1);
+            mVB2.BindVertexAttribute(1);
             mVB2.BufferData<T2>(ref vertexAttributeList2);
 
             // attribute 3
-            mVB3.BindAtIndex(2);
+            mVB3.BindVertexAttribute(2);
             mVB3.BufferData<T3>(ref vertexAttributeList3);
 
-            mVB4.BindAtIndex(3);
+            mVB4.BindVertexAttribute(3);
             mVB4.BufferData<T4>(ref vertexAttributeList4);
 
             mIB.BufferData<uint>(ref indexList);

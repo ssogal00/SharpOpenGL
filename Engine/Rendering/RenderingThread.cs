@@ -23,11 +23,6 @@ namespace Engine
         {
         }
 
-        public bool IsIdle()
-        {
-            return JobQueue.IsEmpty;
-        }
-
         public void Run()
         {
             RenderingThreadId = Thread.CurrentThread.ManagedThreadId;

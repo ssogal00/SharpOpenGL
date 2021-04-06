@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="CompiledMaterial\" />
+    <Folder Include="GameObject\" />
   </ItemGroup>
 
 </Project>

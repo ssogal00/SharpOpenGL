@@ -1,18 +1,9 @@
-﻿using System;
+﻿using GLTF.V2;
+using OpenTK.Mathematics;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using GLTF.V2;
 using System.IO;
-using System.Linq;
-using System.Printing;
-using System.Windows.Documents.DocumentStructures;
-using System.Xaml;
-using Core;
-using Core.Primitive;
-using OpenTK.Compute.OpenCL;
-using OpenTK.Graphics.ES11;
-using OpenTK.Mathematics;
 using AttributeType = GLTF.V2.AttributeType;
 
 namespace GLTF

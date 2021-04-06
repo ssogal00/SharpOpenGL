@@ -59,6 +59,13 @@ namespace Engine
             return buffer;
         }
 
+        public SOAVertexBuffer<T> CreateSOAVertexBuffer<T>(string alias = "") where T : struct, IGenericVertexAttribute
+        {
+            var buffer = new SOAVertexBuffer<T>();
+            mVertexBufferHandles.Add(buffer.BufferHandle, buffer);
+            return buffer;
+        }
+
         public void DeleteVertexBuffer(int handle)
         {
             if (mVertexBufferHandles.ContainsKey(handle))

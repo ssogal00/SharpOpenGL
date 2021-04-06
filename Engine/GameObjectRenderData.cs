@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Windows.Media.Media3D;
-using Core.Buffer;
-using Core.Texture;
-using GLTF;
-using OpenTK.Graphics.ES11;
+﻿using Core.Texture;
 using OpenTK.Mathematics;
+using System.Collections.Generic;
+using Core.Primitive;
 
 namespace Engine
 {
@@ -79,6 +73,16 @@ namespace Engine
 
     public class SphereRenderData : GameObjectRenderData
     {
-        
+        public SphereRenderData(GameObject go)
+        {
+            mSphere = (Sphere)go;
+        }
+
+        public override List<T> GetVertexData<T>()
+        {
+            return base.GetVertexData<T>();
+        }
+
+        protected Sphere mSphere = null;
     }
 }

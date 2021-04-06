@@ -16,7 +16,7 @@ namespace Core.Buffer
             bufferTarget = BufferTarget.ArrayBuffer;
         }
         
-        public virtual void BindAtIndex(int index)
+        public virtual void BindVertexAttribute(int index)
         {
             mVertexAttribute1.VertexAttributeBinding(index);
         }
