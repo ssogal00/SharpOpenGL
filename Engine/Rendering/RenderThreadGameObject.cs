@@ -6,8 +6,9 @@ using System.Text;
 using Core;
 using Core.Buffer;
 using Core.Primitive;
-using GLTF.V2;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using AttributeType = GLTF.V2.AttributeType;
 
 namespace Engine
 {
@@ -53,7 +54,51 @@ namespace Engine
 
         public virtual void Render()
         {
+            // 1. material bind
+            // 2. material param setup
+            // 3. vertex array bind
+            // 4. draw
+            // unbind...
 
+            var material = mGameObject.Material;
+
+            material.Bind();
+
+            SetMaterialParams();
+
+            mVertexArray.Bind();
+            
+
+            mVertexArray.Unbind();
+
+            material.Unbind();
+        }
+
+        protected virtual void SetMaterialParams()
+        {
+            var vec3Params = mGameObject.GetVector3Params();
+            var vec2Params = mGameObject.GetVector2Params();
+            var vec4Params = mGameObject.GetVector4Params();
+            var mat4Params = mGameObject.GetMatrix4Params();
+            
+
+            foreach (var kvp in vec3Params)
+            {
+                var value = kvp.Value;
+                mGameObject.Material.SetUniformBufferValue<Vector3>(kvp.Key, ref value);
+            }
+
+            foreach (var kvp in vec4Params)
+            {
+                var value = kvp.Value;
+                mGameObject.Material.SetUniformBufferValue<Vector4>(kvp.Key, ref value);
+            }
+
+            foreach (var kvp in vec2Params)
+            {
+                var value = kvp.Value;
+                mGameObject.Material.SetUniformBufferValue<Vector2>(kvp.Key, ref value);
+            }
         }
 
         protected void Initialize()
@@ -112,17 +157,19 @@ namespace Engine
         //
         protected void UpdateMaterialParams()
         {
-
+            
         }
 
-        private GameObject mGameObject = null;
+        protected GameObject mGameObject = null;
 
-        private VertexArray mVertexArray;
+        protected VertexArray mVertexArray;
 
-        private IndexBuffer mIndexBuffer;
+        protected IndexBuffer mIndexBuffer;
 
-        private List<OpenGLBuffer> mVertexBuffers = new List<OpenGLBuffer>();
+        protected List<OpenGLBuffer> mVertexBuffers = new List<OpenGLBuffer>();
 
-        private Dictionary<int, OpenGLBuffer> mVertexAttributeMap = new Dictionary<int, OpenGLBuffer>();
+        protected Dictionary<int, OpenGLBuffer> mVertexAttributeMap = new Dictionary<int, OpenGLBuffer>();
+
+        
     }
 }

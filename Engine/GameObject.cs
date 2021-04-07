@@ -106,8 +106,6 @@ namespace Core.Primitive
 
         protected bool bVisible = true;
 
-        protected MaterialBase.MaterialBase defaultMaterial = null;
-
         protected static int ObjectCount = 0;
 
         // for rendering data
@@ -137,6 +135,34 @@ namespace Core.Primitive
         {
             get => mVector4VertexAttributes;
         }
+
+        public MaterialBase.MaterialBase Material { get; set; } = null;
+
+        protected MaterialBase.MaterialBase defaultMaterial = null;
+
+        public virtual Dictionary<string, Vector2> GetVector2Params()
+        {
+            return null;
+        }
+
+        public virtual Dictionary<string, Vector3> GetVector3Params()
+        {
+            return null;
+        }
+
+        public virtual Dictionary<string, Vector4> GetVector4Params()
+        {
+            return null;
+        }
+
+        public virtual Dictionary<string, Matrix4> GetMatrix4Params()
+        {
+            return null;
+        }
+
+        public List<uint> UIntIndices => mUIntIndices;
+
+        public List<ushort> UShortIndices => mUShortIndices;
 
         protected List<VertexAttributeSemantic> mVertexAttributeList = new List<VertexAttributeSemantic>();
 

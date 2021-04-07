@@ -4,6 +4,7 @@ using Core.Texture;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -238,6 +239,7 @@ namespace Core.MaterialBase
                 mUniformBufferMap[bufferName].BufferData(ref data);
             }
         }
+
 
         public void SetUniformBufferMemberValue<TMember>(string bufferName, ref TMember data, int offset) where TMember : struct
         {
