@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core.CustomAttribute;
+using Core.Texture;
 using GLTF;
 using OpenTK;
 using OpenTK.Mathematics;
@@ -140,24 +142,34 @@ namespace Core.Primitive
 
         protected MaterialBase.MaterialBase defaultMaterial = null;
 
-        public virtual Dictionary<string, Vector2> GetVector2Params()
+        public virtual IEnumerable<(string, Vector2)> GetVector2Params()
         {
-            return null;
+            return Enumerable.Empty<(string, Vector2)>();
         }
 
-        public virtual Dictionary<string, Vector3> GetVector3Params()
+        public virtual IEnumerable<(string, Vector3)> GetVector3Params()
         {
-            return null;
+            return Enumerable.Empty<(string, Vector3)>();
         }
 
-        public virtual Dictionary<string, Vector4> GetVector4Params()
+        public virtual IEnumerable<(string, Vector4)> GetVector4Params()
         {
-            return null;
+            return Enumerable.Empty<(string, Vector4)>();
         }
 
-        public virtual Dictionary<string, Matrix4> GetMatrix4Params()
+        public virtual IEnumerable<(string, Matrix4)> GetMatrix4Params()
         {
-            return null;
+            return Enumerable.Empty<(string, Matrix4)>();
+        }
+
+        public virtual IEnumerable<(string, TextureBase)> GetTextureParams()
+        {
+            return Enumerable.Empty<(string, TextureBase)>();
+        }
+
+        public virtual IEnumerable<(string, bool)> GetBoolParams()
+        {
+            return Enumerable.Empty<(string, bool)>();
         }
 
         public List<uint> UIntIndices => mUIntIndices;

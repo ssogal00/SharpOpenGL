@@ -124,6 +124,15 @@ namespace Core.MaterialBase
             {
                 var uniformBuffer = new DynamicUniformBuffer(mMaterialProgram, name);
                 mUniformBufferMap.Add(name, uniformBuffer);
+
+                var bufferMembers = mMaterialProgram
+                    .GetUniformVariableMetaDataListInBlock(uniformBuffer.UniformBufferBlockIndex)
+                    .OrderBy(x => x.VariableOffset);
+
+                foreach (var member in bufferMembers)
+                {
+                    mUniformBufferMembersMap.Add(member.VariableName, member);
+                }
             }
         }
 
@@ -253,10 +262,13 @@ namespace Core.MaterialBase
                 CheckUniformVariableExist(varName);
             }
 
+            // 
             if (mUniformVariableNames.Contains(varName))
             {
                 mMaterialProgram.SetUniformVariable(varName, data);
             }
+
+            InternalSetUnfiormBufferMember(varName,data);
         }
 
         public void SetUniformVariable(string varName, bool data, bool bChecked = false)
@@ -270,6 +282,8 @@ namespace Core.MaterialBase
             {
                 mMaterialProgram.SetUniformVariable(varName, data);
             }
+
+            InternalSetUnfiormBufferMember(varName, data);
         }
 
         public void SetUniformVariable(string varName, int data, bool bChecked=false)
@@ -283,6 +297,8 @@ namespace Core.MaterialBase
             {
                 mMaterialProgram.SetUniformVariable(varName, data);
             }
+
+            InternalSetUnfiormBufferMember(varName, data);
         }
 
         public void SetUniformVariable(string varName, float[] data, bool bChecked = false)
@@ -320,8 +336,18 @@ namespace Core.MaterialBase
             {
                 mMaterialProgram.SetUniformVariable(varName, data);
             }
+
+            InternalSetUnfiormBufferMember(varName, data);
         }
 
+        private void InternalSetUnfiormBufferMember<T>(string variableName, T data) where T : struct
+        {
+            if (mUniformBufferMembersMap.ContainsKey(variableName))
+            {
+                var member = mUniformBufferMembersMap[variableName];
+                mUniformBufferMap[member.UniformBlockName].BufferSubData(data, member.VariableOffset);
+            }
+        }
         
         public void SetUniformVariable(string varName, Vector3 data, bool bChecked = false)
         {
@@ -334,6 +360,8 @@ namespace Core.MaterialBase
             {
                 mMaterialProgram.SetUniformVariable(varName, data);
             }
+
+            InternalSetUnfiormBufferMember(varName, data);
         }
 
 
@@ -348,6 +376,8 @@ namespace Core.MaterialBase
             {
                 mMaterialProgram.SetUniformVariable(varName, data);
             }
+
+            InternalSetUnfiormBufferMember(varName, data);
         }
 
         public void SetUniformVariable(string varName, Matrix3 data, bool bChecked=false)
@@ -361,6 +391,8 @@ namespace Core.MaterialBase
             {
                 mMaterialProgram.SetUniformVariable(varName, data);
             }
+
+            InternalSetUnfiormBufferMember(varName, data);
         }
 
         public void SetUniformVariable(string varName, Matrix4 data, bool bChecked = false)
@@ -374,6 +406,7 @@ namespace Core.MaterialBase
             {
                 mMaterialProgram.SetUniformVariable(varName, data);
             }
+            InternalSetUnfiormBufferMember(varName, data);
         }
 
         private void CheckUniformVariableExist(string variablename)
@@ -422,7 +455,10 @@ namespace Core.MaterialBase
         protected ModelTransform mModelTransform = new ModelTransform();
 
         protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = new Dictionary<string, DynamicUniformBuffer>();
+        protected Dictionary<string, UniformVariableMetaData> mUniformBufferMembersMap = new Dictionary<string, UniformVariableMetaData>();
+        
         protected Dictionary<string, int> mUniformVariableMap = new Dictionary<string, int>();
+
         protected Dictionary<string, int> mSamplerMap = new Dictionary<string, int>();
         
 

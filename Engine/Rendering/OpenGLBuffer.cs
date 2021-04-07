@@ -74,7 +74,6 @@ namespace Core.Buffer
         public void BufferSubData<T>(T Data, int Offset) where T : struct
         {
             Bind();
-            var Size = Marshal.SizeOf(Data);
             GL.BufferSubData<T>(bufferTarget, new IntPtr(Offset), Marshal.SizeOf(Data), ref Data);
         }
         

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -129,6 +130,19 @@ namespace Engine
             TextureManager.Get().UnloadTexture(diffuseTexPath);
         }
 
+
+        public override IEnumerable<(string, Matrix4)> GetMatrix4Params()
+        {
+            yield return ("View", CameraManager.Instance.CurrentCameraView);
+            yield return ("Proj", CameraManager.Instance.CurrentCameraProj);
+            yield return ("Model", this.LocalMatrix);
+        }
+
+        public override IEnumerable<(string, TextureBase)> GetTextureParams()
+        {
+            
+        }
+
         public override void Render()
         {
             if (bReadyToDraw == false)
@@ -143,10 +157,10 @@ namespace Engine
                     var gbufferDraw = (GBufferDraw)defaultMaterial;
 
                     gbufferDraw.LightChannel = (int) Light.LightChannel.StaticMeshChannel;
-                    gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
-                    gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
-                    gbufferDraw.PrevTransform_PrevProj = CameraManager.Get().PrevCameraProj;
-                    gbufferDraw.PrevTransform_PrevView = CameraManager.Get().PrevCameraView;
+                    gbufferDraw.CameraTransform_View = CameraManager.Instance.CurrentCameraView;
+                    gbufferDraw.CameraTransform_Proj = CameraManager.Instance.CurrentCameraProj;
+                    gbufferDraw.PrevTransform_PrevProj = CameraManager.Instance.PrevCameraProj;
+                    gbufferDraw.PrevTransform_PrevView = CameraManager.Instance.PrevCameraView;
                     gbufferDraw.PrevTransform_PrevModel = this.PrevModel;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 

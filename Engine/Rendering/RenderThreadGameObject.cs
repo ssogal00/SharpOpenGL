@@ -67,7 +67,6 @@ namespace Engine
             SetMaterialParams();
 
             mVertexArray.Bind();
-            
 
             mVertexArray.Unbind();
 
@@ -80,24 +79,38 @@ namespace Engine
             var vec2Params = mGameObject.GetVector2Params();
             var vec4Params = mGameObject.GetVector4Params();
             var mat4Params = mGameObject.GetMatrix4Params();
+            var textureParams = mGameObject.GetTextureParams();
+            var boolParams = mGameObject.GetBoolParams();
             
-
+            // set if it exists
             foreach (var kvp in vec3Params)
             {
-                var value = kvp.Value;
-                mGameObject.Material.SetUniformVariable(kvp.Key, value);
+                mGameObject.Material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
 
             foreach (var kvp in vec4Params)
             {
-                var value = kvp.Value;
-                mGameObject.Material.SetUniformBufferValue<Vector4>(kvp.Key, value);
+                mGameObject.Material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
 
             foreach (var kvp in vec2Params)
             {
-                var value = kvp.Value;
-                mGameObject.Material.SetUniformBufferValue<Vector2>(kvp.Key, value);
+                mGameObject.Material.SetUniformVariable(kvp.Item1, kvp.Item2);
+            }
+
+            foreach (var kvp in mat4Params)
+            {
+                mGameObject.Material.SetUniformVariable(kvp.Item1, kvp.Item2);
+            }
+
+            foreach (var kvp in textureParams)
+            {
+                mGameObject.Material.SetTexture(kvp.Item1, kvp.Item2);
+            }
+
+            foreach (var kvp in boolParams)
+            {
+                mGameObject.Material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
         }
 

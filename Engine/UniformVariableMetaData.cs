@@ -11,8 +11,9 @@ namespace Core.OpenGLShader
 {
     public class UniformVariableMetaData
     {
-        public UniformVariableMetaData(string name, ActiveUniformType type, bool bIsArray = false)
+        public UniformVariableMetaData(string blockName, string name, ActiveUniformType type, bool bIsArray = false)
         {
+            UniformBlockName = blockName;
             VariableName = name;
             VariableType = type;
             VariableTypeString = GLToSharpTranslator.GetUniformTypeString(type);
@@ -20,8 +21,9 @@ namespace Core.OpenGLShader
             IsArray = bIsArray;
         }
 
-        public UniformVariableMetaData(string name, ActiveUniformType type, int nOffset, bool bIsArray=false)
+        public UniformVariableMetaData(string blockName,string name, ActiveUniformType type, int nOffset, bool bIsArray=false)
         {
+            UniformBlockName = blockName;
             VariableName = name;
             VariableType = type;
             VariableTypeString = GLToSharpTranslator.GetUniformTypeString(type);
@@ -34,5 +36,6 @@ namespace Core.OpenGLShader
         public int VariableOffset;
         public string VariableTypeString;
         public bool IsArray = false;
+        public string UniformBlockName = string.Empty;
     }
 }

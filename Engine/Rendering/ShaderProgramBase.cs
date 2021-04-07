@@ -825,7 +825,7 @@ namespace Core.OpenGLShader
         public List<UniformVariableMetaData> GetUniformVariableMetaDataListInBlock(int nBlockIndex)
         {
             var result = new List<UniformVariableMetaData>();
-
+            var blockName = GetUniformBlockName(nBlockIndex);
             var types = GetUniformVariableTypesInBlock(nBlockIndex);
             var names = GetUniformVariableNamesInBlock(nBlockIndex);
             var offsets = GetUniformVariableOffsetsInBlock(nBlockIndex);
@@ -837,7 +837,7 @@ namespace Core.OpenGLShader
                 {
                     for (int i = 0; i < types.Count; ++i)
                     {
-                        result.Add(new UniformVariableMetaData(names[i], types[i], offsets[i],arrayness[i]));
+                        result.Add(new UniformVariableMetaData(blockName,names[i], types[i], offsets[i],arrayness[i]));
                     }
                 }
             }
