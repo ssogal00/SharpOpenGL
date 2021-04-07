@@ -140,7 +140,33 @@ namespace Engine
 
         public override IEnumerable<(string, TextureBase)> GetTextureParams()
         {
+            if (bMetallicExist)
+            {
+                yield return ("MetalicTex", metalicTex);
+            }
+
+            if (bNormalExist)
+            {
+                yield return ("NormalTex", normalTex);
+            }
             
+            if (bRoughnessExist)
+            {
+                yield return ("RoughnessTex", roughTex);
+            }
+
+            if (bDiffuseExist)
+            {
+                yield return ("DiffuseTex", diffuseTex);
+            }
+        }
+
+        public override IEnumerable<(string, bool)> GetBoolParams()
+        {
+            yield return ("MetalicExist", bMetallicExist);
+            yield return ("MetalicExist", bMetallicExist);
+            yield return ("MetalicExist", bMetallicExist);
+            yield return ("MetalicExist", bMetallicExist);
         }
 
         public override void Render()
