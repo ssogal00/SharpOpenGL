@@ -139,7 +139,7 @@ namespace Engine
                 SOAVertexBuffer<Vec2_VertexAttribute> vector2VB = null;
                 SOAVertexBuffer<Vec4_VertexAttribute> vector4VB = null;
 
-                switch(attrList[i].attributeType)
+                switch (attrList[i].attributeType)
                 {
                     case AttributeType.VEC4:
                         vector4Data = mGameObject.Vector4VertexAttributes[attrList[i]].ToArray();
@@ -169,6 +169,18 @@ namespace Engine
 
             mIndexBuffer.Bind();
 
+            if (mGameObject.UIntIndices.Count > 0)
+            {
+                mIndexBuffer.BufferData(mGameObject.UIntIndices.ToArray());
+                mIndexType = DrawElementsType.UnsignedInt;
+                mIndexCount = mGameObject.UIntIndices.Count;
+            }
+            else if (mGameObject.UShortIndices.Count > 0)
+            {
+                mIndexBuffer.BufferData(mGameObject.UShortIndices.ToArray());
+                mIndexType = DrawElementsType.UnsignedShort;
+                mIndexCount = mGameObject.UShortIndices.Count;
+            }
             
 
             mIndexBuffer.Unbind();
@@ -192,6 +204,7 @@ namespace Engine
 
         protected Dictionary<int, OpenGLBuffer> mVertexAttributeMap = new Dictionary<int, OpenGLBuffer>();
 
-        
+        protected int mIndexCount = 0;
+        protected DrawElementsType mIndexType = DrawElementsType.UnsignedInt;
     }
 }
