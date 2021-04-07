@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Core.CustomAttribute;
+using Engine;
 
 
 namespace Core.MaterialBase
@@ -119,11 +120,6 @@ namespace Core.MaterialBase
         {
             var names = mMaterialProgram.GetActiveUniformBlockNames();
 
-            if (names.Count > 0)
-            {
-                mUniformBufferMap = new Dictionary<string, DynamicUniformBuffer>();
-            }
-
             foreach (var name in names)
             {
                 var uniformBuffer = new DynamicUniformBuffer(mMaterialProgram, name);
@@ -135,11 +131,6 @@ namespace Core.MaterialBase
         {
             var samplerNames = mMaterialProgram.GetSampler2DNames();
 
-            if (samplerNames.Count > 0)
-            {
-                mSamplerMap = new Dictionary<string, int>();
-            }
-
             for (int i = 0; i < samplerNames.Count; ++i)
             {
                 int index = mMaterialProgram.GetSampler2DUniformLocation(samplerNames[i]);
@@ -150,13 +141,19 @@ namespace Core.MaterialBase
 
         protected virtual void Initialize()
         {
+            Debug.Assert(RenderingThread.IsInRenderingThread());
+
             BuildUniformBufferMap();
 
             BuildSamplerMap();
 
-            var attrList = mMaterialProgram.GetActiveVertexAttributeList();
-
             mUniformVariableNames = mMaterialProgram.GetActiveUniformNames();
+
+            foreach (var name in mUniformVariableNames)
+            {
+                var loc= mMaterialProgram.GetUniformLocation(name);
+                mUniformVariableMap.Add(name, loc);
+            }
         }
 
         public void SetTexture(int location, Core.Texture.TextureBase texture)
@@ -485,8 +482,9 @@ namespace Core.MaterialBase
         protected CameraTransform mCameraTransform = new CameraTransform();
         protected ModelTransform mModelTransform = new ModelTransform();
 
-        protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = null;
-        protected Dictionary<string, int> mSamplerMap = null;
+        protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = new Dictionary<string, DynamicUniformBuffer>();
+        protected Dictionary<string, int> mUniformVariableMap = new Dictionary<string, int>();
+        protected Dictionary<string, int> mSamplerMap = new Dictionary<string, int>();
         
 
         protected List<string> mUniformVariableNames = null;

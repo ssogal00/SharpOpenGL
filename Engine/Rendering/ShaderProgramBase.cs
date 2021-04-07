@@ -456,7 +456,8 @@ namespace Core.OpenGLShader
                     var uniformType = GetActiveUniformVariableType(i);
                     if (uniformType == ActiveUniformType.Sampler2D ||
                         uniformType == ActiveUniformType.SamplerCube ||
-                        uniformType == ActiveUniformType.Sampler2DMultisample)
+                        uniformType == ActiveUniformType.Sampler2DMultisample ||
+                        uniformType == ActiveUniformType.Sampler3D)
                     {
                         continue;
                     }

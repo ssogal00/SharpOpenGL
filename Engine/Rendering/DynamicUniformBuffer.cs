@@ -36,7 +36,6 @@ namespace Core.Buffer
 
         public override void Bind()
         {
-            base.Bind();
             //
             Debug.Assert(UniformBufferBlockIndex != -1);
             GL.BindBufferBase(BufferRangeTarget.UniformBuffer, UniformBufferBlockIndex, mBufferHandle);
