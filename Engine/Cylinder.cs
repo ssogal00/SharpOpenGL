@@ -60,7 +60,7 @@ namespace Engine
                 using (var wireframe = new WireFrameMode())
                 using (var dummy = new ScopedBind(defaultMaterial))
                 {
-                    defaultMaterial.SetUniformVarData("Model", LocalMatrix * ParentMatrix, true);
+                    defaultMaterial.SetUniformVariable("Model", LocalMatrix * ParentMatrix, true);
                     drawable.DrawArrays(PrimitiveType.Triangles);
                 }
             }

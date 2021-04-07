@@ -52,10 +52,10 @@ namespace Engine.Font
             {
                 fontBoxRenderMaterial.BindAndExecute(boxVB, () =>
                 {
-                    fontBoxRenderMaterial.SetUniformVarData("ScreenSize",
+                    fontBoxRenderMaterial.SetUniformVariable("ScreenSize",
                         new Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
-                    fontBoxRenderMaterial.SetUniformVarData("BoxColor", new Vector3(0,0,0));
-                    fontBoxRenderMaterial.SetUniformVarData("BoxAlpha", 0.70f);
+                    fontBoxRenderMaterial.SetUniformVariable("BoxColor", new Vector3(0,0,0));
+                    fontBoxRenderMaterial.SetUniformVariable("BoxAlpha", 0.70f);
                     GL.DrawArrays(PrimitiveType.Quads, 0, 4);
                 });
             }

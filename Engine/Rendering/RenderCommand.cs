@@ -93,7 +93,7 @@ namespace Core
 
         public override void Execute()
         {
-            mMaterial.SetUniformBufferValue<T>(mName, ref mParamValue);
+            mMaterial.SetUniformBufferValue<T>(mName, mParamValue);
         }
 
         public void UpdateValue(ref T paramValue)

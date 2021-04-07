@@ -103,10 +103,10 @@ namespace Engine
 
                 mTransformInfo.Proj = CameraManager.Get().CurrentCameraProj;
                 mTransformInfo.View = CameraManager.Get().CurrentCameraView;
-                mtl.SetUniformBufferValue<CameraTransform>(@"CameraTransform", ref mTransformInfo);
+                mtl.SetUniformBufferValue<CameraTransform>(@"CameraTransform", mTransformInfo);
 
                 mModelTransformInfo.Model = this.LocalMatrix;
-                mtl.SetUniformBufferValue<ModelTransform>(@"ModelTransform", ref mModelTransformInfo);
+                mtl.SetUniformBufferValue<ModelTransform>(@"ModelTransform", mModelTransformInfo);
                 
                 mMaterialProperty.MetallicExist = true;
                 mMaterialProperty.NormalExist = true;
@@ -114,7 +114,7 @@ namespace Engine
                 mMaterialProperty.MetallicRoughnessOneTexture = true;
                 mMaterialProperty.RoghnessExist = true;
 
-                mtl.SetUniformBufferValue<MaterialProperty>(@"MaterialProperty", ref mMaterialProperty);
+                mtl.SetUniformBufferValue<MaterialProperty>(@"MaterialProperty", mMaterialProperty);
 
                 // base 
                 if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.BaseColor))

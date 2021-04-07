@@ -65,7 +65,7 @@ namespace Engine
             {
                 using (var dummy = new ScopedBind(VB, defaultMaterial))
                 {
-                    defaultMaterial.SetUniformVarData("Model", LocalMatrix * ParentMatrix);
+                    defaultMaterial.SetUniformVariable("Model", LocalMatrix * ParentMatrix);
                     GL.DrawArrays(PrimitiveType.Triangles, 0, (int)VertexCount);
                 }
             }

@@ -85,19 +85,19 @@ namespace Engine
             foreach (var kvp in vec3Params)
             {
                 var value = kvp.Value;
-                mGameObject.Material.SetUniformBufferValue<Vector3>(kvp.Key, ref value);
+                mGameObject.Material.SetUniformVariable(kvp.Key, value);
             }
 
             foreach (var kvp in vec4Params)
             {
                 var value = kvp.Value;
-                mGameObject.Material.SetUniformBufferValue<Vector4>(kvp.Key, ref value);
+                mGameObject.Material.SetUniformBufferValue<Vector4>(kvp.Key, value);
             }
 
             foreach (var kvp in vec2Params)
             {
                 var value = kvp.Value;
-                mGameObject.Material.SetUniformBufferValue<Vector2>(kvp.Key, ref value);
+                mGameObject.Material.SetUniformBufferValue<Vector2>(kvp.Key, value);
             }
         }
 

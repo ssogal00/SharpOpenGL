@@ -36,7 +36,7 @@ namespace Core
         public override void SetParameter()
         {
             BufferObject.Bind();
-            BufferObject.BufferData<T>(ref Data);
+            BufferObject.BufferData<T>(Data);
         }
 
         public void SetValue(ref T newValue)

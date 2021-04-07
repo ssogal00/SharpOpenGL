@@ -57,7 +57,7 @@ namespace Core.Buffer
             GL.BufferData(bufferTarget, Size, Data, hint);            
         }
 
-        public void BufferData<T>(ref T Data) where T : struct
+        public void BufferData<T>(T Data) where T : struct
         {   
             Bind();
             
@@ -65,20 +65,20 @@ namespace Core.Buffer
             GL.BufferData<T>(bufferTarget, Size, ref Data, hint);            
         }
      
-        public void BufferWholeData<T>(ref T Data) where T: struct
+        public void BufferWholeData<T>(T Data) where T: struct
         {            
             Bind();
             GL.BufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
 	    }
 
-        public void BufferSubData<T>(ref T Data, int Offset) where T : struct
+        public void BufferSubData<T>(T Data, int Offset) where T : struct
         {
             Bind();
             var Size = Marshal.SizeOf(Data);
             GL.BufferSubData<T>(bufferTarget, new IntPtr(Offset), Marshal.SizeOf(Data), ref Data);
         }
         
-        public void GetBufferWholeData<T>(ref T Data) where T : struct
+        public void GetBufferWholeData<T>(T Data) where T : struct
         {
             Bind();
             GL.GetBufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);

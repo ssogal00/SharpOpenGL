@@ -35,14 +35,12 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 
 	public void Set<#=Sampler#>2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"<#=Sampler#>", textureObject, samplerObject);
-		//SetTextureByIndex(<#=Sampler#>Index, textureObject, samplerObject);
+		SetTexture(@"<#=Sampler#>", textureObject, samplerObject);		
 	}
 
 	public TextureBase <#=Sampler.FirstCharToUpper()#>2D 
 	{	
-		set => SetTexture(@"<#=Sampler#>", value);
-		//set => SetTextureByIndex(<#=Sampler#>Index, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"<#=Sampler#>", value);		
 	}
 
 	public TextureBase <#=Sampler.FirstCharToUpper()#>2D_PointSample
@@ -68,7 +66,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		set 
 		{
 			<#=item.VariableName.ToLower()#> = value;
-			SetUniformVarData(@"<#=item.VariableName#>", ref <#=item.VariableName.ToLower()#>);			
+			SetUniformVariable(@"<#=item.VariableName#>", <#=item.VariableName.ToLower()#>);			
 		}
 	}
 	private <#=item.VariableTypeString#>[] <#=item.VariableName.ToLower()#>;
@@ -81,7 +79,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		set 
 		{
 			<#=item.VariableName.ToLower()#> = value;
-			SetUniformVarData(@"<#=item.VariableName#>", <#=item.VariableName.ToLower()#>);			
+			SetUniformVariable(@"<#=item.VariableName#>", <#=item.VariableName.ToLower()#>);			
 		}
 	}
 	private <#=item.VariableTypeString#> <#=item.VariableName.ToLower()#>;
@@ -98,7 +96,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		set 
 		{
 			<#=item.VariableName.ToLower()#> = value;
-			SetUniformVarData(@"<#=item.VariableName#>", ref <#=item.VariableName.ToLower()#>);			
+			SetUniformVariable(@"<#=item.VariableName#>", <#=item.VariableName.ToLower()#>);			
 		}
 	}
 	private <#=item.VariableTypeString#>[] <#=item.VariableName.ToLower()#>;
@@ -111,7 +109,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		set 
 		{
 			<#=item.VariableName.ToLower()#> = value;
-			SetUniformVarData(@"<#=item.VariableName#>", <#=item.VariableName.ToLower()#>);			
+			SetUniformVariable(@"<#=item.VariableName#>", <#=item.VariableName.ToLower()#>);			
 		}
 	}
 	private <#=item.VariableTypeString#> <#=item.VariableName.ToLower()#>;
@@ -132,7 +130,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		set 
 		{ 
 			<#=blockname.ToLower()#> = value; 
-			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref value);
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", value);
 		}
 	}
 
@@ -145,7 +143,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		set 
 		{ 
 			<#=blockname.ToLower()#>.<#=data.VariableName#> = value;
-			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", <#=blockname.ToLower()#>);
 		}
 	}
 <# } #>
@@ -167,7 +165,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		set 
 		{ 
 			<#=blockname.ToLower()#> = value; 
-			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", <#=blockname.ToLower()#>);
 		}
 	}
 
@@ -180,7 +178,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		set 
 		{ 
 			<#=blockname.ToLower()#>.<#=data.VariableName#> = value; 
-			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", ref <#=blockname.ToLower()#>);			
+			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", <#=blockname.ToLower()#>);			
 		}
 	}
 <# } #>

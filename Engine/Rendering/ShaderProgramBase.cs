@@ -108,114 +108,78 @@ namespace Core.OpenGLShader
             return false;
         }
 
-        public void SetUniformVarData(string VarName, bool bValue)
+        public void SetUniformVariable(string VarName, bool bValue)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform1(Loc, bValue ? (int)1 : (int)0);
         }
 
-        public void SetUniformVarData(string VarName, float fValue)
+        public void SetUniformVariable(string VarName, float fValue)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform1(Loc, fValue);
         }
 
-        public void SetUniformVarData(string VarName, int data)
+        public void SetUniformVariable(string VarName, int data)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform1(Loc, data);
         }
 
-        public void SetUniformVarData(string VarName, Vector2 Data)
+        public void SetUniformVariable(string VarName, Vector2 Data)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform2(Loc, Data);
         }
 
-        public void SetUniformVarData(string VarName, ref Vector2 Data)
-        {
-            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
-            GL.Uniform2(Loc, ref Data);
-        }
-
-        public void SetUniformVarData(string VarName, Vector3 Data)
+        public void SetUniformVariable(string VarName, Vector3 Data)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform3(Loc, Data);
         }
 
-        public void SetUniformVarData(string VarName, ref Vector3 Data)
-        {
-            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
-            GL.Uniform3(Loc, ref Data);
-        }
-
-        public void SetUniformVarData(string VarName, Vector4 data)
+        public void SetUniformVariable(string VarName, Vector4 data)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform4(Loc, ref data);
         }
-
-        public void SetUniformVarData(string VarName, ref Vector4 Data)
-        {
-            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
-            GL.Uniform4(Loc, Data);
-        }
-
-        public void SetUniformVarData(string VarName, ref Matrix2 Data)
+        
+        public void SetUniformVariable(string VarName, Matrix2 Data)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.UniformMatrix2(Loc, false, ref Data);
-        }
-
-        public void SetUniformVarData(string VarName, Matrix2 Data)
-        {
-            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
-            GL.UniformMatrix2(Loc, false, ref Data);
-        }
-
-        public void SetUniformVarData(string VarName, ref Matrix3 Data)
-        {
-            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
-            GL.UniformMatrix3(Loc, false, ref Data);
-        }
-
-
-        public void SetUniformVarData(string VarName, Matrix3 Data)
-        {
-            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
-            GL.UniformMatrix3(Loc, false, ref Data);
-        }
-
-        public void SetUniformVarData(string VarName, ref Matrix4 Data)
-        {
-            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
-            GL.UniformMatrix4(Loc, false, ref Data);
-        }
-
-        public void SetUniformVarData(string VarName, Matrix4 Data)
-        {
-            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
-            GL.UniformMatrix4(Loc, false, ref Data);
         }
 
         
 
-        public void SetUniformIntArrayData(string VarName, ref int[] data)
+        public void SetUniformVariable(string VarName, Matrix3 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.UniformMatrix3(Loc, false, ref Data);
+        }
+
+        public void SetUniformVariable(string VarName, Matrix4 Data)
+        {
+            var Loc = GL.GetUniformLocation(ProgramObject, VarName);
+            GL.UniformMatrix4(Loc, false, ref Data);
+        }
+
+
+        public void SetUniformIntArrayData(string VarName, int[] data)
         {
             Debug.Assert(data.Any());
             int Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform1(Loc, data.Length, data);
         }
 
-        public void SetUniformIntListData(string VarName, ref List<int> data)
+        public void SetUniformIntListData(string VarName, List<int> data)
         {
             Debug.Assert(data.Any());
             int Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform1(Loc, data.Count, data.ToArray());
         }
 
-        public void SetUniformFloatArrayData(string VarName, ref float[] data)
+        public void SetUniformFloatArrayData(string VarName, float[] data)
         {
             Debug.Assert(data.Any());
             int Loc;
@@ -223,7 +187,7 @@ namespace Core.OpenGLShader
             GL.Uniform1(Loc, data.Length, data);
         }
 
-        public void SetUniformDoubleArrayData(string VarName, ref double[] data)
+        public void SetUniformDoubleArrayData(string VarName, double[] data)
         {
             Debug.Assert(data.Any());
             int Loc;
@@ -231,24 +195,24 @@ namespace Core.OpenGLShader
             GL.Uniform1(Loc, data.Length, data);
         }
 
-        public void SetUniformVector2ArrayData(string VarName, ref Vector2[] Data)
+        public void SetUniformVector2ArrayData(string VarName, Vector2[] Data)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform2(Loc, Data.Count(), Data.FlattenVec2Array());
         }
 
-        public void SetUniformVector3ArrayData(string VarName, ref Vector3[] Data)
+        public void SetUniformVector3ArrayData(string VarName, Vector3[] Data)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform3(Loc, Data.Count(), Data.FlattenVec3Array());
         }
-        public void SetUniformVector4ArrayData(string VarName, ref Vector4[] Data)
+        public void SetUniformVector4ArrayData(string VarName, Vector4[] Data)
         {
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.Uniform4(Loc, Data.Count(), Data.FlattenVec4Array());
         }
 
-        public void SetUniformVector2ArrayData(string VarName, ref float[] Data)
+        public void SetUniformVector2ArrayData(string VarName, float[] Data)
         {
             Debug.Assert(Data.Any());
             Debug.Assert(Data.Count() % 2 == 0);
@@ -257,7 +221,7 @@ namespace Core.OpenGLShader
             GL.Uniform2(Loc, Data.Count() / 2, Data);
         }
 
-        public void SetUniformVector2ArrayData(string VarName, ref double[] Data)
+        public void SetUniformVector2ArrayData(string VarName, double[] Data)
         {
             Debug.Assert(Data.Any());
             Debug.Assert(Data.Count() % 2 == 0);
@@ -266,7 +230,7 @@ namespace Core.OpenGLShader
             GL.Uniform2(Loc, Data.Count() / 2, Data);
         }
 
-        public void SetUniformVector3ArrayData(string VarName, ref float[] Data)
+        public void SetUniformVector3ArrayData(string VarName, float[] Data)
         {
             Debug.Assert(Data.Any());
             Debug.Assert(Data.Count() % 3 == 0);
@@ -275,7 +239,7 @@ namespace Core.OpenGLShader
             GL.Uniform3(Loc, Data.Count() / 3, Data);
         }
 
-        public void SetUniformVector4ArrayData(string VarName, ref float[] Data)
+        public void SetUniformVector4ArrayData(string VarName, float[] Data)
         {
             Debug.Assert(Data.Any());
             Debug.Assert(Data.Count() % 4 == 0);

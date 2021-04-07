@@ -229,24 +229,24 @@ namespace Core.MaterialBase
             return false;
         }
         
-        public void SetUniformBufferValue<T>(string bufferName, ref T data) where T : struct
+        public void SetUniformBufferValue<T>(string bufferName, T data) where T : struct
         {
             if(HasUniformBuffer(bufferName))
             {   
-                mUniformBufferMap[bufferName].BufferData(ref data);
+                mUniformBufferMap[bufferName].BufferData(data);
             }
         }
 
 
-        public void SetUniformBufferMemberValue<TMember>(string bufferName, ref TMember data, int offset) where TMember : struct
+        public void SetUniformBufferMemberValue<TMember>(string bufferName, TMember data, int offset) where TMember : struct
         {
             if (HasUniformBuffer(bufferName))
             {   
-                mUniformBufferMap[bufferName].BufferSubData<TMember>(ref data, offset);
+                mUniformBufferMap[bufferName].BufferSubData<TMember>(data, offset);
             }
         }
 
-        public void SetUniformVarData(string varName, float data, bool bChecked = false)
+        public void SetUniformVariable(string varName, float data, bool bChecked = false)
         {
             if (bChecked)
             {
@@ -255,11 +255,11 @@ namespace Core.MaterialBase
 
             if (mUniformVariableNames.Contains(varName))
             {
-                mMaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVariable(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, bool data, bool bChecked = false)
+        public void SetUniformVariable(string varName, bool data, bool bChecked = false)
         {
             if (bChecked)
             {
@@ -268,11 +268,11 @@ namespace Core.MaterialBase
 
             if (mUniformVariableNames.Contains(varName))
             {
-                mMaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVariable(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, int data, bool bChecked=false)
+        public void SetUniformVariable(string varName, int data, bool bChecked=false)
         {
             if (bChecked)
             {
@@ -281,59 +281,35 @@ namespace Core.MaterialBase
 
             if (mUniformVariableNames.Contains(varName))
             {
-                mMaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVariable(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, float[] data, bool bChecked = false)
+        public void SetUniformVariable(string varName, float[] data, bool bChecked = false)
         {
             if (mUniformVariableNames.Contains(varName))
             {
-                mMaterialProgram.SetUniformFloatArrayData(varName , ref data);
+                mMaterialProgram.SetUniformFloatArrayData(varName , data);
             }
         }
 
-        public void SetUniformVarData(string varName, ref float[] data, bool bChecked = false)
-        {
-            if (mUniformVariableNames.Contains(varName))
-            {
-                mMaterialProgram.SetUniformFloatArrayData(varName, ref data);
-            }
-        }
-
-        public void SetUniformVarData(string varName, double[] data, bool bChecked = false)
-        {
-            if (mUniformVariableNames.Contains(varName))
-            {
-                mMaterialProgram.SetUniformDoubleArrayData(varName, ref data);
-            }
-        }
-
-        public void SetUniformVarData(string varname, ref Vector2[] data)
+        public void SetUniformVariable(string varname, Vector3[] data)
         {
             if (mUniformVariableNames.Contains(varname))
             {
-                mMaterialProgram.SetUniformVector2ArrayData(varname, ref data);
+                mMaterialProgram.SetUniformVector3ArrayData(varname, data);
             }
         }
 
-        public void SetUniformVarData(string varname, ref Vector3[] data)
+        public void SetUniformVariable(string varname, Vector4[] data)
         {
             if (mUniformVariableNames.Contains(varname))
             {
-                mMaterialProgram.SetUniformVector3ArrayData(varname, ref data);
+                mMaterialProgram.SetUniformVector4ArrayData(varname, data);
             }
         }
 
-        public void SetUniformVarData(string varname, ref Vector4[] data)
-        {
-            if (mUniformVariableNames.Contains(varname))
-            {
-                mMaterialProgram.SetUniformVector4ArrayData(varname, ref data);
-            }
-        }
-
-        public void SetUniformVarData(string varName, Vector2 data, bool bChecked = false)
+        public void SetUniformVariable(string varName, Vector2 data, bool bChecked = false)
         {
             if (bChecked)
             {
@@ -342,11 +318,12 @@ namespace Core.MaterialBase
 
             if (mUniformVariableNames.Contains(varName))
             {
-                mMaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVariable(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, ref Vector2 data, bool bChecked = false)
+        
+        public void SetUniformVariable(string varName, Vector3 data, bool bChecked = false)
         {
             if (bChecked)
             {
@@ -355,24 +332,12 @@ namespace Core.MaterialBase
 
             if (mUniformVariableNames.Contains(varName))
             {
-                mMaterialProgram.SetUniformVarData(varName, data);
-            }
-        }        
-
-        public void SetUniformVarData(string varName, Vector3 data, bool bChecked = false)
-        {
-            if (bChecked)
-            {
-                CheckUniformVariableExist(varName);
-            }
-
-            if (mUniformVariableNames.Contains(varName))
-            {
-                mMaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVariable(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, ref Vector3 data, bool bChecked = false)
+
+        public void SetUniformVariable(string varName, Vector4 data, bool bChecked=false)
         {
             if (bChecked)
             {
@@ -381,11 +346,11 @@ namespace Core.MaterialBase
 
             if (mUniformVariableNames.Contains(varName))
             {
-                mMaterialProgram.SetUniformVarData(varName, ref data);
+                mMaterialProgram.SetUniformVariable(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, Vector4 data, bool bChecked=false)
+        public void SetUniformVariable(string varName, Matrix3 data, bool bChecked=false)
         {
             if (bChecked)
             {
@@ -394,11 +359,11 @@ namespace Core.MaterialBase
 
             if (mUniformVariableNames.Contains(varName))
             {
-                mMaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVariable(varName, data);
             }
         }
 
-        public void SetUniformVarData(string varName, Matrix3 data, bool bChecked=false)
+        public void SetUniformVariable(string varName, Matrix4 data, bool bChecked = false)
         {
             if (bChecked)
             {
@@ -407,7 +372,7 @@ namespace Core.MaterialBase
 
             if (mUniformVariableNames.Contains(varName))
             {
-                mMaterialProgram.SetUniformVarData(varName, data);
+                mMaterialProgram.SetUniformVariable(varName, data);
             }
         }
 
@@ -416,48 +381,22 @@ namespace Core.MaterialBase
             Debug.Assert(mUniformVariableNames.Contains(variablename));
         }
 
-        public void SetUniformVarData(string varName, Matrix4 data, bool bChecked = false)
-        {
-            if (bChecked)
-            {
-                CheckUniformVariableExist(varName);
-            }
-
-            if (mUniformVariableNames.Contains(varName))
-            {
-                mMaterialProgram.SetUniformVarData(varName, data);
-            }
-        }
-
-        public void SetUniformVarData(string varName, ref Matrix4 data, bool bChecked = false)
-        {
-            if (bChecked)
-            {
-                CheckUniformVariableExist(varName);
-            }
-
-            if (mUniformVariableNames.Contains(varName))
-            {
-                mMaterialProgram.SetUniformVarData(varName, ref data);
-            }
-        }
-
-        public void SetUniformVector2ArrayData(string varName, ref float[] data)
+        public void SetUniformVector2ArrayData(string varName, float[] data)
         {
             Debug.Assert(mUniformVariableNames.Contains(varName));
-            mMaterialProgram.SetUniformVector2ArrayData(varName, ref data);
+            mMaterialProgram.SetUniformVector2ArrayData(varName, data);
         }
 
-        public void SetUniformVector3ArrayData(string varName, ref float[] data)
+        public void SetUniformVector3ArrayData(string varName, float[] data)
         {
             Debug.Assert(mUniformVariableNames.Contains(varName));
-            mMaterialProgram.SetUniformVector3ArrayData(varName, ref data);
+            mMaterialProgram.SetUniformVector3ArrayData(varName, data);
         }
 
-        public void SetUniformVector4ArrayData(string varName, ref float[] data)
+        public void SetUniformVector4ArrayData(string varName, float[] data)
         {
             Debug.Assert(mUniformVariableNames.Contains(varName));
-            mMaterialProgram.SetUniformVector4ArrayData(varName, ref data);
+            mMaterialProgram.SetUniformVector4ArrayData(varName, data);
         }
 
         public List<VertexAttribute> GetVertexAttributes()

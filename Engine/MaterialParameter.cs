@@ -26,7 +26,7 @@ namespace Engine.Material
             // 
             foreach (var each in floatParamDictionary)
             {
-                material.SetUniformVarData(each.Key, each.Value);
+                material.SetUniformVariable(each.Key, each.Value);
             }
         }
 
