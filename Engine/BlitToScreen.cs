@@ -46,7 +46,7 @@ namespace Engine
             UpdateVertexBuffer(0, 0, 1, 1, 1, 1);
             // feed index buffer
             uint[] IndexArray = { 0, 1, 2, 3, 4, 5 };
-            IB.BufferData<uint>(ref IndexArray);
+            IB.BufferData<uint>(IndexArray);
         }
         
         public void Blit(TextureBase texture)
@@ -137,7 +137,7 @@ namespace Engine
             // feed vertex buffer
             VB.Bind();
             var VertexArray = VertexList.ToArray();
-            VB.BufferData<PT_VertexAttribute>(ref VertexArray);
+            VB.BufferData<PT_VertexAttribute>(VertexArray);
         }
 
         protected ScreenSpaceDraw Material = null;

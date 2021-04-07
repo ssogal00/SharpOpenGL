@@ -35,7 +35,7 @@ namespace Core
             mVA.Bind();
             mVB.Bind();
             
-            mVB.BufferData<T>(ref VertexList);
+            mVB.BufferData<T>(VertexList);
             mVertexCount = VertexList.Count();
             mbReadyToDraw = true;
 
@@ -67,10 +67,10 @@ namespace Core
         {
             using (var dummy = new ScopedBind(mVA, mVB, mIB))
             {
-                mVB.BufferData<T>(ref vertexList);
+                mVB.BufferData<T>(vertexList);
                 mVertexCount = vertexList.Count();
 
-                mIB.BufferData<ushort>(ref indexList);
+                mIB.BufferData<ushort>(indexList);
                 mIndexCount = indexList.Count();
 
                 mIndexType = DrawElementsType.UnsignedShort;
@@ -83,10 +83,10 @@ namespace Core
         {
             using (var dummy = new ScopedBind(mVA, mIB, mVB))
             {
-                mVB.BufferData<T>(ref vertexList);
+                mVB.BufferData<T>(vertexList);
                 mVertexCount = vertexList.Count();
 
-                mIB.BufferData<uint>(ref indexList);
+                mIB.BufferData<uint>(indexList);
                 mIndexCount = indexList.Count();
 
                 mIndexType = DrawElementsType.UnsignedInt;
@@ -188,26 +188,26 @@ namespace Core
             mVertexArray.Unbind();
         }
 
-        public void SetIndexBufferData(ref uint[] indexList)
+        public void SetIndexBufferData(uint[] indexList)
         {
             mIndexBuffer.Bind();
-            mIndexBuffer.BufferData(ref indexList);
+            mIndexBuffer.BufferData(indexList);
             mIndexCount = indexList.Length;
             mIndexBuffer.Unbind();
             mIndexType = DrawElementsType.UnsignedInt;
         }
 
-        public void SetIndexBufferData(ref ushort[] indexList)
+        public void SetIndexBufferData(ushort[] indexList)
         {
             mIndexBuffer.Bind();
-            mIndexBuffer.BufferData(ref indexList);
+            mIndexBuffer.BufferData(indexList);
             mIndexArray = indexList;
             mIndexCount = indexList.Length;
             mIndexBuffer.Unbind();
             mIndexType = DrawElementsType.UnsignedShort;
         }
 
-        public void SetVertexBufferData<T>(int index, ref T[] vertexAttributeData) where T : struct
+        public void SetVertexBufferData<T>(int index, T[] vertexAttributeData) where T : struct
         {
             Debug.Assert(vertexAttributeData != null && vertexAttributeData.Length > 0);
             
@@ -246,7 +246,7 @@ namespace Core
         }
 
         //
-        public void DrawIndexed(ref uint[] indexArray)
+        public void DrawIndexed(uint[] indexArray)
         {
             mVertexArray.Bind();
             
@@ -255,7 +255,7 @@ namespace Core
             mVertexArray.Unbind();
         }
 
-        public void DrawIndexed(ref ushort[] indexArray)
+        public void DrawIndexed(ushort[] indexArray)
         {
             mVertexArray.Bind();
 
@@ -302,7 +302,7 @@ namespace Core
             mVB1.BufferData<T1>(ref vertexAttributeList1);
             mVertexCount = vertexAttributeList1.Count();
 
-            mIB.BufferData<uint>(ref indexList);
+            mIB.BufferData<uint>(indexList);
             mIndexCount = indexList.Count();
 
             mbReadyToDraw = true;
@@ -373,7 +373,7 @@ namespace Core
             mVB2.BindVertexAttribute(1);
             mVB2.BufferData<T2>(ref vertexAttributeList2);
 
-            mIB.BufferData<uint>(ref indexList);
+            mIB.BufferData<uint>(indexList);
             mIndexCount = indexList.Count();
 
             mbReadyToDraw = true;
@@ -431,7 +431,7 @@ namespace Core
             mVB3.BindVertexAttribute(2);
             mVB3.BufferData<T3>(ref vertexAttributeList3);
 
-            mIB.BufferData<uint>(ref indexList);
+            mIB.BufferData<uint>(indexList);
             mIndexCount = indexList.Count();
 
             mbReadyToDraw = true;
@@ -500,7 +500,7 @@ namespace Core
             mVB4.BindVertexAttribute(3);
             mVB4.BufferData<T4>(ref vertexAttributeList4);
 
-            mIB.BufferData<uint>(ref indexList);
+            mIB.BufferData<uint>(indexList);
             mIndexCount = indexList.Count();
 
             mbReadyToDraw = true;

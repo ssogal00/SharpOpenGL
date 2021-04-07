@@ -344,7 +344,7 @@ namespace Core.OpenGLShader
                     var name = GetActiveUniformVariableName(i);
                     var isArray = IsUniformVariableArray(i);
 
-                    result.Add(new UniformVariableMetaData(name, uniformType, isArray));
+                    result.Add(new UniformVariableMetaData(string.Empty, name, uniformType, isArray));
                 }
             }
             return result;

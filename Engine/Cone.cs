@@ -50,7 +50,7 @@ namespace Engine
                 VB.Bind();
 
                 var vertexArray = VertexList.ToArray();
-                VB.BufferData<PNC_VertexAttribute>(ref vertexArray);
+                VB.BufferData<PNC_VertexAttribute>(vertexArray);
                 VertexList.Clear();
 
                 defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC>();

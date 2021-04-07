@@ -94,7 +94,7 @@ namespace Core.Buffer
             return result;
         }
 
-        public void BufferData<T>(ref T[] Data) where T: struct
+        public void BufferData<T>(T[] Data) where T: struct
         {
             Bind();
             if (Data != null)

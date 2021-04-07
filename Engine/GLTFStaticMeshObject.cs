@@ -210,19 +210,19 @@ namespace Engine
                 if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC3)
                 {
                     var data = mGLTFAsset.Vector3VertexAttributes[attrList[i]].ToArray();
-                    mDrawable.SetVertexBufferData(i, ref data);
+                    mDrawable.SetVertexBufferData(i, data);
                     mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec3);
                 }
                 else if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC2)
                 {
                     var data = mGLTFAsset.Vector2VertexAttributes[attrList[i]].ToArray();
-                    mDrawable.SetVertexBufferData(i, ref data);
+                    mDrawable.SetVertexBufferData(i, data);
                     mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec2);
                 }
                 else if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC4)
                 {
                     var data = mGLTFAsset.Vector4VertexAttributes[attrList[i]].ToArray();
-                    mDrawable.SetVertexBufferData(i, ref data);
+                    mDrawable.SetVertexBufferData(i, data);
                     mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec4);
                 }
             }
@@ -230,13 +230,13 @@ namespace Engine
             if (mGLTFAsset.UIntIndices.Count > 0)
             {
                 var arr = mGLTFAsset.UIntIndices.ToArray();
-                mDrawable.SetIndexBufferData(ref arr);
+                mDrawable.SetIndexBufferData(arr);
                 mIndexCount = (uint)arr.Length;
             }
             else if (mGLTFAsset.UShortIndices.Count > 0)
             {
                 var arr = mGLTFAsset.UShortIndices.ToArray();
-                mDrawable.SetIndexBufferData(ref arr);
+                mDrawable.SetIndexBufferData(arr);
                 mIndexCount = (uint)arr.Length;
             }
 

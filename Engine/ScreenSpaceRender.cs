@@ -71,7 +71,7 @@ namespace Engine
             // feed index buffer
             uint[] IndexArray = { 0, 1, 2, 3, 4, 5 };
             IB.Bind();
-            IB.BufferData<uint>(ref IndexArray);
+            IB.BufferData<uint>(IndexArray);
         }
 
         protected void UpdateVertexBuffer()
@@ -113,7 +113,7 @@ namespace Engine
             // feed vertex buffer
             VB.Bind();
             var VertexArray = VertexList.ToArray();
-            VB.BufferData<PT_VertexAttribute>(ref VertexArray);
+            VB.BufferData<PT_VertexAttribute>(VertexArray);
         }
     }
 }

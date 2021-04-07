@@ -68,6 +68,8 @@ namespace Engine
 
             mVertexArray.Bind();
 
+            
+
             mVertexArray.Unbind();
 
             material.Unbind();
@@ -126,6 +128,7 @@ namespace Engine
 
             mVertexArray.Bind();
 
+            // fill vertex bufer data
             for (int i = 0; i < attrList.Length; ++i)
             {
                 Vector3[] vector3Data = null;
@@ -163,6 +166,12 @@ namespace Engine
                         break;
                 }
             }
+
+            mIndexBuffer.Bind();
+
+            
+
+            mIndexBuffer.Unbind();
 
             mVertexArray.Unbind();
         }
