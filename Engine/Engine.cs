@@ -6,6 +6,7 @@ using OpenTK.Mathematics;
 using System.Diagnostics;
 using System.DirectoryServices;
 using System.Threading;
+using System.Threading.Tasks;
 using Core.Asset;
 using ZeroFormatter.Formatters;
 using DirectXTexWrapper;
@@ -28,12 +29,14 @@ namespace Engine
         public bool IsInitialized => bInitialized;
 
         
-        //private SceneBase mCurrentScene = new FontTestScene();
-        private SceneBase mCurrentScene = new GLTFTestScene();
+        // private SceneBase mCurrentScene = new FontTestScene();
+        // private SceneBase mCurrentScene = new GLTFTestScene();
+        private SceneBase mCurrentScene = new SphereScene();
+
 
         public SceneBase CurrentScene => mCurrentScene;
 
-        public async void Initialize()
+        public async Task Initialize()
         {
             // register resolver
             Formatter<DefaultResolver, Vector3>.Register(new Vector3Formatter<DefaultResolver>());

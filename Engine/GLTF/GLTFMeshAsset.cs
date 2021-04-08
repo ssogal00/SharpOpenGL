@@ -29,20 +29,20 @@ namespace GLTF
 
     public class VertexAttributeSemantic : IEquatable<VertexAttributeSemantic>
     {
-        public readonly int index = 0;
-        public readonly string name = "";
-        public readonly AttributeType attributeType = AttributeType.SCALAR;
+        public readonly int Index = 0;
+        public readonly string AttributeName = "";
+        public readonly AttributeType AttributeType = AttributeType.SCALAR;
 
 
         public VertexAttributeSemantic(int attributeIndex, string attributeName, AttributeType @type)
         {
-            this.index = attributeIndex;
-            this.name = attributeName;
-            this.attributeType = @type;
+            this.Index = attributeIndex;
+            this.AttributeName = attributeName;
+            this.AttributeType = @type;
         }
         public bool Equals(VertexAttributeSemantic semantic)
         {
-            return index == semantic.index && name == semantic.name;
+            return Index == semantic.Index && AttributeName == semantic.AttributeName;
         }
 
         public bool Equals(object o)
@@ -52,7 +52,7 @@ namespace GLTF
         
         public override int GetHashCode()
         {
-            return index;
+            return Index;
         }
     }
 

@@ -15,23 +15,36 @@ namespace Core.Buffer
     {
         protected DynamicUniformBuffer()            
         {
-            bufferTarget  = BufferTarget.UniformBuffer;
-            hint          = BufferUsageHint.DynamicDraw;
+            mBufferTarget  = BufferTarget.UniformBuffer;
+            mHint          = BufferUsageHint.DynamicDraw;
         }
 
-        public DynamicUniformBuffer(ShaderProgram ProgramObject, string UniformBlockName)
+        public DynamicUniformBuffer(ShaderProgram programObject, string uniformBlockName)
         : this()
         {
-            if (ProgramObject.IsProgramLinked())
+            if (programObject.IsProgramLinked())
             {
-                UniformBufferBlockIndex = ProgramObject.GetUniformBlockBindingPoint(UniformBlockName);
+                UniformBufferBlockIndex = programObject.GetUniformBlockBindingPoint(uniformBlockName);
             }
         }
 
-        public DynamicUniformBuffer(int ProgramObject, string UniformBlockName)
+        public DynamicUniformBuffer(ShaderProgram programObject, string uniformBlockName, int size)
+        : base()
+        {
+            mBufferTarget = BufferTarget.UniformBuffer;
+            mHint = BufferUsageHint.DynamicDraw;
+
+            if (programObject.IsProgramLinked())
+            {
+                UniformBufferBlockIndex = programObject.GetUniformBlockBindingPoint(uniformBlockName);
+            }
+            AllocateBuffer(size);
+        }
+
+        public DynamicUniformBuffer(int programObject, string uniformBlockName)
         : this()
         {   
-            UniformBufferBlockIndex = GL.GetUniformBlockIndex(ProgramObject, UniformBlockName);
+            UniformBufferBlockIndex = GL.GetUniformBlockIndex(programObject, uniformBlockName);
         }
 
         public override void Bind()
@@ -41,6 +54,12 @@ namespace Core.Buffer
             GL.BindBufferBase(BufferRangeTarget.UniformBuffer, UniformBufferBlockIndex, mBufferHandle);
         }
 
-        public int UniformBufferBlockIndex = -1;
+        public int UniformBufferBlockIndex
+        {
+            get => mUniformBufferBlockIndex;
+            private set => mUniformBufferBlockIndex = value;
+        }
+
+        private int mUniformBufferBlockIndex = -1;
     }
 }

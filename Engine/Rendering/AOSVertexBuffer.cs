@@ -18,8 +18,8 @@ namespace Core.Buffer
     {   
         public AOSVertexBuffer()
         {
-            bufferTarget = BufferTarget.ArrayBuffer;
-            hint = BufferUsageHint.StaticDraw;
+            mBufferTarget = BufferTarget.ArrayBuffer;
+            mHint = BufferUsageHint.StaticDraw;
             Count++;
         }
 

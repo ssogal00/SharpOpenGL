@@ -10,7 +10,9 @@ using Core.CustomAttribute;
 using Core.MaterialBase;
 using Core.Primitive;
 using Core.Texture;
+using GLTF;
 using OpenTK.Mathematics;
+using AttributeType = GLTF.V2.AttributeType;
 
 namespace Engine
 {
@@ -236,12 +238,22 @@ namespace Engine
             }
             
 
-            VertexCount = VertexList.Count;
+            mVertexCount = VertexList.Count;
 
-            TempVertexList.Clear();
-            TempNormalList.Clear();
-            TempTangentList.Clear();
-            TempTexCoordList.Clear();
+            var positionAttribute = new VertexAttributeSemantic(0, "POSITION", AttributeType.VEC3);
+            var normalAttribute = new VertexAttributeSemantic(1, "NORMAL", AttributeType.VEC3);
+            var texcoordAttribute = new VertexAttributeSemantic(2, "TEXCOORD", AttributeType.VEC2);
+            var tangentAttribute = new VertexAttributeSemantic(3, "TANGENT", AttributeType.VEC4);
+
+            mVector3VertexAttributes.Add(positionAttribute, TempVertexList);
+            mVector3VertexAttributes.Add(normalAttribute, TempNormalList);
+            mVector2VertexAttributes.Add(texcoordAttribute, TempTexCoordList);
+            mVector4VertexAttributes.Add(tangentAttribute, TempTangentList);
+
+            mVertexAttributeMap.Add(positionAttribute.AttributeName, positionAttribute);
+            mVertexAttributeMap.Add(normalAttribute.AttributeName, normalAttribute);
+            mVertexAttributeMap.Add(texcoordAttribute.AttributeName, texcoordAttribute);
+            mVertexAttributeMap.Add(tangentAttribute.AttributeName, tangentAttribute);
         }
 
         protected void GenerateTangents()
@@ -347,7 +359,8 @@ namespace Engine
         [ExposeUI]
         public float Specular = 0.1f;
 
-        int VertexCount = 0;
+        
+
         protected float Radius = 10.0f;
         protected int StackCount = 10;
         protected int SectorCount = 10;

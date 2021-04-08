@@ -58,22 +58,22 @@ namespace Engine
 
             foreach (var semantic in semanticList)
             {
-                if (semantic.name.StartsWith("TEXCOORD", true, null))
+                if (semantic.AttributeName.StartsWith("TEXCOORD", true, null))
                 {
                     bContainsTexCoord = true;
                 }
 
-                if (semantic.name.StartsWith("NORMAL", true, null))
+                if (semantic.AttributeName.StartsWith("NORMAL", true, null))
                 {
                     bContainsNormal = true;
                 }
 
-                if (semantic.name.StartsWith("TANGENT", true, null))
+                if (semantic.AttributeName.StartsWith("TANGENT", true, null))
                 {
                     bContainsTangent = true;
                 }
 
-                if (semantic.name.StartsWith("POSITION", true, null))
+                if (semantic.AttributeName.StartsWith("POSITION", true, null))
                 {
                     bContainsPosition = true;
                 }
@@ -207,19 +207,19 @@ namespace Engine
 
             for (int i = 0; i < attrList.Count(); ++i)
             {
-                if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC3)
+                if (attrList[i].AttributeType == GLTF.V2.AttributeType.VEC3)
                 {
                     var data = mGLTFAsset.Vector3VertexAttributes[attrList[i]].ToArray();
                     mDrawable.SetVertexBufferData(i, data);
                     mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec3);
                 }
-                else if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC2)
+                else if (attrList[i].AttributeType == GLTF.V2.AttributeType.VEC2)
                 {
                     var data = mGLTFAsset.Vector2VertexAttributes[attrList[i]].ToArray();
                     mDrawable.SetVertexBufferData(i, data);
                     mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec2);
                 }
-                else if (attrList[i].attributeType == GLTF.V2.AttributeType.VEC4)
+                else if (attrList[i].AttributeType == GLTF.V2.AttributeType.VEC4)
                 {
                     var data = mGLTFAsset.Vector4VertexAttributes[attrList[i]].ToArray();
                     mDrawable.SetVertexBufferData(i, data);

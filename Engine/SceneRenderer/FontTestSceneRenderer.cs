@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Windows.Media.Media3D;
-using CompiledMaterial.FontRenderMaterial;
-using Core;
-using Core.MaterialBase;
-using Core.Texture;
+﻿using Core.Texture;
 using Engine.Scene;
 using FreeTypeGLWrapper;
 using OpenTK.Graphics.OpenGL;
-using Engine;
 
 namespace Engine.SceneRenderer
 {
     class FontTestSceneRenderer : SceneRendererBase
     {
-        public override void Initialize()
+        public override void Initialize(SceneBase scene)
         {
             ManagedTextureAtlas result = FreeTypeGL.GenerateTextureAtlas(512, 512, 72, "./Resources/Fonts/Vera.ttf");
             mFontAtlas = new Texture2D();
@@ -30,8 +21,6 @@ namespace Engine.SceneRenderer
         public override void RenderScene(SceneBase scene)
         {
             mFontRender.Render(mFontAtlas);
-
-            //mScreenBlit.Blit(mFontAtlas, 0, 0, 1, 1);
         }
 
         private Texture2D mFontAtlas = null;

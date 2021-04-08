@@ -13,7 +13,7 @@ namespace Core.Buffer
     {
         public SOAVertexBuffer()
         {
-            bufferTarget = BufferTarget.ArrayBuffer;
+            mBufferTarget = BufferTarget.ArrayBuffer;
         }
         
         public virtual void BindVertexAttribute(int index)

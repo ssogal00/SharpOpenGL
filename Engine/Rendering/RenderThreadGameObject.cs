@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using CompiledMaterial.GBufferDraw;
 using Core;
 using Core.Buffer;
 using Core.Primitive;
@@ -48,6 +49,7 @@ namespace Engine
 
         public virtual void Dispose()
         {
+            ResourceManager.Instance.DeleteVertexArray(mVertexArray);
 
         }
 
@@ -60,19 +62,41 @@ namespace Engine
             // 4. draw
             // unbind...
 
-            var material = mGameObject.Material;
+            var material = ShaderManager.Instance.GetMaterial<GBufferDraw>();
 
             material.Bind();
 
             SetMaterialParams();
 
+            ChangeRenderState();
+
             mVertexArray.Bind();
 
+            if (mHasIndex)
+            {
+                GL.DrawElements(PrimitiveType.Triangles, mIndexCount, mIndexType, 0);
+            }
+            else
+            {
+                GL.DrawArrays(PrimitiveType.Triangles, 0, mGameObject.VertexCount);
+            }
             
 
             mVertexArray.Unbind();
 
             material.Unbind();
+
+            RestoreRenderState();
+        }
+
+        protected virtual void ChangeRenderState()
+        {
+
+        }
+
+        protected virtual void RestoreRenderState()
+        {
+
         }
 
         protected virtual void SetMaterialParams()
@@ -83,46 +107,46 @@ namespace Engine
             var mat4Params = mGameObject.GetMatrix4Params();
             var textureParams = mGameObject.GetTextureParams();
             var boolParams = mGameObject.GetBoolParams();
+            var material = ShaderManager.Instance.GetMaterial<GBufferDraw>();
             
             // set if it exists
             foreach (var kvp in vec3Params)
             {
-                mGameObject.Material.SetUniformVariable(kvp.Item1, kvp.Item2);
+                material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
 
             foreach (var kvp in vec4Params)
             {
-                mGameObject.Material.SetUniformVariable(kvp.Item1, kvp.Item2);
+                material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
 
             foreach (var kvp in vec2Params)
             {
-                mGameObject.Material.SetUniformVariable(kvp.Item1, kvp.Item2);
+                material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
 
             foreach (var kvp in mat4Params)
             {
-                mGameObject.Material.SetUniformVariable(kvp.Item1, kvp.Item2);
+                material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
 
             foreach (var kvp in textureParams)
             {
-                mGameObject.Material.SetTexture(kvp.Item1, kvp.Item2);
+                material.SetTexture(kvp.Item1, kvp.Item2);
             }
 
             foreach (var kvp in boolParams)
             {
-                mGameObject.Material.SetUniformVariable(kvp.Item1, kvp.Item2);
+                material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
         }
 
         protected void Initialize()
         {
             mVertexArray = ResourceManager.Instance.CreateVertexArray();
-            mIndexBuffer = ResourceManager.Instance.CreateIndexBuffer();
 
             var attrList = mGameObject.VertexAttributeMap
-                .OrderBy(x => GetSemanticPriority(x.Key))
+                .OrderBy(x => x.Value.Index)
                 .Select(x => x.Value)
                 .ToArray();
 
@@ -139,7 +163,7 @@ namespace Engine
                 SOAVertexBuffer<Vec2_VertexAttribute> vector2VB = null;
                 SOAVertexBuffer<Vec4_VertexAttribute> vector4VB = null;
 
-                switch (attrList[i].attributeType)
+                switch (attrList[i].AttributeType)
                 {
                     case AttributeType.VEC4:
                         vector4Data = mGameObject.Vector4VertexAttributes[attrList[i]].ToArray();
@@ -166,32 +190,32 @@ namespace Engine
                         break;
                 }
             }
-
-            mIndexBuffer.Bind();
-
+            
             if (mGameObject.UIntIndices.Count > 0)
             {
+                mIndexBuffer = ResourceManager.Instance.CreateIndexBuffer();
+                mIndexBuffer.Bind();
                 mIndexBuffer.BufferData(mGameObject.UIntIndices.ToArray());
                 mIndexType = DrawElementsType.UnsignedInt;
                 mIndexCount = mGameObject.UIntIndices.Count;
+                mIndexBuffer.Unbind();
             }
             else if (mGameObject.UShortIndices.Count > 0)
             {
+                mIndexBuffer = ResourceManager.Instance.CreateIndexBuffer();
+                mIndexBuffer.Bind();
                 mIndexBuffer.BufferData(mGameObject.UShortIndices.ToArray());
                 mIndexType = DrawElementsType.UnsignedShort;
                 mIndexCount = mGameObject.UShortIndices.Count;
+                mIndexBuffer.Unbind();
             }
-            
+            else
+            {
+                mHasIndex = false;
+            }
 
-            mIndexBuffer.Unbind();
 
             mVertexArray.Unbind();
-        }
-
-        //
-        protected void UpdateMaterialParams()
-        {
-            
         }
 
         protected GameObject mGameObject = null;
@@ -205,6 +229,9 @@ namespace Engine
         protected Dictionary<int, OpenGLBuffer> mVertexAttributeMap = new Dictionary<int, OpenGLBuffer>();
 
         protected int mIndexCount = 0;
+        
         protected DrawElementsType mIndexType = DrawElementsType.UnsignedInt;
+
+        protected bool mHasIndex = true;
     }
 }

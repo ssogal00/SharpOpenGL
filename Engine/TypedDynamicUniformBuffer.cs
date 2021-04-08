@@ -19,7 +19,7 @@ namespace Core.Buffer
             var defaultValue = new T();
             int sizeT = Marshal.SizeOf(defaultValue);
             Bind();
-            GL.BufferStorage(bufferTarget, sizeT, ref defaultValue, BufferStorageFlags.DynamicStorageBit);
+            GL.BufferStorage(mBufferTarget, sizeT, ref defaultValue, BufferStorageFlags.DynamicStorageBit);
         }
 
         public TypedDynamicUniformBuffer(ShaderProgram program, string UniformBlockName)
@@ -28,7 +28,7 @@ namespace Core.Buffer
             var defaultValue = new T();
             int sizeT = Marshal.SizeOf(defaultValue);
             Bind();
-            GL.BufferStorage(bufferTarget, sizeT, ref defaultValue, BufferStorageFlags.DynamicStorageBit);
+            GL.BufferStorage(mBufferTarget, sizeT, ref defaultValue, BufferStorageFlags.DynamicStorageBit);
         }
 
         public TypedDynamicUniformBuffer(ShaderProgram program, string UniformBlockName, ref T defaultValue)
@@ -36,7 +36,7 @@ namespace Core.Buffer
         {
             int sizeT = Marshal.SizeOf(defaultValue);
             Bind();
-            GL.BufferStorage(bufferTarget, sizeT, ref defaultValue, BufferStorageFlags.DynamicStorageBit);
+            GL.BufferStorage(mBufferTarget, sizeT, ref defaultValue, BufferStorageFlags.DynamicStorageBit);
         }
     }
 }

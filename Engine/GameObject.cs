@@ -111,6 +111,13 @@ namespace Core.Primitive
         protected static int ObjectCount = 0;
 
         // for rendering data
+        public int VertexCount
+        {
+            get => mVertexCount;
+        }
+
+        protected int mVertexCount = 0;
+
         public List<VertexAttributeSemantic> VertexAttributeList
         {
             get => mVertexAttributeList;

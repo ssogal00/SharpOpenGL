@@ -12,7 +12,7 @@ namespace Engine
 
         }
 
-        public virtual void Initialize()
+        public virtual void Initialize(SceneBase currentScene)
         {
 
         }
@@ -27,5 +27,7 @@ namespace Engine
         }
 
         protected bool mSceneLoaded = false;
+
+        protected List<RenderThreadGameObject> mRenderThreadGameObjectList = new List<RenderThreadGameObject>();
     }
 }

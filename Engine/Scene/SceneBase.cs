@@ -81,6 +81,8 @@ namespace Engine.Scene
         
         protected List<GameObject> mGameObjectList = new List<GameObject>();
 
+        public List<GameObject> GameObjectList => mGameObjectList;
+
         protected SceneRendererBase mSceneRenderer = null;
 
 

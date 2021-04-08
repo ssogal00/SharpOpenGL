@@ -13,8 +13,8 @@ namespace Core.Buffer
     {
         public DynamicVertexBuffer()
         {
-            bufferTarget = BufferTarget.ArrayBuffer;
-            hint = BufferUsageHint.DynamicDraw;
+            mBufferTarget = BufferTarget.ArrayBuffer;
+            mHint = BufferUsageHint.DynamicDraw;
             ++Count;
         }
         public static int DynamicVertexBufferCount => Count;

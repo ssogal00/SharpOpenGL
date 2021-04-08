@@ -88,8 +88,8 @@ namespace Engine
 
             ResizableManager.Instance.ResizeEventHandler.OnNext(new Tuple<int,int>(this.Width, this.Height));
 
-            mDefaultSceneRenderer = Engine.Get().CurrentScene.GetSceneRenderer();
-            mDefaultSceneRenderer.Initialize();
+            mDefaultSceneRenderer = Engine.Instance.CurrentScene.GetSceneRenderer();
+            mDefaultSceneRenderer.Initialize(Engine.Instance.CurrentScene);
         }
 
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
@@ -214,7 +214,7 @@ namespace Engine
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
-            RenderingThread.Get().ExecuteTimeSlice();
+            RenderingThread.Instance.ExecuteTimeSlice();
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -237,7 +237,7 @@ namespace Engine
                 return;
             }
 
-            mDefaultSceneRenderer.RenderScene(Engine.Get().CurrentScene);
+            mDefaultSceneRenderer.RenderScene(Engine.Instance.CurrentScene);
 
             SwapBuffers();
         }

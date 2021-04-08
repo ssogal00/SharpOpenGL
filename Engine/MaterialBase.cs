@@ -118,11 +118,11 @@ namespace Core.MaterialBase
 
         protected virtual void BuildUniformBufferMap()
         {
-            var names = mMaterialProgram.GetActiveUniformBlockNames();
+            var blocks = mMaterialProgram.GetActiveUnformBlockNameAndSizes();
 
-            foreach (var name in names)
+            foreach (var (name,size) in blocks)
             {
-                var uniformBuffer = new DynamicUniformBuffer(mMaterialProgram, name);
+                var uniformBuffer = new DynamicUniformBuffer(mMaterialProgram, name, size);
                 mUniformBufferMap.Add(name, uniformBuffer);
 
                 var bufferMembers = mMaterialProgram

@@ -1,5 +1,6 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using OpenTK;
 
@@ -23,6 +24,27 @@ namespace Core.Buffer
             mBufferHandle = GL.GenBuffer();
         }
 
+        public OpenGLBuffer(int size)
+        {
+            mBufferHandle = GL.GenBuffer();
+        }
+
+        protected void AllocateBuffer(int size)
+        {
+            Bind();
+            GL.BufferData(mBufferTarget, new IntPtr(size), new IntPtr(0), mHint);
+            mBufferCreated = true;
+        }
+
+        protected void AllocateBuffer<T>(T data) where T : struct
+        {
+            Bind();
+            var size = new IntPtr(Marshal.SizeOf(data));
+            GL.BufferData<T>(mBufferTarget, size, ref data, mHint);
+            mBufferCreated = true;
+        }
+
+        
         public void Dispose()
         {
             Unbind();
@@ -31,7 +53,7 @@ namespace Core.Buffer
 
         public virtual void Bind()
         {
-            GL.BindBuffer(bufferTarget, mBufferHandle);
+            GL.BindBuffer(mBufferTarget, mBufferHandle);
             bBind = true;
         }
 
@@ -42,7 +64,7 @@ namespace Core.Buffer
 
         public void Unbind()
         {
-            GL.BindBuffer(bufferTarget, 0);
+            GL.BindBuffer(mBufferTarget, 0);
             bBind = false;
         }
 
@@ -54,34 +76,40 @@ namespace Core.Buffer
         public void BufferData(IntPtr Size, IntPtr Data)
         {
             Bind();
-            GL.BufferData(bufferTarget, Size, Data, hint);            
+            GL.BufferData(mBufferTarget, Size, Data, mHint);
         }
 
-        public void BufferData<T>(T Data) where T : struct
+        public void BufferData<T>(T data) where T : struct
         {   
             Bind();
             
-            var Size = new IntPtr(Marshal.SizeOf(Data));
-            GL.BufferData<T>(bufferTarget, Size, ref Data, hint);            
+            if (mBufferCreated == false)
+            {
+                AllocateBuffer(data);
+            }
+            else
+            {
+                var size = new IntPtr(Marshal.SizeOf(data));
+                GL.BufferSubData(mBufferTarget, new IntPtr(0),  size, ref data);
+            }
+            
         }
      
-        public void BufferWholeData<T>(T Data) where T: struct
-        {            
-            Bind();
-            GL.BufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
-	    }
 
-        public void BufferSubData<T>(T Data, int Offset) where T : struct
+        public void BufferSubData<T>(T Data, int offset) where T : struct
         {
+            Debug.Assert(mBufferCreated);
             Bind();
-            GL.BufferSubData<T>(bufferTarget, new IntPtr(Offset), Marshal.SizeOf(Data), ref Data);
+            var size = new IntPtr(Marshal.SizeOf(Data));
+            GL.BufferSubData<T>(mBufferTarget, new IntPtr(offset), size, ref Data);
+            var errcode =  GL.GetError();
+
+            if (errcode != ErrorCode.NoError)
+            {
+                Console.Write("Error");
+            }
         }
-        
-        public void GetBufferWholeData<T>(T Data) where T : struct
-        {
-            Bind();
-            GL.GetBufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(Data), ref Data);
-        }
+     
 
         public T GetBufferWholeData<T>() where T: struct
         {
@@ -89,7 +117,7 @@ namespace Core.Buffer
 
             Bind();
 
-            GL.GetBufferSubData<T>(bufferTarget, new IntPtr(0), Marshal.SizeOf(result), ref result);
+            GL.GetBufferSubData<T>(mBufferTarget, new IntPtr(0), Marshal.SizeOf(result), ref result);
 
             return result;
         }
@@ -100,26 +128,26 @@ namespace Core.Buffer
             if (Data != null)
             {
                 var Size = new IntPtr(Marshal.SizeOf(Data[0]) * Data.Length);
-                GL.BufferData<T>(bufferTarget, Size, Data, hint);
+                GL.BufferData<T>(mBufferTarget, Size, Data, mHint);
             }
         }
 
         public IntPtr MapBuffer(BufferAccess access)
         {
             Bind();
-            return GL.MapBuffer(bufferTarget, access);
+            return GL.MapBuffer(mBufferTarget, access);
         }
         
         public BufferUsageHint UsageHint
         {
-            get { return hint; }
-            set { hint = value; }
+            get { return mHint; }
+            set { mHint = value; }
         }
 
         public BufferTarget Target 
         { 
-            get { return bufferTarget; }
-            protected set { bufferTarget = value; }
+            get { return mBufferTarget; }
+            protected set { mBufferTarget = value; }
         }
 
         public int BufferHandle
@@ -128,14 +156,16 @@ namespace Core.Buffer
             protected set { mBufferHandle = value; }
         }
 
-        protected BufferTarget bufferTarget;
+        protected BufferTarget mBufferTarget;
 
-        protected BufferUsageHint hint;
+        protected BufferUsageHint mHint;
+
+        protected bool mBufferCreated = false;
 
         protected int mBufferHandle = -1;
 
         protected bool bBind = false;
 
-        public string DebugName = "";
+        
     }
 }

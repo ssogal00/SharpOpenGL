@@ -310,6 +310,19 @@ namespace Core.OpenGLShader
             return result;
         }
 
+        public IEnumerable<(string, int)> GetActiveUnformBlockNameAndSizes()
+        {
+            if (IsProgramLinked())
+            {
+                int nBlockSize = GetActiveUniformBlockCount();
+
+                for (var i = 0; i < nBlockSize; ++i)
+                {
+                    yield return (GetUniformBlockName(i), GetUniformBlockDataSize(i));
+                }
+            }
+        }
+
         public List<UniformVariableMetaData> GetActiveUniformVariableMetaDataList()
         {
             var result = new List<UniformVariableMetaData>();
@@ -526,6 +539,20 @@ namespace Core.OpenGLShader
             }
 
             return "";
+        }
+
+        public int GetUniformBlockSize(int nBlockIndex)
+        {
+            if (IsProgramLinked())
+            {
+                if (nBlockIndex < GetActiveUniformBlockCount())
+                {
+                    GL.GetActiveUniformBlock(ProgramObject, nBlockIndex, ActiveUniformBlockParameter.UniformBlockDataSize, out int result);
+                    return result;
+                }
+            }
+
+            return 0;
         }
 
         public int GetUniformBlockIndex(String BlockName)
