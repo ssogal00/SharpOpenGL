@@ -49,7 +49,16 @@ namespace Engine
 
         public virtual void Dispose()
         {
-            ResourceManager.Instance.DeleteVertexArray(mVertexArray);
+            if (mVertexArray != null)
+            {
+                ResourceManager.Instance.DeleteVertexArray(mVertexArray);
+            }
+
+            if (mIndexBuffer != null)
+            {
+                ResourceManager.Instance.DeleteIndexBuffer(mIndexBuffer);
+            }
+
 
         }
 
