@@ -15,7 +15,12 @@ namespace Engine
 {
     public class DefaultSceneRenderer : SceneRendererBase
     {
-        public override void Initialize(SceneBase scene)
+        public DefaultSceneRenderer(SceneBase scene)
+        : base(scene)
+        {
+
+        }
+        public override void Initialize()
         {
             mScreenBlit = new BlitToScreen();
             lightPostProcess = new DeferredLight();

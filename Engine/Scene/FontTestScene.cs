@@ -32,7 +32,7 @@ namespace Engine.Scene
         protected override SceneRendererBase CreateSceneRenderer()
         {
             //return new FontTestSceneRenderer();
-            return new DefaultSceneRenderer();
+            return new DefaultSceneRenderer(this);
         }
 
         private GLTFStaticMeshObject mTestMeshObject;

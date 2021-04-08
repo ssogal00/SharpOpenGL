@@ -18,7 +18,7 @@ namespace Engine
     {
         private static int StaticMeshCount = 0;
         public StaticMeshObject(string assetpath)
-        : base(Path.GetFileNameWithoutExtension(assetpath), StaticMeshCount++)
+        : base(Path.GetFileNameWithoutExtension(assetpath))
         {
             this.assetpath = assetpath;
             Initialize();
@@ -55,7 +55,7 @@ namespace Engine
         }
 
         public StaticMeshObject()
-        : base("StaticMesh", StaticMeshCount++)
+        : base("StaticMesh")
         {
         }
 
@@ -66,7 +66,7 @@ namespace Engine
         }
 
         public StaticMeshObject(StaticMeshAsset asset)
-        : base("StaticMesh", StaticMeshCount++)
+        : base("StaticMesh")
         {
             meshAsset = asset;
 

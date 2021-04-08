@@ -26,7 +26,7 @@ namespace Engine
         {
         }
         public Cube()
-            : base("Cube", CubeCount++)
+            : base("Cube")
         {
             Initialize();
         }

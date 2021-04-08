@@ -29,7 +29,7 @@ namespace Engine
         }
 
         public Sphere()
-        : base("Sphere",SphereCount++)
+        : base("Sphere")
         {
             Radius = 10;
             StackCount = 25;
@@ -41,7 +41,7 @@ namespace Engine
 
 
         public Sphere(float radius, int stackcount, int sectorcount)
-            : base("Sphere", SphereCount++)
+            : base("Sphere")
         {
             Debug.Assert(radius > 0 && StackCount > 0 && SectorCount > 0);
             Radius = radius;

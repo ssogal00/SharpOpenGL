@@ -7,12 +7,17 @@ namespace Engine
 {
     public class SceneRendererBase 
     {
-        public SceneRendererBase()
+        public SceneRendererBase(SceneBase referenceScene)
+        {
+            mReferenceScene = referenceScene;
+        }
+
+        public virtual void Initialize()
         {
 
         }
 
-        public virtual void Initialize(SceneBase currentScene)
+        protected virtual void SyncGameObjectWithRenderObject()
         {
 
         }
@@ -28,6 +33,8 @@ namespace Engine
 
         protected bool mSceneLoaded = false;
 
-        protected List<RenderThreadGameObject> mRenderThreadGameObjectList = new List<RenderThreadGameObject>();
+        protected SceneBase mReferenceScene = null;
+
+        protected Dictionary<int, RenderThreadGameObject> mRenderThreadGameObjectMap = new Dictionary<int, RenderThreadGameObject>();
     }
 }

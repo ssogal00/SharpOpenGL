@@ -18,7 +18,12 @@ namespace Core.Primitive
         [ExposeUI("Translation")]
         public virtual Vector3 Translation { get; set; }
 
-        public int Id = 0;
+        public int ID
+        {
+            get => mID;
+        }
+
+        protected int mID = 0;
 
         public virtual float TranslationY
         {
@@ -70,13 +75,14 @@ namespace Core.Primitive
         public GameObject()
         {
             Name = string.Format("SceneObject_{0}", ObjectCount);
-            Id = ObjectCount++;
+            mID = ObjectCount++;
             SceneObjectManager.Instance.AddSceneObject(this);
         }
 
-        protected GameObject(string name, int objectCount)
+        protected GameObject(string name)
         {
-            Name = string.Format("{0}_{1}", name, objectCount);
+            mID = ObjectCount++;
+            Name = string.Format("{0}_{1}", name, mID);
             SceneObjectManager.Get().AddSceneObject(this);
         }
        

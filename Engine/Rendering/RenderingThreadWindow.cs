@@ -89,7 +89,7 @@ namespace Engine
             ResizableManager.Instance.ResizeEventHandler.OnNext(new Tuple<int,int>(this.Width, this.Height));
 
             mDefaultSceneRenderer = Engine.Instance.CurrentScene.GetSceneRenderer();
-            mDefaultSceneRenderer.Initialize(Engine.Instance.CurrentScene);
+            mDefaultSceneRenderer.Initialize();
         }
 
         protected override void OnKeyDown(KeyboardKeyEventArgs e)

@@ -72,7 +72,7 @@ namespace Engine
         protected override SceneRendererBase CreateSceneRenderer()
         {
             // return new DefaultSceneRenderer();
-            return new RenderThreadTestSceneRenderer();
+            return new RenderThreadTestSceneRenderer(this);
         }
     }
 }

@@ -14,32 +14,7 @@ using AttributeType = GLTF.V2.AttributeType;
 namespace Engine
 {
     public class RenderThreadGameObject : IDisposable
-    {
-        private static int GetSemanticPriority(string semanticName)
-        {
-            if (semanticName.StartsWith("POSITION", true, null))
-            {
-                return 0;
-            }
-
-            else if (semanticName.StartsWith("NORMAL", true, null))
-            {
-                return 1;
-            }
-
-            else if (semanticName.StartsWith("TEXCOORD_0", true, null))
-            {
-                return 2;
-            }
-
-            else if (semanticName.StartsWith("TANGENT", true, null))
-            {
-                return 3;
-            }
-
-            return 0;
-        }
-
+    {   
         public RenderThreadGameObject(GameObject gameObject)
         {
             Debug.Assert(RenderingThread.IsInRenderingThread());
@@ -58,10 +33,7 @@ namespace Engine
             {
                 ResourceManager.Instance.DeleteIndexBuffer(mIndexBuffer);
             }
-
-
         }
-
 
         public virtual void Render()
         {
@@ -76,7 +48,7 @@ namespace Engine
             material.Bind();
 
             SetMaterialParams();
-
+            
             ChangeRenderState();
 
             mVertexArray.Bind();

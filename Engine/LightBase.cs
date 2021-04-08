@@ -19,7 +19,7 @@ namespace Engine.Light
     public abstract class LightBase : GameObject
     {
         protected LightBase(string name, int count)
-        : base(name, count)
+        : base(name)
         {   
         }
 

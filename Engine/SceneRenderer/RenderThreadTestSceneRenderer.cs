@@ -13,15 +13,17 @@ namespace Engine
 {
     public class RenderThreadTestSceneRenderer : SceneRendererBase
     {
+        public RenderThreadTestSceneRenderer(SceneBase scene)
+        : base(scene)
+        {
+        }
 
-        public override void Initialize(SceneBase scene)
+        public override void Initialize()
         {
             Debug.Assert(RenderingThread.IsInRenderingThread());
-
             mScreenBlit = new BlitToScreen();
             mLightPostProcess = new DeferredLight();
-            
-            
+
             mEquirectToCubemap = new EquirectangleToCubemap();
             mConvolution = new CubemapConvolutionTransform();
             mFxaa = new FXAAPostProcess();
@@ -41,16 +43,23 @@ namespace Engine
             mLut.Render();
 
             mSkybox.SetCubemapTexture(mEquirectToCubemap.ResultCubemap);
+        }
 
-            foreach (var go in scene.GameObjectList)
+        protected override void SyncGameObjectWithRenderObject()
+        {
+            foreach (var go in mReferenceScene.GameObjectList)
             {
-                var ro = new RenderThreadGameObject(go);
-                mRenderThreadGameObjectList.Add(ro);
+                if (!mRenderThreadGameObjectMap.ContainsKey(go.ID))
+                {
+                    var ro = new RenderThreadGameObject(go);
+                    mRenderThreadGameObjectMap.Add(go.ID, ro);
+                }
             }
         }
 
         public override void RenderScene(SceneBase scene)
         {
+            SyncGameObjectWithRenderObject();
             // clear gbuffer
             mRenderGBuffer.BindAndExecute(
                 () =>
@@ -65,9 +74,9 @@ namespace Engine
                 () =>
                 {
                     mSkybox.Render();
-                    foreach (var ro in mRenderThreadGameObjectList)
+                    foreach (var ro in mRenderThreadGameObjectMap)
                     {
-                        ro.Render();
+                        ro.Value.Render();
                     }
                     UIManager.Instance.RenderUI();
                 }

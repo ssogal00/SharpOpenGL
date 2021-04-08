@@ -23,7 +23,7 @@ namespace Engine
 
         protected override SceneRendererBase CreateSceneRenderer()
         {
-            return new DefaultSceneRenderer();
+            return new DefaultSceneRenderer(this);
         }
     }
 }

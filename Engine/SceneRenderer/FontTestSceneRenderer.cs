@@ -7,7 +7,12 @@ namespace Engine.SceneRenderer
 {
     class FontTestSceneRenderer : SceneRendererBase
     {
-        public override void Initialize(SceneBase scene)
+        public FontTestSceneRenderer(SceneBase scene)
+        : base(scene)
+        {
+
+        }
+        public override void Initialize()
         {
             ManagedTextureAtlas result = FreeTypeGL.GenerateTextureAtlas(512, 512, 72, "./Resources/Fonts/Vera.ttf");
             mFontAtlas = new Texture2D();
