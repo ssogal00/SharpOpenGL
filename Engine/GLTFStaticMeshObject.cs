@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Xps.Serialization;
+using OpenTK.Mathematics;
 using CameraTransform = CompiledMaterial.GBufferPNTT.CameraTransform;
 using ModelTransform = CompiledMaterial.GBufferPNTT.ModelTransform;
 
@@ -49,43 +51,19 @@ namespace Engine
             return 0;
         }
 
-        private static bool CanCreateTangent(List<VertexAttributeSemantic> semanticList)
-        {
-            bool bContainsTexCoord = false;
-            bool bContainsNormal = false;
-            bool bContainsTangent = false;
-            bool bContainsPosition = false;
-
-            foreach (var semantic in semanticList)
-            {
-                if (semantic.AttributeName.StartsWith("TEXCOORD", true, null))
-                {
-                    bContainsTexCoord = true;
-                }
-
-                if (semantic.AttributeName.StartsWith("NORMAL", true, null))
-                {
-                    bContainsNormal = true;
-                }
-
-                if (semantic.AttributeName.StartsWith("TANGENT", true, null))
-                {
-                    bContainsTangent = true;
-                }
-
-                if (semantic.AttributeName.StartsWith("POSITION", true, null))
-                {
-                    bContainsPosition = true;
-                }
-            }
-
-            return bContainsTexCoord && bContainsNormal && (!bContainsTangent) && bContainsPosition;
-        }
-        
 
         public GLTFStaticMeshObject(GLTFMeshAsset asset)
         {
             mGLTFAsset = asset;
+
+            mVertexAttributeMap = mGLTFAsset.VertexAttributeMap;
+            mVector2VertexAttributes = mGLTFAsset.Vector2VertexAttributes;
+            mVector3VertexAttributes = mGLTFAsset.Vector3VertexAttributes;
+            mVector4VertexAttributes = mGLTFAsset.Vector4VertexAttributes;
+            mUIntIndices = mGLTFAsset.UIntIndices;
+            mUShortIndices = mGLTFAsset.UShortIndices;
+
+
             mEncodedPBRInfo = EncodePBRInfo();
             RenderingThread.Instance.ExecuteImmediatelyIfRenderingThread(() =>
             {
@@ -257,6 +235,52 @@ namespace Engine
                 }
             }
         }
+
+        public override IEnumerable<(string, Matrix4)> GetMatrix4Params()
+        {
+            yield return ("View", CameraManager.Instance.CurrentCameraView);
+            yield return ("Proj", CameraManager.Instance.CurrentCameraProj);
+            yield return ("Model", this.LocalMatrix);
+        }
+
+        public override IEnumerable<(string, bool)> GetBoolParams()
+        {
+            yield return ("MetallicExist", true);
+
+            yield return ("NormalExist", true);
+
+            yield return ("MaskExist", false);
+
+            yield return ("MetallicRoughnessOneTexture", true);
+
+            yield return ("RoghnessExist", true);
+        }
+
+        public override IEnumerable<(string, string)> GetTextureParams()
+        {
+            // base 
+            if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.BaseColor))
+            {
+                var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.BaseColor];
+                yield return ("DiffuseTex", path);
+            }
+
+            // normal
+            if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Normal))
+            {
+                var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.Normal];
+                yield return ("NormalTex", path);
+            }
+
+            // metallic roughness
+            if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.MetallicRoughness))
+            {
+                var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.MetallicRoughness];
+                yield return ("MetallicTex", path);
+                yield return ("RoughnessTex", path);
+            }
+        }
+
 
         private GenericMeshDrawable mDrawable = null;
 

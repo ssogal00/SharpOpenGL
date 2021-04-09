@@ -255,13 +255,8 @@ namespace Core.MaterialBase
             }
         }
 
-        public void SetUniformVariable(string varName, float data, bool bChecked = false)
+        public void SetUniformVariable(string varName, float data, bool bCompareAndUpdateWhenDifferent = false)
         {
-            if (bChecked)
-            {
-                CheckUniformVariableExist(varName);
-            }
-
             // 
             if (mUniformVariableNames.Contains(varName))
             {
