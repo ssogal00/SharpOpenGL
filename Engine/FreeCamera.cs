@@ -244,7 +244,7 @@ namespace Core.Camera
                 }
 
                 vDir.Normalize();
-                EyeLocation += vDir * (float)fDeltaSeconds * SpeedList[SpeedIndex];
+                EyeLocation += vDir * (float)fDeltaSeconds * SpeedList[2];
             }
             else
             {

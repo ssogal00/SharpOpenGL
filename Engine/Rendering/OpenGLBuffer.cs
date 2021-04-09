@@ -47,6 +47,8 @@ namespace Core.Buffer
             if (mCachedBufferData == null)
             {
                 mCachedBufferData = new byte[size];
+                mTempStorage = new byte[size];
+                mCachedDataPtr = Marshal.AllocHGlobal(size);
             }
         }
 
@@ -62,17 +64,17 @@ namespace Core.Buffer
 
         protected void UpdateCachedBufferData<T>(T data) where T : struct
         {
+            int size = Marshal.SizeOf(data);
+
             if (mCachedBufferData == null)
             {
-                mCachedBufferData = new byte[Marshal.SizeOf(data)];
+                mCachedBufferData = new byte[size];
+                mTempStorage = new byte[size];
+                mCachedDataPtr = Marshal.AllocHGlobal(size);
             }
             
-            var bf = new BinaryFormatter();
-            using (MemoryStream ms = new MemoryStream())
-            {
-                bf.Serialize(ms, data);
-                mCachedBufferData = ms.ToArray();
-            }
+            Marshal.StructureToPtr(data, mCachedDataPtr, true);
+            Marshal.Copy(mCachedDataPtr, mCachedBufferData, 0, size);
         }
 
         // return true if equals
@@ -84,18 +86,15 @@ namespace Core.Buffer
             }
 
             int size = Marshal.SizeOf(data);
-            byte[] newData = new byte[size];
-            IntPtr ptr = Marshal.AllocHGlobal(size);
-            Marshal.StructureToPtr(data,ptr,true);
-            Marshal.Copy(ptr, newData,0,size);
-            Marshal.FreeHGlobal(ptr);
+            Marshal.StructureToPtr(data,mCachedDataPtr,true);
+            Marshal.Copy(mCachedDataPtr, mTempStorage,offset,size);
 
-            byte[] prevData = mCachedBufferData.AsSpan(offset, Marshal.SizeOf(data)).ToArray();
+            byte[] prevData = mCachedBufferData.AsSpan(offset, size).ToArray();
 
-            bool bEqual = prevData.SequenceEqual(newData);
+            bool bEqual = prevData.SequenceEqual(mTempStorage.Skip(offset).Take(size));
             if (!bEqual)
             {
-                System.Buffer.BlockCopy(newData, 0, mCachedBufferData, offset, size);
+                System.Buffer.BlockCopy(mTempStorage, offset, mCachedBufferData, offset, size);
             }
 
             return bEqual;
@@ -138,18 +137,20 @@ namespace Core.Buffer
         public void BufferData<T>(T data) where T : struct
         {   
             Bind();
+
+            var size = new IntPtr(Marshal.SizeOf(data));
             
             if (mBufferCreated == false)
             {
-                AllocateBuffer(data);
+                GL.BufferData<T>(mBufferTarget, size, ref data, mHint);
+                mBufferCreated = true;
             }
             else
             {
-                var size = new IntPtr(Marshal.SizeOf(data));
                 GL.BufferSubData(mBufferTarget, new IntPtr(0),  size, ref data);
-                UpdateCachedBufferData(data);
             }
-            
+
+            UpdateCachedBufferData(data);
         }
      
 
@@ -166,12 +167,7 @@ namespace Core.Buffer
             Bind();
             var size = new IntPtr(Marshal.SizeOf(data));
             GL.BufferSubData<T>(mBufferTarget, new IntPtr(offset), size, ref data);
-            var errcode =  GL.GetError();
-
-            if (errcode != ErrorCode.NoError)
-            {
-                Console.Write("Error");
-            }
+            UpdateCachedBufferData(data);
         }
      
 
@@ -231,6 +227,10 @@ namespace Core.Buffer
         protected bool bBind = false;
 
         protected byte[] mCachedBufferData = null;
-        
+
+        protected byte[] mTempStorage = null;
+
+        private IntPtr mCachedDataPtr = IntPtr.Zero;
+
     }
 }
