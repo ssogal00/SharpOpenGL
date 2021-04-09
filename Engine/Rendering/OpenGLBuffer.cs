@@ -1,7 +1,11 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Controls;
 using OpenTK;
 
 namespace Core.Buffer
@@ -34,6 +38,16 @@ namespace Core.Buffer
             Bind();
             GL.BufferData(mBufferTarget, new IntPtr(size), new IntPtr(0), mHint);
             mBufferCreated = true;
+            
+            CreateCachedBufferData(size);
+        }
+
+        private void CreateCachedBufferData(int size)
+        {
+            if (mCachedBufferData == null)
+            {
+                mCachedBufferData = new byte[size];
+            }
         }
 
         protected void AllocateBuffer<T>(T data) where T : struct
@@ -42,8 +56,50 @@ namespace Core.Buffer
             var size = new IntPtr(Marshal.SizeOf(data));
             GL.BufferData<T>(mBufferTarget, size, ref data, mHint);
             mBufferCreated = true;
+
+            UpdateCachedBufferData(data);
         }
 
+        protected void UpdateCachedBufferData<T>(T data) where T : struct
+        {
+            if (mCachedBufferData == null)
+            {
+                mCachedBufferData = new byte[Marshal.SizeOf(data)];
+            }
+            
+            var bf = new BinaryFormatter();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                bf.Serialize(ms, data);
+                mCachedBufferData = ms.ToArray();
+            }
+        }
+
+        // return true if equals
+        protected bool CompareCachedBufferData<T>(T data, int offset) where T : struct
+        {
+            if (mCachedBufferData == null)
+            {
+                return false;
+            }
+
+            int size = Marshal.SizeOf(data);
+            byte[] newData = new byte[size];
+            IntPtr ptr = Marshal.AllocHGlobal(size);
+            Marshal.StructureToPtr(data,ptr,true);
+            Marshal.Copy(ptr, newData,0,size);
+            Marshal.FreeHGlobal(ptr);
+
+            byte[] prevData = mCachedBufferData.AsSpan(offset, Marshal.SizeOf(data)).ToArray();
+
+            bool bEqual = prevData.SequenceEqual(newData);
+            if (!bEqual)
+            {
+                System.Buffer.BlockCopy(newData, 0, mCachedBufferData, offset, size);
+            }
+
+            return bEqual;
+        }
         
         public void Dispose()
         {
@@ -91,17 +147,25 @@ namespace Core.Buffer
             {
                 var size = new IntPtr(Marshal.SizeOf(data));
                 GL.BufferSubData(mBufferTarget, new IntPtr(0),  size, ref data);
+                UpdateCachedBufferData(data);
             }
             
         }
      
 
-        public void BufferSubData<T>(T Data, int offset) where T : struct
+        public void BufferSubData<T>(T data, int offset) where T : struct
         {
             Debug.Assert(mBufferCreated);
+
+            bool bEqual = CompareCachedBufferData(data, offset);
+            if (bEqual)
+            {
+                return;
+            }
+            
             Bind();
-            var size = new IntPtr(Marshal.SizeOf(Data));
-            GL.BufferSubData<T>(mBufferTarget, new IntPtr(offset), size, ref Data);
+            var size = new IntPtr(Marshal.SizeOf(data));
+            GL.BufferSubData<T>(mBufferTarget, new IntPtr(offset), size, ref data);
             var errcode =  GL.GetError();
 
             if (errcode != ErrorCode.NoError)
@@ -166,6 +230,7 @@ namespace Core.Buffer
 
         protected bool bBind = false;
 
+        protected byte[] mCachedBufferData = null;
         
     }
 }

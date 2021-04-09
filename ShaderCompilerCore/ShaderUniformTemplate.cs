@@ -30,7 +30,7 @@ namespace ShaderCompilerCore
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write("\r\n\r\n[StructLayout(LayoutKind.Explicit,Size=");
+            this.Write("\r\n[Serializable]\r\n[StructLayout(LayoutKind.Explicit,Size=");
             
             #line 10 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\ShaderUniformTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(BlockDataSize));

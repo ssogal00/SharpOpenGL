@@ -6,7 +6,7 @@
 <#@ import namespace="OpenTK" #>
 <#@ import namespace="OpenTK.Graphics.OpenGL" #>
 
-
+[Serializable]
 [StructLayout(LayoutKind.Explicit,Size=<#= BlockDataSize #>)]
 public struct <#= StructName #>
 {
