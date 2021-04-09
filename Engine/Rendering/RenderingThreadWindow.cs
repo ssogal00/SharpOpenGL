@@ -44,7 +44,7 @@ namespace Engine
 
         public RenderingThreadWindow(int width, int height)
         :base (new GameWindowSettings{IsMultiThreaded = false, UpdateFrequency = 500, RenderFrequency = 500}, 
-            new NativeWindowSettings{APIVersion = new Version(4,6)})
+            new NativeWindowSettings{APIVersion = new Version(4,6), Size = new Vector2i(1280,720)})
         {
             GLContextCreated.Subscribe(_ =>
             {

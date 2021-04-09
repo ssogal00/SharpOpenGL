@@ -39,10 +39,10 @@ namespace Core.Buffer
             GL.BufferData(mBufferTarget, new IntPtr(size), new IntPtr(0), mHint);
             mBufferCreated = true;
             
-            CreateCachedBufferData(size);
+            InitCachedBufferData(size);
         }
 
-        private void CreateCachedBufferData(int size)
+        private void InitCachedBufferData(int size)
         {
             if (mCachedBufferData == null)
             {
@@ -52,25 +52,13 @@ namespace Core.Buffer
             }
         }
 
-        protected void AllocateBuffer<T>(T data) where T : struct
-        {
-            Bind();
-            var size = new IntPtr(Marshal.SizeOf(data));
-            GL.BufferData<T>(mBufferTarget, size, ref data, mHint);
-            mBufferCreated = true;
-
-            UpdateCachedBufferData(data);
-        }
-
         protected void UpdateCachedBufferData<T>(T data) where T : struct
         {
             int size = Marshal.SizeOf(data);
 
             if (mCachedBufferData == null)
             {
-                mCachedBufferData = new byte[size];
-                mTempStorage = new byte[size];
-                mCachedDataPtr = Marshal.AllocHGlobal(size);
+                InitCachedBufferData(size);
             }
             
             Marshal.StructureToPtr(data, mCachedDataPtr, true);
