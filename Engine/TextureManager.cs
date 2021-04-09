@@ -1,14 +1,11 @@
 ﻿using Core;
 using Core.Texture;
+using Engine.Asset;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using DirectXTexWrapper;
-using Engine.Asset;
-using OpenTK.Graphics.OpenGL4;
-using PixelType = OpenTK.Graphics.OpenGL.PixelType;
 
 
 namespace Engine
@@ -72,7 +69,7 @@ namespace Engine
                 TextureMap.Remove(path);
             }
         }
-
+        
         public Texture2D LoadTexture2D(string path)
         {
             //

@@ -175,9 +175,9 @@ namespace Core.Primitive
             return Enumerable.Empty<(string, Matrix4)>();
         }
 
-        public virtual IEnumerable<(string, TextureBase)> GetTextureParams()
+        public virtual IEnumerable<(string, string)> GetTextureParams()
         {
-            return Enumerable.Empty<(string, TextureBase)>();
+            return Enumerable.Empty<(string, string)>();
         }
 
         public virtual IEnumerable<(string, bool)> GetBoolParams()

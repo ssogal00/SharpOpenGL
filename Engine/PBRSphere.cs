@@ -106,22 +106,26 @@ namespace Engine
 
         public void SetNormalTex(string normalTex)
         {
+            bNormalExist = true;
             this.normalTexPath = normalTex;
         }
 
         public void SetDiffuseTex(string diffuseTex)
         {
+            bDiffuseExist = true;
             this.diffuseTexPath = diffuseTex;
         }
 
         public void SetRoughnessTex(string roughnessTex)
         {
+            bRoughnessExist = true;
             this.roughnessTexPath = roughnessTex;
         }
 
 
         public void SetMetallicTex(string metallicTex)
         {
+            bMetallicExist = true;
             this.metallicTexPath = metallicTex;
         }
 
@@ -138,35 +142,42 @@ namespace Engine
             yield return ("Model", this.LocalMatrix);
         }
 
-        public override IEnumerable<(string, TextureBase)> GetTextureParams()
+        public override IEnumerable<(string, string)> GetTextureParams()
         {
             if (bMetallicExist)
             {
-                yield return ("MetalicTex", metalicTex);
+                yield return ("MetalicTex", metallicTexPath);
             }
 
             if (bNormalExist)
             {
-                yield return ("NormalTex", normalTex);
+                yield return ("NormalTex", normalTexPath);
             }
             
             if (bRoughnessExist)
             {
-                yield return ("RoughnessTex", roughTex);
+                yield return ("RoughnessTex", roughnessTexPath);
             }
 
             if (bDiffuseExist)
             {
-                yield return ("DiffuseTex", diffuseTex);
+                yield return ("DiffuseTex", diffuseTexPath);
             }
         }
+
+        
 
         public override IEnumerable<(string, bool)> GetBoolParams()
         {
             yield return ("MetalicExist", bMetallicExist);
-            yield return ("MetalicExist", bMetallicExist);
-            yield return ("MetalicExist", bMetallicExist);
-            yield return ("MetalicExist", bMetallicExist);
+            yield return ("NormalMapExist", bNormalExist);
+            yield return ("RoughnessExist", bRoughnessExist);
+            yield return ("DiffuseMapExist", bDiffuseExist);
+        }
+
+        public override IEnumerable<(string, int)> GetIntParams()
+        {
+            yield return ("LightChannel", (int) Light.LightChannel.StaticMeshChannel);
         }
 
         public override void Render()

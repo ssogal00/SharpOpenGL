@@ -106,7 +106,7 @@ namespace Core.Texture
 
         public override async Task<bool> LoadFromDDSFileAsync(string path)
         {
-            ManagedScratchImage result = await Task.Factory.StartNew(() =>
+            ManagedScratchImage result = await Task.Run(() =>
             {
                 return DXTLoader.LoadFromDDSFile(path);
             });
@@ -116,10 +116,8 @@ namespace Core.Texture
                 LoadInternal(result);
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            
+            return false;
         }
 
         public override bool LoadFromTGAFile(string path)
@@ -137,6 +135,22 @@ namespace Core.Texture
             }
         }
 
+        public override async Task<bool> LoadFromTGAFileAsync(string path)
+        {
+            ManagedScratchImage result = await Task.Run(() =>
+            {
+                return DXTLoader.LoadFromTGAFile(path);
+            });
+
+            if (result != null)
+            {
+                LoadInternal(result);
+                return true;
+            }
+
+            return false;
+        }
+
         public override bool LoadFromJPGFile(string path)
         {
             var scratchImage = DXTLoader.LoadFromJPGFile(path);
@@ -151,6 +165,8 @@ namespace Core.Texture
                 return false;
             } 
         }
+
+        
 
         public override void Load(string filePath, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         {

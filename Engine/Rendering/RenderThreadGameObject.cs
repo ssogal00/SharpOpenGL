@@ -90,6 +90,7 @@ namespace Engine
             var boolParams = mGameObject.GetBoolParams();
             var floatParams = mGameObject.GetFloatParams();
             var intParams = mGameObject.GetIntParams();
+            
             var material = ShaderManager.Instance.GetMaterial<GBufferDraw>();
             
             // set if it exists
@@ -113,12 +114,18 @@ namespace Engine
                 material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
 
-            foreach (var kvp in textureParams)
+            foreach (var kvp in boolParams)
             {
-                material.SetTexture(kvp.Item1, kvp.Item2);
+                material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
 
-            foreach (var kvp in boolParams)
+            foreach (var kvp in textureParams)
+            {
+                var tex=TextureManager.Instance.LoadTexture2D(kvp.Item2);
+                material.SetTexture(kvp.Item1, tex);
+            }
+
+            foreach (var kvp in intParams)
             {
                 material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }

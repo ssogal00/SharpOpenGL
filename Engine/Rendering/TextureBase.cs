@@ -63,6 +63,21 @@ namespace Core.Texture
             return false;
         }
 
+        public async virtual Task<bool> LoadFromTGAFileAsync(string path)
+        {
+            return false;
+        }
+
+        public async virtual Task<bool> LoadFromJPGFileAsync(string path)
+        {
+            return false;
+        }
+
+        public async virtual Task<bool> LoadFromHDRFileAsync(string path)
+        {
+            return false;
+        }
+
         public virtual byte[] GetTexImageAsByte()
         {
             return null;
