@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reactive.Threading.Tasks;
 using System.Text;
+using System.Threading.Tasks;
 using Engine;
 using Engine.Scene;
 
@@ -9,7 +10,7 @@ namespace Engine
 {
     public class SponzaScene : SceneBase
     {
-        public async override void InitializeScene()
+        public async override Task InitializeScene()
         {
             StaticMeshObject.CreateStaticMeshObjectAsync("sponza2.staticmesh").ToObservable().Subscribe(sponzamesh =>
             {

@@ -17,7 +17,7 @@ namespace Engine.Transform
     {
         public Prefilter()
         {
-            prefilterMaterial = ShaderManager.Get().GetMaterial<PrefilterMaterial>();
+            prefilterMaterial = ShaderManager.Instance.GetMaterial<PrefilterMaterial>();
 
             cubemesh = new Cube();
             cubemesh.SetVisible(false);

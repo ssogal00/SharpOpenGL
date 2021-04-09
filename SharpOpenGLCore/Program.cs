@@ -14,6 +14,7 @@ namespace SharpOpenGLCore
         [STAThread]
         static void Main()
         {
+            // initialize first
             Engine.Engine.Instance.Initialize();
 
             var renderThread = new Thread(RenderingThread.Instance.Run);

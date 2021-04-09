@@ -53,7 +53,7 @@ namespace Engine.Font
                 fontBoxRenderMaterial.BindAndExecute(boxVB, () =>
                 {
                     fontBoxRenderMaterial.SetUniformVariable("ScreenSize",
-                        new Vector2(OpenGLContext.Get().WindowWidth, OpenGLContext.Get().WindowHeight));
+                        new Vector2(OpenGLContext.Instance.WindowWidth, OpenGLContext.Instance.WindowHeight));
                     fontBoxRenderMaterial.SetUniformVariable("BoxColor", new Vector3(0,0,0));
                     fontBoxRenderMaterial.SetUniformVariable("BoxAlpha", 0.70f);
                     GL.DrawArrays(PrimitiveType.Quads, 0, 4);

@@ -26,7 +26,7 @@ namespace Engine
         }
         public override void Initialize()
         {
-            material = ShaderManager.Get().GetMaterial<EquirectangleToCube>();
+            material = ShaderManager.Instance.GetMaterial<EquirectangleToCube>();
 
             // create hdr texture
             var hdr = new Texture2D();

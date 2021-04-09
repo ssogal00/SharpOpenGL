@@ -13,7 +13,7 @@ namespace Engine.PostProcess
         {
             // just draw on current binded render target
             bOwnItsRenderTarget = false;
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<CubemapMaterial>();
+            PostProcessMaterial = ShaderManager.Instance.GetMaterial<CubemapMaterial>();
 
             sphereMeshObject = new StaticMeshObject("./Resources/Imported/StaticMesh/sphere3.staticmesh");
             sphereMeshObject.SetVisible(false);
@@ -32,9 +32,9 @@ namespace Engine.PostProcess
                 PostProcessMaterial.BindAndExecute(() =>
                 {
                     var specificMaterial = (CubemapMaterial) PostProcessMaterial;
-                    specificMaterial.ModelMatrix = Matrix4.CreateScale(10.0f) * Matrix4.CreateTranslation(CameraManager.Get().CurrentCameraEye);
-                    specificMaterial.ViewMatrix = CameraManager.Get().CurrentCameraView;
-                    specificMaterial.ProjMatrix = CameraManager.Get().CurrentCameraProj;
+                    specificMaterial.ModelMatrix = Matrix4.CreateScale(10.0f) * Matrix4.CreateTranslation(CameraManager.Instance.CurrentCameraEye);
+                    specificMaterial.ViewMatrix = CameraManager.Instance.CurrentCameraView;
+                    specificMaterial.ProjMatrix = CameraManager.Instance.CurrentCameraProj;
                     specificMaterial.TexCubemap2D = cubemapTexture;
                     specificMaterial.LightChannel = (int) Light.LightChannel.SkyBoxChannel;
                     sphereMeshObject.DrawWithBindedMaterial();

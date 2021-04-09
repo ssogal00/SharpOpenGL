@@ -83,7 +83,7 @@ namespace Core.Primitive
         {
             mID = ObjectCount++;
             Name = string.Format("{0}_{1}", name, mID);
-            SceneObjectManager.Get().AddSceneObject(this);
+            SceneObjectManager.Instance.AddSceneObject(this);
         }
        
         public virtual void Initialize()
@@ -183,6 +183,16 @@ namespace Core.Primitive
         public virtual IEnumerable<(string, bool)> GetBoolParams()
         {
             return Enumerable.Empty<(string, bool)>();
+        }
+
+        public virtual IEnumerable<(string, float)> GetFloatParams()
+        {
+            return Enumerable.Empty <(string, float)>();
+        }
+
+        public virtual IEnumerable<(string, int)> GetIntParams()
+        {
+            return Enumerable.Empty<(string, int)>();
         }
 
         public List<uint> UIntIndices => mUIntIndices;

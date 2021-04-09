@@ -16,8 +16,8 @@ namespace Engine
         public FontRender()
         : base()
         {
-            mFontRenderMaterial = ShaderManager.Get().GetMaterial<SignedDistanceField>();
-            //mFontRenderMaterial = ShaderManager.Get().GetMaterial<ScreenSpaceDraw>();
+            mFontRenderMaterial = ShaderManager.Instance.GetMaterial<SignedDistanceField>();
+            //mFontRenderMaterial = ShaderManager.Instance.GetMaterial<ScreenSpaceDraw>();
             Debug.Assert(mFontRenderMaterial != null);
         }
 

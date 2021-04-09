@@ -112,7 +112,7 @@ namespace Engine
 
             GenerateVertices();
             
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
+            RenderingThread.Instance.ExecuteImmediatelyIfRenderingThread(() =>
             {
                 drawable = new DrawableBase<PN_VertexAttribute>();
                 var vertexArray = VertexList.ToArray();
@@ -120,7 +120,7 @@ namespace Engine
 
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferCubeTest>();
+                defaultMaterial = ShaderManager.Instance.GetMaterial<GBufferCubeTest>();
 
                 bReadyToDraw = true;
             });
@@ -134,8 +134,8 @@ namespace Engine
                 {
                     var gbufferDraw = (GBufferCubeTest)defaultMaterial;
 
-                    gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
-                    gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+                    gbufferDraw.CameraTransform_View = CameraManager.Instance.CurrentCameraView;
+                    gbufferDraw.CameraTransform_Proj = CameraManager.Instance.CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 
                     gbufferDraw.EquirectangularMap2D = cubemapTex;

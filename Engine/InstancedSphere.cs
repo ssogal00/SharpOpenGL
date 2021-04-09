@@ -34,7 +34,7 @@ namespace Engine
         {
             GenerateVertices();
 
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
+            RenderingThread.Instance.ExecuteImmediatelyIfRenderingThread(() =>
             {
                 drawable = new DrawableBase<PNTT_VertexAttribute>();
                 var vertexArray = VertexList.ToArray();
@@ -42,7 +42,7 @@ namespace Engine
 
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferInstanced>();
+                defaultMaterial = ShaderManager.Instance.GetMaterial<GBufferInstanced>();
 
                 bReadyToDraw = true;
             });
@@ -58,8 +58,8 @@ namespace Engine
 
                     gbufferDraw.LightChannel = (int) Light.LightChannel.StaticMeshChannel;
                     
-                    gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
-                    gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+                    gbufferDraw.CameraTransform_View = CameraManager.Instance.CurrentCameraView;
+                    gbufferDraw.CameraTransform_Proj = CameraManager.Instance.CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 
                     gbufferDraw.NormalMapExist = false;

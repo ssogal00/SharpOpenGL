@@ -13,7 +13,7 @@ namespace Engine
     {
         public void DebugDraw()
         {
-            var pointLights = LightManager.Get().GetLightListOfType<PointLight>();
+            var pointLights = LightManager.Instance.GetLightListOfType<PointLight>();
             foreach (var point in pointLights)
             {
                 point.Render();

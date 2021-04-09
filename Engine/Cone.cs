@@ -43,7 +43,7 @@ namespace Engine
         {
             GenerateVertices();
 
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(
+            RenderingThread.Instance.ExecuteImmediatelyIfRenderingThread(
             () =>
             {
                 VB = new AOSVertexBuffer<PNC_VertexAttribute>();
@@ -53,7 +53,7 @@ namespace Engine
                 VB.BufferData<PNC_VertexAttribute>(vertexArray);
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC>();
+                defaultMaterial = ShaderManager.Instance.GetMaterial<GBufferPNC>();
 
                 bReadyToDraw = true;
             });

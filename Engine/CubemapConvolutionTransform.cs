@@ -23,7 +23,7 @@ namespace Engine.Transform
 
         public override void Initialize()
         {
-            material = ShaderManager.Get().GetMaterial<CubemapConvolution>();
+            material = ShaderManager.Instance.GetMaterial<CubemapConvolution>();
 
             //
             cubeMesh = new Cube();

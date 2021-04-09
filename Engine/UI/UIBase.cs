@@ -221,7 +221,7 @@ namespace Engine
 
         public UIScreen()
         {
-            ResizableManager.Get().AddResizable(this);
+            ResizableManager.Instance.AddResizable(this);
         }
 
         public void AddChild(UIBase child)

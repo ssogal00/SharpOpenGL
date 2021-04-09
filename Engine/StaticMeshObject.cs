@@ -70,7 +70,7 @@ namespace Engine
         {
             meshAsset = asset;
 
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread
+            RenderingThread.Instance.ExecuteImmediatelyIfRenderingThread
             (
                 () =>
                 {
@@ -83,7 +83,7 @@ namespace Engine
         {
             meshAsset = AssetManager.LoadAssetSync<StaticMeshAsset>(assetpath);
 
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread
+            RenderingThread.Instance.ExecuteImmediatelyIfRenderingThread
             (
                 () =>
                 {
@@ -118,14 +118,14 @@ namespace Engine
                 return;
             }
 
-            var material = ShaderManager.Get().GetMaterial<TBNMaterial>();
+            var material = ShaderManager.Instance.GetMaterial<TBNMaterial>();
 
             Debug.Assert(material != null);
 
             material.Bind();
             material.ModelTransform_Model = this.ParentMatrix * this.LocalMatrix;
-            material.CameraTransform_View = CameraManager.Get().CurrentCameraView;
-            material.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+            material.CameraTransform_View = CameraManager.Instance.CurrentCameraView;
+            material.CameraTransform_Proj = CameraManager.Instance.CurrentCameraProj;
 
             if (linedrawable != null)
             {
@@ -141,7 +141,7 @@ namespace Engine
                 return;
             }
 
-            var gbufferMaterial = ShaderManager.Get().GetMaterial<GBufferDraw>();
+            var gbufferMaterial = ShaderManager.Instance.GetMaterial<GBufferDraw>();
 
             Debug.Assert(gbufferMaterial != null);
 
@@ -152,16 +152,16 @@ namespace Engine
             gbufferMaterial.PrevTransform_PrevModel = this.ParentMatrix * this.LocalMatrix;
             gbufferMaterial.ModelTransform_Model = this.ParentMatrix * this.LocalMatrix;
 
-            gbufferMaterial.PrevTransform_PrevProj = CameraManager.Get().PrevCameraProj;
-            gbufferMaterial.PrevTransform_PrevView = CameraManager.Get().PrevCameraView;
+            gbufferMaterial.PrevTransform_PrevProj = CameraManager.Instance.PrevCameraProj;
+            gbufferMaterial.PrevTransform_PrevView = CameraManager.Instance.PrevCameraView;
 
-            gbufferMaterial.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
-            gbufferMaterial.CameraTransform_View = CameraManager.Get().CurrentCameraView;
+            gbufferMaterial.CameraTransform_Proj = CameraManager.Instance.CurrentCameraProj;
+            gbufferMaterial.CameraTransform_View = CameraManager.Instance.CurrentCameraView;
 
             if (meshAsset.MaterialMap.Count == 0)
             {
                 gbufferMaterial.SetTexture("DiffuseTex",
-                    TextureManager.Get().GetTexture2D("./Resources/Texture/Checker.png"));
+                    TextureManager.Instance.GetTexture2D("./Resources/Texture/Checker.png"));
                 meshdrawable.Draw(0, (uint) (meshAsset.VertexIndices.Count));
                 return;
             }
@@ -172,14 +172,14 @@ namespace Engine
                 // setup
                 if (meshAsset.MaterialMap.ContainsKey(sectionName))
                 {
-                    var diffuseTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].DiffuseMap);
+                    var diffuseTex = TextureManager.Instance.GetTexture2D(meshAsset.MaterialMap[sectionName].DiffuseMap);
                     gbufferMaterial.DiffuseMapExist = true;
                     gbufferMaterial.DiffuseTex2D = diffuseTex;
 
                     if (meshAsset.MaterialMap[sectionName].NormalMap != null)
                     {
                         gbufferMaterial.NormalMapExist = true;
-                        var normalTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].NormalMap);
+                        var normalTex = TextureManager.Instance.GetTexture2D(meshAsset.MaterialMap[sectionName].NormalMap);
                         gbufferMaterial.NormalTex2D = normalTex;
                     }
                     else
@@ -190,7 +190,7 @@ namespace Engine
                     if (meshAsset.MaterialMap[sectionName].MaskMap != null)
                     {
                         gbufferMaterial.MaskMapExist = true;
-                        var maskTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].MaskMap);
+                        var maskTex = TextureManager.Instance.GetTexture2D(meshAsset.MaterialMap[sectionName].MaskMap);
                         gbufferMaterial.MaskTex2D = maskTex;
                     }
                     else
@@ -206,13 +206,13 @@ namespace Engine
                     else if(meshAsset.MaterialMap[sectionName].SpecularMap != null)
                     {
                         gbufferMaterial.MetalicExist = true;
-                        var specTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].SpecularMap);
+                        var specTex = TextureManager.Instance.GetTexture2D(meshAsset.MaterialMap[sectionName].SpecularMap);
                         gbufferMaterial.MetalicTex2D = specTex;
                     }
                     else
                     {
                         gbufferMaterial.MetalicExist = false;
-                        gbufferMaterial.Metalic = DebugDrawer.Get().SceneMetallic;
+                        gbufferMaterial.Metalic = DebugDrawer.Instance.SceneMetallic;
                     }
 
                     if(IsRoughnessOverride)
@@ -223,13 +223,13 @@ namespace Engine
                     else if(meshAsset.MaterialMap[sectionName].RoughnessMap != null)
                     {
                         gbufferMaterial.RoughnessExist = true;
-                        var roughnessTex = TextureManager.Get().GetTexture2D(meshAsset.MaterialMap[sectionName].RoughnessMap);
+                        var roughnessTex = TextureManager.Instance.GetTexture2D(meshAsset.MaterialMap[sectionName].RoughnessMap);
                         gbufferMaterial.RoughnessTex2D = roughnessTex;
                     }
                     else
                     {
                         gbufferMaterial.RoughnessExist = false;
-                        gbufferMaterial.Roughness = DebugDrawer.Get().SceneRoughness;
+                        gbufferMaterial.Roughness = DebugDrawer.Instance.SceneRoughness;
                     }
                 }
 
@@ -257,27 +257,27 @@ namespace Engine
             {
                 if (Mtl.Value.DiffuseMap.Length > 0)
                 {
-                    TextureManager.Get().CacheTexture2D(Mtl.Value.DiffuseMap);
+                    TextureManager.Instance.CacheTexture2D(Mtl.Value.DiffuseMap);
                 }
 
                 if (Mtl.Value.NormalMap != null)
                 {
-                    TextureManager.Get().CacheTexture2D(Mtl.Value.NormalMap);
+                    TextureManager.Instance.CacheTexture2D(Mtl.Value.NormalMap);
                 }
 
                 if (Mtl.Value.SpecularMap != null)
                 {
-                    TextureManager.Get().CacheTexture2D(Mtl.Value.SpecularMap);
+                    TextureManager.Instance.CacheTexture2D(Mtl.Value.SpecularMap);
                 }
 
                 if (Mtl.Value.MaskMap != null)
                 {
-                    TextureManager.Get().CacheTexture2D(Mtl.Value.MaskMap);
+                    TextureManager.Instance.CacheTexture2D(Mtl.Value.MaskMap);
                 }
 
                 if (Mtl.Value.RoughnessMap != null)
                 {
-                    TextureManager.Get().CacheTexture2D(Mtl.Value.RoughnessMap);
+                    TextureManager.Instance.CacheTexture2D(Mtl.Value.RoughnessMap);
                 }
             }
         }

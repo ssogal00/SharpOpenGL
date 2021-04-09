@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using AttributeType = GLTF.V2.AttributeType;
 
 namespace GLTF
@@ -69,6 +70,12 @@ namespace GLTF
 
     public class GLTFMeshAsset
     {
+        public static async Task<List<GLTFMeshAsset>> LoadFromAsync(GLTF_V2 gltf)
+        {
+            var result = await Task.Factory.StartNew(() => { return LoadFrom(gltf);});
+            return result;
+        }
+
         public static List<GLTFMeshAsset> LoadFrom(GLTF_V2 gltf)
         {
             // buffer

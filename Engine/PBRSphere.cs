@@ -57,11 +57,11 @@ namespace Engine
 
             VertexList.Clear();
 
-            defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw>();
+            defaultMaterial = ShaderManager.Instance.GetMaterial<GBufferDraw>();
 
             if (normalTex == null && normalTexPath?.Length > 0)
             {
-                normalTex = TextureManager.Get().LoadTexture2D(normalTexPath);
+                normalTex = TextureManager.Instance.LoadTexture2D(normalTexPath);
                 if (normalTex != null)
                 {
                     bNormalExist = true;
@@ -70,7 +70,7 @@ namespace Engine
 
             if (diffuseTex == null && diffuseTexPath?.Length > 0)
             {
-                diffuseTex = TextureManager.Get().LoadTexture2D(diffuseTexPath);
+                diffuseTex = TextureManager.Instance.LoadTexture2D(diffuseTexPath);
                 if (diffuseTex != null)
                 {
                     bDiffuseExist = true;
@@ -79,7 +79,7 @@ namespace Engine
 
             if (roughTex == null && roughnessTexPath?.Length > 0)
             {
-                roughTex = TextureManager.Get().LoadTexture2D(roughnessTexPath);
+                roughTex = TextureManager.Instance.LoadTexture2D(roughnessTexPath);
 
                 if (roughTex != null)
                 {
@@ -89,7 +89,7 @@ namespace Engine
 
             if (metalicTex == null && metallicTexPath?.Length > 0)
             {
-                metalicTex = TextureManager.Get().LoadTexture2D(metallicTexPath);
+                metalicTex = TextureManager.Instance.LoadTexture2D(metallicTexPath);
                 if (metalicTex != null)
                 {
                     bMetallicExist = true;
@@ -127,7 +127,7 @@ namespace Engine
 
         public override void Dispose()
         {
-            TextureManager.Get().UnloadTexture(diffuseTexPath);
+            TextureManager.Instance.UnloadTexture(diffuseTexPath);
         }
 
 

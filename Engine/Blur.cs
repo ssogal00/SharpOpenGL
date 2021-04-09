@@ -26,7 +26,7 @@ namespace Engine.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<Blur>();
+            PostProcessMaterial = ShaderManager.Instance.GetMaterial<Blur>();
         }
 
         public override void Render(TextureBase input)

@@ -49,7 +49,7 @@ namespace Engine
         {
             GenerateVertices();
 
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
+            RenderingThread.Instance.ExecuteImmediatelyIfRenderingThread(() =>
             {
                 drawable = new DrawableBase<PNC_VertexAttribute>();
                 var vertexArray = VertexList.ToArray();
@@ -57,7 +57,7 @@ namespace Engine
 
                 VertexList.Clear();
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC>();
+                defaultMaterial = ShaderManager.Instance.GetMaterial<GBufferPNC>();
 
                 bReadyToDraw = true;
             });
@@ -143,8 +143,8 @@ namespace Engine
                 {
                     var gbufferDraw = (GBufferPNC)defaultMaterial;
 
-                    gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
-                    gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+                    gbufferDraw.CameraTransform_View = CameraManager.Instance.CurrentCameraView;
+                    gbufferDraw.CameraTransform_Proj = CameraManager.Instance.CurrentCameraProj;
                     gbufferDraw.Model = this.LocalMatrix;
 
                     drawable.DrawArrays(PrimitiveType.Triangles);

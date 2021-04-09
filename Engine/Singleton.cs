@@ -15,9 +15,5 @@ namespace Core
             get => instance;
         }
 
-        public static T Get()
-        {
-            return instance;
-        }
     }
 }

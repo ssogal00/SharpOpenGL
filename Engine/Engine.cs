@@ -46,9 +46,9 @@ namespace Engine
             MainThreadId = Thread.CurrentThread.ManagedThreadId;
             OpenGLContext.Instance.SetMainThreadId(MainThreadId);
 
-            await AssetManager.Instance.ImportStaticMeshes();
+            await AssetManager.Instance.ImportStaticMeshesAsync();
 
-            mCurrentScene.InitializeScene();
+            await mCurrentScene.InitializeScene();
 
             bInitialized = true;
         }
@@ -67,7 +67,7 @@ namespace Engine
             }
 
             TickableObjectManager.Tick(stopwatch.ElapsedMilliseconds * 0.001f);
-            SceneObjectManager.Get().Tick(stopwatch.ElapsedMilliseconds * 0.001f);
+            SceneObjectManager.Instance.Tick(stopwatch.ElapsedMilliseconds * 0.001f);
 
             GameThreadDone.Set();
 

@@ -62,12 +62,12 @@ namespace Engine
 
             VertexList.Clear();
 
-            defaultMaterial = ShaderManager.Get().GetMaterial<GBufferDraw>();
+            defaultMaterial = ShaderManager.Instance.GetMaterial<GBufferDraw>();
 
-            normalTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_normal-dx.imported");
-            diffuseTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_basecolor.imported");
-            roughTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/metalgrid4_roughness.imported");
-            metalicTex = TextureManager.Get().LoadTexture2D("./Resources/Imported/Texture/copper-rock1-metal.imported");
+            normalTex = TextureManager.Instance.LoadTexture2D("./Resources/Imported/Texture/metalgrid4_normal-dx.imported");
+            diffuseTex = TextureManager.Instance.LoadTexture2D("./Resources/Imported/Texture/metalgrid4_basecolor.imported");
+            roughTex = TextureManager.Instance.LoadTexture2D("./Resources/Imported/Texture/metalgrid4_roughness.imported");
+            metalicTex = TextureManager.Instance.LoadTexture2D("./Resources/Imported/Texture/copper-rock1-metal.imported");
 
             bReadyToDraw = true;
         }
@@ -87,8 +87,8 @@ namespace Engine
                 {
                     var gbufferDraw = (GBufferDraw) defaultMaterial;
 
-                    gbufferDraw.CameraTransform_View = CameraManager.Get().CurrentCameraView;
-                    gbufferDraw.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+                    gbufferDraw.CameraTransform_View = CameraManager.Instance.CurrentCameraView;
+                    gbufferDraw.CameraTransform_Proj = CameraManager.Instance.CurrentCameraProj;
                     gbufferDraw.ModelTransform_Model = this.LocalMatrix;
 
                     gbufferDraw.NormalMapExist = true;

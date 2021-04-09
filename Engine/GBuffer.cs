@@ -10,7 +10,7 @@ namespace Core.Buffer
     {        
         public GBuffer(int width, int height)
         {
-            ResizableManager.Get().AddResizable(this);
+            ResizableManager.Instance.AddResizable(this);
             BufferHeight = height;
             BufferWidth = width;
 
@@ -19,7 +19,7 @@ namespace Core.Buffer
 
         public GBuffer()
         {
-            ResizableManager.Get().AddResizable(this);
+            ResizableManager.Instance.AddResizable(this);
             BufferWidth = 1024;
             BufferHeight = 768;
             Initialize();

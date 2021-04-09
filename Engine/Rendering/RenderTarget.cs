@@ -14,7 +14,7 @@ namespace Core.Texture
         {
             if (bFixedSize == false)
             {
-                ResizableManager.Get().AddResizable(this);
+                ResizableManager.Instance.AddResizable(this);
             }
 
             this.bIncludeDepthAttachment = bIncludeDepthAttachment;

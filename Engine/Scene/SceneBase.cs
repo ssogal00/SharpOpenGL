@@ -13,7 +13,7 @@ namespace Engine.Scene
         {
         }
 
-        public async virtual void InitializeScene()
+        public async virtual Task InitializeScene()
         {
         }
 
@@ -39,8 +39,8 @@ namespace Engine.Scene
 
         protected virtual void InitializeCamera()
         {
-            CameraManager.Get().CurrentCamera.EyeLocation = mCameraStartPos;
-            CameraManager.Get().CurrentCamera.LookAtLocation = mCameraStartPos + mCameraStartDir * 1.0f;
+            CameraManager.Instance.CurrentCamera.EyeLocation = mCameraStartPos;
+            CameraManager.Instance.CurrentCamera.LookAtLocation = mCameraStartPos + mCameraStartDir * 1.0f;
         }
         
         public virtual void Render()

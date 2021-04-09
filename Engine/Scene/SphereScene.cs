@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Core.Primitive;
 using OpenTK.Mathematics;
 using Engine;
@@ -10,7 +11,7 @@ namespace Engine
 {
     public class SphereScene : SceneBase
     {
-        public override void InitializeScene()
+        public async override Task InitializeScene()
         {
             var rusted = CreateGameObject<PBRSphere>();
             rusted.Scale = 1.5f;

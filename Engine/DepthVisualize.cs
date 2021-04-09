@@ -13,7 +13,7 @@ namespace Engine.PostProcess
         public DepthVisualize()
             : base()
         {
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<DepthVisualizeMaterial>();
+            PostProcessMaterial = ShaderManager.Instance.GetMaterial<DepthVisualizeMaterial>();
 
             Debug.Assert(PostProcessMaterial != null);
         }
@@ -25,8 +25,8 @@ namespace Engine.PostProcess
             Output.BindAndExecute(concretemtl, ()=>
             {
                 concretemtl.DepthTex2D = Input0;
-                concretemtl.Near = CameraManager.Get().CurrentCamera.Near;
-                concretemtl.Far = CameraManager.Get().CurrentCamera.Far;
+                concretemtl.Near = CameraManager.Instance.CurrentCamera.Near;
+                concretemtl.Far = CameraManager.Instance.CurrentCamera.Far;
 
                 BlitToScreenSpace();
             });

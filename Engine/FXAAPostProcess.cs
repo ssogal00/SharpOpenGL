@@ -14,7 +14,7 @@ namespace Engine.PostProcess
         public FXAAPostProcess()
         {
             this.Name = "FXAAPostProcess";
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<FXAAMaterial>();
+            PostProcessMaterial = ShaderManager.Instance.GetMaterial<FXAAMaterial>();
         }
 
         public override void Render(TextureBase Input)

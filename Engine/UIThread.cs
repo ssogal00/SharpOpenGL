@@ -26,7 +26,7 @@ namespace Engine
         {   
             /*editorWindow = new ObjectEditor.MainWindow();
 
-            editorWindow.ObjectCreateEventHandler += Engine.Get().OnObjectCreate;
+            editorWindow.ObjectCreateEventHandler += Engine.Instance.OnObjectCreate;
 
             editorWindow.Show();
 

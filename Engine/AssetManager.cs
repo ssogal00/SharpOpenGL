@@ -63,7 +63,7 @@ namespace Core.Asset
                 return cachedAsset;
             }
 
-            return await Task.Factory.StartNew(() =>
+            return await Task.Run(() =>
             {
                 lock (syncObject)
                 {
@@ -114,7 +114,7 @@ namespace Core.Asset
             }
         }
 
-        public async Task ImportStaticMeshes()
+        public async Task ImportStaticMeshesAsync()
         {
             List<string> objFileList = new List<string>();
             List<string> mtlFileList = new List<string>();

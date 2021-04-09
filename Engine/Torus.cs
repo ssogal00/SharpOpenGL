@@ -33,7 +33,7 @@ namespace Engine
         {   
             GenerateVertices();
 
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread
+            RenderingThread.Instance.ExecuteImmediatelyIfRenderingThread
             (
             ()=>
             {
@@ -41,7 +41,7 @@ namespace Engine
                 var vertexArray = VertexList.ToArray();
                 drawable.SetupVertexData(ref vertexArray);
 
-                defaultMaterial = ShaderManager.Get().GetMaterial<GBufferPNC>();
+                defaultMaterial = ShaderManager.Instance.GetMaterial<GBufferPNC>();
 
                 VertexList.Clear();
                 bReadyToDraw = true;

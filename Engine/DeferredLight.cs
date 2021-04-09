@@ -23,7 +23,7 @@ namespace Engine.PostProcess
 
         private void UpdateLightInfo()
         {
-            IEnumerable<PointLight> lightList = LightManager.Get().GetLightListOfType<PointLight>();
+            IEnumerable<PointLight> lightList = LightManager.Instance.GetLightListOfType<PointLight>();
 
             var lightCount = lightList.Count();
 
@@ -58,14 +58,14 @@ namespace Engine.PostProcess
                 deferredLight.PrefilterMap2D = prefilterMap;
 
                 
-                deferredLight.CameraTransform_View = CameraManager.Get().CurrentCameraView;
-                deferredLight.CameraTransform_Proj = CameraManager.Get().CurrentCameraProj;
+                deferredLight.CameraTransform_View = CameraManager.Instance.CurrentCameraView;
+                deferredLight.CameraTransform_Proj = CameraManager.Instance.CurrentCameraProj;
                 //
 
                 UpdateLightInfo();
                 /*deferredLight.LightCount = this.LightPositions.Count;
                 deferredLight.LightPositions = this.LightPositions.ToArray();
-                deferredLight.LightColors = this.LightColors.Select(x => x * DebugDrawer.Get().LightIntensity).ToArray();
+                deferredLight.LightColors = this.LightColors.Select(x => x * DebugDrawer.Instance.LightIntensity).ToArray();
                 deferredLight.LightMinMaxs = this.LightMinMaxs.ToArray();*/
 
                 BlitToScreenSpace();

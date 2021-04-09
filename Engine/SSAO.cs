@@ -28,7 +28,7 @@ namespace Engine.PostProcess
         {
             base.OnGLContextCreated(sender, e);
 
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<SSAOMaterial>();
+            PostProcessMaterial = ShaderManager.Instance.GetMaterial<SSAOMaterial>();
 
             BuildKernel();
             BuildRandomRotationTexture();
@@ -42,7 +42,7 @@ namespace Engine.PostProcess
             {
                 ssaoMaterial.NormalTex2D = normalTex;
                 ssaoMaterial.PositionTex2D = positionTex;
-                ssaoMaterial.ProjectionMatrix = CameraManager.Get().CurrentCameraProj;
+                ssaoMaterial.ProjectionMatrix = CameraManager.Instance.CurrentCameraProj;
                 ssaoMaterial.RandTex2D = this.RandTexture;
                 ssaoMaterial.SampleKernel = KernelArray;
                 ssaoMaterial.Radius = 50;

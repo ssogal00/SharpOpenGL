@@ -16,7 +16,7 @@ namespace Engine.Transform
     {
         public LookUpTable2D()
         {
-            material = ShaderManager.Get().GetMaterial<LUTGenerateMaterial>();
+            material = ShaderManager.Instance.GetMaterial<LUTGenerateMaterial>();
         }
 
         protected override void CreateDefaultRenderTarget()

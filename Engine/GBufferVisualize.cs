@@ -57,7 +57,7 @@ namespace Engine.PostProcess
         public override void Initialize()
         {
             base.Initialize();
-            PostProcessMaterial = ShaderManager.Get().GetMaterial<GBufferDump>();
+            PostProcessMaterial = ShaderManager.Instance.GetMaterial<GBufferDump>();
         }
 
         public override void Render(TextureBase ColorInput, TextureBase NormalInput, TextureBase PositionInput, TextureBase MotionInput)

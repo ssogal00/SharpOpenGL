@@ -40,8 +40,11 @@ namespace Engine
         private bool RightMouseBtnDown = false;
 #endregion
 
+        private static NativeWindowSettings mNativeWindowSettings = NativeWindowSettings.Default;
+
         public RenderingThreadWindow(int width, int height)
-        :base (new GameWindowSettings{IsMultiThreaded = false, UpdateFrequency = 500, RenderFrequency = 500}, NativeWindowSettings.Default)
+        :base (new GameWindowSettings{IsMultiThreaded = false, UpdateFrequency = 500, RenderFrequency = 500}, 
+            new NativeWindowSettings{APIVersion = new Version(4,6)})
         {
             GLContextCreated.Subscribe(_ =>
             {
@@ -50,7 +53,7 @@ namespace Engine
 
             WindowResized.Subscribe((x) =>
             {
-                CameraManager.Get().OnWindowResized(x.Item1, x.Item2);
+                CameraManager.Instance.OnWindowResized(x.Item1, x.Item2);
             });
         }
 
@@ -70,7 +73,7 @@ namespace Engine
             IsGLContextInitialized = true;
 
             Sampler.Initialize();
-            ShaderManager.Get().CompileShaders();
+            ShaderManager.Instance.CompileShaders();
             
             this.Title = "MyEngine";
 
@@ -80,8 +83,8 @@ namespace Engine
             GL.Enable(EnableCap.TextureCubeMap);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
             
-            OnKeyDownEvent += CameraManager.Get().OnKeyDown;
-            OnKeyUpEvent += CameraManager.Get().OnKeyUp;
+            OnKeyDownEvent += CameraManager.Instance.OnKeyDown;
+            OnKeyUpEvent += CameraManager.Instance.OnKeyUp;
             OnKeyDownEvent += this.HandleKeyDownEvent;
 
             VSync = VSyncMode.Off;
@@ -131,12 +134,12 @@ namespace Engine
             {
                 if (Math.Abs(e.DeltaX) > 0)
                 {
-                    CameraManager.Get().CurrentCamera.RotateYaw(e.DeltaX * 0.01f);
+                    CameraManager.Instance.CurrentCamera.RotateYaw(e.DeltaX * 0.01f);
                 }
 
                 if (Math.Abs(e.DeltaY) > 0)
                 {
-                    CameraManager.Get().CurrentCamera.RotatePitch(e.DeltaY * 0.01f);
+                    CameraManager.Instance.CurrentCamera.RotatePitch(e.DeltaY * 0.01f);
                 }
             }
         }
@@ -154,15 +157,15 @@ namespace Engine
         {
             if (e.Key == Keys.F1)
             {
-                CameraManager.Get().SwitchCamera();
+                CameraManager.Instance.SwitchCamera();
             }
             else if (e.Key == Keys.F2)
             {
-                CameraManager.Get().CurrentCamera.FOV += OpenTK.Mathematics.MathHelper.DegreesToRadians(1.0f);
+                CameraManager.Instance.CurrentCamera.FOV += OpenTK.Mathematics.MathHelper.DegreesToRadians(1.0f);
             }
             else if (e.Key == Keys.F3)
             {
-                CameraManager.Get().CurrentCamera.FOV -= OpenTK.Mathematics.MathHelper.DegreesToRadians(1.0f);
+                CameraManager.Instance.CurrentCamera.FOV -= OpenTK.Mathematics.MathHelper.DegreesToRadians(1.0f);
             }
             else if (e.Key == Keys.F6)
             {   
@@ -170,7 +173,7 @@ namespace Engine
             }
             else if (e.Key == Keys.F4)
             {
-                DebugDrawer.Get().IsGBufferDump = !DebugDrawer.Get().IsGBufferDump;
+                DebugDrawer.Instance.IsGBufferDump = !DebugDrawer.Instance.IsGBufferDump;
             }
             else if (e.Key == Keys.F5)
             {
@@ -180,7 +183,7 @@ namespace Engine
 
         protected override void OnUnload()
         {
-            Engine.Get().RequestExit();
+            Engine.Instance.RequestExit();
         }
         
         protected override void OnResize(ResizeEventArgs e)
@@ -206,7 +209,7 @@ namespace Engine
 
             WindowResized.OnNext(newSize);
 
-            ResizableManager.Get().ResizeEventHandler.OnNext(newSize);
+            ResizableManager.Instance.ResizeEventHandler.OnNext(newSize);
             
             this.Title = string.Format("MyEngine({0}x{1})", Width, Height);
         }
@@ -220,18 +223,18 @@ namespace Engine
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
-            Engine.Get().RequestExit();
+            Engine.Instance.RequestExit();
         }
         
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            Engine.Get().WaitForGameThread();
+            Engine.Instance.WaitForGameThread();
 
             this.MakeCurrent();
             GL.ClearColor(Color.BlueViolet);
             GL.Clear(ClearBufferMask.DepthBufferBit | ClearBufferMask.ColorBufferBit);
 
-            if (Engine.Get().IsInitialized == false)
+            if (Engine.Instance.IsInitialized == false)
             {
                 SwapBuffers();
                 return;

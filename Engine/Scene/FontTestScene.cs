@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Core;
 using GLTF;
 using Engine.Scene;
@@ -11,7 +12,7 @@ namespace Engine.Scene
 {
     public class FontTestScene : SceneBase
     {
-        public override void InitializeScene()
+        public async override Task InitializeScene()
         {
             var v2Sample = GLTFLoader.LoadGLTFV2("./Resources/GLTF/DamagedHelmet/glTF/DamagedHelmet.gltf");
 

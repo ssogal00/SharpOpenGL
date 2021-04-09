@@ -87,7 +87,7 @@ namespace Engine
         {
             mGLTFAsset = asset;
             mEncodedPBRInfo = EncodePBRInfo();
-            RenderingThread.Get().ExecuteImmediatelyIfRenderingThread(() =>
+            RenderingThread.Instance.ExecuteImmediatelyIfRenderingThread(() =>
             {
                 PrepareRenderingData();
             });
@@ -97,12 +97,12 @@ namespace Engine
         {
             if (bReadyToDraw)
             {
-                var mtl = ShaderManager.Get().GetMaterial("GBufferMacro1");
+                var mtl = ShaderManager.Instance.GetMaterial("GBufferMacro1");
 
                 mtl.Bind();
 
-                mTransformInfo.Proj = CameraManager.Get().CurrentCameraProj;
-                mTransformInfo.View = CameraManager.Get().CurrentCameraView;
+                mTransformInfo.Proj = CameraManager.Instance.CurrentCameraProj;
+                mTransformInfo.View = CameraManager.Instance.CurrentCameraView;
                 mtl.SetUniformBufferValue<CameraTransform>(@"CameraTransform", mTransformInfo);
 
                 mModelTransformInfo.Model = this.LocalMatrix;
@@ -120,22 +120,22 @@ namespace Engine
                 if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.BaseColor))
                 {
                     var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.BaseColor];
-                    mtl.SetTexture("DiffuseTex", TextureManager.Get().GetTexture2D(path));
+                    mtl.SetTexture("DiffuseTex", TextureManager.Instance.GetTexture2D(path));
                 }
 
                 // normal
                 if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Normal))
                 {
                     var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.Normal];
-                    mtl.SetTexture("NormalTex", TextureManager.Get().GetTexture2D(path));
+                    mtl.SetTexture("NormalTex", TextureManager.Instance.GetTexture2D(path));
                 }
 
                 // metallic roughness
                 if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.MetallicRoughness))
                 {
                     var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.MetallicRoughness];
-                    mtl.SetTexture("MetallicTex", TextureManager.Get().GetTexture2D(path));
-                    mtl.SetTexture("RoughnessTex", TextureManager.Get().GetTexture2D(path));
+                    mtl.SetTexture("MetallicTex", TextureManager.Instance.GetTexture2D(path));
+                    mtl.SetTexture("RoughnessTex", TextureManager.Instance.GetTexture2D(path));
                 }
 
                 mDrawable.DrawIndexed();
@@ -253,7 +253,7 @@ namespace Engine
             {
                 if (File.Exists(kvp.Value))
                 {
-                    TextureManager.Get().CacheTexture2D(kvp.Value);
+                    TextureManager.Instance.CacheTexture2D(kvp.Value);
                 }
             }
         }

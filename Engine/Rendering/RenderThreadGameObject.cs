@@ -88,6 +88,8 @@ namespace Engine
             var mat4Params = mGameObject.GetMatrix4Params();
             var textureParams = mGameObject.GetTextureParams();
             var boolParams = mGameObject.GetBoolParams();
+            var floatParams = mGameObject.GetFloatParams();
+            var intParams = mGameObject.GetIntParams();
             var material = ShaderManager.Instance.GetMaterial<GBufferDraw>();
             
             // set if it exists

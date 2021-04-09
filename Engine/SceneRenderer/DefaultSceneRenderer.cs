@@ -20,7 +20,7 @@ namespace Engine
         {
 
         }
-        public override void Initialize()
+        public async override void Initialize()
         {
             mScreenBlit = new BlitToScreen();
             lightPostProcess = new DeferredLight();
@@ -95,7 +95,7 @@ namespace Engine
             (
                 () =>
                 {
-                    Engine.Get().CurrentScene.Render();
+                    Engine.Instance.CurrentScene.Render();
                 }
             );
 
@@ -110,7 +110,7 @@ namespace Engine
                 mScreenBlit.Blit(testTexture, 0, 0, 2, 2);
             }
 
-            else if (DebugDrawer.Get().IsDepthDump)
+            else if (DebugDrawer.Instance.IsDepthDump)
             {
                 depthVisualize.Render(mRenderGBuffer.GetDepthAttachment);
                 mScreenBlit.Blit(depthVisualize.OutputColorTex0, 0, 0, 2, 2);
