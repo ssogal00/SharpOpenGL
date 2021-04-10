@@ -31,6 +31,15 @@ namespace Engine
             }
         }
 
+        public void DeleteVertexBuffer(int handle)
+        {
+            if (mVertexBufferHandles.ContainsKey(handle))
+            {
+                mVertexBufferHandles[handle].Dispose();
+                mVertexBufferHandles.Remove(handle);
+            }
+        }
+
         public VertexArray CreateVertexArray(string alias = "")
         {
             var va = new VertexArray(alias);
@@ -64,15 +73,6 @@ namespace Engine
             var buffer = new SOAVertexBuffer<T>();
             mVertexBufferHandles.Add(buffer.BufferHandle, buffer);
             return buffer;
-        }
-
-        public void DeleteVertexBuffer(int handle)
-        {
-            if (mVertexBufferHandles.ContainsKey(handle))
-            {
-                mVertexBufferHandles[handle].Dispose();
-                mVertexBufferHandles.Remove(handle);
-            }
         }
 
         private Dictionary<int, IndexBuffer> mIndexBufferHandles = new Dictionary<int, IndexBuffer>();

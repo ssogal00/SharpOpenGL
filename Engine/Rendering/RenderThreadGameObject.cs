@@ -33,6 +33,11 @@ namespace Engine
             {
                 ResourceManager.Instance.DeleteIndexBuffer(mIndexBuffer);
             }
+
+            foreach (var vb in mVertexBuffers)
+            {
+                ResourceManager.Instance.DeleteVertexBuffer(vb.BufferHandle);
+            }
         }
 
         public virtual void Render()
@@ -157,7 +162,7 @@ namespace Engine
                 {
                     case AttributeType.VEC4:
                         vector4Data = mGameObject.Vector4VertexAttributes[attrList[i]].ToArray();
-                        vector4VB = new SOAVertexBuffer<Vec4_VertexAttribute>();
+                        vector4VB = ResourceManager.Instance.CreateSOAVertexBuffer<Vec4_VertexAttribute>();
                         mVertexBuffers.Add(vector4VB);
                         vector4VB.BufferData<Vector4>(ref vector4Data);
                         vector4VB.BindVertexAttribute(i);
@@ -165,7 +170,7 @@ namespace Engine
 
                     case AttributeType.VEC3:
                         vector3Data = mGameObject.Vector3VertexAttributes[attrList[i]].ToArray();
-                        vector3VB = new SOAVertexBuffer<Vec3_VertexAttribute>();
+                        vector3VB = ResourceManager.Instance.CreateSOAVertexBuffer<Vec3_VertexAttribute>();
                         mVertexBuffers.Add(vector3VB);
                         vector3VB.BufferData<Vector3>(ref vector3Data);
                         vector3VB.BindVertexAttribute(i);
@@ -173,7 +178,7 @@ namespace Engine
 
                     case AttributeType.VEC2:
                         vector2Data = mGameObject.Vector2VertexAttributes[attrList[i]].ToArray();
-                        vector2VB = new SOAVertexBuffer<Vec2_VertexAttribute>();
+                        vector2VB = ResourceManager.Instance.CreateSOAVertexBuffer<Vec2_VertexAttribute>();
                         mVertexBuffers.Add(vector2VB);
                         vector2VB.BufferData<Vector2>(ref vector2Data);
                         vector2VB.BindVertexAttribute(i);
