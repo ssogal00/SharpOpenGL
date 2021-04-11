@@ -25,6 +25,7 @@ namespace Engine
             this.Color = new Vector3(1,1,1);
             this.Scale = 2.0f;
             this.IsEditable = true;
+            this.MaterialName = "GBufferDraw";
         }
 
         public PBRSphere(string diffuseTex, string normalTex, string roghnessTex, string metallicTex)
@@ -34,6 +35,7 @@ namespace Engine
             this.normalTexPath = normalTex;
             this.roughnessTexPath = roghnessTex;
             this.metallicTexPath = metallicTex;
+            this.MaterialName = "GBufferDraw";
         }
 
         private Matrix4 PrevModel = Matrix4.Identity;

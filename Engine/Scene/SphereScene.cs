@@ -6,6 +6,7 @@ using Core.Primitive;
 using OpenTK.Mathematics;
 using Engine;
 using Engine.Scene;
+using GLTF;
 
 namespace Engine
 {
@@ -58,6 +59,17 @@ namespace Engine
             tile.SetNormalTex("./Resources/Texture/tile/Tiles32_nrm.dds");
             tile.SetDiffuseTex("./Resources/Texture/tile/Tiles32_col.dds");
             tile.SetRoughnessTex("./Resources/Texture/tile/Tiles32_rgh.dds");
+            
+            var v2Sample = GLTFLoader.LoadGLTFV2("./Resources/GLTF/FlightHelmet/glTF/FlightHelmet.gltf");
+
+            var sampleMesh = GLTFMeshAsset.LoadFrom(v2Sample);
+
+            sampleMesh.ForEach(item =>
+            {
+                var newmesh = new GLTFStaticMeshObject(item);
+                newmesh.Scale = 10;
+                mGameObjectList.Add(newmesh);
+            });
 
             InitializeCamera();
         }

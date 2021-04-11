@@ -38,7 +38,7 @@ namespace Engine
                 return 1;
             }
 
-            else if (semanticName.StartsWith("TEXCOORD_0", true, null))
+            else if (semanticName.StartsWith("TEXCOORD", true, null))
             {
                 return 2;
             }
@@ -56,19 +56,14 @@ namespace Engine
         {
             mGLTFAsset = asset;
 
+            MaterialName = "GBufferMacro1";
+
             mVertexAttributeMap = mGLTFAsset.VertexAttributeMap;
             mVector2VertexAttributes = mGLTFAsset.Vector2VertexAttributes;
             mVector3VertexAttributes = mGLTFAsset.Vector3VertexAttributes;
             mVector4VertexAttributes = mGLTFAsset.Vector4VertexAttributes;
             mUIntIndices = mGLTFAsset.UIntIndices;
             mUShortIndices = mGLTFAsset.UShortIndices;
-
-
-            mEncodedPBRInfo = EncodePBRInfo();
-            RenderingThread.Instance.ExecuteImmediatelyIfRenderingThread(() =>
-            {
-                PrepareRenderingData();
-            });
         }
 
         public override void Render()

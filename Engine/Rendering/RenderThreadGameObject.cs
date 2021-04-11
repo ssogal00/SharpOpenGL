@@ -7,6 +7,7 @@ using CompiledMaterial.GBufferDraw;
 using Core;
 using Core.Buffer;
 using Core.Primitive;
+using GLTF;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using AttributeType = GLTF.V2.AttributeType;
@@ -47,8 +48,11 @@ namespace Engine
             // 3. vertex array bind
             // 4. draw
             // unbind...
+            
+            var material = ShaderManager.Instance.GetMaterial(mGameObject.MaterialName);
+            
 
-            var material = ShaderManager.Instance.GetMaterial<GBufferDraw>();
+            Debug.Assert(material != null);
 
             material.Bind();
 
@@ -60,10 +64,14 @@ namespace Engine
 
             if (mHasIndex)
             {
+                Debug.Assert(mIndexCount > 0);
+                mIndexBuffer.Bind();
                 GL.DrawElements(PrimitiveType.Triangles, mIndexCount, mIndexType, 0);
+                mIndexBuffer.Unbind();
             }
             else
             {
+                Debug.Assert(mGameObject.VertexCount > 0);
                 GL.DrawArrays(PrimitiveType.Triangles, 0, mGameObject.VertexCount);
             }
             
@@ -95,9 +103,9 @@ namespace Engine
             var boolParams = mGameObject.GetBoolParams();
             var floatParams = mGameObject.GetFloatParams();
             var intParams = mGameObject.GetIntParams();
-            
-            var material = ShaderManager.Instance.GetMaterial<GBufferDraw>();
-            
+
+            var material = ShaderManager.Instance.GetMaterial(mGameObject.MaterialName);
+
             // set if it exists
             foreach (var kvp in vec3Params)
             {
@@ -141,7 +149,7 @@ namespace Engine
             mVertexArray = ResourceManager.Instance.CreateVertexArray();
 
             var attrList = mGameObject.VertexAttributeMap
-                .OrderBy(x => x.Value.Index)
+                .OrderBy(x => x.Value.GetSemanticIndexInShader())
                 .Select(x => x.Value)
                 .ToArray();
 

@@ -28,12 +28,40 @@ namespace GLTF
         public string BaseColorTexture;
     }
 
+    public static class VertexAttributeSemanticExtensions
+    {
+
+        public static int GetSemanticIndexInShader(this VertexAttributeSemantic semantic)
+        {
+            if (semantic.AttributeName.StartsWith("POSITION", true, null))
+            {
+                return 0;
+            }
+
+            else if (semantic.AttributeName.StartsWith("NORMAL", true, null))
+            {
+                return 1;
+            }
+
+            else if (semantic.AttributeName.StartsWith("TEXCOORD", true, null))
+            {
+                return 2;
+            }
+
+            else if (semantic.AttributeName.StartsWith("TANGENT", true, null))
+            {
+                return 3;
+            }
+
+            return 0;
+        }
+    }
+
     public class VertexAttributeSemantic : IEquatable<VertexAttributeSemantic>
     {
         public readonly int Index = 0;
         public readonly string AttributeName = "";
         public readonly AttributeType AttributeType = AttributeType.SCALAR;
-
 
         public VertexAttributeSemantic(int attributeIndex, string attributeName, AttributeType @type)
         {

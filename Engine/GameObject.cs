@@ -153,6 +153,8 @@ namespace Core.Primitive
 
         public MaterialBase.MaterialBase Material { get; set; } = null;
 
+        public string MaterialName { get; set; } = string.Empty;
+
         protected MaterialBase.MaterialBase defaultMaterial = null;
 
         public virtual IEnumerable<(string, Vector2)> GetVector2Params()
