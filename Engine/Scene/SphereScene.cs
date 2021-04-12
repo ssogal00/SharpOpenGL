@@ -14,7 +14,7 @@ namespace Engine
     {
         public async override Task InitializeScene()
         {
-            /*var rusted = CreateGameObject<PBRSphere>();
+            var rusted = CreateGameObject<PBRSphere>();
             rusted.Scale = 1.5f;
             rusted.Translation = new Vector3(0, 0, -80);
             rusted.SetNormalTex("./Resources/Texture/rustediron/rustediron2_normal.dds");
@@ -30,12 +30,12 @@ namespace Engine
             gold.SetMetallicTex("./Resources/Texture/gold/gold-scuffed_metallic.dds");
             gold.SetRoughnessTex("./Resources/Texture/gold/gold-scuffed_roughness.dds");
 
-            var wood = CreateGameObject<PBRSphere>();
+            /*var wood = CreateGameObject<PBRSphere>();
             wood.Scale = 1.5f;
             wood.Translation = new Vector3(-0, 0, 0);
             wood.SetNormalTex("./Resources/Texture/floor/mahogfloor_normal.dds");
             wood.SetDiffuseTex("./Resources/Texture/floor/mahogfloor_basecolor.dds");
-            wood.SetRoughnessTex("./Resources/Texture/floor/mahogfloor_roughness.dds");
+            wood.SetRoughnessTex("./Resources/Texture/floor/mahogfloor_roughness.dds");*/
 
             var bamboo = CreateGameObject<PBRSphere>();
             bamboo.Scale = 1.5f;
@@ -44,7 +44,7 @@ namespace Engine
             bamboo.SetDiffuseTex("./Resources/Texture/bamboo/bamboo-wood-semigloss-albedo.dds");
             bamboo.SetRoughnessTex("./Resources/Texture/bamboo/bamboo-wood-semigloss-roughness.dds");
             bamboo.SetMetallicTex("./Resources/Texture/bamboo/bamboo-wood-semigloss-metal.dds");
-            */
+            
             var metal = CreateGameObject<PBRSphere>();
             metal.Scale = 1.5f;
             metal.Translation = new Vector3(0, 0, 80);
@@ -69,7 +69,7 @@ namespace Engine
             sampleMesh.ForEach(item =>
             {
                 var newmesh = new GLTFStaticMeshObject(item);
-                newmesh.Scale = 10;
+                newmesh.Scale = 100;
                 mGameObjectList.Add(newmesh);
             });
 
