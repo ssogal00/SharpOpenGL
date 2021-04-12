@@ -23,7 +23,7 @@ namespace Engine
             Debug.Assert(RenderingThread.IsInRenderingThread());
             mScreenBlit = new BlitToScreen();
             mLightPostProcess = new DeferredLight();
-
+            gbufferVisualize = new GBufferVisualize();
             mEquirectToCubemap = new EquirectangleToCubemap();
             mConvolution = new CubemapConvolutionTransform();
             mFxaa = new FXAAPostProcess();
@@ -91,6 +91,11 @@ namespace Engine
                 mPrefilter.ResultCubemap);
 
             mScreenBlit.Blit(mLightPostProcess.OutputColorTex0, 0, 0, 1, 1);
+            //gbufferVisualize.CurrentMode = GBufferVisualize.EVisualizeMode.EColor;
+            //gbufferVisualize.Render(mRenderGBuffer.GetColorAttachement, mRenderGBuffer.GetNormalAttachment, mRenderGBuffer.GetPositionAttachment, mRenderGBuffer.GetMotionAttachment);
+            //mScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0, 0, 1, 1);
+
+            //mScreenBlit.Blit(mRenderGBuffer.GetColorAttachement,0,0,1,1);
         }
 
         protected BlitToScreen mScreenBlit;
@@ -100,6 +105,7 @@ namespace Engine
         protected EquirectangleToCubemap mEquirectToCubemap;
         protected CubemapConvolutionTransform mConvolution;
         protected FXAAPostProcess mFxaa;
+        protected GBufferVisualize gbufferVisualize;
         #endregion
 
         protected LookUpTable2D mLut;

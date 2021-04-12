@@ -14,7 +14,7 @@ namespace Engine
     {
         public async override Task InitializeScene()
         {
-            var rusted = CreateGameObject<PBRSphere>();
+            /*var rusted = CreateGameObject<PBRSphere>();
             rusted.Scale = 1.5f;
             rusted.Translation = new Vector3(0, 0, -80);
             rusted.SetNormalTex("./Resources/Texture/rustediron/rustediron2_normal.dds");
@@ -44,7 +44,7 @@ namespace Engine
             bamboo.SetDiffuseTex("./Resources/Texture/bamboo/bamboo-wood-semigloss-albedo.dds");
             bamboo.SetRoughnessTex("./Resources/Texture/bamboo/bamboo-wood-semigloss-roughness.dds");
             bamboo.SetMetallicTex("./Resources/Texture/bamboo/bamboo-wood-semigloss-metal.dds");
-
+            */
             var metal = CreateGameObject<PBRSphere>();
             metal.Scale = 1.5f;
             metal.Translation = new Vector3(0, 0, 80);
@@ -52,14 +52,16 @@ namespace Engine
             metal.SetDiffuseTex("./Resources/Texture/metal/metal-splotchy-albedo.dds");
             metal.SetRoughnessTex("./Resources/Texture/metal/metal-splotchy-rough.dds");
             metal.SetMetallicTex("./Resources/Texture/metal/metal-splotchy-metal.dds");
-
+              
             var tile = CreateGameObject<PBRSphere>();
             tile.Scale = 1.5f;
             tile.Translation = new Vector3(0, 0, 120);
             tile.SetNormalTex("./Resources/Texture/tile/Tiles32_nrm.dds");
             tile.SetDiffuseTex("./Resources/Texture/tile/Tiles32_col.dds");
             tile.SetRoughnessTex("./Resources/Texture/tile/Tiles32_rgh.dds");
-            
+          
+
+
             var v2Sample = GLTFLoader.LoadGLTFV2("./Resources/GLTF/FlightHelmet/glTF/FlightHelmet.gltf");
 
             var sampleMesh = GLTFMeshAsset.LoadFrom(v2Sample);
@@ -70,6 +72,8 @@ namespace Engine
                 newmesh.Scale = 10;
                 mGameObjectList.Add(newmesh);
             });
+
+            
 
             InitializeCamera();
         }

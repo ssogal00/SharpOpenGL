@@ -145,14 +145,12 @@ namespace Core.Buffer
         public void BufferSubData<T>(T data, int offset) where T : struct
         {
             Debug.Assert(mBufferCreated);
-
+            Bind();
             bool bEqual = CompareCachedBufferData(data, offset);
             if (bEqual)
             {
                 return;
             }
-            
-            Bind();
             var size = new IntPtr(Marshal.SizeOf(data));
             GL.BufferSubData<T>(mBufferTarget, new IntPtr(offset), size, ref data);
             UpdateCachedBufferData(data);

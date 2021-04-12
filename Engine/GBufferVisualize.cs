@@ -18,7 +18,7 @@ namespace Engine.PostProcess
             Initialize();
         }
 
-        protected enum EVisualizeMode
+        public enum EVisualizeMode
         {
             EColor,
             ENormal,
@@ -82,6 +82,12 @@ namespace Engine.PostProcess
 
                 BlitToScreenSpace();
             });
+        }
+
+        public EVisualizeMode CurrentMode
+        {
+            get => eVisualizeMode;
+            set => eVisualizeMode = value;
         }
 
         protected EVisualizeMode eVisualizeMode = EVisualizeMode.EPosition;

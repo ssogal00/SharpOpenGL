@@ -202,16 +202,6 @@ namespace Core.MaterialBase
 
         public void Bind()
         {
-            Setup();
-        }
-
-        public void Unbind()
-        {
-            GL.UseProgram(0);
-        }
-
-        public virtual void Setup()
-        {
             mMaterialProgram.UseProgram();
 
             if (mUniformBufferMap != null)
@@ -219,6 +209,20 @@ namespace Core.MaterialBase
                 foreach (var uniformBuffer in mUniformBufferMap)
                 {
                     mMaterialProgram.BindUniformBlock(uniformBuffer.Key);
+                    uniformBuffer.Value.Bind();
+                }
+            }
+        }
+
+        public void Unbind()
+        {
+            GL.UseProgram(0);
+
+            if (mUniformBufferMap != null)
+            {
+                foreach (var uniformBuffer in mUniformBufferMap)
+                {
+                    uniformBuffer.Value.Unbind();
                 }
             }
         }
