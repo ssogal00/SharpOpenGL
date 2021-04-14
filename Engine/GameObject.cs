@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Core.CustomAttribute;
 using Core.Texture;
+using Engine.Rendering;
 using GLTF;
 using OpenTK;
 using OpenTK.Mathematics;
@@ -124,11 +125,10 @@ namespace Core.Primitive
 
         protected int mVertexCount = 0;
 
-        public List<VertexAttributeSemantic> VertexAttributeList
-        {
-            get => mVertexAttributeList;
-        }
+        protected int mMeshSectionCount = 1;
+        public int MeshSectionCount => mMeshSectionCount;
 
+        
         public Dictionary<string, VertexAttributeSemantic> VertexAttributeMap
         {
             get => mVertexAttributeMap;
@@ -151,15 +151,25 @@ namespace Core.Primitive
             get => mVector4VertexAttributes;
         }
 
-        public MaterialBase.MaterialBase Material { get; set; } = null;
+        
 
         public string MaterialName { get; set; } = string.Empty;
 
         protected MaterialBase.MaterialBase defaultMaterial = null;
 
+        public virtual IEnumerable<(string, Vector2)> GetVector2Params(int meshSection)
+        {
+            return Enumerable.Empty<(string, Vector2)>();
+        }
+
         public virtual IEnumerable<(string, Vector2)> GetVector2Params()
         {
             return Enumerable.Empty<(string, Vector2)>();
+        }
+
+        public virtual IEnumerable<(string, Vector3)> GetVector3Params(int meshSection)
+        {
+            return Enumerable.Empty<(string, Vector3)>();
         }
 
         public virtual IEnumerable<(string, Vector3)> GetVector3Params()
@@ -167,9 +177,19 @@ namespace Core.Primitive
             return Enumerable.Empty<(string, Vector3)>();
         }
 
+        public virtual IEnumerable<(string, Vector4)> GetVector4Params(int sectionIndex)
+        {
+            return Enumerable.Empty<(string, Vector4)>();
+        }
+
         public virtual IEnumerable<(string, Vector4)> GetVector4Params()
         {
             return Enumerable.Empty<(string, Vector4)>();
+        }
+
+        public virtual IEnumerable<(string, Matrix4)> GetMatrix4Params(int sectionIndex)
+        {
+            return Enumerable.Empty<(string, Matrix4)>();
         }
 
         public virtual IEnumerable<(string, Matrix4)> GetMatrix4Params()
@@ -181,8 +201,16 @@ namespace Core.Primitive
         {
             return Enumerable.Empty<(string, string)>();
         }
+        public virtual IEnumerable<(string, string)> GetTextureParams(int sectionIndex)
+        {
+            return Enumerable.Empty<(string, string)>();
+        }
 
         public virtual IEnumerable<(string, bool)> GetBoolParams()
+        {
+            return Enumerable.Empty<(string, bool)>();
+        }
+        public virtual IEnumerable<(string, bool)> GetBoolParams(int sectionIndex)
         {
             return Enumerable.Empty<(string, bool)>();
         }
@@ -192,10 +220,25 @@ namespace Core.Primitive
             return Enumerable.Empty <(string, float)>();
         }
 
+        public virtual IEnumerable<(string, float)> GetFloatParams(int sectionIndex)
+        {
+            return Enumerable.Empty<(string, float)>();
+        }
+
         public virtual IEnumerable<(string, int)> GetIntParams()
         {
             return Enumerable.Empty<(string, int)>();
         }
+
+        public virtual IEnumerable<(string, int)> GetIntParams(int sectionIndex)
+        {
+            return Enumerable.Empty<(string, int)>();
+        }
+
+        public List<MeshSection> MeshSectionList => mMeshSectionList;
+
+        protected List<MeshSection> mMeshSectionList = new List<MeshSection>();
+
 
         public List<uint> UIntIndices => mUIntIndices;
 

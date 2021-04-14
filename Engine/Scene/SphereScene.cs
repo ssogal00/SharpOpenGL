@@ -70,6 +70,7 @@ namespace Engine
             {
                 var newmesh = new GLTFStaticMeshObject(item);
                 newmesh.Scale = 100;
+                newmesh.Yaw = -(float)Math.PI / 2.0f;
                 mGameObjectList.Add(newmesh);
             });
 

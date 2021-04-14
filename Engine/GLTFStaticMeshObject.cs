@@ -52,6 +52,12 @@ namespace Engine
         }
 
 
+        public GLTFStaticMeshObject(List<GLTFMeshAsset> assetList)
+        {
+            MaterialName = "GBufferMacro1";
+            
+        }
+
         public GLTFStaticMeshObject(GLTFMeshAsset asset)
         {
             mGLTFAsset = asset;
