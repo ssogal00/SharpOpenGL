@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using CompiledMaterial.GBufferDraw;
-using Core;
-using Core.Buffer;
+﻿using Core.Buffer;
 using Core.Primitive;
 using GLTF;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using AttributeType = GLTF.V2.AttributeType;
 
 namespace Engine
@@ -87,9 +84,34 @@ namespace Engine
         {
             for (int sectionIndex = 0; sectionIndex < mGameObject.MeshSectionList.Count; ++sectionIndex)
             {
+                var material = ShaderManager.Instance.GetMaterial(mGameObject.MeshSectionList[sectionIndex].MaterialName);
+                Debug.Assert(material != null);
+
+                material.Bind();
                 mVertexArrayList[sectionIndex].Bind();
 
+                if (mGameObject.MeshSectionList[sectionIndex].HasIndex)
+                {
+                    mIndexBufferMap[sectionIndex].Bind();
+                    
+                    GL.DrawElements(PrimitiveType.Triangles, 
+                        mGameObject.MeshSectionList[sectionIndex].IndexCount, 
+                        mGameObject.MeshSectionList[sectionIndex].IndexType, 0);
+
+                    mIndexBufferMap[sectionIndex].Unbind();
+                }
+                else
+                {
+                    Debug.Assert(mGameObject.VertexCount > 0);
+                    GL.DrawArrays(PrimitiveType.Triangles, 0, mGameObject.VertexCount);
+                }
+
+
+
+                SetMaterialParams(sectionIndex);
+
                 mVertexArrayList[sectionIndex].Unbind();
+                material.Unbind();
             }
         }
 
@@ -277,7 +299,7 @@ namespace Engine
                 if (section.UIntIndices.Count > 0)
                 {
                     var indexBuffer = ResourceManager.Instance.CreateIndexBuffer();
-                    mIndexBufferList.Add(indexBuffer);
+                    mIndexBufferMap.Add(sectionIndex, indexBuffer);
                     indexBuffer.Bind();
                     indexBuffer.BufferData(section.UIntIndices.ToArray());
                     mIndexType = DrawElementsType.UnsignedInt;
@@ -287,16 +309,12 @@ namespace Engine
                 else if (section.UShortIndices.Count > 0)
                 {
                     var indexBuffer = ResourceManager.Instance.CreateIndexBuffer();
-                    mIndexBufferList.Add(indexBuffer);
+                    mIndexBufferMap.Add(sectionIndex, indexBuffer);
                     indexBuffer.Bind();
                     indexBuffer.BufferData(section.UShortIndices.ToArray());
                     mIndexType = DrawElementsType.UnsignedShort;
                     mIndexCount = section.UShortIndices.Count;
                     indexBuffer.Unbind();
-                }
-                else
-                {
-                    mHasIndex = false;
                 }
 
                 vertexArray.Unbind();
@@ -388,7 +406,7 @@ namespace Engine
 
         protected IndexBuffer mIndexBuffer;
 
-        protected List<IndexBuffer> mIndexBufferList;
+        protected Dictionary<int, IndexBuffer> mIndexBufferMap;
 
         protected List<OpenGLBuffer> mVertexBuffers = new List<OpenGLBuffer>();
 

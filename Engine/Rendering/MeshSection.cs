@@ -4,15 +4,48 @@ using System.Linq;
 using System.Text;
 using GLTF;
 using OpenTK.Mathematics;
+using OpenTK.Graphics.OpenGL;
 
 namespace Engine.Rendering
 {
     public class MeshSection
     {
         public string MaterialName = string.Empty;
+
+        public bool HasIndex
+        {
+            get;
+            set;
+        }
+
         public List<uint> UIntIndices => mUIntIndices;
 
         public List<ushort> UShortIndices => mUShortIndices;
+
+        public DrawElementsType IndexType
+        {
+            get
+            {
+                if (UIntIndices.Count > 0)
+                {
+                    return DrawElementsType.UnsignedInt;
+                }
+                else if (UShortIndices.Count > 0)
+                {
+                    return DrawElementsType.UnsignedShort;
+                }
+
+                return DrawElementsType.UnsignedInt;
+            }
+        }
+
+        public int IndexCount
+        {
+            get
+            {
+                return Math.Max(UIntIndices.Count, UShortIndices.Count);
+            }
+        }
 
         public Dictionary<string, VertexAttributeSemantic> VertexAttributeMap
         {
