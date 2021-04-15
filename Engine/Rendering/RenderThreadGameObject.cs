@@ -17,7 +17,8 @@ namespace Engine
         {
             Debug.Assert(RenderingThread.IsInRenderingThread());
             mGameObject = gameObject;
-            Initialize();
+            // Initialize();
+            InitializeMultipleSections();
         }
 
         public virtual void Dispose()
@@ -87,7 +88,12 @@ namespace Engine
                 var material = ShaderManager.Instance.GetMaterial(mGameObject.MeshSectionList[sectionIndex].MaterialName);
                 Debug.Assert(material != null);
 
+                // bind material
                 material.Bind();
+                
+                // set material parameterss
+                SetMaterialParams(sectionIndex);
+                
                 mVertexArrayList[sectionIndex].Bind();
 
                 if (mGameObject.MeshSectionList[sectionIndex].HasIndex)
@@ -106,9 +112,6 @@ namespace Engine
                     GL.DrawArrays(PrimitiveType.Triangles, 0, mGameObject.VertexCount);
                 }
 
-
-
-                SetMaterialParams(sectionIndex);
 
                 mVertexArrayList[sectionIndex].Unbind();
                 material.Unbind();

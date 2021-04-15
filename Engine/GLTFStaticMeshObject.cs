@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Xps.Serialization;
+using Engine.Rendering;
 using OpenTK.Mathematics;
 using CameraTransform = CompiledMaterial.GBufferPNTT.CameraTransform;
 using ModelTransform = CompiledMaterial.GBufferPNTT.ModelTransform;
@@ -55,7 +56,14 @@ namespace Engine
         public GLTFStaticMeshObject(List<GLTFMeshAsset> assetList)
         {
             MaterialName = "GBufferMacro1";
-            
+
+            foreach (var asset in assetList)
+            {
+                var section = new MeshSection();
+                section.MaterialName = "GBufferMacro1";
+                section.Vector2VertexAttributes = asset.Vector2VertexAttributes;
+                section
+            }
         }
 
         public GLTFStaticMeshObject(GLTFMeshAsset asset)

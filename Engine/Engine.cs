@@ -58,7 +58,7 @@ namespace Engine
             // frametime in milliseconds
             long frameMilliseconds = stopwatch.ElapsedMilliseconds;
             // gamethread 120fps
-            float frameCap = (1.0f / 120.0f) * 1000;
+            float frameCap = (1.0f / 240.0f) * 1000;
 
             if (stopwatch.ElapsedMilliseconds < frameCap)
             {

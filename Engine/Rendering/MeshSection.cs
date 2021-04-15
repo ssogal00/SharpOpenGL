@@ -39,6 +39,11 @@ namespace Engine.Rendering
             }
         }
 
+        public MeshSection(string materialName,
+            Dictionary<string, VertexAttributeSemantic> vertexAttributeMap,
+            Dictionary<VertexAttributeSemantic, List<Vector2>> vector2VertexAttributes,
+            Dictionary<>)
+
         public int IndexCount
         {
             get
