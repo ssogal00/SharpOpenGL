@@ -147,6 +147,11 @@ namespace Engine
             {
                 material.SetUniformVariable(kvp.Item1, kvp.Item2);
             }
+
+            foreach (var kvp in floatParams)
+            {
+                material.SetUniformVariable(kvp.Item1, kvp.Item2);
+            }
         }
 
         

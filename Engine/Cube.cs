@@ -100,10 +100,7 @@ namespace Engine
             VertexList.Add(new PN_VertexAttribute(new Vector3(-1.0f, -1.0f, 1.0f), Vector3.UnitY));
         }
 
-        public override List<RenderCommand> GetRenderCommands()
-        {
-            return null;
-        }
+        
 
         public override void Initialize()
         {

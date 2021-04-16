@@ -92,12 +92,6 @@ namespace Core.Primitive
         {
 
         }
-
-        public virtual List<RenderCommand> GetRenderCommands()
-        {
-            return null;
-        }
-
         public bool IsReadyToDraw => bReadyToDraw;
 
         [ExposeUI]
@@ -143,18 +137,8 @@ namespace Core.Primitive
         {
             return Enumerable.Empty<(string, Vector2)>();
         }
-
-        public virtual IEnumerable<(string, Vector2)> GetVector2Params()
-        {
-            return Enumerable.Empty<(string, Vector2)>();
-        }
-
+        
         public virtual IEnumerable<(string, Vector3)> GetVector3Params(int meshSection)
-        {
-            return Enumerable.Empty<(string, Vector3)>();
-        }
-
-        public virtual IEnumerable<(string, Vector3)> GetVector3Params()
         {
             return Enumerable.Empty<(string, Vector3)>();
         }
@@ -164,52 +148,25 @@ namespace Core.Primitive
             return Enumerable.Empty<(string, Vector4)>();
         }
 
-        public virtual IEnumerable<(string, Vector4)> GetVector4Params()
-        {
-            return Enumerable.Empty<(string, Vector4)>();
-        }
 
         public virtual IEnumerable<(string, Matrix4)> GetMatrix4Params(int sectionIndex)
         {
             return Enumerable.Empty<(string, Matrix4)>();
         }
 
-        public virtual IEnumerable<(string, Matrix4)> GetMatrix4Params()
-        {
-            return Enumerable.Empty<(string, Matrix4)>();
-        }
-
-        public virtual IEnumerable<(string, string)> GetTextureParams()
-        {
-            return Enumerable.Empty<(string, string)>();
-        }
         public virtual IEnumerable<(string, string)> GetTextureParams(int sectionIndex)
         {
             return Enumerable.Empty<(string, string)>();
         }
 
-        public virtual IEnumerable<(string, bool)> GetBoolParams()
-        {
-            return Enumerable.Empty<(string, bool)>();
-        }
         public virtual IEnumerable<(string, bool)> GetBoolParams(int sectionIndex)
         {
             return Enumerable.Empty<(string, bool)>();
         }
 
-        public virtual IEnumerable<(string, float)> GetFloatParams()
-        {
-            return Enumerable.Empty <(string, float)>();
-        }
-
         public virtual IEnumerable<(string, float)> GetFloatParams(int sectionIndex)
         {
             return Enumerable.Empty<(string, float)>();
-        }
-
-        public virtual IEnumerable<(string, int)> GetIntParams()
-        {
-            return Enumerable.Empty<(string, int)>();
         }
 
         public virtual IEnumerable<(string, int)> GetIntParams(int sectionIndex)

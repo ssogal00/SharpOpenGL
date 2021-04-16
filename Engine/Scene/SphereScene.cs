@@ -61,13 +61,18 @@ namespace Engine
             tile.SetRoughnessTex("./Resources/Texture/tile/Tiles32_rgh.dds");
           
             var v2Sample = GLTFLoader.LoadGLTFV2("./Resources/GLTF/FlightHelmet/glTF/FlightHelmet.gltf");
-
             var sampleMesh = GLTFMeshAsset.LoadFrom(v2Sample);
-            
-            var newmesh = new GLTFStaticMeshObject(sampleMesh);
+            var newmesh = new GLTFStaticMeshObject("GBufferMacro1", sampleMesh);
             newmesh.Scale = 100;
             newmesh.Yaw = -(float)Math.PI / 2.0f;
             mGameObjectList.Add(newmesh);
+
+            var v2Sample2 = GLTFLoader.LoadGLTFV2("./Resources/GLTF/DamagedHelmet/glTF/DamagedHelmet.gltf");
+            var sampleMesh2 = GLTFMeshAsset.LoadFrom(v2Sample2);
+            var newmesh2 = new GLTFStaticMeshObject("GBufferMacro2", sampleMesh2);
+            newmesh2.Scale = 10;
+            newmesh2.Translation = new Vector3(0, -50, 0);
+            mGameObjectList.Add(newmesh2);
 
             InitializeCamera();
         }

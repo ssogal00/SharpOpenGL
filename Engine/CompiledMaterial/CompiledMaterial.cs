@@ -473,11 +473,11 @@ float GetMetallicValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord)[2];
+			return texture(MetallicRoughnessTex, texcoord).b;
 		}
 		else
 		{
-			return texture(MetallicTex, texcoord)[2];
+			return texture(MetallicTex, texcoord).b;
 		}
 	}
 	else
@@ -492,11 +492,11 @@ float GetRoughnessValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord)[1];
+			return texture(MetallicRoughnessTex, texcoord).g;
 		}
 		else
 		{
-			return texture(RoughnessTex, texcoord)[1];
+			return texture(RoughnessTex, texcoord).g;
 		}
 	}
 	else
@@ -989,11 +989,11 @@ float GetMetallicValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord)[2];
+			return texture(MetallicRoughnessTex, texcoord).b;
 		}
 		else
 		{
-			return texture(MetallicTex, texcoord)[2];
+			return texture(MetallicTex, texcoord).b;
 		}
 	}
 	else
@@ -1008,11 +1008,11 @@ float GetRoughnessValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord)[1];
+			return texture(MetallicRoughnessTex, texcoord).g;
 		}
 		else
 		{
-			return texture(RoughnessTex, texcoord)[1];
+			return texture(RoughnessTex, texcoord).g;
 		}
 	}
 	else

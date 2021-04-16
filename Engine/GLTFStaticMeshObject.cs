@@ -11,7 +11,7 @@ namespace Engine
     {
         public GLTFStaticMeshObject(List<GLTFMeshAsset> assetList)
         {
-            MaterialName = "GBufferMacro1";
+            MaterialName = "GBufferMacro2";
             mGLTFAssetList = assetList;
             foreach (var asset in assetList)
             {
@@ -23,11 +23,25 @@ namespace Engine
             }
         }
 
+        public GLTFStaticMeshObject(string mtlName, List<GLTFMeshAsset> assetList)
+        {
+            MaterialName = mtlName;
+            mGLTFAssetList = assetList;
+            foreach (var asset in assetList)
+            {
+                var section = new MeshSection(MaterialName, asset.VertexAttributeMap,
+                    asset.Vector2VertexAttributes, asset.Vector3VertexAttributes,
+                    asset.Vector4VertexAttributes, asset.UIntIndices, asset.UShortIndices);
+
+                mMeshSectionList.Add(section);
+            }
+        }
+
         public GLTFStaticMeshObject(GLTFMeshAsset asset)
         {
             mGLTFAsset = asset;
 
-            MaterialName = "GBufferMacro1";
+            MaterialName = "GBufferMacro2";
 
             var section = new MeshSection(MaterialName, asset.VertexAttributeMap,
                 asset.Vector2VertexAttributes, asset.Vector3VertexAttributes,
@@ -85,14 +99,17 @@ namespace Engine
             return encoded;
         }
 
-
-
-       
         public override IEnumerable<(string, Matrix4)> GetMatrix4Params(int sectionIndex)
         {
             yield return ("View", CameraManager.Instance.CurrentCameraView);
             yield return ("Proj", CameraManager.Instance.CurrentCameraProj);
             yield return ("Model", this.LocalMatrix);
+        }
+
+        public override IEnumerable<(string, float)> GetFloatParams(int sectionIndex)
+        {
+            yield return ("Metallic", 0.5f);
+            yield return ("Roughness", 0.5f);
         }
 
         public override IEnumerable<(string, bool)> GetBoolParams(int sectionIndex)
@@ -129,34 +146,10 @@ namespace Engine
                 var path = mGLTFAssetList[index].Material.TextureMap[PBRTextureType.MetallicRoughness];
                 yield return ("MetallicTex", path);
                 yield return ("RoughnessTex", path);
+                yield return ("MetallicRoughnessTex", path);
             }
         }
 
-        public override IEnumerable<(string, string)> GetTextureParams()
-        {
-            // base 
-            if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.BaseColor))
-            {
-                var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.BaseColor];
-                yield return ("DiffuseTex", path);
-            }
-
-            // normal
-            if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Normal))
-            {
-                var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.Normal];
-                yield return ("NormalTex", path);
-            }
-
-            // metallic roughness
-            if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.MetallicRoughness))
-            {
-                var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.MetallicRoughness];
-                yield return ("MetallicTex", path);
-                yield return ("RoughnessTex", path);
-            }
-        }
-        
         protected GLTFMeshAsset mGLTFAsset;
 
         protected List<GLTFMeshAsset> mGLTFAssetList = new List<GLTFMeshAsset>();
