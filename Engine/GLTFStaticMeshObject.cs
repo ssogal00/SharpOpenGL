@@ -1,68 +1,25 @@
-﻿using CompiledMaterial.GBufferMacro1;
-using Core;
-using Core.Primitive;
+﻿using Core.Primitive;
+using Engine.Rendering;
 using GLTF;
-using OpenTK.Graphics.OpenGL;
-using Engine;
+using OpenTK.Mathematics;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Windows.Xps.Serialization;
-using Engine.Rendering;
-using OpenTK.Mathematics;
-using CameraTransform = CompiledMaterial.GBufferPNTT.CameraTransform;
-using ModelTransform = CompiledMaterial.GBufferPNTT.ModelTransform;
 
 namespace Engine
 {
     public class GLTFStaticMeshObject : GameObject
     {
-        private static readonly Dictionary<string, int> mVertexAttributePriority = new Dictionary<string, int>
-        {
-            {"POSITION", 0},
-            {"NORMAL", 1},
-            {"TEXCOORD_0", 2},
-            {"TEXCOORD_1", 3},
-            {"TANGENT", 4}
-        };
-
-        private static int GetSemanticPriority(string semanticName)
-        {
-            if (semanticName.StartsWith("POSITION", true, null))
-            {
-                return 0;
-            }
-
-            else if (semanticName.StartsWith("NORMAL", true, null))
-            {
-                return 1;
-            }
-
-            else if (semanticName.StartsWith("TEXCOORD", true, null))
-            {
-                return 2;
-            }
-
-            else if (semanticName.StartsWith("TANGENT", true, null))
-            {
-                return 3;
-            }
-
-            return 0;
-        }
-
-
         public GLTFStaticMeshObject(List<GLTFMeshAsset> assetList)
         {
             MaterialName = "GBufferMacro1";
-
+            mGLTFAssetList = assetList;
             foreach (var asset in assetList)
             {
-                var section = new MeshSection();
-                section.MaterialName = "GBufferMacro1";
-                section.Vector2VertexAttributes = asset.Vector2VertexAttributes;
-                section
+                var section = new MeshSection(MaterialName, asset.VertexAttributeMap,
+                    asset.Vector2VertexAttributes, asset.Vector3VertexAttributes,
+                    asset.Vector4VertexAttributes, asset.UIntIndices,asset.UShortIndices);
+
+                mMeshSectionList.Add(section);
             }
         }
 
@@ -72,64 +29,14 @@ namespace Engine
 
             MaterialName = "GBufferMacro1";
 
-            mVertexAttributeMap = mGLTFAsset.VertexAttributeMap;
-            mVector2VertexAttributes = mGLTFAsset.Vector2VertexAttributes;
-            mVector3VertexAttributes = mGLTFAsset.Vector3VertexAttributes;
-            mVector4VertexAttributes = mGLTFAsset.Vector4VertexAttributes;
-            mUIntIndices = mGLTFAsset.UIntIndices;
-            mUShortIndices = mGLTFAsset.UShortIndices;
+            var section = new MeshSection(MaterialName, asset.VertexAttributeMap,
+                asset.Vector2VertexAttributes, asset.Vector3VertexAttributes,
+                asset.Vector4VertexAttributes, asset.UIntIndices, asset.UShortIndices);
+
+            mMeshSectionList.Add(section);
         }
 
-        public override void Render()
-        {
-            if (bReadyToDraw)
-            {
-                var mtl = ShaderManager.Instance.GetMaterial("GBufferMacro1");
-
-                mtl.Bind();
-
-                mTransformInfo.Proj = CameraManager.Instance.CurrentCameraProj;
-                mTransformInfo.View = CameraManager.Instance.CurrentCameraView;
-                mtl.SetUniformBufferValue<CameraTransform>(@"CameraTransform", mTransformInfo);
-
-                mModelTransformInfo.Model = this.LocalMatrix;
-                mtl.SetUniformBufferValue<ModelTransform>(@"ModelTransform", mModelTransformInfo);
-                
-                mMaterialProperty.MetallicExist = true;
-                mMaterialProperty.NormalExist = true;
-                mMaterialProperty.MaskExist = false;
-                mMaterialProperty.MetallicRoughnessOneTexture = true;
-                mMaterialProperty.RoghnessExist = true;
-
-                mtl.SetUniformBufferValue<MaterialProperty>(@"MaterialProperty", mMaterialProperty);
-
-                // base 
-                if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.BaseColor))
-                {
-                    var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.BaseColor];
-                    mtl.SetTexture("DiffuseTex", TextureManager.Instance.GetTexture2D(path));
-                }
-
-                // normal
-                if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.Normal))
-                {
-                    var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.Normal];
-                    mtl.SetTexture("NormalTex", TextureManager.Instance.GetTexture2D(path));
-                }
-
-                // metallic roughness
-                if (this.mGLTFAsset.Material.TextureMap.ContainsKey(PBRTextureType.MetallicRoughness))
-                {
-                    var path = this.mGLTFAsset.Material.TextureMap[PBRTextureType.MetallicRoughness];
-                    mtl.SetTexture("MetallicTex", TextureManager.Instance.GetTexture2D(path));
-                    mtl.SetTexture("RoughnessTex", TextureManager.Instance.GetTexture2D(path));
-                }
-
-                mDrawable.DrawIndexed();
-
-                mtl.Unbind();
-            }
-        }
+      
 
         // bit position 0 => metallicExist;
         // bit position 1 => roghnessExist;
@@ -180,79 +87,15 @@ namespace Engine
 
 
 
-        protected override void PrepareRenderingData()
-        {
-            Debug.Assert(RenderingThread.IsInRenderingThread());
-
-            mDrawable = new GenericMeshDrawable();
-            mDrawable.Bind();
-
-            var attrList = mGLTFAsset.VertexAttributeMap
-                .OrderBy(x => GetSemanticPriority(x.Key))
-                .Select(x => x.Value)
-                .ToArray();
-
-            for (int i = 0; i < attrList.Count(); ++i)
-            {
-                if (attrList[i].AttributeType == GLTF.V2.AttributeType.VEC3)
-                {
-                    var data = mGLTFAsset.Vector3VertexAttributes[attrList[i]].ToArray();
-                    mDrawable.SetVertexBufferData(i, data);
-                    mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec3);
-                }
-                else if (attrList[i].AttributeType == GLTF.V2.AttributeType.VEC2)
-                {
-                    var data = mGLTFAsset.Vector2VertexAttributes[attrList[i]].ToArray();
-                    mDrawable.SetVertexBufferData(i, data);
-                    mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec2);
-                }
-                else if (attrList[i].AttributeType == GLTF.V2.AttributeType.VEC4)
-                {
-                    var data = mGLTFAsset.Vector4VertexAttributes[attrList[i]].ToArray();
-                    mDrawable.SetVertexBufferData(i, data);
-                    mGLVertexAttributeTypeList.Add(ActiveAttribType.FloatVec4);
-                }
-            }
-
-            if (mGLTFAsset.UIntIndices.Count > 0)
-            {
-                var arr = mGLTFAsset.UIntIndices.ToArray();
-                mDrawable.SetIndexBufferData(arr);
-                mIndexCount = (uint)arr.Length;
-            }
-            else if (mGLTFAsset.UShortIndices.Count > 0)
-            {
-                var arr = mGLTFAsset.UShortIndices.ToArray();
-                mDrawable.SetIndexBufferData(arr);
-                mIndexCount = (uint)arr.Length;
-            }
-
-            LoadTextures();
-
-            mDrawable.Unbind();
-
-            bReadyToDraw = true;
-        }
-
-        private void LoadTextures()
-        {
-            foreach (var kvp in this.mGLTFAsset.Material.TextureMap)
-            {
-                if (File.Exists(kvp.Value))
-                {
-                    TextureManager.Instance.CacheTexture2D(kvp.Value);
-                }
-            }
-        }
-
-        public override IEnumerable<(string, Matrix4)> GetMatrix4Params()
+       
+        public override IEnumerable<(string, Matrix4)> GetMatrix4Params(int sectionIndex)
         {
             yield return ("View", CameraManager.Instance.CurrentCameraView);
             yield return ("Proj", CameraManager.Instance.CurrentCameraProj);
             yield return ("Model", this.LocalMatrix);
         }
 
-        public override IEnumerable<(string, bool)> GetBoolParams()
+        public override IEnumerable<(string, bool)> GetBoolParams(int sectionIndex)
         {
             yield return ("MetallicExist", true);
 
@@ -263,6 +106,30 @@ namespace Engine
             yield return ("MetallicRoughnessOneTexture", true);
 
             yield return ("RoghnessExist", true);
+        }
+
+        public override IEnumerable<(string, string)> GetTextureParams(int index)
+        {
+            Debug.Assert(index < mGLTFAssetList.Count);
+
+            if (mGLTFAssetList[index].Material.TextureMap.ContainsKey(PBRTextureType.BaseColor))
+            {
+                var path = mGLTFAssetList[index].Material.TextureMap[PBRTextureType.BaseColor];
+                yield return ("DiffuseTex", path);
+            }
+
+            if (mGLTFAssetList[index].Material.TextureMap.ContainsKey(PBRTextureType.Normal))
+            {
+                var path = mGLTFAssetList[index].Material.TextureMap[PBRTextureType.Normal];
+                yield return ("NormalTex", path);
+            }
+
+            if (mGLTFAssetList[index].Material.TextureMap.ContainsKey(PBRTextureType.MetallicRoughness))
+            {
+                var path = mGLTFAssetList[index].Material.TextureMap[PBRTextureType.MetallicRoughness];
+                yield return ("MetallicTex", path);
+                yield return ("RoughnessTex", path);
+            }
         }
 
         public override IEnumerable<(string, string)> GetTextureParams()
@@ -289,21 +156,10 @@ namespace Engine
                 yield return ("RoughnessTex", path);
             }
         }
-
-
-        private GenericMeshDrawable mDrawable = null;
-
+        
         protected GLTFMeshAsset mGLTFAsset;
 
-        protected uint mIndexCount = 0;
-
-        protected List<ActiveAttribType> mGLVertexAttributeTypeList = new List<ActiveAttribType>();
-
-        protected CameraTransform mTransformInfo = new CameraTransform();
-
-        protected ModelTransform mModelTransformInfo = new ModelTransform();
-
-        protected MaterialProperty mMaterialProperty = new MaterialProperty();
+        protected List<GLTFMeshAsset> mGLTFAssetList = new List<GLTFMeshAsset>();
 
         protected uint mEncodedPBRInfo = 0;
     }

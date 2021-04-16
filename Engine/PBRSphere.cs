@@ -137,14 +137,14 @@ namespace Engine
         }
 
 
-        public override IEnumerable<(string, Matrix4)> GetMatrix4Params()
+        public override IEnumerable<(string, Matrix4)> GetMatrix4Params(int index)
         {
             yield return ("View", CameraManager.Instance.CurrentCameraView);
             yield return ("Proj", CameraManager.Instance.CurrentCameraProj);
             yield return ("Model", this.LocalMatrix);
         }
 
-        public override IEnumerable<(string, string)> GetTextureParams()
+        public override IEnumerable<(string, string)> GetTextureParams(int index)
         {
             if (bMetallicExist)
             {
@@ -169,7 +169,7 @@ namespace Engine
 
         
 
-        public override IEnumerable<(string, bool)> GetBoolParams()
+        public override IEnumerable<(string, bool)> GetBoolParams(int index)
         {
             yield return ("MetalicExist", bMetallicExist);
             yield return ("NormalMapExist", bNormalExist);
@@ -177,7 +177,7 @@ namespace Engine
             yield return ("DiffuseMapExist", bDiffuseExist);
         }
 
-        public override IEnumerable<(string, int)> GetIntParams()
+        public override IEnumerable<(string, int)> GetIntParams(int index)
         {
             yield return ("LightChannel", (int) Light.LightChannel.StaticMeshChannel);
         }

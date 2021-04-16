@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using CompiledMaterial.GBufferDraw;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using Core;
+﻿using Core;
 using Core.CustomAttribute;
-using Core.MaterialBase;
 using Core.Primitive;
 using Core.Texture;
+using Engine.Rendering;
 using GLTF;
 using OpenTK.Mathematics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using AttributeType = GLTF.V2.AttributeType;
 
 namespace Engine
@@ -53,63 +49,6 @@ namespace Engine
         {   
             GenerateVertices();
         }
-
-        protected override void PrepareRenderingData()
-        {
-            drawable = new DrawableBase<PNTT_VertexAttribute>();
-            var vertexArray = VertexList.ToArray();
-            drawable.SetupVertexData(ref vertexArray);
-
-            VertexList.Clear();
-
-            defaultMaterial = ShaderManager.Instance.GetMaterial<GBufferDraw>();
-
-            normalTex = TextureManager.Instance.LoadTexture2D("./Resources/Imported/Texture/metalgrid4_normal-dx.imported");
-            diffuseTex = TextureManager.Instance.LoadTexture2D("./Resources/Imported/Texture/metalgrid4_basecolor.imported");
-            roughTex = TextureManager.Instance.LoadTexture2D("./Resources/Imported/Texture/metalgrid4_roughness.imported");
-            metalicTex = TextureManager.Instance.LoadTexture2D("./Resources/Imported/Texture/copper-rock1-metal.imported");
-
-            bReadyToDraw = true;
-        }
-
-        public override void Render()
-        {
-            Debug.Assert(RenderingThread.IsInRenderingThread());
-            
-            if (!bReadyToDraw)
-            {
-                PrepareRenderingData();
-            }
-
-            if (bReadyToDraw)
-            {
-                using (var dummy = new ScopedBind(defaultMaterial))
-                {
-                    var gbufferDraw = (GBufferDraw) defaultMaterial;
-
-                    gbufferDraw.CameraTransform_View = CameraManager.Instance.CurrentCameraView;
-                    gbufferDraw.CameraTransform_Proj = CameraManager.Instance.CurrentCameraProj;
-                    gbufferDraw.ModelTransform_Model = this.LocalMatrix;
-
-                    gbufferDraw.NormalMapExist = true;
-                    gbufferDraw.MaskMapExist = false;
-                    gbufferDraw.MetalicExist = false;
-                    gbufferDraw.RoughnessExist = false;
-                    gbufferDraw.DiffuseMapExist = false;
-
-                    gbufferDraw.Roughness = this.Roughness;
-                    gbufferDraw.Metalic = this.Metallic;
-                    gbufferDraw.DiffuseOverride = Vector3.UnitX;
-                    
-                    gbufferDraw.DiffuseTex2D = diffuseTex;
-                    gbufferDraw.NormalTex2D = normalTex;
-
-                    drawable.DrawArrays(PrimitiveType.Triangles);
-                }
-            }
-        }
-
-        
 
         protected void GenerateVertices()
         {
@@ -245,15 +184,27 @@ namespace Engine
             var texcoordAttribute = new VertexAttributeSemantic(2, "TEXCOORD", AttributeType.VEC2);
             var tangentAttribute = new VertexAttributeSemantic(3, "TANGENT", AttributeType.VEC4);
 
-            mVector3VertexAttributes.Add(positionAttribute, TempVertexList);
-            mVector3VertexAttributes.Add(normalAttribute, TempNormalList);
-            mVector2VertexAttributes.Add(texcoordAttribute, TempTexCoordList);
-            mVector4VertexAttributes.Add(tangentAttribute, TempTangentList);
+            var vector3VertexAttributes = new Dictionary<VertexAttributeSemantic, List<Vector3>>();
+            var vector2VertexAttributes = new Dictionary<VertexAttributeSemantic, List<Vector2>>();
+            var vector4VertexAttributes = new Dictionary<VertexAttributeSemantic, List<Vector4>>();
 
-            mVertexAttributeMap.Add(positionAttribute.AttributeName, positionAttribute);
-            mVertexAttributeMap.Add(normalAttribute.AttributeName, normalAttribute);
-            mVertexAttributeMap.Add(texcoordAttribute.AttributeName, texcoordAttribute);
-            mVertexAttributeMap.Add(tangentAttribute.AttributeName, tangentAttribute);
+            vector3VertexAttributes.Add(positionAttribute, TempVertexList);
+            vector3VertexAttributes.Add(normalAttribute, TempNormalList);
+            vector2VertexAttributes.Add(texcoordAttribute, TempTexCoordList);
+            vector4VertexAttributes.Add(tangentAttribute, TempTangentList);
+
+            var vertexAttributeMap = new Dictionary<string, VertexAttributeSemantic>();
+
+            vertexAttributeMap.Add(positionAttribute.AttributeName, positionAttribute);
+            vertexAttributeMap.Add(normalAttribute.AttributeName, normalAttribute);
+            vertexAttributeMap.Add(texcoordAttribute.AttributeName, texcoordAttribute);
+            vertexAttributeMap.Add(tangentAttribute.AttributeName, tangentAttribute);
+
+            mMeshSectionList.Add(new MeshSection("GBufferDraw", 
+                vertexAttributeMap,
+                vector2VertexAttributes,
+                vector3VertexAttributes,
+                vector4VertexAttributes, null, null));
         }
 
         protected void GenerateTangents()

@@ -14,8 +14,10 @@ namespace Engine.Rendering
 
         public bool HasIndex
         {
-            get;
-            set;
+            get
+            {
+                return (mUIntIndices.Count > 0 || mUShortIndices.Count > 0);
+            }
         }
 
         public List<uint> UIntIndices => mUIntIndices;
@@ -42,7 +44,26 @@ namespace Engine.Rendering
         public MeshSection(string materialName,
             Dictionary<string, VertexAttributeSemantic> vertexAttributeMap,
             Dictionary<VertexAttributeSemantic, List<Vector2>> vector2VertexAttributes,
-            Dictionary<>)
+            Dictionary<VertexAttributeSemantic, List<Vector3>> vector3VertexAttributes,
+            Dictionary<VertexAttributeSemantic, List<Vector4>> vector4VertexAttributes,
+            List<uint> uintIndices, List<ushort> ushortIndices)
+        {
+            this.MaterialName = materialName;
+            this.mVertexAttributeMap = vertexAttributeMap;
+            this.mVector2VertexAttributes = vector2VertexAttributes;
+            this.mVector3VertexAttributes = vector3VertexAttributes;
+            this.mVector4VertexAttributes = vector4VertexAttributes;
+            
+            if (ushortIndices != null)
+            {
+                this.mUShortIndices = ushortIndices;
+            }
+
+            if (uintIndices != null)
+            {
+                this.mUIntIndices = uintIndices;
+            }
+        }
 
         public int IndexCount
         {

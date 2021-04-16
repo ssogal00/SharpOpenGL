@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using Core.CustomAttribute;
 using Core.Texture;
 using Engine.Rendering;
@@ -62,10 +63,10 @@ namespace Core.Primitive
         public virtual void Tick(double elapsed) { }
 
         //Render with default material
-        public abstract void Render();
+        public virtual void Render(){}
 
 
-        protected abstract void PrepareRenderingData();
+        protected virtual void PrepareRenderingData(){}
 
         //
         public virtual void JustDraw() { }
@@ -126,32 +127,13 @@ namespace Core.Primitive
         protected int mVertexCount = 0;
 
         protected int mMeshSectionCount = 1;
-        public int MeshSectionCount => mMeshSectionCount;
-
-        
-        public Dictionary<string, VertexAttributeSemantic> VertexAttributeMap
+        public int MeshSectionCount
         {
-            get => mVertexAttributeMap;
+            get
+            {
+                return mMeshSectionList.Count;
+            }
         }
-
-        public Dictionary<VertexAttributeSemantic, List<float>> FloatVertexAttributes
-        {
-            get => mFloatVertexAttributes;
-        }
-        public Dictionary<VertexAttributeSemantic, List<Vector2>> Vector2VertexAttributes
-        {
-            get => mVector2VertexAttributes;
-        }
-        public Dictionary<VertexAttributeSemantic, List<Vector3>> Vector3VertexAttributes
-        {
-            get => mVector3VertexAttributes;
-        }
-        public Dictionary<VertexAttributeSemantic, List<Vector4>> Vector4VertexAttributes
-        {
-            get => mVector4VertexAttributes;
-        }
-
-        
 
         public string MaterialName { get; set; } = string.Empty;
 
@@ -239,25 +221,5 @@ namespace Core.Primitive
 
         protected List<MeshSection> mMeshSectionList = new List<MeshSection>();
 
-
-        public List<uint> UIntIndices => mUIntIndices;
-
-        public List<ushort> UShortIndices => mUShortIndices;
-
-        protected List<VertexAttributeSemantic> mVertexAttributeList = new List<VertexAttributeSemantic>();
-
-        protected Dictionary<string, VertexAttributeSemantic> mVertexAttributeMap = new Dictionary<string, VertexAttributeSemantic>();
-
-        protected Dictionary<VertexAttributeSemantic, List<float>> mFloatVertexAttributes = new Dictionary<VertexAttributeSemantic, List<float>>();
-
-        protected Dictionary<VertexAttributeSemantic, List<Vector3>> mVector3VertexAttributes = new Dictionary<VertexAttributeSemantic, List<Vector3>>();
-
-        protected Dictionary<VertexAttributeSemantic, List<Vector2>> mVector2VertexAttributes = new Dictionary<VertexAttributeSemantic, List<Vector2>>();
-
-        protected Dictionary<VertexAttributeSemantic, List<Vector4>> mVector4VertexAttributes = new Dictionary<VertexAttributeSemantic, List<Vector4>>();
-
-        protected List<uint> mUIntIndices = new List<uint>();
-
-        protected List<ushort> mUShortIndices = new List<ushort>();
     }
 }

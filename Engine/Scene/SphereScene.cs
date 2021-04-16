@@ -60,21 +60,14 @@ namespace Engine
             tile.SetDiffuseTex("./Resources/Texture/tile/Tiles32_col.dds");
             tile.SetRoughnessTex("./Resources/Texture/tile/Tiles32_rgh.dds");
           
-
-
             var v2Sample = GLTFLoader.LoadGLTFV2("./Resources/GLTF/FlightHelmet/glTF/FlightHelmet.gltf");
 
             var sampleMesh = GLTFMeshAsset.LoadFrom(v2Sample);
-
-            sampleMesh.ForEach(item =>
-            {
-                var newmesh = new GLTFStaticMeshObject(item);
-                newmesh.Scale = 100;
-                newmesh.Yaw = -(float)Math.PI / 2.0f;
-                mGameObjectList.Add(newmesh);
-            });
-
             
+            var newmesh = new GLTFStaticMeshObject(sampleMesh);
+            newmesh.Scale = 100;
+            newmesh.Yaw = -(float)Math.PI / 2.0f;
+            mGameObjectList.Add(newmesh);
 
             InitializeCamera();
         }
