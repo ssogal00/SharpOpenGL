@@ -65,7 +65,7 @@ namespace Engine
                 if (mGameObject.MeshSectionList[sectionIndex].HasIndex)
                 {
                     mIndexBufferMap[sectionIndex].Bind();
-                    
+
                     GL.DrawElements(PrimitiveType.Triangles, 
                         mGameObject.MeshSectionList[sectionIndex].IndexCount, 
                         mGameObject.MeshSectionList[sectionIndex].IndexType, 0);
