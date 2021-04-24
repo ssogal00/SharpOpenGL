@@ -31,7 +31,7 @@ namespace Core.MaterialBase
         public OpenTK.Mathematics.Matrix4 Model;
     }
 
-    public class MaterialBase : Core.AssetBase, IBindable
+    public class MaterialBase : IBindable
     {
         protected ShaderProgram mMaterialProgram = null;
         protected Core.OpenGLShader.VertexShader mVertexShader = null;
@@ -98,10 +98,6 @@ namespace Core.MaterialBase
             Debug.Assert(bSuccess == true);
 
             Initialize();
-        }
-
-        public MaterialBase()
-        {
         }
 
         protected virtual void CleanUpUniformBufferMap()

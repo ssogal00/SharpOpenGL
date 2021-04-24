@@ -17,7 +17,13 @@ namespace Engine
         {
             Debug.Assert(RenderingThread.IsInRenderingThread());
             mGameObject = gameObject;
+            mRenderThreadObjectId = mGameObject.ID;
             Initialize();
+        }
+
+        public int ID
+        {
+            get => mRenderThreadObjectId;
         }
 
         public virtual void Dispose()
@@ -249,5 +255,8 @@ namespace Engine
         protected Dictionary<int, IndexBuffer> mIndexBufferMap = new Dictionary<int, IndexBuffer>();
         // mesh section <-> vertexBuffer
         protected Dictionary<int, List<OpenGLBuffer>> mVertexBufferMap = new Dictionary<int, List<OpenGLBuffer>>();
+
+        // gameObjectId == mRenderThreadObjectId;
+        protected int mRenderThreadObjectId = 0;
     }
 }

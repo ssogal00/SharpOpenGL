@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Engine.Scene
 {
-    class InstancedDrawTestScene
+    public class InstancedRenderingScene : SceneBase
     {
+
     }
 }

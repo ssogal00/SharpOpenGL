@@ -71,8 +71,6 @@ namespace Core.Primitive
         //
         public virtual void JustDraw() { }
 
-        public static EventHandler<EventArgs> OnOpenGLContextCreated;
-        
 
         public GameObject()
         {

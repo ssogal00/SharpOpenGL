@@ -55,6 +55,7 @@ namespace Engine
                     mRenderThreadGameObjectMap.Add(go.ID, ro);
                 }
             }
+
         }
 
         public override void RenderScene(SceneBase scene)
