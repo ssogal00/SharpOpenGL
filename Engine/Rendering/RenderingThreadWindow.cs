@@ -8,7 +8,9 @@ using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 using Engine;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -67,6 +69,7 @@ namespace Engine
             get => this.ClientSize.Y;
         }
 
+        public HashSet<string> Extensions = new HashSet<string>();
 
         protected override void OnLoad()
         {
@@ -82,6 +85,12 @@ namespace Engine
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.TextureCubeMap);
             GL.Enable(EnableCap.TextureCubeMapSeamless);
+            
+            bool bSupported = GLFW.ExtensionSupported("GL_ARB_multi_draw_indirect");
+            bSupported = GLFW.ExtensionSupported("GL_ARB_timer_query");
+            bSupported = GLFW.ExtensionSupported("GL_EXT_framebuffer_multisample");
+
+            
             
             OnKeyDownEvent += CameraManager.Instance.OnKeyDown;
             OnKeyUpEvent += CameraManager.Instance.OnKeyUp;
