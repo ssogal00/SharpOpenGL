@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Core.CustomAttribute;
 using Engine;
+using Engine.Rendering;
 
 
 namespace Core.MaterialBase
@@ -34,8 +35,10 @@ namespace Core.MaterialBase
     public class MaterialBase : IBindable
     {
         protected ShaderProgram mMaterialProgram = null;
+        
         protected Core.OpenGLShader.VertexShader mVertexShader = null;
         protected Core.OpenGLShader.FragmentShader mFragmentShader = null;
+        protected GeometryShader mGeometryShader = null;
 
         protected string VertexShaderCode = "";
         protected string FragmentShaderCode = "";
@@ -96,6 +99,33 @@ namespace Core.MaterialBase
             }
 
             Debug.Assert(bSuccess == true);
+
+            Initialize();
+        }
+
+        // geometry shader
+        public MaterialBase(string vertexShaderCode, string geometryShaderCode, string fragmentShaderCode)
+        {
+            mVertexShader = new VertexShader();
+            mFragmentShader = new FragmentShader();
+            
+            mMaterialProgram = new ShaderProgram();
+            mVertexShader.CompileShader(vertexShaderCode);
+            mGeometryShader.CompileShader(geometryShaderCode);
+            mFragmentShader.CompileShader(fragmentShaderCode);
+
+            mMaterialProgram.AttachShader(mVertexShader);
+            mMaterialProgram.AttachShader(mGeometryShader);
+            mMaterialProgram.AttachShader(mFragmentShader);
+
+            bool bSuccess = mMaterialProgram.LinkProgram(out CompileResult);
+
+            if (bSuccess == false)
+            {
+                Console.Write("{0}", CompileResult);
+            }
+
+            Debug.Assert(bSuccess);
 
             Initialize();
         }
