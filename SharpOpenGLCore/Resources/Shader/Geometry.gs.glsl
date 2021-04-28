@@ -4,13 +4,21 @@
 layout (triangles) in;
 layout (triangle_strip, max_vertices=3) out;
 
-out vec3 GNormal;
-out vec3 GPosition;
-
-noperspective out vec3 GEdgeDistance;
+layout (location=0) out vec3 GNormal;
+layout (location=1) out vec3 GPosition;
+layout (location=2) out vec2 GTexCoord;
+layout (location=3) out vec4 GTangent;
+layout (location=4) noperspective out vec3 GEdgeDistance;
 
 layout (location=0) in vec3 VPosition[];
 layout (location=1) in vec3 VNormal[];
+layout (location=2) in vec2 VTexcoord[];
+layout (location=3) in vec4 VTangent[];
+
+//layout (location=0) out vec3 OutPosition;
+//layout (location=1) out vec3 OutNormal;
+//layout (location=2) out vec2 OutTexcoord;
+//layout (location=3) out vec4 OutTangent;
 
 
 uniform mat4 ViewportMatrix;
