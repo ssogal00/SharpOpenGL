@@ -20,11 +20,17 @@ namespace ShaderCompilerCore
         [JsonPropertyName("fragmentShader")]
         public string FragmentShaderPath { get; set; }
 
+        [JsonPropertyName("geometryShader")]
+        public string GeometryShaderPath { get; set; }
+
         [JsonPropertyName("vertexShaderDefines")]
         public List<ShaderMacro> VertexShaderDefines { get; set; }
 
         [JsonPropertyName("fragmentShaderDefines")]
         public List<ShaderMacro> FragmentShaderDefines { get; set; }
+
+        [JsonPropertyName("geometryShaderDefines")]
+        public List<ShaderMacro> GeometryShaderDefines { get; set; }
 
         [JsonPropertyName("name")]
         public string Name { get; set; }

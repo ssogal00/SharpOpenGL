@@ -51,9 +51,12 @@ namespace ShaderCompilerCore
                         {
                             foreach (var item in result.ShaderList)
                             {
-                                var vsCode = File.ReadAllText(Path.Combine(args[0], Path.GetFileName(item.VertexShaderPath)));
-                                var fsCode = File.ReadAllText(Path.Combine(args[0], Path.GetFileName(item.FragmentShaderPath)));
+                                string vsCode = "";
+                                string fsCode = "";
                                 
+                                vsCode = File.ReadAllText(Path.Combine(args[0], Path.GetFileName(item.VertexShaderPath)));
+                                fsCode = File.ReadAllText(Path.Combine(args[0], Path.GetFileName(item.FragmentShaderPath)));
+
                                 var vsDefines = item.VertexShaderDefines.Select(x => new Tuple<string, string>(x.name, x.value)).ToList();
                                 var fsDefines = item.FragmentShaderDefines.Select(x => new Tuple<string, string>(x.name, x.value)).ToList();
                                 
