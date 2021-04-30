@@ -10,21 +10,34 @@ namespace ShaderCompilerCore
 {
     public class MaterialCodeGenerator : CodeGenerator
     {
-        public MaterialCodeGenerator(Core.OpenGLShader.ShaderProgram mVsProgramObject, Core.OpenGLShader.ShaderProgram FSProgramObject,
+        public MaterialCodeGenerator(Core.OpenGLShader.ShaderProgram vsProgramObject, Core.OpenGLShader.ShaderProgram fsProgramObject,
             string _VSSourceCode, string _FSSourceCode, string _MaterialName
             )
         {            
             NameSpace = string.Format("CompiledMaterial.{0}", _MaterialName);
-            FSProgram = FSProgramObject;
-            mVSProgram = mVsProgramObject;
+            mFSProgram = fsProgramObject;
+            mVSProgram = vsProgramObject;
             VSSourceCode = _VSSourceCode;
             FSSourceCode = _FSSourceCode;
             MaterialName = _MaterialName;
         }
 
+        public MaterialCodeGenerator(ShaderProgram vsProgramObject, ShaderProgram fsProgramObject,
+            ShaderProgram gsProgramObject, string vsCode, string fsCode, string gsCode, string materialName)
+        {
+            NameSpace = string.Format("CompiledMaterial.{0}", materialName);
+            mFSProgram = fsProgramObject;
+            mVSProgram = vsProgramObject;
+            mGSProgram = gsProgramObject;
+            VSSourceCode = vsCode;
+            FSSourceCode = fsCode;
+            GSSourceCode = gsCode;
+            MaterialName = materialName;
+        }
+
         public override string GetCodeContents()
         {
-            var template = new MaterialTemplate(mVSProgram, FSProgram, VSSourceCode, FSSourceCode, MaterialName);
+            var template = new MaterialTemplate(mVSProgram, mFSProgram, mGSProgram,  VSSourceCode, FSSourceCode, GSSourceCode, MaterialName);
 
             var sb = new StringBuilder();
             sb.AppendLine("namespace " + MaterialName);
@@ -35,12 +48,12 @@ namespace ShaderCompilerCore
             return sb.ToString();
         }
 
-
-
-        ShaderProgram mVSProgram;
-        ShaderProgram FSProgram;
-        string VSSourceCode;
-        string FSSourceCode;
+        private ShaderProgram mVSProgram;
+        private ShaderProgram mFSProgram;
+        private ShaderProgram mGSProgram;
+        string VSSourceCode = "";
+        string FSSourceCode = "";
+        private string GSSourceCode = "#version 460 core";
         string MaterialName;
     }
 }

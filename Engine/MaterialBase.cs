@@ -84,12 +84,16 @@ namespace Core.MaterialBase
             mFragmentShader = new FragmentShader();
 
             mMaterialProgram = new Core.OpenGLShader.ShaderProgram();
-            
-            mVertexShader.CompileShader(vertexShaderCode);
-            mFragmentShader.CompileShader(fragmentShaderCode);
 
-            mMaterialProgram.AttachShader(mVertexShader);
-            mMaterialProgram.AttachShader(mFragmentShader);
+            if (mVertexShader.CompileShader(vertexShaderCode))
+            {
+                mMaterialProgram.AttachShader(mVertexShader);
+            }
+
+            if (mFragmentShader.CompileShader(fragmentShaderCode))
+            {
+                mMaterialProgram.AttachShader(mFragmentShader);
+            }
 
             bool bSuccess = mMaterialProgram.LinkProgram(out CompileResult);
 
@@ -108,15 +112,23 @@ namespace Core.MaterialBase
         {
             mVertexShader = new VertexShader();
             mFragmentShader = new FragmentShader();
-            
+            mGeometryShader = new GeometryShader();
             mMaterialProgram = new ShaderProgram();
-            mVertexShader.CompileShader(vertexShaderCode);
-            mGeometryShader.CompileShader(geometryShaderCode);
-            mFragmentShader.CompileShader(fragmentShaderCode);
 
-            mMaterialProgram.AttachShader(mVertexShader);
-            mMaterialProgram.AttachShader(mGeometryShader);
-            mMaterialProgram.AttachShader(mFragmentShader);
+            if (mVertexShader.CompileShader(vertexShaderCode))
+            {
+                mMaterialProgram.AttachShader(mVertexShader);
+            }
+
+            if (mFragmentShader.CompileShader(fragmentShaderCode))
+            {
+                mMaterialProgram.AttachShader(mFragmentShader);
+            }
+
+            if (geometryShaderCode.Length > 0 && mGeometryShader.CompileShader(geometryShaderCode))
+            {
+                mMaterialProgram.AttachShader(mGeometryShader);
+            }
 
             bool bSuccess = mMaterialProgram.LinkProgram(out CompileResult);
 

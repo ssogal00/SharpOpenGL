@@ -9,7 +9,7 @@
 public class <#=ShaderName#> : MaterialBase
 {
 	public <#=ShaderName#>() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -192,5 +192,10 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 	public static string GetFSSourceCode()
 	{
 		return @"<#=FSSourceCode#>";
+	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"<#=GSSourceCode#>";
 	}
 }

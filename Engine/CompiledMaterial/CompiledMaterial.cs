@@ -20,7 +20,7 @@ namespace GBufferMacro1
 public class GBufferMacro1 : MaterialBase
 {
 	public GBufferMacro1() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -552,6 +552,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GBufferMacro2
@@ -561,7 +566,7 @@ namespace GBufferMacro2
 public class GBufferMacro2 : MaterialBase
 {
 	public GBufferMacro2() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -1068,6 +1073,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace ScreenSpaceDraw
@@ -1077,7 +1087,7 @@ namespace ScreenSpaceDraw
 public class ScreenSpaceDraw : MaterialBase
 {
 	public ScreenSpaceDraw() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -1157,6 +1167,11 @@ void main()
     FragColor = texture(ColorTex, OutTexCoord);    
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace EquirectangleToCube
@@ -1166,7 +1181,7 @@ namespace EquirectangleToCube
 public class EquirectangleToCube : MaterialBase
 {
 	public EquirectangleToCube() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -1277,6 +1292,11 @@ void main()
     FragColor = vec4(color, 1.0);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GBufferDump
@@ -1286,7 +1306,7 @@ namespace GBufferDump
 public class GBufferDump : MaterialBase
 {
 	public GBufferDump() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -1546,6 +1566,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace DeferredLightMaterial
@@ -1555,7 +1580,7 @@ namespace DeferredLightMaterial
 public class DeferredLightMaterial : MaterialBase
 {
 	public DeferredLightMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -1915,6 +1940,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace BasicMaterial
@@ -1924,7 +1954,7 @@ namespace BasicMaterial
 public class BasicMaterial : MaterialBase
 {
 	public BasicMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -2052,6 +2082,11 @@ void main()
     FragColor = vec4(1,0,0,1);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace SimpleMaterial
@@ -2061,7 +2096,7 @@ namespace SimpleMaterial
 public class SimpleMaterial : MaterialBase
 {
 	public SimpleMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -2155,6 +2190,11 @@ void main()
     FragColor = vec4(1,0,0,0);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GBufferDraw
@@ -2164,7 +2204,7 @@ namespace GBufferDraw
 public class GBufferDraw : MaterialBase
 {
 	public GBufferDraw() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -2671,6 +2711,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace CubemapConvolution
@@ -2680,7 +2725,7 @@ namespace CubemapConvolution
 public class CubemapConvolution : MaterialBase
 {
 	public CubemapConvolution() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -2818,6 +2863,11 @@ void main()
     FragColor = vec4(irradiance, 1.0);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GBufferInstanced
@@ -2827,7 +2877,7 @@ namespace GBufferInstanced
 public class GBufferInstanced : MaterialBase
 {
 	public GBufferInstanced() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -3235,6 +3285,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GBufferWithoutTexture
@@ -3244,7 +3299,7 @@ namespace GBufferWithoutTexture
 public class GBufferWithoutTexture : MaterialBase
 {
 	public GBufferWithoutTexture() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -3446,6 +3501,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GBufferPNC
@@ -3455,7 +3515,7 @@ namespace GBufferPNC
 public class GBufferPNC : MaterialBase
 {
 	public GBufferPNC() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -3579,6 +3639,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GBufferCubeTest
@@ -3588,7 +3653,7 @@ namespace GBufferCubeTest
 public class GBufferCubeTest : MaterialBase
 {
 	public GBufferCubeTest() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -3758,6 +3823,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GBufferPNCT
@@ -3767,7 +3837,7 @@ namespace GBufferPNCT
 public class GBufferPNCT : MaterialBase
 {
 	public GBufferPNCT() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -3920,6 +3990,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GBufferPNT
@@ -3929,7 +4004,7 @@ namespace GBufferPNT
 public class GBufferPNT : MaterialBase
 {
 	public GBufferPNT() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4095,6 +4170,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GBufferPNTT
@@ -4104,7 +4184,7 @@ namespace GBufferPNTT
 public class GBufferPNTT : MaterialBase
 {
 	public GBufferPNTT() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4273,6 +4353,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace Blur
@@ -4282,7 +4367,7 @@ namespace Blur
 public class Blur : MaterialBase
 {
 	public Blur() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4403,6 +4488,11 @@ void main()
     FragColor = vec4(result, 1.0);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace BloomMaterial
@@ -4412,7 +4502,7 @@ namespace BloomMaterial
 public class BloomMaterial : MaterialBase
 {
 	public BloomMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4504,6 +4594,11 @@ void main()
         FragColor = vec4(0,0,0,1);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace CubemapMaterial
@@ -4513,7 +4608,7 @@ namespace CubemapMaterial
 public class CubemapMaterial : MaterialBase
 {
 	public CubemapMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4652,6 +4747,11 @@ void main()
 	PositionColor.a = LightChannel;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace MSGBufferMaterial
@@ -4661,7 +4761,7 @@ namespace MSGBufferMaterial
 public class MSGBufferMaterial : MaterialBase
 {
 	public MSGBufferMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4895,6 +4995,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace DepthVisualizeMaterial
@@ -4904,7 +5009,7 @@ namespace DepthVisualizeMaterial
 public class DepthVisualizeMaterial : MaterialBase
 {
 	public DepthVisualizeMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5010,6 +5115,11 @@ void main()
     FragColor = vec4(linearizedDepth, linearizedDepth, linearizedDepth, 1.0f);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace FontRenderMaterial
@@ -5019,7 +5129,7 @@ namespace FontRenderMaterial
 public class FontRenderMaterial : MaterialBase
 {
 	public FontRenderMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5119,6 +5229,11 @@ void main()
     DiffuseColor.a = texture(FontTexture, TexCoord).r;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace FontBoxRenderMaterial
@@ -5128,7 +5243,7 @@ namespace FontBoxRenderMaterial
 public class FontBoxRenderMaterial : MaterialBase
 {
 	public FontBoxRenderMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5218,6 +5333,11 @@ void main()
     FragColor =vec4(BoxColor, BoxAlpha);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace GridRenderMaterial
@@ -5227,7 +5347,7 @@ namespace GridRenderMaterial
 public class GridRenderMaterial : MaterialBase
 {
 	public GridRenderMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5346,6 +5466,11 @@ void main()
     FragColor =vec4(LineColor, 1);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace ThreeDTextRenderMaterial
@@ -5355,7 +5480,7 @@ namespace ThreeDTextRenderMaterial
 public class ThreeDTextRenderMaterial : MaterialBase
 {
 	public ThreeDTextRenderMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5479,6 +5604,11 @@ void main()
     FragColor =vec4(TextColor,TexCol.a);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace ResolveMaterial
@@ -5488,7 +5618,7 @@ namespace ResolveMaterial
 public class ResolveMaterial : MaterialBase
 {
 	public ResolveMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5608,6 +5738,11 @@ void main()
 	FragColor = c;	
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace SSAOMaterial
@@ -5617,7 +5752,7 @@ namespace SSAOMaterial
 public class SSAOMaterial : MaterialBase
 {
 	public SSAOMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5850,6 +5985,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace LUTGenerateMaterial
@@ -5859,7 +5999,7 @@ namespace LUTGenerateMaterial
 public class LUTGenerateMaterial : MaterialBase
 {
 	public LUTGenerateMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -6014,6 +6154,11 @@ void main()
     FragColor.xy = integratedBRDF;    
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace PrefilterMaterial
@@ -6023,7 +6168,7 @@ namespace PrefilterMaterial
 public class PrefilterMaterial : MaterialBase
 {
 	public PrefilterMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -6232,6 +6377,11 @@ void main()
     FragColor = vec4(prefilteredColor, 1.0);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace FXAAMaterial
@@ -6241,7 +6391,7 @@ namespace FXAAMaterial
 public class FXAAMaterial : MaterialBase
 {
 	public FXAAMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -6600,6 +6750,11 @@ void main()
 	FragColor = finalColor;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace TBNMaterial
@@ -6609,7 +6764,7 @@ namespace TBNMaterial
 public class TBNMaterial : MaterialBase
 {
 	public TBNMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -6734,6 +6889,11 @@ void main()
     DiffuseColor = vec4(InColor, 1); 
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
+	}
 }
 }
 namespace SignedDistanceField
@@ -6743,7 +6903,7 @@ namespace SignedDistanceField
 public class SignedDistanceField : MaterialBase
 {
 	public SignedDistanceField() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -6887,6 +7047,11 @@ void main(void)
 
 
 ";
+	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"#version 460 core";
 	}
 }
 }

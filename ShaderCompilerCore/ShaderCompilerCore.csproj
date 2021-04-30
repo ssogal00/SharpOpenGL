@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <DisableFastUpToDateCheck>false</DisableFastUpToDateCheck>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,11 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="FragmentShaderTemplate.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FragmentShaderTemplate.tt</DependentUpon>
-    </Compile>
     <Compile Update="MaterialTemplate.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -48,10 +43,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="FragmentShaderTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>FragmentShaderTemplate.cs</LastGenOutput>
-    </None>
     <None Update="MaterialTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MaterialTemplate.cs</LastGenOutput>

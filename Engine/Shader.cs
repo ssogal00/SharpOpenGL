@@ -40,7 +40,7 @@ namespace Core.OpenGLShader
             shaderObject = -1;
         }
 
-        public void CompileShader(string ShaderSourceCode)
+        public bool CompileShader(string ShaderSourceCode)
         {
             string ShaderErrLog = "";
             bool bSuccess = CompileShader(ShaderSourceCode, out ShaderErrLog);
@@ -49,6 +49,8 @@ namespace Core.OpenGLShader
             {
                 Console.WriteLine(ShaderErrLog);
             }
+
+            return bSuccess;
         }
 
         public void CompileShader(string shaderSourceCode, List<Tuple<string, string>> defines)

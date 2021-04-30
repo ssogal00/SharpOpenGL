@@ -20,11 +20,25 @@ namespace ShaderCompilerCore
             mVertexAttributeList = vsProgram.GetActiveVertexAttributeList();
         }
 
+        public MaterialTemplate(ShaderProgram vsProgram, ShaderProgram fsProgram, ShaderProgram gsProgram,
+            string vsSourceCode, string fsSourceCode, string gsSourceCode, string shaderName)
+        {
+            VSProgram = vsProgram;
+            FSProgram = fsProgram;
+            gsProgram = gsProgram;
+            ShaderName = shaderName;
+            VSSourceCode = vsSourceCode;
+            FSSourceCode = fsSourceCode;
+            GSSourceCode = gsSourceCode;
+            mVertexAttributeList = vsProgram.GetActiveVertexAttributeList();
+        }
+
         protected ShaderProgram VSProgram;
         protected ShaderProgram FSProgram;
         protected string ShaderName;
-        protected string VSSourceCode;
-        protected string FSSourceCode;
+        protected string VSSourceCode = "";
+        protected string FSSourceCode = "";
+        protected string GSSourceCode = "";
         protected List<VertexAttribute> mVertexAttributeList = new List<VertexAttribute>();
     }
 }
