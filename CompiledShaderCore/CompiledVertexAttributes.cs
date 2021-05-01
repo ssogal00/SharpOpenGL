@@ -17,25 +17,18 @@ namespace BasicMaterial
 {
 
 
-[ZeroFormattable]
-[StructLayout(LayoutKind.Explicit,Size=20)]
+[StructLayout(LayoutKind.Explicit,Size=12)]
 public struct VertexAttribute
 {
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Mathematics.Vector3 VertexPosition;
-		
-	[Index(1)]
-	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public OpenTK.Mathematics.Vector2 TexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
 		GL.EnableVertexAttribArray(0);
-		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 20, new IntPtr(0));
-		GL.EnableVertexAttribArray(1);
-		GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 20, new IntPtr(12));
+		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 12, new IntPtr(0));
 	}
 }
 }
@@ -43,7 +36,6 @@ namespace SimpleMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=12)]
 public struct VertexAttribute
 {
@@ -63,7 +55,6 @@ namespace GBufferDraw
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=48)]
 public struct VertexAttribute
 {
@@ -101,7 +92,6 @@ namespace CubemapConvolution
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=12)]
 public struct VertexAttribute
 {
@@ -121,7 +111,6 @@ namespace GBufferInstanced
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=48)]
 public struct VertexAttribute
 {
@@ -159,7 +148,6 @@ namespace GBufferWithoutTexture
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=48)]
 public struct VertexAttribute
 {
@@ -197,7 +185,6 @@ namespace GBufferPNC
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=36)]
 public struct VertexAttribute
 {
@@ -229,7 +216,6 @@ namespace GBufferCubeTest
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=24)]
 public struct VertexAttribute
 {
@@ -255,7 +241,6 @@ namespace GBufferPNCT
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=44)]
 public struct VertexAttribute
 {
@@ -293,7 +278,6 @@ namespace GBufferPNT
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=32)]
 public struct VertexAttribute
 {
@@ -325,7 +309,6 @@ namespace GBufferPNTT
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=48)]
 public struct VertexAttribute
 {
@@ -363,7 +346,6 @@ namespace Blur
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {
@@ -389,7 +371,6 @@ namespace BloomMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {
@@ -415,7 +396,6 @@ namespace CubemapMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {
@@ -441,7 +421,6 @@ namespace MSGBufferMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=48)]
 public struct VertexAttribute
 {
@@ -479,7 +458,6 @@ namespace DepthVisualizeMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {
@@ -505,7 +483,6 @@ namespace FontRenderMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=32)]
 public struct VertexAttribute
 {
@@ -537,25 +514,18 @@ namespace FontBoxRenderMaterial
 {
 
 
-[ZeroFormattable]
-[StructLayout(LayoutKind.Explicit,Size=20)]
+[StructLayout(LayoutKind.Explicit,Size=12)]
 public struct VertexAttribute
 {
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Mathematics.Vector3 VertexPosition;
-		
-	[Index(1)]
-	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
 		GL.EnableVertexAttribArray(0);
-		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 20, new IntPtr(0));
-		GL.EnableVertexAttribArray(1);
-		GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 20, new IntPtr(12));
+		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 12, new IntPtr(0));
 	}
 }
 }
@@ -563,7 +533,6 @@ namespace GridRenderMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=12)]
 public struct VertexAttribute
 {
@@ -583,7 +552,6 @@ namespace ThreeDTextRenderMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {
@@ -609,7 +577,6 @@ namespace ResolveMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {
@@ -635,7 +602,6 @@ namespace SSAOMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {
@@ -661,7 +627,6 @@ namespace LUTGenerateMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {
@@ -687,7 +652,6 @@ namespace PrefilterMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=12)]
 public struct VertexAttribute
 {
@@ -703,37 +667,10 @@ public struct VertexAttribute
 	}
 }
 }
-namespace HDAOMaterial
-{
-
-
-[ZeroFormattable]
-[StructLayout(LayoutKind.Explicit,Size=20)]
-public struct VertexAttribute
-{
-	
-	[Index(0)]
-	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
-	public OpenTK.Mathematics.Vector3 VertexPosition;
-		
-	[Index(1)]
-	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public OpenTK.Mathematics.Vector2 VertexTexCoord;
-	
-	public static void VertexAttributeBinding()
-	{
-		GL.EnableVertexAttribArray(0);
-		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 20, new IntPtr(0));
-		GL.EnableVertexAttribArray(1);
-		GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 20, new IntPtr(12));
-	}
-}
-}
 namespace FXAAMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {
@@ -759,7 +696,6 @@ namespace TBNMaterial
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=24)]
 public struct VertexAttribute
 {
@@ -785,7 +721,6 @@ namespace SignedDistanceField
 {
 
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=20)]
 public struct VertexAttribute
 {

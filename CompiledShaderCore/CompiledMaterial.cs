@@ -20,7 +20,7 @@ namespace GBufferMacro1
 public class GBufferMacro1 : MaterialBase
 {
 	public GBufferMacro1() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -41,14 +41,12 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		set => SetTexture(@"DiffuseTex", value);
-		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);		
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -59,8 +57,7 @@ public class GBufferMacro1 : MaterialBase
 	public TextureBase DiffuseTex2D_LinearSample
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int DiffuseTexIndex = 0;
+	}	
 	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MaskTex", TextureObject);
@@ -68,14 +65,12 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetMaskTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MaskTex", textureObject, samplerObject);
-		//SetTextureByIndex(MaskTexIndex, textureObject, samplerObject);
+		SetTexture(@"MaskTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MaskTex2D 
 	{	
-		set => SetTexture(@"MaskTex", value);
-		//set => SetTextureByIndex(MaskTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MaskTex", value);		
 	}
 
 	public TextureBase MaskTex2D_PointSample
@@ -86,8 +81,7 @@ public class GBufferMacro1 : MaterialBase
 	public TextureBase MaskTex2D_LinearSample
 	{	
 		set => SetTexture(@"MaskTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MaskTexIndex = 2;
+	}	
 	public void SetMetallicRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MetallicRoughnessTex", TextureObject);
@@ -95,14 +89,12 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetMetallicRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MetallicRoughnessTex", textureObject, samplerObject);
-		//SetTextureByIndex(MetallicRoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetallicRoughnessTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MetallicRoughnessTex2D 
 	{	
-		set => SetTexture(@"MetallicRoughnessTex", value);
-		//set => SetTextureByIndex(MetallicRoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetallicRoughnessTex", value);		
 	}
 
 	public TextureBase MetallicRoughnessTex2D_PointSample
@@ -113,8 +105,7 @@ public class GBufferMacro1 : MaterialBase
 	public TextureBase MetallicRoughnessTex2D_LinearSample
 	{	
 		set => SetTexture(@"MetallicRoughnessTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MetallicRoughnessTexIndex = 5;
+	}	
 	public void SetMetallicTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MetallicTex", TextureObject);
@@ -122,14 +113,12 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetMetallicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MetallicTex", textureObject, samplerObject);
-		//SetTextureByIndex(MetallicTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetallicTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MetallicTex2D 
 	{	
-		set => SetTexture(@"MetallicTex", value);
-		//set => SetTextureByIndex(MetallicTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetallicTex", value);		
 	}
 
 	public TextureBase MetallicTex2D_PointSample
@@ -140,8 +129,7 @@ public class GBufferMacro1 : MaterialBase
 	public TextureBase MetallicTex2D_LinearSample
 	{	
 		set => SetTexture(@"MetallicTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MetallicTexIndex = 3;
+	}	
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
@@ -149,14 +137,12 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"NormalTex", textureObject, samplerObject);
-		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		set => SetTexture(@"NormalTex", value);
-		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);		
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -167,8 +153,7 @@ public class GBufferMacro1 : MaterialBase
 	public TextureBase NormalTex2D_LinearSample
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int NormalTexIndex = 1;
+	}	
 	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"RoughnessTex", TextureObject);
@@ -176,14 +161,12 @@ public class GBufferMacro1 : MaterialBase
 
 	public void SetRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"RoughnessTex", textureObject, samplerObject);
-		//SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"RoughnessTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase RoughnessTex2D 
 	{	
-		set => SetTexture(@"RoughnessTex", value);
-		//set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"RoughnessTex", value);		
 	}
 
 	public TextureBase RoughnessTex2D_PointSample
@@ -194,9 +177,7 @@ public class GBufferMacro1 : MaterialBase
 	public TextureBase RoughnessTex2D_LinearSample
 	{	
 		set => SetTexture(@"RoughnessTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int RoughnessTexIndex = 4;
-
+	}	
 
 
 
@@ -207,7 +188,7 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -217,7 +198,7 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -226,10 +207,92 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
+		}
+	}
+    private MaterialProperty materialproperty = new MaterialProperty();
+	public MaterialProperty MaterialProperty
+	{
+		get { return materialproperty; }
+		set 
+		{ 
+			materialproperty = value; 
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", value);
 		}
 	}
 
+	public System.UInt32 MaterialProperty_EncodedPBRInfo
+	{
+		get { return materialproperty.encodedPBRInfo ; }
+		set 
+		{ 
+			materialproperty.encodedPBRInfo = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MetallicExist
+	{
+		get { return materialproperty.MetallicExist ; }
+		set 
+		{ 
+			materialproperty.MetallicExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_RoghnessExist
+	{
+		get { return materialproperty.RoghnessExist ; }
+		set 
+		{ 
+			materialproperty.RoghnessExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MaskExist
+	{
+		get { return materialproperty.MaskExist ; }
+		set 
+		{ 
+			materialproperty.MaskExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_NormalExist
+	{
+		get { return materialproperty.NormalExist ; }
+		set 
+		{ 
+			materialproperty.NormalExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Single MaterialProperty_Metallic
+	{
+		get { return materialproperty.Metallic ; }
+		set 
+		{ 
+			materialproperty.Metallic = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Single MaterialProperty_Roughness
+	{
+		get { return materialproperty.Roughness ; }
+		set 
+		{ 
+			materialproperty.Roughness = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MetallicRoughnessOneTexture
+	{
+		get { return materialproperty.MetallicRoughnessOneTexture ; }
+		set 
+		{ 
+			materialproperty.MetallicRoughnessOneTexture = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -237,7 +300,7 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -247,95 +310,10 @@ public class GBufferMacro1 : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
 
-
-    private MaterialProperty materialproperty = new MaterialProperty();
-	public MaterialProperty MaterialProperty
-	{
-		get { return materialproperty; }
-		set 
-		{ 
-			materialproperty = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-		}
-	}
-
-	public System.UInt32 MaterialProperty_EncodedPBRInfo
-	{
-		get { return materialproperty.encodedPBRInfo ; }
-		set 
-		{ 
-			materialproperty.encodedPBRInfo = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MetallicExist
-	{
-		get { return materialproperty.MetallicExist ; }
-		set 
-		{ 
-			materialproperty.MetallicExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_RoghnessExist
-	{
-		get { return materialproperty.RoghnessExist ; }
-		set 
-		{ 
-			materialproperty.RoghnessExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MaskExist
-	{
-		get { return materialproperty.MaskExist ; }
-		set 
-		{ 
-			materialproperty.MaskExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_NormalExist
-	{
-		get { return materialproperty.NormalExist ; }
-		set 
-		{ 
-			materialproperty.NormalExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Single MaterialProperty_Metallic
-	{
-		get { return materialproperty.Metallic ; }
-		set 
-		{ 
-			materialproperty.Metallic = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Single MaterialProperty_Roughness
-	{
-		get { return materialproperty.Roughness ; }
-		set 
-		{ 
-			materialproperty.Roughness = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MetallicRoughnessOneTexture
-	{
-		get { return materialproperty.MetallicRoughnessOneTexture ; }
-		set 
-		{ 
-			materialproperty.MetallicRoughnessOneTexture = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -564,6 +542,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GBufferMacro2
@@ -573,7 +556,7 @@ namespace GBufferMacro2
 public class GBufferMacro2 : MaterialBase
 {
 	public GBufferMacro2() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -594,14 +577,12 @@ public class GBufferMacro2 : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		set => SetTexture(@"DiffuseTex", value);
-		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);		
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -612,8 +593,7 @@ public class GBufferMacro2 : MaterialBase
 	public TextureBase DiffuseTex2D_LinearSample
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int DiffuseTexIndex = 0;
+	}	
 	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MaskTex", TextureObject);
@@ -621,14 +601,12 @@ public class GBufferMacro2 : MaterialBase
 
 	public void SetMaskTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MaskTex", textureObject, samplerObject);
-		//SetTextureByIndex(MaskTexIndex, textureObject, samplerObject);
+		SetTexture(@"MaskTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MaskTex2D 
 	{	
-		set => SetTexture(@"MaskTex", value);
-		//set => SetTextureByIndex(MaskTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MaskTex", value);		
 	}
 
 	public TextureBase MaskTex2D_PointSample
@@ -639,8 +617,7 @@ public class GBufferMacro2 : MaterialBase
 	public TextureBase MaskTex2D_LinearSample
 	{	
 		set => SetTexture(@"MaskTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MaskTexIndex = 2;
+	}	
 	public void SetMetallicRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MetallicRoughnessTex", TextureObject);
@@ -648,14 +625,12 @@ public class GBufferMacro2 : MaterialBase
 
 	public void SetMetallicRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MetallicRoughnessTex", textureObject, samplerObject);
-		//SetTextureByIndex(MetallicRoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetallicRoughnessTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MetallicRoughnessTex2D 
 	{	
-		set => SetTexture(@"MetallicRoughnessTex", value);
-		//set => SetTextureByIndex(MetallicRoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetallicRoughnessTex", value);		
 	}
 
 	public TextureBase MetallicRoughnessTex2D_PointSample
@@ -666,8 +641,7 @@ public class GBufferMacro2 : MaterialBase
 	public TextureBase MetallicRoughnessTex2D_LinearSample
 	{	
 		set => SetTexture(@"MetallicRoughnessTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MetallicRoughnessTexIndex = 5;
+	}	
 	public void SetMetallicTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MetallicTex", TextureObject);
@@ -675,14 +649,12 @@ public class GBufferMacro2 : MaterialBase
 
 	public void SetMetallicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MetallicTex", textureObject, samplerObject);
-		//SetTextureByIndex(MetallicTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetallicTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MetallicTex2D 
 	{	
-		set => SetTexture(@"MetallicTex", value);
-		//set => SetTextureByIndex(MetallicTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetallicTex", value);		
 	}
 
 	public TextureBase MetallicTex2D_PointSample
@@ -693,8 +665,7 @@ public class GBufferMacro2 : MaterialBase
 	public TextureBase MetallicTex2D_LinearSample
 	{	
 		set => SetTexture(@"MetallicTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MetallicTexIndex = 3;
+	}	
 	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"RoughnessTex", TextureObject);
@@ -702,14 +673,12 @@ public class GBufferMacro2 : MaterialBase
 
 	public void SetRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"RoughnessTex", textureObject, samplerObject);
-		//SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"RoughnessTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase RoughnessTex2D 
 	{	
-		set => SetTexture(@"RoughnessTex", value);
-		//set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"RoughnessTex", value);		
 	}
 
 	public TextureBase RoughnessTex2D_PointSample
@@ -720,9 +689,7 @@ public class GBufferMacro2 : MaterialBase
 	public TextureBase RoughnessTex2D_LinearSample
 	{	
 		set => SetTexture(@"RoughnessTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int RoughnessTexIndex = 4;
-
+	}	
 
 
 
@@ -733,7 +700,7 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -743,7 +710,7 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -752,10 +719,92 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
+		}
+	}
+    private MaterialProperty materialproperty = new MaterialProperty();
+	public MaterialProperty MaterialProperty
+	{
+		get { return materialproperty; }
+		set 
+		{ 
+			materialproperty = value; 
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", value);
 		}
 	}
 
+	public System.UInt32 MaterialProperty_EncodedPBRInfo
+	{
+		get { return materialproperty.encodedPBRInfo ; }
+		set 
+		{ 
+			materialproperty.encodedPBRInfo = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MetallicExist
+	{
+		get { return materialproperty.MetallicExist ; }
+		set 
+		{ 
+			materialproperty.MetallicExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_RoghnessExist
+	{
+		get { return materialproperty.RoghnessExist ; }
+		set 
+		{ 
+			materialproperty.RoghnessExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MaskExist
+	{
+		get { return materialproperty.MaskExist ; }
+		set 
+		{ 
+			materialproperty.MaskExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_NormalExist
+	{
+		get { return materialproperty.NormalExist ; }
+		set 
+		{ 
+			materialproperty.NormalExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Single MaterialProperty_Metallic
+	{
+		get { return materialproperty.Metallic ; }
+		set 
+		{ 
+			materialproperty.Metallic = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Single MaterialProperty_Roughness
+	{
+		get { return materialproperty.Roughness ; }
+		set 
+		{ 
+			materialproperty.Roughness = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MetallicRoughnessOneTexture
+	{
+		get { return materialproperty.MetallicRoughnessOneTexture ; }
+		set 
+		{ 
+			materialproperty.MetallicRoughnessOneTexture = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -763,7 +812,7 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -773,95 +822,10 @@ public class GBufferMacro2 : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
 
-
-    private MaterialProperty materialproperty = new MaterialProperty();
-	public MaterialProperty MaterialProperty
-	{
-		get { return materialproperty; }
-		set 
-		{ 
-			materialproperty = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);
-		}
-	}
-
-	public System.UInt32 MaterialProperty_EncodedPBRInfo
-	{
-		get { return materialproperty.encodedPBRInfo ; }
-		set 
-		{ 
-			materialproperty.encodedPBRInfo = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MetallicExist
-	{
-		get { return materialproperty.MetallicExist ; }
-		set 
-		{ 
-			materialproperty.MetallicExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_RoghnessExist
-	{
-		get { return materialproperty.RoghnessExist ; }
-		set 
-		{ 
-			materialproperty.RoghnessExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MaskExist
-	{
-		get { return materialproperty.MaskExist ; }
-		set 
-		{ 
-			materialproperty.MaskExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_NormalExist
-	{
-		get { return materialproperty.NormalExist ; }
-		set 
-		{ 
-			materialproperty.NormalExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Single MaterialProperty_Metallic
-	{
-		get { return materialproperty.Metallic ; }
-		set 
-		{ 
-			materialproperty.Metallic = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Single MaterialProperty_Roughness
-	{
-		get { return materialproperty.Roughness ; }
-		set 
-		{ 
-			materialproperty.Roughness = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MetallicRoughnessOneTexture
-	{
-		get { return materialproperty.MetallicRoughnessOneTexture ; }
-		set 
-		{ 
-			materialproperty.MetallicRoughnessOneTexture = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", ref materialproperty);			
-		}
-	}
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -1090,6 +1054,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace ScreenSpaceDraw
@@ -1099,7 +1068,7 @@ namespace ScreenSpaceDraw
 public class ScreenSpaceDraw : MaterialBase
 {
 	public ScreenSpaceDraw() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -1120,14 +1089,12 @@ public class ScreenSpaceDraw : MaterialBase
 
 	public void SetColorTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"ColorTex", textureObject, samplerObject);
-		//SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
+		SetTexture(@"ColorTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase ColorTex2D 
 	{	
-		set => SetTexture(@"ColorTex", value);
-		//set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"ColorTex", value);		
 	}
 
 	public TextureBase ColorTex2D_PointSample
@@ -1138,14 +1105,11 @@ public class ScreenSpaceDraw : MaterialBase
 	public TextureBase ColorTex2D_LinearSample
 	{	
 		set => SetTexture(@"ColorTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int ColorTexIndex = 0;
+	}	
 
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -1181,6 +1145,11 @@ void main()
     FragColor = texture(ColorTex, OutTexCoord);    
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace EquirectangleToCube
@@ -1190,7 +1159,7 @@ namespace EquirectangleToCube
 public class EquirectangleToCube : MaterialBase
 {
 	public EquirectangleToCube() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -1211,14 +1180,12 @@ public class EquirectangleToCube : MaterialBase
 
 	public void SetEquirectangularMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"EquirectangularMap", textureObject, samplerObject);
-		//SetTextureByIndex(EquirectangularMapIndex, textureObject, samplerObject);
+		SetTexture(@"EquirectangularMap", textureObject, samplerObject);		
 	}
 
 	public TextureBase EquirectangularMap2D 
 	{	
-		set => SetTexture(@"EquirectangularMap", value);
-		//set => SetTextureByIndex(EquirectangularMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"EquirectangularMap", value);		
 	}
 
 	public TextureBase EquirectangularMap2D_PointSample
@@ -1229,8 +1196,7 @@ public class EquirectangleToCube : MaterialBase
 	public TextureBase EquirectangularMap2D_LinearSample
 	{	
 		set => SetTexture(@"EquirectangularMap", value, Sampler.DefaultLinearSampler);
-	}
-	private int EquirectangularMapIndex = 0;
+	}	
 
 	public OpenTK.Mathematics.Matrix4 Projection
 	{
@@ -1238,7 +1204,7 @@ public class EquirectangleToCube : MaterialBase
 		set 
 		{
 			projection = value;
-			SetUniformVarData(@"Projection", projection);			
+			SetUniformVariable(@"Projection", projection);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 projection;
@@ -1248,15 +1214,13 @@ public class EquirectangleToCube : MaterialBase
 		set 
 		{
 			view = value;
-			SetUniformVarData(@"View", view);			
+			SetUniformVariable(@"View", view);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 view;
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -1303,6 +1267,11 @@ void main()
     FragColor = vec4(color, 1.0);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GBufferDump
@@ -1312,7 +1281,7 @@ namespace GBufferDump
 public class GBufferDump : MaterialBase
 {
 	public GBufferDump() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -1333,14 +1302,12 @@ public class GBufferDump : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		set => SetTexture(@"DiffuseTex", value);
-		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);		
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -1351,8 +1318,7 @@ public class GBufferDump : MaterialBase
 	public TextureBase DiffuseTex2D_LinearSample
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int DiffuseTexIndex = 1;
+	}	
 	public void SetMotionBlurTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MotionBlurTex", TextureObject);
@@ -1360,14 +1326,12 @@ public class GBufferDump : MaterialBase
 
 	public void SetMotionBlurTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MotionBlurTex", textureObject, samplerObject);
-		//SetTextureByIndex(MotionBlurTexIndex, textureObject, samplerObject);
+		SetTexture(@"MotionBlurTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MotionBlurTex2D 
 	{	
-		set => SetTexture(@"MotionBlurTex", value);
-		//set => SetTextureByIndex(MotionBlurTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MotionBlurTex", value);		
 	}
 
 	public TextureBase MotionBlurTex2D_PointSample
@@ -1378,8 +1342,7 @@ public class GBufferDump : MaterialBase
 	public TextureBase MotionBlurTex2D_LinearSample
 	{	
 		set => SetTexture(@"MotionBlurTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MotionBlurTexIndex = 3;
+	}	
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
@@ -1387,14 +1350,12 @@ public class GBufferDump : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"NormalTex", textureObject, samplerObject);
-		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		set => SetTexture(@"NormalTex", value);
-		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);		
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -1405,8 +1366,7 @@ public class GBufferDump : MaterialBase
 	public TextureBase NormalTex2D_LinearSample
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int NormalTexIndex = 2;
+	}	
 	public void SetPositionTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"PositionTex", TextureObject);
@@ -1414,14 +1374,12 @@ public class GBufferDump : MaterialBase
 
 	public void SetPositionTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"PositionTex", textureObject, samplerObject);
-		//SetTextureByIndex(PositionTexIndex, textureObject, samplerObject);
+		SetTexture(@"PositionTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase PositionTex2D 
 	{	
-		set => SetTexture(@"PositionTex", value);
-		//set => SetTextureByIndex(PositionTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"PositionTex", value);		
 	}
 
 	public TextureBase PositionTex2D_PointSample
@@ -1432,10 +1390,7 @@ public class GBufferDump : MaterialBase
 	public TextureBase PositionTex2D_LinearSample
 	{	
 		set => SetTexture(@"PositionTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int PositionTexIndex = 0;
-
-
+	}	
 
 
 
@@ -1446,7 +1401,7 @@ public class GBufferDump : MaterialBase
 		set 
 		{ 
 			dump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);
+			this.SetUniformBufferValue< Dump >(@"Dump", value);
 		}
 	}
 
@@ -1455,8 +1410,8 @@ public class GBufferDump : MaterialBase
 		get { return dump.PositionDump ; }
 		set 
 		{ 
-			dump.PositionDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
+			dump.PositionDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
 	public System.Boolean Dump_NormalDump
@@ -1464,8 +1419,8 @@ public class GBufferDump : MaterialBase
 		get { return dump.NormalDump ; }
 		set 
 		{ 
-			dump.NormalDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
+			dump.NormalDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
 	public System.Boolean Dump_MetalicDump
@@ -1473,8 +1428,8 @@ public class GBufferDump : MaterialBase
 		get { return dump.MetalicDump ; }
 		set 
 		{ 
-			dump.MetalicDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
+			dump.MetalicDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
 	public System.Boolean Dump_DiffuseDump
@@ -1482,8 +1437,8 @@ public class GBufferDump : MaterialBase
 		get { return dump.DiffuseDump ; }
 		set 
 		{ 
-			dump.DiffuseDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
+			dump.DiffuseDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
 	public System.Boolean Dump_RoughnessDump
@@ -1491,8 +1446,8 @@ public class GBufferDump : MaterialBase
 		get { return dump.RoughnessDump ; }
 		set 
 		{ 
-			dump.RoughnessDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
+			dump.RoughnessDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
 	public System.Boolean Dump_MotionBlurDump
@@ -1500,11 +1455,11 @@ public class GBufferDump : MaterialBase
 		get { return dump.MotionBlurDump ; }
 		set 
 		{ 
-			dump.MotionBlurDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", ref dump);			
+			dump.MotionBlurDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
-	
+
 
 	public static string GetVSSourceCode()
 	{
@@ -1580,6 +1535,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace DeferredLightMaterial
@@ -1589,7 +1549,7 @@ namespace DeferredLightMaterial
 public class DeferredLightMaterial : MaterialBase
 {
 	public DeferredLightMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -1610,14 +1570,12 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetBrdfLUT2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"BrdfLUT", textureObject, samplerObject);
-		//SetTextureByIndex(BrdfLUTIndex, textureObject, samplerObject);
+		SetTexture(@"BrdfLUT", textureObject, samplerObject);		
 	}
 
 	public TextureBase BrdfLUT2D 
 	{	
-		set => SetTexture(@"BrdfLUT", value);
-		//set => SetTextureByIndex(BrdfLUTIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"BrdfLUT", value);		
 	}
 
 	public TextureBase BrdfLUT2D_PointSample
@@ -1628,8 +1586,7 @@ public class DeferredLightMaterial : MaterialBase
 	public TextureBase BrdfLUT2D_LinearSample
 	{	
 		set => SetTexture(@"BrdfLUT", value, Sampler.DefaultLinearSampler);
-	}
-	private int BrdfLUTIndex = 3;
+	}	
 	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"DiffuseTex", TextureObject);
@@ -1637,14 +1594,12 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		set => SetTexture(@"DiffuseTex", value);
-		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);		
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -1655,8 +1610,7 @@ public class DeferredLightMaterial : MaterialBase
 	public TextureBase DiffuseTex2D_LinearSample
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int DiffuseTexIndex = 1;
+	}	
 	public void SetIrradianceMap2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"IrradianceMap", TextureObject);
@@ -1664,14 +1618,12 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetIrradianceMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"IrradianceMap", textureObject, samplerObject);
-		//SetTextureByIndex(IrradianceMapIndex, textureObject, samplerObject);
+		SetTexture(@"IrradianceMap", textureObject, samplerObject);		
 	}
 
 	public TextureBase IrradianceMap2D 
 	{	
-		set => SetTexture(@"IrradianceMap", value);
-		//set => SetTextureByIndex(IrradianceMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"IrradianceMap", value);		
 	}
 
 	public TextureBase IrradianceMap2D_PointSample
@@ -1682,8 +1634,7 @@ public class DeferredLightMaterial : MaterialBase
 	public TextureBase IrradianceMap2D_LinearSample
 	{	
 		set => SetTexture(@"IrradianceMap", value, Sampler.DefaultLinearSampler);
-	}
-	private int IrradianceMapIndex = 4;
+	}	
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
@@ -1691,14 +1642,12 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"NormalTex", textureObject, samplerObject);
-		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		set => SetTexture(@"NormalTex", value);
-		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);		
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -1709,8 +1658,7 @@ public class DeferredLightMaterial : MaterialBase
 	public TextureBase NormalTex2D_LinearSample
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int NormalTexIndex = 2;
+	}	
 	public void SetPositionTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"PositionTex", TextureObject);
@@ -1718,14 +1666,12 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetPositionTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"PositionTex", textureObject, samplerObject);
-		//SetTextureByIndex(PositionTexIndex, textureObject, samplerObject);
+		SetTexture(@"PositionTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase PositionTex2D 
 	{	
-		set => SetTexture(@"PositionTex", value);
-		//set => SetTextureByIndex(PositionTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"PositionTex", value);		
 	}
 
 	public TextureBase PositionTex2D_PointSample
@@ -1736,8 +1682,7 @@ public class DeferredLightMaterial : MaterialBase
 	public TextureBase PositionTex2D_LinearSample
 	{	
 		set => SetTexture(@"PositionTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int PositionTexIndex = 0;
+	}	
 	public void SetPrefilterMap2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"PrefilterMap", TextureObject);
@@ -1745,14 +1690,12 @@ public class DeferredLightMaterial : MaterialBase
 
 	public void SetPrefilterMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"PrefilterMap", textureObject, samplerObject);
-		//SetTextureByIndex(PrefilterMapIndex, textureObject, samplerObject);
+		SetTexture(@"PrefilterMap", textureObject, samplerObject);		
 	}
 
 	public TextureBase PrefilterMap2D 
 	{	
-		set => SetTexture(@"PrefilterMap", value);
-		//set => SetTextureByIndex(PrefilterMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"PrefilterMap", value);		
 	}
 
 	public TextureBase PrefilterMap2D_PointSample
@@ -1763,10 +1706,7 @@ public class DeferredLightMaterial : MaterialBase
 	public TextureBase PrefilterMap2D_LinearSample
 	{	
 		set => SetTexture(@"PrefilterMap", value, Sampler.DefaultLinearSampler);
-	}
-	private int PrefilterMapIndex = 5;
-
-
+	}	
 
 
 
@@ -1777,7 +1717,7 @@ public class DeferredLightMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -1786,8 +1726,8 @@ public class DeferredLightMaterial : MaterialBase
 		get { return cameratransform.View ; }
 		set 
 		{ 
-			cameratransform.View = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);			
+			cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -1795,11 +1735,11 @@ public class DeferredLightMaterial : MaterialBase
 		get { return cameratransform.Proj ; }
 		set 
 		{ 
-			cameratransform.Proj = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);			
+			cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-	
+
 
 	public static string GetVSSourceCode()
 	{
@@ -1961,6 +1901,267 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
+}
+}
+namespace GeometryWireframeMaterial
+{
+
+
+public class GeometryWireframeMaterial : MaterialBase
+{
+	public GeometryWireframeMaterial() 
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return mMaterialProgram;
+	}
+
+	public void Use()
+	{
+		mMaterialProgram.UseProgram();
+	}
+
+	public void SetdiffuseTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"diffuseTex", TextureObject);
+	}
+
+	public void SetdiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
+	{
+		SetTexture(@"diffuseTex", textureObject, samplerObject);		
+	}
+
+	public TextureBase DiffuseTex2D 
+	{	
+		set => SetTexture(@"diffuseTex", value);		
+	}
+
+	public TextureBase DiffuseTex2D_PointSample
+	{	
+		set => SetTexture(@"diffuseTex", value, Sampler.DefaultPointSampler);
+	}
+
+	public TextureBase DiffuseTex2D_LinearSample
+	{	
+		set => SetTexture(@"diffuseTex", value, Sampler.DefaultLinearSampler);
+	}	
+
+	public OpenTK.Mathematics.Matrix4 MVP
+	{
+		get { return mvp; }
+		set 
+		{
+			mvp = value;
+			SetUniformVariable(@"MVP", mvp);			
+		}
+	}
+	private OpenTK.Mathematics.Matrix4 mvp;
+	public OpenTK.Mathematics.Matrix4 ModelViewMatrix
+	{
+		get { return modelviewmatrix; }
+		set 
+		{
+			modelviewmatrix = value;
+			SetUniformVariable(@"ModelViewMatrix", modelviewmatrix);			
+		}
+	}
+	private OpenTK.Mathematics.Matrix4 modelviewmatrix;
+	public OpenTK.Mathematics.Matrix3 NormalMatrix
+	{
+		get { return normalmatrix; }
+		set 
+		{
+			normalmatrix = value;
+			SetUniformVariable(@"NormalMatrix", normalmatrix);			
+		}
+	}
+	private OpenTK.Mathematics.Matrix3 normalmatrix;
+	public OpenTK.Mathematics.Matrix4 ViewportMatrix
+	{
+		get { return viewportmatrix; }
+		set 
+		{
+			viewportmatrix = value;
+			SetUniformVariable(@"ViewportMatrix", viewportmatrix);			
+		}
+	}
+	private OpenTK.Mathematics.Matrix4 viewportmatrix;
+
+
+    private LineInfo lineinfo = new LineInfo();
+	public LineInfo LineInfo
+	{
+		get { return lineinfo; }
+		set 
+		{ 
+			lineinfo = value; 
+			this.SetUniformBufferValue< LineInfo >(@"LineInfo", value);
+		}
+	}
+
+	public System.Single LineInfo_Width
+	{
+		get { return lineinfo.Width ; }
+		set 
+		{ 
+			lineinfo.Width = value;
+			this.SetUniformBufferValue< LineInfo >(@"LineInfo", lineinfo);
+		}
+	}
+	public OpenTK.Mathematics.Vector4 LineInfo_Color
+	{
+		get { return lineinfo.Color ; }
+		set 
+		{ 
+			lineinfo.Color = value;
+			this.SetUniformBufferValue< LineInfo >(@"LineInfo", lineinfo);
+		}
+	}
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"
+
+
+#version 430 core
+
+layout (location = 0) in vec3 VertexPosition;
+layout (location = 1) in vec3 VertexNormal;
+layout (location = 2) in vec2 Texcoord;
+layout (location = 3) in vec4 Tangent;
+
+uniform mat4 ModelViewMatrix;
+uniform mat3 NormalMatrix;
+uniform mat4 ProjectionMatrix;
+uniform mat4 MVP;
+
+layout (location=0) out vec3 OutPosition;
+layout (location=1) out vec3 OutNormal;
+layout (location=2) out vec2 OutTexcoord;
+layout (location=3) out vec4 OutTangent;
+
+
+void main()
+{
+	OutNormal = normalize(NormalMatrix * VertexNormal);
+	OutPosition = vec3(ModelViewMatrix * vec4(VertexPosition,1));
+	OutTexcoord = Texcoord;
+	gl_Position = MVP * vec4(VertexPosition, 1.0f);
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"#version 450 core
+
+
+
+uniform LineInfo
+{
+	float Width;
+	vec4 Color;
+};
+
+//layout (location=0) out vec3 GNormal;
+//layout (location=1) out vec3 GPosition;
+//layout (location=2) out vec2 GTexCoord;
+//layout (location=3) out vec4 GTangent;
+//layout (location=4) noperspective out vec3 GEdgeDistance;
+
+layout (location=0) in vec3 GNormal;
+layout (location=1) in vec3 GPosition;
+layout (location=2) in vec2 GTexCoord;
+layout (location=3) in vec4 GTangent;
+layout (location=4) noperspective in vec3 GEdgeDistance;
+
+layout (location=0) out vec4 FragColor;
+
+uniform sampler2D diffuseTex;
+
+void main()
+{
+	float d = min(GEdgeDistance.x, GEdgeDistance.y);
+	d = min(d, GEdgeDistance.z);
+
+	float mixVal = smoothstep(Width-1,	Width+1, d);
+
+	vec4 diffuseColor = texture(diffuseTex, GTexCoord);
+
+	FragColor = mix(Color, diffuseColor, mixVal);
+}";
+	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"
+#version 430
+
+layout (triangles) in;
+layout (triangle_strip, max_vertices=3) out;
+
+layout (location=0) out vec3 GNormal;
+layout (location=1) out vec3 GPosition;
+layout (location=2) out vec2 GTexCoord;
+layout (location=3) out vec4 GTangent;
+layout (location=4) noperspective out vec3 GEdgeDistance;
+
+layout (location=0) in vec3 VPosition[];
+layout (location=1) in vec3 VNormal[];
+layout (location=2) in vec2 VTexcoord[];
+layout (location=3) in vec4 VTangent[];
+
+//layout (location=0) out vec3 OutPosition;
+//layout (location=1) out vec3 OutNormal;
+//layout (location=2) out vec2 OutTexcoord;
+//layout (location=3) out vec4 OutTangent;
+
+
+uniform mat4 ViewportMatrix;
+
+void main()
+{
+	// Transform each vertex into viewport space
+	vec3 p0 = vec3(ViewportMatrix * (gl_in[0].gl_Position / gl_in[0].gl_Position.w));
+	vec3 p1 = vec3(ViewportMatrix * (gl_in[1].gl_Position / gl_in[1].gl_Position.w));
+	vec3 p2 = vec3(ViewportMatrix * (gl_in[2].gl_Position / gl_in[2].gl_Position.w));
+	// Find the altitudes (ha, hb and hc)
+	float a = length(p1 - p2);
+	float b = length(p2 - p0);
+	float c = length(p1 - p0);
+	float alpha = acos( (b*b + c*c - a*a) / (2.0*b*c) );
+	float beta = acos( (a*a + c*c - b*b) / (2.0*a*c) );
+	float ha = abs( c * sin( beta ) );
+	float hb = abs( c * sin( alpha ) );
+	float hc = abs( b * sin( alpha ) );
+	// Send the triangle along with the edge distances
+	GEdgeDistance = vec3( ha, 0, 0 );
+
+	GNormal = VNormal[0];
+	GPosition = VPosition[0];
+	gl_Position = gl_in[0].gl_Position;
+	EmitVertex();
+	GEdgeDistance = vec3( 0, hb, 0 );
+	GNormal = VNormal[1];
+	GPosition = VPosition[1];
+	gl_Position = gl_in[1].gl_Position;
+	EmitVertex();
+	GEdgeDistance = vec3( 0, 0, hc );
+	GNormal = VNormal[2];
+	GPosition = VPosition[2];
+	gl_Position = gl_in[2].gl_Position;
+	EmitVertex();
+	EndPrimitive();
+}";
+	}
 }
 }
 namespace BasicMaterial
@@ -1970,7 +2171,7 @@ namespace BasicMaterial
 public class BasicMaterial : MaterialBase
 {
 	public BasicMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -1987,7 +2188,6 @@ public class BasicMaterial : MaterialBase
 
 
 
-
     private ColorBlock colorblock = new ColorBlock();
 	public ColorBlock ColorBlock
 	{
@@ -1995,7 +2195,7 @@ public class BasicMaterial : MaterialBase
 		set 
 		{ 
 			colorblock = value; 
-			this.SetUniformBufferValue< ColorBlock >(@"ColorBlock", ref value);
+			this.SetUniformBufferValue< ColorBlock >(@"ColorBlock", value);
 		}
 	}
 
@@ -2005,10 +2205,9 @@ public class BasicMaterial : MaterialBase
 		set 
 		{ 
 			colorblock.Value = value;
-			this.SetUniformBufferValue< ColorBlock >(@"ColorBlock", ref colorblock);
+			this.SetUniformBufferValue< ColorBlock >(@"ColorBlock", colorblock);
 		}
 	}
-
     private Transform transform = new Transform();
 	public Transform Transform
 	{
@@ -2016,7 +2215,7 @@ public class BasicMaterial : MaterialBase
 		set 
 		{ 
 			transform = value; 
-			this.SetUniformBufferValue< Transform >(@"Transform", ref value);
+			this.SetUniformBufferValue< Transform >(@"Transform", value);
 		}
 	}
 
@@ -2026,7 +2225,7 @@ public class BasicMaterial : MaterialBase
 		set 
 		{ 
 			transform.Model = value;
-			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			this.SetUniformBufferValue< Transform >(@"Transform", transform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 Transform_View
@@ -2035,7 +2234,7 @@ public class BasicMaterial : MaterialBase
 		set 
 		{ 
 			transform.View = value;
-			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			this.SetUniformBufferValue< Transform >(@"Transform", transform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 Transform_Proj
@@ -2044,12 +2243,10 @@ public class BasicMaterial : MaterialBase
 		set 
 		{ 
 			transform.Proj = value;
-			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			this.SetUniformBufferValue< Transform >(@"Transform", transform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -2098,6 +2295,11 @@ void main()
     FragColor = vec4(1,0,0,1);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace SimpleMaterial
@@ -2107,7 +2309,7 @@ namespace SimpleMaterial
 public class SimpleMaterial : MaterialBase
 {
 	public SimpleMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -2124,7 +2326,6 @@ public class SimpleMaterial : MaterialBase
 
 
 
-
     private Transform transform = new Transform();
 	public Transform Transform
 	{
@@ -2132,7 +2333,7 @@ public class SimpleMaterial : MaterialBase
 		set 
 		{ 
 			transform = value; 
-			this.SetUniformBufferValue< Transform >(@"Transform", ref value);
+			this.SetUniformBufferValue< Transform >(@"Transform", value);
 		}
 	}
 
@@ -2142,7 +2343,7 @@ public class SimpleMaterial : MaterialBase
 		set 
 		{ 
 			transform.Model = value;
-			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			this.SetUniformBufferValue< Transform >(@"Transform", transform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 Transform_View
@@ -2151,7 +2352,7 @@ public class SimpleMaterial : MaterialBase
 		set 
 		{ 
 			transform.View = value;
-			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			this.SetUniformBufferValue< Transform >(@"Transform", transform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 Transform_Proj
@@ -2160,12 +2361,10 @@ public class SimpleMaterial : MaterialBase
 		set 
 		{ 
 			transform.Proj = value;
-			this.SetUniformBufferValue< Transform >(@"Transform", ref transform);
+			this.SetUniformBufferValue< Transform >(@"Transform", transform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -2201,6 +2400,11 @@ void main()
     FragColor = vec4(1,0,0,0);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GBufferDraw
@@ -2210,7 +2414,7 @@ namespace GBufferDraw
 public class GBufferDraw : MaterialBase
 {
 	public GBufferDraw() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -2231,14 +2435,12 @@ public class GBufferDraw : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		set => SetTexture(@"DiffuseTex", value);
-		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);		
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -2249,8 +2451,7 @@ public class GBufferDraw : MaterialBase
 	public TextureBase DiffuseTex2D_LinearSample
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int DiffuseTexIndex = 0;
+	}	
 	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MaskTex", TextureObject);
@@ -2258,14 +2459,12 @@ public class GBufferDraw : MaterialBase
 
 	public void SetMaskTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MaskTex", textureObject, samplerObject);
-		//SetTextureByIndex(MaskTexIndex, textureObject, samplerObject);
+		SetTexture(@"MaskTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MaskTex2D 
 	{	
-		set => SetTexture(@"MaskTex", value);
-		//set => SetTextureByIndex(MaskTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MaskTex", value);		
 	}
 
 	public TextureBase MaskTex2D_PointSample
@@ -2276,8 +2475,7 @@ public class GBufferDraw : MaterialBase
 	public TextureBase MaskTex2D_LinearSample
 	{	
 		set => SetTexture(@"MaskTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MaskTexIndex = 2;
+	}	
 	public void SetMetalicTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MetalicTex", TextureObject);
@@ -2285,14 +2483,12 @@ public class GBufferDraw : MaterialBase
 
 	public void SetMetalicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MetalicTex", textureObject, samplerObject);
-		//SetTextureByIndex(MetalicTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetalicTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MetalicTex2D 
 	{	
-		set => SetTexture(@"MetalicTex", value);
-		//set => SetTextureByIndex(MetalicTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetalicTex", value);		
 	}
 
 	public TextureBase MetalicTex2D_PointSample
@@ -2303,8 +2499,7 @@ public class GBufferDraw : MaterialBase
 	public TextureBase MetalicTex2D_LinearSample
 	{	
 		set => SetTexture(@"MetalicTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MetalicTexIndex = 3;
+	}	
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
@@ -2312,14 +2507,12 @@ public class GBufferDraw : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"NormalTex", textureObject, samplerObject);
-		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		set => SetTexture(@"NormalTex", value);
-		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);		
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -2330,8 +2523,7 @@ public class GBufferDraw : MaterialBase
 	public TextureBase NormalTex2D_LinearSample
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int NormalTexIndex = 1;
+	}	
 	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"RoughnessTex", TextureObject);
@@ -2339,14 +2531,12 @@ public class GBufferDraw : MaterialBase
 
 	public void SetRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"RoughnessTex", textureObject, samplerObject);
-		//SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"RoughnessTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase RoughnessTex2D 
 	{	
-		set => SetTexture(@"RoughnessTex", value);
-		//set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"RoughnessTex", value);		
 	}
 
 	public TextureBase RoughnessTex2D_PointSample
@@ -2357,106 +2547,95 @@ public class GBufferDraw : MaterialBase
 	public TextureBase RoughnessTex2D_LinearSample
 	{	
 		set => SetTexture(@"RoughnessTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int RoughnessTexIndex = 4;
+	}	
 
-
-	
 	public System.Boolean DiffuseMapExist
 	{
 		get { return diffusemapexist; }
 		set 
 		{
 			diffusemapexist = value;
-			SetUniformVarData(@"DiffuseMapExist", diffusemapexist);			
+			SetUniformVariable(@"DiffuseMapExist", diffusemapexist);			
 		}
 	}
 	private System.Boolean diffusemapexist;
-	
 	public OpenTK.Mathematics.Vector3 DiffuseOverride
 	{
 		get { return diffuseoverride; }
 		set 
 		{
 			diffuseoverride = value;
-			SetUniformVarData(@"DiffuseOverride", diffuseoverride);			
+			SetUniformVariable(@"DiffuseOverride", diffuseoverride);			
 		}
 	}
 	private OpenTK.Mathematics.Vector3 diffuseoverride;
-	
 	public System.Int32 LightChannel
 	{
 		get { return lightchannel; }
 		set 
 		{
 			lightchannel = value;
-			SetUniformVarData(@"LightChannel", lightchannel);			
+			SetUniformVariable(@"LightChannel", lightchannel);			
 		}
 	}
 	private System.Int32 lightchannel;
-	
 	public System.Boolean MaskMapExist
 	{
 		get { return maskmapexist; }
 		set 
 		{
 			maskmapexist = value;
-			SetUniformVarData(@"MaskMapExist", maskmapexist);			
+			SetUniformVariable(@"MaskMapExist", maskmapexist);			
 		}
 	}
 	private System.Boolean maskmapexist;
-	
 	public System.Single Metalic
 	{
 		get { return metalic; }
 		set 
 		{
 			metalic = value;
-			SetUniformVarData(@"Metalic", metalic);			
+			SetUniformVariable(@"Metalic", metalic);			
 		}
 	}
 	private System.Single metalic;
-	
 	public System.Boolean MetalicExist
 	{
 		get { return metalicexist; }
 		set 
 		{
 			metalicexist = value;
-			SetUniformVarData(@"MetalicExist", metalicexist);			
+			SetUniformVariable(@"MetalicExist", metalicexist);			
 		}
 	}
 	private System.Boolean metalicexist;
-	
 	public System.Boolean NormalMapExist
 	{
 		get { return normalmapexist; }
 		set 
 		{
 			normalmapexist = value;
-			SetUniformVarData(@"NormalMapExist", normalmapexist);			
+			SetUniformVariable(@"NormalMapExist", normalmapexist);			
 		}
 	}
 	private System.Boolean normalmapexist;
-	
 	public System.Single Roughness
 	{
 		get { return roughness; }
 		set 
 		{
 			roughness = value;
-			SetUniformVarData(@"Roughness", roughness);			
+			SetUniformVariable(@"Roughness", roughness);			
 		}
 	}
 	private System.Single roughness;
-	
 	public System.Boolean RoughnessExist
 	{
 		get { return roughnessexist; }
 		set 
 		{
 			roughnessexist = value;
-			SetUniformVarData(@"RoughnessExist", roughnessexist);			
+			SetUniformVariable(@"RoughnessExist", roughnessexist);			
 		}
 	}
 	private System.Boolean roughnessexist;
@@ -2469,7 +2648,7 @@ public class GBufferDraw : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -2479,7 +2658,7 @@ public class GBufferDraw : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -2488,10 +2667,9 @@ public class GBufferDraw : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -2499,7 +2677,7 @@ public class GBufferDraw : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -2509,10 +2687,9 @@ public class GBufferDraw : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
-
     private PrevTransform prevtransform = new PrevTransform();
 	public PrevTransform PrevTransform
 	{
@@ -2520,7 +2697,7 @@ public class GBufferDraw : MaterialBase
 		set 
 		{ 
 			prevtransform = value; 
-			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref value);
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", value);
 		}
 	}
 
@@ -2530,7 +2707,7 @@ public class GBufferDraw : MaterialBase
 		set 
 		{ 
 			prevtransform.PrevProj = value;
-			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", prevtransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 PrevTransform_PrevModel
@@ -2539,7 +2716,7 @@ public class GBufferDraw : MaterialBase
 		set 
 		{ 
 			prevtransform.PrevModel = value;
-			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", prevtransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 PrevTransform_PrevView
@@ -2548,12 +2725,10 @@ public class GBufferDraw : MaterialBase
 		set 
 		{ 
 			prevtransform.PrevView = value;
-			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", prevtransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -2727,6 +2902,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace CubemapConvolution
@@ -2736,7 +2916,7 @@ namespace CubemapConvolution
 public class CubemapConvolution : MaterialBase
 {
 	public CubemapConvolution() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -2757,14 +2937,12 @@ public class CubemapConvolution : MaterialBase
 
 	public void SetEnvironmentMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"EnvironmentMap", textureObject, samplerObject);
-		//SetTextureByIndex(EnvironmentMapIndex, textureObject, samplerObject);
+		SetTexture(@"EnvironmentMap", textureObject, samplerObject);		
 	}
 
 	public TextureBase EnvironmentMap2D 
 	{	
-		set => SetTexture(@"EnvironmentMap", value);
-		//set => SetTextureByIndex(EnvironmentMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"EnvironmentMap", value);		
 	}
 
 	public TextureBase EnvironmentMap2D_PointSample
@@ -2775,8 +2953,7 @@ public class CubemapConvolution : MaterialBase
 	public TextureBase EnvironmentMap2D_LinearSample
 	{	
 		set => SetTexture(@"EnvironmentMap", value, Sampler.DefaultLinearSampler);
-	}
-	private int EnvironmentMapIndex = 0;
+	}	
 
 	public OpenTK.Mathematics.Matrix4 Projection
 	{
@@ -2784,7 +2961,7 @@ public class CubemapConvolution : MaterialBase
 		set 
 		{
 			projection = value;
-			SetUniformVarData(@"Projection", projection);			
+			SetUniformVariable(@"Projection", projection);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 projection;
@@ -2794,15 +2971,13 @@ public class CubemapConvolution : MaterialBase
 		set 
 		{
 			view = value;
-			SetUniformVarData(@"View", view);			
+			SetUniformVariable(@"View", view);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 view;
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -2876,6 +3051,11 @@ void main()
     FragColor = vec4(irradiance, 1.0);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GBufferInstanced
@@ -2885,7 +3065,7 @@ namespace GBufferInstanced
 public class GBufferInstanced : MaterialBase
 {
 	public GBufferInstanced() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -2906,14 +3086,12 @@ public class GBufferInstanced : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		set => SetTexture(@"DiffuseTex", value);
-		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);		
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -2924,8 +3102,7 @@ public class GBufferInstanced : MaterialBase
 	public TextureBase DiffuseTex2D_LinearSample
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int DiffuseTexIndex = 0;
+	}	
 	public void SetMetalicTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MetalicTex", TextureObject);
@@ -2933,14 +3110,12 @@ public class GBufferInstanced : MaterialBase
 
 	public void SetMetalicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MetalicTex", textureObject, samplerObject);
-		//SetTextureByIndex(MetalicTexIndex, textureObject, samplerObject);
+		SetTexture(@"MetalicTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MetalicTex2D 
 	{	
-		set => SetTexture(@"MetalicTex", value);
-		//set => SetTextureByIndex(MetalicTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetalicTex", value);		
 	}
 
 	public TextureBase MetalicTex2D_PointSample
@@ -2951,8 +3126,7 @@ public class GBufferInstanced : MaterialBase
 	public TextureBase MetalicTex2D_LinearSample
 	{	
 		set => SetTexture(@"MetalicTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MetalicTexIndex = 3;
+	}	
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"NormalTex", TextureObject);
@@ -2960,14 +3134,12 @@ public class GBufferInstanced : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"NormalTex", textureObject, samplerObject);
-		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		set => SetTexture(@"NormalTex", value);
-		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);		
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -2978,8 +3150,7 @@ public class GBufferInstanced : MaterialBase
 	public TextureBase NormalTex2D_LinearSample
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int NormalTexIndex = 1;
+	}	
 	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"RoughnessTex", TextureObject);
@@ -2987,14 +3158,12 @@ public class GBufferInstanced : MaterialBase
 
 	public void SetRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"RoughnessTex", textureObject, samplerObject);
-		//SetTextureByIndex(RoughnessTexIndex, textureObject, samplerObject);
+		SetTexture(@"RoughnessTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase RoughnessTex2D 
 	{	
-		set => SetTexture(@"RoughnessTex", value);
-		//set => SetTextureByIndex(RoughnessTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"RoughnessTex", value);		
 	}
 
 	public TextureBase RoughnessTex2D_PointSample
@@ -3005,93 +3174,85 @@ public class GBufferInstanced : MaterialBase
 	public TextureBase RoughnessTex2D_LinearSample
 	{	
 		set => SetTexture(@"RoughnessTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int RoughnessTexIndex = 4;
+	}	
 
-	public System.Int32 MetallicCount
-	{
-		get { return metalliccount; }
-		set 
-		{
-			metalliccount = value;
-			SetUniformVarData(@"MetallicCount", metalliccount);			
-		}
-	}
-	private System.Int32 metalliccount;
-	public System.Int32 RoughnessCount
-	{
-		get { return roughnesscount; }
-		set 
-		{
-			roughnesscount = value;
-			SetUniformVarData(@"RoughnessCount", roughnesscount);			
-		}
-	}
-	private System.Int32 roughnesscount;
-
-	
 	public System.Boolean DiffuseMapExist
 	{
 		get { return diffusemapexist; }
 		set 
 		{
 			diffusemapexist = value;
-			SetUniformVarData(@"DiffuseMapExist", diffusemapexist);			
+			SetUniformVariable(@"DiffuseMapExist", diffusemapexist);			
 		}
 	}
 	private System.Boolean diffusemapexist;
-	
 	public OpenTK.Mathematics.Vector3 DiffuseOverride
 	{
 		get { return diffuseoverride; }
 		set 
 		{
 			diffuseoverride = value;
-			SetUniformVarData(@"DiffuseOverride", diffuseoverride);			
+			SetUniformVariable(@"DiffuseOverride", diffuseoverride);			
 		}
 	}
 	private OpenTK.Mathematics.Vector3 diffuseoverride;
-	
 	public System.Int32 LightChannel
 	{
 		get { return lightchannel; }
 		set 
 		{
 			lightchannel = value;
-			SetUniformVarData(@"LightChannel", lightchannel);			
+			SetUniformVariable(@"LightChannel", lightchannel);			
 		}
 	}
 	private System.Int32 lightchannel;
-	
 	public System.Boolean MetalicExist
 	{
 		get { return metalicexist; }
 		set 
 		{
 			metalicexist = value;
-			SetUniformVarData(@"MetalicExist", metalicexist);			
+			SetUniformVariable(@"MetalicExist", metalicexist);			
 		}
 	}
 	private System.Boolean metalicexist;
-	
+	public System.Int32 MetallicCount
+	{
+		get { return metalliccount; }
+		set 
+		{
+			metalliccount = value;
+			SetUniformVariable(@"MetallicCount", metalliccount);			
+		}
+	}
+	private System.Int32 metalliccount;
 	public System.Boolean NormalMapExist
 	{
 		get { return normalmapexist; }
 		set 
 		{
 			normalmapexist = value;
-			SetUniformVarData(@"NormalMapExist", normalmapexist);			
+			SetUniformVariable(@"NormalMapExist", normalmapexist);			
 		}
 	}
 	private System.Boolean normalmapexist;
-	
+	public System.Int32 RoughnessCount
+	{
+		get { return roughnesscount; }
+		set 
+		{
+			roughnesscount = value;
+			SetUniformVariable(@"RoughnessCount", roughnesscount);			
+		}
+	}
+	private System.Int32 roughnesscount;
 	public System.Boolean RoughnessExist
 	{
 		get { return roughnessexist; }
 		set 
 		{
 			roughnessexist = value;
-			SetUniformVarData(@"RoughnessExist", roughnessexist);			
+			SetUniformVariable(@"RoughnessExist", roughnessexist);			
 		}
 	}
 	private System.Boolean roughnessexist;
@@ -3104,7 +3265,7 @@ public class GBufferInstanced : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -3114,7 +3275,7 @@ public class GBufferInstanced : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -3123,10 +3284,9 @@ public class GBufferInstanced : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -3134,7 +3294,7 @@ public class GBufferInstanced : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -3144,12 +3304,10 @@ public class GBufferInstanced : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -3301,6 +3459,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GBufferWithoutTexture
@@ -3310,7 +3473,7 @@ namespace GBufferWithoutTexture
 public class GBufferWithoutTexture : MaterialBase
 {
 	public GBufferWithoutTexture() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -3327,7 +3490,6 @@ public class GBufferWithoutTexture : MaterialBase
 
 
 
-
     private CameraTransform cameratransform = new CameraTransform();
 	public CameraTransform CameraTransform
 	{
@@ -3335,7 +3497,7 @@ public class GBufferWithoutTexture : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -3345,7 +3507,7 @@ public class GBufferWithoutTexture : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -3354,10 +3516,9 @@ public class GBufferWithoutTexture : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -3365,7 +3526,7 @@ public class GBufferWithoutTexture : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -3375,10 +3536,9 @@ public class GBufferWithoutTexture : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
-
     private PrevTransform prevtransform = new PrevTransform();
 	public PrevTransform PrevTransform
 	{
@@ -3386,7 +3546,7 @@ public class GBufferWithoutTexture : MaterialBase
 		set 
 		{ 
 			prevtransform = value; 
-			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref value);
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", value);
 		}
 	}
 
@@ -3396,7 +3556,7 @@ public class GBufferWithoutTexture : MaterialBase
 		set 
 		{ 
 			prevtransform.PrevProj = value;
-			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", prevtransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 PrevTransform_PrevModel
@@ -3405,7 +3565,7 @@ public class GBufferWithoutTexture : MaterialBase
 		set 
 		{ 
 			prevtransform.PrevModel = value;
-			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", prevtransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 PrevTransform_PrevView
@@ -3414,12 +3574,10 @@ public class GBufferWithoutTexture : MaterialBase
 		set 
 		{ 
 			prevtransform.PrevView = value;
-			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", ref prevtransform);
+			this.SetUniformBufferValue< PrevTransform >(@"PrevTransform", prevtransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -3512,6 +3670,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GBufferPNC
@@ -3521,7 +3684,7 @@ namespace GBufferPNC
 public class GBufferPNC : MaterialBase
 {
 	public GBufferPNC() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -3542,11 +3705,10 @@ public class GBufferPNC : MaterialBase
 		set 
 		{
 			model = value;
-			SetUniformVarData(@"Model", model);			
+			SetUniformVariable(@"Model", model);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 model;
-
 
 
     private CameraTransform cameratransform = new CameraTransform();
@@ -3556,7 +3718,7 @@ public class GBufferPNC : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -3566,7 +3728,7 @@ public class GBufferPNC : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -3575,12 +3737,10 @@ public class GBufferPNC : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -3645,6 +3805,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GBufferCubeTest
@@ -3654,7 +3819,7 @@ namespace GBufferCubeTest
 public class GBufferCubeTest : MaterialBase
 {
 	public GBufferCubeTest() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -3675,14 +3840,12 @@ public class GBufferCubeTest : MaterialBase
 
 	public void SetEquirectangularMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"EquirectangularMap", textureObject, samplerObject);
-		//SetTextureByIndex(EquirectangularMapIndex, textureObject, samplerObject);
+		SetTexture(@"EquirectangularMap", textureObject, samplerObject);		
 	}
 
 	public TextureBase EquirectangularMap2D 
 	{	
-		set => SetTexture(@"EquirectangularMap", value);
-		//set => SetTextureByIndex(EquirectangularMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"EquirectangularMap", value);		
 	}
 
 	public TextureBase EquirectangularMap2D_PointSample
@@ -3693,9 +3856,7 @@ public class GBufferCubeTest : MaterialBase
 	public TextureBase EquirectangularMap2D_LinearSample
 	{	
 		set => SetTexture(@"EquirectangularMap", value, Sampler.DefaultLinearSampler);
-	}
-	private int EquirectangularMapIndex = 0;
-
+	}	
 
 
 
@@ -3706,7 +3867,7 @@ public class GBufferCubeTest : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -3716,7 +3877,7 @@ public class GBufferCubeTest : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -3725,10 +3886,9 @@ public class GBufferCubeTest : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -3736,7 +3896,7 @@ public class GBufferCubeTest : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -3746,12 +3906,10 @@ public class GBufferCubeTest : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -3826,6 +3984,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GBufferPNCT
@@ -3835,7 +3998,7 @@ namespace GBufferPNCT
 public class GBufferPNCT : MaterialBase
 {
 	public GBufferPNCT() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -3856,14 +4019,12 @@ public class GBufferPNCT : MaterialBase
 
 	public void SetSpecularTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"SpecularTex", textureObject, samplerObject);
-		//SetTextureByIndex(SpecularTexIndex, textureObject, samplerObject);
+		SetTexture(@"SpecularTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase SpecularTex2D 
 	{	
-		set => SetTexture(@"SpecularTex", value);
-		//set => SetTextureByIndex(SpecularTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"SpecularTex", value);		
 	}
 
 	public TextureBase SpecularTex2D_PointSample
@@ -3874,8 +4035,7 @@ public class GBufferPNCT : MaterialBase
 	public TextureBase SpecularTex2D_LinearSample
 	{	
 		set => SetTexture(@"SpecularTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int SpecularTexIndex = 0;
+	}	
 
 	public OpenTK.Mathematics.Matrix4 Model
 	{
@@ -3883,11 +4043,10 @@ public class GBufferPNCT : MaterialBase
 		set 
 		{
 			model = value;
-			SetUniformVarData(@"Model", model);			
+			SetUniformVariable(@"Model", model);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 model;
-
 
 
     private CameraTransform cameratransform = new CameraTransform();
@@ -3897,7 +4056,7 @@ public class GBufferPNCT : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -3907,7 +4066,7 @@ public class GBufferPNCT : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -3916,12 +4075,10 @@ public class GBufferPNCT : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -3990,6 +4147,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GBufferPNT
@@ -3999,7 +4161,7 @@ namespace GBufferPNT
 public class GBufferPNT : MaterialBase
 {
 	public GBufferPNT() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4020,14 +4182,12 @@ public class GBufferPNT : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		set => SetTexture(@"DiffuseTex", value);
-		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);		
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -4038,9 +4198,7 @@ public class GBufferPNT : MaterialBase
 	public TextureBase DiffuseTex2D_LinearSample
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int DiffuseTexIndex = 0;
-
+	}	
 
 
 
@@ -4051,7 +4209,7 @@ public class GBufferPNT : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -4061,7 +4219,7 @@ public class GBufferPNT : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -4070,10 +4228,9 @@ public class GBufferPNT : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -4081,7 +4238,7 @@ public class GBufferPNT : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -4091,12 +4248,10 @@ public class GBufferPNT : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4167,6 +4322,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GBufferPNTT
@@ -4176,7 +4336,7 @@ namespace GBufferPNTT
 public class GBufferPNTT : MaterialBase
 {
 	public GBufferPNTT() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4197,14 +4357,12 @@ public class GBufferPNTT : MaterialBase
 
 	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"DiffuseTex", textureObject, samplerObject);
-		//SetTextureByIndex(DiffuseTexIndex, textureObject, samplerObject);
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		set => SetTexture(@"DiffuseTex", value);
-		//set => SetTextureByIndex(DiffuseTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value);		
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
@@ -4215,9 +4373,7 @@ public class GBufferPNTT : MaterialBase
 	public TextureBase DiffuseTex2D_LinearSample
 	{	
 		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int DiffuseTexIndex = 0;
-
+	}	
 
 
 
@@ -4228,7 +4384,7 @@ public class GBufferPNTT : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -4238,7 +4394,7 @@ public class GBufferPNTT : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -4247,10 +4403,9 @@ public class GBufferPNTT : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -4258,7 +4413,7 @@ public class GBufferPNTT : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -4268,12 +4423,10 @@ public class GBufferPNTT : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4347,6 +4500,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace Blur
@@ -4356,7 +4514,7 @@ namespace Blur
 public class Blur : MaterialBase
 {
 	public Blur() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4377,14 +4535,12 @@ public class Blur : MaterialBase
 
 	public void SetColorTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"ColorTex", textureObject, samplerObject);
-		//SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
+		SetTexture(@"ColorTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase ColorTex2D 
 	{	
-		set => SetTexture(@"ColorTex", value);
-		//set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"ColorTex", value);		
 	}
 
 	public TextureBase ColorTex2D_PointSample
@@ -4395,36 +4551,31 @@ public class Blur : MaterialBase
 	public TextureBase ColorTex2D_LinearSample
 	{	
 		set => SetTexture(@"ColorTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int ColorTexIndex = 0;
+	}	
 
-
-	
 	public System.Boolean Horizontal
 	{
 		get { return horizontal; }
 		set 
 		{
 			horizontal = value;
-			SetUniformVarData(@"horizontal", horizontal);			
+			SetUniformVariable(@"horizontal", horizontal);			
 		}
 	}
 	private System.Boolean horizontal;
-	
 	public System.Single[] Weight
 	{
 		get { return weight; }
 		set 
 		{
 			weight = value;
-			SetUniformVarData(@"weight", ref weight);			
+			SetUniformVariable(@"weight", weight);			
 		}
 	}
 	private System.Single[] weight;
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4479,6 +4630,11 @@ void main()
     FragColor = vec4(result, 1.0);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace BloomMaterial
@@ -4488,7 +4644,7 @@ namespace BloomMaterial
 public class BloomMaterial : MaterialBase
 {
 	public BloomMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4509,14 +4665,12 @@ public class BloomMaterial : MaterialBase
 
 	public void SetColorTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"ColorTex", textureObject, samplerObject);
-		//SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
+		SetTexture(@"ColorTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase ColorTex2D 
 	{	
-		set => SetTexture(@"ColorTex", value);
-		//set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"ColorTex", value);		
 	}
 
 	public TextureBase ColorTex2D_PointSample
@@ -4527,14 +4681,11 @@ public class BloomMaterial : MaterialBase
 	public TextureBase ColorTex2D_LinearSample
 	{	
 		set => SetTexture(@"ColorTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int ColorTexIndex = 0;
+	}	
 
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4582,6 +4733,11 @@ void main()
         FragColor = vec4(0,0,0,1);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace CubemapMaterial
@@ -4591,7 +4747,7 @@ namespace CubemapMaterial
 public class CubemapMaterial : MaterialBase
 {
 	public CubemapMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4612,14 +4768,12 @@ public class CubemapMaterial : MaterialBase
 
 	public void SettexCubemap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"texCubemap", textureObject, samplerObject);
-		//SetTextureByIndex(texCubemapIndex, textureObject, samplerObject);
+		SetTexture(@"texCubemap", textureObject, samplerObject);		
 	}
 
 	public TextureBase TexCubemap2D 
 	{	
-		set => SetTexture(@"texCubemap", value);
-		//set => SetTextureByIndex(texCubemapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"texCubemap", value);		
 	}
 
 	public TextureBase TexCubemap2D_PointSample
@@ -4630,16 +4784,25 @@ public class CubemapMaterial : MaterialBase
 	public TextureBase TexCubemap2D_LinearSample
 	{	
 		set => SetTexture(@"texCubemap", value, Sampler.DefaultLinearSampler);
-	}
-	private int texCubemapIndex = 0;
+	}	
 
+	public System.Int32 LightChannel
+	{
+		get { return lightchannel; }
+		set 
+		{
+			lightchannel = value;
+			SetUniformVariable(@"LightChannel", lightchannel);			
+		}
+	}
+	private System.Int32 lightchannel;
 	public OpenTK.Mathematics.Matrix4 ModelMatrix
 	{
 		get { return modelmatrix; }
 		set 
 		{
 			modelmatrix = value;
-			SetUniformVarData(@"ModelMatrix", modelmatrix);			
+			SetUniformVariable(@"ModelMatrix", modelmatrix);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 modelmatrix;
@@ -4649,7 +4812,7 @@ public class CubemapMaterial : MaterialBase
 		set 
 		{
 			projmatrix = value;
-			SetUniformVarData(@"ProjMatrix", projmatrix);			
+			SetUniformVariable(@"ProjMatrix", projmatrix);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 projmatrix;
@@ -4659,26 +4822,13 @@ public class CubemapMaterial : MaterialBase
 		set 
 		{
 			viewmatrix = value;
-			SetUniformVarData(@"ViewMatrix", viewmatrix);			
+			SetUniformVariable(@"ViewMatrix", viewmatrix);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 viewmatrix;
 
-	
-	public System.Int32 LightChannel
-	{
-		get { return lightchannel; }
-		set 
-		{
-			lightchannel = value;
-			SetUniformVarData(@"LightChannel", lightchannel);			
-		}
-	}
-	private System.Int32 lightchannel;
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4732,6 +4882,11 @@ void main()
 	PositionColor.a = LightChannel;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace MSGBufferMaterial
@@ -4741,7 +4896,7 @@ namespace MSGBufferMaterial
 public class MSGBufferMaterial : MaterialBase
 {
 	public MSGBufferMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -4756,37 +4911,33 @@ public class MSGBufferMaterial : MaterialBase
 	}
 
 
-
-	
 	public System.Int32 MaskMapExist
 	{
 		get { return maskmapexist; }
 		set 
 		{
 			maskmapexist = value;
-			SetUniformVarData(@"MaskMapExist", maskmapexist);			
+			SetUniformVariable(@"MaskMapExist", maskmapexist);			
 		}
 	}
 	private System.Int32 maskmapexist;
-	
 	public System.Int32 NormalMapExist
 	{
 		get { return normalmapexist; }
 		set 
 		{
 			normalmapexist = value;
-			SetUniformVarData(@"NormalMapExist", normalmapexist);			
+			SetUniformVariable(@"NormalMapExist", normalmapexist);			
 		}
 	}
 	private System.Int32 normalmapexist;
-	
 	public System.Int32 SpecularMapExist
 	{
 		get { return specularmapexist; }
 		set 
 		{
 			specularmapexist = value;
-			SetUniformVarData(@"SpecularMapExist", specularmapexist);			
+			SetUniformVariable(@"SpecularMapExist", specularmapexist);			
 		}
 	}
 	private System.Int32 specularmapexist;
@@ -4799,7 +4950,7 @@ public class MSGBufferMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -4809,7 +4960,7 @@ public class MSGBufferMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -4818,10 +4969,9 @@ public class MSGBufferMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -4829,7 +4979,7 @@ public class MSGBufferMaterial : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -4839,12 +4989,10 @@ public class MSGBufferMaterial : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4975,6 +5123,11 @@ void main()
     PositionColor = InPosition;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace DepthVisualizeMaterial
@@ -4984,7 +5137,7 @@ namespace DepthVisualizeMaterial
 public class DepthVisualizeMaterial : MaterialBase
 {
 	public DepthVisualizeMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5005,14 +5158,12 @@ public class DepthVisualizeMaterial : MaterialBase
 
 	public void SetDepthTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"DepthTex", textureObject, samplerObject);
-		//SetTextureByIndex(DepthTexIndex, textureObject, samplerObject);
+		SetTexture(@"DepthTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase DepthTex2D 
 	{	
-		set => SetTexture(@"DepthTex", value);
-		//set => SetTextureByIndex(DepthTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DepthTex", value);		
 	}
 
 	public TextureBase DepthTex2D_PointSample
@@ -5023,36 +5174,31 @@ public class DepthVisualizeMaterial : MaterialBase
 	public TextureBase DepthTex2D_LinearSample
 	{	
 		set => SetTexture(@"DepthTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int DepthTexIndex = 0;
+	}	
 
-
-	
 	public System.Single Far
 	{
 		get { return far; }
 		set 
 		{
 			far = value;
-			SetUniformVarData(@"Far", far);			
+			SetUniformVariable(@"Far", far);			
 		}
 	}
 	private System.Single far;
-	
 	public System.Single Near
 	{
 		get { return near; }
 		set 
 		{
 			near = value;
-			SetUniformVarData(@"Near", near);			
+			SetUniformVariable(@"Near", near);			
 		}
 	}
 	private System.Single near;
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5092,6 +5238,11 @@ void main()
     FragColor = vec4(linearizedDepth, linearizedDepth, linearizedDepth, 1.0f);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace FontRenderMaterial
@@ -5101,7 +5252,7 @@ namespace FontRenderMaterial
 public class FontRenderMaterial : MaterialBase
 {
 	public FontRenderMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5122,14 +5273,12 @@ public class FontRenderMaterial : MaterialBase
 
 	public void SetFontTexture2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"FontTexture", textureObject, samplerObject);
-		//SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
+		SetTexture(@"FontTexture", textureObject, samplerObject);		
 	}
 
 	public TextureBase FontTexture2D 
 	{	
-		set => SetTexture(@"FontTexture", value);
-		//set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"FontTexture", value);		
 	}
 
 	public TextureBase FontTexture2D_PointSample
@@ -5140,8 +5289,7 @@ public class FontRenderMaterial : MaterialBase
 	public TextureBase FontTexture2D_LinearSample
 	{	
 		set => SetTexture(@"FontTexture", value, Sampler.DefaultLinearSampler);
-	}
-	private int FontTextureIndex = 0;
+	}	
 
 	public OpenTK.Mathematics.Vector2 ScreenSize
 	{
@@ -5149,15 +5297,13 @@ public class FontRenderMaterial : MaterialBase
 		set 
 		{
 			screensize = value;
-			SetUniformVarData(@"ScreenSize", screensize);			
+			SetUniformVariable(@"ScreenSize", screensize);			
 		}
 	}
 	private OpenTK.Mathematics.Vector2 screensize;
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5203,6 +5349,11 @@ void main()
     DiffuseColor.a = texture(FontTexture, TexCoord).r;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace FontBoxRenderMaterial
@@ -5212,7 +5363,7 @@ namespace FontBoxRenderMaterial
 public class FontBoxRenderMaterial : MaterialBase
 {
 	public FontBoxRenderMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5227,43 +5378,39 @@ public class FontBoxRenderMaterial : MaterialBase
 	}
 
 
-	public OpenTK.Mathematics.Vector2 ScreenSize
-	{
-		get { return screensize; }
-		set 
-		{
-			screensize = value;
-			SetUniformVarData(@"ScreenSize", screensize);			
-		}
-	}
-	private OpenTK.Mathematics.Vector2 screensize;
-
-	
 	public System.Single BoxAlpha
 	{
 		get { return boxalpha; }
 		set 
 		{
 			boxalpha = value;
-			SetUniformVarData(@"BoxAlpha", boxalpha);			
+			SetUniformVariable(@"BoxAlpha", boxalpha);			
 		}
 	}
 	private System.Single boxalpha;
-	
 	public OpenTK.Mathematics.Vector3 BoxColor
 	{
 		get { return boxcolor; }
 		set 
 		{
 			boxcolor = value;
-			SetUniformVarData(@"BoxColor", boxcolor);			
+			SetUniformVariable(@"BoxColor", boxcolor);			
 		}
 	}
 	private OpenTK.Mathematics.Vector3 boxcolor;
+	public OpenTK.Mathematics.Vector2 ScreenSize
+	{
+		get { return screensize; }
+		set 
+		{
+			screensize = value;
+			SetUniformVariable(@"ScreenSize", screensize);			
+		}
+	}
+	private OpenTK.Mathematics.Vector2 screensize;
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5302,6 +5449,11 @@ void main()
     FragColor =vec4(BoxColor, BoxAlpha);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace GridRenderMaterial
@@ -5311,7 +5463,7 @@ namespace GridRenderMaterial
 public class GridRenderMaterial : MaterialBase
 {
 	public GridRenderMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5326,15 +5478,13 @@ public class GridRenderMaterial : MaterialBase
 	}
 
 
-
-	
 	public OpenTK.Mathematics.Vector3 LineColor
 	{
 		get { return linecolor; }
 		set 
 		{
 			linecolor = value;
-			SetUniformVarData(@"LineColor", linecolor);			
+			SetUniformVariable(@"LineColor", linecolor);			
 		}
 	}
 	private OpenTK.Mathematics.Vector3 linecolor;
@@ -5347,7 +5497,7 @@ public class GridRenderMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -5357,7 +5507,7 @@ public class GridRenderMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -5366,10 +5516,9 @@ public class GridRenderMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -5377,7 +5526,7 @@ public class GridRenderMaterial : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -5387,12 +5536,10 @@ public class GridRenderMaterial : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5430,6 +5577,11 @@ void main()
     FragColor =vec4(LineColor, 1);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace ThreeDTextRenderMaterial
@@ -5439,7 +5591,7 @@ namespace ThreeDTextRenderMaterial
 public class ThreeDTextRenderMaterial : MaterialBase
 {
 	public ThreeDTextRenderMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5460,14 +5612,12 @@ public class ThreeDTextRenderMaterial : MaterialBase
 
 	public void SetFontTexture2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"FontTexture", textureObject, samplerObject);
-		//SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
+		SetTexture(@"FontTexture", textureObject, samplerObject);		
 	}
 
 	public TextureBase FontTexture2D 
 	{	
-		set => SetTexture(@"FontTexture", value);
-		//set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"FontTexture", value);		
 	}
 
 	public TextureBase FontTexture2D_PointSample
@@ -5478,8 +5628,7 @@ public class ThreeDTextRenderMaterial : MaterialBase
 	public TextureBase FontTexture2D_LinearSample
 	{	
 		set => SetTexture(@"FontTexture", value, Sampler.DefaultLinearSampler);
-	}
-	private int FontTextureIndex = 0;
+	}	
 
 	public OpenTK.Mathematics.Matrix4 Model
 	{
@@ -5487,7 +5636,7 @@ public class ThreeDTextRenderMaterial : MaterialBase
 		set 
 		{
 			model = value;
-			SetUniformVarData(@"Model", model);			
+			SetUniformVariable(@"Model", model);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 model;
@@ -5497,36 +5646,33 @@ public class ThreeDTextRenderMaterial : MaterialBase
 		set 
 		{
 			proj = value;
-			SetUniformVarData(@"Proj", proj);			
+			SetUniformVariable(@"Proj", proj);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 proj;
-	public OpenTK.Mathematics.Matrix4 View
-	{
-		get { return view; }
-		set 
-		{
-			view = value;
-			SetUniformVarData(@"View", view);			
-		}
-	}
-	private OpenTK.Mathematics.Matrix4 view;
-
-	
 	public OpenTK.Mathematics.Vector3 TextColor
 	{
 		get { return textcolor; }
 		set 
 		{
 			textcolor = value;
-			SetUniformVarData(@"TextColor", textcolor);			
+			SetUniformVariable(@"TextColor", textcolor);			
 		}
 	}
 	private OpenTK.Mathematics.Vector3 textcolor;
+	public OpenTK.Mathematics.Matrix4 View
+	{
+		get { return view; }
+		set 
+		{
+			view = value;
+			SetUniformVariable(@"View", view);			
+		}
+	}
+	private OpenTK.Mathematics.Matrix4 view;
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5565,6 +5711,11 @@ void main()
     FragColor =vec4(TextColor,TexCol.a);
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace ResolveMaterial
@@ -5574,7 +5725,7 @@ namespace ResolveMaterial
 public class ResolveMaterial : MaterialBase
 {
 	public ResolveMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5595,14 +5746,12 @@ public class ResolveMaterial : MaterialBase
 
 	public void SetColorTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"ColorTex", textureObject, samplerObject);
-		//SetTextureByIndex(ColorTexIndex, textureObject, samplerObject);
+		SetTexture(@"ColorTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase ColorTex2D 
 	{	
-		set => SetTexture(@"ColorTex", value);
-		//set => SetTextureByIndex(ColorTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"ColorTex", value);		
 	}
 
 	public TextureBase ColorTex2D_PointSample
@@ -5613,8 +5762,7 @@ public class ResolveMaterial : MaterialBase
 	public TextureBase ColorTex2D_LinearSample
 	{	
 		set => SetTexture(@"ColorTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int ColorTexIndex = 0;
+	}	
 	public void SetMotionTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"MotionTex", TextureObject);
@@ -5622,14 +5770,12 @@ public class ResolveMaterial : MaterialBase
 
 	public void SetMotionTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MotionTex", textureObject, samplerObject);
-		//SetTextureByIndex(MotionTexIndex, textureObject, samplerObject);
+		SetTexture(@"MotionTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase MotionTex2D 
 	{	
-		set => SetTexture(@"MotionTex", value);
-		//set => SetTextureByIndex(MotionTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MotionTex", value);		
 	}
 
 	public TextureBase MotionTex2D_PointSample
@@ -5640,14 +5786,11 @@ public class ResolveMaterial : MaterialBase
 	public TextureBase MotionTex2D_LinearSample
 	{	
 		set => SetTexture(@"MotionTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int MotionTexIndex = 1;
+	}	
 
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5698,6 +5841,11 @@ void main()
 	FragColor = c;	
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace SSAOMaterial
@@ -5707,7 +5855,7 @@ namespace SSAOMaterial
 public class SSAOMaterial : MaterialBase
 {
 	public SSAOMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5728,14 +5876,12 @@ public class SSAOMaterial : MaterialBase
 
 	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"NormalTex", textureObject, samplerObject);
-		//SetTextureByIndex(NormalTexIndex, textureObject, samplerObject);
+		SetTexture(@"NormalTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase NormalTex2D 
 	{	
-		set => SetTexture(@"NormalTex", value);
-		//set => SetTextureByIndex(NormalTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"NormalTex", value);		
 	}
 
 	public TextureBase NormalTex2D_PointSample
@@ -5746,8 +5892,7 @@ public class SSAOMaterial : MaterialBase
 	public TextureBase NormalTex2D_LinearSample
 	{	
 		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int NormalTexIndex = 0;
+	}	
 	public void SetPositionTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"PositionTex", TextureObject);
@@ -5755,14 +5900,12 @@ public class SSAOMaterial : MaterialBase
 
 	public void SetPositionTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"PositionTex", textureObject, samplerObject);
-		//SetTextureByIndex(PositionTexIndex, textureObject, samplerObject);
+		SetTexture(@"PositionTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase PositionTex2D 
 	{	
-		set => SetTexture(@"PositionTex", value);
-		//set => SetTextureByIndex(PositionTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"PositionTex", value);		
 	}
 
 	public TextureBase PositionTex2D_PointSample
@@ -5773,8 +5916,7 @@ public class SSAOMaterial : MaterialBase
 	public TextureBase PositionTex2D_LinearSample
 	{	
 		set => SetTexture(@"PositionTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int PositionTexIndex = 1;
+	}	
 	public void SetRandTex2D(Core.Texture.TextureBase TextureObject)
 	{
 		SetTexture(@"RandTex", TextureObject);
@@ -5782,14 +5924,12 @@ public class SSAOMaterial : MaterialBase
 
 	public void SetRandTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"RandTex", textureObject, samplerObject);
-		//SetTextureByIndex(RandTexIndex, textureObject, samplerObject);
+		SetTexture(@"RandTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase RandTex2D 
 	{	
-		set => SetTexture(@"RandTex", value);
-		//set => SetTextureByIndex(RandTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"RandTex", value);		
 	}
 
 	public TextureBase RandTex2D_PointSample
@@ -5800,58 +5940,51 @@ public class SSAOMaterial : MaterialBase
 	public TextureBase RandTex2D_LinearSample
 	{	
 		set => SetTexture(@"RandTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int RandTexIndex = 4;
+	}	
 
-
-	
 	public OpenTK.Mathematics.Matrix4 ProjectionMatrix
 	{
 		get { return projectionmatrix; }
 		set 
 		{
 			projectionmatrix = value;
-			SetUniformVarData(@"ProjectionMatrix", projectionmatrix);			
+			SetUniformVariable(@"ProjectionMatrix", projectionmatrix);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 projectionmatrix;
-	
 	public System.Single Radius
 	{
 		get { return radius; }
 		set 
 		{
 			radius = value;
-			SetUniformVarData(@"Radius", radius);			
+			SetUniformVariable(@"Radius", radius);			
 		}
 	}
 	private System.Single radius;
-	
 	public OpenTK.Mathematics.Vector3[] SampleKernel
 	{
 		get { return samplekernel; }
 		set 
 		{
 			samplekernel = value;
-			SetUniformVarData(@"SampleKernel", ref samplekernel);			
+			SetUniformVariable(@"SampleKernel", samplekernel);			
 		}
 	}
 	private OpenTK.Mathematics.Vector3[] samplekernel;
-	
 	public OpenTK.Mathematics.Vector2 ScreenSize
 	{
 		get { return screensize; }
 		set 
 		{
 			screensize = value;
-			SetUniformVarData(@"ScreenSize", screensize);			
+			SetUniformVariable(@"ScreenSize", screensize);			
 		}
 	}
 	private OpenTK.Mathematics.Vector2 screensize;
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5946,6 +6079,11 @@ void main()
 }
 ";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace LUTGenerateMaterial
@@ -5955,7 +6093,7 @@ namespace LUTGenerateMaterial
 public class LUTGenerateMaterial : MaterialBase
 {
 	public LUTGenerateMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -5973,8 +6111,6 @@ public class LUTGenerateMaterial : MaterialBase
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -6110,6 +6246,11 @@ void main()
     FragColor.xy = integratedBRDF;    
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace PrefilterMaterial
@@ -6119,7 +6260,7 @@ namespace PrefilterMaterial
 public class PrefilterMaterial : MaterialBase
 {
 	public PrefilterMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -6140,14 +6281,12 @@ public class PrefilterMaterial : MaterialBase
 
 	public void SetEnvironmentMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"EnvironmentMap", textureObject, samplerObject);
-		//SetTextureByIndex(EnvironmentMapIndex, textureObject, samplerObject);
+		SetTexture(@"EnvironmentMap", textureObject, samplerObject);		
 	}
 
 	public TextureBase EnvironmentMap2D 
 	{	
-		set => SetTexture(@"EnvironmentMap", value);
-		//set => SetTextureByIndex(EnvironmentMapIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"EnvironmentMap", value);		
 	}
 
 	public TextureBase EnvironmentMap2D_PointSample
@@ -6158,8 +6297,7 @@ public class PrefilterMaterial : MaterialBase
 	public TextureBase EnvironmentMap2D_LinearSample
 	{	
 		set => SetTexture(@"EnvironmentMap", value, Sampler.DefaultLinearSampler);
-	}
-	private int EnvironmentMapIndex = 0;
+	}	
 
 	public OpenTK.Mathematics.Matrix4 Projection
 	{
@@ -6167,7 +6305,7 @@ public class PrefilterMaterial : MaterialBase
 		set 
 		{
 			projection = value;
-			SetUniformVarData(@"Projection", projection);			
+			SetUniformVariable(@"Projection", projection);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 projection;
@@ -6177,26 +6315,23 @@ public class PrefilterMaterial : MaterialBase
 		set 
 		{
 			view = value;
-			SetUniformVarData(@"View", view);			
+			SetUniformVariable(@"View", view);			
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 view;
-
-	
 	public System.Single Roughness
 	{
 		get { return roughness; }
 		set 
 		{
 			roughness = value;
-			SetUniformVarData(@"roughness", roughness);			
+			SetUniformVariable(@"roughness", roughness);			
 		}
 	}
 	private System.Single roughness;
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -6330,676 +6465,10 @@ void main()
     FragColor = vec4(prefilteredColor, 1.0);
 }";
 	}
-}
-}
-namespace HDAOMaterial
-{
 
-
-public class HDAOMaterial : MaterialBase
-{
-	public HDAOMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
-	{	
-	}
-
-	public ShaderProgram GetProgramObject()
+	public static string GetGSSourceCode()
 	{
-		return mMaterialProgram;
-	}
-
-	public void Use()
-	{
-		mMaterialProgram.UseProgram();
-	}
-
-	public void SetNormalMap2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"NormalMap", TextureObject);
-	}
-
-	public void SetNormalMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
-	{
-		SetTexture(@"NormalMap", textureObject, samplerObject);
-		//SetTextureByIndex(NormalMapIndex, textureObject, samplerObject);
-	}
-
-	public TextureBase NormalMap2D 
-	{	
-		set => SetTexture(@"NormalMap", value);
-		//set => SetTextureByIndex(NormalMapIndex, value, Sampler.DefaultLinearSampler);
-	}
-
-	public TextureBase NormalMap2D_PointSample
-	{	
-		set => SetTexture(@"NormalMap", value, Sampler.DefaultPointSampler);
-	}
-
-	public TextureBase NormalMap2D_LinearSample
-	{	
-		set => SetTexture(@"NormalMap", value, Sampler.DefaultLinearSampler);
-	}
-	private int NormalMapIndex = 4;
-	public void SetPositionMap2D(Core.Texture.TextureBase TextureObject)
-	{
-		SetTexture(@"PositionMap", TextureObject);
-	}
-
-	public void SetPositionMap2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
-	{
-		SetTexture(@"PositionMap", textureObject, samplerObject);
-		//SetTextureByIndex(PositionMapIndex, textureObject, samplerObject);
-	}
-
-	public TextureBase PositionMap2D 
-	{	
-		set => SetTexture(@"PositionMap", value);
-		//set => SetTextureByIndex(PositionMapIndex, value, Sampler.DefaultLinearSampler);
-	}
-
-	public TextureBase PositionMap2D_PointSample
-	{	
-		set => SetTexture(@"PositionMap", value, Sampler.DefaultPointSampler);
-	}
-
-	public TextureBase PositionMap2D_LinearSample
-	{	
-		set => SetTexture(@"PositionMap", value, Sampler.DefaultLinearSampler);
-	}
-	private int PositionMapIndex = 6;
-
-
-	
-	public System.Single AcceptAngle
-	{
-		get { return acceptangle; }
-		set 
-		{
-			acceptangle = value;
-			SetUniformVarData(@"AcceptAngle", acceptangle);			
-		}
-	}
-	private System.Single acceptangle;
-	
-	public OpenTK.Mathematics.Vector4 HDAOAcceptRadius
-	{
-		get { return hdaoacceptradius; }
-		set 
-		{
-			hdaoacceptradius = value;
-			SetUniformVarData(@"HDAOAcceptRadius", hdaoacceptradius);			
-		}
-	}
-	private OpenTK.Mathematics.Vector4 hdaoacceptradius;
-	
-	public System.Single HDAOIntensity
-	{
-		get { return hdaointensity; }
-		set 
-		{
-			hdaointensity = value;
-			SetUniformVarData(@"HDAOIntensity", hdaointensity);			
-		}
-	}
-	private System.Single hdaointensity;
-	
-	public OpenTK.Mathematics.Vector4 HDAORejectRadius
-	{
-		get { return hdaorejectradius; }
-		set 
-		{
-			hdaorejectradius = value;
-			SetUniformVarData(@"HDAORejectRadius", hdaorejectradius);			
-		}
-	}
-	private OpenTK.Mathematics.Vector4 hdaorejectradius;
-	
-	public System.Single NormalScale
-	{
-		get { return normalscale; }
-		set 
-		{
-			normalscale = value;
-			SetUniformVarData(@"NormalScale", normalscale);			
-		}
-	}
-	private System.Single normalscale;
-	
-	public OpenTK.Mathematics.Vector2 RTSize
-	{
-		get { return rtsize; }
-		set 
-		{
-			rtsize = value;
-			SetUniformVarData(@"RTSize", rtsize);			
-		}
-	}
-	private OpenTK.Mathematics.Vector2 rtsize;
-
-
-
-	
-
-	public static string GetVSSourceCode()
-	{
-		return @"#version 450
-
-layout (location = 0) in vec3 VertexPosition;
-layout (location = 1) in vec2 VertexTexCoord;
-
-
-layout (location = 0) out vec2 TexCoord;
-
-void main()
-{
-    TexCoord = VertexTexCoord;
-    
-	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);	
-}
-";
-	}
-
-	public static string GetFSSourceCode()
-	{
-		return @"#version 450
-
-layout (location = 0) in vec2 TexCoord;
-
-layout (binding = 0) uniform sampler2D PositionMap;
-layout (binding = 1) uniform sampler2D NormalMap;
-uniform float FarClipDistance;
-uniform vec2 RTSize;
-uniform float NormalScale;
-uniform vec2 InvFocalLen;
-uniform float AcceptAngle;
-uniform vec4 HDAORejectRadius;
-uniform vec4 HDAOAcceptRadius;
-uniform float HDAOIntensity;
-
-
-// Gather defines
-#define RING_1    (1)
-#define RING_2    (2)
-#define RING_3    (3)
-#define RING_4    (4)
-#define NUM_RING_1_GATHERS    (2)
-#define NUM_RING_2_GATHERS    (6)
-#define NUM_RING_3_GATHERS    (12)
-#define NUM_RING_4_GATHERS    (20)
-
-//const vec2 test[2] = vec2[2]( vec2(1,1), vec2(0,0) );
-
-// Ring sample pattern
-const vec2 g_f2HDAORingPattern[NUM_RING_4_GATHERS] = vec2[20]
-(
-    // Ring 1
-    vec2( 1, -1 ),
-    vec2( 0, 1 ),
-    
-    // Ring 2
-    vec2( 0, 3 ),
-	vec2( 2, 1 ),
-    vec2( 3, -1 ),
-    vec2( 1, -3 ),
-        
-    // Ring 3
-    vec2( 1, -5 ),
-    vec2( 3, -3 ),
-    vec2( 5, -1 ),
-    vec2( 4, 1 ),
-    vec2( 2, 3 ),
-    vec2( 0, 5 ),
-    
-    // Ring 4
-    vec2( 0, 7 ),
-    vec2( 2, 5 ),
-    vec2( 4, 3 ),
-    vec2( 6, 1 ),
-    vec2( 7, -1 ),
-    vec2( 5, -3 ),
-    vec2( 3, -5 ),
-    vec2( 1, -7 )
-);
-
-// Ring weights
-const vec4 g_f4HDAORingWeight[NUM_RING_4_GATHERS] = vec4[20]
-(
-    // Ring 1 (Sum = 5.30864)
-    vec4( 1.00000, 0.50000, 0.44721, 0.70711 ),
-    vec4( 0.50000, 0.44721, 0.70711, 1.00000 ),
-    
-    // Ring 2 (Sum = 6.08746)
-    vec4( 0.30000, 0.29104, 0.37947, 0.40000 ),
-    vec4( 0.42426, 0.33282, 0.37947, 0.53666 ),
-    vec4( 0.40000, 0.30000, 0.29104, 0.37947 ),
-    vec4( 0.53666, 0.42426, 0.33282, 0.37947 ),
-    
-    // Ring 3 (Sum = 6.53067)
-    vec4( 0.31530, 0.29069, 0.24140, 0.25495 ),
-    vec4( 0.36056, 0.29069, 0.26000, 0.30641 ),
-    vec4( 0.26000, 0.21667, 0.21372, 0.25495 ),
-    vec4( 0.29069, 0.24140, 0.25495, 0.31530 ),
-    vec4( 0.29069, 0.26000, 0.30641, 0.36056 ),
-    vec4( 0.21667, 0.21372, 0.25495, 0.26000 ),
-    
-    // Ring 4 (Sum = 7.00962)
-    vec4( 0.17500, 0.17365, 0.19799, 0.20000 ),
-    vec4( 0.22136, 0.20870, 0.24010, 0.25997 ),
-    vec4( 0.24749, 0.21864, 0.24010, 0.28000 ),
-    vec4( 0.22136, 0.19230, 0.19799, 0.23016 ),
-    vec4( 0.20000, 0.17500, 0.17365, 0.19799 ),
-    vec4( 0.25997, 0.22136, 0.20870, 0.24010 ),
-    vec4( 0.28000, 0.24749, 0.21864, 0.24010 ),
-    vec4( 0.23016, 0.22136, 0.19230, 0.19799 )
-);
-
-const float g_fRingWeightsTotal[RING_4] = float[4](5.30864, 11.39610, 17.92677, 24.93639);
-
-#define NUM_NORMAL_LOADS (4)
-const ivec2 g_i2NormalLoadPattern[NUM_NORMAL_LOADS] = ivec2[4]
-(
-    ivec2( 1, 8 ),
-	ivec2( 8, -1 ),
-    ivec2( 5, 4 ),
-    ivec2( 4, -4 )
-);
-
-
-ivec2 ClampToScreen(ivec2 i2ScreenCoord)
-{           
-    if( float(i2ScreenCoord.x) > (RTSize.x - 1.f)  &&  float(i2ScreenCoord.y) > (RTSize.y - 1.f) )
-    {        
-        return ivec2(RTSize - vec2(1,1));
-    }
-    else if( i2ScreenCoord.x < 0 && i2ScreenCoord.y < 0)
-    {
-        return ivec2(0,0);
-    }
-    else
-    {
-        return i2ScreenCoord;
-    }
-}
-
-//----------------------------------------------------------------------------------------
-// Helper function to Gather samples 
-//----------------------------------------------------------------------------------------
-vec4 GatherSamples( sampler2D Tex, vec2 f2TexCoord, int iComponent)
-{
-    vec4 f4Ret;    
-    
-    f4Ret = textureGather(Tex , f2TexCoord, iComponent);
-        
-    return f4Ret;
-}
-
-vec4 GatherSamples2(sampler2D Tex, vec2 f2TexCoord, int iComponent)
-{
-	vec4 f4Ret;    
-    
-	if(iComponent == 0)
-    {
-		f4Ret.x = textureOffset(Tex, f2TexCoord, ivec2(0,1)).x;
-		f4Ret.y = textureOffset(Tex, f2TexCoord, ivec2(1,1)).x;
-		f4Ret.z = textureOffset(Tex, f2TexCoord, ivec2(1,0)).x;
-		f4Ret.w = textureOffset(Tex, f2TexCoord, ivec2(0,0)).x;
-	}
-	else if(iComponent == 1)
-    {
-		f4Ret.x = textureOffset(Tex, f2TexCoord, ivec2(0,1)).y;
-		f4Ret.y = textureOffset(Tex, f2TexCoord, ivec2(1,1)).y;
-		f4Ret.z = textureOffset(Tex, f2TexCoord, ivec2(1,0)).y;
-		f4Ret.w = textureOffset(Tex, f2TexCoord, ivec2(0,0)).y;
-	}
-	else if(iComponent == 2)
-    {
-		f4Ret.x = textureOffset(Tex, f2TexCoord, ivec2(0,1)).z;
-		f4Ret.y = textureOffset(Tex, f2TexCoord, ivec2(1,1)).z;
-		f4Ret.z = textureOffset(Tex, f2TexCoord, ivec2(1,0)).z;
-		f4Ret.w = textureOffset(Tex, f2TexCoord, ivec2(0,0)).z;
-	}
-	else if(iComponent == 3)
-    {
-		f4Ret.x = textureOffset(Tex, f2TexCoord, ivec2(0,1)).w;
-		f4Ret.y = textureOffset(Tex, f2TexCoord, ivec2(1,1)).w;
-		f4Ret.z = textureOffset(Tex, f2TexCoord, ivec2(1,0)).w;
-		f4Ret.w = textureOffset(Tex, f2TexCoord, ivec2(0,0)).w;
-	}
-        
-    return f4Ret;
-}
-
-
-//----------------------------------------------------------------------------------
-vec3 uv_to_eye(vec2 uv, float eye_z)
-{
-    uv = (uv * vec2(2.0, 2.0) - vec2(1.0, 1.0));
-    return vec3(uv * InvFocalLen * eye_z, eye_z);
-}
-
-//----------------------------------------------------------------------------------
-vec3 GetCameraXYZ(ivec2 uv)
-{   	
-    // float fDepth = texelFetch(NormalMap, uv, 0).a;	    
-    float fDepth = abs(texelFetch(PositionMap, uv, 0).z);
-    return uv_to_eye(vec2(uv / RTSize), abs(fDepth));
-}
-
-vec3 GetCameraXYZFloat(vec2 uv)
-{
-	//float fDepth = texture(NormalMap, uv, 0).a;	    
-    float fDepth = abs(texture(PositionMap, uv, 0).z);
-    return uv_to_eye(uv, abs(fDepth));
-}
-
-
-
-//--------------------------------------------------------------------------------------
-// Used as an early rejection test - based on geometry
-//--------------------------------------------------------------------------------------
-float GeometryRejectionTest( ivec2 i2ScreenCoord)
-{
-    vec3 f3N[3];
-    vec3 f3Pos[3];
-    vec3 f3Dir[2];
-    float fDot;
-    float fSummedDot = 0.0f;
-    ivec2 i2MirrorPattern;
-    ivec2 i2OffsetScreenCoord;
-    ivec2 i2MirrorOffsetScreenCoord;
-    float fDepth;
-    
-    //fDepth = g_txDepth.Load( ivec3( i2ScreenCoord, 0 ) ).x;
-    //f3Pos[0] = GetCameraXYZFromDepth( fDepth, i2ScreenCoord );
-    
-    
-    f3Pos[0] = GetCameraXYZ( i2ScreenCoord );
-    f3N[0] = texelFetch(NormalMap, i2ScreenCoord, 0).xyz;   
-    f3Pos[0] -= ( f3N[0] * NormalScale );
-
-    for( int iNormal=0; iNormal < NUM_NORMAL_LOADS; iNormal++ )
-    {
-        i2MirrorPattern = ( g_i2NormalLoadPattern[iNormal] + ivec2( 1, 1 ) ) * ivec2( -1, -1 );
-        i2OffsetScreenCoord = i2ScreenCoord + g_i2NormalLoadPattern[iNormal];
-        i2MirrorOffsetScreenCoord = i2ScreenCoord + i2MirrorPattern;
-        
-        // Clamp our test to screen coordinates
-
-        i2OffsetScreenCoord = ClampToScreen(i2OffsetScreenCoord);
-        i2MirrorOffsetScreenCoord = ClampToScreen(i2MirrorOffsetScreenCoord);        
-
-        //fDepth = g_txDepth.Load( ivec3( i2OffsetScreenCoord, 0 ) ).x;
-        
-        // fDepth = texelFetch( NormalMap, i2OffsetScreenCoord, 0 ).a;        
-        fDepth = abs(texelFetch( PositionMap, i2OffsetScreenCoord, 0 ).z);
-        f3Pos[1] = GetCameraXYZ( i2OffsetScreenCoord );
-
-        //fDepth = g_txDepth.Load( ivec3( i2MirrorOffsetScreenCoord, 0 ) ).x;
-
-        //fDepth = texelFetch( NormalMap, i2MirrorOffsetScreenCoord, 0 ).a;
-        fDepth = abs(texelFetch( PositionMap, i2MirrorOffsetScreenCoord, 0 ).z);
-
-        f3Pos[2] = GetCameraXYZ( i2MirrorOffsetScreenCoord );
-        
-        f3N[1] = texelFetch(NormalMap, i2OffsetScreenCoord, 0).xyz;
-        f3N[2] = texelFetch(NormalMap, i2MirrorOffsetScreenCoord, 0).xyz;
-                
-        f3Pos[1] -= ( f3N[1] * NormalScale );
-        f3Pos[2] -= ( f3N[2] * NormalScale );
-        
-        f3Dir[0] = f3Pos[1] - f3Pos[0];
-        f3Dir[1] = f3Pos[2] - f3Pos[0];
-        
-        f3Dir[0] = normalize( f3Dir[0] );
-        f3Dir[1] = normalize( f3Dir[1] );
-        
-        fDot = dot( f3Dir[0], f3Dir[1] );
-        
-        fSummedDot += ( fDot + 2.0f );
-    }
-        
-    return ( fSummedDot * 0.125f );
-}
-
-
-//--------------------------------------------------------------------------------------
-// Used as an early rejection test - based on normals
-//--------------------------------------------------------------------------------------
-float NormalRejectionTest( ivec2 i2ScreenCoord, bool b10_1 )
-{
-    vec3 f3N1;
-    vec3 f3N2;
-    float fDot = 0.f;
-    float fSummedDot = 0.0f;
-    ivec2 i2MirrorPattern;
-    ivec2 i2OffsetScreenCoord;
-    ivec2 i2MirrorOffsetScreenCoord;
-
-    for( int iNormal=0; iNormal<NUM_NORMAL_LOADS; iNormal++ )
-    {
-        i2MirrorPattern = ( g_i2NormalLoadPattern[iNormal] + ivec2( 1, 1 ) ) * ivec2( -1, -1 );
-        i2OffsetScreenCoord = i2ScreenCoord + g_i2NormalLoadPattern[iNormal];
-        i2MirrorOffsetScreenCoord = i2ScreenCoord + i2MirrorPattern;
-        
-        // Clamp our test to screen coordinates
-        i2OffsetScreenCoord = ClampToScreen(i2OffsetScreenCoord);
-        i2MirrorOffsetScreenCoord = ClampToScreen(i2MirrorOffsetScreenCoord);                   
-                        
-        f3N1 = texelFetch(NormalMap, i2OffsetScreenCoord, 0 ).xyz;
-        f3N2 = texelFetch(NormalMap, i2MirrorOffsetScreenCoord, 0).xyz;                 
-        
-        fDot = dot( f3N1, f3N2 );
-        
-        fSummedDot += ( fDot > AcceptAngle ) ? ( 0.0f ) : ( 1.0f - ( abs( fDot ) * 0.25f ) );
-    }
-        
-    return ( 0.5f + fSummedDot * 0.25f  );
-}
-
-vec4 GatherZSamples( sampler2D Tex, vec2 f2TexCoord)
-{
-    vec4 f4Ret;
-    vec4 f4Gather;
-    
-    // depth is recorded in alpha channel    
-    f4Gather = GatherSamples(Tex, f2TexCoord, 3);
-    
-    return f4Gather;
-}
-
-
-vec4 ComponentwiseCompareGreater(vec4 A, vec4 B)
-{
-	vec4 vResult;
-
-	vResult.x = A.x > B.x ? 1.f : 0.0f;
-	vResult.y = A.y > B.y ? 1.f : 0.0f;
-	vResult.z = A.z > B.z ? 1.f : 0.0f;
-	vResult.w = A.w > B.w ? 1.f : 0.0f;
-
-	return vResult;
-}
-
-vec4 ComponentwiseCompareSmaller(vec4 A, vec4 B)
-{
-	vec4 vResult;
-
-	vResult.x = A.x < B.x ? 1.f : 0.0f;
-	vResult.y = A.y < B.y ? 1.f : 0.0f;
-	vResult.z = A.z < B.z ? 1.f : 0.0f;
-	vResult.w = A.w < B.w ? 1.f : 0.0f;
-
-	return vResult;
-}
-
-layout( location = 0 ) out vec4 FragColor;
-
-void main() 
-{   
-     // Locals
-    ivec2 i2ScreenCoord;
-    vec2 f2ScreenCoord_10_1;
-    vec2 f2ScreenCoord;
-    vec2 f2MirrorScreenCoord;
-    vec2 f2TexCoord_10_1;
-    vec2 f2MirrorTexCoord_10_1;
-    vec2 f2TexCoord;
-    vec2 f2MirrorTexCoord;
-    vec2 f2InvRTSize;
-    float fCenterZ;
-    float fOffsetCenterZ;
-    float fCenterNormalZ;
-    vec4 f4SampledZ[2];
-    vec4 f4OffsetSampledZ[2];
-    vec4 f4SampledNormalZ[2];
-    vec4 f4Diff;
-    vec4 f4Compare[2];
-    vec4 f4Occlusion = vec4(0.0f);
-    float fOcclusion;
-    int iGather;
-    float fDot = 1.0f;
-    vec2 f2KernelScale = vec2( RTSize.x / 1200.0f, RTSize.y / 1200.0f );
-    vec3 f3CameraPos;
-    bool bUseNormals = true;
-    bool b10_1 = false;
-	const int iNumRings = RING_3;
-	const int iNumRingGathers = NUM_RING_3_GATHERS;
-                            
-    // Compute integer screen coord, and store off the inverse of the RT Size
-    f2InvRTSize = 1.0f / RTSize;
-    f2ScreenCoord = TexCoord * RTSize;
-	i2ScreenCoord = ivec2( f2ScreenCoord );	
-
-    // Test the normals to see if we should apply occlusion
-    fDot = NormalRejectionTest( i2ScreenCoord, b10_1 );       
-    
-	
-    if( fDot > 0.5f )
-    {   
-        // Sample the center pixel for camera Z
-        if( b10_1 )
-        {
-            // For Gather we need to snap the screen coords
-            f2ScreenCoord_10_1 = vec2( i2ScreenCoord );
-            f2TexCoord = vec2( f2ScreenCoord_10_1 * f2InvRTSize );
-        }
-        else
-        {
-            f2TexCoord = vec2( f2ScreenCoord * f2InvRTSize );
-        }
-
-        // float fDepth = texture( NormalMap, f2TexCoord ).a;        
-        float fDepth = abs(texture( PositionMap, f2TexCoord ).z);        
-        fCenterZ = fDepth;
-        
-        if( bUseNormals )
-        {
-            if( b10_1 )
-            {
-                //fCenterNormalZ = g_txNormalsZ.SampleLevel( g_SamplePoint, f2TexCoord, 0 ).x;
-                fCenterNormalZ = texture(NormalMap, f2TexCoord).z;
-            }
-            else
-            {
-                //fCenterNormalZ = g_txNormals.SampleLevel( g_SamplePoint, f2TexCoord, 0 ).x;
-                fCenterNormalZ = texture(NormalMap, f2TexCoord).z;
-            }
-            fOffsetCenterZ = fCenterZ + fCenterNormalZ * NormalScale;
-        }
-            
-        // Loop through each gather location, and compare with its mirrored location
-        for( iGather=0; iGather < iNumRingGathers; iGather++ )
-        {
-            f2MirrorScreenCoord = ( ( f2KernelScale * g_f2HDAORingPattern[iGather] ) + vec2( 1.0f, 1.0f ) ) * vec2( -1.0f, -1.0f );
-            
-            f2TexCoord = vec2( ( f2ScreenCoord + ( f2KernelScale * g_f2HDAORingPattern[iGather] ) ) * f2InvRTSize );
-            f2MirrorTexCoord = vec2( ( f2ScreenCoord + ( f2MirrorScreenCoord ) ) * f2InvRTSize );
-            
-            // Sample
-            if( b10_1 )
-            {
-                f2TexCoord_10_1 = vec2( ( f2ScreenCoord_10_1 + ( ( f2KernelScale * g_f2HDAORingPattern[iGather] ) + vec2( 1.0f, 1.0f ) ) ) * f2InvRTSize );
-                f2MirrorTexCoord_10_1 = vec2( ( f2ScreenCoord_10_1 + ( f2MirrorScreenCoord + vec2( 1.0f, 1.0f ) ) ) * f2InvRTSize );
-                
-                f4SampledZ[0] = GatherZSamples( NormalMap, f2TexCoord_10_1 );
-                f4SampledZ[1] = GatherZSamples( NormalMap, f2MirrorTexCoord_10_1 );
-            }
-            else
-            {
-                f4SampledZ[0] = GatherZSamples( NormalMap, f2TexCoord );
-                f4SampledZ[1] = GatherZSamples( NormalMap, f2MirrorTexCoord );
-            }
-                        
-            // Detect valleys
-            f4Diff = vec4(fCenterZ) - f4SampledZ[0];   
-            
-            f4Compare[0] = ComponentwiseCompareSmaller(f4Diff, HDAORejectRadius);
-            f4Compare[0] *= ComponentwiseCompareGreater(f4Diff, HDAOAcceptRadius);            
-
-            //f4Compare[0] = ( f4Diff < HDAORejectRadius.xxxx ) ? ( 1.0f ) : ( 0.0f );
-            //f4Compare[0] *= ( f4Diff > HDAOAcceptRadius.xxxx ) ? ( 1.0f ) : ( 0.0f );
-            
-            f4Diff = vec4(fCenterZ) - f4SampledZ[1];
-
-            //f4Compare[1] = ( f4Diff < HDAORejectRadius.xxxx ) ? ( 1.0f ) : ( 0.0f );
-            //f4Compare[1] *= ( f4Diff > HDAOAcceptRadius.xxxx ) ? ( 1.0f ) : ( 0.0f );
-
-			f4Compare[1] = ComponentwiseCompareSmaller(f4Diff, HDAORejectRadius);
-            f4Compare[1] *= ComponentwiseCompareGreater(f4Diff, HDAOAcceptRadius);			            
-            
-            f4Occlusion.xyzw += ( g_f4HDAORingWeight[iGather].xyzw * ( f4Compare[0].xyzw * f4Compare[1].zwxy ) * fDot );			
-                
-            if( bUseNormals )
-            {
-                // Sample normals
-                if( b10_1 )
-                {        
-                    f4SampledNormalZ[0] = GatherSamples( NormalMap, f2TexCoord_10_1, 2 );
-                    f4SampledNormalZ[1] = GatherSamples( NormalMap, f2MirrorTexCoord_10_1, 2 );
-                }
-                else
-                {
-                    f4SampledNormalZ[0] = GatherSamples( NormalMap, f2TexCoord, 2 );
-                    f4SampledNormalZ[1] = GatherSamples( NormalMap, f2MirrorTexCoord, 2 );
-                }
-                    
-                // Scale normals
-                f4OffsetSampledZ[0] = f4SampledZ[0] + ( f4SampledNormalZ[0] * NormalScale );
-                f4OffsetSampledZ[1] = f4SampledZ[1] + ( f4SampledNormalZ[1] * NormalScale );
-                            
-                // Detect valleys
-                f4Diff = vec4(fOffsetCenterZ) - f4OffsetSampledZ[0];
-
-                f4Compare[0] = ComponentwiseCompareSmaller( f4Diff , HDAORejectRadius);
-                f4Compare[0] *= ComponentwiseCompareGreater( f4Diff , HDAOAcceptRadius);
-                
-                f4Diff = vec4(fOffsetCenterZ) - f4OffsetSampledZ[1];
-
-                f4Compare[1] = ComponentwiseCompareSmaller( f4Diff , HDAORejectRadius ) ;
-                f4Compare[1] *= ComponentwiseCompareGreater( f4Diff , HDAOAcceptRadius );
-                
-                f4Occlusion.xyzw += ( g_f4HDAORingWeight[iGather].xyzw * ( f4Compare[0].xyzw * f4Compare[1].zwxy ) * fDot );    
-            }
-        }
-    }	
-                    
-    // Finally calculate the HDAO occlusion value
-    if( bUseNormals )
-    {
-        fOcclusion = ( ( f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w ) / ( 3.0f * g_fRingWeightsTotal[iNumRings - 1] ) );
-    }
-    else
-    {
-        fOcclusion = ( ( f4Occlusion.x + f4Occlusion.y + f4Occlusion.z + f4Occlusion.w ) / ( 2.0f * g_fRingWeightsTotal[iNumRings - 1] ) );
-    }
-
-    fOcclusion *= ( HDAOIntensity );	
-
-    fOcclusion = 1.0f - clamp( fOcclusion , 0.0, 1.f);    
-    
-    FragColor = vec4(fOcclusion);
-}
-";
+		return @"";
 	}
 }
 }
@@ -7010,7 +6479,7 @@ namespace FXAAMaterial
 public class FXAAMaterial : MaterialBase
 {
 	public FXAAMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -7031,14 +6500,12 @@ public class FXAAMaterial : MaterialBase
 
 	public void SetScreenTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"ScreenTex", textureObject, samplerObject);
-		//SetTextureByIndex(ScreenTexIndex, textureObject, samplerObject);
+		SetTexture(@"ScreenTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase ScreenTex2D 
 	{	
-		set => SetTexture(@"ScreenTex", value);
-		//set => SetTextureByIndex(ScreenTexIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"ScreenTex", value);		
 	}
 
 	public TextureBase ScreenTex2D_PointSample
@@ -7049,25 +6516,21 @@ public class FXAAMaterial : MaterialBase
 	public TextureBase ScreenTex2D_LinearSample
 	{	
 		set => SetTexture(@"ScreenTex", value, Sampler.DefaultLinearSampler);
-	}
-	private int ScreenTexIndex = 1;
+	}	
 
-
-	
 	public OpenTK.Mathematics.Vector2 InverseScreenSize
 	{
 		get { return inversescreensize; }
 		set 
 		{
 			inversescreensize = value;
-			SetUniformVarData(@"InverseScreenSize", inversescreensize);			
+			SetUniformVariable(@"InverseScreenSize", inversescreensize);			
 		}
 	}
 	private OpenTK.Mathematics.Vector2 inversescreensize;
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -7371,6 +6834,11 @@ void main()
 	FragColor = finalColor;
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace TBNMaterial
@@ -7380,7 +6848,7 @@ namespace TBNMaterial
 public class TBNMaterial : MaterialBase
 {
 	public TBNMaterial() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -7397,7 +6865,6 @@ public class TBNMaterial : MaterialBase
 
 
 
-
     private CameraTransform cameratransform = new CameraTransform();
 	public CameraTransform CameraTransform
 	{
@@ -7405,7 +6872,7 @@ public class TBNMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref value);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -7415,7 +6882,7 @@ public class TBNMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform.View = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -7424,10 +6891,9 @@ public class TBNMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform.Proj = value;
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", ref cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -7435,7 +6901,7 @@ public class TBNMaterial : MaterialBase
 		set 
 		{ 
 			modeltransform = value; 
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref value);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
 		}
 	}
 
@@ -7445,12 +6911,10 @@ public class TBNMaterial : MaterialBase
 		set 
 		{ 
 			modeltransform.Model = value;
-			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", ref modeltransform);
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -7505,6 +6969,11 @@ void main()
     DiffuseColor = vec4(InColor, 1); 
 }";
 	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
+	}
 }
 }
 namespace SignedDistanceField
@@ -7514,7 +6983,7 @@ namespace SignedDistanceField
 public class SignedDistanceField : MaterialBase
 {
 	public SignedDistanceField() 
-	 : base (GetVSSourceCode(), GetFSSourceCode())
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
 
@@ -7535,14 +7004,12 @@ public class SignedDistanceField : MaterialBase
 
 	public void SetFontTexture2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"FontTexture", textureObject, samplerObject);
-		//SetTextureByIndex(FontTextureIndex, textureObject, samplerObject);
+		SetTexture(@"FontTexture", textureObject, samplerObject);		
 	}
 
 	public TextureBase FontTexture2D 
 	{	
-		set => SetTexture(@"FontTexture", value);
-		//set => SetTextureByIndex(FontTextureIndex, value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"FontTexture", value);		
 	}
 
 	public TextureBase FontTexture2D_PointSample
@@ -7553,14 +7020,11 @@ public class SignedDistanceField : MaterialBase
 	public TextureBase FontTexture2D_LinearSample
 	{	
 		set => SetTexture(@"FontTexture", value, Sampler.DefaultLinearSampler);
-	}
-	private int FontTextureIndex = 0;
+	}	
 
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -7660,6 +7124,11 @@ void main(void)
 
 
 ";
+	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"";
 	}
 }
 }

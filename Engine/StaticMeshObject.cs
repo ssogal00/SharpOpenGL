@@ -16,7 +16,6 @@ namespace Engine
 {
     public class StaticMeshObject : GameObject
     {
-        private static int StaticMeshCount = 0;
         public StaticMeshObject(string assetpath)
         : base(Path.GetFileNameWithoutExtension(assetpath))
         {

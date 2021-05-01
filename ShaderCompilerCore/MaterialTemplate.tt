@@ -25,8 +25,7 @@ public class <#=ShaderName#> : MaterialBase
 
 <# int index = 0;
 foreach(var Sampler in mShaderProgram.GetSampler2DNames())
-{
-	int samplerIndex = mShaderProgram.GetSampler2DUniformLocation(Sampler);
+{	
 #>
 	public void Set<#=Sampler#>2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -51,8 +50,7 @@ foreach(var Sampler in mShaderProgram.GetSampler2DNames())
 	public TextureBase <#=Sampler.FirstCharToUpper()#>2D_LinearSample
 	{	
 		set => SetTexture(@"<#=Sampler#>", value, Sampler.DefaultLinearSampler);
-	}
-	private int <#=Sampler#>Index = <#=samplerIndex#>;
+	}	
 <#index++;#>
 <#}#>
 

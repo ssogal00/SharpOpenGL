@@ -20,7 +20,7 @@ namespace Engine
         {
 
         }
-        public async override void Initialize()
+        public override void Initialize()
         {
             mScreenBlit = new BlitToScreen();
             lightPostProcess = new DeferredLight();

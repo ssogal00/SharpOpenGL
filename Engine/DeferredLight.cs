@@ -18,7 +18,7 @@ namespace Engine.PostProcess
             : base()
         {
             this.Name = "deferredLight";
-            PostProcessMaterial = new DeferredLightMaterial();
+            
         }
 
         private void UpdateLightInfo()
@@ -47,26 +47,21 @@ namespace Engine.PostProcess
         {
             GL.TexParameter(TextureTarget.TextureCubeMap, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.LinearMipmapLinear);
 
+            PostProcessMaterial = ShaderManager.Instance.GetMaterial<DeferredLightMaterial>();
+
             Output.BindAndExecute(PostProcessMaterial,  () =>
             {
-                var deferredLight = (DeferredLightMaterial) PostProcessMaterial;
-                deferredLight.PositionTex2D = positionInput;
-                deferredLight.NormalTex2D = normalInput;
-                deferredLight.DiffuseTex2D = colorInput;
-                deferredLight.IrradianceMap2D = ambientIrradiancemap;
-                deferredLight.BrdfLUT2D = lutMap;
-                deferredLight.PrefilterMap2D = prefilterMap;
 
-                
-                deferredLight.CameraTransform_View = CameraManager.Instance.CurrentCameraView;
-                deferredLight.CameraTransform_Proj = CameraManager.Instance.CurrentCameraProj;
+                PostProcessMaterial.SetTexture("PositionTex", positionInput);
+                PostProcessMaterial.SetTexture("NormalTex", normalInput);
+                PostProcessMaterial.SetTexture("DiffuseTex", colorInput);
+                PostProcessMaterial.SetTexture("IrradianceMap", ambientIrradiancemap);
+                PostProcessMaterial.SetTexture("BrdfLUT", lutMap);
+                PostProcessMaterial.SetTexture("PrefilterMap", prefilterMap);
+
+                PostProcessMaterial.SetUniformVariable("View", CameraManager.Instance.CurrentCameraView);
+                PostProcessMaterial.SetUniformVariable("Proj", CameraManager.Instance.CurrentCameraProj);
                 //
-
-                UpdateLightInfo();
-                /*deferredLight.LightCount = this.LightPositions.Count;
-                deferredLight.LightPositions = this.LightPositions.ToArray();
-                deferredLight.LightColors = this.LightColors.Select(x => x * DebugDrawer.Instance.LightIntensity).ToArray();
-                deferredLight.LightMinMaxs = this.LightMinMaxs.ToArray();*/
 
                 BlitToScreenSpace();
             });

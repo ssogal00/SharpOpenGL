@@ -491,13 +491,10 @@ namespace Core.MaterialBase
         protected CameraTransform mCameraTransform = new CameraTransform();
         protected ModelTransform mModelTransform = new ModelTransform();
 
-        protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = new Dictionary<string, DynamicUniformBuffer>();
-        protected Dictionary<string, UniformVariableMetaData> mUniformBufferMembersMap = new Dictionary<string, UniformVariableMetaData>();
-        
-        protected Dictionary<string, int> mUniformVariableMap = new Dictionary<string, int>();
-
-        protected Dictionary<string, int> mSamplerMap = new Dictionary<string, int>();
-        
+        protected Dictionary<string, DynamicUniformBuffer> mUniformBufferMap = new Dictionary<string, DynamicUniformBuffer>(StringComparer.InvariantCultureIgnoreCase);
+        protected Dictionary<string, UniformVariableMetaData> mUniformBufferMembersMap = new Dictionary<string, UniformVariableMetaData>(StringComparer.InvariantCultureIgnoreCase);
+        protected Dictionary<string, int> mUniformVariableMap = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase);
+        protected Dictionary<string, int> mSamplerMap = new Dictionary<string, int>(StringComparer.InvariantCultureIgnoreCase);
 
         protected List<string> mUniformVariableNames = null;
     }

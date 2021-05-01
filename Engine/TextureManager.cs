@@ -17,7 +17,7 @@ namespace Engine
             {
                 TextureMap[path].Dispose();
                 TextureMap.Remove(path);
-            }
+            } 
         }
         
         public Texture2D LoadTexture2D(string path)

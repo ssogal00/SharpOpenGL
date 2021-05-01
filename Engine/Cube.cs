@@ -13,8 +13,6 @@ namespace Engine
     
     public class Cube : GameObject
     {
-        private static int CubeCount = 0;
-
         public override Matrix4 LocalMatrix
         {
             get
