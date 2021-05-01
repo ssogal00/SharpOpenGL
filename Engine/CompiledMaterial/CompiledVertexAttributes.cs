@@ -18,24 +18,18 @@ namespace BasicMaterial
 
 
 [ZeroFormattable]
-[StructLayout(LayoutKind.Explicit,Size=20)]
+[StructLayout(LayoutKind.Explicit,Size=12)]
 public struct VertexAttribute
 {
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Mathematics.Vector3 VertexPosition;
-		
-	[Index(1)]
-	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public OpenTK.Mathematics.Vector2 TexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
 		GL.EnableVertexAttribArray(0);
-		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 20, new IntPtr(0));
-		GL.EnableVertexAttribArray(1);
-		GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 20, new IntPtr(12));
+		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 12, new IntPtr(0));
 	}
 }
 }
@@ -538,24 +532,18 @@ namespace FontBoxRenderMaterial
 
 
 [ZeroFormattable]
-[StructLayout(LayoutKind.Explicit,Size=20)]
+[StructLayout(LayoutKind.Explicit,Size=12)]
 public struct VertexAttribute
 {
 	
 	[Index(0)]
 	[FieldOffset(0), ComponentCount(3), ComponentType(VertexAttribPointerType.Float)]
 	public OpenTK.Mathematics.Vector3 VertexPosition;
-		
-	[Index(1)]
-	[FieldOffset(12), ComponentCount(2), ComponentType(VertexAttribPointerType.Float)]
-	public OpenTK.Mathematics.Vector2 VertexTexCoord;
 	
 	public static void VertexAttributeBinding()
 	{
 		GL.EnableVertexAttribArray(0);
-		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 20, new IntPtr(0));
-		GL.EnableVertexAttribArray(1);
-		GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 20, new IntPtr(12));
+		GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 12, new IntPtr(0));
 	}
 }
 }

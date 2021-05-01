@@ -28,10 +28,9 @@ void main()
 	float d = min(GEdgeDistance.x, GEdgeDistance.y);
 	d = min(d, GEdgeDistance.z);
 
-	float mixVal = smoothstep(Line.Width-1,
-	Line.Width+1, d);
+	float mixVal = smoothstep(Width-1,	Width+1, d);
 
-	vec4 Color = texture(diffuseTex, GTexCoord);
+	vec4 diffuseColor = texture(diffuseTex, GTexCoord);
 
-	FragColor = mix(Line.Color, Color, mixVal);
+	FragColor = mix(Color, diffuseColor, mixVal);
 }

@@ -20,7 +20,7 @@ namespace ShaderCompilerCore
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+    #line 1 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "16.0.0.0")]
     public partial class VertexAttributeTemplate : VertexAttributeTemplateBase
     {
@@ -32,7 +32,7 @@ namespace ShaderCompilerCore
         {
             this.Write("\r\n");
             
-            #line 9 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 9 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
 
 	int nTotalSize = 0;
 	for(int i =0; i < VertexAttributeList.Count; ++i)
@@ -43,16 +43,16 @@ namespace ShaderCompilerCore
             
             #line default
             #line hidden
-            this.Write("\r\n[ZeroFormattable]\r\n[StructLayout(LayoutKind.Explicit,Size=");
+            this.Write("\r\n[StructLayout(LayoutKind.Explicit,Size=");
             
-            #line 18 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 17 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nTotalSize));
             
             #line default
             #line hidden
             this.Write(")]\r\npublic struct VertexAttribute\r\n{\r\n");
             
-            #line 21 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 20 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
  
 for(int i = 0; i < VertexAttributeList.Count; ++i)
 {
@@ -67,49 +67,49 @@ for(int i = 0; i < VertexAttributeList.Count; ++i)
             #line hidden
             this.Write("\t\r\n\t[Index(");
             
-            #line 30 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 29 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(i));
             
             #line default
             #line hidden
             this.Write(")]\r\n\t[FieldOffset(");
             
-            #line 31 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 30 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nOffset));
             
             #line default
             #line hidden
             this.Write("), ComponentCount(");
             
-            #line 31 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 30 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].ComponentCount));
             
             #line default
             #line hidden
             this.Write("), ComponentType(VertexAttribPointerType.");
             
-            #line 31 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 30 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].ComponentType.ToString()));
             
             #line default
             #line hidden
             this.Write(")]\r\n\tpublic ");
             
-            #line 32 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 31 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].AttributeTypeString));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 32 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 31 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[i].Name));
             
             #line default
             #line hidden
             this.Write(";\r\n\t");
             
-            #line 33 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 32 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
 
 	}
 	
@@ -118,7 +118,7 @@ for(int i = 0; i < VertexAttributeList.Count; ++i)
             #line hidden
             this.Write("\r\n\tpublic static void VertexAttributeBinding()\r\n\t{\r\n");
             
-            #line 39 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 38 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
 
 for(int index = 0; index < VertexAttributeList.Count; ++index)    
 {
@@ -133,49 +133,49 @@ for(int index = 0; index < VertexAttributeList.Count; ++index)
             #line hidden
             this.Write("\t\tGL.EnableVertexAttribArray(");
             
-            #line 48 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 47 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(index));
             
             #line default
             #line hidden
             this.Write(");\r\n\t\tGL.VertexAttribPointer(");
             
-            #line 49 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 48 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(index));
             
             #line default
             #line hidden
             this.Write(", ");
             
-            #line 49 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 48 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[index].ComponentCount));
             
             #line default
             #line hidden
             this.Write(", VertexAttribPointerType.");
             
-            #line 49 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 48 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(VertexAttributeList[index].ComponentType.ToString()));
             
             #line default
             #line hidden
             this.Write(", false, ");
             
-            #line 49 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 48 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nTotalSize));
             
             #line default
             #line hidden
             this.Write(", new IntPtr(");
             
-            #line 49 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 48 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nOffset));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 50 "C:\MyGitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
+            #line 49 "C:\GitHub\SharpOpenGL\ShaderCompilerCore\VertexAttributeTemplate.tt"
 
 }
 

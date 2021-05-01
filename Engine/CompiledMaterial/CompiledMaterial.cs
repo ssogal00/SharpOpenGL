@@ -187,7 +187,6 @@ public class GBufferMacro1 : MaterialBase
 
 
 
-
     private CameraTransform cameratransform = new CameraTransform();
 	public CameraTransform CameraTransform
 	{
@@ -217,7 +216,89 @@ public class GBufferMacro1 : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
+    private MaterialProperty materialproperty = new MaterialProperty();
+	public MaterialProperty MaterialProperty
+	{
+		get { return materialproperty; }
+		set 
+		{ 
+			materialproperty = value; 
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", value);
+		}
+	}
 
+	public System.UInt32 MaterialProperty_EncodedPBRInfo
+	{
+		get { return materialproperty.encodedPBRInfo ; }
+		set 
+		{ 
+			materialproperty.encodedPBRInfo = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MetallicExist
+	{
+		get { return materialproperty.MetallicExist ; }
+		set 
+		{ 
+			materialproperty.MetallicExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_RoghnessExist
+	{
+		get { return materialproperty.RoghnessExist ; }
+		set 
+		{ 
+			materialproperty.RoghnessExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MaskExist
+	{
+		get { return materialproperty.MaskExist ; }
+		set 
+		{ 
+			materialproperty.MaskExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_NormalExist
+	{
+		get { return materialproperty.NormalExist ; }
+		set 
+		{ 
+			materialproperty.NormalExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Single MaterialProperty_Metallic
+	{
+		get { return materialproperty.Metallic ; }
+		set 
+		{ 
+			materialproperty.Metallic = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Single MaterialProperty_Roughness
+	{
+		get { return materialproperty.Roughness ; }
+		set 
+		{ 
+			materialproperty.Roughness = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MetallicRoughnessOneTexture
+	{
+		get { return materialproperty.MetallicRoughnessOneTexture ; }
+		set 
+		{ 
+			materialproperty.MetallicRoughnessOneTexture = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -239,91 +320,6 @@ public class GBufferMacro1 : MaterialBase
 		}
 	}
 
-
-    private MaterialProperty materialproperty = new MaterialProperty();
-	public MaterialProperty MaterialProperty
-	{
-		get { return materialproperty; }
-		set 
-		{ 
-			materialproperty = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
-		}
-	}
-
-	public System.UInt32 MaterialProperty_EncodedPBRInfo
-	{
-		get { return materialproperty.encodedPBRInfo ; }
-		set 
-		{ 
-			materialproperty.encodedPBRInfo = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MetallicExist
-	{
-		get { return materialproperty.MetallicExist ; }
-		set 
-		{ 
-			materialproperty.MetallicExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_RoghnessExist
-	{
-		get { return materialproperty.RoghnessExist ; }
-		set 
-		{ 
-			materialproperty.RoghnessExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MaskExist
-	{
-		get { return materialproperty.MaskExist ; }
-		set 
-		{ 
-			materialproperty.MaskExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_NormalExist
-	{
-		get { return materialproperty.NormalExist ; }
-		set 
-		{ 
-			materialproperty.NormalExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Single MaterialProperty_Metallic
-	{
-		get { return materialproperty.Metallic ; }
-		set 
-		{ 
-			materialproperty.Metallic = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Single MaterialProperty_Roughness
-	{
-		get { return materialproperty.Roughness ; }
-		set 
-		{ 
-			materialproperty.Roughness = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MetallicRoughnessOneTexture
-	{
-		get { return materialproperty.MetallicRoughnessOneTexture ; }
-		set 
-		{ 
-			materialproperty.MetallicRoughnessOneTexture = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -555,7 +551,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -708,7 +704,6 @@ public class GBufferMacro2 : MaterialBase
 
 
 
-
     private CameraTransform cameratransform = new CameraTransform();
 	public CameraTransform CameraTransform
 	{
@@ -738,7 +733,89 @@ public class GBufferMacro2 : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
+    private MaterialProperty materialproperty = new MaterialProperty();
+	public MaterialProperty MaterialProperty
+	{
+		get { return materialproperty; }
+		set 
+		{ 
+			materialproperty = value; 
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", value);
+		}
+	}
 
+	public System.UInt32 MaterialProperty_EncodedPBRInfo
+	{
+		get { return materialproperty.encodedPBRInfo ; }
+		set 
+		{ 
+			materialproperty.encodedPBRInfo = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MetallicExist
+	{
+		get { return materialproperty.MetallicExist ; }
+		set 
+		{ 
+			materialproperty.MetallicExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_RoghnessExist
+	{
+		get { return materialproperty.RoghnessExist ; }
+		set 
+		{ 
+			materialproperty.RoghnessExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MaskExist
+	{
+		get { return materialproperty.MaskExist ; }
+		set 
+		{ 
+			materialproperty.MaskExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_NormalExist
+	{
+		get { return materialproperty.NormalExist ; }
+		set 
+		{ 
+			materialproperty.NormalExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Single MaterialProperty_Metallic
+	{
+		get { return materialproperty.Metallic ; }
+		set 
+		{ 
+			materialproperty.Metallic = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Single MaterialProperty_Roughness
+	{
+		get { return materialproperty.Roughness ; }
+		set 
+		{ 
+			materialproperty.Roughness = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MetallicRoughnessOneTexture
+	{
+		get { return materialproperty.MetallicRoughnessOneTexture ; }
+		set 
+		{ 
+			materialproperty.MetallicRoughnessOneTexture = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -760,91 +837,6 @@ public class GBufferMacro2 : MaterialBase
 		}
 	}
 
-
-    private MaterialProperty materialproperty = new MaterialProperty();
-	public MaterialProperty MaterialProperty
-	{
-		get { return materialproperty; }
-		set 
-		{ 
-			materialproperty = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
-		}
-	}
-
-	public System.UInt32 MaterialProperty_EncodedPBRInfo
-	{
-		get { return materialproperty.encodedPBRInfo ; }
-		set 
-		{ 
-			materialproperty.encodedPBRInfo = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MetallicExist
-	{
-		get { return materialproperty.MetallicExist ; }
-		set 
-		{ 
-			materialproperty.MetallicExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_RoghnessExist
-	{
-		get { return materialproperty.RoghnessExist ; }
-		set 
-		{ 
-			materialproperty.RoghnessExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MaskExist
-	{
-		get { return materialproperty.MaskExist ; }
-		set 
-		{ 
-			materialproperty.MaskExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_NormalExist
-	{
-		get { return materialproperty.NormalExist ; }
-		set 
-		{ 
-			materialproperty.NormalExist = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Single MaterialProperty_Metallic
-	{
-		get { return materialproperty.Metallic ; }
-		set 
-		{ 
-			materialproperty.Metallic = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Single MaterialProperty_Roughness
-	{
-		get { return materialproperty.Roughness ; }
-		set 
-		{ 
-			materialproperty.Roughness = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	public System.Boolean MaterialProperty_MetallicRoughnessOneTexture
-	{
-		get { return materialproperty.MetallicRoughnessOneTexture ; }
-		set 
-		{ 
-			materialproperty.MetallicRoughnessOneTexture = value; 
-			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);			
-		}
-	}
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -1076,7 +1068,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -1131,8 +1123,6 @@ public class ScreenSpaceDraw : MaterialBase
 
 
 
-	
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -1170,7 +1160,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -1245,8 +1235,6 @@ public class EquirectangleToCube : MaterialBase
 
 
 
-	
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450
@@ -1295,7 +1283,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -1423,8 +1411,6 @@ public class GBufferDump : MaterialBase
 
 
 
-
-
     private Dump dump = new Dump();
 	public Dump Dump
 	{
@@ -1432,7 +1418,7 @@ public class GBufferDump : MaterialBase
 		set 
 		{ 
 			dump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", dump);
+			this.SetUniformBufferValue< Dump >(@"Dump", value);
 		}
 	}
 
@@ -1441,8 +1427,8 @@ public class GBufferDump : MaterialBase
 		get { return dump.PositionDump ; }
 		set 
 		{ 
-			dump.PositionDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", dump);			
+			dump.PositionDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
 	public System.Boolean Dump_NormalDump
@@ -1450,8 +1436,8 @@ public class GBufferDump : MaterialBase
 		get { return dump.NormalDump ; }
 		set 
 		{ 
-			dump.NormalDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", dump);			
+			dump.NormalDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
 	public System.Boolean Dump_MetalicDump
@@ -1459,8 +1445,8 @@ public class GBufferDump : MaterialBase
 		get { return dump.MetalicDump ; }
 		set 
 		{ 
-			dump.MetalicDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", dump);			
+			dump.MetalicDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
 	public System.Boolean Dump_DiffuseDump
@@ -1468,8 +1454,8 @@ public class GBufferDump : MaterialBase
 		get { return dump.DiffuseDump ; }
 		set 
 		{ 
-			dump.DiffuseDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", dump);			
+			dump.DiffuseDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
 	public System.Boolean Dump_RoughnessDump
@@ -1477,8 +1463,8 @@ public class GBufferDump : MaterialBase
 		get { return dump.RoughnessDump ; }
 		set 
 		{ 
-			dump.RoughnessDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", dump);			
+			dump.RoughnessDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
 	public System.Boolean Dump_MotionBlurDump
@@ -1486,11 +1472,11 @@ public class GBufferDump : MaterialBase
 		get { return dump.MotionBlurDump ; }
 		set 
 		{ 
-			dump.MotionBlurDump = value; 
-			this.SetUniformBufferValue< Dump >(@"Dump", dump);			
+			dump.MotionBlurDump = value;
+			this.SetUniformBufferValue< Dump >(@"Dump", dump);
 		}
 	}
-	
+
 
 	public static string GetVSSourceCode()
 	{
@@ -1569,7 +1555,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -1747,8 +1733,6 @@ public class DeferredLightMaterial : MaterialBase
 
 
 
-
-
     private CameraTransform cameratransform = new CameraTransform();
 	public CameraTransform CameraTransform
 	{
@@ -1756,7 +1740,7 @@ public class DeferredLightMaterial : MaterialBase
 		set 
 		{ 
 			cameratransform = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
 		}
 	}
 
@@ -1765,8 +1749,8 @@ public class DeferredLightMaterial : MaterialBase
 		get { return cameratransform.View ; }
 		set 
 		{ 
-			cameratransform.View = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);			
+			cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
 	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
@@ -1774,11 +1758,11 @@ public class DeferredLightMaterial : MaterialBase
 		get { return cameratransform.Proj ; }
 		set 
 		{ 
-			cameratransform.Proj = value; 
-			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);			
+			cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-	
+
 
 	public static string GetVSSourceCode()
 	{
@@ -1943,7 +1927,264 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
+	}
+}
+}
+namespace GeometryWireframeMaterial
+{
+
+
+public class GeometryWireframeMaterial : MaterialBase
+{
+	public GeometryWireframeMaterial() 
+	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
+	{	
+	}
+
+	public ShaderProgram GetProgramObject()
+	{
+		return mMaterialProgram;
+	}
+
+	public void Use()
+	{
+		mMaterialProgram.UseProgram();
+	}
+
+	public void SetdiffuseTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"diffuseTex", TextureObject);
+	}
+
+	public void SetdiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
+	{
+		SetTexture(@"diffuseTex", textureObject, samplerObject);		
+	}
+
+	public TextureBase DiffuseTex2D 
+	{	
+		set => SetTexture(@"diffuseTex", value);		
+	}
+
+	public TextureBase DiffuseTex2D_PointSample
+	{	
+		set => SetTexture(@"diffuseTex", value, Sampler.DefaultPointSampler);
+	}
+
+	public TextureBase DiffuseTex2D_LinearSample
+	{	
+		set => SetTexture(@"diffuseTex", value, Sampler.DefaultLinearSampler);
+	}
+	private int diffuseTexIndex = 4;
+
+	public OpenTK.Mathematics.Matrix4 MVP
+	{
+		get { return mvp; }
+		set 
+		{
+			mvp = value;
+			SetUniformVariable(@"MVP", mvp);			
+		}
+	}
+	private OpenTK.Mathematics.Matrix4 mvp;
+	public OpenTK.Mathematics.Matrix4 ModelViewMatrix
+	{
+		get { return modelviewmatrix; }
+		set 
+		{
+			modelviewmatrix = value;
+			SetUniformVariable(@"ModelViewMatrix", modelviewmatrix);			
+		}
+	}
+	private OpenTK.Mathematics.Matrix4 modelviewmatrix;
+	public OpenTK.Mathematics.Matrix3 NormalMatrix
+	{
+		get { return normalmatrix; }
+		set 
+		{
+			normalmatrix = value;
+			SetUniformVariable(@"NormalMatrix", normalmatrix);			
+		}
+	}
+	private OpenTK.Mathematics.Matrix3 normalmatrix;
+	public OpenTK.Mathematics.Matrix4 ViewportMatrix
+	{
+		get { return viewportmatrix; }
+		set 
+		{
+			viewportmatrix = value;
+			SetUniformVariable(@"ViewportMatrix", viewportmatrix);			
+		}
+	}
+	private OpenTK.Mathematics.Matrix4 viewportmatrix;
+
+
+    private LineInfo lineinfo = new LineInfo();
+	public LineInfo LineInfo
+	{
+		get { return lineinfo; }
+		set 
+		{ 
+			lineinfo = value; 
+			this.SetUniformBufferValue< LineInfo >(@"LineInfo", value);
+		}
+	}
+
+	public System.Single LineInfo_Width
+	{
+		get { return lineinfo.Width ; }
+		set 
+		{ 
+			lineinfo.Width = value;
+			this.SetUniformBufferValue< LineInfo >(@"LineInfo", lineinfo);
+		}
+	}
+	public OpenTK.Mathematics.Vector4 LineInfo_Color
+	{
+		get { return lineinfo.Color ; }
+		set 
+		{ 
+			lineinfo.Color = value;
+			this.SetUniformBufferValue< LineInfo >(@"LineInfo", lineinfo);
+		}
+	}
+
+
+	public static string GetVSSourceCode()
+	{
+		return @"
+
+
+#version 430 core
+
+layout (location = 0) in vec3 VertexPosition;
+layout (location = 1) in vec3 VertexNormal;
+layout (location = 2) in vec2 Texcoord;
+layout (location = 3) in vec4 Tangent;
+
+uniform mat4 ModelViewMatrix;
+uniform mat3 NormalMatrix;
+uniform mat4 ProjectionMatrix;
+uniform mat4 MVP;
+
+layout (location=0) out vec3 OutPosition;
+layout (location=1) out vec3 OutNormal;
+layout (location=2) out vec2 OutTexcoord;
+layout (location=3) out vec4 OutTangent;
+
+
+void main()
+{
+	OutNormal = normalize(NormalMatrix * VertexNormal);
+	OutPosition = vec3(ModelViewMatrix * vec4(VertexPosition,1));
+	OutTexcoord = Texcoord;
+	gl_Position = MVP * vec4(VertexPosition, 1.0f);
+}";
+	}
+
+	public static string GetFSSourceCode()
+	{
+		return @"#version 450 core
+
+
+
+uniform LineInfo
+{
+	float Width;
+	vec4 Color;
+};
+
+//layout (location=0) out vec3 GNormal;
+//layout (location=1) out vec3 GPosition;
+//layout (location=2) out vec2 GTexCoord;
+//layout (location=3) out vec4 GTangent;
+//layout (location=4) noperspective out vec3 GEdgeDistance;
+
+layout (location=0) in vec3 GNormal;
+layout (location=1) in vec3 GPosition;
+layout (location=2) in vec2 GTexCoord;
+layout (location=3) in vec4 GTangent;
+layout (location=4) noperspective in vec3 GEdgeDistance;
+
+layout (location=0) out vec4 FragColor;
+
+uniform sampler2D diffuseTex;
+
+void main()
+{
+	float d = min(GEdgeDistance.x, GEdgeDistance.y);
+	d = min(d, GEdgeDistance.z);
+
+	float mixVal = smoothstep(Width-1,	Width+1, d);
+
+	vec4 diffuseColor = texture(diffuseTex, GTexCoord);
+
+	FragColor = mix(Color, diffuseColor, mixVal);
+}";
+	}
+
+	public static string GetGSSourceCode()
+	{
+		return @"
+#version 430
+
+layout (triangles) in;
+layout (triangle_strip, max_vertices=3) out;
+
+layout (location=0) out vec3 GNormal;
+layout (location=1) out vec3 GPosition;
+layout (location=2) out vec2 GTexCoord;
+layout (location=3) out vec4 GTangent;
+layout (location=4) noperspective out vec3 GEdgeDistance;
+
+layout (location=0) in vec3 VPosition[];
+layout (location=1) in vec3 VNormal[];
+layout (location=2) in vec2 VTexcoord[];
+layout (location=3) in vec4 VTangent[];
+
+//layout (location=0) out vec3 OutPosition;
+//layout (location=1) out vec3 OutNormal;
+//layout (location=2) out vec2 OutTexcoord;
+//layout (location=3) out vec4 OutTangent;
+
+
+uniform mat4 ViewportMatrix;
+
+void main()
+{
+	// Transform each vertex into viewport space
+	vec3 p0 = vec3(ViewportMatrix * (gl_in[0].gl_Position / gl_in[0].gl_Position.w));
+	vec3 p1 = vec3(ViewportMatrix * (gl_in[1].gl_Position / gl_in[1].gl_Position.w));
+	vec3 p2 = vec3(ViewportMatrix * (gl_in[2].gl_Position / gl_in[2].gl_Position.w));
+	// Find the altitudes (ha, hb and hc)
+	float a = length(p1 - p2);
+	float b = length(p2 - p0);
+	float c = length(p1 - p0);
+	float alpha = acos( (b*b + c*c - a*a) / (2.0*b*c) );
+	float beta = acos( (a*a + c*c - b*b) / (2.0*a*c) );
+	float ha = abs( c * sin( beta ) );
+	float hb = abs( c * sin( alpha ) );
+	float hc = abs( b * sin( alpha ) );
+	// Send the triangle along with the edge distances
+	GEdgeDistance = vec3( ha, 0, 0 );
+
+	GNormal = VNormal[0];
+	GPosition = VPosition[0];
+	gl_Position = gl_in[0].gl_Position;
+	EmitVertex();
+	GEdgeDistance = vec3( 0, hb, 0 );
+	GNormal = VNormal[1];
+	GPosition = VPosition[1];
+	gl_Position = gl_in[1].gl_Position;
+	EmitVertex();
+	GEdgeDistance = vec3( 0, 0, hc );
+	GNormal = VNormal[2];
+	GPosition = VPosition[2];
+	gl_Position = gl_in[2].gl_Position;
+	EmitVertex();
+	EndPrimitive();
+}";
 	}
 }
 }
@@ -1971,7 +2212,6 @@ public class BasicMaterial : MaterialBase
 
 
 
-
     private ColorBlock colorblock = new ColorBlock();
 	public ColorBlock ColorBlock
 	{
@@ -1992,7 +2232,6 @@ public class BasicMaterial : MaterialBase
 			this.SetUniformBufferValue< ColorBlock >(@"ColorBlock", colorblock);
 		}
 	}
-
     private Transform transform = new Transform();
 	public Transform Transform
 	{
@@ -2032,8 +2271,6 @@ public class BasicMaterial : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -2085,7 +2322,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -2109,7 +2346,6 @@ public class SimpleMaterial : MaterialBase
 	{
 		mMaterialProgram.UseProgram();
 	}
-
 
 
 
@@ -2154,8 +2390,6 @@ public class SimpleMaterial : MaterialBase
 	}
 
 
-	
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -2193,7 +2427,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -2344,8 +2578,6 @@ public class GBufferDraw : MaterialBase
 	}
 	private int RoughnessTexIndex = 4;
 
-
-	
 	public System.Boolean DiffuseMapExist
 	{
 		get { return diffusemapexist; }
@@ -2356,7 +2588,6 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private System.Boolean diffusemapexist;
-	
 	public OpenTK.Mathematics.Vector3 DiffuseOverride
 	{
 		get { return diffuseoverride; }
@@ -2367,7 +2598,6 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private OpenTK.Mathematics.Vector3 diffuseoverride;
-	
 	public System.Int32 LightChannel
 	{
 		get { return lightchannel; }
@@ -2378,7 +2608,6 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private System.Int32 lightchannel;
-	
 	public System.Boolean MaskMapExist
 	{
 		get { return maskmapexist; }
@@ -2389,7 +2618,6 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private System.Boolean maskmapexist;
-	
 	public System.Single Metalic
 	{
 		get { return metalic; }
@@ -2400,7 +2628,6 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private System.Single metalic;
-	
 	public System.Boolean MetalicExist
 	{
 		get { return metalicexist; }
@@ -2411,7 +2638,6 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private System.Boolean metalicexist;
-	
 	public System.Boolean NormalMapExist
 	{
 		get { return normalmapexist; }
@@ -2422,7 +2648,6 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private System.Boolean normalmapexist;
-	
 	public System.Single Roughness
 	{
 		get { return roughness; }
@@ -2433,7 +2658,6 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private System.Single roughness;
-	
 	public System.Boolean RoughnessExist
 	{
 		get { return roughnessexist; }
@@ -2475,7 +2699,6 @@ public class GBufferDraw : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -2496,7 +2719,6 @@ public class GBufferDraw : MaterialBase
 			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
-
     private PrevTransform prevtransform = new PrevTransform();
 	public PrevTransform PrevTransform
 	{
@@ -2536,8 +2758,6 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -2714,7 +2934,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -2788,8 +3008,6 @@ public class CubemapConvolution : MaterialBase
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -2866,7 +3084,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -2992,28 +3210,6 @@ public class GBufferInstanced : MaterialBase
 	}
 	private int RoughnessTexIndex = 4;
 
-	public System.Int32 MetallicCount
-	{
-		get { return metalliccount; }
-		set 
-		{
-			metalliccount = value;
-			SetUniformVariable(@"MetallicCount", metalliccount);			
-		}
-	}
-	private System.Int32 metalliccount;
-	public System.Int32 RoughnessCount
-	{
-		get { return roughnesscount; }
-		set 
-		{
-			roughnesscount = value;
-			SetUniformVariable(@"RoughnessCount", roughnesscount);			
-		}
-	}
-	private System.Int32 roughnesscount;
-
-	
 	public System.Boolean DiffuseMapExist
 	{
 		get { return diffusemapexist; }
@@ -3024,7 +3220,6 @@ public class GBufferInstanced : MaterialBase
 		}
 	}
 	private System.Boolean diffusemapexist;
-	
 	public OpenTK.Mathematics.Vector3 DiffuseOverride
 	{
 		get { return diffuseoverride; }
@@ -3035,7 +3230,6 @@ public class GBufferInstanced : MaterialBase
 		}
 	}
 	private OpenTK.Mathematics.Vector3 diffuseoverride;
-	
 	public System.Int32 LightChannel
 	{
 		get { return lightchannel; }
@@ -3046,7 +3240,6 @@ public class GBufferInstanced : MaterialBase
 		}
 	}
 	private System.Int32 lightchannel;
-	
 	public System.Boolean MetalicExist
 	{
 		get { return metalicexist; }
@@ -3057,7 +3250,16 @@ public class GBufferInstanced : MaterialBase
 		}
 	}
 	private System.Boolean metalicexist;
-	
+	public System.Int32 MetallicCount
+	{
+		get { return metalliccount; }
+		set 
+		{
+			metalliccount = value;
+			SetUniformVariable(@"MetallicCount", metalliccount);			
+		}
+	}
+	private System.Int32 metalliccount;
 	public System.Boolean NormalMapExist
 	{
 		get { return normalmapexist; }
@@ -3068,7 +3270,16 @@ public class GBufferInstanced : MaterialBase
 		}
 	}
 	private System.Boolean normalmapexist;
-	
+	public System.Int32 RoughnessCount
+	{
+		get { return roughnesscount; }
+		set 
+		{
+			roughnesscount = value;
+			SetUniformVariable(@"RoughnessCount", roughnesscount);			
+		}
+	}
+	private System.Int32 roughnesscount;
 	public System.Boolean RoughnessExist
 	{
 		get { return roughnessexist; }
@@ -3110,7 +3321,6 @@ public class GBufferInstanced : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -3132,8 +3342,6 @@ public class GBufferInstanced : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -3288,7 +3496,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -3312,7 +3520,6 @@ public class GBufferWithoutTexture : MaterialBase
 	{
 		mMaterialProgram.UseProgram();
 	}
-
 
 
 
@@ -3346,7 +3553,6 @@ public class GBufferWithoutTexture : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -3367,7 +3573,6 @@ public class GBufferWithoutTexture : MaterialBase
 			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
 		}
 	}
-
     private PrevTransform prevtransform = new PrevTransform();
 	public PrevTransform PrevTransform
 	{
@@ -3407,8 +3612,6 @@ public class GBufferWithoutTexture : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -3504,7 +3707,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -3542,7 +3745,6 @@ public class GBufferPNC : MaterialBase
 	private OpenTK.Mathematics.Matrix4 model;
 
 
-
     private CameraTransform cameratransform = new CameraTransform();
 	public CameraTransform CameraTransform
 	{
@@ -3573,8 +3775,6 @@ public class GBufferPNC : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -3642,7 +3842,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -3695,7 +3895,6 @@ public class GBufferCubeTest : MaterialBase
 
 
 
-
     private CameraTransform cameratransform = new CameraTransform();
 	public CameraTransform CameraTransform
 	{
@@ -3725,7 +3924,6 @@ public class GBufferCubeTest : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -3747,8 +3945,6 @@ public class GBufferCubeTest : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -3826,7 +4022,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -3889,7 +4085,6 @@ public class GBufferPNCT : MaterialBase
 	private OpenTK.Mathematics.Matrix4 model;
 
 
-
     private CameraTransform cameratransform = new CameraTransform();
 	public CameraTransform CameraTransform
 	{
@@ -3920,8 +4115,6 @@ public class GBufferPNCT : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -3993,7 +4186,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -4046,7 +4239,6 @@ public class GBufferPNT : MaterialBase
 
 
 
-
     private CameraTransform cameratransform = new CameraTransform();
 	public CameraTransform CameraTransform
 	{
@@ -4076,7 +4268,6 @@ public class GBufferPNT : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -4098,8 +4289,6 @@ public class GBufferPNT : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4173,7 +4362,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -4226,7 +4415,6 @@ public class GBufferPNTT : MaterialBase
 
 
 
-
     private CameraTransform cameratransform = new CameraTransform();
 	public CameraTransform CameraTransform
 	{
@@ -4256,7 +4444,6 @@ public class GBufferPNTT : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -4278,8 +4465,6 @@ public class GBufferPNTT : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4356,7 +4541,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -4407,8 +4592,6 @@ public class Blur : MaterialBase
 	}
 	private int ColorTexIndex = 0;
 
-
-	
 	public System.Boolean Horizontal
 	{
 		get { return horizontal; }
@@ -4419,7 +4602,6 @@ public class Blur : MaterialBase
 		}
 	}
 	private System.Boolean horizontal;
-	
 	public System.Single[] Weight
 	{
 		get { return weight; }
@@ -4433,7 +4615,6 @@ public class Blur : MaterialBase
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4491,7 +4672,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -4546,8 +4727,6 @@ public class BloomMaterial : MaterialBase
 
 
 
-	
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450
@@ -4597,7 +4776,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -4648,6 +4827,16 @@ public class CubemapMaterial : MaterialBase
 	}
 	private int texCubemapIndex = 0;
 
+	public System.Int32 LightChannel
+	{
+		get { return lightchannel; }
+		set 
+		{
+			lightchannel = value;
+			SetUniformVariable(@"LightChannel", lightchannel);			
+		}
+	}
+	private System.Int32 lightchannel;
 	public OpenTK.Mathematics.Matrix4 ModelMatrix
 	{
 		get { return modelmatrix; }
@@ -4679,21 +4868,8 @@ public class CubemapMaterial : MaterialBase
 	}
 	private OpenTK.Mathematics.Matrix4 viewmatrix;
 
-	
-	public System.Int32 LightChannel
-	{
-		get { return lightchannel; }
-		set 
-		{
-			lightchannel = value;
-			SetUniformVariable(@"LightChannel", lightchannel);			
-		}
-	}
-	private System.Int32 lightchannel;
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4750,7 +4926,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -4776,8 +4952,6 @@ public class MSGBufferMaterial : MaterialBase
 	}
 
 
-
-	
 	public System.Int32 MaskMapExist
 	{
 		get { return maskmapexist; }
@@ -4788,7 +4962,6 @@ public class MSGBufferMaterial : MaterialBase
 		}
 	}
 	private System.Int32 maskmapexist;
-	
 	public System.Int32 NormalMapExist
 	{
 		get { return normalmapexist; }
@@ -4799,7 +4972,6 @@ public class MSGBufferMaterial : MaterialBase
 		}
 	}
 	private System.Int32 normalmapexist;
-	
 	public System.Int32 SpecularMapExist
 	{
 		get { return specularmapexist; }
@@ -4841,7 +5013,6 @@ public class MSGBufferMaterial : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -4863,8 +5034,6 @@ public class MSGBufferMaterial : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -4998,7 +5167,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -5049,8 +5218,6 @@ public class DepthVisualizeMaterial : MaterialBase
 	}
 	private int DepthTexIndex = 0;
 
-
-	
 	public System.Single Far
 	{
 		get { return far; }
@@ -5061,7 +5228,6 @@ public class DepthVisualizeMaterial : MaterialBase
 		}
 	}
 	private System.Single far;
-	
 	public System.Single Near
 	{
 		get { return near; }
@@ -5075,7 +5241,6 @@ public class DepthVisualizeMaterial : MaterialBase
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5118,7 +5283,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -5183,8 +5348,6 @@ public class FontRenderMaterial : MaterialBase
 
 
 
-	
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450 core
@@ -5232,7 +5395,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -5258,6 +5421,26 @@ public class FontBoxRenderMaterial : MaterialBase
 	}
 
 
+	public System.Single BoxAlpha
+	{
+		get { return boxalpha; }
+		set 
+		{
+			boxalpha = value;
+			SetUniformVariable(@"BoxAlpha", boxalpha);			
+		}
+	}
+	private System.Single boxalpha;
+	public OpenTK.Mathematics.Vector3 BoxColor
+	{
+		get { return boxcolor; }
+		set 
+		{
+			boxcolor = value;
+			SetUniformVariable(@"BoxColor", boxcolor);			
+		}
+	}
+	private OpenTK.Mathematics.Vector3 boxcolor;
 	public OpenTK.Mathematics.Vector2 ScreenSize
 	{
 		get { return screensize; }
@@ -5269,32 +5452,8 @@ public class FontBoxRenderMaterial : MaterialBase
 	}
 	private OpenTK.Mathematics.Vector2 screensize;
 
-	
-	public System.Single BoxAlpha
-	{
-		get { return boxalpha; }
-		set 
-		{
-			boxalpha = value;
-			SetUniformVariable(@"BoxAlpha", boxalpha);			
-		}
-	}
-	private System.Single boxalpha;
-	
-	public OpenTK.Mathematics.Vector3 BoxColor
-	{
-		get { return boxcolor; }
-		set 
-		{
-			boxcolor = value;
-			SetUniformVariable(@"BoxColor", boxcolor);			
-		}
-	}
-	private OpenTK.Mathematics.Vector3 boxcolor;
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5336,7 +5495,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -5362,8 +5521,6 @@ public class GridRenderMaterial : MaterialBase
 	}
 
 
-
-	
 	public OpenTK.Mathematics.Vector3 LineColor
 	{
 		get { return linecolor; }
@@ -5405,7 +5562,6 @@ public class GridRenderMaterial : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -5427,8 +5583,6 @@ public class GridRenderMaterial : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5469,7 +5623,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -5540,6 +5694,16 @@ public class ThreeDTextRenderMaterial : MaterialBase
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 proj;
+	public OpenTK.Mathematics.Vector3 TextColor
+	{
+		get { return textcolor; }
+		set 
+		{
+			textcolor = value;
+			SetUniformVariable(@"TextColor", textcolor);			
+		}
+	}
+	private OpenTK.Mathematics.Vector3 textcolor;
 	public OpenTK.Mathematics.Matrix4 View
 	{
 		get { return view; }
@@ -5551,21 +5715,8 @@ public class ThreeDTextRenderMaterial : MaterialBase
 	}
 	private OpenTK.Mathematics.Matrix4 view;
 
-	
-	public OpenTK.Mathematics.Vector3 TextColor
-	{
-		get { return textcolor; }
-		set 
-		{
-			textcolor = value;
-			SetUniformVariable(@"TextColor", textcolor);			
-		}
-	}
-	private OpenTK.Mathematics.Vector3 textcolor;
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5607,7 +5758,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -5687,8 +5838,6 @@ public class ResolveMaterial : MaterialBase
 
 
 
-	
-
 	public static string GetVSSourceCode()
 	{
 		return @"#version 450
@@ -5741,7 +5890,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -5842,8 +5991,6 @@ public class SSAOMaterial : MaterialBase
 	}
 	private int RandTexIndex = 4;
 
-
-	
 	public OpenTK.Mathematics.Matrix4 ProjectionMatrix
 	{
 		get { return projectionmatrix; }
@@ -5854,7 +6001,6 @@ public class SSAOMaterial : MaterialBase
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 projectionmatrix;
-	
 	public System.Single Radius
 	{
 		get { return radius; }
@@ -5865,7 +6011,6 @@ public class SSAOMaterial : MaterialBase
 		}
 	}
 	private System.Single radius;
-	
 	public OpenTK.Mathematics.Vector3[] SampleKernel
 	{
 		get { return samplekernel; }
@@ -5876,7 +6021,6 @@ public class SSAOMaterial : MaterialBase
 		}
 	}
 	private OpenTK.Mathematics.Vector3[] samplekernel;
-	
 	public OpenTK.Mathematics.Vector2 ScreenSize
 	{
 		get { return screensize; }
@@ -5890,7 +6034,6 @@ public class SSAOMaterial : MaterialBase
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -5988,7 +6131,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -6017,8 +6160,6 @@ public class LUTGenerateMaterial : MaterialBase
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -6157,7 +6298,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -6228,8 +6369,6 @@ public class PrefilterMaterial : MaterialBase
 		}
 	}
 	private OpenTK.Mathematics.Matrix4 view;
-
-	
 	public System.Single Roughness
 	{
 		get { return roughness; }
@@ -6243,7 +6382,6 @@ public class PrefilterMaterial : MaterialBase
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -6380,7 +6518,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -6431,8 +6569,6 @@ public class FXAAMaterial : MaterialBase
 	}
 	private int ScreenTexIndex = 1;
 
-
-	
 	public OpenTK.Mathematics.Vector2 InverseScreenSize
 	{
 		get { return inversescreensize; }
@@ -6446,7 +6582,6 @@ public class FXAAMaterial : MaterialBase
 
 
 
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -6753,7 +6888,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -6777,7 +6912,6 @@ public class TBNMaterial : MaterialBase
 	{
 		mMaterialProgram.UseProgram();
 	}
-
 
 
 
@@ -6811,7 +6945,6 @@ public class TBNMaterial : MaterialBase
 			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
 		}
 	}
-
     private ModelTransform modeltransform = new ModelTransform();
 	public ModelTransform ModelTransform
 	{
@@ -6833,8 +6966,6 @@ public class TBNMaterial : MaterialBase
 		}
 	}
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -6892,7 +7023,7 @@ void main()
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }
@@ -6946,8 +7077,6 @@ public class SignedDistanceField : MaterialBase
 
 
 
-
-	
 
 	public static string GetVSSourceCode()
 	{
@@ -7051,7 +7180,7 @@ void main(void)
 
 	public static string GetGSSourceCode()
 	{
-		return @"#version 460 core";
+		return @"";
 	}
 }
 }

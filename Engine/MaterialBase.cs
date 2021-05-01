@@ -108,7 +108,7 @@ namespace Core.MaterialBase
         }
 
         // geometry shader
-        public MaterialBase(string vertexShaderCode, string geometryShaderCode, string fragmentShaderCode)
+        public MaterialBase(string vertexShaderCode,  string fragmentShaderCode, string geometryShaderCode)
         {
             mVertexShader = new VertexShader();
             mFragmentShader = new FragmentShader();

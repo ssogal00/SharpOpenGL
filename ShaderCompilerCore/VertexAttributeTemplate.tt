@@ -14,7 +14,6 @@
 	}
 #>
 
-[ZeroFormattable]
 [StructLayout(LayoutKind.Explicit,Size=<#= nTotalSize #>)]
 public struct VertexAttribute
 {

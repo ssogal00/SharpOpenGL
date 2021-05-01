@@ -127,15 +127,14 @@ namespace Engine
 
             }
 
-            VertexCount = VertexList.Count;
+            mVertexCount = VertexList.Count;
         }
 
         protected float Radius = 1.0f;
         protected float Height = 10.0f;
         protected uint Count = 10;
         public Vector3 Color = new Vector3(1, 0, 0);
-
-        protected int VertexCount = 0;
+        
 
         protected List<PNC_VertexAttribute> VertexList = new List<PNC_VertexAttribute>();
         protected AOSVertexBuffer<PNC_VertexAttribute> VB = null;

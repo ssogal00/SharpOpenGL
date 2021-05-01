@@ -24,9 +24,9 @@ public class <#=ShaderName#> : MaterialBase
 	}
 
 <# int index = 0;
-foreach(var Sampler in FSProgram.GetSampler2DNames())
+foreach(var Sampler in mShaderProgram.GetSampler2DNames())
 {
-	int samplerIndex = FSProgram.GetSampler2DUniformLocation(Sampler);
+	int samplerIndex = mShaderProgram.GetSampler2DUniformLocation(Sampler);
 #>
 	public void Set<#=Sampler#>2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -56,38 +56,8 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 <#index++;#>
 <#}#>
 
-<#foreach(var item in VSProgram.GetActiveUniformVariableMetaDataList())#>
+<#foreach(var item in mShaderProgram.GetActiveUniformVariableMetaDataList())#>
 <#{#>
-<#if(item.IsArray)#>
-<#{#>
-	public <#=item.VariableTypeString#>[] <#=item.VariableName.FirstCharToUpper()#>
-	{
-		get { return <#=item.VariableName.ToLower()#>; }
-		set 
-		{
-			<#=item.VariableName.ToLower()#> = value;
-			SetUniformVariable(@"<#=item.VariableName#>", <#=item.VariableName.ToLower()#>);			
-		}
-	}
-	private <#=item.VariableTypeString#>[] <#=item.VariableName.ToLower()#>;
-<#}#>
-<#else#>
-<#{#>
-	public <#=item.VariableTypeString#> <#=item.VariableName.FirstCharToUpper()#>
-	{
-		get { return <#=item.VariableName.ToLower()#>; }
-		set 
-		{
-			<#=item.VariableName.ToLower()#> = value;
-			SetUniformVariable(@"<#=item.VariableName#>", <#=item.VariableName.ToLower()#>);			
-		}
-	}
-	private <#=item.VariableTypeString#> <#=item.VariableName.ToLower()#>;
-<#}#>
-<#}#>
-
-<#foreach(var item in FSProgram.GetActiveUniformVariableMetaDataList())#>
-<#{#>	
 <#if(item.IsArray)#>
 <#{#>
 	public <#=item.VariableTypeString#>[] <#=item.VariableName.FirstCharToUpper()#>
@@ -118,9 +88,9 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 
 <#var BlockNameList = new List<string>();#>
 
-<#for(int i = 0; i < VSProgram.GetActiveUniformBlockCount(); ++i)
+<#for(int i = 0; i < mShaderProgram.GetActiveUniformBlockCount(); ++i)
 {
-    var blockname = VSProgram.GetUniformBlockName(i);
+    var blockname = mShaderProgram.GetUniformBlockName(i);
 	BlockNameList.Add(blockname);
 #>
     private <#=blockname#> <#=blockname.ToLower()#> = new <#=blockname#>();
@@ -134,7 +104,7 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		}
 	}
 
-<# var MetaDataList = VSProgram.GetUniformVariableMetaDataListInBlock(i).OrderBy(x => x.VariableOffset).ToList();#>
+<# var MetaDataList = mShaderProgram.GetUniformVariableMetaDataListInBlock(i).OrderBy(x => x.VariableOffset).ToList();#>
 <# foreach(var data in MetaDataList) #>
 <# { #>
 	public <#=data.VariableTypeString#> <#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
@@ -147,42 +117,8 @@ foreach(var Sampler in FSProgram.GetSampler2DNames())
 		}
 	}
 <# } #>
-
 <#}#>
 
-<#for(int i = 0; i < FSProgram.GetActiveUniformBlockCount(); ++i)
-{
-    var blockname = FSProgram.GetUniformBlockName(i);
-	if(BlockNameList.Contains(blockname))
-	{
-		continue;
-	}
-#>
-    private <#=blockname#> <#=blockname.ToLower()#> = new <#=blockname#>();
-	public <#=blockname#> <#=blockname#>
-	{
-		get { return <#=blockname.ToLower()#>; }
-		set 
-		{ 
-			<#=blockname.ToLower()#> = value; 
-			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", <#=blockname.ToLower()#>);
-		}
-	}
-
-<# var MetaDataList = FSProgram.GetUniformVariableMetaDataListInBlock(i).OrderBy(x => x.VariableOffset).ToList();#>
-<# foreach(var data in MetaDataList) #>
-<# { #>
-	public <#=data.VariableTypeString#> <#=blockname#>_<#=data.VariableName.FirstCharToUpper()#>
-	{
-		get { return <#=blockname.ToLower()#>.<#=data.VariableName#> ; }
-		set 
-		{ 
-			<#=blockname.ToLower()#>.<#=data.VariableName#> = value; 
-			this.SetUniformBufferValue< <#=blockname#> >(@"<#=blockname#>", <#=blockname.ToLower()#>);			
-		}
-	}
-<# } #>
-<#}#>	
 
 	public static string GetVSSourceCode()
 	{

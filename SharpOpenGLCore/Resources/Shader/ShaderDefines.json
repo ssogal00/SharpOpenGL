@@ -41,6 +41,12 @@
 			"fragmentShader" : "./Resources/Shader/DeferredLight.fs.glsl",
 			"vertexShaderDefines" : [],
 			"fragmentShaderDefines" : []		
+		},
+		{
+			"name" : "GeometryWireframeMaterial",
+			"vertexShader" : "./Resources/Shader/Geometry.vs.glsl",
+			"fragmentShader" : "./Resources/Shader/Geometry.fs.glsl",
+			"geometryShader" : "./Resources/Shader/Geometry.gs.glsl"
 		}
 	]
 }

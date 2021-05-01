@@ -27,17 +27,6 @@ public struct CameraTransform
 }
 
 [Serializable]
-[StructLayout(LayoutKind.Explicit,Size=64)]
-public struct ModelTransform
-{
-	[FieldOffset(0), ExposeUI]
-	public OpenTK.Mathematics.Matrix4 Model;
-}
-}
-namespace GBufferMacro1
-{
-
-[Serializable]
 [StructLayout(LayoutKind.Explicit,Size=32)]
 public struct MaterialProperty
 {
@@ -57,6 +46,14 @@ public struct MaterialProperty
 	public System.Single Roughness;
 	[FieldOffset(28), ExposeUI]
 	public System.Boolean MetallicRoughnessOneTexture;
+}
+
+[Serializable]
+[StructLayout(LayoutKind.Explicit,Size=64)]
+public struct ModelTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Model;
 }
 }
 namespace GBufferMacro2
@@ -73,17 +70,6 @@ public struct CameraTransform
 }
 
 [Serializable]
-[StructLayout(LayoutKind.Explicit,Size=64)]
-public struct ModelTransform
-{
-	[FieldOffset(0), ExposeUI]
-	public OpenTK.Mathematics.Matrix4 Model;
-}
-}
-namespace GBufferMacro2
-{
-
-[Serializable]
 [StructLayout(LayoutKind.Explicit,Size=32)]
 public struct MaterialProperty
 {
@@ -104,14 +90,19 @@ public struct MaterialProperty
 	[FieldOffset(28), ExposeUI]
 	public System.Boolean MetallicRoughnessOneTexture;
 }
+
+[Serializable]
+[StructLayout(LayoutKind.Explicit,Size=64)]
+public struct ModelTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Model;
+}
 }
 namespace ScreenSpaceDraw
 {
 }
 namespace EquirectangleToCube
-{
-}
-namespace GBufferDump
 {
 }
 namespace GBufferDump
@@ -137,9 +128,6 @@ public struct Dump
 }
 namespace DeferredLightMaterial
 {
-}
-namespace DeferredLightMaterial
-{
 
 [Serializable]
 [StructLayout(LayoutKind.Explicit,Size=128)]
@@ -149,6 +137,19 @@ public struct CameraTransform
 	public OpenTK.Mathematics.Matrix4 View;
 	[FieldOffset(64), ExposeUI]
 	public OpenTK.Mathematics.Matrix4 Proj;
+}
+}
+namespace GeometryWireframeMaterial
+{
+
+[Serializable]
+[StructLayout(LayoutKind.Explicit,Size=32)]
+public struct LineInfo
+{
+	[FieldOffset(0), ExposeUI]
+	public System.Single Width;
+	[FieldOffset(16), ExposeUI]
+	public OpenTK.Mathematics.Vector4 Color;
 }
 }
 namespace BasicMaterial
@@ -174,9 +175,6 @@ public struct Transform
 	public OpenTK.Mathematics.Matrix4 Proj;
 }
 }
-namespace BasicMaterial
-{
-}
 namespace SimpleMaterial
 {
 
@@ -191,9 +189,6 @@ public struct Transform
 	[FieldOffset(128), ExposeUI]
 	public OpenTK.Mathematics.Matrix4 Proj;
 }
-}
-namespace SimpleMaterial
-{
 }
 namespace GBufferDraw
 {
@@ -227,9 +222,6 @@ public struct PrevTransform
 	[FieldOffset(128), ExposeUI]
 	public OpenTK.Mathematics.Matrix4 PrevView;
 }
-}
-namespace GBufferDraw
-{
 }
 namespace CubemapConvolution
 {
@@ -255,9 +247,6 @@ public struct ModelTransform
 	public OpenTK.Mathematics.Matrix4 Model;
 }
 }
-namespace GBufferInstanced
-{
-}
 namespace GBufferWithoutTexture
 {
 
@@ -291,9 +280,6 @@ public struct PrevTransform
 	public OpenTK.Mathematics.Matrix4 PrevView;
 }
 }
-namespace GBufferWithoutTexture
-{
-}
 namespace GBufferPNC
 {
 
@@ -306,9 +292,6 @@ public struct CameraTransform
 	[FieldOffset(64), ExposeUI]
 	public OpenTK.Mathematics.Matrix4 Proj;
 }
-}
-namespace GBufferPNC
-{
 }
 namespace GBufferCubeTest
 {
@@ -331,9 +314,6 @@ public struct ModelTransform
 	public OpenTK.Mathematics.Matrix4 Model;
 }
 }
-namespace GBufferCubeTest
-{
-}
 namespace GBufferPNCT
 {
 
@@ -346,9 +326,6 @@ public struct CameraTransform
 	[FieldOffset(64), ExposeUI]
 	public OpenTK.Mathematics.Matrix4 Proj;
 }
-}
-namespace GBufferPNCT
-{
 }
 namespace GBufferPNT
 {
@@ -371,9 +348,6 @@ public struct ModelTransform
 	public OpenTK.Mathematics.Matrix4 Model;
 }
 }
-namespace GBufferPNT
-{
-}
 namespace GBufferPNTT
 {
 
@@ -394,9 +368,6 @@ public struct ModelTransform
 	[FieldOffset(0), ExposeUI]
 	public OpenTK.Mathematics.Matrix4 Model;
 }
-}
-namespace GBufferPNTT
-{
 }
 namespace Blur
 {
@@ -428,9 +399,6 @@ public struct ModelTransform
 	public OpenTK.Mathematics.Matrix4 Model;
 }
 }
-namespace MSGBufferMaterial
-{
-}
 namespace DepthVisualizeMaterial
 {
 }
@@ -460,9 +428,6 @@ public struct ModelTransform
 	[FieldOffset(0), ExposeUI]
 	public OpenTK.Mathematics.Matrix4 Model;
 }
-}
-namespace GridRenderMaterial
-{
 }
 namespace ThreeDTextRenderMaterial
 {
@@ -502,9 +467,6 @@ public struct ModelTransform
 	[FieldOffset(0), ExposeUI]
 	public OpenTK.Mathematics.Matrix4 Model;
 }
-}
-namespace TBNMaterial
-{
 }
 namespace SignedDistanceField
 {
