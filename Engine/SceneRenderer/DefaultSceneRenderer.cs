@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using Core;
 using Core.Buffer;
-using Core.Texture;
-using OpenTK.Windowing.Desktop;
-using Engine;
 using Engine.PostProcess;
 using Engine.Scene;
 using Engine.Transform;

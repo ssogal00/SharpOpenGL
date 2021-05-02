@@ -1954,26 +1954,6 @@ public class GeometryWireframeMaterial : MaterialBase
 		set => SetTexture(@"diffuseTex", value, Sampler.DefaultLinearSampler);
 	}	
 
-	public OpenTK.Mathematics.Matrix4 MVP
-	{
-		get { return mvp; }
-		set 
-		{
-			mvp = value;
-			SetUniformVariable(@"MVP", mvp);			
-		}
-	}
-	private OpenTK.Mathematics.Matrix4 mvp;
-	public OpenTK.Mathematics.Matrix4 ModelViewMatrix
-	{
-		get { return modelviewmatrix; }
-		set 
-		{
-			modelviewmatrix = value;
-			SetUniformVariable(@"ModelViewMatrix", modelviewmatrix);			
-		}
-	}
-	private OpenTK.Mathematics.Matrix4 modelviewmatrix;
 	public OpenTK.Mathematics.Matrix3 NormalMatrix
 	{
 		get { return normalmatrix; }
@@ -1996,6 +1976,35 @@ public class GeometryWireframeMaterial : MaterialBase
 	private OpenTK.Mathematics.Matrix4 viewportmatrix;
 
 
+    private CameraTransform cameratransform = new CameraTransform();
+	public CameraTransform CameraTransform
+	{
+		get { return cameratransform; }
+		set 
+		{ 
+			cameratransform = value; 
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", value);
+		}
+	}
+
+	public OpenTK.Mathematics.Matrix4 CameraTransform_View
+	{
+		get { return cameratransform.View ; }
+		set 
+		{ 
+			cameratransform.View = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
+		}
+	}
+	public OpenTK.Mathematics.Matrix4 CameraTransform_Proj
+	{
+		get { return cameratransform.Proj ; }
+		set 
+		{ 
+			cameratransform.Proj = value;
+			this.SetUniformBufferValue< CameraTransform >(@"CameraTransform", cameratransform);
+		}
+	}
     private LineInfo lineinfo = new LineInfo();
 	public LineInfo LineInfo
 	{
@@ -2025,6 +2034,26 @@ public class GeometryWireframeMaterial : MaterialBase
 			this.SetUniformBufferValue< LineInfo >(@"LineInfo", lineinfo);
 		}
 	}
+    private ModelTransform modeltransform = new ModelTransform();
+	public ModelTransform ModelTransform
+	{
+		get { return modeltransform; }
+		set 
+		{ 
+			modeltransform = value; 
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", value);
+		}
+	}
+
+	public OpenTK.Mathematics.Matrix4 ModelTransform_Model
+	{
+		get { return modeltransform.Model ; }
+		set 
+		{ 
+			modeltransform.Model = value;
+			this.SetUniformBufferValue< ModelTransform >(@"ModelTransform", modeltransform);
+		}
+	}
 
 
 	public static string GetVSSourceCode()
@@ -2039,10 +2068,18 @@ layout (location = 1) in vec3 VertexNormal;
 layout (location = 2) in vec2 Texcoord;
 layout (location = 3) in vec4 Tangent;
 
-uniform mat4 ModelViewMatrix;
-uniform mat3 NormalMatrix;
-uniform mat4 ProjectionMatrix;
-uniform mat4 MVP;
+uniform mat3x3 NormalMatrix;
+
+uniform ModelTransform
+{
+	mat4x4 Model;
+};
+
+uniform CameraTransform
+{
+	mat4x4 View;
+	mat4x4 Proj;
+};
 
 layout (location=0) out vec3 OutPosition;
 layout (location=1) out vec3 OutNormal;
@@ -2052,8 +2089,10 @@ layout (location=3) out vec4 OutTangent;
 
 void main()
 {
+	mat4 ModelView = View * Model;
+	mat4 MVP = Proj * View * Model;
 	OutNormal = normalize(NormalMatrix * VertexNormal);
-	OutPosition = vec3(ModelViewMatrix * vec4(VertexPosition,1));
+	OutPosition = vec3(ModelView * vec4(VertexPosition,1));
 	OutTexcoord = Texcoord;
 	gl_Position = MVP * vec4(VertexPosition, 1.0f);
 }";
@@ -2147,16 +2186,22 @@ void main()
 
 	GNormal = VNormal[0];
 	GPosition = VPosition[0];
+	GTexCoord = VTexcoord[0];
+	GTangent = VTangent[0];
 	gl_Position = gl_in[0].gl_Position;
 	EmitVertex();
 	GEdgeDistance = vec3( 0, hb, 0 );
 	GNormal = VNormal[1];
 	GPosition = VPosition[1];
+	GTexCoord = VTexcoord[1];
+	GTangent = VTangent[1];
 	gl_Position = gl_in[1].gl_Position;
 	EmitVertex();
 	GEdgeDistance = vec3( 0, 0, hc );
 	GNormal = VNormal[2];
 	GPosition = VPosition[2];
+	GTexCoord = VTexcoord[2];
+	GTangent = VTangent[2];
 	gl_Position = gl_in[2].gl_Position;
 	EmitVertex();
 	EndPrimitive();

@@ -43,16 +43,22 @@ void main()
 
 	GNormal = VNormal[0];
 	GPosition = VPosition[0];
+	GTexCoord = VTexcoord[0];
+	GTangent = VTangent[0];
 	gl_Position = gl_in[0].gl_Position;
 	EmitVertex();
 	GEdgeDistance = vec3( 0, hb, 0 );
 	GNormal = VNormal[1];
 	GPosition = VPosition[1];
+	GTexCoord = VTexcoord[1];
+	GTangent = VTangent[1];
 	gl_Position = gl_in[1].gl_Position;
 	EmitVertex();
 	GEdgeDistance = vec3( 0, 0, hc );
 	GNormal = VNormal[2];
 	GPosition = VPosition[2];
+	GTexCoord = VTexcoord[2];
+	GTangent = VTangent[2];
 	gl_Position = gl_in[2].gl_Position;
 	EmitVertex();
 	EndPrimitive();

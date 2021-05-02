@@ -59,6 +59,11 @@ namespace Engine
             tile.SetNormalTex("./Resources/Texture/tile/Tiles32_nrm.dds");
             tile.SetDiffuseTex("./Resources/Texture/tile/Tiles32_col.dds");
             tile.SetRoughnessTex("./Resources/Texture/tile/Tiles32_rgh.dds");
+
+            var geometry = CreateGameObject<WireFrameSphere>();
+            geometry.Scale = 3.0f;
+            geometry.Translation = new Vector3(0,0,150);
+            geometry.SetDiffuseTex("./Resources/Texture/rustediron/rustediron2_basecolor.dds");
           
             var v2Sample = GLTFLoader.LoadGLTFV2("./Resources/GLTF/FlightHelmet/glTF/FlightHelmet.gltf");
             var sampleMesh = GLTFMeshAsset.LoadFrom(v2Sample);

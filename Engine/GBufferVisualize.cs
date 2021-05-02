@@ -54,32 +54,26 @@ namespace Engine.PostProcess
             }
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-            PostProcessMaterial = ShaderManager.Instance.GetMaterial<GBufferDump>();
-        }
-
         public override void Render(TextureBase ColorInput, TextureBase NormalInput, TextureBase PositionInput, TextureBase MotionInput)
         {
             Output.ClearColor = Color.Violet;
 
-            var gbufferVisualize = (GBufferDump) PostProcessMaterial;
+            PostProcessMaterial = ShaderManager.Instance.GetMaterial<GBufferDump>();
 
-            Output.BindAndExecute(gbufferVisualize, () =>
+            Output.BindAndExecute(PostProcessMaterial, () =>
             {
-                gbufferVisualize.DiffuseTex2D = ColorInput;
-                gbufferVisualize.NormalTex2D = NormalInput;
-                gbufferVisualize.PositionTex2D = PositionInput;
-                gbufferVisualize.MotionBlurTex2D = MotionInput;
+                PostProcessMaterial.SetTexture("DiffuseTex",ColorInput);
+                PostProcessMaterial.SetTexture("NormalTex", NormalInput);
+                PostProcessMaterial.SetTexture("PositionTex", PositionInput);
+                PostProcessMaterial.SetTexture("MotionBlurTex", MotionInput);
 
-                gbufferVisualize.Dump_DiffuseDump = eVisualizeMode == EVisualizeMode.EColor;
-                gbufferVisualize.Dump_NormalDump = eVisualizeMode == EVisualizeMode.ENormal;
-                gbufferVisualize.Dump_PositionDump = eVisualizeMode == EVisualizeMode.EPosition;
-                gbufferVisualize.Dump_MetalicDump = eVisualizeMode == EVisualizeMode.EMetalic;
-                gbufferVisualize.Dump_RoughnessDump = eVisualizeMode == EVisualizeMode.ERoughness;
-                gbufferVisualize.Dump_MotionBlurDump = eVisualizeMode == EVisualizeMode.EMotionBlur;
-
+                PostProcessMaterial.SetUniformVariable("DiffuseDump", eVisualizeMode == EVisualizeMode.EColor);
+                PostProcessMaterial.SetUniformVariable("NormalDump", eVisualizeMode == EVisualizeMode.ENormal);
+                PostProcessMaterial.SetUniformVariable("PositionDump", eVisualizeMode == EVisualizeMode.EPosition);
+                PostProcessMaterial.SetUniformVariable("MetalicDump", eVisualizeMode == EVisualizeMode.EMetalic);
+                PostProcessMaterial.SetUniformVariable("RoughnessDump", eVisualizeMode == EVisualizeMode.ERoughness);
+                PostProcessMaterial.SetUniformVariable("MotionBlurDump", eVisualizeMode == EVisualizeMode.EMotionBlur);
+                
                 BlitToScreenSpace();
             });
         }

@@ -57,6 +57,11 @@ namespace Core.Camera
             get { return PrevProjMatrix; }
         }
 
+        public Matrix4 Viewport
+        {
+            get { return ViewportMatrix; }
+        }
+
         public virtual void MoveForward() {}
 
         public virtual void MoveBackward() {}
@@ -119,6 +124,15 @@ namespace Core.Camera
         {
             float fAspectRatio = width / (float) height;
             AspectRatio = fAspectRatio;
+
+            float w2 = width * 0.50f;
+            float h2 = height * 0.50f;
+            
+            ViewportMatrix = new Matrix4(
+                new Vector4(w2,0,0,0),
+                new Vector4(0,h2,0,0),
+                new Vector4(0,0,1,0),
+                new Vector4(w2,h2,0,1));
         }
 
         protected Vector3 UpDir = new Vector3(0,1,0);
@@ -130,5 +144,6 @@ namespace Core.Camera
 
         protected Matrix4 PrevProjMatrix = new Matrix4();
         protected Matrix4 PrevViewMatrix = new Matrix4();
+        protected Matrix4 ViewportMatrix = new Matrix4();
     }
 }

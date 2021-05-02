@@ -76,6 +76,8 @@ namespace Engine
 
         public Vector3 CurrentCameraEye => currentCamera.EyeLocation;
 
+        public Matrix4 CurrentViewport => currentCamera.Viewport;
+
         public CameraBase CurrentCamera => currentCamera;
 
         protected CameraBase currentCamera = null;
