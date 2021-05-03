@@ -192,6 +192,49 @@ public struct ModelTransform
 	public OpenTK.Mathematics.Matrix4 Model;
 }
 }
+namespace GBufferDraw
+{
+
+[Serializable]
+[StructLayout(LayoutKind.Explicit,Size=128)]
+public struct CameraTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 View;
+	[FieldOffset(64), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Proj;
+}
+
+[Serializable]
+[StructLayout(LayoutKind.Explicit,Size=32)]
+public struct MaterialProperty
+{
+	[FieldOffset(0), ExposeUI]
+	public System.UInt32 encodedPBRInfo;
+	[FieldOffset(4), ExposeUI]
+	public System.Boolean MetallicExist;
+	[FieldOffset(8), ExposeUI]
+	public System.Boolean RoghnessExist;
+	[FieldOffset(12), ExposeUI]
+	public System.Boolean MaskExist;
+	[FieldOffset(16), ExposeUI]
+	public System.Boolean NormalExist;
+	[FieldOffset(20), ExposeUI]
+	public System.Single Metallic;
+	[FieldOffset(24), ExposeUI]
+	public System.Single Roughness;
+	[FieldOffset(28), ExposeUI]
+	public System.Boolean MetallicRoughnessOneTexture;
+}
+
+[Serializable]
+[StructLayout(LayoutKind.Explicit,Size=64)]
+public struct ModelTransform
+{
+	[FieldOffset(0), ExposeUI]
+	public OpenTK.Mathematics.Matrix4 Model;
+}
+}
 namespace BasicMaterial
 {
 
@@ -228,39 +271,6 @@ public struct Transform
 	public OpenTK.Mathematics.Matrix4 View;
 	[FieldOffset(128), ExposeUI]
 	public OpenTK.Mathematics.Matrix4 Proj;
-}
-}
-namespace GBufferDraw
-{
-
-[Serializable]
-[StructLayout(LayoutKind.Explicit,Size=128)]
-public struct CameraTransform
-{
-	[FieldOffset(0), ExposeUI]
-	public OpenTK.Mathematics.Matrix4 View;
-	[FieldOffset(64), ExposeUI]
-	public OpenTK.Mathematics.Matrix4 Proj;
-}
-
-[Serializable]
-[StructLayout(LayoutKind.Explicit,Size=64)]
-public struct ModelTransform
-{
-	[FieldOffset(0), ExposeUI]
-	public OpenTK.Mathematics.Matrix4 Model;
-}
-
-[Serializable]
-[StructLayout(LayoutKind.Explicit,Size=192)]
-public struct PrevTransform
-{
-	[FieldOffset(0), ExposeUI]
-	public OpenTK.Mathematics.Matrix4 PrevProj;
-	[FieldOffset(64), ExposeUI]
-	public OpenTK.Mathematics.Matrix4 PrevModel;
-	[FieldOffset(128), ExposeUI]
-	public OpenTK.Mathematics.Matrix4 PrevView;
 }
 }
 namespace CubemapConvolution

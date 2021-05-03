@@ -49,6 +49,13 @@
 			"vertexShader" : "./Resources/Shader/Uber.vs.glsl",			
 			"vertexShaderDefines" : [{"name" : "VERTEX_PNTT", "value" : "1"}],
 			"fragmentShaderDefines" : [{ "name" : "VERTEX_PNTT", "value" : "1"}, {"name" : "WIRE_FRAME", "value":"1"}]
+		},
+		{
+			"name" : "GBufferDraw",
+			"vertexShader" : "./Resources/Shader/Uber.vs.glsl",
+			"fragmentShader" : "./Resources/Shader/Uber.fs.glsl",
+			"vertexShaderDefines" : [ { "name" : "VERTEX_PNT", "value" : "1"}],
+			"fragmentShaderDefines" : [{ "name" : "VERTEX_PNT", "value" : "1"}]
 		}
 	]
 }
