@@ -7,11 +7,11 @@ using OpenTK.Graphics.OpenGL;
 namespace Engine.Rendering
 {
     //
-    public class GeometryShader : Core.OpenGLShader.Shader
+    public class ComputeShader : Core.OpenGLShader.Shader
     {
-        public GeometryShader()
+        public ComputeShader()
         {
-            ShaderObject = GL.CreateShader(ShaderType.GeometryShader);
+            ShaderObject = GL.CreateShader(ShaderType.ComputeShader);
         }
     }
 }
