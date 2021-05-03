@@ -14,6 +14,9 @@ namespace Engine.Query
             mQueryObject = GL.GenQuery();
         }
 
+        public virtual void Begin(){}
+        public virtual void End(){}
+
         public void Dispose()
         {
             GL.DeleteQuery(mQueryObject);

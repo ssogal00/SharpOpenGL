@@ -36,9 +36,12 @@ namespace Core.MaterialBase
     {
         protected ShaderProgram mMaterialProgram = null;
         
-        protected Core.OpenGLShader.VertexShader mVertexShader = null;
-        protected Core.OpenGLShader.FragmentShader mFragmentShader = null;
+        protected VertexShader mVertexShader = null;
+        protected FragmentShader mFragmentShader = null;
         protected GeometryShader mGeometryShader = null;
+        protected ComputeShader mComputeShader = null;
+        protected TesselControlShader mTesselControlShader = null;
+        protected TesselEvalShader mTesselEvalShader = null;
 
         protected string VertexShaderCode = "";
         protected string FragmentShaderCode = "";
@@ -80,29 +83,11 @@ namespace Core.MaterialBase
 
         public MaterialBase(string vertexShaderCode, string fragmentShaderCode)
         {
-            mVertexShader = new VertexShader();
-            mFragmentShader = new FragmentShader();
-
-            mMaterialProgram = new Core.OpenGLShader.ShaderProgram();
-
-            if (mVertexShader.CompileShader(vertexShaderCode))
+            CompileAndLink(new Dictionary<ShaderType, string>
             {
-                mMaterialProgram.AttachShader(mVertexShader);
-            }
-
-            if (mFragmentShader.CompileShader(fragmentShaderCode))
-            {
-                mMaterialProgram.AttachShader(mFragmentShader);
-            }
-
-            bool bSuccess = mMaterialProgram.LinkProgram(out CompileResult);
-
-            if (bSuccess == false)
-            {
-                Console.Write("{0}", CompileResult);
-            }
-
-            Debug.Assert(bSuccess == true);
+                {ShaderType.VertexShader, vertexShaderCode},
+                {ShaderType.FragmentShader, fragmentShaderCode}
+            });
 
             Initialize();
         }
@@ -110,24 +95,71 @@ namespace Core.MaterialBase
         // geometry shader
         public MaterialBase(string vertexShaderCode,  string fragmentShaderCode, string geometryShaderCode)
         {
-            mVertexShader = new VertexShader();
-            mFragmentShader = new FragmentShader();
-            mGeometryShader = new GeometryShader();
-            mMaterialProgram = new ShaderProgram();
-
-            if (mVertexShader.CompileShader(vertexShaderCode))
+            CompileAndLink(new Dictionary<ShaderType, string>
             {
-                mMaterialProgram.AttachShader(mVertexShader);
+                {ShaderType.VertexShader, vertexShaderCode},
+                {ShaderType.FragmentShader, fragmentShaderCode},
+                {ShaderType.GeometryShader, geometryShaderCode}
+            });
+            Initialize();
+        }
+        
+        protected bool CompileAndLink(Dictionary<ShaderType, string> shaderTypeCodeMap)
+        {
+            if (shaderTypeCodeMap.ContainsKey(ShaderType.VertexShader))
+            {
+                mVertexShader = new VertexShader();
+
+                if (mVertexShader.CompileShader(shaderTypeCodeMap[ShaderType.VertexShader]))
+                {
+                    mMaterialProgram.AttachShader(mVertexShader);
+                }
             }
 
-            if (mFragmentShader.CompileShader(fragmentShaderCode))
+            if (shaderTypeCodeMap.ContainsKey(ShaderType.FragmentShader))
             {
-                mMaterialProgram.AttachShader(mFragmentShader);
+                mFragmentShader = new FragmentShader();
+
+                if (mFragmentShader.CompileShader(shaderTypeCodeMap[ShaderType.FragmentShader]))
+                {
+                    mMaterialProgram.AttachShader(mFragmentShader);
+                }
             }
 
-            if (geometryShaderCode.Length > 0 && mGeometryShader.CompileShader(geometryShaderCode))
+            if (shaderTypeCodeMap.ContainsKey(ShaderType.ComputeShader))
             {
-                mMaterialProgram.AttachShader(mGeometryShader);
+                mComputeShader = new ComputeShader();
+                if (mComputeShader.CompileShader(shaderTypeCodeMap[ShaderType.ComputeShader]))
+                {
+                    mMaterialProgram.AttachShader(mComputeShader);
+                }
+            }
+
+            if (shaderTypeCodeMap.ContainsKey(ShaderType.GeometryShader))
+            {
+                mGeometryShader = new GeometryShader();
+                if (mGeometryShader.CompileShader(shaderTypeCodeMap[ShaderType.GeometryShader]))
+                {
+                    mMaterialProgram.AttachShader(mGeometryShader);
+                }
+            }
+
+            if (shaderTypeCodeMap.ContainsKey(ShaderType.TessControlShader))
+            {
+                mTesselControlShader = new TesselControlShader();
+                if (mTesselControlShader.CompileShader(shaderTypeCodeMap[ShaderType.TessControlShader]))
+                {
+                    mMaterialProgram.AttachShader(mTesselControlShader);
+                }
+            }
+
+            if (shaderTypeCodeMap.ContainsKey(ShaderType.TessEvaluationShader))
+            {
+                mTesselEvalShader = new TesselEvalShader();
+                if (mTesselEvalShader.CompileShader(shaderTypeCodeMap[ShaderType.TessEvaluationShader]))
+                {
+                    mMaterialProgram.AttachShader(mTesselEvalShader);
+                }
             }
 
             bool bSuccess = mMaterialProgram.LinkProgram(out CompileResult);
@@ -139,6 +171,12 @@ namespace Core.MaterialBase
 
             Debug.Assert(bSuccess);
 
+            return bSuccess;
+        }
+
+        public MaterialBase(Dictionary<ShaderType, string> shaderTypeCodeMap)
+        {
+            CompileAndLink(shaderTypeCodeMap);
             Initialize();
         }
 
