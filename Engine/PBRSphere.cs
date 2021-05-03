@@ -74,7 +74,7 @@ namespace Engine
         {
             if (bMetallicExist)
             {
-                yield return ("MetalicTex", metallicTexPath);
+                yield return ("MetallicTex", metallicTexPath);
             }
 
             if (bNormalExist)
@@ -97,7 +97,7 @@ namespace Engine
 
         public override IEnumerable<(string, bool)> GetBoolParams(int index)
         {
-            yield return ("MetalicExist", bMetallicExist);
+            yield return ("MetallicExist", bMetallicExist);
             yield return ("NormalMapExist", bNormalExist);
             yield return ("RoughnessExist", bRoughnessExist);
             yield return ("DiffuseMapExist", bDiffuseExist);

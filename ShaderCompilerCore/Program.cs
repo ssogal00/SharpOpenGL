@@ -72,6 +72,12 @@ namespace ShaderCompilerCore
             bool fragmentShaderSuccess = fs.CompileShader(composedFSCode, out string fsError);
             bool vertexShaderSuccess = vs.CompileShader(composedVSCode, out string vsError);
 
+            if (!fragmentShaderSuccess || !vertexShaderSuccess)
+            {
+                Console.WriteLine("vertexShader Error in {0} : {1}",compileInfo.VertexShaderPath,  vsError);
+                Console.WriteLine("fragmentShader Error in {0} : {1}", compileInfo.FragmentShaderPath, fsError);
+            }
+
             Debug.Assert(fragmentShaderSuccess && vertexShaderSuccess);
 
             vsProgram.AttachShader(vs);

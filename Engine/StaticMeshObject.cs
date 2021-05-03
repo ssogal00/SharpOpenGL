@@ -199,18 +199,18 @@ namespace Engine
 
                     if (IsMetallicOverride)
                     {
-                        gbufferMaterial.MetalicExist = false;
+                        gbufferMaterial.MetallicExist = false;
                         gbufferMaterial.Metalic = this.Metallic;
                     }
                     else if(meshAsset.MaterialMap[sectionName].SpecularMap != null)
                     {
-                        gbufferMaterial.MetalicExist = true;
+                        gbufferMaterial.MetallicExist = true;
                         var specTex = TextureManager.Instance.GetTexture2D(meshAsset.MaterialMap[sectionName].SpecularMap);
-                        gbufferMaterial.MetalicTex2D = specTex;
+                        gbufferMaterial.MetallicTex2D = specTex;
                     }
                     else
                     {
-                        gbufferMaterial.MetalicExist = false;
+                        gbufferMaterial.MetallicExist = false;
                         gbufferMaterial.Metalic = DebugDrawer.Instance.SceneMetallic;
                     }
 

@@ -19,10 +19,10 @@ layout (location = 3) out vec4 VelocityColor;
 layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
 layout (location = 1, binding=1) uniform sampler2D NormalTex;
 layout (location = 2, binding=2) uniform sampler2D MaskTex;
-layout (location = 3, binding=3) uniform sampler2D MetalicTex;
+layout (location = 3, binding=3) uniform sampler2D MetallicTex;
 layout (location = 4, binding=4) uniform sampler2D RoughnessTex;
 
-uniform bool MetalicExist;
+uniform bool MetallicExist;
 uniform bool MaskMapExist;
 uniform bool NormalMapExist;
 uniform bool RoughnessExist;
@@ -89,9 +89,9 @@ void main()
         NormalColor.xyz = InNormal.xyz;
     }
 
-    if(MetalicExist)
+    if(MetallicExist)
     {
-        NormalColor.a = texture(MetalicTex, InTexCoord).x;        
+        NormalColor.a = texture(MetallicTex, InTexCoord).x;        
     }
     else
     {

@@ -92,7 +92,7 @@ namespace Engine
                 mPrefilter.ResultCubemap);
 
             mScreenBlit.Blit(mLightPostProcess.OutputColorTex0, 0, 0, 1, 1);
-            /*gbufferVisualize.CurrentMode = GBufferVisualize.EVisualizeMode.ERoughness;
+            /*gbufferVisualize.CurrentMode = GBufferVisualize.EVisualizeMode.EMetalic;
             gbufferVisualize.Render(mRenderGBuffer.GetColorAttachement, mRenderGBuffer.GetNormalAttachment, mRenderGBuffer.GetPositionAttachment, mRenderGBuffer.GetMotionAttachment);
             mScreenBlit.Blit(gbufferVisualize.OutputColorTex0, 0, 0, 1, 1);*/
 

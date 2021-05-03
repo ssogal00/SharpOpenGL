@@ -2934,29 +2934,29 @@ public class GBufferDraw : MaterialBase
 	{	
 		set => SetTexture(@"MaskTex", value, Sampler.DefaultLinearSampler);
 	}	
-	public void SetMetalicTex2D(Core.Texture.TextureBase TextureObject)
+	public void SetMetallicTex2D(Core.Texture.TextureBase TextureObject)
 	{
-		SetTexture(@"MetalicTex", TextureObject);
+		SetTexture(@"MetallicTex", TextureObject);
 	}
 
-	public void SetMetalicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
+	public void SetMetallicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"MetalicTex", textureObject, samplerObject);		
+		SetTexture(@"MetallicTex", textureObject, samplerObject);		
 	}
 
-	public TextureBase MetalicTex2D 
+	public TextureBase MetallicTex2D 
 	{	
-		set => SetTexture(@"MetalicTex", value);		
+		set => SetTexture(@"MetallicTex", value);		
 	}
 
-	public TextureBase MetalicTex2D_PointSample
+	public TextureBase MetallicTex2D_PointSample
 	{	
-		set => SetTexture(@"MetalicTex", value, Sampler.DefaultPointSampler);
+		set => SetTexture(@"MetallicTex", value, Sampler.DefaultPointSampler);
 	}
 
-	public TextureBase MetalicTex2D_LinearSample
+	public TextureBase MetallicTex2D_LinearSample
 	{	
-		set => SetTexture(@"MetalicTex", value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"MetallicTex", value, Sampler.DefaultLinearSampler);
 	}	
 	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
 	{
@@ -3057,16 +3057,16 @@ public class GBufferDraw : MaterialBase
 		}
 	}
 	private System.Single metalic;
-	public System.Boolean MetalicExist
+	public System.Boolean MetallicExist
 	{
-		get { return metalicexist; }
+		get { return metallicexist; }
 		set 
 		{
-			metalicexist = value;
-			SetUniformVariable(@"MetalicExist", metalicexist);			
+			metallicexist = value;
+			SetUniformVariable(@"MetallicExist", metallicexist);			
 		}
 	}
-	private System.Boolean metalicexist;
+	private System.Boolean metallicexist;
 	public System.Boolean NormalMapExist
 	{
 		get { return normalmapexist; }
@@ -3274,10 +3274,10 @@ layout (location = 3) out vec4 VelocityColor;
 layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
 layout (location = 1, binding=1) uniform sampler2D NormalTex;
 layout (location = 2, binding=2) uniform sampler2D MaskTex;
-layout (location = 3, binding=3) uniform sampler2D MetalicTex;
+layout (location = 3, binding=3) uniform sampler2D MetallicTex;
 layout (location = 4, binding=4) uniform sampler2D RoughnessTex;
 
-uniform bool MetalicExist;
+uniform bool MetallicExist;
 uniform bool MaskMapExist;
 uniform bool NormalMapExist;
 uniform bool RoughnessExist;
@@ -3344,9 +3344,9 @@ void main()
         NormalColor.xyz = InNormal.xyz;
     }
 
-    if(MetalicExist)
+    if(MetallicExist)
     {
-        NormalColor.a = texture(MetalicTex, InTexCoord).x;        
+        NormalColor.a = texture(MetallicTex, InTexCoord).x;        
     }
     else
     {
