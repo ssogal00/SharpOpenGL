@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.CustomAttribute;
-using Core.MaterialBase;
-using OpenTK;
+﻿using Core.CustomAttribute;
 using OpenTK.Mathematics;
 
 namespace Engine.Light

@@ -139,7 +139,7 @@ public struct CameraTransform
 	public OpenTK.Mathematics.Matrix4 Proj;
 }
 }
-namespace GeometryWireframeMaterial
+namespace GeometryWireframeMaterial2
 {
 
 [Serializable]
@@ -159,7 +159,29 @@ public struct LineInfo
 	[FieldOffset(0), ExposeUI]
 	public System.Single Width;
 	[FieldOffset(16), ExposeUI]
-	public OpenTK.Mathematics.Vector4 Color;
+	public OpenTK.Mathematics.Vector4 WireframeColor;
+}
+
+[Serializable]
+[StructLayout(LayoutKind.Explicit,Size=32)]
+public struct MaterialProperty
+{
+	[FieldOffset(0), ExposeUI]
+	public System.UInt32 encodedPBRInfo;
+	[FieldOffset(4), ExposeUI]
+	public System.Boolean MetallicExist;
+	[FieldOffset(8), ExposeUI]
+	public System.Boolean RoghnessExist;
+	[FieldOffset(12), ExposeUI]
+	public System.Boolean MaskExist;
+	[FieldOffset(16), ExposeUI]
+	public System.Boolean NormalExist;
+	[FieldOffset(20), ExposeUI]
+	public System.Single Metallic;
+	[FieldOffset(24), ExposeUI]
+	public System.Single Roughness;
+	[FieldOffset(28), ExposeUI]
+	public System.Boolean MetallicRoughnessOneTexture;
 }
 
 [Serializable]

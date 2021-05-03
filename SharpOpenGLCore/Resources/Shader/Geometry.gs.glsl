@@ -1,19 +1,21 @@
 ﻿
-#version 430
+#version 460
 
 layout (triangles) in;
 layout (triangle_strip, max_vertices=3) out;
 
-layout (location=0) out vec3 GNormal;
-layout (location=1) out vec3 GPosition;
+layout (location=0) out vec4 GPosition;
+layout (location=1) out vec3 GNormal;
 layout (location=2) out vec2 GTexCoord;
-layout (location=3) out vec4 GTangent;
-layout (location=4) noperspective out vec3 GEdgeDistance;
+layout (location=3) out vec3 GTangent;
+layout (location=4) out vec3 GBinormal;
+layout (location=5) noperspective out vec3 GEdgeDistance;
 
-layout (location=0) in vec3 VPosition[];
+layout (location=0) in vec4 VPosition[];
 layout (location=1) in vec3 VNormal[];
 layout (location=2) in vec2 VTexcoord[];
-layout (location=3) in vec4 VTangent[];
+layout (location=3) in vec3 VTangent[];
+layout (location=4) in vec3 VBinormal[];
 
 //layout (location=0) out vec3 OutPosition;
 //layout (location=1) out vec3 OutNormal;
@@ -45,21 +47,27 @@ void main()
 	GPosition = VPosition[0];
 	GTexCoord = VTexcoord[0];
 	GTangent = VTangent[0];
+	GBinormal = VBinormal[0];
 	gl_Position = gl_in[0].gl_Position;
 	EmitVertex();
+
 	GEdgeDistance = vec3( 0, hb, 0 );
 	GNormal = VNormal[1];
 	GPosition = VPosition[1];
 	GTexCoord = VTexcoord[1];
 	GTangent = VTangent[1];
+	GBinormal = VBinormal[1];
 	gl_Position = gl_in[1].gl_Position;
 	EmitVertex();
+
 	GEdgeDistance = vec3( 0, 0, hc );
 	GNormal = VNormal[2];
 	GPosition = VPosition[2];
 	GTexCoord = VTexcoord[2];
 	GTangent = VTangent[2];
+	GBinormal = VBinormal[2];
 	gl_Position = gl_in[2].gl_Position;
 	EmitVertex();
+
 	EndPrimitive();
 }

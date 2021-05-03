@@ -1,17 +1,5 @@
-﻿using System;
+﻿using OpenTK.Mathematics;
 using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using CompiledMaterial.GBufferDraw;
-using Core;
-using Core.Primitive;
-using Core.Texture;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Mathematics;
 
 namespace Engine
 {

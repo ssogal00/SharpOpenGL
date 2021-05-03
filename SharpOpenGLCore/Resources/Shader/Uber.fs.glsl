@@ -1,12 +1,13 @@
 
-
 #if VERTEX_PNTT
-
 layout(location=0) in vec4 InPosition;
 layout(location=1) in vec3 InNormal;
 layout(location=2) in vec2 InTexCoord;
 layout(location=3) in vec3 InTangent;
 layout(location=4) in vec3 InBinormal;
+#if WIRE_FRAME
+layout (location=5) noperspective in vec3 GEdgeDistance;
+#endif
 
 #elif VERTEX_PNT
 
@@ -22,6 +23,13 @@ layout(location=2) in vec3 InColor;
 
 #endif
 
+#if WIRE_FRAME
+uniform LineInfo
+{
+	float Width;
+	vec4 WireframeColor;
+};
+#endif
 layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
 layout (location = 1, binding=1) uniform sampler2D NormalTex;
 layout (location = 2, binding=2) uniform sampler2D MaskTex;
@@ -61,11 +69,11 @@ float GetMetallicValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord)[2];
+			return texture(MetallicRoughnessTex, texcoord).b;
 		}
 		else
 		{
-			return texture(MetallicTex, texcoord)[2];
+			return texture(MetallicTex, texcoord).b;
 		}
 	}
 	else
@@ -80,17 +88,30 @@ float GetRoughnessValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord)[1];
+			return texture(MetallicRoughnessTex, texcoord).g;
 		}
 		else
 		{
-			return texture(RoughnessTex, texcoord)[1];
+			return texture(RoughnessTex, texcoord).g;
 		}
 	}
 	else
 	{
 		return Roughness;
 	}
+}
+
+vec4 GetDiffuseColor(vec2 texcoord)
+{
+	vec4 diffuseColor = texture(DiffuseTex,texcoord);
+#if WIRE_FRAME
+	float d = min(GEdgeDistance.x, GEdgeDistance.y);
+	d = min(d, GEdgeDistance.z);
+	float mixVal = smoothstep(Width-1,	Width+1, d);
+	return mix(WireframeColor, diffuseColor, mixVal);	
+#else
+	return diffuseColor;
+#endif
 }
 
 void main()
@@ -100,7 +121,8 @@ void main()
 		vec4 MaskValue= texture(MaskTex, InTexCoord);
 		if(MaskValue.x > 0)
 		{
-			DiffuseColor = texture(DiffuseTex, InTexCoord);
+
+			DiffuseColor = GetDiffuseColor(InTexCoord);
 		}
 		else
 		{
@@ -109,7 +131,7 @@ void main()
 	}
 	else
 	{
-		DiffuseColor = texture(DiffuseTex, InTexCoord);    
+		DiffuseColor = GetDiffuseColor(InTexCoord);
 	}
 	
 	DiffuseColor.a = GetRoughnessValue(InTexCoord);    

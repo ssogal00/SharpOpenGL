@@ -53,18 +53,21 @@ namespace Engine
             metal.SetRoughnessTex("./Resources/Texture/metal/metal-splotchy-rough.dds");
             metal.SetMetallicTex("./Resources/Texture/metal/metal-splotchy-metal.dds");
               
-            var tile = CreateGameObject<PBRSphere>();
+            /*var tile = CreateGameObject<PBRSphere>();
             tile.Scale = 1.5f;
             tile.Translation = new Vector3(0, 0, 120);
             tile.SetNormalTex("./Resources/Texture/tile/Tiles32_nrm.dds");
             tile.SetDiffuseTex("./Resources/Texture/tile/Tiles32_col.dds");
-            tile.SetRoughnessTex("./Resources/Texture/tile/Tiles32_rgh.dds");
+            tile.SetRoughnessTex("./Resources/Texture/tile/Tiles32_rgh.dds");*/
 
             var geometry = CreateGameObject<WireFrameSphere>();
             geometry.Scale = 3.0f;
             geometry.Translation = new Vector3(0,0,150);
+            geometry.SetNormalTex("./Resources/Texture/rustediron/rustediron2_normal.dds");
             geometry.SetDiffuseTex("./Resources/Texture/rustediron/rustediron2_basecolor.dds");
-          
+            geometry.SetMetallicTex("./Resources/Texture/rustediron/rustediron2_metallic.dds");
+            geometry.SetRoughnessTex("./Resources/Texture/rustediron/rustediron2_roughness.dds");
+
             var v2Sample = GLTFLoader.LoadGLTFV2("./Resources/GLTF/FlightHelmet/glTF/FlightHelmet.gltf");
             var sampleMesh = GLTFMeshAsset.LoadFrom(v2Sample);
             var newmesh = new GLTFStaticMeshObject("GBufferMacro1", sampleMesh);

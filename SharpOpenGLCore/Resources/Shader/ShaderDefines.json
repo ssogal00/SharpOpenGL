@@ -40,13 +40,15 @@
 			"vertexShader" : "./Resources/Shader/DeferredLight.vs.glsl",
 			"fragmentShader" : "./Resources/Shader/DeferredLight.fs.glsl",
 			"vertexShaderDefines" : [],
-			"fragmentShaderDefines" : []		
-		},
+			"fragmentShaderDefines" : []
+		},		
 		{
-			"name" : "GeometryWireframeMaterial",
-			"vertexShader" : "./Resources/Shader/Geometry.vs.glsl",
-			"fragmentShader" : "./Resources/Shader/Geometry.fs.glsl",
-			"geometryShader" : "./Resources/Shader/Geometry.gs.glsl"
+			"name" : "GeometryWireframeMaterial2",
+			"fragmentShader" : "./Resources/Shader/Uber.fs.glsl",
+			"geometryShader" : "./Resources/Shader/Geometry.gs.glsl",
+			"vertexShader" : "./Resources/Shader/Uber.vs.glsl",			
+			"vertexShaderDefines" : [{"name" : "VERTEX_PNTT", "value" : "1"}],
+			"fragmentShaderDefines" : [{ "name" : "VERTEX_PNTT", "value" : "1"}, {"name" : "WIRE_FRAME", "value":"1"}]
 		}
 	]
 }

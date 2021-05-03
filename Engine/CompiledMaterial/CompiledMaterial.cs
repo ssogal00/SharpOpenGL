@@ -401,14 +401,15 @@ void main()
 		return @"#version 450 core
 #define VERTEX_PNTT 1
 
-
 #if VERTEX_PNTT
-
 layout(location=0) in vec4 InPosition;
 layout(location=1) in vec3 InNormal;
 layout(location=2) in vec2 InTexCoord;
 layout(location=3) in vec3 InTangent;
 layout(location=4) in vec3 InBinormal;
+#if WIRE_FRAME
+layout (location=5) noperspective in vec3 GEdgeDistance;
+#endif
 
 #elif VERTEX_PNT
 
@@ -424,6 +425,13 @@ layout(location=2) in vec3 InColor;
 
 #endif
 
+#if WIRE_FRAME
+uniform LineInfo
+{
+	float Width;
+	vec4 WireframeColor;
+};
+#endif
 layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
 layout (location = 1, binding=1) uniform sampler2D NormalTex;
 layout (location = 2, binding=2) uniform sampler2D MaskTex;
@@ -463,11 +471,11 @@ float GetMetallicValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord)[2];
+			return texture(MetallicRoughnessTex, texcoord).b;
 		}
 		else
 		{
-			return texture(MetallicTex, texcoord)[2];
+			return texture(MetallicTex, texcoord).b;
 		}
 	}
 	else
@@ -482,17 +490,30 @@ float GetRoughnessValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord)[1];
+			return texture(MetallicRoughnessTex, texcoord).g;
 		}
 		else
 		{
-			return texture(RoughnessTex, texcoord)[1];
+			return texture(RoughnessTex, texcoord).g;
 		}
 	}
 	else
 	{
 		return Roughness;
 	}
+}
+
+vec4 GetDiffuseColor(vec2 texcoord)
+{
+	vec4 diffuseColor = texture(DiffuseTex,texcoord);
+#if WIRE_FRAME
+	float d = min(GEdgeDistance.x, GEdgeDistance.y);
+	d = min(d, GEdgeDistance.z);
+	float mixVal = smoothstep(Width-1,	Width+1, d);
+	return mix(WireframeColor, diffuseColor, mixVal);	
+#else
+	return diffuseColor;
+#endif
 }
 
 void main()
@@ -502,7 +523,8 @@ void main()
 		vec4 MaskValue= texture(MaskTex, InTexCoord);
 		if(MaskValue.x > 0)
 		{
-			DiffuseColor = texture(DiffuseTex, InTexCoord);
+
+			DiffuseColor = GetDiffuseColor(InTexCoord);
 		}
 		else
 		{
@@ -511,7 +533,7 @@ void main()
 	}
 	else
 	{
-		DiffuseColor = texture(DiffuseTex, InTexCoord);    
+		DiffuseColor = GetDiffuseColor(InTexCoord);
 	}
 	
 	DiffuseColor.a = GetRoughnessValue(InTexCoord);    
@@ -913,14 +935,15 @@ void main()
 		return @"#version 450 core
 #define VERTEX_PNT 1
 
-
 #if VERTEX_PNTT
-
 layout(location=0) in vec4 InPosition;
 layout(location=1) in vec3 InNormal;
 layout(location=2) in vec2 InTexCoord;
 layout(location=3) in vec3 InTangent;
 layout(location=4) in vec3 InBinormal;
+#if WIRE_FRAME
+layout (location=5) noperspective in vec3 GEdgeDistance;
+#endif
 
 #elif VERTEX_PNT
 
@@ -936,6 +959,13 @@ layout(location=2) in vec3 InColor;
 
 #endif
 
+#if WIRE_FRAME
+uniform LineInfo
+{
+	float Width;
+	vec4 WireframeColor;
+};
+#endif
 layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
 layout (location = 1, binding=1) uniform sampler2D NormalTex;
 layout (location = 2, binding=2) uniform sampler2D MaskTex;
@@ -975,11 +1005,11 @@ float GetMetallicValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord)[2];
+			return texture(MetallicRoughnessTex, texcoord).b;
 		}
 		else
 		{
-			return texture(MetallicTex, texcoord)[2];
+			return texture(MetallicTex, texcoord).b;
 		}
 	}
 	else
@@ -994,17 +1024,30 @@ float GetRoughnessValue(vec2 texcoord)
 	{
 		if (MetallicRoughnessOneTexture)
 		{
-			return texture(MetallicRoughnessTex, texcoord)[1];
+			return texture(MetallicRoughnessTex, texcoord).g;
 		}
 		else
 		{
-			return texture(RoughnessTex, texcoord)[1];
+			return texture(RoughnessTex, texcoord).g;
 		}
 	}
 	else
 	{
 		return Roughness;
 	}
+}
+
+vec4 GetDiffuseColor(vec2 texcoord)
+{
+	vec4 diffuseColor = texture(DiffuseTex,texcoord);
+#if WIRE_FRAME
+	float d = min(GEdgeDistance.x, GEdgeDistance.y);
+	d = min(d, GEdgeDistance.z);
+	float mixVal = smoothstep(Width-1,	Width+1, d);
+	return mix(WireframeColor, diffuseColor, mixVal);	
+#else
+	return diffuseColor;
+#endif
 }
 
 void main()
@@ -1014,7 +1057,8 @@ void main()
 		vec4 MaskValue= texture(MaskTex, InTexCoord);
 		if(MaskValue.x > 0)
 		{
-			DiffuseColor = texture(DiffuseTex, InTexCoord);
+
+			DiffuseColor = GetDiffuseColor(InTexCoord);
 		}
 		else
 		{
@@ -1023,7 +1067,7 @@ void main()
 	}
 	else
 	{
-		DiffuseColor = texture(DiffuseTex, InTexCoord);    
+		DiffuseColor = GetDiffuseColor(InTexCoord);
 	}
 	
 	DiffuseColor.a = GetRoughnessValue(InTexCoord);    
@@ -1908,13 +1952,13 @@ void main()
 	}
 }
 }
-namespace GeometryWireframeMaterial
+namespace GeometryWireframeMaterial2
 {
 
 
-public class GeometryWireframeMaterial : MaterialBase
+public class GeometryWireframeMaterial2 : MaterialBase
 {
-	public GeometryWireframeMaterial() 
+	public GeometryWireframeMaterial2() 
 	 : base (GetVSSourceCode(), GetFSSourceCode(), GetGSSourceCode())
 	{	
 	}
@@ -1929,41 +1973,151 @@ public class GeometryWireframeMaterial : MaterialBase
 		mMaterialProgram.UseProgram();
 	}
 
-	public void SetdiffuseTex2D(Core.Texture.TextureBase TextureObject)
+	public void SetDiffuseTex2D(Core.Texture.TextureBase TextureObject)
 	{
-		SetTexture(@"diffuseTex", TextureObject);
+		SetTexture(@"DiffuseTex", TextureObject);
 	}
 
-	public void SetdiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
+	public void SetDiffuseTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
 	{
-		SetTexture(@"diffuseTex", textureObject, samplerObject);		
+		SetTexture(@"DiffuseTex", textureObject, samplerObject);		
 	}
 
 	public TextureBase DiffuseTex2D 
 	{	
-		set => SetTexture(@"diffuseTex", value);		
+		set => SetTexture(@"DiffuseTex", value);		
 	}
 
 	public TextureBase DiffuseTex2D_PointSample
 	{	
-		set => SetTexture(@"diffuseTex", value, Sampler.DefaultPointSampler);
+		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultPointSampler);
 	}
 
 	public TextureBase DiffuseTex2D_LinearSample
 	{	
-		set => SetTexture(@"diffuseTex", value, Sampler.DefaultLinearSampler);
+		set => SetTexture(@"DiffuseTex", value, Sampler.DefaultLinearSampler);
+	}	
+	public void SetMaskTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"MaskTex", TextureObject);
+	}
+
+	public void SetMaskTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
+	{
+		SetTexture(@"MaskTex", textureObject, samplerObject);		
+	}
+
+	public TextureBase MaskTex2D 
+	{	
+		set => SetTexture(@"MaskTex", value);		
+	}
+
+	public TextureBase MaskTex2D_PointSample
+	{	
+		set => SetTexture(@"MaskTex", value, Sampler.DefaultPointSampler);
+	}
+
+	public TextureBase MaskTex2D_LinearSample
+	{	
+		set => SetTexture(@"MaskTex", value, Sampler.DefaultLinearSampler);
+	}	
+	public void SetMetallicRoughnessTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"MetallicRoughnessTex", TextureObject);
+	}
+
+	public void SetMetallicRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
+	{
+		SetTexture(@"MetallicRoughnessTex", textureObject, samplerObject);		
+	}
+
+	public TextureBase MetallicRoughnessTex2D 
+	{	
+		set => SetTexture(@"MetallicRoughnessTex", value);		
+	}
+
+	public TextureBase MetallicRoughnessTex2D_PointSample
+	{	
+		set => SetTexture(@"MetallicRoughnessTex", value, Sampler.DefaultPointSampler);
+	}
+
+	public TextureBase MetallicRoughnessTex2D_LinearSample
+	{	
+		set => SetTexture(@"MetallicRoughnessTex", value, Sampler.DefaultLinearSampler);
+	}	
+	public void SetMetallicTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"MetallicTex", TextureObject);
+	}
+
+	public void SetMetallicTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
+	{
+		SetTexture(@"MetallicTex", textureObject, samplerObject);		
+	}
+
+	public TextureBase MetallicTex2D 
+	{	
+		set => SetTexture(@"MetallicTex", value);		
+	}
+
+	public TextureBase MetallicTex2D_PointSample
+	{	
+		set => SetTexture(@"MetallicTex", value, Sampler.DefaultPointSampler);
+	}
+
+	public TextureBase MetallicTex2D_LinearSample
+	{	
+		set => SetTexture(@"MetallicTex", value, Sampler.DefaultLinearSampler);
+	}	
+	public void SetNormalTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"NormalTex", TextureObject);
+	}
+
+	public void SetNormalTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
+	{
+		SetTexture(@"NormalTex", textureObject, samplerObject);		
+	}
+
+	public TextureBase NormalTex2D 
+	{	
+		set => SetTexture(@"NormalTex", value);		
+	}
+
+	public TextureBase NormalTex2D_PointSample
+	{	
+		set => SetTexture(@"NormalTex", value, Sampler.DefaultPointSampler);
+	}
+
+	public TextureBase NormalTex2D_LinearSample
+	{	
+		set => SetTexture(@"NormalTex", value, Sampler.DefaultLinearSampler);
+	}	
+	public void SetRoughnessTex2D(Core.Texture.TextureBase TextureObject)
+	{
+		SetTexture(@"RoughnessTex", TextureObject);
+	}
+
+	public void SetRoughnessTex2D(Core.Texture.TextureBase textureObject, Sampler samplerObject)
+	{
+		SetTexture(@"RoughnessTex", textureObject, samplerObject);		
+	}
+
+	public TextureBase RoughnessTex2D 
+	{	
+		set => SetTexture(@"RoughnessTex", value);		
+	}
+
+	public TextureBase RoughnessTex2D_PointSample
+	{	
+		set => SetTexture(@"RoughnessTex", value, Sampler.DefaultPointSampler);
+	}
+
+	public TextureBase RoughnessTex2D_LinearSample
+	{	
+		set => SetTexture(@"RoughnessTex", value, Sampler.DefaultLinearSampler);
 	}	
 
-	public OpenTK.Mathematics.Matrix3 NormalMatrix
-	{
-		get { return normalmatrix; }
-		set 
-		{
-			normalmatrix = value;
-			SetUniformVariable(@"NormalMatrix", normalmatrix);			
-		}
-	}
-	private OpenTK.Mathematics.Matrix3 normalmatrix;
 	public OpenTK.Mathematics.Matrix4 ViewportMatrix
 	{
 		get { return viewportmatrix; }
@@ -2025,13 +2179,96 @@ public class GeometryWireframeMaterial : MaterialBase
 			this.SetUniformBufferValue< LineInfo >(@"LineInfo", lineinfo);
 		}
 	}
-	public OpenTK.Mathematics.Vector4 LineInfo_Color
+	public OpenTK.Mathematics.Vector4 LineInfo_WireframeColor
 	{
-		get { return lineinfo.Color ; }
+		get { return lineinfo.WireframeColor ; }
 		set 
 		{ 
-			lineinfo.Color = value;
+			lineinfo.WireframeColor = value;
 			this.SetUniformBufferValue< LineInfo >(@"LineInfo", lineinfo);
+		}
+	}
+    private MaterialProperty materialproperty = new MaterialProperty();
+	public MaterialProperty MaterialProperty
+	{
+		get { return materialproperty; }
+		set 
+		{ 
+			materialproperty = value; 
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", value);
+		}
+	}
+
+	public System.UInt32 MaterialProperty_EncodedPBRInfo
+	{
+		get { return materialproperty.encodedPBRInfo ; }
+		set 
+		{ 
+			materialproperty.encodedPBRInfo = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MetallicExist
+	{
+		get { return materialproperty.MetallicExist ; }
+		set 
+		{ 
+			materialproperty.MetallicExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_RoghnessExist
+	{
+		get { return materialproperty.RoghnessExist ; }
+		set 
+		{ 
+			materialproperty.RoghnessExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MaskExist
+	{
+		get { return materialproperty.MaskExist ; }
+		set 
+		{ 
+			materialproperty.MaskExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_NormalExist
+	{
+		get { return materialproperty.NormalExist ; }
+		set 
+		{ 
+			materialproperty.NormalExist = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Single MaterialProperty_Metallic
+	{
+		get { return materialproperty.Metallic ; }
+		set 
+		{ 
+			materialproperty.Metallic = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Single MaterialProperty_Roughness
+	{
+		get { return materialproperty.Roughness ; }
+		set 
+		{ 
+			materialproperty.Roughness = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
+		}
+	}
+	public System.Boolean MaterialProperty_MetallicRoughnessOneTexture
+	{
+		get { return materialproperty.MetallicRoughnessOneTexture ; }
+		set 
+		{ 
+			materialproperty.MetallicRoughnessOneTexture = value;
+			this.SetUniformBufferValue< MaterialProperty >(@"MaterialProperty", materialproperty);
 		}
 	}
     private ModelTransform modeltransform = new ModelTransform();
@@ -2058,17 +2295,9 @@ public class GeometryWireframeMaterial : MaterialBase
 
 	public static string GetVSSourceCode()
 	{
-		return @"
+		return @"#version 450 core
+#define VERTEX_PNTT 1
 
-
-#version 430 core
-
-layout (location = 0) in vec3 VertexPosition;
-layout (location = 1) in vec3 VertexNormal;
-layout (location = 2) in vec2 Texcoord;
-layout (location = 3) in vec4 Tangent;
-
-uniform mat3x3 NormalMatrix;
 
 uniform ModelTransform
 {
@@ -2081,82 +2310,260 @@ uniform CameraTransform
 	mat4x4 Proj;
 };
 
-layout (location=0) out vec3 OutPosition;
-layout (location=1) out vec3 OutNormal;
-layout (location=2) out vec2 OutTexcoord;
-layout (location=3) out vec4 OutTangent;
+uniform mat4 NormalMatrix;
 
+//
+#if VERTEX_PNTT
+#define TANGENT_EXIST 1
+#define TEXCOORD_EXIST 1
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec3 VertexNormal;
+layout(location=2) in vec2 TexCoord;
+layout(location=3) in vec4 Tangent;
 
+layout(location=0) out vec4 OutPosition;
+layout(location=1) out vec3 OutNormal;
+layout(location=2) out vec2 OutTexCoord;
+layout(location=3) out vec3 OutTangent;
+layout(location=4) out vec3 OutBinormal;
+
+#elif VERTEX_PNT
+#define TEXCOORD_EXIST 1
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec3 VertexNormal;
+layout(location=2) in vec2 TexCoord;
+
+layout(location=0) out vec4 OutPosition;
+layout(location=1) out vec3 OutNormal;
+layout(location=2) out vec2 OutTexCoord;
+
+#elif VERTEX_PNC
+#define VERTEXCOLOR_EXIST 1
+#define TEXCOORD_EXIST 0
+layout(location=0) in vec3 VertexPosition;
+layout(location=1) in vec3 VertexNormal;
+layout(location=2) in vec3 VertexColor;
+
+layout(location=0) out vec4 OutPosition;
+layout(location=1) out vec3 OutNormal;
+layout(location=2) out vec3 OutVertexColor;
+#endif
+  
 void main()
-{
+{	
+	//
 	mat4 ModelView = View * Model;
-	mat4 MVP = Proj * View * Model;
-	OutNormal = normalize(NormalMatrix * VertexNormal);
-	OutPosition = vec3(ModelView * vec4(VertexPosition,1));
-	OutTexcoord = Texcoord;
-	gl_Position = MVP * vec4(VertexPosition, 1.0f);
+	gl_Position = Proj * View * Model * vec4(VertexPosition, 1);
+
+#if TEXCOORD_EXIST	
+	OutTexCoord = TexCoord;		
+#endif
+
+#if VERTEXCOLOR_EXIST
+	OutVertexColor = VertexColor;
+#endif
+
+	OutPosition =   (ModelView * vec4(VertexPosition, 1));
+	OutNormal =  normalize(mat3(ModelView) * VertexNormal);	
+
+#if TANGENT_EXIST
+	OutTangent = normalize(mat3(ModelView) * vec3(Tangent));
+	vec3 binormal = (cross( VertexNormal, Tangent.xyz )) * Tangent.w;
+	OutBinormal = normalize(mat3(ModelView) * binormal);	
+#endif
 }";
 	}
 
 	public static string GetFSSourceCode()
 	{
 		return @"#version 450 core
+#define VERTEX_PNTT 1
+#define WIRE_FRAME 1
 
+#if VERTEX_PNTT
+layout(location=0) in vec4 InPosition;
+layout(location=1) in vec3 InNormal;
+layout(location=2) in vec2 InTexCoord;
+layout(location=3) in vec3 InTangent;
+layout(location=4) in vec3 InBinormal;
+#if WIRE_FRAME
+layout (location=5) noperspective in vec3 GEdgeDistance;
+#endif
 
+#elif VERTEX_PNT
 
+layout(location=0) in vec4 InPosition;
+layout(location=1) in vec3 InNormal;
+layout(location=2) in vec2 InTexCoord;
+
+#elif VERTEX_PNC
+
+layout(location=0) in vec4 InPosition;
+layout(location=1) in vec3 InNormal;
+layout(location=2) in vec3 InColor;
+
+#endif
+
+#if WIRE_FRAME
 uniform LineInfo
 {
 	float Width;
-	vec4 Color;
+	vec4 WireframeColor;
+};
+#endif
+layout (location = 0, binding=0) uniform sampler2D DiffuseTex;
+layout (location = 1, binding=1) uniform sampler2D NormalTex;
+layout (location = 2, binding=2) uniform sampler2D MaskTex;
+layout (location = 3, binding=3) uniform sampler2D MetallicTex;
+layout (location = 4, binding=4) uniform sampler2D RoughnessTex;
+layout(location = 5, binding = 5) uniform sampler2D MetallicRoughnessTex;
+
+layout (location = 0) out vec4 PositionColor;
+layout (location = 1) out vec4 DiffuseColor;
+layout (location = 2) out vec4 NormalColor;
+layout (location = 3) out vec4 VelocityColor;
+
+uniform MaterialProperty
+{
+	// 00000000 00000000 00000000 00000000
+	// 00000000
+	// bit position 0 => metallicExist;
+	// bit position 1 => roghnessExist;
+	// bit position 2 => maskExist;
+	// bit position 3 => normalExist;
+	// bit position 4 => occlusionExist;
+
+
+	uint encodedPBRInfo;
+	bool MetallicExist;
+	bool RoghnessExist;
+	bool MaskExist;
+	bool NormalExist;
+	float Metallic;
+	float Roughness;
+	bool MetallicRoughnessOneTexture;
 };
 
-//layout (location=0) out vec3 GNormal;
-//layout (location=1) out vec3 GPosition;
-//layout (location=2) out vec2 GTexCoord;
-//layout (location=3) out vec4 GTangent;
-//layout (location=4) noperspective out vec3 GEdgeDistance;
-
-layout (location=0) in vec3 GNormal;
-layout (location=1) in vec3 GPosition;
-layout (location=2) in vec2 GTexCoord;
-layout (location=3) in vec4 GTangent;
-layout (location=4) noperspective in vec3 GEdgeDistance;
-
-layout (location=0) out vec4 FragColor;
-
-uniform sampler2D diffuseTex;
-
-void main()
+float GetMetallicValue(vec2 texcoord)
 {
+	if (MetallicExist)
+	{
+		if (MetallicRoughnessOneTexture)
+		{
+			return texture(MetallicRoughnessTex, texcoord).b;
+		}
+		else
+		{
+			return texture(MetallicTex, texcoord).b;
+		}
+	}
+	else
+	{
+		return Metallic;
+	}
+}
+
+float GetRoughnessValue(vec2 texcoord)
+{
+	if (MetallicExist)
+	{
+		if (MetallicRoughnessOneTexture)
+		{
+			return texture(MetallicRoughnessTex, texcoord).g;
+		}
+		else
+		{
+			return texture(RoughnessTex, texcoord).g;
+		}
+	}
+	else
+	{
+		return Roughness;
+	}
+}
+
+vec4 GetDiffuseColor(vec2 texcoord)
+{
+	vec4 diffuseColor = texture(DiffuseTex,texcoord);
+#if WIRE_FRAME
 	float d = min(GEdgeDistance.x, GEdgeDistance.y);
 	d = min(d, GEdgeDistance.z);
-
 	float mixVal = smoothstep(Width-1,	Width+1, d);
+	return mix(WireframeColor, diffuseColor, mixVal);	
+#else
+	return diffuseColor;
+#endif
+}
 
-	vec4 diffuseColor = texture(diffuseTex, GTexCoord);
+void main()
+{   
+	if(MaskExist)
+	{
+		vec4 MaskValue= texture(MaskTex, InTexCoord);
+		if(MaskValue.x > 0)
+		{
 
-	FragColor = mix(Color, diffuseColor, mixVal);
-}";
+			DiffuseColor = GetDiffuseColor(InTexCoord);
+		}
+		else
+		{
+			discard;
+		}    
+	}
+	else
+	{
+		DiffuseColor = GetDiffuseColor(InTexCoord);
+	}
+	
+	DiffuseColor.a = GetRoughnessValue(InTexCoord);    
+
+#if VERTEX_PNTT
+	if(NormalExist)
+    {
+    	mat3 TangentToModelViewSpaceMatrix = mat3( InTangent.x, InTangent.y, InTangent.z, 
+								    InBinormal.x, InBinormal.y, InBinormal.z, 
+								    InNormal.x, InNormal.y, InNormal.z);    
+    
+	    vec3 NormalMapNormal = (2.0f * (texture( NormalTex, InTexCoord ).xyz) - vec3(1.0f));
+	    vec3 BumpNormal = normalize(TangentToModelViewSpaceMatrix * NormalMapNormal.xyz);
+
+	    NormalColor.xyz = BumpNormal.xyz;
+    }
+    else
+    {
+    	NormalColor.xyz = InNormal.xyz;
+	}
+#else
+	NormalColor.xyz = InNormal.xyz;
+#endif
+    	
+	NormalColor.a = GetMetallicValue(InTexCoord);	
+
+    PositionColor = InPosition;
+}
+";
 	}
 
 	public static string GetGSSourceCode()
 	{
 		return @"
-#version 430
+#version 460
 
 layout (triangles) in;
 layout (triangle_strip, max_vertices=3) out;
 
-layout (location=0) out vec3 GNormal;
-layout (location=1) out vec3 GPosition;
+layout (location=0) out vec4 GPosition;
+layout (location=1) out vec3 GNormal;
 layout (location=2) out vec2 GTexCoord;
-layout (location=3) out vec4 GTangent;
-layout (location=4) noperspective out vec3 GEdgeDistance;
+layout (location=3) out vec3 GTangent;
+layout (location=4) out vec3 GBinormal;
+layout (location=5) noperspective out vec3 GEdgeDistance;
 
-layout (location=0) in vec3 VPosition[];
+layout (location=0) in vec4 VPosition[];
 layout (location=1) in vec3 VNormal[];
 layout (location=2) in vec2 VTexcoord[];
-layout (location=3) in vec4 VTangent[];
+layout (location=3) in vec3 VTangent[];
+layout (location=4) in vec3 VBinormal[];
 
 //layout (location=0) out vec3 OutPosition;
 //layout (location=1) out vec3 OutNormal;
@@ -2188,22 +2595,28 @@ void main()
 	GPosition = VPosition[0];
 	GTexCoord = VTexcoord[0];
 	GTangent = VTangent[0];
+	GBinormal = VBinormal[0];
 	gl_Position = gl_in[0].gl_Position;
 	EmitVertex();
+
 	GEdgeDistance = vec3( 0, hb, 0 );
 	GNormal = VNormal[1];
 	GPosition = VPosition[1];
 	GTexCoord = VTexcoord[1];
 	GTangent = VTangent[1];
+	GBinormal = VBinormal[1];
 	gl_Position = gl_in[1].gl_Position;
 	EmitVertex();
+
 	GEdgeDistance = vec3( 0, 0, hc );
 	GNormal = VNormal[2];
 	GPosition = VPosition[2];
 	GTexCoord = VTexcoord[2];
 	GTangent = VTangent[2];
+	GBinormal = VBinormal[2];
 	gl_Position = gl_in[2].gl_Position;
 	EmitVertex();
+
 	EndPrimitive();
 }";
 	}

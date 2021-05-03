@@ -14,14 +14,14 @@ using CameraTransform = Core.MaterialBase.CameraTransform;
 
 namespace Engine
 {
-    public class WireFrameSphere : Sphere
+    public class WireFrameSphere : PBRSphere
     {
         public WireFrameSphere()
         :base()
         {
             this.Scale = 10.0f;
-            this.MaterialName = "GeometryWireframeMaterial";
-            this.mMeshSectionList[0].MaterialName= "GeometryWireframeMaterial";
+            this.MaterialName = "GeometryWireframeMaterial2";
+            this.mMeshSectionList[0].MaterialName= "GeometryWireframeMaterial2";
         }
 
         public override bool IsEditable { get; set; } = false;
@@ -34,29 +34,14 @@ namespace Engine
             Initialize();
         }
 
-        public void SetDiffuseTex(string diffuseTex)
-        {
-            this.mDiffuseTexPath = diffuseTex;
-        }
-
-        public override void Initialize()
-        {
-            GenerateVertices();
-        }
-
-        public override IEnumerable<(string, string)> GetTextureParams(int index)
-        {
-            yield return ("diffuseTex", mDiffuseTexPath);
-        }
-
         public override IEnumerable<(string, Vector4)> GetVector4Params(int index)
         {
-            yield return ("Color", mColor);
+            yield return ("WireframeColor", mColor);
         }
 
         public override IEnumerable<(string, float)> GetFloatParams(int index)
         {
-            yield return ("Width", 1.0f);
+            yield return ("Width", 2.0f);
         }
 
         public override IEnumerable<(string, Matrix4)> GetMatrix4Params(int index)
@@ -67,7 +52,6 @@ namespace Engine
             yield return ("ViewportMatrix", CameraManager.Instance.CurrentViewport);
         }
 
-        private string mDiffuseTexPath = null;
         private Vector4 mColor = new Vector4(0,0,0,1);
     }
 }

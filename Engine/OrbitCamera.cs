@@ -1,11 +1,7 @@
-﻿using OpenTK;
-using System;
-using Core.CustomEvent;
-
-using OpenTK.Input;
-using OpenTK.Mathematics;
+﻿using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using System;
 
 namespace Core.Camera
 {
