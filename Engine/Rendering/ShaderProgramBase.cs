@@ -82,6 +82,7 @@ namespace Core.OpenGLShader
             if (!ProgramLinked)
             {
                 result = GL.GetProgramInfoLog(ProgramObject);
+                Console.WriteLine("Error : {0}", result);
                 return false;
             }
 
@@ -149,8 +150,6 @@ namespace Core.OpenGLShader
             var Loc = GL.GetUniformLocation(ProgramObject, VarName);
             GL.UniformMatrix2(Loc, false, ref Data);
         }
-
-        
 
         public void SetUniformVariable(string VarName, Matrix3 Data)
         {
@@ -739,6 +738,33 @@ namespace Core.OpenGLShader
                 }
             }
 
+            return result;
+        }
+
+        public List<int> GetImageUniformLocations()
+        {
+            var result = new List<int>();
+
+            if (ProgramLinked)
+            {
+                var count = GetActiveUniformCount();
+
+                for (int i = 0; i < count; ++i)
+                {
+                    int size;
+                    ActiveUniformType type;
+
+                    GL.GetActiveUniform(ProgramObject, i, out size, out type);
+
+                    if (type == ActiveUniformType.Image2D
+                    || type == ActiveUniformType.Image1D
+                    || type == ActiveUniformType.Image3D)
+                    {
+                        result.Add(i);
+                    }
+                }
+
+            }
             return result;
         }
 

@@ -1,16 +1,5 @@
-﻿using System;
+﻿using OpenTK.Mathematics;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CompiledMaterial.GBufferPNC;
-using Core.Primitive;
-using OpenTK;
-using Core;
-using Core.MaterialBase;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Mathematics;
-using CameraTransform = Core.MaterialBase.CameraTransform;
 
 namespace Engine
 {
