@@ -1,12 +1,9 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using Engine;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Windows.Controls;
-using OpenTK;
 
 namespace Core.Buffer
 {
@@ -25,6 +22,7 @@ namespace Core.Buffer
     {
         public OpenGLBuffer()
         {
+            Debug.Assert(RenderingThread.IsInRenderingThread());
             mBufferHandle = GL.GenBuffer();
         }
 
