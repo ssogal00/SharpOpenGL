@@ -11,7 +11,6 @@ using Core.Asset;
 using ZeroFormatter.Formatters;
 using DirectXTexWrapper;
 using Engine.Scene;
-using FreeTypeGLWrapper;
 using Engine;
 
 namespace Engine

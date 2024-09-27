@@ -6,8 +6,6 @@ using Core;
 using Core.Texture;
 using OpenTK.Graphics.OpenGL;
 
-using FreeTypeWrapper;
-
 namespace Engine.UI
 {
     public class UIManager : Singleton<UIManager>
@@ -18,7 +16,6 @@ namespace Engine.UI
 
             // RootScreen.AddChild(new UIBox(Vector2.Zero, 64*4,64*4));
             RootScreen.AddChild(new UIText("abcdef", new Vector2i(0, 200)));
-            mFontAtlas = FreeType.GetFontAtlas(null, "abcdefghijklmn", 64);
         }
 
         public void RenderUI()
@@ -28,14 +25,6 @@ namespace Engine.UI
 
         public UIScreen RootScreen = null;
 
-        private FontAtlas mFontAtlas;
-
-        public FontAtlas FontAtlas
-        {
-            get
-            {
-                return mFontAtlas;
-            }
-        }
+       
     }
 }

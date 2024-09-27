@@ -79,7 +79,7 @@ namespace Engine
                     {
                         ro.Value.Render();
                     }
-                    UIManager.Instance.RenderUI();
+                    
                 }
             );
 

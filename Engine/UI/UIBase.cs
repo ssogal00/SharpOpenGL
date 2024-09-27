@@ -265,10 +265,6 @@ namespace Engine
             {
                 mTexture = new Texture2D();
 
-                var bitmap= UIManager.Instance.FontAtlas.Bitmap;
-                var size = UIManager.Instance.FontAtlas.SquarePixelSize;
-
-                mTexture.LoadFromMemory(bitmap, size, size, PixelInternalFormat.R8, PixelFormat.Red);
             }
 
             var vertices = mVertexList.ToArray();

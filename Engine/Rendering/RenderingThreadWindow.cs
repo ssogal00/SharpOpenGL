@@ -16,7 +16,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
-using Engine.SceneRenderer;
 using MouseButtonEventArgs = OpenTK.Windowing.Common.MouseButtonEventArgs;
 
 namespace Engine

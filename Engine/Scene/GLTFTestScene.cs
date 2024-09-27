@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Core;
 using GLTF;
 using Engine.Scene;
-using Engine.SceneRenderer;
 using GLTF.V2;
 
 namespace Engine.Scene
