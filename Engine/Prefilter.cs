@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 using CompiledMaterial.PrefilterMaterial;
@@ -88,7 +89,7 @@ namespace Engine.Transform
         {
             this.environmentMap = envmap;
         }
-
+        [SupportedOSPlatform("windows")]
         public void Save()
         {
             var colorDataX = cubemapRenderTarget.GetCubemapTexImageAsByte(TextureTarget.TextureCubeMapPositiveX, 0);

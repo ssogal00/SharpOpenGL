@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Drawing.Imaging;
+using System.Runtime.Versioning;
 
 
 
@@ -12,6 +13,7 @@ namespace Core.Texture
 {
     public static class FreeImageHelper
     {
+        [SupportedOSPlatform("windows")]
         public static void SaveAsBmp(ref byte[] Data, int width, int height, string FileName)
         {
             Debug.Assert(width > 0 && height > 0);
@@ -24,7 +26,8 @@ namespace Core.Texture
                 bool bSaved = FreeImage.SaveBitmap(bitmap, FileName);
             }
         }
-
+        
+        [SupportedOSPlatform("windows")]
         public static void SaveAsBmp(ref float[] Data, int width, int height, string FileName)
         {
             Debug.Assert(width > 0 && height > 0);
@@ -38,6 +41,7 @@ namespace Core.Texture
             }
         }
 
+        [SupportedOSPlatform("windows")]
         public static FIBITMAP Load(string FilePath, out int Width, out int Height, out PixelFormat OutPixelFormat, out bool IsTransparent, out uint BPP)
         {
             FIBITMAP DIB = new FIBITMAP();

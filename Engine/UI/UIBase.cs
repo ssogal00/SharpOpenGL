@@ -127,11 +127,7 @@ namespace Engine
 
         public Vector2 GetAnchorPosition(EAnchorPosition anchorType)
         {
-            switch (anchorType)
-            {
-
-            }
-
+         
             return Vector2.Zero;
         }
         

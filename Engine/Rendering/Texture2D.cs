@@ -4,6 +4,7 @@ using OpenTK.Graphics.OpenGL;
 using FreeImageAPI;
 using Core.Texture;
 using DirectXTexWrapper;
+using System.Runtime.Versioning;
 
 namespace Core.Texture
 {
@@ -166,8 +167,8 @@ namespace Core.Texture
             } 
         }
 
-        
 
+        [SupportedOSPlatform("windows")]
         public override void Load(string filePath, PixelInternalFormat internalFormat, PixelFormat pixelFormat)
         {
             using (var bitmap = new ScopedFreeImage(filePath))

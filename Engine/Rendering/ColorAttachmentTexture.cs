@@ -1,6 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL;
 using System;
 using System.Diagnostics;
+using System.Runtime.Versioning;
 
 namespace Core.Texture
 {
@@ -30,7 +31,7 @@ namespace Core.Texture
                 textureObject = GL.GenTexture();
             }
         }
-
+        [SupportedOSPlatform("windows")]
         public void SaveAsBmp(string filename)
         {
             var colorData = GetTexImageAsByte();

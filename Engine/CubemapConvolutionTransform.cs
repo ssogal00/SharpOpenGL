@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 using CompiledMaterial.CubemapConvolution;
@@ -41,7 +42,7 @@ namespace Engine.Transform
         {
             this.sourceCubemap = sourceCubemap;
         }
-
+        [SupportedOSPlatform("windows")]
         public void Save()
         {
             if (bSaved == false)

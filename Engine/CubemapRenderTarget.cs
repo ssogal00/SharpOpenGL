@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Core.Buffer;
+using System.Runtime.Versioning;
 
 namespace Core.Texture
 {
@@ -113,7 +114,7 @@ namespace Core.Texture
 
             return data;
         }
-
+        [SupportedOSPlatform("windows")]
         public void Save(int mip)
         {
             int mipWidth = (int)(Width * Math.Pow(0.5, (double)mip));

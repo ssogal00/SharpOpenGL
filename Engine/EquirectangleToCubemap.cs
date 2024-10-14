@@ -15,6 +15,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Mathematics;
 using Engine.PostProcess;
 using MathHelper = OpenTK.Mathematics.MathHelper;
+using System.Runtime.Versioning;
 
 namespace Engine
 {
@@ -44,7 +45,7 @@ namespace Engine
             NegativeZ.Initialize();
         }
 
-
+        [SupportedOSPlatform("windows")]
         public void Save()
         {
             if (bSaved == false)

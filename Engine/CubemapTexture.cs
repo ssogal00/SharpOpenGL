@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK.Graphics.OpenGL;
 using FreeImageAPI;
+using System.Runtime.Versioning;
 
 namespace Core.Texture
 {
@@ -32,7 +33,7 @@ namespace Core.Texture
                 GL.Uniform1(SamplerLoc, (int)(Unit - TextureUnit.Texture0));
             }
         }
-
+        [SupportedOSPlatform("windows")]
         public void Load()
         {
             Bind();

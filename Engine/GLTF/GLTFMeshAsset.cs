@@ -74,7 +74,7 @@ namespace GLTF
             return Index == semantic.Index && AttributeName == semantic.AttributeName;
         }
 
-        public bool Equals(object o)
+        public override bool Equals(object o) 
         {
             return Equals(o as VertexAttributeSemantic);
         }

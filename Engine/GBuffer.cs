@@ -3,6 +3,7 @@ using Core.Texture;
 using System.Diagnostics;
 using System;
 using Core.CustomEvent;
+using System.Runtime.Versioning;
 
 namespace Core.Buffer
 {
@@ -113,12 +114,12 @@ namespace Core.Buffer
             
             GL.DrawBuffers(4, attachments);
         }
-
+        [SupportedOSPlatform("windows")]
         public void SaveColorAttachmentAsBmp(string filename)
         {
             ColorAttachment.SaveAsBmp(filename);
         }
-
+        [SupportedOSPlatform("windows")]
         public void SaveNormalAttachmentAsBmp(string filename)
         {
             NormalAttachment.SaveAsBmp(filename);

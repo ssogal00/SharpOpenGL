@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading.Tasks;
 using CompiledMaterial.LUTGenerateMaterial;
@@ -27,7 +28,7 @@ namespace Engine.Transform
         }
 
         public bool IsCompleted { get; set; } = false;
-
+        [SupportedOSPlatform("windows")]
         public void Save()
         {
             if (Output != null)

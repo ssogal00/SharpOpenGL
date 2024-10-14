@@ -5,11 +5,13 @@ using System.IO;
 using OpenTK.Graphics.OpenGL;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace Core.Texture
 {
     public class ScopedFreeImage : IDisposable
     {
+        [SupportedOSPlatform("windows")]
         public ScopedFreeImage(string imagePath, bool bFloatingPoint = false)
         {
             if (File.Exists(imagePath) == false)
