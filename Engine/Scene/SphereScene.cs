@@ -60,7 +60,7 @@ namespace Engine
             tile.SetDiffuseTex("./Resources/Texture/tile/Tiles32_col.dds");
             tile.SetRoughnessTex("./Resources/Texture/tile/Tiles32_rgh.dds");*/
 
-            var geometry = CreateGameObject<WireFrameSphere>();
+            var geometry = CreateGameObject<PBRSphere>();
             geometry.Scale = 3.0f;
             geometry.Translation = new Vector3(0,0,150);
             geometry.SetNormalTex("./Resources/Texture/rustediron/rustediron2_normal.dds");
